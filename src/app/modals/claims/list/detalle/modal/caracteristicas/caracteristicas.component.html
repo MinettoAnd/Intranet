@@ -1,0 +1,205 @@
+<div class="modal-header">
+  <h4 class="modal-title">Modificar Características del Reclamo</h4>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="activeModal.dismiss('Cross click')"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="detailForm">
+    <div class="row">
+      <div class="form-group col-md-4">
+        <label for="codigo">Codigo </label>
+        <div class="input-group">
+          <input
+            type="text"
+            formControlName="codigo"
+            [(ngModel)]="dataCaracteristicas.codigo"
+            class="form-control form-control-sm"
+            disabled
+          />
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md-4">
+        <label for="clasificacion">Clasificación</label>
+        <select
+          formControlName="clasificacion"
+          [(ngModel)]="dataCaracteristicas.clasificacion"
+          class="form-control form-select form-control-sm"
+        >
+          <option value="">Seleccione ...</option>
+          <option value="1">Administrativo</option>
+          <option value="2">Asistencial</option>
+        </select>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="sede">Sede</label>
+        <select
+          id="sede"
+          class="form-control form-select form-control-sm"
+          [(ngModel)]="dataCaracteristicas.sede"
+          formControlName="sede"
+        >
+          <option value="">Seleccione...</option>
+          <option *ngFor="let sede of listsedes" [value]="sede.id_sede">
+            {{ sede.n_descripcion }}
+          </option>
+        </select>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="modorecpcion">Modo de Recepcion </label>
+        <select
+          id="modorecepcion"
+          class="form-control form-select form-control-sm"
+          [(ngModel)]="dataCaracteristicas.modorepcion"
+          (change)="onChangeModoRecepcion($event)"
+          formControlName="modorecpcion"
+        >
+          <option value="">Seleccione...</option>
+          <option
+            *ngFor="let recep of listrecepcions"
+            value="{{ recep.id_modorecepcion_v2 }}"
+          >
+            {{ recep.v_descripcion }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md-4">
+        <label for="garantia">Garantia</label>
+        <select
+          id="garantia"
+          class="form-control form-select form-control-sm"
+          [(ngModel)]="dataCaracteristicas.garantia"
+          (change)="onChangeCausas($event)"
+          formControlName="garantia"
+        >
+          <option value="">Seleccione...</option>
+          <option
+            *ngFor="let item of listgarantias"
+            value="{{ item.id_garantia }}"
+          >
+            {{ item.v_descripcion }}
+          </option>
+        </select>
+      </div>
+      <div class="form-group col-md-8">
+        <label for="causa">Causa Específica </label>
+        <select
+          id="causa"
+          class="form-control form-select form-control-sm"
+          [(ngModel)]="dataCaracteristicas.causa"
+          formControlName="causa"
+          (change)="onChangeCausasDetail(1, $event)"
+        >
+          <option value="">Seleccione...</option>
+          <option
+            *ngFor="let item of listcuasasespeciales"
+            value="{{ item.id_int }}"
+          >
+            {{ item.v_descripccion }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md-4">
+        <label for="niverelreclamo">Nivel del Reclamo </label>
+        <select
+          formControlName="niverelreclamo"
+          [(ngModel)]="dataCaracteristicas.nivelreclamo"
+          class="form-control form-select form-control-sm"
+        >
+          <option value="">Selecciona...</option>
+          <option
+            *ngFor="let item of listnevereclamo"
+            value="{{ item.id_nivel_reclamo }}"
+          >
+            {{ item.v_descripcion_reclamo }}
+          </option>
+        </select>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="codigoweb">Codigo Web </label>
+        <div class="input-group">
+          <input
+            type="text"
+            formControlName="codigoweb"
+            [(ngModel)]="dataCaracteristicas.codigoweb"
+            class="form-control form-control-sm"
+          />
+        </div>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="codigolibrorelcamo">Codigo Libro Reclamaciones </label>
+        <div class="input-group">
+          <input
+            type="text"
+            formControlName="codigolibrorelcamo"
+            [(ngModel)]="dataCaracteristicas.codigolibro"
+            class="form-control form-control-sm"
+            disabled
+          />
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md-4">
+        <label for="productoservicio">Producto o Servicio Contratado </label>
+        <select
+          formControlName="productoservicio"
+          [(ngModel)]="dataCaracteristicas.prodservice"
+          class="form-control form-select form-control-sm"
+        >
+          <option value="">Seleccione ...</option>
+          <option value="1">Producto</option>
+          <option value="2">Servicio</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-md-12">
+        <label for="detalle">Destalle del reclamo </label>
+        <textarea
+          class="form-control rounded-0"
+          [(ngModel)]="dataCaracteristicas.detalle"
+          formControlName="detalle"
+          rows="10"
+        ></textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md-12">
+        <label for="detalle_envio">Breve Descripción del Reclamo </label>
+        <textarea
+          class="form-control rounded-0"
+          [(ngModel)]="texEnvioSusalud"
+          formControlName="detalle_envio"
+          [maxlength]="maxChars"
+          rows="10"
+        ></textarea>
+        {{ texEnvioSusalud.length }}/{{ maxChars }} Caractères Maximo
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button (click)="updateCaracteriscas()" type="button" class="btn btn-primary">
+    <i class="fa fa-save"></i> Guardar
+  </button>
+  <button
+    type="button"
+    class="btn btn-outline-dark"
+    (click)="activeModal.close('Close click')"
+  >
+    <i class="fa fa-minus-circle"></i> Cancelar
+  </button>
+</div>

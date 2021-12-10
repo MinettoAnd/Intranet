@@ -1,0 +1,20 @@
+<div class="card mt-sm-5 mt-md-0">
+  <div class="card-header">
+    <h4>Reclamos registrados</h4>
+  </div>
+  <div class="card-body">
+    <div class="chart">
+      <canvas
+        baseChart
+        [data]="pieChartData"
+        [labels]="pieChartLabels"
+        [chartType]="pieChartType"
+        [options]="pieChartOptions"
+        [plugins]="pieChartPlugins"
+        [colors]="pieChartColors"
+        [legend]="pieChartLegend"
+      >
+      </canvas>
+    </div>
+  </div>
+</div>

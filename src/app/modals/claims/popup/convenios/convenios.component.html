@@ -1,0 +1,105 @@
+<div class="modal-header">
+  <select
+    class="custom-select"
+    style="width: auto"
+    [(ngModel)]="pageSize"
+    (ngModelChange)="refreshCountries()"
+  >
+    <option [ngValue]="20">20</option>
+    <option [ngValue]="50">50</option>
+    <option [ngValue]="100">100</option>
+  </select>
+  <h4 class="modal-title ml-2">TITULO</h4>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="activeModal.dismiss('Cross click')"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <!--SEARCH-->
+  <form [formGroup]="seachForm">
+    <div class="form-row mt-2">
+      <div class="form-group col-md-8">
+        <div class="card-header-action">
+          <div class="input-group">
+            <input
+              type="text"
+              class="form-control form-control-sm"
+              formControlName="textempresa"
+              placeholder="Empresa"
+            />
+            <div class="input-group-btn">
+              <button
+                (click)="searchConvenios()"
+                class="btn btn-sm btn-primary"
+              >
+                <i class="fa fa-search"></i>Filtrar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div class="table-responsive">
+    <table class="table table-sm table-hover" id="table-1">
+      <thead>
+        <tr>
+          <th>Cod</th>
+          <th>Empresa</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of convenios; let i = index">
+          <td>{{ item.idEmpresa }}</td>
+          <td>{{ item.Descripcion }}</td>
+          <td>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                (click)="getDataConvenios(item)"
+                type="checkbox"
+                id="autoSizingCheck{{ i }}"
+              />
+              <label class="form-check-label" for="autoSizingCheck{{ i }}">
+                Filtrar
+              </label>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="scroll-container" style="overflow: auto">
+    <div class="p-2">
+      <ngb-pagination
+        class="float-right"
+        [collectionSize]="collectionSize"
+        [(page)]="page"
+        [pageSize]="pageSize"
+        (pageChange)="refreshCountries()"
+      >
+        <ng-template ngbPaginationPrevious>
+          <i class="fa fa-chevron-left"></i
+        ></ng-template>
+        <ng-template ngbPaginationNext
+          ><i class="fa fa-chevron-right"></i
+        ></ng-template>
+      </ngb-pagination>
+    </div>
+  </div>
+</div>
+<!--div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-dark"
+      (click)="activeModal.close('Close click')"
+    >
+      Close
+    </button>
+  </div-->

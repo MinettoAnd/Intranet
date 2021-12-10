@@ -1,0 +1,577 @@
+<div class="modal-header">
+  <h4 class="modal-title">Para conocimiento</h4>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="activeModal.dismiss('Cross click')"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="mb-3 mt-2">
+    <form [formGroup]="conocimietnoForm">
+      <div class="card">
+        <div class="card-header">
+          <h5>Área y Personal Involucrado</h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="form-group col-md-4">
+              <label for="area">Área</label>
+              <select
+                id="area"
+                class="form-control form-control-sm"
+                [(ngModel)]="codarea"
+                (change)="onChangeAreaName($event)"
+                formControlName="area"
+              >
+                <option value="">Seleccione...</option>
+                <option
+                  *ngFor="let item of listareas"
+                  value="{{ item.Departamento }}"
+                >
+                  {{ item.Descripcion }}
+                </option>
+              </select>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="consultorios_externos">Consultorios Externos</label>
+              <select
+                formControlName="consultorios_externos"
+                [ngModel]="listDetalle[0]?.id_especialidad"
+                class="form-control form-control-sm"
+              >
+                <option value="">Seleccionar ....</option>
+                <option
+                  *ngFor="let item of especialidades"
+                  value="{{ item.IdEspecialidad }}"
+                >
+                  {{ item.Especialidad }}
+                </option>
+              </select>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="hopitalizacion">Hospitalización</label>
+              <select
+                formControlName="hopitalizacion"
+                [ngModel]="listDetalle[0]?.id_hospitalizacion"
+                class="form-control form-control-sm"
+              >
+                <option value="">Seleccionar ....</option>
+                <option
+                  *ngFor="let item of hospitalizaciones"
+                  [value]="item.id_hospitalizacion"
+                >
+                  {{ item.v_descripcion }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-8">
+              <label for="jefe_area">Jefe de Área</label>
+              <form [formGroup]="searchJefeForm">
+                <div class="row">
+                  <div class="form-group col-md-12">
+                    <div class="card-header-action">
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          formControlName="jefesearch"
+                          [ngClass]="{
+                            'is-invalid': submittedjefe && j.jefesearch.errors
+                          }"
+                          class="form-control form-control-sm"
+                          placeholder="Apellidos"
+                        />
+                        <div class="input-group-btn">
+                          <button
+                            (click)="searchPeraConocimiento(5)"
+                            class="btn btn-sm btn-primary"
+                          >
+                            <i class="fa fa-search"></i>Filtrar
+                          </button>
+                        </div>
+                        <div
+                          *ngIf="submittedjefe && j.jefesearch.errors"
+                          class="invalid-feedback"
+                        >
+                          <div *ngIf="j.jefesearch.errors.required">
+                            Campo requerido
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <div class="form-group col-md-4">
+              <label for="medidico">Medico</label>
+              <select
+                id="medidico"
+                formControlName="medidico"
+                class="form-control form-control-sm"
+              >
+                <option value="">Seleccione...</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-4" style="display: none">
+              <label for="jfcode">code</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  formControlName="jfcode"
+                  [(ngModel)]="jfcodigo"
+                  class="form-control form-control-sm"
+                />
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="jfnombre">Nombre</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  formControlName="jfnombre"
+                  [(ngModel)]="jfnombre"
+                  class="form-control form-control-sm"
+                />
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="jfpaterno">Apellido Paterno </label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  formControlName="jfpaterno"
+                  [(ngModel)]="jfpaterno"
+                  class="form-control form-control-sm"
+                />
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="jfmaterno">Apellido Materno </label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  formControlName="jfmaterno"
+                  [(ngModel)]="jfmaterno"
+                  class="form-control form-control-sm"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-8">
+              <label class="pt-2 text-dark">Personal</label>
+              <form [formGroup]="searchpersonalForm">
+                <div class="row">
+                  <div class="form-group col-md-12">
+                    <div class="card-header-action">
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          formControlName="personasearch"
+                          [ngClass]="{
+                            'is-invalid':
+                              submittedpersonal && p.personasearch.errors
+                          }"
+                          class="form-control form-control-sm"
+                          placeholder="Apellidos"
+                        />
+                        <div class="input-group-btn">
+                          <button
+                            (click)="searchPeraConocimiento(1)"
+                            class="btn btn-sm btn-primary"
+                          >
+                            <i class="fa fa-search"></i>Filtrar
+                          </button>
+                        </div>
+                        <div
+                          *ngIf="submittedpersonal && p.personasearch.errors"
+                          class="invalid-feedback"
+                        >
+                          <div *ngIf="p.personasearch.errors.required">
+                            Campo requerido
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="form-group col-md-4">
+              <label class="pt-2 text-white">Personal</label>
+              <select
+                id="medico_admistrativo"
+                class="form-control form-control-sm"
+                [(ngModel)]="admistrativo"
+                formControlName="medico_admistrativo"
+              >
+                <option value="">Seleccione...</option>
+                <option value="1">Personal Administrativo</option>
+                <option value="2">Médicos</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-4" style="display: none">
+              <label for="pcode">code</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  formControlName="codpersonal"
+                  [(ngModel)]="tcodigo"
+                  class="form-control form-control-sm"
+                />
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="pnombre">Nombre</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  formControlName="pnombre"
+                  [(ngModel)]="tnombre"
+                  class="form-control form-control-sm"
+                />
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="ppaterno">Apellido Paterno </label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  formControlName="ppaterno"
+                  [(ngModel)]="tpaterno"
+                  class="form-control form-control-sm"
+                />
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="pmaterno">Apellido Materno </label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  formControlName="pmaterno"
+                  [(ngModel)]="tmaterno"
+                  class="form-control form-control-sm"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h5>Para Conocimiento 01</h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-12">
+              <form [formGroup]="searchconocimientoForm">
+                <div class="row mt-2">
+                  <div class="form-group col-md-12">
+                    <div class="card-header-action">
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          formControlName="conocimientotxt"
+                          [ngClass]="{
+                            'is-invalid':
+                              submittedconocimineto1 && c.conocimientotxt.errors
+                          }"
+                          class="form-control form-control-sm"
+                          placeholder="Apellidos"
+                        />
+                        <div class="input-group-btn">
+                          <button
+                            (click)="searchPeraConocimiento(2)"
+                            class="btn btn-sm btn-primary"
+                          >
+                            <i class="fa fa-search"></i>Filtrar
+                          </button>
+                        </div>
+                        <div
+                          *ngIf="
+                            submittedconocimineto1 && c.conocimientotxt.errors
+                          "
+                          class="invalid-feedback"
+                        >
+                          <div *ngIf="c.conocimientotxt.errors.required">
+                            Campo requerido
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-4" style="display: none">
+              <label for="codcono">code</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  formControlName="codcono"
+                  [(ngModel)]="ccodigo"
+                  class="form-control form-control-sm"
+                />
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="cnombre">Nombre</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  formControlName="cnombre"
+                  [(ngModel)]="cnombre"
+                  class="form-control form-control-sm"
+                />
+              </div>
+            </div>
+            <div class="form-group col-md-8">
+              <label for="cpaterno">Apellidos </label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  formControlName="cpaterno"
+                  [(ngModel)]="cpaterno"
+                  class="form-control form-control-sm"
+                />
+              </div>
+            </div>
+            <!--div class="form-group col-md-4">
+            <label for="cmaterno">Apellido Materno </label>
+            <div class="input-group">
+              <input
+                type="text"
+                formControlName="cmaterno"
+                [(ngModel)]="cmaterno"
+                class="form-control form-control-sm"
+              />
+            </div>
+          </div-->
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h5>Para Conocimiento 02</h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-12">
+              <form [formGroup]="searchconocimiento2Form">
+                <div class="row mt-2">
+                  <div class="form-group col-md-12">
+                    <div class="card-header-action">
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          formControlName="conocimientotxt2"
+                          [ngClass]="{
+                            'is-invalid':
+                              submittedconocimineto2 &&
+                              c2.conocimientotxt2.errors
+                          }"
+                          class="form-control form-control-sm"
+                          placeholder="Apellidos"
+                        />
+                        <div class="input-group-btn">
+                          <button
+                            (click)="searchPeraConocimiento(3)"
+                            class="btn btn-sm btn-primary"
+                          >
+                            <i class="fa fa-search"></i>Filtrar
+                          </button>
+                        </div>
+                        <div
+                          *ngIf="
+                            submittedconocimineto2 && c2.conocimientotxt2.errors
+                          "
+                          class="invalid-feedback"
+                        >
+                          <div *ngIf="c2.conocimientotxt2.errors.required">
+                            Campo requerido
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-4" style="display: none">
+              <label for="codcono2">code</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  formControlName="codcono2"
+                  [(ngModel)]="c2codigo"
+                  class="form-control form-control-sm"
+                />
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="c2nombre">Nombre</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  formControlName="c2nombre"
+                  [(ngModel)]="c2nombre"
+                  class="form-control form-control-sm"
+                />
+              </div>
+            </div>
+            <div class="form-group col-md-8">
+              <label for="c2paterno">Apellidos </label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  formControlName="c2paterno"
+                  [(ngModel)]="c2paterno"
+                  class="form-control form-control-sm"
+                />
+              </div>
+            </div>
+            <!--div class="form-group col-md-4">
+            <label for="c2materno">Apellido Materno </label>
+            <div class="input-group">
+              <input
+                type="text"
+                formControlName="c2materno"
+                [(ngModel)]="c2materno"
+                class="form-control form-control-sm"
+              />
+            </div>
+          </div-->
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h5>Para Conocimiento 03</h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-12">
+              <form [formGroup]="searchconocimiento3Form">
+                <div class="row mt-2">
+                  <div class="form-group col-md-12">
+                    <div class="card-header-action">
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          formControlName="conocimientotxt3"
+                          [ngClass]="{
+                            'is-invalid':
+                              submittedconocimineto3 &&
+                              c3.conocimientotxt3.errors
+                          }"
+                          class="form-control form-control-sm"
+                          placeholder="Apellidos"
+                        />
+                        <div class="input-group-btn">
+                          <button
+                            (click)="searchPeraConocimiento(4)"
+                            class="btn btn-sm btn-primary"
+                          >
+                            <i class="fa fa-search"></i>Filtrar
+                          </button>
+                        </div>
+                        <div
+                          *ngIf="
+                            submittedconocimineto3 && c3.conocimientotxt3.errors
+                          "
+                          class="invalid-feedback"
+                        >
+                          <div *ngIf="c3.conocimientotxt3.errors.required">
+                            Campo requerido
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-4" style="display: none">
+              <label for="codcono3">code</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  formControlName="codcono3"
+                  [(ngModel)]="c3codigo"
+                  class="form-control form-control-sm"
+                />
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="c3nombre">Nombre</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  formControlName="c3nombre"
+                  [(ngModel)]="c3nombre"
+                  class="form-control form-control-sm"
+                />
+              </div>
+            </div>
+            <div class="form-group col-md-8">
+              <label for="c3paterno">Apellido Paterno </label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  formControlName="c3paterno"
+                  [(ngModel)]="c3paterno"
+                  class="form-control form-control-sm"
+                />
+              </div>
+            </div>
+            <!--div class="form-group col-md-4">
+            <label for="c3materno">Apellido Materno </label>
+            <div class="input-group">
+              <input
+                type="text"
+                formControlName="c3materno"
+                [(ngModel)]="c3materno"
+                class="form-control form-control-sm"
+              />
+            </div>
+          </div-->
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="modal-footer">
+  <button
+    type="button"
+    (click)="updateParaConocimiento()"
+    class="btn btn-primary"
+  >
+    <i class="fa fa-save"></i> Guardar
+  </button>
+  <button
+    type="button"
+    class="btn btn-outline-dark"
+    (click)="activeModal.close('Close click')"
+  >
+    <i class="fa fa-minus-circle"></i> Cancelar
+  </button>
+</div>

@@ -1,0 +1,74 @@
+<div class="main-wrapper">
+  <div class="limiter">
+    <div
+      class="container-login100"
+      style="background-image: url('../../../assets/images/banner01.png')"
+    >
+      <!--style="background-image: url('./assets/images/img-01.png')"-->
+      <div
+        class="wrap-login100 pt-5 pb-5"
+        style="
+          background-color: rgba(133, 131, 131, 0.741);
+          border-radius: 25px;
+        "
+      >
+        <form
+          [formGroup]="loginForm"
+          (ngSubmit)="onSubmit()"
+          class="login100-form validate-form"
+        >
+          <div class="login100-form-avatar">
+            <img src="./assets/images/inconadmin.png" alt="" />
+          </div>
+
+          <span class="login100-form-title pt-5 pb-5"> Aplicaciones Web </span>
+
+          <div class="form-group wrap-input100 mb-2">
+            <input
+              class="form-control input100"
+              type="text"
+              name="username"
+              formControlName="username"
+              [ngClass]="{ 'is-invalid': submitted && f.username.errors }"
+              placeholder="Usuario"
+            />
+            <div
+              *ngIf="submitted && f.username.errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f.username.errors.required">Usuario requerido</div>
+            </div>
+            <span class="focus-input100"></span>
+            <span class="symbol-input100">
+              <i class="fa fa-user"></i>
+            </span>
+          </div>
+
+          <div class="wrap-input100 form-group">
+            <input
+              class="form-control input100"
+              type="password"
+              formControlName="password"
+              [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
+              placeholder="Contraseña"
+            />
+            <div
+              *ngIf="submitted && f.password.errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f.password.errors.required">Contraseña requerida</div>
+            </div>
+            <span class="focus-input100"></span>
+            <span class="symbol-input100">
+              <i class="fa fa-lock"></i>
+            </span>
+          </div>
+
+          <div class="container-login100-form-btn pt-2">
+            <button type="submit" class="login100-form-btn">Ingresar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

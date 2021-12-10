@@ -1,0 +1,1701 @@
+<div class="card main-card mb-3 mt-2">
+  <div class="card-body">
+    <ngb-tabset>
+      <ngb-tab title="Información Paciente">
+        <ng-template ngbTabContent>
+          <fieldset>
+            <legend>Paciente</legend>
+            <!--SEARCH-->
+            <form [formGroup]="seachForm">
+              <div class="row">
+                <div class="form-group col-md-4">
+                  <select
+                    id="inputState"
+                    class="form-control form-select form-control-sm"
+                    formControlName="searchtipo"
+                    [ngClass]="{
+                      'is-invalid': submitted && f.searchtipo.errors
+                    }"
+                  >
+                    <option value="" selected="">Seleccione...</option>
+                    <option value="1">APELLIDOS</option>
+                    <option value="2">DNI/RUC</option>
+                  </select>
+                  <div
+                    *ngIf="submitted && f.searchtipo.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.searchtipo.errors.required">
+                      Campo requerido
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-8">
+                  <div class="card-header-action">
+                    <div class="input-group">
+                      <input
+                        type="text"
+                        formControlName="txtsearch"
+                        [ngClass]="{
+                          'is-invalid': submitted && f.txtsearch.errors
+                        }"
+                        class="form-control form-control-sm"
+                        placeholder=""
+                      />
+                      <div class="input-group-btn">
+                        <button (click)="open()" class="btn btn-sm btn-primary">
+                          <i class="fa fa-search"></i>Filtrar
+                        </button>
+                      </div>
+                      <div
+                        *ngIf="submitted && f.txtsearch.errors"
+                        class="invalid-feedback"
+                      >
+                        <div *ngIf="f.txtsearch.errors.required">
+                          campo requerido
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <hr />
+            <!--END SEARCH-->
+            <!--START FORMS PACIENTE-->
+            <form [formGroup]="pacienteForm">
+              <div class="row">
+                <div class="form-group col-md-4">
+                  <label for="nombre"
+                    >Nombre <span class="text-danger">*</span></label
+                  >
+                  <input
+                    type="text"
+                    formControlName="nombre"
+                    [ngModel]="detailpaciente[0]?.Nombres"
+                    [ngClass]="{
+                      'is-invalid': submittedpatient && g.nombre.errors
+                    }"
+                    class="form-control form-control-sm"
+                    id="nombre"
+                  />
+                  <div
+                    *ngIf="submitted && g.nombre.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="g.nombre.errors.required">Nombre requerido</div>
+                  </div>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="paterno"
+                    >Apellido Paterno <span class="text-danger">*</span></label
+                  >
+                  <input
+                    type="text"
+                    formControlName="paterno"
+                    [ngModel]="detailpaciente[0]?.ApellidoPaterno"
+                    [ngClass]="{
+                      'is-invalid': submittedpatient && g.paterno.errors
+                    }"
+                    class="form-control form-control-sm"
+                    id="paterno"
+                  />
+                  <div
+                    *ngIf="submitted && g.paterno.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="g.paterno.errors.required">
+                      Apellido paterno requerido
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="materno"
+                    >Apellidos Materno <span class="text-danger">*</span></label
+                  >
+                  <input
+                    type="text"
+                    formControlName="materno"
+                    [ngModel]="detailpaciente[0]?.ApellidoMaterno"
+                    [ngClass]="{
+                      'is-invalid': submittedpatient && g.materno.errors
+                    }"
+                    class="form-control form-control-sm"
+                    id="materno"
+                  />
+                  <div
+                    *ngIf="submitted && g.materno.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="g.materno.errors.required">
+                      Apellido materno requerido
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-4">
+                  <label for="historia"
+                    >Historia Clínica <span class="text-danger">*</span></label
+                  >
+                  <input
+                    type="number"
+                    formControlName="historia"
+                    [ngModel]="detailpaciente[0]?.hclinica"
+                    [ngClass]="{
+                      'is-invalid': submittedpatient && g.historia.errors
+                    }"
+                    class="form-control form-control-sm"
+                    id="historia"
+                  />
+                  <div
+                    *ngIf="submitted && g.historia.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="g.historia.errors.required">
+                      Campo requerido
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="telefono"
+                    >Teléfono<span class="text-danger">*</span></label
+                  >
+                  <input
+                    type="number"
+                    formControlName="telefono"
+                    [ngModel]="detailpaciente[0]?.Telefono"
+                    [ngClass]="{
+                      'is-invalid': submittedpatient && g.telefono.errors
+                    }"
+                    (keypress)="onKeypressEvent($event)"
+                    class="form-control form-control-sm"
+                    id="telefono"
+                  />
+                  <div
+                    *ngIf="submitted && g.telefono.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="g.telefono.errors.required">
+                      Campo requerido
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="correo">Correo </label>
+                  <input
+                    type="email"
+                    formControlName="correo"
+                    [ngModel]="detailpaciente[0]?.CorreoElectronico"
+                    class="form-control form-control-sm"
+                    id="correo"
+                  />
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-4">
+                  <label for="tipodoc"
+                    >Tipo Documento <span class="text-danger">*</span></label
+                  >
+
+                  <select
+                    id="tipodoc"
+                    class="form-control form-select form-control-sm"
+                    formControlName="tipodoc"
+                    (change)="shownameRazonSocial($event, 1)"
+                    [ngClass]="{
+                      'is-invalid': submittedpatient && g.tipodoc.errors
+                    }"
+                  >
+                    <option value="">Seleccione...</option>
+                    <option
+                      *ngFor="let item of listtypedocument"
+                      value="{{ item.id_tipo_documento }}"
+                    >
+                      {{ item.v_descripcion }}
+                    </option>
+                  </select>
+                  <div
+                    *ngIf="submitted && g.tipodoc.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="g.tipodoc.errors.required">Campo requerido</div>
+                  </div>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="numreodoc"
+                    >Nro. Documento <span class="text-danger">*</span></label
+                  >
+                  <input
+                    type="text"
+                    formControlName="numreodoc"
+                    [ngModel]="detailpaciente[0]?.Documento"
+                    [ngClass]="{
+                      'is-invalid': submittedpatient && g.numreodoc.errors
+                    }"
+                    class="form-control form-control-sm"
+                    id="numreodoc"
+                  />
+                  <div
+                    *ngIf="submitted && g.numreodoc.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="g.numreodoc.errors.required">
+                      Campo requerido
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="fecha_nacimiento">Fecha Nacimiento</label>
+                  <input
+                    type="date"
+                    class="form-control form-control-sm"
+                    formControlName="fecha_nacimiento"
+                    [ngModel]="detailpaciente[0]?.FechaNacimiento"
+                  />
+                </div>
+              </div>
+              <div class="row">
+                <div
+                  class="form-group col-md-4"
+                  *ngIf="showrazonsocialpaciente"
+                >
+                  <label for="razonsocial">Razón Social</label>
+                  <input
+                    type="text"
+                    formControlName="razonsocial"
+                    class="form-control form-control-sm"
+                    id="razonsocial"
+                  />
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-4">
+                  <label for="sexo">Sexo</label>
+                  <select
+                    id="sexo"
+                    class="form-control form-control-sm"
+                    formControlName="sexo"
+                    [ngModel]="detailpaciente[0]?.Sexo"
+                  >
+                    <option value="">Seleccione...</option>
+                    <option value="M">Masculino</option>
+                    <option value="F">Femenino</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-8">
+                  <label for="domicilio">Domicilio</label>
+                  <input
+                    type="text"
+                    formControlName="domicilio"
+                    [ngModel]="detailpaciente[0]?.Direccion"
+                    class="form-control form-control-sm"
+                    id="domicilio"
+                  />
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-4">
+                  <label for="departamento">Departamento</label>
+                  <select
+                    id="departamento"
+                    (change)="changeDepartamento($event)"
+                    class="form-control form-control-sm"
+                    formControlName="departamento"
+                  >
+                    <option value="">Seleccione...</option>
+                    <option
+                      *ngFor="let item of listdepartamentos"
+                      value="{{ item.Departamento }}"
+                    >
+                      {{ item.DescripcionCorta }}
+                    </option>
+                  </select>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="privincia">Provincia</label>
+                  <select
+                    id="privincia"
+                    (change)="changeProvincia($event)"
+                    class="form-control form-control-sm"
+                    formControlName="privincia"
+                  >
+                    <option value="">Seleccione...</option>
+                    <option
+                      *ngFor="let item of listprovincias"
+                      value="{{ item.Provincia }}"
+                    >
+                      {{ item.DescripcionCorta }}
+                    </option>
+                  </select>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="distrito">Distrito</label>
+                  <select
+                    id="distrito"
+                    class="form-control form-control-sm"
+                    formControlName="distrito"
+                  >
+                    <option value="">Seleccione...</option>
+                    <option
+                      *ngFor="let item of listdistritos"
+                      value="{{ item.CodigoPostal }}"
+                    >
+                      {{ item.DescripcionCorta }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-4">
+                  <label for="tipo_paciente"
+                    >Tipo de Paciente <span class="text-danger">*</span></label
+                  >
+                  <select
+                    id="tipo_paciente"
+                    class="form-control form-select form-control-sm"
+                    formControlName="tipo_paciente"
+                    [ngClass]="{
+                      'is-invalid': submittedpatient && g.tipo_paciente.errors
+                    }"
+                    (change)="showEmpresas($event)"
+                  >
+                    <option value="">Seleccione...</option>
+                    <option
+                      *ngFor="let item of listtypepatients"
+                      value="{{ item.idCodigo }}"
+                    >
+                      {{ item.Nombre }}
+                    </option>
+                  </select>
+                  <div
+                    *ngIf="submitted && g.tipo_paciente.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="g.tipo_paciente.errors.required">
+                      Campo requerido
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-4" *ngIf="showplansalud">
+                  <label for="plan_salud">Plan Salud</label>
+                  <select
+                    id="plan_salud"
+                    class="form-control form-select form-control-sm"
+                    formControlName="plan_salud"
+                  >
+                    <option value="">Seleccione...</option>
+                    <option
+                      value="{{ item.idTipoPrograma }}"
+                      *ngFor="let item of listplansalud"
+                    >
+                      {{ item.Descripcion }}
+                    </option>
+                  </select>
+                </div>
+                <div class="form-group col-md-4" *ngIf="showregiment">
+                  <label for="regimen">Regimen</label>
+                  <select
+                    id="regimen"
+                    class="form-control form-select form-control-sm"
+                    (change)="onChangeRegmin($event)"
+                    formControlName="regimen"
+                  >
+                    <option value="">Seleccione...</option>
+                    <option value="1">Régimen Subsidiario</option>
+                    <option value="2">Régimen Semicontributivo</option>
+                    <option value="3">Régimen Contributivo</option>
+                    <option value="4" [selected]="4">No asegurado</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-4" *ngIf="showsegurosconvenios">
+                  <label for="convenios">Convenios</label>
+                  <!--ng-select
+                        (change)="changeConveniosSeguros($event)"
+                        formControlName="convenios"
+                      >
+                        <ng-option value=""
+                          >Seleccione seguros/Seleccione Empresa</ng-option
+                        >
+                        <ng-option
+                          *ngFor="let item of listconveniosseguro"
+                          [value]="item.PERSONA"
+                          >{{ item.NOMBRECOMPLETO }}</ng-option
+                        >
+                      </ng-select-->
+                  <!--SEARCH-->
+
+                  <div class="row">
+                    <div class="form-group col-md-12" style="display: none">
+                      <div class="card-header-action">
+                        <div class="input-group">
+                          <input
+                            type="text"
+                            formControlName="convenios"
+                            [(ngModel)]="codruc"
+                            class="form-control form-control-sm"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group col-md-12">
+                      <div class="card-header-action">
+                        <div class="input-group">
+                          <input
+                            type="text"
+                            formControlName="conveniosname"
+                            [(ngModel)]="namerucvoncenios"
+                            class="form-control form-control-sm"
+                          />
+                          <div class="input-group-btn">
+                            <button
+                              (click)="showConveniosModal(codigotipopaciente)"
+                              class="btn btn-sm btn-primary"
+                            >
+                              <i class="fa fa-search"></i>Mostrar Listado
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-4" *ngIf="showafiliado">
+                  <label for="codigo_afiliado">Código de Afiliado</label>
+                  <input
+                    type="text"
+                    formControlName="codigo_afiliado"
+                    class="form-control form-control-sm"
+                    id="codigo_afiliado"
+                  />
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-4">
+                  <label for="ruc">RUC Empresa</label>
+                  <input
+                    type="text"
+                    formControlName="ruc"
+                    [(ngModel)]="rucconveios"
+                    class="form-control form-control-sm"
+                    id="ruc"
+                  />
+                </div>
+                <div class="form-group col-md-4">
+                  <button
+                    type="button"
+                    (click)="openRuc()"
+                    class="btn btn-pill btn-sm btn-info"
+                    style="margin-top: 25px"
+                  >
+                    Buscar Ruc
+                  </button>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-4">
+                  <label for="tipo_aseg">Tipo de Aseg IAFAS</label>
+                  <select
+                    id="tipo_aseg"
+                    class="form-control form-select form-control-sm"
+                    formControlName="tipo_aseg"
+                  >
+                    <option value="">Seleccione...</option>
+                    <option
+                      *ngFor="let segu of listtypeseguro"
+                      value="{{ segu.id_tipo_asegura }}"
+                    >
+                      {{ segu.v_descripcion }}
+                    </option>
+                  </select>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="vinculo">Vinculo</label>
+                  <select
+                    id="vinculo"
+                    class="form-control form-select form-control-sm"
+                    formControlName="vinculo"
+                  >
+                    <option value="">Seleccione...</option>
+                    <option
+                      *ngFor="let item of listviculos"
+                      value="{{ item.id_vinculo_laboral }}"
+                    >
+                      {{ item.v_descripcion }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </form>
+            <!--END FORMS PACIENTE-->
+          </fieldset>
+          <!--REPRESENTANTE-->
+          <fieldset>
+            <legend class="legendrepre">
+              <div class="col-12">
+                <div
+                  class="custom-checkbox custom-control custom-control-inline"
+                >
+                  <input
+                    type="checkbox"
+                    (change)="onChangeShowRepresentante($event)"
+                    id="repre"
+                    class="custom-control-input"
+                  />
+                  <label for="repre" class="custom-control-label"
+                    >Representante que deja el reclamo</label
+                  >
+                </div>
+              </div>
+            </legend>
+            <form [formGroup]="parentescoForm" *ngIf="showparent">
+              <div class="row">
+                <div class="form-group col-md-4">
+                  <label for="repretipodoc">Tipo Documento </label>
+                  <select
+                    id="repretipodoc"
+                    (change)="shownameRazonSocial($event, 2)"
+                    class="form-control form-select form-control-sm"
+                    formControlName="repretipodoc"
+                  >
+                    <option value="">Seleccione...</option>
+                    <option
+                      *ngFor="let item of listtypedocument"
+                      value="{{ item.id_tipo_documento }}"
+                    >
+                      {{ item.v_descripcion }}
+                    </option>
+                  </select>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="reprenumreodoc">Nro. Documento </label>
+                  <input
+                    type="text"
+                    formControlName="reprenumreodoc"
+                    class="form-control form-control-sm"
+                    id="reprenumreodoc"
+                  />
+                </div>
+                <div
+                  class="form-group col-md-4"
+                  *ngIf="showrazonsocialrepresentante"
+                >
+                  <label for="razonsocialrepre">Razón Social</label>
+                  <input
+                    type="text"
+                    formControlName="razonsocialrepre"
+                    class="form-control form-control-sm"
+                    id="razonsocialrepre"
+                  />
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-4">
+                  <label for="parentesco">Parentesco</label>
+                  <select
+                    id="parentesco"
+                    class="form-control form-select form-control-sm"
+                    formControlName="parentesco"
+                  >
+                    <option value="">Seleccione...</option>
+                    <option
+                      *ngFor="let item of listparentesco"
+                      value="{{ item.id_parentesco }}"
+                    >
+                      {{ item.v_descripcion }}
+                    </option>
+                    <option>..</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="reprenombre">Nombre</label>
+                  <input
+                    type="text"
+                    class="form-control form-control-sm"
+                    formControlName="reprenombre"
+                    id="reprenombre"
+                  />
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="reprepaterno">Apellido Paterno</label>
+                  <input
+                    type="text"
+                    class="form-control form-control-sm"
+                    formControlName="reprepaterno"
+                    id="reprepaterno"
+                  />
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-4">
+                  <label for="reprematerno">Apellido Materno</label>
+                  <input
+                    type="text"
+                    class="form-control form-control-sm"
+                    formControlName="reprematerno"
+                    id="reprematerno"
+                  />
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="repretelefono">Teléfono</label>
+                  <input
+                    type="text"
+                    class="form-control form-control-sm"
+                    formControlName="repretelefono"
+                    id="repretelefono"
+                  />
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="repremail">Correo</label>
+                  <input
+                    type="text"
+                    class="form-control form-control-sm"
+                    formControlName="repremail"
+                    id="repremail"
+                  />
+                </div>
+              </div>
+            </form>
+          </fieldset>
+          <!--END REPRESENTANTE-->
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab title="Descripción Detalle">
+        <ng-template ngbTabContent>
+          <form [formGroup]="detailForm">
+            <div class="row">
+              <div class="col-md-6">
+                <fieldset>
+                  <legend class="legendrepre">Fecha del Evento</legend>
+                  <div class="row">
+                    <div class="form-group col-md-6">
+                      <div class="input-group">
+                        <input
+                          type="date"
+                          class="form-control form-control-sm"
+                          placeholder="yyyy-mm-dd"
+                          formControlName="fechaevento"
+                        />
+                      </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                      <input
+                        type="time"
+                        formControlName="horarenvento"
+                        class="form-control form-control-sm"
+                        id="horarenvento"
+                      />
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+              <div class="col-md-6">
+                <fieldset>
+                  <legend class="legendrepre">Clasificación</legend>
+                  <div class="form-group col-md-6">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="radio"
+                            formControlName="administrativo"
+                            name="administrativo"
+                            value="1"
+                            id="gridRadios2c"
+                          />
+                          <label class="form-check-label" for="gridRadios2c">
+                            Administrativo
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="radio"
+                            formControlName="administrativo"
+                            name="administrativo"
+                            value="2"
+                            id="gridRadios3c"
+                          />
+                          <label class="form-check-label" for="gridRadios3c">
+                            Asistencial
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <fieldset>
+                  <legend class="legendrepre">Fecha del Reclamo</legend>
+                  <div class="row">
+                    <div class="form-group col-md-6">
+                      <div class="input-group">
+                        <input
+                          type="date"
+                          class="form-control form-control-sm"
+                          placeholder="yyyy-mm-dd"
+                          formControlName="fechareclamo"
+                        />
+                      </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                      <input
+                        type="time"
+                        formControlName="horareclamo"
+                        class="form-control form-control-sm"
+                        id="horareclamo"
+                      />
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+              <div class="col-md-6">
+                <fieldset>
+                  <legend class="legendservicio">
+                    Producto o Servicio Contratado
+                  </legend>
+                  <div class="form-group col-md-6">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="radio"
+                            formControlName="productoservicio"
+                            name="productoservicio"
+                            value="1"
+                            id="gridRadiosp2"
+                          />
+                          <label class="form-check-label" for="gridRadiosp2">
+                            Producto
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="radio"
+                            formControlName="productoservicio"
+                            name="productoservicio"
+                            value="2"
+                            id="gridRadiosp3"
+                          />
+                          <label class="form-check-label" for="gridRadiosp3">
+                            Servicio
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <fieldset>
+                  <legend class="legendrepre">Archivos</legend>
+                  <div class="panel panel-default">
+                    <div class="panel-body">
+                      <div class="row">
+                        <div class="col-12">
+                          <p class="float-left txtSize">
+                            Seleccione la cantidad de archivos a subir (Máximo
+                            Tamaño Permitido 5MB):
+                          </p>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-6 form-group mt-2 texto">
+                          <label class="label-1" for="file"
+                            ><img
+                              src="./assets/images/fileimg.png"
+                              width="300"
+                              alt=""
+                          /></label>
+                          <input
+                            id="file"
+                            type="file"
+                            multiple="multiple"
+                            formControlName="file"
+                            class="form-control"
+                            (change)="onFileChange($event)"
+                          />
+                        </div>
+                        <div class="col-6 div-r">
+                          <ul class="ul-u">
+                            <li
+                              class="li-u"
+                              *ngFor="let item of archivos; let index = index"
+                            >
+                              <div class="collapsible-header">
+                                {{ item.name }}
+                                <i
+                                  style="font-size: 15px"
+                                  (click)="removeSelectedFile(index)"
+                                  class="fa fa-trash"
+                                ></i>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                      <div class="row"></div>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-3">
+                <label for="sede">Sede</label>
+                <select
+                  id="sede"
+                  [ngModel]="idsurcursal"
+                  class="form-control form-select form-control-sm"
+                  formControlName="sede"
+                >
+                  <option value="">Seleccione...</option>
+                  <option *ngFor="let sede of listsedes" [value]="sede.id_sede">
+                    {{ sede.n_descripcion }}
+                  </option>
+                </select>
+              </div>
+              <div class="form-group col-md-3">
+                <label for="modorecepcion">Modo Recepción</label>
+                <select
+                  id="modorecepcion"
+                  class="form-control form-select form-control-sm"
+                  (change)="onChangeModoRecepcion($event)"
+                  formControlName="modorecepcion"
+                >
+                  <option value="">Seleccione...</option>
+                  <option
+                    *ngFor="let recep of listrecepcions"
+                    value="{{ recep.id_modorecepcion_v2 }}"
+                  >
+                    {{ recep.v_descripcion }}
+                  </option>
+                </select>
+              </div>
+              <div class="form-group col-md-3">
+                <label for="estado">Estado</label>
+                <select
+                  id="estado"
+                  [(ngModel)]="tramite"
+                  (change)="onChangeEstado($event)"
+                  formControlName="estado"
+                  class="form-control form-select form-control-sm"
+                >
+                  <option value="">Seleccione...</option>
+                  <option
+                    *ngFor="let item of listestadotramites"
+                    value="{{ item.id_estado }}"
+                  >
+                    {{ item.v_decripcion }}
+                  </option>
+                </select>
+              </div>
+              <div class="form-group col-md-3" *ngIf="showcodigoweb">
+                <label for="codigoweb">Código Web</label>
+                <input
+                  type="text"
+                  formControlName="codigoweb"
+                  class="form-control form-control-sm"
+                  id="codigoweb"
+                />
+              </div>
+            </div>
+            <div class="row"></div>
+            <div class="row mt-2">
+              <div class="form-group col-md-12">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    formControlName="usuario_autoriza"
+                    [ngClass]="{
+                      'is-invalid': submitteddetail && h.usuario_autoriza.errors
+                    }"
+                    id="flexCheckDefault"
+                  />
+                  <label class="form-check-label" for="flexCheckDefault">
+                    Usuario autoriza que resultado del reclamo se notifique al
+                    correo registrado
+                  </label>
+                  <div
+                    *ngIf="submitteddetail && h.usuario_autoriza.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="h.usuario_autoriza.errors.required">
+                      Campo requerido
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="form-group col-md-12">
+                <label>Descripción del Reclamo</label>
+                <textarea
+                  class="form-control"
+                  formControlName="descripcion_reclamo"
+                  rows="15"
+                ></textarea>
+                <!--label
+                       [(ngModel)]="descrpreclamo"
+                      [maxlength]="maxChars"
+                      class="nopadding clrlbl"
+                      [ngStyle]="{ 'background-color': txtcolor }"
+                    >
+                      Restan {{ maxChars - descrpreclamo.length }} caracteres de
+                      {{ maxChars }}
+                    </label-->
+              </div>
+            </div>
+          </form>
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab title="Causa">
+        <ng-template ngbTabContent>
+          <form [formGroup]="causaForm">
+            <div class="row">
+              <div class="col-md-12">
+                <fieldset>
+                  <legend class="legendrepre">Motivo de Reclamo 1</legend>
+                  <div class="row">
+                    <div class="form-group col-md-4">
+                      <label for="derechosalud">Derechos en Salud</label>
+                      <select
+                        id="derechosalud"
+                        class="form-control form-select form-control-sm"
+                        (change)="onChangeCausas($event)"
+                        formControlName="derechosalud"
+                      >
+                        <option value="">Seleccione...</option>
+                        <option
+                          *ngFor="let item of listgarantias"
+                          value="{{ item.id_garantia }}"
+                        >
+                          {{ item.v_descripcion }}
+                        </option>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-8">
+                      <label for="causaespecifica">Causa Específica</label>
+                      <select
+                        id="causaespecifica"
+                        class="form-control form-select form-control-sm"
+                        formControlName="causaespecifica"
+                        (change)="onChangeCausasDetail(1, $event)"
+                      >
+                        <option value="">Seleccione...</option>
+                        <option
+                          *ngFor="let item of listcuasasespeciales"
+                          value="{{ item.id_int }}"
+                        >
+                          {{ item.v_descripccion }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+              <div class="col-md-12">
+                <fieldset>
+                  <legend class="legendrepre">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        (change)="onChangeShowCausas(2, $event)"
+                        type="checkbox"
+                        id="gridCheckr"
+                      />
+                      <label for="gridCheckr" class="form-check-label">
+                        Motivo de Reclamo 2
+                      </label>
+                    </div>
+                  </legend>
+                  <div class="row" *ngIf="showcausa2">
+                    <div class="form-group col-md-4">
+                      <label for="derechosalud1">Derechos en Salud</label>
+                      <select
+                        id="derechosalud1"
+                        formControlName="derechosalud1"
+                        (change)="onChangeCausas2($event)"
+                        class="form-control form-select form-control-sm"
+                      >
+                        <option value="">Seleccione...</option>
+                        <option
+                          *ngFor="let item of listgarantias"
+                          value="{{ item.id_garantia }}"
+                        >
+                          {{ item.v_descripcion }}
+                        </option>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-8">
+                      <label for="causaespecifica1">Causa Específica</label>
+                      <select
+                        id="causaespecifica1"
+                        formControlName="causaespecifica1"
+                        class="form-control form-select form-control-sm"
+                        (change)="onChangeCausasDetail(2, $event)"
+                      >
+                        <option value="">Seleccione...</option>
+                        <option
+                          *ngFor="let item of listcuasasespeciales2"
+                          value="{{ item.id_int }}"
+                        >
+                          {{ item.v_descripccion }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+              <div class="col-md-12">
+                <fieldset>
+                  <legend class="legendrepre">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        (change)="onChangeShowCausas(3, $event)"
+                        type="checkbox"
+                        id="gridCheckr2"
+                      />
+                      <label for="gridCheckr2" class="form-check-label">
+                        Motivo de Reclamo 3
+                      </label>
+                    </div>
+                  </legend>
+                  <div class="row" *ngIf="showcausa3">
+                    <div class="form-group col-md-4">
+                      <label for="derechosalud2">Derechos en Salud</label>
+                      <select
+                        id="derechosalud2"
+                        formControlName="derechosalud2"
+                        (change)="onChangeCausas3($event)"
+                        class="form-control form-select form-control-sm"
+                      >
+                        <option value="">Seleccione...</option>
+                        <option
+                          *ngFor="let item of listgarantias"
+                          value="{{ item.id_garantia }}"
+                        >
+                          {{ item.v_descripcion }}
+                        </option>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-8">
+                      <label for="causaespecifica2">Causa Específica</label>
+                      <select
+                        id="causaespecifica2"
+                        formControlName="causaespecifica2"
+                        (change)="onChangeCausasDetail(3, $event)"
+                        class="form-control form-select form-control-sm"
+                      >
+                        <option value="">Seleccione...</option>
+                        <option
+                          *ngFor="let item of listcuasasespeciales3"
+                          value="{{ item.id_int }}"
+                        >
+                          {{ item.v_descripccion }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-4">
+                <label for="monto">Monto S/.</label>
+                <input
+                  type="number"
+                  formControlName="monto"
+                  class="form-control form-control-sm"
+                  id="monto"
+                />
+              </div>
+            </div>
+          </form>
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab title="Involucrados">
+        <ng-template ngbTabContent>
+          <form [formGroup]="involucradoForm">
+            <div class="row">
+              <div class="form-group col-md-4">
+                <label for="servicio_efectuado"
+                  >Servicio Efectuado <span class="text-danger">*</span>
+                </label>
+                <select
+                  id="servicio_efectuado"
+                  class="form-control form-select form-control-sm"
+                  [ngClass]="{
+                    'is-invalid':
+                      submittedinvolucradoservicio &&
+                      s.servicio_efectuado.errors
+                  }"
+                  formControlName="servicio_efectuado"
+                >
+                  <option value="">Seleccione...</option>
+                  <option
+                    *ngFor="let item of listservicios"
+                    value="{{ item.id }}"
+                  >
+                    {{ item.name }}
+                  </option>
+                </select>
+                <div
+                  *ngIf="
+                    submittedinvolucradoservicio && s.servicio_efectuado.errors
+                  "
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="s.servicio_efectuado.errors.required">
+                    Campo requerido
+                  </div>
+                </div>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="area">Area</label>
+                <select
+                  id="area"
+                  class="form-control form-select form-control-sm"
+                  (change)="onChangeAreaName($event)"
+                  formControlName="area"
+                >
+                  <option value="">Seleccione...</option>
+                  <option
+                    *ngFor="let item of listareas"
+                    value="{{ item.Departamento }}"
+                  >
+                    {{ item.Descripcion }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <fieldset class="mt-2">
+              <legend class="legendrepre">Personal Involucrado</legend>
+              <div class="form-group col-md-6">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        name="involucrado"
+                        type="radio"
+                        id="gridRadios1"
+                        value="1"
+                        formControlName="involucrado"
+                      />
+                      <label class="form-check-label" for="gridRadios1">
+                        Personal Administrativo
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="involucrado"
+                        value="2"
+                        formControlName="involucrado"
+                        id="gridRadios2"
+                      />
+                      <label class="form-check-label" for="gridRadios2">
+                        Médicos
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--SEARCH-->
+              <form [formGroup]="seachInvolucradoForm">
+                <div class="row mt-2">
+                  <div class="form-group col-md-8">
+                    <div class="card-header-action">
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          class="form-control form-control-sm"
+                          formControlName="txtinvolucrado"
+                          [ngClass]="{
+                            'is-invalid':
+                              submittedinvolucrado && i.txtinvolucrado.errors
+                          }"
+                          placeholder="Apellidos"
+                        />
+                        <div class="input-group-btn">
+                          <button
+                            (click)="searchPersonalInvolucrado()"
+                            class="btn btn-sm btn-primary"
+                          >
+                            <i class="fa fa-search"></i>Filtrar
+                          </button>
+                        </div>
+                        <div
+                          *ngIf="
+                            submittedinvolucrado && i.txtinvolucrado.errors
+                          "
+                          class="invalid-feedback"
+                        >
+                          <div *ngIf="i.txtinvolucrado.errors.required">
+                            Campo requerido
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+              <hr />
+              <div class="row">
+                <div class="form-group col-md-4" style="display: none">
+                  <input
+                    type="text"
+                    formControlName="codinvolucrado"
+                    [ngModel]="listpersonal[0]?.Persona"
+                    class="form-control form-control-sm"
+                    id="codinvolucrado"
+                  />
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="shnombre">Nombre</label>
+                  <input
+                    type="text"
+                    formControlName="shnombre"
+                    [ngModel]="listpersonal[0]?.Nombres"
+                    class="form-control form-control-sm"
+                    id="shnombre"
+                  />
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="shpaterno">Apellido Paterno</label>
+                  <input
+                    type="text"
+                    formControlName="shpaterno"
+                    [ngModel]="listpersonal[0]?.Paterno"
+                    class="form-control form-control-sm"
+                    id="shpaterno"
+                  />
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="shmaterno">Apellidos Materno</label>
+                  <input
+                    type="text"
+                    formControlName="shmaterno"
+                    [ngModel]="listpersonal[0]?.Materno"
+                    class="form-control form-control-sm"
+                    id="shmaterno"
+                  />
+                </div>
+              </div>
+              <!--END SEARCH-->
+            </fieldset>
+            <fieldset class="mt-2">
+              <legend class="legendrepre">Nombre del jefe de área</legend>
+              <div class="row">
+                <div class="form-group col-md-4" style="display: none">
+                  <input
+                    type="text"
+                    formControlName="codjefe"
+                    [ngModel]="listjefe[0]?.idSuperior"
+                    class="form-control form-control-sm"
+                    id="codjefe"
+                  />
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="jefenombre">Nombre</label>
+                  <input
+                    type="text"
+                    formControlName="jefenombre"
+                    [ngModel]="listjefe[0]?.SuperiorNombre"
+                    class="form-control form-control-sm"
+                    id="jefenombre"
+                  />
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="jefepaterno">Apellido Paterno</label>
+                  <input
+                    type="text"
+                    formControlName="jefepaterno"
+                    [ngModel]="listjefe[0]?.SuperiorApellidoPaterno"
+                    class="form-control form-control-sm"
+                    id="jefepaterno"
+                  />
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="jefematerno">Apellidos Materno</label>
+                  <input
+                    type="text"
+                    formControlName="jefematerno"
+                    [ngModel]="listjefe[0]?.SuperiorApellidoMaterno"
+                    class="form-control form-control-sm"
+                    id="jefematerno"
+                  />
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-4">
+                  <label for="jefecorreo">Correo</label>
+                  <input
+                    type="text"
+                    formControlName="jefecorreo"
+                    class="form-control form-control-sm"
+                    id="jefecorreo"
+                  />
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab title="Acciones Tomadas">
+        <ng-template ngbTabContent>
+          <form [formGroup]="accionesForm">
+            <div class="row">
+              <div class="form-group col-md-12">
+                <label>Descripción de la acción tomada</label>
+                <textarea
+                  class="form-control"
+                  formControlName="descripcionscciones"
+                ></textarea>
+              </div>
+            </div>
+            <fieldset class="mt-2">
+              <legend class="legendrepre">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    (change)="onChangeParaConocimiento($event)"
+                    type="checkbox"
+                    id="gridCheck1p"
+                  />
+                  <label class="form-check-label" for="gridCheck1p">
+                    Para Conocimiento
+                  </label>
+                </div>
+              </legend>
+              <fieldset class="mt-2" *ngIf="showparaconocimiento">
+                <legend class="legendrepre">Personal 1</legend>
+                <form action="">
+                  <div class="row mt-2">
+                    <div class="form-group col-md-8">
+                      <div class="card-header-action">
+                        <form [formGroup]="seachParaConocimientoForm">
+                          <div class="input-group">
+                            <input
+                              type="text"
+                              formControlName="personal1"
+                              [ngClass]="{
+                                'is-invalid':
+                                  submittedsearchpersonal1 && j.personal1.errors
+                              }"
+                              class="form-control form-control-sm"
+                              placeholder="Search"
+                            />
+                            <div class="input-group-btn">
+                              <button
+                                class="btn btn-sm btn-primary"
+                                (click)="searchPeraConocimiento(1)"
+                              >
+                                <i class="fa fa-search"></i>Filtrar
+                              </button>
+                            </div>
+                            <div
+                              *ngIf="
+                                submittedsearchpersonal1 && j.personal1.errors
+                              "
+                              class="invalid-feedback"
+                            >
+                              <div *ngIf="j.personal1.errors.required">
+                                Campo requerido
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+                <hr />
+                <div class="row">
+                  <div class="form-group col-md-4" style="display: none">
+                    <input
+                      type="text"
+                      class="form-control form-control-sm"
+                      [ngModel]="listdetalpersonal01[0]?.Persona"
+                      formControlName="p1code"
+                      id="p1code"
+                    />
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="p1nombre">Nombre</label>
+                    <input
+                      type="text"
+                      class="form-control form-control-sm"
+                      [ngModel]="listdetalpersonal01[0]?.Nombres"
+                      formControlName="p1nombre"
+                      id="p1nombre"
+                    />
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="p1paterno">Apellido Paterno</label>
+                    <input
+                      type="text"
+                      class="form-control form-control-sm"
+                      [ngModel]="listdetalpersonal01[0]?.Paterno"
+                      formControlName="p1paterno"
+                      id="p1paterno"
+                    />
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="p1materno">Apellidos Materno</label>
+                    <input
+                      type="text"
+                      class="form-control form-control-sm"
+                      [ngModel]="listdetalpersonal01[0]?.Materno"
+                      formControlName="p1materno"
+                      id="p1materno"
+                    />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-md-4">
+                    <label for="p1correo">Correo</label>
+                    <input
+                      type="text"
+                      class="form-control form-control-sm"
+                      [ngModel]="listdetalpersonal01[0]?.CorreoInterno"
+                      formControlName="p1correo"
+                      id="p1correo"
+                    />
+                  </div>
+                </div>
+              </fieldset>
+              <fieldset class="mt-2" *ngIf="showparaconocimiento">
+                <legend class="legendrepre">Personal 2</legend>
+                <form action="">
+                  <div class="row mt-2">
+                    <div class="form-group col-md-8">
+                      <div class="card-header-action">
+                        <form [formGroup]="seachParaConocimientoForm2">
+                          <div class="input-group">
+                            <input
+                              type="text"
+                              class="form-control form-control-sm"
+                              formControlName="personal2"
+                              [ngClass]="{
+                                'is-invalid':
+                                  submittedsearchpersonal2 && k.personal2.errors
+                              }"
+                              placeholder="Search"
+                            />
+
+                            <div class="input-group-btn">
+                              <button
+                                class="btn btn-sm btn-primary"
+                                (click)="searchPeraConocimiento(2)"
+                              >
+                                <i class="fa fa-search"></i>Filtrar
+                              </button>
+                            </div>
+                            <div
+                              *ngIf="
+                                submittedsearchpersonal2 && k.personal2.errors
+                              "
+                              class="invalid-feedback"
+                            >
+                              <div *ngIf="k.personal2.errors.required">
+                                Campo requerido
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+                <hr />
+                <div class="row">
+                  <div class="form-group col-md-4" style="display: none">
+                    <input
+                      type="text"
+                      class="form-control form-control-sm"
+                      formControlName="p2code"
+                      [ngModel]="listdetalpersonal02[0]?.Persona"
+                      id="p2code"
+                    />
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="p2nombre">Nombre</label>
+                    <input
+                      type="text"
+                      class="form-control form-control-sm"
+                      formControlName="p2nombre"
+                      [ngModel]="listdetalpersonal02[0]?.Nombres"
+                      id="p2nombre"
+                    />
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="p2paterno">Apellido Paterno</label>
+                    <input
+                      type="text"
+                      class="form-control form-control-sm"
+                      formControlName="p2paterno"
+                      [ngModel]="listdetalpersonal02[0]?.Paterno"
+                      id="p2paterno"
+                    />
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="p2materno">Apellidos Materno</label>
+                    <input
+                      type="text"
+                      class="form-control form-control-sm"
+                      formControlName="p2materno"
+                      [ngModel]="listdetalpersonal02[0]?.Materno"
+                      id="p2materno"
+                    />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-md-4">
+                    <label for="p2correo">Correo</label>
+                    <input
+                      type="text"
+                      class="form-control form-control-sm"
+                      formControlName="p2correo"
+                      [ngModel]="listdetalpersonal02[0]?.CorreoInterno"
+                      id="p2correo"
+                    />
+                  </div>
+                </div>
+              </fieldset>
+
+              <fieldset class="mt-2" *ngIf="showparaconocimiento">
+                <legend class="legendrepre">Personal 3</legend>
+                <form action="">
+                  <div class="row mt-2">
+                    <div class="form-group col-md-8">
+                      <div class="card-header-action">
+                        <form [formGroup]="seachParaConocimientoForm3">
+                          <div class="input-group">
+                            <input
+                              type="text"
+                              class="form-control form-control-sm"
+                              formControlName="personal3"
+                              [ngClass]="{
+                                'is-invalid':
+                                  submittedsearchpersonal3 && p.personal3.errors
+                              }"
+                              placeholder="Search"
+                            />
+
+                            <div class="input-group-btn">
+                              <button
+                                class="btn btn-sm btn-primary"
+                                (click)="searchPeraConocimiento(3)"
+                              >
+                                <i class="fa fa-search"></i>Filtrar
+                              </button>
+                            </div>
+                            <div
+                              *ngIf="
+                                submittedsearchpersonal3 && p.personal3.errors
+                              "
+                              class="invalid-feedback"
+                            >
+                              <div *ngIf="p.personal3.errors.required">
+                                Campo requerido
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+                <hr />
+                <div class="row">
+                  <div class="form-group col-md-4" style="display: none">
+                    <input
+                      type="text"
+                      class="form-control form-control-sm"
+                      formControlName="p3code"
+                      [ngModel]="listdetalpersonal03[0]?.Persona"
+                      id="p3code"
+                    />
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="p3nombre">Nombre</label>
+                    <input
+                      type="text"
+                      class="form-control form-control-sm"
+                      formControlName="p3nombre"
+                      [ngModel]="listdetalpersonal03[0]?.Nombres"
+                      id="p3nombre"
+                    />
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="p3paterno">Apellido Paterno</label>
+                    <input
+                      type="text"
+                      class="form-control form-control-sm"
+                      formControlName="p3paterno"
+                      [ngModel]="listdetalpersonal03[0]?.Paterno"
+                      id="p3paterno"
+                    />
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="p3materno">Apellidos Materno</label>
+                    <input
+                      type="text"
+                      class="form-control form-control-sm"
+                      formControlName="p3materno"
+                      [ngModel]="listdetalpersonal03[0]?.Materno"
+                      id="p3materno"
+                    />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-md-4">
+                    <label for="p3correo">Correo</label>
+                    <input
+                      type="text"
+                      class="form-control form-control-sm"
+                      formControlName="p3correo"
+                      [ngModel]="listdetalpersonal03[0]?.CorreoInterno"
+                      id="p3correo"
+                    />
+                  </div>
+                </div>
+              </fieldset>
+            </fieldset>
+          </form>
+          <div class="card-body">
+            <div class="buttons float-right" style="cursor: pointer">
+              <a
+                (click)="registroReclamo()"
+                class="btn btn-icon icon-left btn-info text-white"
+                ><i class="fa fa-save"></i> Registrar Reclamo</a
+              >
+            </div>
+          </div>
+        </ng-template>
+      </ngb-tab>
+    </ngb-tabset>
+  </div>
+</div>

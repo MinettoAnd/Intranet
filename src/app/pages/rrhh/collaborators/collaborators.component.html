@@ -1,0 +1,166 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <form [formGroup]="filtroForm">
+          <div class="row">
+            <div class="form-group col-sm-12 col-md-4 col-lg-2">
+              <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">Estado</span>
+                </div>
+                <select
+                  class="form-control form-select"
+                  formControlName="estado"
+                  id="inputGroupSelect04"
+                >
+                  <option value="1">Todos</option>
+                  <option value="0">Activo</option>
+                  <option value="2">Cesado</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group col-sm-12 col-md-4 col-lg-2">
+              <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">F.Inicio</span>
+                </div>
+                <input
+                  type="date"
+                  formControlName="inicio"
+                  class="form-control"
+                />
+              </div>
+            </div>
+
+            <div class="form-group col-sm-12 col-md-4 col-lg-2">
+              <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">F.Fin</span>
+                </div>
+                <input
+                  type="date"
+                  formControlName="final"
+                  class="form-control"
+                />
+              </div>
+            </div>
+            <div class="form-group col-sm-12 col-md-4 col-lg-2">
+              <div class="input-group input-group-sm">
+                <div class="input-group-append">
+                  <span class="input-group-text">Sedes</span>
+                </div>
+                <select
+                  class="form-control form-select"
+                  formControlName="sedes"
+                  id="inputGroupSelect04"
+                >
+                  <option value="NA">Todos</option>
+                  <option value="0001">Lima</option>
+                  <option value="0002">Chorrillos</option>
+                  <option value="0004">Surco</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group col-sm-12 col-md-4 col-lg-2">
+              <div class="input-group input-group-sm">
+                <div class="input-group-append">
+                  <span class="input-group-text">Correos</span>
+                </div>
+                <select
+                  class="form-control form-select"
+                  formControlName="correo"
+                  id="inputGroupSelect04"
+                >
+                  <option value="3">Todos</option>
+                  <option value="1">Con Correo</option>
+                  <option value="2">Sin Correo</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group col-sm-12 col-md-4 col-lg-2">
+              <div class="input-group input-group-sm">
+                <div class="input-group-append">
+                  <span class="input-group-text">Cargo</span>
+                </div>
+                <select
+                  class="form-control form-select"
+                  formControlName="cargo"
+                  id="inputGroupSelect04"
+                >
+                  <option value="">Seleccione...</option>
+                  <option
+                    *ngFor="let item of cargos"
+                    value="{{ item.codigopuesto }}"
+                  >
+                    {{ item.descripcion }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row pt-2">
+            <div class="col-md-4">
+              <div class="form-group">
+                <div class="input-group input-group-sm">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Area</span>
+                  </div>
+                  <input
+                    type="text"
+                    formControlName="area"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <div class="input-group input-group-sm">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Apellidos</span>
+                  </div>
+                  <input
+                    type="text"
+                    formControlName="apellidos"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="input-group">
+                <div class="input-group-btn">
+                  <button (click)="filter()" class="btn btn-sm btn-primary">
+                    <i class="fa fa-search"></i> Filtrar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="row mt-4">
+          <div class="col">
+            <div [ngStyle]="style">
+              <!--button (click)="getSelectedRows()">Get Selected Rows</button-->
+              <ag-grid-angular
+                #agGrid
+                style="width: 100%; height: 600px"
+                class="ag-theme-balham"
+                [rowData]="rowData"
+                [columnDefs]="columnDefs"
+                [tooltipShowDelay]="tooltipShowDelay"
+                [frameworkComponents]="frameworkComponents"
+                (cellValueChanged)="onCellValueChanged($event)"
+                [pagination]="true"
+                [defaultColDef]="defaultColDef"
+                rowSelection="multiple"
+              >
+              </ag-grid-angular>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

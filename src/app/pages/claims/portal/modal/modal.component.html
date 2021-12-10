@@ -1,0 +1,265 @@
+<div class="modal-header">
+  <h4 class="modal-title">Detalle</h4>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="activeModal.dismiss('Cross click')"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="form-group col-md-3">
+      <label for="distrito">Lugar de Atencion</label>
+      <div class="input-group">
+        <input
+          type="text"
+          value="{{ dato.v_lugar }}"
+          class="form-control form-control-sm"
+          disabled
+        />
+      </div>
+    </div>
+    <div class="form-group col-md-3">
+      <label for="dia_registro">Dia De Registro</label>
+      <div class="input-group">
+        <input
+          type="date"
+          value="{{ rgetFormatFeha(dato.d_fecha_reg) }}"
+          class="form-control form-control-sm"
+          disabled
+        />
+      </div>
+    </div>
+    <div class="form-group col-md-3">
+      <label for="fecha_reclamo">Fecha Reclamo</label>
+      <div class="input-group">
+        <input
+          type="date"
+          value="{{ rgetFormatFeha(dato.d_fecha_reclamo) }}"
+          class="form-control form-control-sm"
+          disabled
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group col-md-4">
+      <label for="afectado">Afeactado</label>
+      <div class="input-group">
+        <input
+          type="text"
+          value="{{ dato.n_nombre_afil }} {{ dato.n_apellidos_afil }} {{
+            dato.n_apellido_materno_afil
+          }}"
+          class="form-control form-control-sm"
+          disabled
+        />
+      </div>
+    </div>
+    <div class="form-group col-md-3">
+      <label for="distrito">Distrito</label>
+      <div class="input-group">
+        <input
+          type="text"
+          value="{{ dato.n_distrito_afil }}"
+          class="form-control form-control-sm"
+          disabled
+        />
+      </div>
+    </div>
+    <div class="form-group col-md-3">
+      <label for="direccion">Dirección</label>
+      <div class="input-group">
+        <input
+          type="text"
+          value="{{ dato.n_domicilio_afil }}"
+          class="form-control form-control-sm"
+          disabled
+        />
+      </div>
+    </div>
+    <div class="form-group col-md-2">
+      <label for="telefono">Telefono</label>
+      <div class="input-group">
+        <input
+          type="text"
+          value="{{ dato.n_tel_fij_afil }}"
+          class="form-control form-control-sm"
+          disabled
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group col-md-3">
+      <label for="tipodoc">Tipo Documento</label>
+      <div class="input-group">
+        <input
+          type="text"
+          value="{{ dato.n_tipo_documento_afil }}"
+          class="form-control form-control-sm"
+          disabled
+        />
+      </div>
+    </div>
+    <div class="form-group col-md-3">
+      <label for="numerodoc">N° Documento</label>
+      <div class="input-group">
+        <input
+          type="text"
+          value="{{ dato.n_dni_afil }}"
+          class="form-control form-control-sm"
+          disabled
+        />
+      </div>
+    </div>
+    <div class="form-group col-md-3">
+      <label for="celular">Celular</label>
+      <div class="input-group">
+        <input
+          type="text"
+          value="{{ dato.n_tel_cel_afil }}"
+          class="form-control form-control-sm"
+          disabled
+        />
+      </div>
+    </div>
+    <div class="form-group col-md-3">
+      <label for="correo">Correo</label>
+      <div class="input-group">
+        <input
+          type="text"
+          value="{{ dato.v_email_afi }}"
+          class="form-control form-control-sm"
+          disabled
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group col-md-4">
+      <label for="representante">Representante</label>
+      <div class="input-group">
+        <input
+          type="text"
+          value="{{ dato.n_nombres_repre }} {{ dato.n_apellidos_repre }} {{
+            dato.n_apellido_materno_repre
+          }}"
+          class="form-control form-control-sm"
+          disabled
+        />
+      </div>
+    </div>
+    <div class="form-group col-md-3">
+      <label for="redistrito">Distrito</label>
+      <div class="input-group">
+        <input
+          type="text"
+          value="{{ dato.n_distrito_repre }}"
+          class="form-control form-control-sm"
+          disabled
+        />
+      </div>
+    </div>
+    <div class="form-group col-md-3">
+      <label for="redireccion">Dirección</label>
+      <div class="input-group">
+        <input
+          type="text"
+          value="{{ dato.n_direccion_repre }}"
+          class="form-control form-control-sm"
+          disabled
+        />
+      </div>
+    </div>
+    <div class="form-group col-md-2">
+      <label for="retelefono">Telefono</label>
+      <div class="input-group">
+        <input
+          type="text"
+          value="{{ dato.n_telf_repre }}"
+          class="form-control form-control-sm"
+          disabled
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group col-md-3">
+      <label for="representante">Correo</label>
+      <div class="input-group">
+        <input
+          type="text"
+          value="{{ dato.n_email_repre }}"
+          class="form-control form-control-sm"
+          disabled
+        />
+      </div>
+    </div>
+    <div class="form-group col-md-6">
+      <label for="redistrito">Parentesco</label>
+      <div class="input-group">
+        <input
+          type="text"
+          value="{{ dato.v_parentesco }}"
+          class="form-control form-control-sm"
+          disabled
+        />
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-md-3">
+      <label for="afectado">Area</label>
+      <div class="input-group">
+        <input
+          type="text"
+          value="{{ dato.v_area }}"
+          class="form-control form-control-sm"
+          disabled
+        />
+      </div>
+    </div>
+    <div class="form-group col-md-6">
+      <label for="involucrado">Perona Involucrado</label>
+      <div class="input-group">
+        <input
+          type="text"
+          value="{{ dato.v_personal_involucrado }}"
+          class="form-control form-control-sm"
+          disabled
+        />
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-md-12">
+      <label for="accionestomadas">Descripción</label>
+      <textarea
+        class="form-control form-control-sm"
+        rows="10"
+        value="{{ dato.v_descripcion }}"
+        disabled
+      ></textarea>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <!--button type="button" class="btn btn-primary">
+      <i class="fas fa-save"></i> Guardar
+    </button-->
+  <button
+    type="button"
+    class="btn btn-outline-dark"
+    (click)="activeModal.close('Close click')"
+  >
+    <i class="fa fa-minus-circle"></i> Cerrar
+  </button>
+</div>

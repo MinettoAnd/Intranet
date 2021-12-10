@@ -1,0 +1,466 @@
+<div class="modal-header">
+  <h4 class="modal-title">Modificar Información general del cliente</h4>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="activeModal.dismiss('Cross click')"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="infoForm">
+    <div class="row">
+      <div class="form-group col-md-12">
+        <label for="estado">Estado </label>
+        <select
+          id="estado"
+          formControlName="estado"
+          (change)="onChangeEstado($event)"
+          [(ngModel)]="datainfoclient.estado"
+          [ngClass]="{ 'is-invalid': submitted && f.estado.errors }"
+          class="form-control form-select form-control-sm"
+        >
+          <option value="">Seleccione...</option>
+          <option
+            *ngFor="let item of listestadotramites"
+            value="{{ item.id_estado }}"
+          >
+            {{ item.v_decripcion }}
+          </option>
+        </select>
+        <div *ngIf="submitted && f.estado.errors" class="invalid-feedback">
+          <div *ngIf="f.estado.errors.required">Campo requerido</div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md-4">
+        <label for="nombre">Nombres</label>
+        <div class="input-group">
+          <input
+            type="text"
+            formControlName="nombre"
+            [(ngModel)]="datainfoclient.nombre"
+            [ngClass]="{ 'is-invalid': submitted && f.nombre.errors }"
+            class="form-control form-control-sm"
+          />
+          <div *ngIf="submitted && f.nombre.errors" class="invalid-feedback">
+            <div *ngIf="f.nombre.errors.required">Campo requerido</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="paterno">Apellido Paterno</label>
+        <div class="input-group">
+          <input
+            type="text"
+            formControlName="paterno"
+            [ngClass]="{ 'is-invalid': submitted && f.paterno.errors }"
+            [(ngModel)]="datainfoclient.paterno"
+            class="form-control form-control-sm"
+          />
+          <div *ngIf="submitted && f.paterno.errors" class="invalid-feedback">
+            <div *ngIf="f.paterno.errors.required">Campo requerido</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="materno">Apellido Materno</label>
+        <div class="input-group">
+          <input
+            type="text"
+            formControlName="materno"
+            [(ngModel)]="datainfoclient.materno"
+            class="form-control form-control-sm"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md-4">
+        <label for="historiaclinica">Historia Clínica </label>
+        <div class="input-group">
+          <input
+            type="text"
+            [ngClass]="{ 'is-invalid': submitted && f.historiaclinica.errors }"
+            formControlName="historiaclinica"
+            [(ngModel)]="datainfoclient.historiaclinica"
+            class="form-control form-control-sm"
+          />
+          <div
+            *ngIf="submitted && f.historiaclinica.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="f.historiaclinica.errors.required">Campo requerido</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="dni">Dni</label>
+        <div class="input-group">
+          <input
+            type="text"
+            [ngClass]="{ 'is-invalid': submitted && f.dni.errors }"
+            formControlName="dni"
+            [(ngModel)]="datainfoclient.dni"
+            class="form-control form-control-sm"
+          />
+          <div *ngIf="submitted && f.dni.errors" class="invalid-feedback">
+            <div *ngIf="f.dni.errors.required">Campo requerido</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="telefono">Telefono </label>
+        <div class="input-group">
+          <input
+            type="text"
+            formControlName="telefono"
+            [ngClass]="{ 'is-invalid': submitted && f.telefono.errors }"
+            [(ngModel)]="datainfoclient.telefono"
+            class="form-control form-control-sm"
+          />
+          <div *ngIf="submitted && f.telefono.errors" class="invalid-feedback">
+            <div *ngIf="f.telefono.errors.required">Campo requerido</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md-4">
+        <label for="fechareclamo">Fecha Reclamo </label>
+        <div class="input-group">
+          <input
+            type="date"
+            [ngClass]="{ 'is-invalid': submitted && f.fechareclamo.errors }"
+            [(ngModel)]="fechareclamo"
+            formControlName="fechareclamo"
+            class="form-control form-control-sm"
+          />
+          <div
+            *ngIf="submitted && f.fechareclamo.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="f.fechareclamo.errors.required">Campo requerido</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="horareclamo">Hora</label>
+        <div class="input-group">
+          <input
+            type="time"
+            [ngClass]="{ 'is-invalid': submitted && f.horareclamo.errors }"
+            [(ngModel)]="horareclamo"
+            formControlName="horareclamo"
+            class="form-control form-control-sm"
+          />
+          <div
+            *ngIf="submitted && f.horareclamo.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="f.horareclamo.errors.required">Campo requerido</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="empresa">Correo </label>
+        <div class="input-group">
+          <input
+            type="text"
+            [(ngModel)]="datainfoclient.correo"
+            formControlName="empresa"
+            class="form-control form-control-sm"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md-4">
+        <label for="tipo_paciente"
+          >Tipo de Paciente <span class="text-danger">*</span></label
+        >
+        <select
+          id="tipo_paciente"
+          formControlName="tipo_paciente"
+          [ngClass]="{ 'is-invalid': submitted && f.tipo_paciente.errors }"
+          [(ngModel)]="datainfoclient.tipopaciente"
+          class="form-control form-select form-control-sm"
+          (change)="showEmpresas($event)"
+        >
+          <option value="">Seleccione...</option>
+          <option
+            *ngFor="let item of listtypepatients"
+            value="{{ item.idCodigo }}"
+          >
+            {{ item.Nombre }}
+          </option>
+        </select>
+        <div
+          *ngIf="submitted && f.tipo_paciente.errors"
+          class="invalid-feedback"
+        >
+          <div *ngIf="f.tipo_paciente.errors.required">Campo requerido</div>
+        </div>
+      </div>
+      <div class="form-group col-md-4" *ngIf="showplansalud">
+        <label for="plan_salud">Plan Salud</label>
+        <select
+          id="plan_salud"
+          formControlName="plan_salud"
+          [(ngModel)]="plansalud"
+          class="form-control form-select form-control-sm"
+        >
+          <option value="">Seleccione...</option>
+          <option
+            value="{{ item.idTipoPrograma }}"
+            *ngFor="let item of listplansalud"
+          >
+            {{ item.Descripcion }}
+          </option>
+        </select>
+      </div>
+      <div class="form-group col-md-4" *ngIf="showregiment">
+        <label for="regimen">Regimen</label>
+        <select
+          id="regimen"
+          formControlName="regimen"
+          [(ngModel)]="regiment"
+          class="form-control form-select form-control-sm"
+          (change)="onChangeRegmin($event)"
+        >
+          <option value="">Seleccione...</option>
+          <option value="1">Régimen Subsidiario</option>
+          <option value="2">Régimen Semicontributivo</option>
+          <option value="3">Régimen Contributivo</option>
+          <option value="4">No asegurado</option>
+        </select>
+      </div>
+      <div class="form-group col-md-4" *ngIf="showsegurosconvenios">
+        <label for="convenios">Convenios</label>
+        <ng-select
+          formControlName="convenios"
+          [(ngModel)]="convenios"
+          (change)="changeConveniosSeguros($event)"
+        >
+          <ng-option value="">Seleccione seguros/Seleccione Empresa</ng-option>
+          <ng-option
+            *ngFor="let item of listconveniosseguro"
+            [value]="item.idEmpresa"
+            >{{ item.Descripcion }}</ng-option
+          >
+        </ng-select>
+      </div>
+      <div class="form-group col-md-4" *ngIf="showafiliado">
+        <label for="codigo_afiliado">Código de Afiliado</label>
+        <input
+          type="text"
+          formControlName="codigo_afiliado"
+          [(ngModel)]="codigoafliado"
+          class="form-control form-control-sm"
+          id="codigo_afiliado"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md-4">
+        <label for="fechaevento">Fecha del Evento </label>
+        <div class="input-group">
+          <input
+            type="date"
+            [ngClass]="{ 'is-invalid': submitted && f.fechaevento.errors }"
+            [(ngModel)]="fechareevento"
+            formControlName="fechaevento"
+            class="form-control form-control-sm"
+          />
+          <div
+            *ngIf="submitted && f.fechaevento.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="f.fechaevento.errors.required">Campo requerido</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-md-2">
+        <label for="hotaevento">hora </label>
+        <div class="input-group">
+          <input
+            type="time"
+            [ngClass]="{ 'is-invalid': submitted && f.hotaevento.errors }"
+            [(ngModel)]="horaevento"
+            formControlName="hotaevento"
+            class="form-control form-control-sm"
+          />
+          <div
+            *ngIf="submitted && f.hotaevento.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="f.hotaevento.errors.required">Campo requerido</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="fecharegistro">Fecha de Registro </label>
+        <div class="input-group">
+          <input
+            type="date"
+            [ngClass]="{ 'is-invalid': submitted && f.fecharegistro.errors }"
+            [(ngModel)]="fecharegistro"
+            formControlName="fecharegistro"
+            class="form-control form-control-sm"
+          />
+          <div
+            *ngIf="submitted && f.fecharegistro.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="f.fecharegistro.errors.required">Campo requerido</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group col-md-2">
+        <label for="horaregistro">hora </label>
+        <div class="input-group">
+          <input
+            type="time"
+            [ngClass]="{ 'is-invalid': submitted && f.horaregistro.errors }"
+            [(ngModel)]="horaregistro"
+            formControlName="horaregistro"
+            class="form-control form-control-sm"
+          />
+          <div
+            *ngIf="submitted && f.horaregistro.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="f.horaregistro.errors.required">Campo requerido</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <!--div class="form-group col-md-4">
+        <label for="fechasolucion">Fecha de Solución </label>
+        <div class="input-group">
+          <input
+            type="date"
+            [(ngModel)]="fechasolucion"
+            formControlName="fechasolucion"
+            class="form-control form-control-sm"
+          />
+        </div>
+      </div-->
+      <!--div class="form-group col-md-2">
+        <label for="horasolucion">hora </label>
+        <div class="input-group">
+          <input
+            type="time"
+            [(ngModel)]="horasolucion"
+            formControlName="horasolucion"
+            class="form-control form-control-sm"
+          />
+        </div>
+      </div-->
+    </div>
+    <div class="row">
+      <div class="form-group col-md-12">
+        <label for="direccion">Domicilio</label>
+        <div class="input-group">
+          <input
+            type="text"
+            [ngClass]="{ 'is-invalid': submitted && f.direccion.errors }"
+            [(ngModel)]="datainfoclient.domicilio"
+            formControlName="direccion"
+            class="form-control form-control-sm"
+          />
+          <div *ngIf="submitted && f.direccion.errors" class="invalid-feedback">
+            <div *ngIf="f.direccion.errors.required">Campo requerido</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md-4">
+        <label for="departamento">Departamento</label>
+        <select
+          id="departamento"
+          class="form-control form-select form-control-sm"
+          [ngClass]="{ 'is-invalid': submitted && f.departamento.errors }"
+          (change)="changeDepartamento($event)"
+          [(ngModel)]="iddepartamento"
+          formControlName="departamento"
+        >
+          <option value="">Seleccione...</option>
+          <option
+            *ngFor="let item of listdepartamentos"
+            value="{{ item.Departamento }}"
+          >
+            {{ item.DescripcionCorta }}
+          </option>
+        </select>
+        <div
+          *ngIf="submitted && f.departamento.errors"
+          class="invalid-feedback"
+        >
+          <div *ngIf="f.departamento.errors.required">Campo requerido</div>
+        </div>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="provincia">Provincia</label>
+        <select
+          id="provincia"
+          (change)="changeProvincia($event)"
+          [ngClass]="{ 'is-invalid': submitted && f.provincia.errors }"
+          class="form-control form-select form-control-sm"
+          [(ngModel)]="idprovincia"
+          formControlName="provincia"
+        >
+          <option value="">Seleccione...</option>
+          <option
+            *ngFor="let item of listprovincias"
+            value="{{ item.Provincia }}"
+          >
+            {{ item.DescripcionCorta }}
+          </option>
+        </select>
+        <div *ngIf="submitted && f.provincia.errors" class="invalid-feedback">
+          <div *ngIf="f.provincia.errors.required">Campo requerido</div>
+        </div>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="distrito">Distrito</label>
+        <select
+          id="distrito"
+          class="form-control form-select form-control-sm"
+          [(ngModel)]="iddistrito"
+          [ngClass]="{ 'is-invalid': submitted && f.distrito.errors }"
+          formControlName="distrito"
+        >
+          <option value="">Seleccione...</option>
+          <option
+            *ngFor="let item of listdistritos"
+            value="{{ item.CodigoPostal }}"
+          >
+            {{ item.DescripcionCorta }}
+          </option>
+        </select>
+        <div *ngIf="submitted && f.distrito.errors" class="invalid-feedback">
+          <div *ngIf="f.distrito.errors.required">Campo requerido</div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button (click)="updateInfoClient()" type="button" class="btn btn-primary">
+    <i class="fa fa-save"></i> Guardar
+  </button>
+  <button
+    type="button"
+    class="btn btn-outline-dark"
+    (click)="activeModal.close('Close click')"
+  >
+    <i class="fa fa-minus-circle"></i> Cancelar
+  </button>
+</div>

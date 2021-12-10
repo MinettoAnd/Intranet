@@ -1,0 +1,38 @@
+label {
+  margin-bottom: 0rem;
+}
+.form-group {
+  margin-bottom: 0px;
+}
+.card {
+  background-color: #fff;
+  border-radius: 10px;
+  border: none;
+  position: relative;
+  margin-bottom: 20px;
+  box-shadow: 0 0px 0px 0 rgb(0 0 0 / 20%), 0 0px 3px 0 rgb(0 0 0 / 19%);
+}
+.custom-file,
+.custom-file-label,
+.custom-select,
+.custom-file-label:after,
+.form-control[type="color"],
+select.form-control:not([size]):not([multiple]) {
+  height: calc(1.8125rem + 2px);
+}
+.input-group-text,
+select.form-control:not([size]):not([multiple]),
+.form-control:not(.form-control-sm):not(.form-control-lg) {
+  font-size: 14px;
+  padding: 0.25rem 0.5rem;
+}
+
+.card .card-header {
+  border-bottom-color: #f9f9f9;
+  line-height: 30px;
+  align-self: center;
+  width: 100%;
+  padding: 10px 25px;
+  display: flex;
+  align-items: center;
+}

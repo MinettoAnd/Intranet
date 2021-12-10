@@ -1,0 +1,83 @@
+.form-group {
+  margin-bottom: 0rem;
+}
+fieldset {
+  border: 1px solid #ddd !important;
+  padding: 20px;
+}
+
+legend {
+  text-align: left;
+  width: 6%;
+  font-size: 14px;
+}
+
+.legendrepre {
+  width: 18%;
+}
+
+.legendservicio {
+  width: 35%;
+}
+
+input[type="file"] {
+  position: absolute;
+  right: -9999px;
+  visibility: hidden;
+  opacity: 0;
+}
+input[type="submit"] {
+  position: relative;
+  padding: 1rem 3rem;
+  background: #0c8fda;
+  display: inline-block;
+  text-align: center;
+  overflow: hidden;
+  border-radius: 10px;
+  border: 0;
+  color: #fff;
+}
+input[type="submit"]:hover {
+  background: #0b7fc2;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.2s all;
+}
+.label-1 {
+  position: relative;
+  padding: 1rem 3rem;
+  background: #eee;
+  display: inline-block;
+  text-align: center;
+  overflow: hidden;
+  border-radius: 10px;
+}
+.label-1:hover {
+  background: #0c8fda;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.2s all;
+}
+
+.label-1 {
+  color: white;
+  padding: 10px;
+  background-color: #2196f3;
+}
+.div-r .ul-u {
+  list-style: none;
+  padding: 0;
+  max-height: 200px;
+  overflow: auto;
+}
+.div-r .ul-u .li-u {
+  padding-right: 2rem;
+  position: relative;
+}
+.div-r .ul-u .li-u i {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  right: 4rem;
+  transform: translatey(-50%);
+}

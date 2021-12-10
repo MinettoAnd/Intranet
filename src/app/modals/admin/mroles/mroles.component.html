@@ -1,0 +1,104 @@
+<div class="modal-header">
+  <h4 class="modal-title">Asginar Rol</h4>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="activeModal.dismiss('Cross click')"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="rolForm">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text">Nombre Rol</span>
+      </div>
+      <input
+        formControlName="rolname"
+        [ngClass]="{ 'is-invalid': submitted && f.rolname.errors }"
+        type="text"
+        class="form-control"
+      />
+      <div *ngIf="submitted && f.rolname.errors" class="invalid-feedback">
+        <div *ngIf="f.rolname.errors.required">campo requerido</div>
+      </div>
+    </div>
+    <div class="input-group mt-2">
+      <div class="input-group-prepend">
+        <span class="input-group-text">Descripción</span>
+      </div>
+      <input formControlName="descripcion" type="text" class="form-control" />
+    </div>
+
+    <div class="custom-control custom-switch mt-2">
+      <input
+        type="checkbox"
+        formControlName="acceso_especial"
+        class="custom-control-input"
+        id="acceso_espcial"
+      />
+      <label class="custom-control-label" for="acceso_espcial"
+        >Acceso Especial (Acceso A todo el sistema)</label
+      >
+    </div>
+    <div class="custom-control custom-switch mt-2">
+      <input
+        type="checkbox"
+        formControlName="acceso_area"
+        class="custom-control-input"
+        id="acceso_ipress"
+      />
+      <label class="custom-control-label" for="acceso_ipress"
+        >Habilitar filtro por área (Solo es para el modulo de reclamos iafas y
+        ipress)</label
+      >
+    </div>
+  </form>
+  <hr />
+  <label>Listado de acceso para los modulos</label>
+  <hr />
+  <div class="form-row">
+    <div class="col-md-4" *ngFor="let item of listassign; index as i">
+      <div class="custom-checkbox custom-control">
+        <input
+          type="checkbox"
+          id="{{ item.name_module }}"
+          [(ngModel)]="item.isChecked"
+          (change)="changeSelection()"
+          class="custom-control-input"
+        /><label for="{{ item.name_module }}" class="custom-control-label">
+          {{ item.name_module }}</label
+        >
+      </div>
+      <div class="form-row ml-4">
+        <div class="col-md-12" *ngFor="let list of item.rides">
+          <div class="custom-checkbox custom-control">
+            <input
+              type="checkbox"
+              [(ngModel)]="list.isChecked"
+              (change)="changeSelection()"
+              id="{{ list.name }}"
+              class="custom-control-input"
+            /><label for="{{ list.name }}" class="custom-control-label">
+              {{ list.name }}</label
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" (click)="createRol()" class="btn btn-primary">
+    <i class="fa fa-save"></i> Guardar
+  </button>
+  <button
+    type="button"
+    class="btn btn-outline-dark"
+    (click)="activeModal.close('Close click')"
+  >
+    <i class="fa fa-minus-circle"></i> Cancelar
+  </button>
+</div>

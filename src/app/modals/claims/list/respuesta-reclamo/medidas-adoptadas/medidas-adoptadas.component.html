@@ -1,0 +1,181 @@
+<div class="modal-header">
+  <h5 class="modal-title">Reclamo : {{ dato.idreclamo }}</h5>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="activeModal.dismiss('Cross click')"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body m-4">
+  <form [formGroup]="medidasForm">
+    <div class="row">
+      <div class="form-group col-md-4">
+        <label for="f_registra_reclamo">Fecha Reclamo</label>
+        <div class="input-group">
+          <input
+            type="date"
+            [(ngModel)]="f_registra_reclamo"
+            formControlName="f_registra_reclamo"
+            class="form-control form-control-sm"
+            disabled
+          />
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md-4">
+        <label for="fecha_inicio">Fecha Inicio </label>
+        <div class="input-group">
+          <input
+            type="date"
+            [(ngModel)]="fechaInicio"
+            formControlName="fecha_inicio"
+            class="form-control form-control-sm"
+          />
+        </div>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="fecha_fin">Fecha Culminación</label>
+        <div class="input-group">
+          <input
+            type="date"
+            [(ngModel)]="fechafin"
+            formControlName="fecha_fin"
+            class="form-control form-control-sm"
+          />
+        </div>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="tiporelcamo">Tipo Reclamo</label>
+        <select
+          id="area"
+          class="form-control form-select form-control-sm"
+          [(ngModel)]="tipo_reclamo"
+          formControlName="tiporelcamo"
+        >
+          <option value="">Seleccione...</option>
+          <option value="1">Virtual</option>
+          <option value="2">Físico</option>
+          <option value="3">Telefónico</option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <!--div class="form-group col-md-4">
+        <label for="codigo_unico">Codigo Unico Asignado</label>
+        <div class="input-group">
+          <input
+            type="text"
+            [(ngModel)]="codigoAsignado"
+            formControlName="codigo_unico"
+            disabled
+            class="form-control form-control-sm"
+          />
+        </div>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="codigo_medida">Codigo Adoptada</label>
+        <div class="input-group">
+          <input
+            type="text"
+            [(ngModel)]="codigoAdoptado"
+            disabled
+            formControlName="codigo_medida"
+            class="form-control form-control-sm"
+          />
+        </div>
+      </div-->
+    </div>
+    <!--div class="row">
+      <div class="form-group col-md-12">
+        <label for="detalle_reclamo">Detalle del Reclamo</label>
+        <textarea
+          class="form-control form-control-sm"
+          [(ngModel)]="detalle"
+          formControlName="detalle_reclamo"
+          rows="15"
+        ></textarea>
+      </div>
+    </div-->
+    <div class="row">
+      <div class="form-group col-md-12">
+        <label for="resumen">Acciones Tomadas</label>
+        <textarea
+          class="form-control form-control-sm"
+          formControlName="resumen"
+          [(ngModel)]="resume"
+          [maxlength]="maxChars"
+          rows="5"
+        ></textarea>
+        {{ resume.length }}/{{ maxChars }} Caractères Maximo
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md-8">
+        <label for="naturaleza">Naturaleza</label>
+        <select
+          id="naturaleza"
+          [(ngModel)]="naturaleza"
+          class="form-control form-select form-control-sm"
+          formControlName="naturaleza"
+        >
+          <option value="">Seleccione...</option>
+          <option value="1">
+            Administrativa respecto a procesos propios de la IAFAS
+          </option>
+          <option value="2">
+            Administrativa respecto a procesos propios de la IPRESS
+          </option>
+          <option value="3">
+            Administrativa respecto a procesos propios de la UGIPRESS
+          </option>
+          <option value="4">Asistencial (Prestacional)</option>
+          <option value="5">Administrativa y Asistencial (Prestacional)</option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md-8">
+        <label for="proceso">Proceso Medida Adoptada</label>
+        <select
+          id="proceso"
+          class="form-control form-select form-control-sm"
+          [(ngModel)]="proceso"
+          formControlName="proceso"
+        >
+          <option value="">Seleccione...</option>
+          <option value="1">Afiliación</option>
+          <option value="2">Acreditación</option>
+          <option value="3">Prestación de servicios salud</option>
+          <option value="4">
+            Liquidación, cobro o pago al usuario por los servicios prestados
+          </option>
+          <option value="5">
+            Contratación de servicios de salud de una IAFAS a una IPRESS para
+            atención de sus asegurados
+          </option>
+          <option value="6">Otro proceso</option>
+        </select>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button
+    type="button"
+    (click)="registerUpdateMedidas(dato.valor)"
+    class="btn btn-primary"
+  >
+    <i class="fa fa-save"></i> Guardar
+  </button>
+  <button
+    type="button"
+    class="btn btn-outline-dark"
+    (click)="activeModal.close('Close click')"
+  >
+    <i class="fa fa-minus-circle"></i> Cancelar
+  </button>
+</div>

@@ -1,0 +1,1493 @@
+<div class="modal-header">
+  <h5 class="modal-title">Preview Reclamo {{ dato.idreclamo }}</h5>
+  <a (click)="print()" class="btn btn-icon icon-left btn-dark ml-2 text-white">
+    <i class="pe-7s-print"></i> Imprimir</a
+  >
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="activeModal.dismiss('Cross click')"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="card p-4" *ngIf="showtemplate_new" id="dataToPrint">
+    <table
+      width="700"
+      border="0"
+      align="center"
+      cellpadding="0"
+      cellspacing="0"
+      style="font-size: 12px; font-family: Arial, Helvetica, sans-serif"
+    >
+
+      <tr>
+        <td align="left" width="210">
+          <img
+            src= {{this.logo_iafas_ipress}}
+            width="210"
+            height="45"
+          />
+        </td>
+        <td width="310">
+                <span style="font-size: 15px"><strong>
+                    CSALUD S.A.
+</strong></span>  
+                <br>R.U.C. 20101165389
+                <br>Av.Benavides N°5362 Urb. Las Gardenias, Santiago de Surco
+        </td>
+        <td align="right" width="130">
+          <img
+            src="http://webserver.maisondesante.org.pe/html2/oswtest/portal_sisr/images/susalud_100.png"
+            width="130"
+            height="45"
+          />
+        </td>
+        
+      </tr>  
+    </table>
+      
+<div style="height: 20px"></div>
+      
+      
+    <table
+      width="700"
+      border="0"
+      align="center"
+      cellpadding="0"
+      cellspacing="0"
+      style="font-size: 12px; font-family: Arial, Helvetica, sans-serif"
+    >      
+      
+      <tr>
+        <td align="left" width="500">
+          
+          <table
+            width="100%"
+            height="70"
+            border="0"
+            cellspacing="0"
+            cellpadding="0"
+            style="font-size: 12px;
+            padding: 7px;
+            padding-left: 15px;
+            border-radius: 20px;
+            border-style: solid;
+            border-top-width: 1px;
+            border-left-width: 1px;
+            border-right-width: 1px;
+            border-bottom-width: 1px;
+			      display: block;"
+          >
+            <tr>
+              <td >
+                <span style="font-size: 13px"
+                  ><strong>
+                    {{ nombreSUSALUD }}</strong
+                  ></span>
+              </td>
+            </tr>
+            <tr>
+
+              <td>
+          {{ direccion }} 
+                  
+                  
+              </td>
+            </tr>
+            <tr>
+              <td>
+          Código N° {{ codigo_iafas_ipress }}
+         <br />
+                  
+              </td>     
+            </tr>
+          </table>
+          <br>
+          <table
+            width="100%"
+            height="50"
+            border="0"
+            cellspacing="0"
+            cellpadding="0"
+            style="font-size: 12px;
+            padding: 15px;
+            padding-left: 15px;
+            border-radius: 20px;
+            border-style: solid;
+            border-top-width: 1px;
+            border-left-width: 1px;
+            border-right-width: 1px;
+            border-bottom-width: 1px;
+			      display: block;"
+          >
+            
+            <tr>
+              <td>
+                FECHA : {{ this.dataprints[0]?.fecha_solucion}}
+                  <br />
+                  
+              </td>     
+            </tr>
+          </table>
+        </td>
+        
+        <td width="200" align="center">
+          <table
+            width="100%"
+            height="130"
+            border="0"
+            cellspacing="0"
+            cellpadding="0"
+            style="    font-size: 12px;
+            padding: 15px;
+            margin-left: 10px;
+            border-radius: 20px;
+            border-style: solid;
+            border-top-width: 1px;
+            border-left-width: 1px;
+            border-right-width: 1px;
+            border-bottom-width: 1px;
+            display: block;
+			"
+          >
+            <tr>
+              <td align="center">
+                <span style="height: 30px; font-size: 13px">
+                  	<strong>HOJA DE RECLAMACIÓN EN SALUD</strong>
+                </span>                
+              </td>
+            </tr>
+            <tr>
+
+              <td style="font-size: 13px; vertical-align: bottom">
+                <div style="text-align: center"> <br> <strong>
+                  Nro: {{ codigo_iafas_ipress }}-{{
+                    dataprints[0]?.v_correlativo_reclamo
+                  }}
+                </strong>
+                  <br />
+                  
+                </div>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+    
+    
+    
+    <div style="height: 20px"></div>
+
+    <table
+      border="0"
+      align="center"
+      cellpadding="0"
+      cellspacing="0"
+      style="font-size: 12px; font-family: Arial, Helvetica, sans-serif"
+    >
+      <tr>
+        <td>
+          <table
+            width="700"
+            border="0"
+            align="center"
+            cellpadding="3"
+            cellspacing="0"
+            class="tabla"
+            style="
+              font-family: Arial, Helvetica, sans-serif;
+              font-size: 11px;
+              font-style: normal;
+              line-height: normal;
+            border-style: solid;  
+			border-color: #000000;
+              border-top-width: 1px;
+              border-right-width: 1px;
+              border-bottom-width: 1px;
+              border-left-width: 1px;
+
+            "
+          >
+            <tr bgcolor="#ddd">
+              <td colspan="6" style="border-bottom: 1px solid #000000">
+                <!--strong>1.Informaci&oacute;n del Consumidor Reclamante:</strong-->
+                <strong
+                  >1. IDENTIFICACIÓN DEL USUARIO O TERCERO LEGITIMADO:</strong
+                >
+              </td>
+              
+            </tr>
+
+            <tr>
+              <td
+              colspan="4"  
+              width="95"
+                class="linea_infe"
+                style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                  width: 95px;
+                "
+              >
+                NOMBRE O RAZÓN SOCIAL : &nbsp; {{ dataprints[0]?.nombre_completo }} &nbsp;
+              </td>
+              <td
+                colspan="2"
+                class="linea_infe"
+                style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                "
+              >
+                E-MAIL: &nbsp; {{ dataprints[0]?.v_correop }} &nbsp;
+              </td>              
+
+            </tr>
+            
+            
+            <tr>
+
+              <td
+                class="linea_infe"
+              colspan="4"  
+              style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                "
+              >
+                DOMICILIO : &nbsp; {{ dataprints[0]?.v_domicilio }} ({{ regionname }}/{{ provincianame }}/{{ distritoname }})
+              </td>
+              
+              
+
+              <td
+                colspan="2"
+                class="linea_inf_derecha"
+                style="
+                  border-bottom-style: solid;
+                  border-bottom-width: 1px;
+                  border-bottom-color: #000000;
+                  border-right-width: 1px;
+
+                  border-right-style: solid;
+                  border-right-color: #000000;
+                "
+              >
+                TELÉFONO : &nbsp; {{ dataprints[0]?.v_telefono1 }} &nbsp;
+              </td>
+
+              
+
+            </tr>
+            
+            
+            
+            
+            
+            <tr>
+
+              <td
+                colspan="4"
+                class="linea_infe"
+                style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                "
+              > DOCUMENTO DE IDENTIDAD : &nbsp; {{ dataprints[0]?.tipo_documento_titular }}
+                
+              </td>
+              
+              <td
+              colspan="2"  
+              class="linea_infe"
+                style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                "
+              >
+                N° DOCUMENTO : &nbsp; {{ dataprints[0]?.dni }}
+              </td>
+
+            </tr>
+
+            
+            <tr bgcolor="#ddd">
+              <td
+                colspan="6"
+                class="linea_infe"
+                style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                "
+              > <strong>2. IDENTIFICACIÓN DE QUIEN PRESENTA EL RECLAMO (En caso de ser el usuario afectado no es necesario llenarlo)</strong>
+     
+              </td>
+            </tr>
+            <tr>
+              <td
+                colspan="4"
+              	class="linea_infe"
+                style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                "
+              >
+                NOMBRE O RAZÓN SOCIAL : &nbsp; {{ dataprints[0]?.v_nombres_representa }}
+              </td>
+              <td
+                colspan="2"
+              	class="linea_infe"
+                style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                "
+              >
+                E-MAIL :{{ dataprints[0]?.v_email2 }}
+              </td>
+            </tr>
+
+            <tr>
+
+              <td
+                class="linea_infe"
+              colspan="4"  
+              style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                "
+              >
+                DOMICILIO : &nbsp; {{ dataprints[0]?.v_domicilio }} ({{ regionname }}/{{ provincianame }}/{{ distritoname }})
+              </td>
+              
+              
+
+              <td
+                colspan="2"
+                class="linea_inf_derecha"
+                style="
+                  border-bottom-style: solid;
+                  border-bottom-width: 1px;
+                  border-bottom-color: #000000;
+                  border-right-width: 1px;
+
+                  border-right-style: solid;
+                  border-right-color: #000000;
+                "
+              >
+                TELÉFONO : &nbsp; {{ dataprints[0]?.v_celular2 }} &nbsp;
+              </td>
+
+              
+
+            </tr>
+            
+            
+            
+            
+            
+            <tr>
+
+              <td
+                colspan="4"
+                class="linea_infe"
+                style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                "
+              > DOCUMENTO DE IDENTIDAD : &nbsp;  {{ dataprints[0]?.tipo_documento_representante }} 
+                
+              </td>
+              
+              <td
+              colspan="2"  
+              class="linea_infe"
+                style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                "
+              >
+                N° DOCUMENTO : &nbsp; {{ dataprints[0]?.numero_documento_representante }}
+              </td>
+
+            </tr>
+
+            
+            
+
+            <tr bgcolor="#ddd">
+              <td
+                colspan="6"
+                class="linea_infe"
+                style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                "
+              >
+                <strong>3. DETALLE DEL RECLAMO </strong>
+              </td>
+            </tr>
+            
+            <tr>
+              <td
+                height="80"
+                colspan="6"
+                class="linea_infe"
+                style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                "
+              >
+                {{ dataprints[0]?.v_descripcion_reclamo }}
+              </td>
+            </tr>
+
+            <tr bgcolor="#ddd">
+              <td
+                colspan="5"
+                class="linea_infe"
+                style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                "
+              >
+                <strong>4. AUTORIZO NOTIFICACIÓN DEL RESULTADO DEL RECLAMO AL E-MAIL CONSIGNADO </strong>
+              </td>
+              <td
+                colspan="1"
+                class="linea_infe"
+                style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                "
+              >
+                SI({{ autorizado }}) &nbsp; NO({{ desautorizado }})
+              </td>
+            </tr>
+            
+            
+            <tr bgcolor="#ddd">
+              <td
+                colspan="6"
+                class="linea_infe"
+                style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                "
+              >
+                <strong>5. FIRMA DEL RECLAMANTE (USUARIO, REPRESENTANTE O TERCERO LEGITIMADO)</strong>
+              </td>
+            </tr>
+            
+            
+            <tr>              
+              
+              <td
+                colspan="3"
+                class="linea_infe"
+            
+              >
+                FIRMA O HUELLA DIGITAL EN CASO DE SER PERSONA ILETRADA
+              </td>
+              <td
+                colspan="2"
+                class="linea_infe"
+        
+              > &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+                FIRMA
+              </td>
+              <td
+                colspan="1"
+                class="linea_infe"
+              
+              >
+               &nbsp; &nbsp; &nbsp; &nbsp; HUELLA DIGITAL
+              </td>
+            </tr>
+            
+            <tr>              
+              
+              <td
+                colspan="6"
+                height="80"
+                class="linea_infe"
+                style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                "
+              >
+                &nbsp;
+              </td>
+
+            </tr>
+            
+            
+            <tr bgcolor="#ddd">
+              <td
+                colspan="6"
+                class="linea_infe"
+                style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                "
+              >
+                <strong>6. SOLUCIÓN A SU RECLAMO A TRAVÉS DE TRATO DIRECTO</strong>
+              </td>
+            </tr>
+            
+            
+            <tr>              
+              
+              <td
+                colspan="3"
+                class="linea_infe"
+            
+              >
+                DETALLE DE SOLUCIÓN
+              </td>
+              <td
+                colspan="2"
+                class="linea_infe"
+              > 
+                RECLAMANTE
+              </td>
+              <td
+                colspan="1"
+                class="linea_infe"
+              	align="center"
+              >
+               RESPONSABLE DE LIBRO DE <br> RECLAMACIÓN EN SALUD
+              </td>
+            </tr>
+            
+            <tr>              
+              
+              <td
+                colspan="6"
+                height="80"
+                class="linea_infe"
+                style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                "
+              >
+                &nbsp;
+              </td>
+
+            </tr>
+            
+                        
+            
+            
+
+          </table>
+        </td>
+      </tr>
+
+
+
+
+
+      <tr>
+        <td>&nbsp;</td>
+      </tr>
+    </table>
+
+
+    <table
+      width="700"
+      border="0"
+      align="center"
+      cellpadding="0"
+      cellspacing="0"
+      class="estilo11"
+      style="
+        width: 700px;
+        font-size: 11px;
+        font-family: Arial, Helvetica, sans-serif;
+      "
+    >
+      <tr>
+        <td align="center" height="" width="950">
+          <hr />
+          <b
+            >Las IAFAS, IPRESS O UGIPRESS deben atender el reclamo en un plazo
+            de 30 dias hábiles. <br />
+            "Estimado Usuario. Usted puede presentar su queja ante SUSALUD ante hechos o actos que vulneren o pudieran vulnerar el derecho a la salud o cuando no le haya brindado un servicio, presentación o coberturas solicitadas, o
+            recibidas de las IAFAS o IPRESS, o que dependan de las UGIPRESS
+            pública, privado o mixtas. <br>
+             Tambien ante la negativa de atención de
+            su reclamo, irregularidad en su tramitación o disconformidad con el
+            resultado del mismo o hacer uso de los mecanismos alternativos de
+            solución de controversias entre el Centro de Conciliación y
+            Arbitraje - CECONAR de SUSALUD "
+          </b>
+        </td>
+      </tr>
+    </table>
+
+    <div style="height: 30px"></div>
+
+  </div>
+
+  <div class="card p-4" *ngIf="showtemplate_old" id="dataToPrint2">
+    <table
+      width="700"
+      border="0"
+      align="center"
+      cellpadding="0"
+      cellspacing="0"
+      style="font-size: 12px; font-family: Arial, Helvetica, sans-serif"
+    >
+      <tr>
+        <td align="left" width="254">
+          <img
+            src="http://webserver.maisondesante.org.pe/html2/oswtest/portal_sisr/images/CSaludSAnew.png"
+            width="250"
+            height="65"
+          />
+          <!--img src='http://webserver.maisondesante.org.pe/html2/oswtest/portal_sisr/images/CSaludSAnew.png' width='250' height='65' /-->
+        </td>
+        <td width="200" align="center">
+          <table
+            width="100%"
+            height="85"
+            border="0"
+            cellspacing="0"
+            cellpadding="0"
+            style="font-size: 12px"
+          >
+            <tr>
+              <td align="center">
+                <span style="height: 40px; font-size: 13px"
+                  ><strong>
+                    HOJA DE RECLAMACION
+                    <!--<?
+    if($_EMPRESA=='IAFAS'){
+       echo "HOJA DE RECLAMACION ";
+    }else{
+       echo "HOJA DE RECLAMACION EN SALUD  ";
+    }
+    ?>-->
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong
+                  ></span
+                >
+              </td>
+            </tr>
+            <tr>
+              <td style="font-size: 11px; vertical-align: bottom">
+                <div style="text-align: center">
+                  Código {{ dato.empresa }}:
+                  {{ dataprints[0]?.cod_administrativo_d }}<br />
+                  Hoja de Reclamación Nro :
+                  {{ dataprints[0]?.vcodlibro }} <br />Código N&ordm; :{{
+                    dataprints[0]?.COD_REG_RECLAMO
+                  }}
+                </div>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+    <div style="height: 20px"></div>
+
+    <table
+      border="0"
+      align="center"
+      cellpadding="0"
+      cellspacing="0"
+      style="font-size: 12px; font-family: Arial, Helvetica, sans-serif"
+    >
+      <tr>
+        <td>
+          <table
+            width="700"
+            border="0"
+            align="center"
+            cellpadding="3"
+            cellspacing="0"
+            class="tabla"
+            style="
+              font-family: Arial, Helvetica, sans-serif;
+              font-size: 11px;
+              font-style: normal;
+              line-height: normal;
+              border-color: #000000;
+              border-top-width: 1px;
+              border-right-width: 1px;
+              border-bottom-width: 1px;
+              border-left-width: 1px;
+              border-top-style: solid;
+              border-right-style: solid;
+              border-bottom-style: solid;
+              border-left-style: solid;
+            "
+          >
+            <tr>
+              <td colspan="2" style="border-bottom: 1px solid #000000">
+                <strong>1.Informaci&oacute;n del Consumidor Reclamante:</strong>
+              </td>
+              <td
+                colspan="4"
+                class="linea_inf_derecha"
+                style="
+                  border-bottom-style: solid;
+                  border-bottom-width: 1px;
+                  border-bottom-color: #000000;
+                  border-right-width: 1px;
+
+                  border-right-style: solid;
+                  border-right-color: #000000;
+                "
+              >
+                &nbsp;
+              </td>
+            </tr>
+
+            <tr>
+              <td
+                width="95"
+                class="linea_infe"
+                style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                  width: 95px;
+                "
+              >
+                Nombre :
+              </td>
+              <td
+                width="206"
+                class="linea_inf_derecha"
+                style="
+                  border-bottom-style: solid;
+                  border-bottom-width: 1px;
+                  border-bottom-color: #000000;
+                  border-right-width: 1px;
+                  border-right-style: solid;
+                  border-right-color: #000000;
+                  width: 206px;
+                "
+              >
+                {{ dataprints[0]?.nombre_completo }}&nbsp;
+              </td>
+              <td
+                colspan="4"
+                class="linea_infe"
+                style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                "
+              >
+                Tipo de Paciente : {{ dataprints[0]?.name_tipo_paciente }} ({{
+                  dataprints[0]?.cod_afiliado
+                }})
+              </td>
+            </tr>
+            <tr>
+              <td
+                class="linea_infe"
+                style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                "
+              >
+                DNI :
+              </td>
+              <td
+                width="206"
+                class="linea_inf_derecha"
+                style="
+                  border-bottom-style: solid;
+                  border-bottom-width: 1px;
+                  border-bottom-color: #000000;
+                  border-right-width: 1px;
+
+                  border-right-style: solid;
+                  border-right-color: #000000;
+                "
+              >
+                {{ dataprints[0]?.dni }}
+              </td>
+              <td
+                colspan="2"
+                class="linea_inf_derecha"
+                style="
+                  border-bottom-style: solid;
+                  border-bottom-width: 1px;
+                  border-bottom-color: #000000;
+                  border-right-width: 1px;
+
+                  border-right-style: solid;
+                  border-right-color: #000000;
+                "
+              >
+                Teléfono :{{ dataprints[0]?.v_telefono1 }} &nbsp;
+              </td>
+              <td
+                colspan="2"
+                class="linea_infe"
+                style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                "
+              >
+                Email: {{ dataprints[0]?.v_correop }} &nbsp;
+              </td>
+            </tr>
+            <tr>
+              <td
+                class="linea_infe"
+                style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                "
+              >
+                Dpto/Prov/Distrito :
+              </td>
+              <td
+                colspan="5"
+                class="linea_infe"
+                style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                "
+              >
+                {{ regionname }}/{{ provincianame }}/{{ distritoname }}
+              </td>
+            </tr>
+            <tr>
+              <td
+                class="linea_infe"
+                style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                "
+              >
+                Domicilio :
+              </td>
+              <td
+                colspan="5"
+                class="linea_infe"
+                style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                "
+              >
+                {{ dataprints[0]?.v_domicilio }}
+              </td>
+            </tr>
+
+            <tr>
+              <td
+                colspan="6"
+                class="linea_infe"
+                style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                "
+              >
+                Representante o Titular (Para el caso sea menor) :
+                {{ dataprints[0]?.v_nombres_representa }}
+              </td>
+            </tr>
+            <tr>
+              <td
+                class="linea_infe"
+                style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                "
+              >
+                Vinculo Familiar :
+              </td>
+              <td
+                class="linea_infe"
+                style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                "
+              >
+                {{ dataprints[0]?.parentesco }}
+              </td>
+              <td
+                colspan="2"
+                class="linea_infe"
+                style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                "
+              >
+                Teléfono : {{ dataprints[0]?.v_celular2 }}
+              </td>
+              <td
+                colspan="2"
+                class="linea_infe"
+                style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                "
+              >
+                Email :{{ dataprints[0]?.v_email2 }}
+              </td>
+            </tr>
+            <tr>
+              <td
+                class="linea_infe"
+                style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                "
+              >
+                <strong>2. Involucrado: </strong>
+              </td>
+              <td
+                class="linea_infe"
+                style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                "
+              >
+                {{ resultname }} {{ resultpaterno }}
+                {{ resultmaterno }}
+                &nbsp;&nbsp;
+              </td>
+              <td
+                class="linea_infe"
+                style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                "
+              >
+                &nbsp;&nbsp;
+              </td>
+              <td
+                width="53"
+                class="linea_infe"
+                style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                "
+              >
+                &nbsp;
+              </td>
+              <td
+                width="84"
+                class="linea_infe"
+                style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                "
+              >
+                &nbsp;
+              </td>
+              <td
+                class="linea_infe"
+                style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                "
+              >
+                &nbsp;
+              </td>
+            </tr>
+            <tr>
+              <td
+                colspan="2"
+                class="linea_infe"
+                style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                "
+              >
+                Área :{{ dataprints[0]?.area_name }}
+              </td>
+              <td
+                class="linea_infe"
+                style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                "
+              ></td>
+              <td
+                colspan="3"
+                class="linea_infe"
+                style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                "
+              >
+                Sede : Clínica Maison de Santé {{ sedename }}
+              </td>
+            </tr>
+
+            <tr>
+              <td
+                colspan="2"
+                class="linea_infe"
+                style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                "
+              >
+                <strong>3. Producto o Servicio Contratado:</strong>
+              </td>
+              <td
+                class="linea_infe"
+                style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                "
+              >
+                &nbsp;
+              </td>
+              <td
+                class="linea_inf_derecha"
+                style="
+                  border-bottom-style: solid;
+                  border-bottom-width: 1px;
+                  border-bottom-color: #000000;
+                  border-right-width: 1px;
+
+                  border-right-style: solid;
+                  border-right-color: #000000;
+                "
+              >
+                &nbsp;
+              </td>
+              <td
+                class="linea_inf_derecha"
+                style="
+                  border-bottom-style: solid;
+                  border-bottom-width: 1px;
+                  border-bottom-color: #000000;
+                  border-right-width: 1px;
+                  border-right-style: solid;
+                  border-right-color: #000000;
+                "
+              >
+                Producto:<span *ngIf="dataprints[0]?.id_prod_serv === 1"
+                  >(X)</span
+                >
+              </td>
+              <td
+                class="linea_infe"
+                style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                "
+              >
+                Servicio:<span *ngIf="dataprints[0]?.id_prod_serv === 2"
+                  >(x)</span
+                >
+              </td>
+            </tr>
+            <tr>
+              <td
+                colspan="2"
+                class="linea_infe"
+                style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                "
+              >
+                <strong>4. Detalle de la Reclamación:</strong>
+              </td>
+              <td
+                class="linea_infe"
+                style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                "
+              >
+                &nbsp;
+              </td>
+              <td
+                class="linea_inf_derecha"
+                style="
+                  border-bottom-style: solid;
+                  border-bottom-width: 1px;
+                  border-bottom-color: #000000;
+                  border-right-width: 1px;
+
+                  border-right-style: solid;
+                  border-right-color: #000000;
+                "
+              >
+                &nbsp;
+              </td>
+              <td
+                class="linea_inf_derecha"
+                style="
+                  border-bottom-style: solid;
+                  border-bottom-width: 1px;
+                  border-bottom-color: #000000;
+                  border-right-width: 1px;
+
+                  border-right-style: solid;
+                  border-right-color: #000000;
+                "
+              >
+                Reclamo(i):<span *ngIf="dataprints[0]?.id_tiporeclamo != 1"
+                  >(x)</span
+                >
+              </td>
+              <td
+                class="linea_infe"
+                style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                "
+              >
+                Queja(ii):<span *ngIf="dataprints[0]?.id_tiporeclamo === 1"
+                  >(x)</span
+                >
+              </td>
+            </tr>
+
+            <tr>
+              <td
+                colspan="2"
+                align="right"
+                class="linea_inf_derecha"
+                style="
+                  border-bottom-style: solid;
+                  border-bottom-width: 1px;
+                  border-bottom-color: #000000;
+                  border-right-width: 1px;
+
+                  border-right-style: solid;
+                  border-right-color: #000000;
+                "
+              >
+                Fecha de Ocurrencia del Evento:
+              </td>
+              <td
+                width="85"
+                class="linea_inf_derecha"
+                style="
+                  border-bottom-style: solid;
+                  border-bottom-width: 1px;
+                  border-bottom-color: #000000;
+                  border-right-width: 1px;
+
+                  border-right-style: solid;
+                  border-right-color: #000000;
+                "
+              >
+                {{ this.dataprints[0]?.fecha_evento }}
+              </td>
+              <td
+                colspan="2"
+                align="right"
+                class="linea_inf_derecha"
+                style="
+                  border-bottom-style: solid;
+                  border-bottom-width: 1px;
+                  border-bottom-color: #000000;
+                  border-right-width: 1px;
+
+                  border-right-style: solid;
+                  border-right-color: #000000;
+                "
+              >
+                Fecha del Reclamo :
+              </td>
+              <td
+                width="139"
+                class="linea_infe"
+                style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                "
+              >
+                {{ this.dataprints[0]?.fecha_solucion }}
+              </td>
+            </tr>
+
+            <tr>
+              <td
+                colspan="6"
+                class="linea_inf_derecha"
+                style="
+                  border-bottom-style: solid;
+                  border-bottom-width: 1px;
+                  border-bottom-color: #000000;
+                  border-right-width: 1px;
+
+                  border-right-style: solid;
+                  border-right-color: #000000;
+                "
+              >
+                <table
+                  width="100%"
+                  border="0"
+                  cellspacing="0"
+                  cellpadding="0"
+                  style="
+                    font-size: 11px;
+                    font-family: Arial, Helvetica, sans-serif;
+                  "
+                >
+                  <tr>
+                    <td width="34%" align="right" class="">
+                      Código de IAFAS que Financió atención :
+                      {{ codigo_iafas }}
+                    </td>
+                    <td width="5%" class="">&nbsp;</td>
+                    <td width="35%" class="">
+                      Código de IPRESS que brinda atención :{{ codigo_ipress }}
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td
+                colspan="6"
+                class="linea_infe"
+                style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                "
+              >
+                <table
+                  width="100%"
+                  border="0"
+                  cellspacing="0"
+                  cellpadding="0"
+                  style="
+                    font-size: 11px;
+                    font-family: Arial, Helvetica, sans-serif;
+                  "
+                >
+                  <tr>
+                    <td width="45%" align="center" class="">
+                      Motivo del Reclamo : {{ dataprints[0]?.name_garantia }}
+                    </td>
+                    <td width="45%" align="center" class="">&nbsp;</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td
+                height="80"
+                colspan="6"
+                class="linea_infe"
+                style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                "
+              >
+                {{ dataprints[0]?.v_descripcion_reclamo }}
+              </td>
+            </tr>
+            <tr>
+              <td
+                colspan="6"
+                class="linea_infe"
+                style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                "
+              >
+                <strong>5. Acciones tomadas por el proveedor</strong>
+              </td>
+            </tr>
+            <tr>
+              <td
+                height="80"
+                class="linea_infe"
+                style="
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color: #000000;
+                "
+                colspan="6"
+              >
+                {{ acrion_realizada }}
+              </td>
+            </tr>
+            <tr>
+              <td height="20" colspan="6">
+                <strong>Documentos que se adjuntan : </strong>
+              </td>
+            </tr>
+            <tr *ngFor="let item of archivos">
+              <td height="20" colspan="6">{{ item }}</td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="Estilo12" style="font-size: 11px; font-weight: bold">
+          &nbsp;
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <span class="Estilo3" style="font-size: 10px"
+            >(i) Reclamo : Disconformidad relacionada con el servicio
+            <br />(ii)Queja: Disconformidad no relacionada al servicio; o
+            malestar o descontento respecto a la atención del publico
+          </span>
+        </td>
+      </tr>
+
+      <tr>
+        <td height="60">&nbsp;</td>
+      </tr>
+      <tr>
+        <td>
+          <table
+            width="221"
+            border="0"
+            cellpadding="0"
+            cellspacing="0"
+            class="estilo11"
+            style="
+              width: 221px;
+              font-size: 11px;
+              font-family: Arial, Helvetica, sans-serif;
+            "
+          >
+            <tr>
+              <td>____________________________________</td>
+            </tr>
+            <tr>
+              <td><div align="center"></div></td>
+            </tr>
+            <tr>
+              <td>
+                <div align="center">
+                  <strong>Afiliado / Representante</strong>.
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td align="center"><strong>DNI</strong>:</td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+      </tr>
+    </table>
+    <div style="height: 30px"></div>
+
+    <table
+      width="700"
+      border="0"
+      align="center"
+      cellpadding="0"
+      cellspacing="0"
+      class="estilo11"
+      style="
+        width: 700px;
+        font-size: 11px;
+        font-family: Arial, Helvetica, sans-serif;
+      "
+    >
+      <tr>
+        <td align="left" height="" width="950">
+          <b>Lugar donde se genero el Reclamo / Sugerencia:</b>
+        </td>
+      </tr>
+    </table>
+
+    <div style="height: 30px"></div>
+
+    <table
+      width="700"
+      border="0"
+      align="center"
+      cellpadding="0"
+      cellspacing="0"
+      class="estilo11"
+      style="
+        width: 700px;
+        font-size: 11px;
+        font-family: Arial, Helvetica, sans-serif;
+      "
+    >
+      <tr>
+        <td align="left" height="" width="950">
+          <BR /> <strong>CSALUD S.A.<BR /> RUC 20101165389</strong><br />
+          <b>Atención al Cliente:</b><br />
+          <b>www.maisondesante.org.pe </b>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+<div class="modal-footer">
+  <!--button type="button" class="btn btn-primary">
+      <i class="fas fa-save"></i> Guardar
+    </button-->
+  <button
+    type="button"
+    class="btn btn-outline-dark"
+    (click)="activeModal.close('Close click')"
+  >
+    <i class="fa fa-minus-circle"></i> Cancelar
+  </button>
+</div>

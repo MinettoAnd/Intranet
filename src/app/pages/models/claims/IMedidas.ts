@@ -1,0 +1,16 @@
+export interface IMedidas {
+  id: number,
+  idreclamo: number,
+  empresa: string,
+  fecha_inicio: string,
+  fecha_culminacion: string,
+  tipo_reclamo: number,
+  codigo_unico: string,
+  codigo_adoptado: string,
+  detalle_reclamo: string,
+  naturaleza: number,
+  resumen: string,
+  processo_adoptada: number,
+  fecha_registro: string,
+  fecha_actulizacion: string,
+}

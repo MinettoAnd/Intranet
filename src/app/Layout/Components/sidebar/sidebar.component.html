@@ -1,0 +1,225 @@
+<div
+  [class]="'app-sidebar sidebar-shadow ' + (config$ | async).sidebarTheme"
+  (mouseover)="sidebarHover()"
+  (mouseout)="sidebarHover()"
+>
+  <div class="app-header__logo">
+    <!-- class="logo-src" -->
+    <div>
+      <img src="../../../../assets/images/img-text.png" width="200" alt="" />
+    </div>
+    <div class="header__pane ml-auto">
+      <button
+        type="button"
+        class="hamburger close-sidebar-btn hamburger--elastic"
+        [ngClass]="{ 'is-active': globals.toggleSidebar }"
+        (click)="toggleSidebar()"
+      >
+        <span class="hamburger-box">
+          <span class="hamburger-inner"></span>
+        </span>
+      </button>
+    </div>
+  </div>
+  <div class="app-sidebar-content">
+    <div class="app-sidebar-scroll">
+      <perfect-scrollbar [autoPropagation]="true">
+        <div class="v-sidebar-menu vsm-default">
+          <div class="vsm-list">
+            <ngb-accordion
+              [destroyOnHide]="false"
+              [closeOthers]="true"
+              [activeIds]="extraParameter"
+            >
+              <ngb-panel [id]="item.menu" *ngFor="let item of menuItems">
+                <ng-template ngbPanelHeader>
+                  <div class="vsm-header">{{ item.title }}</div>
+                  <button ngbPanelToggle class="vsm-link">
+                    <i [class]="item.icon"></i>
+                    <span class="vsm-title"> {{ item.name_model }}</span>
+                    <i class="vsm-arrow"></i>
+                  </button>
+                </ng-template>
+                <ng-template ngbPanelContent>
+                  <div class="vsm-dropdown">
+                    <div class="vsm-list">
+                      <div
+                        class="vsm-item"
+                        *ngFor="let subMenuItem of item.rides"
+                      >
+                        <a
+                          (click)="goRutePagesHeaderTitle(subMenuItem.header)"
+                          routerLinkActive="active-item"
+                          routerLink="{{ subMenuItem.url }}"
+                          *ngIf="subMenuItem.isChecked"
+                          class="vsm-link"
+                        >
+                          <span class="vsm-title">{{
+                            subMenuItem.name
+                          }}</span></a
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </ng-template>
+              </ngb-panel>
+            </ngb-accordion>
+          </div>
+        </div>
+      </perfect-scrollbar>
+    </div>
+  </div>
+</div>
+
+<!--div class="v-sidebar-menu vsm-default">
+  <div class="vsm-list">
+    <ngb-accordion
+      [destroyOnHide]="false"
+      [closeOthers]="true"
+      [activeIds]="extraParameter"
+    >
+      <ngb-panel>
+        <ng-template ngbPanelHeader>
+          <div class="vsm-header">ADMIN</div>
+        </ng-template>
+      </ngb-panel>
+
+      <ngb-panel id="adminMenu">
+        <ng-template ngbPanelHeader>
+          <button ngbPanelToggle class="vsm-link">
+            <i class="vsm-icon pe-7s-users"></i>
+            <span class="vsm-title">Autenticación</span>
+            <i class="vsm-arrow"></i>
+          </button>
+        </ng-template>
+        <ng-template ngbPanelContent>
+          <div class="vsm-dropdown">
+            <div class="vsm-list">
+              <div class="vsm-item">
+                <a
+                  routerLinkActive="active-item"
+                  routerLink="/admin/users"
+                  class="vsm-link"
+                  ><span class="vsm-title">Usuarios</span></a
+                >
+              </div>
+              <div class="vsm-item">
+                <a
+                  routerLinkActive="active-item"
+                  routerLink="/admin/roles"
+                  class="vsm-link"
+                  ><span class="vsm-title">Roles</span></a
+                >
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </ngb-panel>
+      <ngb-panel>
+        <ng-template ngbPanelHeader>
+          <div class="vsm-header">RECURSOS HUMANOS</div>
+        </ng-template>
+      </ngb-panel>
+      <ngb-panel id="recursosMenu">
+        <ng-template ngbPanelHeader>
+          <button ngbPanelToggle class="vsm-link">
+            <i class="vsm-icon pe-7s-diamond"></i>
+            <span class="vsm-title">RRHH</span>
+            <i class="vsm-arrow"></i>
+          </button>
+        </ng-template>
+        <ng-template ngbPanelContent>
+          <div class="vsm-dropdown">
+            <div class="vsm-list">
+              <div class="vsm-item">
+                <a
+                  routerLinkActive="active-item"
+                  routerLink="/rrhh/collaborators"
+                  class="vsm-link"
+                >
+                  <span class="vsm-title">Colaboradores</span></a
+                >
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </ngb-panel>
+      <ngb-panel>
+        <ng-template ngbPanelHeader>
+          <div class="vsm-header">GESTIÓN DE RECLAMOS</div>
+        </ng-template>
+      </ngb-panel>
+      <ngb-panel id="claimsMenu">
+        <ng-template ngbPanelHeader>
+          <button ngbPanelToggle class="vsm-link">
+            <i class="vsm-icon pe-7s-diamond"></i>
+            <span class="vsm-title">Reclamos</span>
+            <i class="vsm-arrow"></i>
+          </button>
+        </ng-template>
+        <ng-template ngbPanelContent>
+          <div class="vsm-dropdown">
+            <div class="vsm-list">
+              <div class="vsm-item">
+                <a
+                  routerLinkActive="active-item"
+                  routerLink="/claims/iafas"
+                  class="vsm-link"
+                >
+                  <span class="vsm-title">Csalud-Iafas</span></a
+                >
+              </div>
+              <div class="vsm-item">
+                <a
+                  routerLinkActive="active-item"
+                  routerLink="/claims/ipress"
+                  class="vsm-link"
+                >
+                  <span class="vsm-title">Cms-Ipress</span></a
+                >
+              </div>
+              <div class="vsm-item">
+                <a
+                  routerLinkActive="active-item"
+                  routerLink="/claims/portal"
+                  class="vsm-link"
+                  ><span class="vsm-title">Portal-Web</span></a
+                >
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </ngb-panel>
+
+      <ngb-panel>
+        <ng-template ngbPanelHeader>
+          <div class="vsm-header">REPORTES</div>
+        </ng-template>
+      </ngb-panel>
+      <ngb-panel id="reportMenu">
+        <ng-template ngbPanelHeader>
+          <button ngbPanelToggle class="vsm-link">
+            <i class="vsm-icon pe-7s-diamond"></i>
+            <span class="vsm-title">Reportes</span>
+            <i class="vsm-arrow"></i>
+          </button>
+        </ng-template>
+        <ng-template ngbPanelContent>
+          <div class="vsm-dropdown">
+            <div class="vsm-list">
+              <div class="vsm-item">
+                <a
+                  routerLinkActive="active-item"
+                  routerLink="/report/send"
+                  class="vsm-link"
+                >
+                  <span class="vsm-title">Directores</span></a
+                >
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </ngb-panel>
+    </ngb-accordion>
+  </div>
+</div-->

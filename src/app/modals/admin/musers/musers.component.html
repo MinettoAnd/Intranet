@@ -1,0 +1,194 @@
+<div class="modal-header">
+  <h4 class="modal-title">Asginar Rol</h4>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="activeModal.dismiss('Cross click')"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="main-card mb-3 card" *ngIf="dato.isRegister == 1">
+    <div class="card-header">
+      <div
+        class="card-header-title font-size-lg text-capitalize font-weight-normal"
+      >
+        <form [formGroup]="searchForm">
+          <div class="input-group">
+            <input
+              placeholder="Busqueda por nombres o apellidos"
+              type="text"
+              formControlName="names"
+              [ngClass]="{
+                'is-invalid': submitted && f.names.errors
+              }"
+              class="form-control"
+            />
+            <div class="input-group-append">
+              <button
+                (click)="searchUsers()"
+                class="btn-shadow btn btn-sm btn-outline-success"
+              >
+                <i class="pe-7s-search btn-icon-wrapper"> </i>
+              </button>
+            </div>
+            <div *ngIf="submitted && f.names.errors" class="invalid-feedback">
+              <div *ngIf="f.names.errors.required">Campo requerido</div>
+            </div>
+          </div>
+          <div class="position-relative form-group mt-2">
+            <select
+              name="select"
+              formControlName="idrol"
+              id="exampleSelect"
+              class="form-control"
+            >
+              <option value="">Seleccione Rol...</option>
+              <option value="{{ item.idrol }}" *ngFor="let item of roles">
+                {{ item.name }}
+              </option>
+            </select>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="col-md-2 mt-2">
+      <select
+        class="custom-select"
+        style="width: auto"
+        [(ngModel)]="pageSize"
+        (ngModelChange)="refreshCountries()"
+      >
+        <option [ngValue]="20">20</option>
+        <option [ngValue]="40">40</option>
+        <option [ngValue]="60">60</option>
+      </select>
+    </div>
+
+    <div class="table-responsive">
+      <table
+        class="align-middle text-truncate mb-0 table table-sm table-borderless table-hover"
+      >
+        <thead>
+          <tr>
+            <th class="text-left">Nombres</th>
+            <th class="text-left">Usuario</th>
+            <th class="text-left">Area</th>
+            <th class="text-center">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of listpersona; let i = index">
+            <td class="text-left">{{ item.Nombres }} {{ item.Apellidos }}</td>
+            <td class="text-left">{{ item.Usuario }}</td>
+            <td class="text-left">{{ item.DES_AREAS }}</td>
+            <td class="text-center" style="cursor: pointer">
+              <div class="custom-checkbox custom-control custom-control-inline">
+                <input
+                  type="checkbox"
+                  id="{{ i }}"
+                  (change)="changeSelection(item, $event.target.checked)"
+                  class="custom-control-input"
+                /><label for="{{ i }}" class="custom-control-label"
+                  >Seleccionar usuario</label
+                >
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="d-block p-4 text-center card-footer">
+      <ngb-pagination
+        [collectionSize]="collectionSize"
+        [(page)]="page"
+        [pageSize]="pageSize"
+        (pageChange)="refreshCountries()"
+      >
+      </ngb-pagination>
+    </div>
+  </div>
+  <!--UPDATE USER-->
+  <div class="main-card mb-3 card" *ngIf="dato.isRegister == 2">
+    <div class="card-body">
+      <div [formGroup]="updateForm">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Nombre</span>
+          </div>
+          <input
+            [(ngModel)]="dato.iduser"
+            formControlName="iduser"
+            type="text"
+            class="form-control"
+            style="display: none"
+          />
+          <input
+            [(ngModel)]="dato.nombre"
+            formControlName="editname"
+            type="text"
+            class="form-control"
+          />
+        </div>
+        <div class="input-group mt-2">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Apellidos</span>
+          </div>
+          <input
+            [(ngModel)]="dato.apellidos"
+            formControlName="editapellidos"
+            type="text"
+            class="form-control"
+          />
+        </div>
+        <div class="input-group mt-2">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Area</span>
+          </div>
+          <input
+            [(ngModel)]="dato.area"
+            formControlName="editarea"
+            type="text"
+            class="form-control"
+          />
+        </div>
+        <div class="input-group mt-2">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Rol</span>
+          </div>
+          <select
+            name="select"
+            formControlName="editrol"
+            [(ngModel)]="dato.idrol"
+            id="exampleSelect"
+            class="form-control"
+          >
+            <option value="">Seleccione...</option>
+            <option value="{{ item.idrol }}" *ngFor="let item of roles">
+              {{ item.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--END UPDATE USER-->
+</div>
+<div class="modal-footer">
+  <button
+    (click)="registerUser(dato.isRegister)"
+    type="button"
+    class="btn btn-primary"
+  >
+    <i class="fas fa-save"></i> Guardar
+  </button>
+  <button
+    type="button"
+    class="btn btn-outline-dark"
+    (click)="activeModal.close('Close click')"
+  >
+    <i class="fas fa-minus-circle"></i> Cancelar
+  </button>
+</div>

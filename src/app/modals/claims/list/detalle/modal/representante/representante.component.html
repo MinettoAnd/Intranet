@@ -1,0 +1,107 @@
+<div class="modal-header">
+  <h4 class="modal-title">Modificar Información del Representante</h4>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="activeModal.dismiss('Cross click')"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="rForm">
+    <div class="row">
+      <div class="form-group col-md-4">
+        <label for="nombre">Nombres</label>
+        <div class="input-group">
+          <input
+            type="text"
+            [(ngModel)]="datarepresentante.nombre"
+            formControlName="nombre"
+            class="form-control form-control-sm"
+          />
+        </div>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="paterno">Apellido Paterno</label>
+        <div class="input-group">
+          <input
+            type="text"
+            [(ngModel)]="datarepresentante.paterno"
+            formControlName="paterno"
+            class="form-control form-control-sm"
+          />
+        </div>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="materno">Apellido Materno</label>
+        <div class="input-group">
+          <input
+            type="text"
+            [(ngModel)]="datarepresentante.materno"
+            formControlName="materno"
+            class="form-control form-control-sm"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md-4">
+        <label for="telefono">Telefono </label>
+        <div class="input-group">
+          <input
+            type="text"
+            [(ngModel)]="datarepresentante.telefono"
+            formControlName="telefono"
+            class="form-control form-control-sm"
+          />
+        </div>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="parentesco">Parentesco</label>
+        <select
+          id="parentesco"
+          class="form-control form-select form-control-sm"
+          [(ngModel)]="datarepresentante.parentesco"
+          formControlName="parentesco"
+        >
+          <option value="">Seleccione...</option>
+          <option
+            *ngFor="let item of listparentesco"
+            value="{{ item.id_parentesco }}"
+          >
+            {{ item.v_descripcion }}
+          </option>
+        </select>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="correo">Correo </label>
+        <div class="input-group">
+          <input
+            type="text"
+            [(ngModel)]="datarepresentante.correo"
+            formControlName="correo"
+            class="form-control form-control-sm"
+          />
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button
+    (click)="updateInfoRepresentante()"
+    type="button"
+    class="btn btn-primary"
+  >
+    <i class="fa fa-save"></i> Guardar
+  </button>
+  <button
+    type="button"
+    class="btn btn-outline-dark"
+    (click)="activeModal.close('Close click')"
+  >
+    <i class="fa fa-minus-circle"></i> Cancelar
+  </button>
+</div>

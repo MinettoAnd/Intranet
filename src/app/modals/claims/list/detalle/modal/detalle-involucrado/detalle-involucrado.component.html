@@ -1,0 +1,315 @@
+<div class="modal-header">
+  <h4 class="modal-title">Modificar Involucrado/Transferido Reclamo</h4>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="activeModal.dismiss('Cross click')"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="inForm">
+    <div class="row">
+      <div class="form-group col-md-8">
+        <label for="area">Area </label>
+        <select
+          id="area"
+          formControlName="area"
+          [(ngModel)]="areaid"
+          class="form-control form-select form-control-sm"
+          (change)="onChangeAreaName(1, $event)"
+        >
+          <option value="">Seleccione...</option>
+          <option
+            *ngFor="let item of listareas"
+            value="{{ item.Departamento }}"
+          >
+            {{ item.Descripcion }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-md-12 mt-2">
+        <h6>Personal Involucrado</h6>
+      </div>
+      <div class="form-group col-md-6">
+        <select
+          id="medico_admistrativo"
+          class="form-control form-select form-control-sm"
+          [(ngModel)]="admistrativo"
+          formControlName="medico_admistrativo"
+        >
+          <option value="">Seleccione...</option>
+          <option value="1">Personal Administrativo</option>
+          <option value="2">Médicos</option>
+        </select>
+      </div>
+      <div class="col-md-12">
+        <form [formGroup]="searchInvolucradoForm">
+          <div class="row mt-2">
+            <div class="form-group col-md-12">
+              <div class="card-header-action">
+                <div class="input-group">
+                  <input
+                    type="text"
+                    formControlName="pinvolucrado"
+                    [ngClass]="{
+                      'is-invalid':
+                        submittedinvolucrado && i.pinvolucrado.errors
+                    }"
+                    class="form-control form-control-sm"
+                    placeholder="Apellidos"
+                  />
+                  <div class="input-group-btn">
+                    <button
+                      (click)="searchPersonalInvolucrado()"
+                      class="btn btn-sm btn-primary"
+                    >
+                      <i class="fa fa-search"></i>Filtrar
+                    </button>
+                  </div>
+                  <div
+                    *ngIf="submittedinvolucrado && i.pinvolucrado.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="i.pinvolucrado.errors.required">
+                      Campo requerido
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md-4" style="display: none">
+        <label for="code">code</label>
+        <div class="input-group">
+          <input
+            type="text"
+            formControlName="code"
+            [(ngModel)]="codigo"
+            class="form-control form-control-sm"
+          />
+        </div>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="nombre">Nombre</label>
+        <div class="input-group">
+          <input
+            type="text"
+            formControlName="nombre"
+            [(ngModel)]="nombre"
+            class="form-control form-control-sm"
+          />
+        </div>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="paterno">Apellido Paterno </label>
+        <div class="input-group">
+          <input
+            type="text"
+            formControlName="paterno"
+            [(ngModel)]="paterno"
+            class="form-control form-control-sm"
+          />
+        </div>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="materno">Apellido Materno </label>
+        <div class="input-group">
+          <input
+            type="text"
+            formControlName="materno"
+            [(ngModel)]="materno"
+            class="form-control form-control-sm"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md-12 mt-2">
+        <h6>Nombre del jefe de área</h6>
+      </div>
+      <div class="form-group col-md-4" style="display: none">
+        <label for="jcode">code</label>
+        <div class="input-group">
+          <input
+            type="text"
+            formControlName="jcode"
+            [(ngModel)]="jcodigo"
+            class="form-control form-control-sm"
+          />
+        </div>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="jnombre">Nombre </label>
+        <div class="input-group">
+          <input
+            type="text"
+            formControlName="jnombre"
+            [(ngModel)]="jnombre"
+            class="form-control form-control-sm"
+          />
+        </div>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="jpaterno">Apellido Paterno </label>
+        <div class="input-group">
+          <input
+            type="text"
+            formControlName="jpaterno"
+            [(ngModel)]="jpaterno"
+            class="form-control form-control-sm"
+          />
+        </div>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="jmaterno">Apellidos Materno</label>
+        <div class="input-group">
+          <input
+            type="text"
+            formControlName="jmaterno"
+            [(ngModel)]="jmaterno"
+            class="form-control form-control-sm"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md-12 mt-2">
+        <hr />
+        <h4>Transferido</h4>
+      </div>
+      <div class="form-group col-md-8">
+        <label for="area_trasladado">Area </label>
+        <select
+          id="area_trasladado"
+          class="form-control form-select form-control-sm"
+          [(ngModel)]="areaid2"
+          (change)="onChangeAreaName(2, $event)"
+          formControlName="area_trasladado"
+        >
+          <option value="">Seleccione...</option>
+          <option
+            *ngFor="let item of listareas"
+            value="{{ item.Departamento }}"
+          >
+            {{ item.Descripcion }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md-12 mt-2">
+        <h6>Personal Transferido</h6>
+      </div>
+      <div class="col-md-12">
+        <form [formGroup]="searchTrasladadoForm">
+          <div class="row mt-2">
+            <div class="form-group col-md-12">
+              <div class="card-header-action">
+                <div class="input-group">
+                  <input
+                    type="text"
+                    formControlName="ptransferido"
+                    [ngClass]="{
+                      'is-invalid':
+                        submittedtransferido && t.ptransferido.errors
+                    }"
+                    class="form-control form-control-sm"
+                    placeholder="Apellidos"
+                  />
+                  <div class="input-group-btn">
+                    <button
+                      (click)="searchPersonalTransferido()"
+                      class="btn btn-sm btn-primary"
+                    >
+                      <i class="fa fa-search"></i>Filtrar
+                    </button>
+                  </div>
+                  <div
+                    *ngIf="submittedtransferido && t.ptransferido.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="t.ptransferido.errors.required">
+                      Campo requerido
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md-4" style="display: none">
+        <label for="pcode">code</label>
+        <div class="input-group">
+          <input
+            type="text"
+            formControlName="pcode"
+            [(ngModel)]="tcodigo"
+            class="form-control form-control-sm"
+          />
+        </div>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="pnombre">Nombre</label>
+        <div class="input-group">
+          <input
+            type="text"
+            formControlName="pnombre"
+            [(ngModel)]="tnombre"
+            class="form-control form-control-sm"
+          />
+        </div>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="ppaterno">Apellido Paterno </label>
+        <div class="input-group">
+          <input
+            type="text"
+            formControlName="ppaterno"
+            [(ngModel)]="tpaterno"
+            class="form-control form-control-sm"
+          />
+        </div>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="pmaterno">Apellido Materno </label>
+        <div class="input-group">
+          <input
+            type="text"
+            formControlName="pmaterno"
+            [(ngModel)]="tmaterno"
+            class="form-control form-control-sm"
+          />
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button
+    (click)="updateInvolucradoTranferido()"
+    type="button"
+    class="btn btn-primary"
+  >
+    <i class="fa fa-save"></i> Guardar
+  </button>
+  <button
+    type="button"
+    class="btn btn-outline-dark"
+    (click)="activeModal.close('Close click')"
+  >
+    <i class="fa fa-minus-circle"></i> Cancelar
+  </button>
+</div>

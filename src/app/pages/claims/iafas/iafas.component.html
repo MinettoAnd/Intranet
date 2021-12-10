@@ -1,0 +1,43 @@
+<div class="text-center">
+  <div
+    class="btn-group-sm btn-group btn-group-toggle"
+    ngbRadioGroup
+    name="radioBasic"
+    [(ngModel)]="model"
+  >
+    <label ngbButtonLabel class="btn-primary">
+      <input ngbButton type="radio" (click)="showComponent(2)" [value]="1" /><i
+        class="fa fa-fw"
+        aria-hidden="true"
+        title="th-list"
+        ></i
+      >
+      Lista de Reclamos
+    </label>
+    <label ngbButtonLabel class="btn-primary">
+      <input
+        ngbButton
+        type="radio"
+        (click)="showComponent(1)"
+        value="middle"
+      /><i class="fa fa-fw" aria-hidden="true" title="book"></i>
+      Registro de Reclamos
+    </label>
+    <label ngbButtonLabel class="btn-primary">
+      <input
+        ngbButton
+        type="radio"
+        (click)="showComponent(3)"
+        [value]="false"
+      /><i class="fa fa-fw" aria-hidden="true" title="tachometer"></i>
+      Dashboard
+    </label>
+  </div>
+</div>
+
+<!--Lista de Reclamos-->
+<app-list *ngIf="listclaims"></app-list>
+<!--Registro de Reclamos-->
+<app-register *ngIf="showformclaims"></app-register>
+<!--Dashboard-->
+<app-dashboard *ngIf="dashboard"></app-dashboard>

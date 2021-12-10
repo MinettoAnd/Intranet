@@ -1,0 +1,792 @@
+<div class="modal-header">
+  <h4 class="modal-title">Solucion al Reclamo</h4>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="activeModal.dismiss('Cross click')"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <ngb-tabset>
+    <ngb-tab title="Información general del cliente">
+      <ng-template ngbTabContent>
+        <div class="main-card mb-3 mt-2 card">
+          <div class="card-header">
+            Paciente
+            <button (click)="open(1)" class="btn btn-info btn-sm float-right">
+              <i class="pe-7s-note"></i> Editar
+            </button>
+          </div>
+          <div class="card-body">
+            <div class="form-row">
+              <div class="col-md-6">
+                <div class="position-relative form-group">
+                  <label for="nombre">Nombres</label
+                  ><input
+                    name="nombre"
+                    id="nombre"
+                    type="text"
+                    value="{{ listDetalle[0]?.v_nombre_completo }} "
+                    class="form-control form-control-sm"
+                    [disabled]="true"
+                  />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="position-relative form-group">
+                  <label for="dni">Dni</label
+                  ><input
+                    name="dni"
+                    id="dni"
+                    type="text"
+                    value="{{ listDetalle[0]?.v_doc_titular }}"
+                    class="form-control form-control-sm"
+                    [disabled]="true"
+                  />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="position-relative form-group">
+                  <label for="correo">Correo</label
+                  ><input
+                    name="correo"
+                    id="correo"
+                    type="text"
+                    value="{{ listDetalle[0]?.v_correop }}"
+                    class="form-control form-control-sm"
+                    [disabled]="true"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col-md-3">
+                <div class="position-relative form-group">
+                  <label for="fechareclamo">Fecha Reclamo </label
+                  ><input
+                    name="fechareclamo"
+                    id="fechareclamo"
+                    type="text"
+                    value="{{
+                      rgetFormatFeha(listDetalle[0]?.d_registra_reclamo)
+                    }}"
+                    class="form-control form-control-sm"
+                    [disabled]="true"
+                  />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="position-relative form-group">
+                  <label for="telefono">Telefono</label
+                  ><input
+                    name="telefono"
+                    id="telefono"
+                    type="text"
+                    value="{{ listDetalle[0]?.v_telefono1 }}"
+                    class="form-control form-control-sm"
+                    [disabled]="true"
+                  />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="position-relative form-group">
+                  <label for="hclinica">Historia Clínica </label
+                  ><input
+                    name="hclinica"
+                    id="hclinica"
+                    type="text"
+                    value="{{ listDetalle[0]?.v_hist_clinica1 }}"
+                    class="form-control form-control-sm"
+                    [disabled]="true"
+                  />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="position-relative form-group">
+                  <label for="estado">Estado</label
+                  ><input
+                    name="estado"
+                    id="estado"
+                    type="text"
+                    value="{{ listDetalle[0]?.name_estado }}"
+                    class="form-control form-control-sm"
+                    [disabled]="true"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col-md-4">
+                <div class="position-relative form-group">
+                  <label for="tipopaciente">Tipo Paciente </label
+                  ><input
+                    name="tipopaciente"
+                    id="tipopaciente"
+                    type="text"
+                    value="{{ listDetalle[0]?.name_tipo_paciente }}"
+                    class="form-control form-control-sm"
+                    [disabled]="true"
+                  />
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="position-relative form-group">
+                  <label for="fechaevento">Fecha del Evento</label
+                  ><input
+                    name="fechaevento"
+                    id="fechaevento"
+                    type="text"
+                    value="{{
+                      rgetFormatFeha(listDetalle[0]?.d_fecha_reclamo)
+                    }}"
+                    class="form-control form-control-sm"
+                    [disabled]="true"
+                  />
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="position-relative form-group">
+                  <label for="fechasolucion">Fecha de Solución </label
+                  ><input
+                    name="fechasolucion"
+                    id="fechasolucion"
+                    type="text"
+                    value="{{ rgetFormatFeha(listDetalle[0]?.d_solucion) }}"
+                    class="form-control form-control-sm"
+                    [disabled]="true"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col-md-8">
+                <div class="position-relative form-group">
+                  <label for="domicilo">Domicilo</label
+                  ><input
+                    name="domicilo"
+                    id="domicilo"
+                    type="text"
+                    value="{{ listDetalle[0]?.v_domicilio }}"
+                    class="form-control form-control-sm"
+                    [disabled]="true"
+                  />
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="position-relative form-group">
+                  <label for="fecharegistro">Fecha de Registro </label
+                  ><input
+                    name="fecharegistro"
+                    id="fecharegistro"
+                    type="text"
+                    value="{{ rgetFormatFeha(listDetalle[0]?.d_registro) }}"
+                    class="form-control form-control-sm"
+                    [disabled]="true"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col-md-12">
+                <div class="position-relative form-group">
+                  <label for="direccion">Dpto/Prov/Dist </label
+                  ><input
+                    name="direccion"
+                    id="direccion"
+                    type="text"
+                    value="{{ namedepartamento }} / {{ nameprovincia }}  / {{
+                      namedistrito
+                    }}"
+                    class="form-control form-control-sm"
+                    [disabled]="true"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="main-card mb-3 mt-2 card">
+          <div class="card-header">
+            Representante
+            <button (click)="open(2)" class="btn btn-info btn-sm float-right">
+              <i class="pe-7s-note"></i> Editar
+            </button>
+          </div>
+          <div class="card-body">
+            <div class="form-row">
+              <div class="col-md-6">
+                <div class="position-relative form-group">
+                  <label for="rnombre">Nombres</label
+                  ><input
+                    name="rnombre"
+                    id="rnombre"
+                    type="text"
+                    value="{{ listDetalle[0]?.v_Nombres2 }} {{
+                      listDetalle[0]?.v_paterno2
+                    }} {{ listDetalle[0]?.v_materno2 }}"
+                    class="form-control form-control-sm"
+                    [disabled]="true"
+                  />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="position-relative form-group">
+                  <label for="rdni">Telefono</label
+                  ><input
+                    name="rdni"
+                    id="rdni"
+                    type="text"
+                    value="{{ listDetalle[0]?.v_celular2 }}"
+                    class="form-control form-control-sm"
+                    [disabled]="true"
+                  />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="position-relative form-group">
+                  <label for="rcorreo">Parentesco</label
+                  ><input
+                    name="rcorreo"
+                    id="rcorreo"
+                    type="text"
+                    value="{{ parentesco[0]?.v_descripcion }}"
+                    class="form-control form-control-sm"
+                    [disabled]="true"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col-md-12">
+                <div class="position-relative form-group">
+                  <label for="rfechareclamo">Correo </label
+                  ><input
+                    name="rfechareclamo"
+                    id="rfechareclamo"
+                    type="text"
+                    value="{{ listDetalle[0]?.v_email2 }}"
+                    class="form-control form-control-sm"
+                    [disabled]="true"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab title="Involucrado/Transferido">
+      <ng-template ngbTabContent>
+        <div class="main-card mb-3 mt-2 card">
+          <div class="card-header">
+            Involucrado
+            <button (click)="open(3)" class="btn btn-info btn-sm float-right">
+              <i class="pe-7s-note"></i> Editar
+            </button>
+          </div>
+          <div class="card-body">
+            <div class="form-row">
+              <div class="col-md-6">
+                <div class="position-relative form-group">
+                  <label for="innombre">Nombres</label
+                  ><input
+                    name="innombre"
+                    id="innombre"
+                    type="text"
+                    value="{{ resultname }} {{ resultpaterno }} {{
+                      resultmaterno
+                    }}"
+                    class="form-control form-control-sm"
+                    [disabled]="true"
+                  />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="position-relative form-group">
+                  <label for="inarea">Area</label
+                  ><input
+                    name="inarea"
+                    id="inarea"
+                    type="text"
+                    value="{{ listDetalle[0]?.area_name }}"
+                    class="form-control form-control-sm"
+                    [disabled]="true"
+                  />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="position-relative form-group">
+                  <label for="innivel">Nivel </label
+                  ><input
+                    name="innivel"
+                    id="innivel"
+                    type="text"
+                    class="form-control form-control-sm"
+                    [disabled]="true"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col-md-12">
+                <div class="position-relative form-group">
+                  <label for="jefearea">Jefe de Area </label
+                  ><input
+                    name="jefearea"
+                    id="jefearea"
+                    type="text"
+                    value="{{ listDetalle[0]?.v_nombrejefe_involucrado }} {{
+                      listDetalle[0]?.v_p_apellidojefe_involucrado
+                    }} {{ listDetalle[0]?.v_m_apellidojefe_involucrado }}"
+                    class="form-control form-control-sm"
+                    [disabled]="true"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <label class="mt-3">Transferido </label>
+            <hr style="margin-top: 0rem" />
+            <div class="form-row">
+              <div class="col-md-6">
+                <div class="position-relative form-group">
+                  <label for="trnombre">Nombres</label
+                  ><input
+                    name="trnombre"
+                    id="trnombre"
+                    type="text"
+                    value="{{ listDetalle[0]?.v_usuario_transferifo_nom }} {{
+                      listDetalle[0]?.v_usuario_transferifo_pat
+                    }} {{ listDetalle[0]?.v_usuario_transferifo_mat }}"
+                    class="form-control form-control-sm"
+                    [disabled]="true"
+                  />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="position-relative form-group">
+                  <label for="tarea">Area</label
+                  ><input
+                    name="tarea"
+                    id="tarea"
+                    type="text"
+                    value="{{ listDetalle[0]?.area4_name }}"
+                    class="form-control form-control-sm"
+                    [disabled]="true"
+                  />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="position-relative form-group">
+                  <label for="tnivel">Nivel </label
+                  ><input
+                    name="tnivel"
+                    id="tnivel"
+                    type="text"
+                    class="form-control form-control-sm"
+                    [disabled]="true"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab title="Características del Reclamo">
+      <ng-template ngbTabContent>
+        <div class="main-card mb-3 mt-2 card">
+          <div class="card-header">
+            <button (click)="open(4)" class="btn btn-info btn-sm float-right">
+              <i class="pe-7s-note"></i> Editar
+            </button>
+          </div>
+          <div class="card-body">
+            <div class="form-row">
+              <div class="col-md-3">
+                <div class="position-relative form-group">
+                  <label for="rnombre">Clasificación</label
+                  ><input
+                    name="rnombre"
+                    id="rnombre"
+                    type="text"
+                    value="{{ clasificacion }}"
+                    class="form-control form-control-sm"
+                    [disabled]="true"
+                  />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="position-relative form-group">
+                  <label for="rnombre">Sede</label
+                  ><input
+                    name="rnombre"
+                    id="rnombre"
+                    type="text"
+                    value="{{ sedename }}"
+                    class="form-control form-control-sm"
+                    [disabled]="true"
+                  />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="position-relative form-group">
+                  <label for="rdni">Modo de Recepcion </label
+                  ><input
+                    name="rdni"
+                    id="rdni"
+                    type="text"
+                    value="{{ recepcions[0]?.v_descripcion }}"
+                    class="form-control form-control-sm"
+                    [disabled]="true"
+                  />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="position-relative form-group">
+                  <label for="rcorreo">Codigo</label
+                  ><input
+                    name="rcorreo"
+                    id="rcorreo"
+                    type="text"
+                    value="{{ codigo_de_reclamo }}"
+                    class="form-control form-control-sm"
+                    [disabled]="true"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col-md-4">
+                <div class="position-relative form-group">
+                  <label for="rfechareclamo">Garantia </label
+                  ><input
+                    name="rfechareclamo"
+                    id="rfechareclamo"
+                    type="text"
+                    value="{{ listDetalle[0]?.name_garantia }}"
+                    class="form-control form-control-sm"
+                    [disabled]="true"
+                  />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="position-relative form-group">
+                  <label for="rfechareclamo">Causa Específica </label
+                  ><input
+                    name="rfechareclamo"
+                    id="rfechareclamo"
+                    type="text"
+                    value="{{ listDetalle[0]?.name_causa_especifica }}"
+                    class="form-control form-control-sm"
+                    [disabled]="true"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col-md-3">
+                <div class="position-relative form-group">
+                  <label for="rfechareclamo">Nivel del Reclamo </label
+                  ><input
+                    name="rfechareclamo"
+                    id="rfechareclamo"
+                    type="text"
+                    [(ngModel)]="namenivel"
+                    class="form-control form-control-sm"
+                    [disabled]="true"
+                  />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="position-relative form-group">
+                  <label for="rfechareclamo">Codigo Web </label
+                  ><input
+                    name="rfechareclamo"
+                    id="rfechareclamo"
+                    type="text"
+                    value="{{ listDetalle[0]?.n_cod_web }}"
+                    class="form-control form-control-sm"
+                    [disabled]="true"
+                  />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="position-relative form-group">
+                  <label for="rfechareclamo">Codigo Libro Reclamaciones </label
+                  ><input
+                    name="rfechareclamo"
+                    id="rfechareclamo"
+                    type="text"
+                    value="{{ listcodigolibro[0]?.v_correlativo }}"
+                    class="form-control form-control-sm"
+                    [disabled]="true"
+                  />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="position-relative form-group">
+                  <label for="rfechareclamo"
+                    >Producto o Servicio Contratado </label
+                  ><input
+                    name="rfechareclamo"
+                    id="rfechareclamo"
+                    type="text"
+                    value="{{ productoservicio }}"
+                    class="form-control form-control-sm"
+                    [disabled]="true"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1"
+                >Destalle del reclamo
+              </label>
+              <textarea
+                class="form-control rounded-0"
+                id="exampleFormControlTextarea1"
+                [disabled]="true"
+                [innerHTML]="listDetalle[0]?.v_descripcion_reclamo"
+                rows="10"
+              ></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="exampleFormControlTextarea2"
+                >Breve Descripción del Reclamo
+              </label>
+              <textarea
+                class="form-control rounded-0"
+                id="exampleFormControlTextarea2"
+                [innerHTML]="listDetalle[0]?.descripcion_reclamo_envio"
+                [disabled]="true"
+                rows="10"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab title="Archivos Adjuntos">
+      <ng-template ngbTabContent>
+        <div class="col-md-12 col-lg-12 col-xl-12 mt-3">
+          <div class="card-shadow-primary card-border mb-3">
+            <div class="scroll-area-sm">
+              <perfect-scrollbar
+                ng-reflect-auto-propagation="true"
+                class="ps-show-limits"
+                ><div
+                  style="position: static"
+                  class="ps ps--active-y"
+                  ng-reflect-disabled="false"
+                >
+                  <div class="ps-content">
+                    <ul class="list-group list-group-flush">
+                      <li
+                        class="list-group-item"
+                        *ngFor="let item of listsarchivos; let i = index"
+                      >
+                        <div class="widget-content p-0">
+                          <div class="widget-content-wrapper">
+                            <div class="widget-content-left center-elem mr-2">
+                              <i class="pe-7s-file text-muted fsize-2"></i>
+                            </div>
+                            <div class="widget-content-left">
+                              <div class="widget-heading">{{ item }}</div>
+                            </div>
+                            <div class="widget-content-right">
+                              <button
+                                (click)="openDocs(item)"
+                                class="btn-transition btn btn-info"
+                              >
+                                <i class="pe-7s-look"></i>
+                              </button>
+                              <button
+                                (click)="deleteFile(item)"
+                                class="btn-transition btn btn-danger"
+                              >
+                                <i class="pe-7s-trash"></i>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="ps__rail-x" style="left: 0px; bottom: 0px">
+                    <div
+                      class="ps__thumb-x"
+                      tabindex="0"
+                      style="left: 0px; width: 0px"
+                    ></div>
+                  </div>
+                  <div
+                    class="ps__rail-y"
+                    style="top: 0px; height: 200px; right: 0px"
+                  >
+                    <div
+                      class="ps__thumb-y"
+                      tabindex="0"
+                      style="top: 0px; height: 121px"
+                    ></div>
+                  </div></div
+              ></perfect-scrollbar>
+            </div>
+            <div class="text-center d-block card-footer">
+              <!--button class="border-0 btn-transition btn btn-outline-danger">
+                <i class="pe-7s-trash"></i> Eliminar Archivos
+              </button-->
+              <button
+                (click)="openModalFile()"
+                class="border-0 btn-transition btn btn-outline-success"
+              >
+                Cargar Nuevos Archivos
+              </button>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab title="Acciones Tomadas">
+      <ng-template ngbTabContent>
+        <div class="main-card mb-3 mt-2 card">
+          <div class="card-body">
+            <form [formGroup]="accionesTomadasForm">
+              <div class="row">
+                <div class="form-group col-md-12" style="display: none">
+                  <label for="accionestomadas_usuario"
+                    >Acciones tomadas para la gestión</label
+                  >
+                  <textarea
+                    [ngModel]="
+                      accionestomadas_usuario + ' ' + detalleobservacion_usuario
+                    "
+                    class="form-control form-control-sm"
+                    formControlName="accionestomadas_usuario"
+                    rows="5"
+                    disabled
+                  ></textarea>
+                </div>
+                <div class="form-group col-md-12">
+                  <label for="accionestomadas"
+                    >Acciones tomadas para la gestión</label
+                  >
+                  <textarea
+                    [ngModel]="accionestomadas + ' ' + detalleobservacion"
+                    class="form-control form-control-sm"
+                    formControlName="accionestomadas"
+                    rows="5"
+                    disabled
+                  ></textarea>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-10">
+                  <label for="obs">Agregar detalle a las observaciones</label>
+                  <textarea
+                    class="form-control form-control-sm"
+                    [(ngModel)]="textaccion"
+                    formControlName="obs"
+                    rows="5"
+                  ></textarea>
+                </div>
+                <div class="form-group col-md-2 pt-4">
+                  <a
+                    (click)="addCommentary()"
+                    class="btn btn-icon btn-sm icon-left btn-info text-white"
+                    ><i class="pe-7s-box1"></i> Agregar</a
+                  >
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab title="Observaciones">
+      <ng-template ngbTabContent>
+        <div class="main-card mb-3 mt-2 card">
+          <div class="card-body">
+            <form [formGroup]="obsForm">
+              <div class="row">
+                <div class="form-group col-md-12">
+                  <label for="observaciones">Observaciones</label>
+                  <textarea
+                    formControlName="observaciones"
+                    [ngModel]="observacion + ' ' + detalle_obs"
+                    class="form-control form-control-sm"
+                    rows="5"
+                    disabled
+                  ></textarea>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-10">
+                  <label for="detalle_eboservacion"
+                    >Agregar detalle a las observaciones:</label
+                  >
+                  <textarea
+                    class="form-control form-control-sm"
+                    formControlName="detalle_eboservacion"
+                    [(ngModel)]="textobs"
+                    rows="5"
+                  ></textarea>
+                </div>
+                <div class="form-group col-md-2 pt-4">
+                  <a
+                    (click)="addObservation()"
+                    class="btn btn-icon btn-sm icon-left btn-info text-white"
+                    ><i class="pe-7s-box1"></i> Agregar</a
+                  >
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-4">
+                  <label>Calificación Ejecutiva</label>
+                  <select
+                    [ngModel]="calificacionejecutiva"
+                    formControlName="calificacion_ejecutiva"
+                    class="form-control form-select form-control-sm"
+                  >
+                    <option value="">Seleccione ...</option>
+                    <option
+                      *ngFor="let item of calificationsjecutiva"
+                      value="{{ item.id_calificacion_ejecutiva }}"
+                    >
+                      {{ item.v_descripcion }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="buttons float-right" style="cursor: pointer">
+                  <a
+                    (click)="updateSolcuion()"
+                    class="btn btn-icon icon-left btn-info text-white"
+                    ><i class="fpe-7s-diskette"></i> Guardar Cambios</a
+                  >
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-tab>
+  </ngb-tabset>
+</div>
+<div class="modal-footer">
+  <!--button type="button" class="btn btn-primary">
+    <i class="fas fa-save"></i> Guardar
+  </button-->
+  <button
+    type="button"
+    class="btn btn-outline-dark"
+    (click)="activeModal.close('Close click')"
+  >
+    <i class="fa fa-minus-circle"></i> Cancelar
+  </button>
+</div>

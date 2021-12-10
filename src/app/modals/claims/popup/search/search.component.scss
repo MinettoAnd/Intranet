@@ -1,0 +1,17 @@
+.scroll-container {
+  /*border: 2px solid silver;*/
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+
+  &.hide-scrollbar {
+    overflow: auto;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &.show-scroll {
+    overflow: auto;
+  }
+}

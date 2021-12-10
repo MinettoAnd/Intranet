@@ -1,0 +1,448 @@
+<div class="modal-header">
+  <h4 class="modal-title">Respuesta al Reclamo</h4>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="activeModal.dismiss('Cross click')"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <ngb-tabset>
+    <ngb-tab
+      title="Acciones Finales
+      "
+    >
+      <ng-template ngbTabContent>
+        <form [formGroup]="accionForm" class="mt-3 p-4">
+          <div class="row">
+            <div class="form-group col-md-8">
+              <label for="competencia"
+                >Competencia para la atención del reclamo</label
+              ><span class="text-danger">*</span>
+              <select
+                id="competencia"
+                [ngModel]="listDetalle[0]?.id_competencia_atencion"
+                formControlName="competencia"
+                [ngClass]="{
+                  'is-invalid': submitter_accion && s.competencia.errors
+                }"
+                class="form-control form-select form-control-sm"
+              >
+                <option value="">Seleccione...</option>
+                <option value="1">Si</option>
+                <option value="2">No</option>
+                <option value="3">Compartida</option>
+              </select>
+              <div
+                *ngIf="submitter_accion && s.competencia.errors"
+                class="invalid-feedback"
+              >
+                <div *ngIf="s.competencia.errors.required">Campo requerido</div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-4">
+              <label for="estado">Estado</label>
+              <select
+                id="estado"
+                [ngModel]="listDetalle[0]?.id_estado_v2"
+                (change)="onChangeEstado($event)"
+                formControlName="estado"
+                class="form-control form-select form-control-sm"
+              >
+                <option value="">Seleccione...</option>
+                <option
+                  *ngFor="let item of listestado"
+                  value="{{ item.id_estado }}"
+                >
+                  {{ item.v_decripcion }}
+                </option>
+              </select>
+            </div>
+            <div class="form-group col-md-4" *ngIf="showreclamoprimigenio">
+              <label for="codigoreclamo">Código de Reclamo Primigenio</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  [(ngModel)]="codigo_reclamo"
+                  formControlName="codigoreclamo"
+                  class="form-control form-control-sm"
+                />
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="estapareclamo">Etapa del Reclamo</label>
+              <select
+                formControlName="estapareclamo"
+                class="form-control form-select form-control-sm"
+                [ngModel]="listDetalle[0]?.estapa_reclamo"
+              >
+                <option value="">Seleccione ...</option>
+                <option value="1">Adminisón y Registro</option>
+                <option value="2">Evaluacion e Investigacion</option>
+                <option value="3">Resulado y Notificación</option>
+                <option value="4">Archivo y Custodia del Expediente</option>
+              </select>
+            </div>
+          </div>
+          <div class="row" *ngIf="showtraslado">
+            <div class="form-group col-md-4">
+              <label for="tipoadministrador">Tipo de Administrado </label>
+              <select
+                formControlName="tipoadministrador"
+                [(ngModel)]="tipoadmin"
+                class="form-control form-select form-control-sm"
+              >
+                <option value="">Seleccione ...</option>
+                <option value="1">IPRESS</option>
+                <option value="2">UGIPRESS</option>
+                <option value="3">IAFAS</option>
+              </select>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="codigoadmin">Código del administrado</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  [(ngModel)]="codigoadmin"
+                  formControlName="codigoadmin"
+                  class="form-control form-control-sm"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <!--*ngIf="showtresultado"-->
+            <div class="form-group col-md-4">
+              <label for="resultado_reclamo">Resultado Reclamo </label>
+              <select
+                formControlName="resultado_reclamo"
+                [(ngModel)]="resultado_reclamo"
+                (change)="onChangeResultadoreclamo($event)"
+                class="form-control form-select form-control-sm"
+              >
+                <option value="">Seleccione ...</option>
+                <option
+                  value="{{ item.id_resultado_v2 }}"
+                  *ngFor="let item of listresultadoreclamo"
+                >
+                  {{ item.v_descripcion_v2 }}
+                </option>
+              </select>
+            </div>
+            <div class="form-group col-md-4" *ngIf="showmotivo">
+              <label for="motivo">Motivo de Conclusión anticipada</label>
+              <select
+                formControlName="motivo"
+                [(ngModel)]="motivo"
+                class="form-control form-select form-control-sm"
+              >
+                <option value="">Seleccione ...</option>
+                <option value="{{ item.id }}" *ngFor="let item of listmotivo">
+                  {{ item.name }}
+                </option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <div class="row">
+                <div class="form-group col-md-8">
+                  <label for="fechasolucion">Fecha de Solución </label>
+                  <div class="input-group">
+                    <input
+                      type="date"
+                      [(ngModel)]="fechasolucion"
+                      formControlName="fechasolucion"
+                      class="form-control form-control-sm"
+                    />
+                  </div>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="horasolucion">hora </label>
+                  <div class="input-group">
+                    <input
+                      type="time"
+                      [(ngModel)]="horasolucion"
+                      formControlName="horasolucion"
+                      class="form-control form-control-sm"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-12">
+              <label for="solucion_al_reclamo">Solución al Reclamo</label>
+              <textarea
+                class="form-control form-control-sm"
+                [ngModel]="listDetalle[0]?.detalle_reclamo"
+                formControlName="solucion_al_reclamo"
+                rows="5"
+              ></textarea>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <fieldset>
+                <legend class="legendrepre">Archivos</legend>
+                <div class="col-md-12 col-lg-12 col-xl-12 mt-3">
+                  <div class="card-shadow-primary card-border mb-3">
+                    <div class="scroll-area-sm">
+                      <perfect-scrollbar
+                        ng-reflect-auto-propagation="true"
+                        class="ps-show-limits"
+                        ><div
+                          style="position: static"
+                          class="ps ps--active-y"
+                          ng-reflect-disabled="false"
+                        >
+                          <div class="ps-content">
+                            <ul class="list-group list-group-flush">
+                              <li
+                                class="list-group-item"
+                                *ngFor="
+                                  let item of listsarchivos;
+                                  let i = index
+                                "
+                              >
+                                <div class="widget-content p-0">
+                                  <div class="widget-content-wrapper">
+                                    <div
+                                      class="
+                                        widget-content-left
+                                        center-elem
+                                        mr-2
+                                      "
+                                    >
+                                      <i
+                                        class="pe-7s-file text-muted fsize-2"
+                                      ></i>
+                                    </div>
+                                    <div class="widget-content-left">
+                                      <div class="widget-heading">
+                                        {{ item }}
+                                      </div>
+                                    </div>
+                                    <div class="widget-content-right">
+                                      <button
+                                        (click)="openDocs(item)"
+                                        class="btn-transition btn btn-info"
+                                      >
+                                        <i class="pe-7s-look"></i>
+                                      </button>
+                                      <button
+                                        (click)="deleteFile(item)"
+                                        class="btn-transition btn btn-danger"
+                                      >
+                                        <i class="pe-7s-trash"></i>
+                                      </button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </li>
+                            </ul>
+                          </div>
+                          <div
+                            class="ps__rail-x"
+                            style="left: 0px; bottom: 0px"
+                          >
+                            <div
+                              class="ps__thumb-x"
+                              tabindex="0"
+                              style="left: 0px; width: 0px"
+                            ></div>
+                          </div>
+                          <div
+                            class="ps__rail-y"
+                            style="top: 0px; height: 200px; right: 0px"
+                          >
+                            <div
+                              class="ps__thumb-y"
+                              tabindex="0"
+                              style="top: 0px; height: 121px"
+                            ></div>
+                          </div></div
+                      ></perfect-scrollbar>
+                    </div>
+                    <div class="text-center d-block card-footer">
+                      <!--button class="border-0 btn-transition btn btn-outline-danger">
+                        <i class="pe-7s-trash"></i> Eliminar Archivos
+                      </button-->
+                      <button
+                        (click)="openModalFile()"
+                        class="border-0 btn-transition btn btn-outline-success"
+                      >
+                        Cargar Nuevos Archivos
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+            </div>
+          </div>
+        </form>
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab title="Respuesta al reclamo">
+      <ng-template ngbTabContent>
+        <form [formGroup]="respuestaForm">
+          <div class="row">
+            <div class="form-group col-md-4">
+              <label for="fecha">fecha</label>
+              <div class="input-group">
+                <input
+                  type="date"
+                  [(ngModel)]="fecha_respuesta"
+                  formControlName="fecha"
+                  class="form-control form-control-sm"
+                />
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="hora">hora</label>
+              <div class="input-group">
+                <input
+                  type="time"
+                  [(ngModel)]="fecha_respuesta_hora"
+                  formControlName="hora"
+                  class="form-control form-control-sm"
+                />
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="forma_entrega">Forma de Entrega</label>
+              <select
+                [ngModel]="listDetalle[0]?.id_via_respuesta_afi"
+                formControlName="forma_entrega"
+                class="form-control form-select form-control-sm"
+              >
+                <option value="">Seleccionar ....</option>
+                <option value="1">Correo Electronico</option>
+                <option value="2">Via Telefónica</option>
+                <option value="3">Courier</option>
+                <option value="4">Otros</option>
+              </select>
+            </div>
+          </div>
+        </form>
+        <div class="card mt-4">
+          <div class="card-header">
+            <div class="row">
+              <div class="col-md-1">
+                <select
+                  class="custom-select form-select"
+                  style="width: auto"
+                  [(ngModel)]="pageSize"
+                  (ngModelChange)="refreshCountries()"
+                >
+                  <option [ngValue]="50">50</option>
+                  <option [ngValue]="100">100</option>
+                  <option [ngValue]="150">150</option>
+                </select>
+              </div>
+              <div class="col-md-11">
+                <button
+                  class="button btn btn-icon btn-sm btn-success"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  title="Agregar"
+                  (click)="openModalMedida(1, '')"
+                >
+                  <i class="fa fa-plus"></i> Agregar Acciones
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive p-4">
+              <table
+                class="
+                  align-middle
+                  text-truncate
+                  mb-0
+                  table table-sm table-borderless table-hover
+                "
+              >
+                <thead>
+                  <tr>
+                    <th>F.inicio</th>
+                    <th>F.Culminación</th>
+                    <th>T.Reclamo</th>
+                    <th>C.Asignado</th>
+                    <th>C.Adoptado</th>
+                    <th>Naturaleza</th>
+                    <th>P.M.Adoptada</th>
+                    <th>Accion</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of medidas">
+                    <td>{{ diaEvento(item.fecha_inicio) }}</td>
+                    <td>{{ diaEvento(item.fecha_culminacion) }}</td>
+                    <td>{{ getTipoReclamo(item.tipo_reclamo) }}</td>
+                    <td>{{ item.codigo_unico }}</td>
+                    <td>{{ item.codigo_adoptado }}</td>
+                    <td>{{ getNaturaleza(item.naturaleza) }}</td>
+                    <td>{{ getProceso(item.processo_adoptada) }}</td>
+                    <td>
+                      <div role="group" class="btn-group-sm btn-group">
+                        <button
+                          (click)="openModalMedida(2, item)"
+                          class="btn-shadow btn btn-outline-success"
+                        >
+                          <i class="pe-7s-note btn-icon-wrapper"> </i>
+                        </button>
+                        <button
+                          (click)="showDelete(item.id)"
+                          class="btn-shadow btn btn-outline-danger"
+                        >
+                          <i class="pe-7s-trash btn-icon-wrapper"> </i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="p-2">
+              <ngb-pagination
+                class="float-right"
+                [collectionSize]="collectionSize"
+                [(page)]="page"
+                [pageSize]="pageSize"
+                (pageChange)="refreshCountries()"
+              >
+                <ng-template ngbPaginationPrevious>
+                  <i class="fa fa-chevron-left"></i
+                ></ng-template>
+                <ng-template ngbPaginationNext
+                  ><i class="fa fa-chevron-right"></i
+                ></ng-template>
+              </ngb-pagination>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-tab>
+  </ngb-tabset>
+</div>
+<div class="modal-footer">
+  <button
+    type="button"
+    (click)="updateRespuestaReclamo()"
+    class="btn btn-primary"
+  >
+    <i class="pe-7s-diskette"></i> Guardar
+  </button>
+  <button
+    type="button"
+    class="btn btn-outline-dark"
+    (click)="activeModal.close('Close click')"
+  >
+    <i class="pe-7s-less"></i> Cancelar
+  </button>
+</div>

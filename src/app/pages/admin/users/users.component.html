@@ -1,0 +1,90 @@
+<app-page-title
+  [heading]="heading"
+  [subheading]="subheading"
+  [icon]="icon"
+  [component]="component"
+  (stateUser)="getUserList()"
+></app-page-title>
+<div class="main-card mb-3 card">
+  <div class="card-header">
+    <div
+      class="card-header-title font-size-lg text-capitalize font-weight-normal"
+    >
+      <select
+        class="custom-select"
+        style="width: auto"
+        [(ngModel)]="pageSize"
+        (ngModelChange)="refreshCountries()"
+      >
+        <option [ngValue]="20">20</option>
+        <option [ngValue]="40">40</option>
+        <option [ngValue]="60">60</option>
+      </select>
+      Listado
+    </div>
+  </div>
+  <div class="table-responsive p-4">
+    <table
+      class="align-middle text-truncate mb-0 table table-sm table-borderless table-hover"
+    >
+      <thead>
+        <tr>
+          <th class="text-left">Nombres</th>
+          <th class="text-left">Usuario</th>
+          <th class="text-left">Area</th>
+          <th class="text-left">Rol</th>
+          <th class="text-left">F.registro</th>
+          <th class="text-left">F.Actulizacón</th>
+          <th class="text-center">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of userslist">
+          <td class="text-left">{{ user.firtname }} {{ user.lastname }}</td>
+          <td class="text-left">{{ user.username }}</td>
+          <td class="text-left">{{ user.area }}</td>
+          <td class="text-left">
+            <div class="badge badge-pill badge-info">{{ user.name }}</div>
+          </td>
+          <td class="text-left">
+            <span class="pr-2 opacity-6">
+              <i class="fas fa-business-time"></i>
+            </span>
+            {{ user.date_create }}
+          </td>
+          <td class="text-left">
+            <span class="pr-2 opacity-6">
+              <i class="fas fa-business-time"></i>
+            </span>
+            {{ user.date_update }}
+          </td>
+          <td class="text-center">
+            <div role="group" class="btn-group-sm btn-group">
+              <button
+                (click)="open(user)"
+                class="btn-shadow btn btn-outline-success"
+              >
+                <i class="pe-7s-note btn-icon-wrapper"> </i>
+              </button>
+              <button
+                (click)="showDelete(user.user_id)"
+                class="btn-shadow btn btn-outline-danger"
+              >
+                <i class="pe-7s-trash btn-icon-wrapper"> </i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="d-block p-4 text-center card-footer">
+    <ngb-pagination
+      [collectionSize]="collectionSize"
+      [(page)]="page"
+      [pageSize]="pageSize"
+      (pageChange)="refreshCountries()"
+    >
+    </ngb-pagination>
+  </div>
+</div>

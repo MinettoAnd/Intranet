@@ -1,0 +1,162 @@
+<div class="card">
+  <div class="card-body">
+    <form [formGroup]="formSearchReclamo">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="row">
+            <div class="form-group col-md-6">
+              <label for="fechainicio">F.Inicio</label>
+              <input
+                type="date"
+                formControlName="fechainicio"
+                class="form-control form-control-sm"
+                id="fechainicio"
+              />
+            </div>
+            <div class="form-group col-md-6">
+              <label for="fechafin">F.Fin</label>
+              <input
+                type="date"
+                formControlName="fechafin"
+                class="form-control form-control-sm"
+                id="fechafin"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <div class="form-group col-md-3">
+              <label for="sede">Sede</label>
+              <select
+                id="sede"
+                class="form-control form-select form-control-sm"
+                formControlName="sede"
+              >
+                <option value="">Seleccione...</option>
+                <option value="CMS Lima">Lima</option>
+                <option value="CMS Chorrillos">Chorrillos</option>
+                <option value="CMS Surco">Surco</option>
+              </select>
+            </div>
+            <div class="form-group col-md-3">
+              <label for="estado">Tipo Filtro</label>
+              <select
+                id="estado"
+                class="form-control form-control-sm"
+                formControlName="estado"
+              >
+                <option value="">Seleccione...</option>
+                <option value="1">Por Codigo</option>
+                <option value="3">Afectado</option>
+              </select>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="afectado">Afectado</label>
+              <input
+                type="text"
+                class="form-control form-select form-control-sm"
+                formControlName="afectado"
+                placeholder="Ingrese solo el nombre del afectado"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="input-group">
+            <div class="input-group-btn pt-4">
+              <button class="btn btn-primary" (click)="searhReclamo()">
+                <i class="fa fa-search"></i> Filtrar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <select
+          class="custom-select"
+          style="width: auto"
+          [(ngModel)]="pageSize"
+          (ngModelChange)="refreshCountries()"
+        >
+          <option [ngValue]="20">20</option>
+          <option [ngValue]="100">100</option>
+          <option [ngValue]="200">200</option>
+        </select>
+        <h4 class="ml-2">Lista Reclamos</h4>
+        <div class="card-header-action"></div>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-sm table-hover" id="table-1">
+            <thead class="border-bottom">
+              <tr>
+                <th>Codigo</th>
+                <th>F.Registro</th>
+                <th>Persona Afectada</th>
+                <th>Sede</th>
+                <th>Dni</th>
+                <th>Correo</th>
+                <!--th>Dirección</th-->
+                <th>Celular</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of claimslist">
+                <th scope="row">{{ item.id_registro }}</th>
+                <td>{{ rgetFormatFeha(item.d_fecha_reg) }}</td>
+                <td style="text-transform: uppercase">
+                  {{ item.n_nombre_afil }} {{ item.n_apellidos_afil }}
+                  {{ item.n_apellido_materno_afil }}
+                </td>
+                <td>{{ chameNameSede(item.v_lugar) }}</td>
+                <td>{{ item.n_dni_afil }}</td>
+                <td>{{ item.v_email_afi }}</td>
+                <!--td style="text-transform: capitalize">
+                    {{ item.n_domicilio_afil }}
+                  </td-->
+                <td>
+                  {{ chageContac(item.n_tel_cel_afil, item.n_tel_fij_afil) }}
+                </td>
+
+                <td>
+                  <a
+                    class="btn btn-icon btn-sm btn-primary bt-sm text-white"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    (click)="showClaims(item)"
+                    ><i class="fa fa-eye"></i
+                  ></a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!--class="d-flex justify-content-between p-2"-->
+      <div class="p-2">
+        <ngb-pagination
+          class="float-right"
+          [collectionSize]="collectionSize"
+          [(page)]="page"
+          [pageSize]="pageSize"
+          (pageChange)="refreshCountries()"
+        >
+          <ng-template ngbPaginationPrevious>
+            <i class="fa fa-chevron-left"></i
+          ></ng-template>
+          <ng-template ngbPaginationNext
+            ><i class="fa fa-chevron-right"></i
+          ></ng-template>
+        </ngb-pagination>
+      </div>
+    </div>
+  </div>
+</div>
