@@ -3,51 +3,51 @@
 @import "./main.css";
 
 .app-theme-white .app-sidebar .app-sidebar-content {
-  background: #343a40;
+    background: #343a40;
 }
 .app-header__logo {
-  background: #343a40 !important;
+    background: #343a40 !important;
 }
 .v-sidebar-menu .vsm-header {
-  color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.7);
 }
 
 .v-sidebar-menu .vsm-link {
-  color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.7);
 }
 
 .v-sidebar-menu .vsm-link:hover,
 .v-sidebar-menu .vsm-link.active-item,
 .app-sidebar.text-lighter .v-sidebar-menu .vsm-item.active-item > .vsm-link,
 .app-sidebar.text-darker .v-sidebar-menu .vsm-item.active-item > .vsm-link {
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
 }
 .hamburger-inner,
 .hamburger-inner::before,
 .hamburger-inner::after {
-  background-color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(255, 255, 255, 0.7);
 }
 
 .hamburger.is-active .hamburger-inner,
 .hamburger.is-active .hamburger-inner::before,
 .hamburger.is-active .hamburger-inner::after {
-  background-color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(255, 255, 255, 0.7);
 }
 
 .v-sidebar-menu .vsm-dropdown::before {
-  background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.1);
 }
 .closed-sidebar .app-sidebar .v-sidebar-menu .vsm-header::before {
-  background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.1);
 }
 .app-theme-white .app-sidebar .app-header__logo,
 .app-theme-white .app-footer .app-footer__inner,
 .app-theme-white .app-header {
-  background: #ffffff;
+    background: #ffffff;
 }
 .dropdown-menu-lg {
-  min-width: 22rem;
+    min-width: 22rem;
 }
 /* .dropdown-menu-header .menu-header-image {
   position: absolute;
@@ -64,65 +64,72 @@
 .dropdown-menu .dropdown-menu-header,
 .dropdown-menu .menu-header-image,
 .dropdown-menu .dropdown-menu-header-inner {
-  border-top-left-radius: 0.25rem;
-  border-top-right-radius: 0.25rem;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
 }
 /* .dd-header-bg-6 {
   background: url(./assets/images/dropdown-header/city3.jpg);
 } */
 
 .opacity-2 {
-  opacity: 0.2 !important;
+    opacity: 0.2 !important;
 }
 .dropdown-menu-header .dropdown-menu-header-inner {
-  margin: -1px -1px 0;
-  padding: 1.5rem 0.5rem;
-  position: relative;
+    margin: -1px -1px 0;
+    padding: 1.5rem 0.5rem;
+    position: relative;
 }
 .bg-info {
-  background-color: #16aaff !important;
+    background-color: #16aaff !important;
 }
 .dropdown-menu-header {
-  color: #fff;
-  margin-top: -0.65rem;
-  margin-bottom: 0.65rem;
-  position: relative;
-  z-index: 6;
+    color: #fff;
+    margin-top: -0.65rem;
+    margin-bottom: 0.65rem;
+    position: relative;
+    z-index: 6;
 }
 .app-header .app-header__content .app-header-center {
-  align-items: center;
-  display: flex;
-  margin-right: auto;
-  margin-left: auto;
-  padding: 0 0 0 15rem;
-}
-@media (max-width: 991.98px) {
-  .app-theme-white .app-sidebar .app-header__logo,
-  .app-theme-white .app-footer .app-footer__inner,
-  .app-theme-white .app-header {
-    background-color: #343a40;
-  }
-
-  .app-header .logo-mobile {
-    display: block;
-    order: 2;
-  }
-  .app-header .app-header__content .app-header-center {
     align-items: center;
     display: flex;
     margin-right: auto;
     margin-left: auto;
-    padding: 0 0 0 0rem;
-  }
-  h5,
-  .h5 {
-    font-size: 0.9rem;
-  }
-  .popover,
-  .dropdown-menu {
-    top: 35% !important;
-  }
+    padding: 0 0 0 15rem;
+}
+@media (max-width: 991.98px) {
+    .app-theme-white .app-sidebar .app-header__logo,
+    .app-theme-white .app-footer .app-footer__inner,
+    .app-theme-white .app-header {
+        background-color: #343a40;
+    }
+
+    .app-header .logo-mobile {
+        display: block;
+        order: 2;
+    }
+    .app-header .app-header__content .app-header-center {
+        align-items: center;
+        display: flex;
+        margin-right: auto;
+        margin-left: auto;
+        padding: 0 0 0 0rem;
+    }
+    h5,
+    .h5 {
+        font-size: 0.9rem;
+    }
+    .popover,
+    .dropdown-menu {
+        top: 35% !important;
+    }
 }
 .font-size-lg {
-  font-size: 0.9rem !important;
+    font-size: 0.9rem !important;
+}
+
+/* MODAL SIZES */
+.xl > .modal-dialog {
+    max-width: 1490px !important;
+    min-width: 971px !important;
+    width: 95% !important;
 }
