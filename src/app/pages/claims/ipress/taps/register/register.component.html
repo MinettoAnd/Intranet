@@ -72,7 +72,7 @@
                   <input
                     type="text"
                     formControlName="nombre"
-                    [ngModel]="detailpaciente[0]?.Nombres"
+                    [(ngModel)]="detPacteNombres"
                     [ngClass]="{
                       'is-invalid': submittedpatient && g.nombre.errors
                     }"
@@ -93,7 +93,7 @@
                   <input
                     type="text"
                     formControlName="paterno"
-                    [ngModel]="detailpaciente[0]?.ApellidoPaterno"
+                    [(ngModel)]="detPacteApellidoPaterno"
                     [ngClass]="{
                       'is-invalid': submittedpatient && g.paterno.errors
                     }"
@@ -116,7 +116,7 @@
                   <input
                     type="text"
                     formControlName="materno"
-                    [ngModel]="detailpaciente[0]?.ApellidoMaterno"
+                    [(ngModel)]="detPacteApellidoMaterno"
                     [ngClass]="{
                       'is-invalid': submittedpatient && g.materno.errors
                     }"
@@ -141,7 +141,7 @@
                   <input
                     type="number"
                     formControlName="historia"
-                    [ngModel]="detailpaciente[0]?.hclinica"
+                    [(ngModel)]="detPactehclinica"
                     [ngClass]="{
                       'is-invalid': submittedpatient && g.historia.errors
                     }"
@@ -162,7 +162,7 @@
                   <input
                     type="number"
                     formControlName="telefono"
-                    [ngModel]="detailpaciente[0]?.Telefono"
+                    [(ngModel)]="detPacteTelefono"
                     class="form-control form-control-sm"
                     id="telefono"
                   />
@@ -172,7 +172,7 @@
                   <input
                     type="email"
                     formControlName="correo"
-                    [ngModel]="detailpaciente[0]?.CorreoElectronico"
+                    [(ngModel)]="detPacteCorreoElectronico"
                     class="form-control form-control-sm"
                     id="correo"
                   />
@@ -214,7 +214,7 @@
                   <input
                     type="text"
                     formControlName="numreodoc"
-                    [ngModel]="detailpaciente[0]?.Documento"
+                    [(ngModel)]="detPacteDocumento"
                     [ngClass]="{
                       'is-invalid': submittedpatient && g.numreodoc.errors
                     }"
@@ -236,7 +236,7 @@
                     type="date"
                     class="form-control form-control-sm"
                     formControlName="fecha_nacimiento"
-                    [ngModel]="detailpaciente[0]?.FechaNacimiento"
+                    [(ngModel)]="detPacteFechaNacimiento"
                   />
                 </div>
               </div>
@@ -261,7 +261,7 @@
                     id="sexo"
                     class="form-control form-select form-control-sm"
                     formControlName="sexo"
-                    [ngModel]="detailpaciente[0]?.Sexo"
+                    [(ngModel)]="detPacteSexo"
                   >
                     <option value="">Seleccione...</option>
                     <option value="M">Masculino</option>
@@ -273,7 +273,7 @@
                   <input
                     type="text"
                     formControlName="domicilio"
-                    [ngModel]="detailpaciente[0]?.Direccion"
+                    [(ngModel)]="detPacteDireccion"
                     class="form-control form-control-sm"
                     id="domicilio"
                   />

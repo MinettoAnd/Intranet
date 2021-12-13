@@ -49,6 +49,18 @@ export class RegisterIpresComponent implements OnInit {
     public departamento_id: string;
     public provincia_id: string;
 
+    // Datos del paciente
+    public detPacteNombres;
+    public detPacteApellidoPaterno;
+    public detPacteApellidoMaterno;
+    public detPactehclinica;
+    public detPacteTelefono;
+    public detPacteCorreoElectronico;
+    public detPacteDocumento;
+    public detPacteFechaNacimiento;
+    public detPacteSexo;
+    public detPacteDireccion;
+
     public listtypepatients: any = [];
 
     //
@@ -350,6 +362,7 @@ export class RegisterIpresComponent implements OnInit {
                     modalRef.result
                         .then((result) => {
                             this.detailpaciente = result;
+                            this.setDatosPaciente(result[0]);
                         })
                         .catch((error) => {
                             console.log(error);
@@ -1497,5 +1510,19 @@ export class RegisterIpresComponent implements OnInit {
             timer: 2000,
             showConfirmButton: false,
         });
+    }
+
+    setDatosPaciente(datos) {
+        this.detPacteNombres = datos.Nombres;
+        this.detPacteApellidoPaterno = datos.ApellidoPaterno;
+        this.detPacteApellidoMaterno = datos.ApellidoMaterno;
+        this.detPactehclinica = datos.hclinica;
+        this.detPacteTelefono = datos.Telefono;
+        this.detPacteCorreoElectronico = datos.CorreoElectronico;
+        this.detPacteDocumento = datos.Documento;
+        this.detPacteFechaNacimiento = datos.FechaNacimiento;
+        this.detPacteSexo = datos.Sexo;
+        this.detPacteDireccion = datos.Direccion;
+        console.log(this.detPacteApellidoMaterno);
     }
 }

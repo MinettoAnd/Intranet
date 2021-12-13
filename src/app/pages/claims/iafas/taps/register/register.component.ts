@@ -1483,7 +1483,6 @@ export class RegisterComponent implements OnInit {
     }
 
     setDatosPaciente(datos) {
-        console.log(datos);
         this.detPacteNombres = datos.Nombres;
         this.detPacteApellidoPaterno = datos.ApellidoPaterno;
         this.detPacteApellidoMaterno = datos.ApellidoMaterno;
