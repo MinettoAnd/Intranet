@@ -17,6 +17,7 @@ import { ClaimsService } from "../../../claims.service";
 })
 export class RegisterComponent implements OnInit {
     // datosFormRegistroReclamos: FormDataRegistroReclamo;
+    public textoTipoCodigo = "";
 
     model: NgbDateStruct;
     public listSearchPerson: any = [];
@@ -597,9 +598,11 @@ export class RegisterComponent implements OnInit {
         // console.log(this.name_estado);
     }
     onChangeModoRecepcion(event) {
-        console.log(event.target.value);
-        if (event.target.value === "1") {
+        const opcion = event.target.value;
+
+        if (opcion === "1" || opcion === "2") {
             this.showcodigoweb = true;
+            this.textoTipoCodigo = opcion === "1" ? "Web" : "de Libro";
         } else {
             this.showcodigoweb = false;
         }

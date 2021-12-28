@@ -847,7 +847,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="form-group col-md-3">
+              <div class="form-group col-md-3 mt-3">
                 <label for="sede">Sede</label>
                 <select
                   id="sede"
@@ -861,7 +861,7 @@
                   </option>
                 </select>
               </div>
-              <div class="form-group col-md-3">
+              <div class="form-group col-md-3 mt-3">
                 <label for="modorecepcion">Modo Recepción</label>
                 <select
                   id="modorecepcion"
@@ -878,7 +878,7 @@
                   </option>
                 </select>
               </div>
-              <div class="form-group col-md-3">
+              <div class="form-group col-md-3 mt-3">
                 <label for="estado">Estado</label>
                 <select
                   id="estado"
@@ -896,8 +896,8 @@
                   </option>
                 </select>
               </div>
-              <div class="form-group col-md-3" *ngIf="showcodigoweb">
-                <label for="codigoweb">Código Web</label>
+              <div class="form-group col-md-3 mt-3" *ngIf="showcodigoweb">
+                <label for="codigoweb">Código {{ textoTipoCodigo }}</label>
                 <input
                   type="text"
                   formControlName="codigoweb"
