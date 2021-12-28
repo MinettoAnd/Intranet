@@ -69,8 +69,6 @@ export class RegisterIpresComponent implements OnInit {
     public showregiment = false;
     public showplansalud = false;
 
-    public showparent = false;
-
     public rucconveios: string = "";
     public namerucvoncenios: string = "";
     public codruc: string = "";
@@ -542,13 +540,6 @@ export class RegisterIpresComponent implements OnInit {
             this.listparentesco = response.data.length > 0 ? response.data : [];
             //this.getSedes();
         });
-    }
-    onChangeShowRepresentante(event) {
-        if (event.currentTarget.checked) {
-            this.showparent = true;
-        } else {
-            this.showparent = false;
-        }
     }
     //detalle
     onFileChange(event) {

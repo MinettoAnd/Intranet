@@ -4,7 +4,11 @@
       <ngb-tab title="Información Paciente">
         <ng-template ngbTabContent>
           <fieldset>
-            <legend>Paciente</legend>
+            <legend>
+              <div class="col-12">
+                  Paciente
+              </div>
+            </legend>
             <!--SEARCH-->
             <form [formGroup]="seachForm">
               <div class="row">
@@ -515,23 +519,11 @@
           <!--REPRESENTANTE-->
           <fieldset>
             <legend class="legendrepre">
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  (change)="onChangeShowRepresentante($event)"
-                  type="checkbox"
-                  id="autoSizingCheck2"
-                />
-                <label
-                  class="form-check-label"
-                  style="font-size: 14px"
-                  for="autoSizingCheck2"
-                >
+              <div class="col-12">
                   Representante que deja el reclamo
-                </label>
               </div>
             </legend>
-            <form [formGroup]="parentescoForm" *ngIf="showparent">
+            <form [formGroup]="parentescoForm">
               <div class="row">
                 <div class="form-group col-md-4">
                   <label for="repretipodoc">Tipo Documento </label>

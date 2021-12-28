@@ -6,6 +6,7 @@ import { ConocimientoComponent } from "src/app/modals/claims/popup/conocimiento/
 import { ConveniosComponent } from "src/app/modals/claims/popup/convenios/convenios.component";
 import { InvolucradoComponent } from "src/app/modals/claims/popup/involucrado/involucrado.component";
 import { SearchComponent } from "src/app/modals/claims/popup/search/search.component";
+// import { FormDataRegistroReclamo } from "src/app/models/forms-data/form-data-registro-reclamo.model";
 import Swal from "sweetalert2";
 import { ClaimsService } from "../../../claims.service";
 
@@ -15,6 +16,8 @@ import { ClaimsService } from "../../../claims.service";
     styleUrls: ["./register.component.scss"],
 })
 export class RegisterComponent implements OnInit {
+    // datosFormRegistroReclamos: FormDataRegistroReclamo;
+
     model: NgbDateStruct;
     public listSearchPerson: any = [];
     seachForm: FormGroup;
@@ -67,8 +70,6 @@ export class RegisterComponent implements OnInit {
     public showsegurosconvenios = false;
     public showregiment = false;
     public showplansalud = false;
-
-    public showparent = false;
 
     public rucconveios: string = "";
     public namerucvoncenios: string = "";
@@ -542,13 +543,7 @@ export class RegisterComponent implements OnInit {
             //this.getSedes();
         });
     }
-    onChangeShowRepresentante(event) {
-        if (event.currentTarget.checked) {
-            this.showparent = true;
-        } else {
-            this.showparent = false;
-        }
-    }
+
     //detalle
     onFileChange(event) {
         for (var i = 0; i < event.target.files.length; i++) {
