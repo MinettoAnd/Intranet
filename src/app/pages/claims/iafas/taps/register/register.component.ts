@@ -1493,4 +1493,23 @@ export class RegisterComponent implements OnInit {
         this.detPacteDireccion = datos.Direccion;
         console.log(this.detPacteApellidoMaterno);
     }
+
+    actualizarDatosFrmParentesco(event) {
+        if (event.target.value == "11") {
+            const nombre = this.pacienteForm.get("nombre").value;
+            const paterno = this.pacienteForm.get("paterno").value;
+            const materno = this.pacienteForm.get("materno").value;
+            const telefono = this.pacienteForm.get("telefono").value;
+            const correo = this.pacienteForm.get("correo").value;
+            const tipdoc = this.pacienteForm.get("tipodoc").value;
+            const nrodoc = this.pacienteForm.get("numreodoc").value;
+            this.parentescoForm.get("reprenombre").patchValue(nombre);
+            this.parentescoForm.get("reprepaterno").patchValue(paterno);
+            this.parentescoForm.get("reprematerno").patchValue(materno);
+            this.parentescoForm.get("repretelefono").patchValue(telefono);
+            this.parentescoForm.get("repremail").patchValue(correo);
+            this.parentescoForm.get("repretipodoc").patchValue(tipdoc);
+            this.parentescoForm.get("reprenumreodoc").patchValue(nrodoc);
+        }
+    }
 }

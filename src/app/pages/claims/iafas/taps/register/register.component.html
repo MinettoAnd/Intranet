@@ -543,6 +543,73 @@
             <form [formGroup]="parentescoForm">
               <div class="row">
                 <div class="form-group col-md-4">
+                  <label for="parentesco">Parentesco</label>
+                  <select
+                    id="parentesco"
+                    class="form-control form-select form-control-sm"
+                    formControlName="parentesco"
+                    (change)="actualizarDatosFrmParentesco($event)"
+                  >
+                    <option value="">Seleccione...</option>
+                    <option
+                      *ngFor="let item of listparentesco"
+                      value="{{ item.id_parentesco }}"
+                    >
+                      {{ item.v_descripcion }}
+                    </option>
+                    <option>..</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="reprenombre">Nombre</label>
+                  <input
+                    type="text"
+                    class="form-control form-control-sm"
+                    formControlName="reprenombre"
+                    id="reprenombre"
+                  />
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="reprepaterno">Apellido Paterno</label>
+                  <input
+                    type="text"
+                    class="form-control form-control-sm"
+                    formControlName="reprepaterno"
+                    id="reprepaterno"
+                  />
+                </div>
+              </div>
+              <div class="row my-3">
+                <div class="form-group col-md-4">
+                  <label for="reprematerno">Apellido Materno</label>
+                  <input
+                    type="text"
+                    class="form-control form-control-sm"
+                    formControlName="reprematerno"
+                    id="reprematerno"
+                  />
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="repretelefono">Teléfono</label>
+                  <input
+                    type="text"
+                    class="form-control form-control-sm"
+                    formControlName="repretelefono"
+                    id="repretelefono"
+                  />
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="repremail">Correo</label>
+                  <input
+                    type="text"
+                    class="form-control form-control-sm"
+                    formControlName="repremail"
+                    id="repremail"
+                  />
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-4">
                   <label for="repretipodoc">Tipo Documento </label>
                   <select
                     id="repretipodoc"
@@ -578,72 +645,6 @@
                     formControlName="razonsocialrepre"
                     class="form-control form-control-sm"
                     id="razonsocialrepre"
-                  />
-                </div>
-              </div>
-              <div class="row">
-                <div class="form-group col-md-4">
-                  <label for="parentesco">Parentesco</label>
-                  <select
-                    id="parentesco"
-                    class="form-control form-select form-control-sm"
-                    formControlName="parentesco"
-                  >
-                    <option value="">Seleccione...</option>
-                    <option
-                      *ngFor="let item of listparentesco"
-                      value="{{ item.id_parentesco }}"
-                    >
-                      {{ item.v_descripcion }}
-                    </option>
-                    <option>..</option>
-                  </select>
-                </div>
-                <div class="form-group col-md-4">
-                  <label for="reprenombre">Nombre</label>
-                  <input
-                    type="text"
-                    class="form-control form-control-sm"
-                    formControlName="reprenombre"
-                    id="reprenombre"
-                  />
-                </div>
-                <div class="form-group col-md-4">
-                  <label for="reprepaterno">Apellido Paterno</label>
-                  <input
-                    type="text"
-                    class="form-control form-control-sm"
-                    formControlName="reprepaterno"
-                    id="reprepaterno"
-                  />
-                </div>
-              </div>
-              <div class="row">
-                <div class="form-group col-md-4">
-                  <label for="reprematerno">Apellido Materno</label>
-                  <input
-                    type="text"
-                    class="form-control form-control-sm"
-                    formControlName="reprematerno"
-                    id="reprematerno"
-                  />
-                </div>
-                <div class="form-group col-md-4">
-                  <label for="repretelefono">Teléfono</label>
-                  <input
-                    type="text"
-                    class="form-control form-control-sm"
-                    formControlName="repretelefono"
-                    id="repretelefono"
-                  />
-                </div>
-                <div class="form-group col-md-4">
-                  <label for="repremail">Correo</label>
-                  <input
-                    type="text"
-                    class="form-control form-control-sm"
-                    formControlName="repremail"
-                    id="repremail"
                   />
                 </div>
               </div>
