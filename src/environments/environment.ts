@@ -3,8 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
-  baseURL: 'http://servicios.maisondesante.org.pe/api',
+    production: false,
+    baseURL: "http://localhost:3000/api",
+    // baseURL: 'http://servicios.maisondesante.org.pe/api',
 };
 
 /*
