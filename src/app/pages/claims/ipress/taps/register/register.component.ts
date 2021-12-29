@@ -39,6 +39,7 @@ export class RegisterIpresComponent implements OnInit {
     submittedinvolucrado = false;
     submittedinvolucradoservicio = false;
     submitteddetail = false;
+    submittedcausa = false;
     submittedsearchpersonal1 = false;
     submittedsearchpersonal2 = false;
     submittedsearchpersonal3 = false;
@@ -238,12 +239,12 @@ export class RegisterIpresComponent implements OnInit {
             modorecepcion: [""],
             estado: [""],
             codigoweb: [""],
-            usuario_autoriza: ["", Validators.required],
+            usuario_autoriza: [""],
             descripcion_reclamo: [""],
         });
         this.causaForm = this.formBuilder.group({
-            derechosalud: [""],
-            causaespecifica: [""],
+            derechosalud: ["", Validators.required],
+            causaespecifica: ["", Validators.required],
             derechosalud1: [""],
             causaespecifica1: [""],
             derechosalud2: [""],
@@ -311,6 +312,9 @@ export class RegisterIpresComponent implements OnInit {
     }
     get f() {
         return this.seachForm.controls;
+    }
+    get c() {
+        return this.causaForm.controls;
     }
     get g() {
         return this.pacienteForm.controls;
@@ -975,6 +979,7 @@ export class RegisterIpresComponent implements OnInit {
     registroReclamo() {
         this.submittedpatient = true;
         this.submitteddetail = true;
+        this.submittedcausa = true;
         this.submittedinvolucradoservicio = true;
 
         if (this.pacienteForm.invalid) {
@@ -982,6 +987,10 @@ export class RegisterIpresComponent implements OnInit {
             return;
         }
         if (this.detailForm.invalid) {
+            this.showAlertForm();
+            return;
+        }
+        if (this.causaForm.invalid) {
             this.showAlertForm();
             return;
         }
@@ -1342,7 +1351,9 @@ export class RegisterIpresComponent implements OnInit {
                 this.submitted = false;
                 this.submittedpatient = false;
                 this.submitteddetail = false;
+                this.submittedcausa = false;
                 this.submittedinvolucrado = false;
+                this.submittedinvolucradoservicio = false;
                 this.submittedsearchpersonal1 = false;
                 this.submittedsearchpersonal2 = false;
                 this.showparaconocimiento = false;
@@ -1353,6 +1364,7 @@ export class RegisterIpresComponent implements OnInit {
                 this.causaForm.reset();
                 this.involucradoForm.reset();
                 this.accionesForm.reset();
+                this.resetValores();
                 //this.sendMail();
                 //this.sendMailIafas();
             },
@@ -1518,7 +1530,6 @@ export class RegisterIpresComponent implements OnInit {
         this.detPacteFechaNacimiento = datos.FechaNacimiento;
         this.detPacteSexo = datos.Sexo;
         this.detPacteDireccion = datos.Direccion;
-        console.log(this.detPacteApellidoMaterno);
     }
 
     actualizarDatosFrmParentesco(event) {
@@ -1538,5 +1549,21 @@ export class RegisterIpresComponent implements OnInit {
             this.parentescoForm.get("repretipodoc").patchValue(tipdoc);
             this.parentescoForm.get("reprenumreodoc").patchValue(nrodoc);
         }
+    }
+
+    resetValores() {
+        this.detPacteNombres = "";
+        this.detPacteApellidoPaterno = "";
+        this.detPacteApellidoMaterno = "";
+        this.detPactehclinica = "";
+        this.detPacteTelefono = "";
+        this.detPacteCorreoElectronico = "";
+        this.detPacteDocumento = "";
+        this.detPacteFechaNacimiento = "";
+        this.detPacteSexo = "";
+        this.detPacteDireccion = "";
+        this.rucconveios = "";
+        this.pacienteForm.get("ruc").patchValue("");
+        this.detailForm.get("productoservicio").patchValue("2");
     }
 }

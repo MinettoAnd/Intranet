@@ -915,23 +915,12 @@
                     class="form-check-input"
                     type="checkbox"
                     formControlName="usuario_autoriza"
-                    [ngClass]="{
-                      'is-invalid': submitteddetail && h.usuario_autoriza.errors
-                    }"
                     id="flexCheckDefault"
                   />
                   <label class="form-check-label" for="flexCheckDefault">
                     Usuario autoriza que resultado del reclamo se notifique al
                     correo registrado
                   </label>
-                  <div
-                    *ngIf="submitteddetail && h.usuario_autoriza.errors"
-                    class="invalid-feedback"
-                  >
-                    <div *ngIf="h.usuario_autoriza.errors.required">
-                      Campo requerido
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
@@ -972,6 +961,11 @@
                         class="form-control form-select form-control-sm"
                         (change)="onChangeCausas($event)"
                         formControlName="derechosalud"
+                        [ngClass]="{
+                          'is-invalid':
+                            submittedcausa &&
+                            c.derechosalud.errors
+                        }"
                       >
                         <option value="">Seleccione...</option>
                         <option
@@ -988,6 +982,11 @@
                         id="causaespecifica"
                         class="form-control form-select form-control-sm"
                         formControlName="causaespecifica"
+                        [ngClass]="{
+                          'is-invalid':
+                            submittedcausa &&
+                            c.causaespecifica.errors
+                        }"
                         (change)="onChangeCausasDetail(1, $event)"
                       >
                         <option value="">Seleccione...</option>
