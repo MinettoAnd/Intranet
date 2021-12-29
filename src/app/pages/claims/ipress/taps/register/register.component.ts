@@ -544,6 +544,12 @@ export class RegisterIpresComponent implements OnInit {
     getParentesco() {
         this.apiService.getParentescoService().then((response: any) => {
             this.listparentesco = response.data.length > 0 ? response.data : [];
+
+            const tmpList = this.listparentesco.sort((actual, siguiente) => {
+                return actual.id_parentesco == 11 ? -1 : 1;
+            });
+
+            this.listparentesco = tmpList;
             //this.getSedes();
         });
     }
