@@ -1570,6 +1570,16 @@ export class RegisterIpresComponent implements OnInit {
         this.detPacteDireccion = "";
         this.rucconveios = "";
         this.pacienteForm.get("ruc").patchValue("");
+        this.pacienteForm.get("razonsocial").patchValue("");
+        this.pacienteForm.get("regimen").patchValue("");
+        this.parentescoForm.get("razonsocialrepre").patchValue("");
+        this.detailForm.get("descripcion_reclamo").patchValue("");
         this.detailForm.get("productoservicio").patchValue("2");
+        this.detailForm.get("usuario_autoriza").patchValue("");
+        this.causaForm.get("derechosalud1").patchValue("");
+        this.causaForm.get("causaespecifica1").patchValue("");
+        this.causaForm.get("derechosalud2").patchValue("");
+        this.causaForm.get("causaespecifica2").patchValue("");
+        this.causaForm.get("monto").patchValue("");
     }
 }
