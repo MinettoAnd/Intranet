@@ -59,6 +59,7 @@ export class RegisterIpresComponent implements OnInit {
     public detPactehclinica;
     public detPacteTelefono;
     public detPacteCorreoElectronico;
+    public detPacteTipDoc;
     public detPacteDocumento;
     public detPacteFechaNacimiento;
     public detPacteSexo;
@@ -1110,6 +1111,7 @@ export class RegisterIpresComponent implements OnInit {
                 this.max_id_libro = ("000000" + this.maxids[0]?.maximo).slice(
                     -6
                 );
+                this.correlativo = this.max_id_libro;
 
                 const data = {
                     periodo: this.datePipe.transform(new Date(), "yyyyMM"),
@@ -1121,8 +1123,10 @@ export class RegisterIpresComponent implements OnInit {
                     name_causa_especifica: this.name_causa_especifica,
                     idcausa_especifica2: causa.causaespecifica1,
                     idcausa_especifica3: causa.causaespecifica2,
-                    correlativo_reclamo: this.max_id_libro,
-                    correlativo_acomp: this.max_id_libro,
+                    // correlativo_reclamo: this.max_id_libro,
+                    // correlativo_acomp: this.max_id_libro,
+                    correlativo_reclamo: this.correlativoLibro(true),
+                    correlativo_acomp: this.correlativoLibro(true),
                     correlativo_causa: 1,
                     codigo_institucion: this.codigo_institucion,
                     tipo_administrativo: 1, //IPRES
@@ -1301,12 +1305,12 @@ export class RegisterIpresComponent implements OnInit {
                 this.byidsedes = response.data.length > 0 ? response.data : [];
                 this.byidsede = this.byidsedes[0]?.v_inicial;
                 this.vcorrelativo =
-                    "HP" +
-                    this.byidsede +
-                    ("000000" + this.maxids[0]?.maximo).slice(-6);
+                    "HP" + this.byidsede + this.correlativoLibro(true);
+                // ("000000" + this.maxids[0]?.maximo).slice(-6);
                 this.newAudita();
                 this.registerCorrelativoLibro(
-                    "000000" + this.maxids[0]?.maximo,
+                    "000000" + this.correlativoLibro(),
+                    // "000000" + this.maxids[0]?.maximo,
                     this.vcorrelativo,
                     idmax_reclamo,
                     sede
@@ -1346,6 +1350,7 @@ export class RegisterIpresComponent implements OnInit {
             idreclamo: idmax_reclamo,
             idsede: sede,
             tipo_empresa: this.TIPO_RECLAMO,
+            es_corr_fisico: this.esCorrFisico(),
         };
         this.apiService.postCorrelativoLibroReclamoService(data).then(
             (response: any) => {
@@ -1532,6 +1537,7 @@ export class RegisterIpresComponent implements OnInit {
         this.detPactehclinica = datos.hclinica;
         this.detPacteTelefono = datos.Telefono;
         this.detPacteCorreoElectronico = datos.CorreoElectronico;
+        this.detPacteTipDoc = datos.CodSUSALUD;
         this.detPacteDocumento = datos.Documento;
         this.detPacteFechaNacimiento = datos.FechaNacimiento;
         this.detPacteSexo = datos.Sexo;
@@ -1564,6 +1570,7 @@ export class RegisterIpresComponent implements OnInit {
         this.detPactehclinica = "";
         this.detPacteTelefono = "";
         this.detPacteCorreoElectronico = "";
+        this.detPacteTipDoc = "";
         this.detPacteDocumento = "";
         this.detPacteFechaNacimiento = "";
         this.detPacteSexo = "";
@@ -1581,5 +1588,25 @@ export class RegisterIpresComponent implements OnInit {
         this.causaForm.get("derechosalud2").patchValue("");
         this.causaForm.get("causaespecifica2").patchValue("");
         this.causaForm.get("monto").patchValue("");
+    }
+
+    esLibroReclamoFisico() {
+        return this.detailForm.get("modorecepcion").value == "2";
+    }
+
+    esCorrFisico() {
+        return this.esLibroReclamoFisico() ? "S" : "N";
+    }
+
+    correlativoLibro(completarConCeros = false) {
+        const correlativo = this.esLibroReclamoFisico()
+            ? this.detailForm.get("codigoweb").value
+            : this.correlativo;
+
+        if (completarConCeros) {
+            return ("000000" + correlativo).slice(-6);
+        }
+
+        return correlativo;
     }
 }

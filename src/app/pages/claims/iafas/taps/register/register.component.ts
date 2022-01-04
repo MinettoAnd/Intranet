@@ -60,6 +60,7 @@ export class RegisterComponent implements OnInit {
     public detPactehclinica;
     public detPacteTelefono;
     public detPacteCorreoElectronico;
+    public detPacteTipDoc;
     public detPacteDocumento;
     public detPacteFechaNacimiento;
     public detPacteSexo;
@@ -1123,8 +1124,10 @@ export class RegisterComponent implements OnInit {
                         name_causa_especifica: this.name_causa_especifica,
                         idcausa_especifica2: causa.causaespecifica1,
                         idcausa_especifica3: causa.causaespecifica2,
-                        correlativo_reclamo: this.numcorrelativo,
-                        correlativo_acomp: this.numcorrelativo,
+                        // correlativo_reclamo: this.numcorrelativo,
+                        // correlativo_acomp: this.numcorrelativo,
+                        correlativo_reclamo: this.correlativoLibro(true),
+                        correlativo_acomp: this.correlativoLibro(true),
                         correlativo_causa: 1,
                         codigo_institucion: this.codigo_institucion,
                         tipo_administrativo: 3, //iafas
@@ -1355,8 +1358,9 @@ export class RegisterComponent implements OnInit {
   }*/
     registerCorrelativo() {
         const data = {
-            correlativo_reclamo: this.correlativo,
+            correlativo_reclamo: this.correlativoLibro(true),
             tipo_empresa: this.TIPO_RECLAMO,
+            es_corr_fisico: this.esCorrFisico(),
         };
         this.apiService.postCorrelativoService(data).then(
             (response: any) => {
@@ -1505,6 +1509,7 @@ export class RegisterComponent implements OnInit {
         this.detPactehclinica = datos.hclinica;
         this.detPacteTelefono = datos.Telefono;
         this.detPacteCorreoElectronico = datos.CorreoElectronico;
+        this.detPacteTipDoc = datos.CodSUSALUD;
         this.detPacteDocumento = datos.Documento;
         this.detPacteFechaNacimiento = datos.FechaNacimiento;
         this.detPacteSexo = datos.Sexo;
@@ -1537,6 +1542,7 @@ export class RegisterComponent implements OnInit {
         this.detPactehclinica = "";
         this.detPacteTelefono = "";
         this.detPacteCorreoElectronico = "";
+        this.detPacteTipDoc = "";
         this.detPacteDocumento = "";
         this.detPacteFechaNacimiento = "";
         this.detPacteSexo = "";
@@ -1554,5 +1560,25 @@ export class RegisterComponent implements OnInit {
         this.causaForm.get("derechosalud2").patchValue("");
         this.causaForm.get("causaespecifica2").patchValue("");
         this.causaForm.get("monto").patchValue("");
+    }
+
+    esLibroReclamoFisico() {
+        return this.detailForm.get("modorecepcion").value == "2";
+    }
+
+    esCorrFisico() {
+        return this.esLibroReclamoFisico() ? "S" : "N";
+    }
+
+    correlativoLibro(completarConCeros = false) {
+        const correlativo = this.esLibroReclamoFisico()
+            ? this.detailForm.get("codigoweb").value
+            : this.correlativo;
+
+        if (completarConCeros) {
+            return ("000000" + correlativo).slice(-6);
+        }
+
+        return correlativo;
     }
 }

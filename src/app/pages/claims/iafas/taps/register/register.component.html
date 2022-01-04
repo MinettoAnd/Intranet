@@ -207,6 +207,7 @@
                     class="form-control form-select form-control-sm"
                     formControlName="tipodoc"
                     (change)="shownameRazonSocial($event, 1)"
+                    [(ngModel)]="detPacteTipDoc"
                     [ngClass]="{
                       'is-invalid': submittedpatient && g.tipodoc.errors
                     }"
