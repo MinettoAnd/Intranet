@@ -1361,6 +1361,7 @@ export class RegisterComponent implements OnInit {
             correlativo_reclamo: this.correlativoLibro(true),
             tipo_empresa: this.TIPO_RECLAMO,
             es_corr_fisico: this.esCorrFisico(),
+            id_reclamo: this.maxid_reclamo,
         };
         this.apiService.postCorrelativoService(data).then(
             (response: any) => {
