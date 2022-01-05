@@ -223,6 +223,11 @@ export class ClaimsService {
             .put(`${this.baseURL}/claims/caracteristicas`, data)
             .toPromise();
     }
+    updateReclamoCaracteristicasTblCorrService(data) {
+        return this.http
+            .put(`${this.baseURL}/claims/caracteristicas_tbl_corr`, data)
+            .toPromise();
+    }
     updateReclamoSolutionsService(data) {
         return this.http
             .put(`${this.baseURL}/claims/solucion`, data)
