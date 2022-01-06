@@ -155,6 +155,7 @@
                 [pagination]="true"
                 [defaultColDef]="defaultColDef"
                 rowSelection="multiple"
+                (cellDoubleClicked)="copyCellContent($event)"
               >
               </ag-grid-angular>
             </div>
@@ -164,3 +165,10 @@
     </div>
   </div>
 </div>
+<ngb-alert class="alert"
+    [style.display]="displayAlert"
+    [type]="'success'"
+    [dismissible]="false"
+>
+    <b>"{{ textoCopiado }}"</b> se ha copiado al portapapeles
+</ngb-alert>
