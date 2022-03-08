@@ -140,19 +140,19 @@ export class SendComponent implements OnInit {
     this.subject = "";
     const fromValue = this.FormSenMail.value;
     if (fromValue.sede === "0001") {
-      this.correo_director = "msuarez@clubdelasalud.pe";
+      this.correo_director = "tbenavides@clubdelasalud.pe";
       this.name_sede = "LIMA";
       this.id_sede = "0001";
       this.subject = "Producción Medica Asistencial - Sede Lima"
     }
     if (fromValue.sede === "0002") {
-      this.correo_director = "edurand@clubdelasalud.pe";
+      this.correo_director = "gvallejo@clubdelasalud.pe";
       this.name_sede = "CHORRILLOS";
       this.id_sede = "0002";
       this.subject = "Producción Medica Asistencial - Sede Chorrillos"
     }
     if (fromValue.sede === "0004") {
-      this.correo_director = "tbenavides@clubdelasalud.pe";
+      this.correo_director = "jinfante@clubdelasalud.pe";
       this.name_sede = "SURCO";
       this.id_sede = "0004";
       this.subject = "Producción Medica Asistencial - Sede Surco"
