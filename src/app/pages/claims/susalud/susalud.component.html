@@ -1,0 +1,234 @@
+<div class="main-card mt-2 card">
+  <div class="card-body">
+    <form [formGroup]="formListarReclamos">
+      <div class="form-row">
+        <div class="col-md-3">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="position-relative form-group">
+                <label for="tipo">Tipo</label>
+                <select
+                  id="tipo"
+                  name="tipo"
+                  formControlName="tipo"
+                  class="form-control-sm form-control"
+                >
+                  <option value="detalle">Detalle del reclamo</option>
+                  <option value="acciones">Acciones tomadas</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="position-relative form-group">
+                <label for="empresa">Empresa</label>
+                <select
+                  id="empresa"
+                  name="empresa"
+                  formControlName="empresa"
+                  class="form-control-sm form-control"
+                >
+                  <option value="IAFAS">IAFAS</option>
+                  <option value="IPRESS">IPRESS</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="position-relative form-group">
+                <label for="mes">Mes</label
+                ><input
+                  name="mes"
+                  id="mes"
+                  formControlName="mes"
+                  type="month"
+                  class="form-control-sm form-control"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="position-relative form-group">
+                <label for="sedes"
+                  [class]="{'text-secondary': !this.esIPRESS()}"
+                >Sedes</label>
+                <select *ngIf="!this.esIPRESS()"
+                  disabled="true"
+                  class="form-control-sm form-control"
+                >
+                  <option value="0">Todos</option>
+                </select>
+                <select *ngIf="this.esIPRESS()"
+                  id="sedes"
+                  formControlName="sede"
+                  class="form-control-sm form-control"
+                >
+                  <option value="0">Todos</option>
+                  <option value="1">Lima</option>
+                  <option value="2">Chorrillos</option>
+                  <option value="4">Surco</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="input-group">
+            <div class="input-group-btn">
+              <button
+                (click)="buscar()"
+                class="btn btn-primary btn-listar-reclamos"
+              >
+                <i class="pe-7s-search"> </i>Procesar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="main-card mb-3 card">
+  <div class="card-header">
+    <div
+      class="card-header-title font-size-lg text-capitalize font-weight-normal"
+    >
+      <select
+        class="custom-select"
+        style="width: auto"
+        [(ngModel)]="pageSize"
+        (ngModelChange)="refreshCountries()"
+      >
+        <option [ngValue]="50">50</option>
+        <option [ngValue]="100">100</option>
+        <option [ngValue]="150">150</option>
+      </select>
+
+      <div
+        class="btn-group ml-4"
+        role="group"
+        aria-label="Button group with nested dropdown"
+      >
+        <div class="btn-group" role="group">
+          <button
+            (click)="exportTramaTXT()"
+            class="btn btn-primary"
+          >
+            <i class="fa fa-file-text"></i> Generar txt {{ txtBtnExportar }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="table-responsive p-4">
+    <table
+      class="
+        align-middle
+        text-truncate
+        mb-0
+        table table-sm table-borderless table-hover
+      "
+    >
+      <thead>
+        <tr *ngIf="datosMostradosDe('detalle')">
+          <th>Correlativo</th>
+          <th>F.Reclamo</th>
+          <th>F.Evento</th>
+          <th>Sede</th>
+          <th>Estado</th>
+          <th>Afectado</th>
+          <th>Resultado Reclamo</th>
+          <th>Area Involucrado</th>
+        </tr>
+        <tr *ngIf="datosMostradosDe('acciones')">
+          <th>Tipo cód. reclamo</th>
+          <th>Cód. único registro</th>
+          <th>Cód. medida adoptada</th>
+          <th>Descripción</th>
+          <th>Naturaleza medida</th>
+          <th>Proceso adoptado</th>
+          <th>F. inicio implementación</th>
+          <th>F. culminación</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of obtenerDatos">
+          <ng-container *ngIf="datosMostradosDe('detalle')">
+            <td class="text-left">
+              {{ newCorrelativoCorrecto(item.v_correlativo_reclamo) }}
+            </td>
+            <td class="text-left">{{ diaEvento(item.d_registra_reclamo) }}</td>
+            <td class="text-left">
+              {{ diaEvento(item.d_fecha_reclamo) }}
+            </td>
+            <td class="text-left">
+              {{ getsedeName(item.id_sede) }}
+            </td>
+            <td class="text-left">
+              {{ item.name_estado }}
+            </td>
+            <td class="text-left">
+              {{ item.V_nombre1.trim() }} {{ item.v_paterno1.trim() }}
+              {{ item.v_materno1.trim() }}
+            </td>
+            <td class="text-left">
+              {{ getRultadoReclamo(item.id_resultado_reclamo) }}
+            </td>
+            <td class="text-left">{{ item.area_name }}</td>
+          </ng-container>
+          <ng-container *ngIf="datosMostradosDe('acciones')">
+            <td class="text-center">
+              {{ item.tipo_reclamo }}
+            </td>
+            <td class="text-center">
+              {{ item.codigo_unico }}
+            </td>
+            <td class="text-center">
+              {{ ("00" + item.codigo_adoptado).slice(-2) }}
+            </td>
+            <td class="text-left" title="{{ item.resumen }}">
+              {{ longitudFija(item.resumen) }}
+            </td>
+            <td class="text-center">
+              {{ item.naturaleza }}
+            </td>
+            <td class="text-center">
+              {{ item.processo_adoptada }}
+            </td>
+            <td class="text-center">
+              {{ diaSolucion(item.fecha_inicio) }}
+            </td>
+            <td class="text-center">
+              {{ diaSolucion(item.fecha_culminacion) }}
+            </td>
+          </ng-container>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="d-block p-4 text-center card-footer">
+    <ngb-pagination
+      [collectionSize]="collectionSize"
+      [(page)]="page"
+      [pageSize]="pageSize"
+      (pageChange)="refreshCountries()"
+    >
+      <ng-template ngbPaginationPrevious>
+        <i class="pe-7s-angle-left-circle"></i
+      ></ng-template>
+      <ng-template ngbPaginationNext
+        ><i class="pe-7s-angle-right-circle"></i
+      ></ng-template>
+    </ngb-pagination>
+  </div>
+</div>

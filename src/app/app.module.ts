@@ -97,6 +97,7 @@ import { PiecharComponent } from './components/piechar/piechar.component';
 import { BarcharComponent } from './components/barchar/barchar.component';
 import { DashboardIpressComponent } from './pages/claims/ipress/taps/dashboard/dashboard-ipress.component';
 import { LoadingComponent } from './pages/loaging/loading';
+import { SusaludComponent } from './pages/claims/susalud/susalud.component';
 
 
 
@@ -163,7 +164,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     DocsComponent,
     PiecharComponent,
     BarcharComponent,
-    LoadingComponent
+    LoadingComponent,
+    SusaludComponent
   ],
   imports: [
     BrowserModule,

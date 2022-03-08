@@ -272,6 +272,16 @@ export class ClaimsService {
             .post(`${this.baseURL}/claims/getmedidas`, data)
             .toPromise();
     }
+    getReclamoListServiceSusalud(data) {
+        return this.http
+            .post(`${this.baseURL}/claims/getreclamosusalud`, data)
+            .toPromise();
+    }
+    getSearchMedidasAdoptadasSusalud(data) {
+        return this.http
+            .post(`${this.baseURL}/claims/getmedidassusalud`, data)
+            .toPromise();
+    }
     getReclamoByIdService(idreclamo, empresa) {
         return this.http
             .get(`${this.baseURL}/claims/${idreclamo}/${empresa}`)
