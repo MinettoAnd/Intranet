@@ -42,6 +42,7 @@
     "ngx-doc-viewer": "^2.0.2",
     "ngx-perfect-scrollbar": "^7.2.1",
     "node-sass": "^4.14.1",
+    "npm": "^6.11.0",
     "pe7-icon": "^1.0.4",
     "redux": "4.0.0",
     "sweetalert2": "^10.16.7",

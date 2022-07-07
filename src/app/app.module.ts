@@ -99,6 +99,10 @@ import { DashboardIpressComponent } from './pages/claims/ipress/taps/dashboard/d
 import { LoadingComponent } from './pages/loaging/loading';
 import { SusaludComponent } from './pages/claims/susalud/susalud.component';
 
+//ENCUESTA
+import { HomeComponent } from './pages/claims/encuesta/home/home.component';
+import { QuestionComponent } from './pages/claims/encuesta/question/question.component';
+
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -165,7 +169,11 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     PiecharComponent,
     BarcharComponent,
     LoadingComponent,
-    SusaludComponent
+    SusaludComponent,
+
+    //ENCUESTA
+    HomeComponent,
+    QuestionComponent    
   ],
   imports: [
     BrowserModule,

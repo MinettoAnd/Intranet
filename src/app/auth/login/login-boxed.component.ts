@@ -57,6 +57,7 @@ export class LoginBoxedComponent implements OnInit {
     this.loading();
     this.apiService.postLoginService(data).then(
       (response: any) => {
+        console.log(response);
         if (response.respuesta === 'True') {
           this.getProfileUser(this.f.username.value);
           localStorage.setItem('username', this.f.username.value);
