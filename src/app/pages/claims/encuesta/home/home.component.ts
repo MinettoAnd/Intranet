@@ -317,17 +317,21 @@ export class HomeComponent implements OnInit {
 
           console.log(data);
           this.patientPoll.reset();
+          this.hideData();
+          this.router.navigateByUrl('/claims/encuesta/answer');
+          console.log(this.element)
           //this.spinner.show();
 
-         /*  setTimeout(() => { 
+           //setTimeout(() => { 
             //location.href = 'https://www.maisondesante.org.pe/encuestas/newform'
             //location.href = 'http://localhost:4200/newform'
             //this.router.navigateByUrl('encuestas/newform');
-            //this.router.navigateByUrl('/answer');
+            
+            
             /** spinner ends after 5 seconds */
             //this.spinner.hide();
-            //this.hideData();
-          //}, 5000); */
+            
+          //}, 5000);
 
         });
     }
@@ -341,7 +345,7 @@ export class HomeComponent implements OnInit {
 
   getdataEncuesta(){
     //this.router.navigateByUrl('encuestas/resultadoencuesta');
-    this.router.navigateByUrl('/resultadoencuesta');
+    this.router.navigateByUrl('claims/encuesta/resultadoencuesta');
   }
 
   onSubmit(): any {

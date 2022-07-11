@@ -29,6 +29,11 @@ import { SendComponent } from "./pages/report/send/send.component";
 import { DefaultComponent } from "./pages/default/default.component";
 import { AuthGuard } from "./guards/guards.guard";
 
+//ENCUESTA
+import { HomeComponent } from "./pages/claims/encuesta/home/home.component";
+import { AnswerComponent } from "./pages/claims/encuesta/answer/answer.component";
+import { ResponseformComponent } from "./pages/claims/encuesta/responseform/responseform.component";
+
 const routes: Routes = [
     {
         path: "",
@@ -85,6 +90,21 @@ const routes: Routes = [
             {
                 path: "claims/susalud",
                 component: SusaludComponent,
+                data: { extraParameter: "claimsMenu" },
+            },
+            {
+                path: "claims/encuesta",
+                component: HomeComponent,
+                data: { extraParameter: "claimsMenu" },
+            },
+            {
+                path: "claims/encuesta/answer",
+                component: AnswerComponent,
+                data: { extraParameter: "claimsMenu" },
+            },
+            {
+                path: "claims/encuesta/resultadoencuesta",
+                component: ResponseformComponent,
                 data: { extraParameter: "claimsMenu" },
             },
 

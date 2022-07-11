@@ -1,0 +1,33 @@
+<div class="flex flex-col gap-8 w-3/5 mx-auto min-h-screen py-4" *ngIf="element == false">
+    <img src="https://www.maisondesante.org.pe/encuestas/assets/portada.png" alt="img-portada">
+        <div class="flex flex-col gap-4 items-center justify-center">
+            <hr>
+            <h2 class="text-6xl font-bold text-black">Gracias!</h2>
+            <hr>
+            <p class="justify-center align-center text-black rounded-2xl p-4 text-2xl bg-[#2f50f1]">Esta breve encuesta es importante para seguir mejorando y poder brindarte lo mejor en calidad. Gracias por tu respuesta :)</p>
+            <div class="flex flex-col mt-10 gap-4 items-center justify-center">
+                <h3 class="text-3xl font-bold text-black"> Siguenos en nuestras redes sociales!</h3>
+                <div class="mt-4 p-4 text-xl text-center font-semibold text-black bg-[#fad819d0] rounded-2xl">
+                    <a href="https://www.maisondesante.org.pe/"> Clinica Maison de Santé </a>
+                </div>
+               <!--  <div>
+                    <ngx-spinner
+                        bdColor ="rgba(255,255,255) "
+                        size ="medium"
+                        color ="#fff"
+                        type="ball-scale-multiple"
+                        template="<img src='https://www.maisondesante.org.pe/encuestas/assets/LOGO_CMS.gif' />">
+                    </ngx-spinner>
+                </div> -->
+                <p class="mt-2 text-xl font-bold text-[#10004c]">Puedes realizar una nueva encuesta aquí:</p>
+                <button type="submit" class="border rounded-md py-3 px-6 text-xl bg-[#10004c] text-black font-bold" (click)="returnForm()">Nueva encuesta</button>
+            </div>
+            <div class="mt-20">
+                <button type="submit"
+                        class="mt-4 border rounded-md py-3 px-6 text-xl text-black hover:text-slate-50 font-bold hover:bg-blue-800"
+                        (click)="getdataEncuesta()">
+                        Ver Resultados de la encuesta
+                </button>
+            </div>
+        </div>
+</div>

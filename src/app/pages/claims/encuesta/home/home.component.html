@@ -341,14 +341,14 @@
             <app-question question="¿Quisieras comentarnos algo más?"></app-question>
             <textarea class="border rounded-xl text-lg py-2 px-3 outline-none text-black" placeholder="Comentarios adicionales" formControlName="additionalComments" rows="6" ></textarea>
         </div>
-        <ngx-spinner
+        <!-- <ngx-spinner
             bdColor ="rgba(255,255,255) "
             size ="medium"
             color ="#fff"
             type="ball-scale-multiple"
             template="<img src='https://www.maisondesante.org.pe/encuestas/assets/LOGO_CMS.gif'/>">
-        </ngx-spinner>
+        </ngx-spinner> -->
         <button type="submit" class="border rounded-md py-3 text-xl bg-[#10004c] text-white font-bold hover:bg-blue-900"  [disabled]="patientPoll.valid"   >Grabar Formulario</button>
-         <button class="border rounded py-3 text-xl  text-[#10004c] hover:text-slate-50 font-bold hover:bg-blue-800" (click)="getdataEncuesta()">Ver Resultados de la encuesta</button>
+         <button class="border rounded py-3 text-xl  text-black hover:text-slate-50 font-bold hover:bg-blue-800" (click)="getdataEncuesta()">Ver Resultados de la encuesta</button>
     </form>
 </div>

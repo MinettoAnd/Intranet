@@ -100,6 +100,7 @@ import { LoadingComponent } from './pages/loaging/loading';
 import { SusaludComponent } from './pages/claims/susalud/susalud.component';
 
 //ENCUESTA
+//import { NgxSpinnerModule } from "ngx-spinner"
 import { HomeComponent } from './pages/claims/encuesta/home/home.component';
 import { QuestionComponent } from './pages/claims/encuesta/question/question.component';
 
@@ -194,12 +195,15 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ReactiveFormsModule,
     HttpClientModule,
 
+    //NgxSpinnerModule,
+
     // Charts
 
     ChartsModule,
     AngularEditorModule,
     NgSelectModule,
     AgGridModule.withComponents([]),
+
   ],
   providers: [
     {

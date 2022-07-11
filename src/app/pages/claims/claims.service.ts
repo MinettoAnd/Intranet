@@ -475,11 +475,11 @@ export class ClaimsService {
 
     // Router Encuesta
     getFormulario(): Observable<HttpResponse<any>> {
-        return this.http.get(`${this.API}/getSWEncuesta`, { observe: 'response' });
+        return this.http.get(`${this.API}getSWEncuesta`, { observe: 'response' });
     }
 
     postFormulario(datoFormulario: Formulario): Observable<any> {
-        return this.http.post(`${this.API}/postSWEncuesta`, datoFormulario);
+        return this.http.post(`${this.API}postSWEncuesta`, datoFormulario);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////
