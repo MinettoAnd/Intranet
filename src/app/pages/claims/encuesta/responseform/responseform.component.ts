@@ -1,7 +1,8 @@
 import { getLocaleDateFormat } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild  } from '@angular/core';
 import { ClaimsService } from 'src/app/pages/claims/claims.service';
 import { Router } from '@angular/router';
+import { AgGridAngular } from "ag-grid-angular";
 //import { NgxSpinnerService } from "ngx-spinner";
 
 
@@ -13,11 +14,29 @@ import { Router } from '@angular/router';
 export class ResponseformComponent implements OnInit {
   data: any = [];
   //dataEnc:any;
+  @ViewChild("agGrid") agGrid: AgGridAngular;
+  columnDefs;
+  /* frameworkComponents;
+  tooltipShowDelay;
+  defaultColDef; */
+  rowData: any;
+  style = {
+    width: "100%",
+    height: "100%",
+    flex: "1 1 auto",
+};
   element = false;
   constructor(private formularioService: ClaimsService,
-    private router: Router
+    private router: Router,
     //private spinner: NgxSpinnerService
     ) {
+      this.columnDefs =[
+        {headerName: "FECHA"},
+        {headerName: "HORA"},
+        {headerName: "SEDE"},
+        {headerName: "ORIGEN DE ATENCIÓN"},
+        {headerName: "TIPO DE PACIENTE"}
+      ]
 
   }
 
@@ -28,7 +47,7 @@ export class ResponseformComponent implements OnInit {
         this.data = res.body;
         console.log(20,this.data);
       });
-      this.router.navigateByUrl('/claims/encuesta/resultadoencuesta');
+      this.router.navigateByUrl('/claims/resultadoencuesta');
 
   }
 
@@ -36,20 +55,17 @@ export class ResponseformComponent implements OnInit {
     return (this.element = true);
   }
   returnForm(){
-   
-    this.router.navigateByUrl('/claims/encuesta');
-    this.hideData();
-    console.log(this.element);
+
     //this.spinner.show();
     //setTimeout(() => {
       //location.href = 'https://www.maisondesante.org.pe/encuestas/'
       //location.href = 'http://localhost:4200'
        //this.router.navigateByUrl('/encuestas');
-       //this.router.navigateByUrl('/');
+       this.router.navigateByUrl('/claims/encuesta');
 
       /** spinner ends after 5 seconds */
       //this.spinner.hide();
-      //this.hideData();
+      this.hideData();
 
     //}, 5000);
   }
@@ -83,5 +99,8 @@ export class ResponseformComponent implements OnInit {
 
 
 }
+
+
+
 
 

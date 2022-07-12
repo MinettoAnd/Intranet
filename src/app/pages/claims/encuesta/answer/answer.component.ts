@@ -25,7 +25,7 @@ export class AnswerComponent implements OnInit {
 
   getdataEncuesta(){
     //this.router.navigateByUrl('encuestas/resultadoencuesta');
-    this.router.navigateByUrl('/claims/encuesta/resultadoencuesta');
+    this.router.navigateByUrl('/claims/resultadoencuesta');
   }
   returnForm(){
     this.router.navigateByUrl('/claims/encuesta');
