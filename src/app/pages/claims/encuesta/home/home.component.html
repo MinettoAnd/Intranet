@@ -1,4 +1,5 @@
-<div class="grid grid-col min-h-screen sm:min-h-min py-4">
+<div class="card">
+    <div class="card-body">
     <form [formGroup]="patientPoll" (ngSubmit)="onSubmit()" class="flex flex-col gap-8 w-4/5 sm:w-4/5 md:w-4/5 lg:w-3/5 xl:w-3/5 2xl:w-2/5 mx-14 sm:mx-14 md:mx-auto lg:mx-auto xl:mx-auto 2xl:mx-auto" *ngIf="element == false">
         <img src="https://www.maisondesante.org.pe/encuestas/assets/portada.png" alt="img-portada">
         <div class="flex flex-col gap-4">
@@ -351,4 +352,5 @@
         <button type="submit" class="border rounded-md py-3 text-xl bg-[#10004c] text-white font-bold hover:bg-blue-900"  [disabled]="patientPoll.valid"   >Grabar Formulario</button>
          <button type="button" class="border rounded py-3 text-xl  text-black hover:text-slate-50 font-bold hover:bg-blue-800" (click)="getdataEncuesta()">Ver Resultados de la encuesta</button>
     </form>
+</div>
 </div>

@@ -13,6 +13,11 @@ import { AgGridAngular } from "ag-grid-angular";
 })
 export class ResponseformComponent implements OnInit {
   data: any = [];
+  /* fechaRegistro : any = [];
+  sucursal : any = [];
+  modalidad : any = [];
+  paciente: any = []; */
+  
   //dataEnc:any;
   @ViewChild("agGrid") agGrid: AgGridAngular;
   columnDefs;
@@ -26,6 +31,7 @@ export class ResponseformComponent implements OnInit {
     flex: "1 1 auto",
 };
   element = false;
+  idData: any;
   constructor(private formularioService: ClaimsService,
     private router: Router,
     //private spinner: NgxSpinnerService
@@ -74,17 +80,60 @@ export class ResponseformComponent implements OnInit {
     this.formularioService.getFormulario().subscribe(
     (res:any) => {
       console.log(res);
-      this.data = res.body;
+      //this.data = res.body;
+      //this.data = res.body
+      this.data = [
+        {
+            registro_fecha: '2022-07-11 17:39:57.000',
+            sucursal: 'Lima',
+            modalida: 'Hospitalización',
+            paciente: 'Institucional' ,
+        }
+    ]
+
+
+
+      /* let arraydata = arrdata =>{
+        let item: any;
+        for (item of arrdata){
+          //this.fechaRegistro = item.registro_fecha;
+          this.fechaRegistro = item.registro_fecha;
+          this.sucursal = item.sucursal;
+          this.modalidad = item.modalidad;
+          this.paciente = item.paciente;
+
+          console.log(150,item.registro_fecha);
+          
+          //let paciente = item.paciente
+          return JSON.stringify(this.fechaRegistro);
+
+        }        
+      } */
+      //arraydata(this.data.paciente)
+      //console.log(200, arraydata);
+      
+      this.idData = this.data[0].paciente;
+      //this.data = JSON.stringify(res.body);
+      console.log(10,JSON.stringify(this.idData));
 
       //let dataEnc = data.body;
       console.log(20,this.data);
+      console.log(21, this.data[0]);
+      console.log(typeof JSON.stringify(this.data))
+      console.dir(22,this.data[0].paciente);
       //let date = this.data.updated_at;
       //let hour = this.data[1].updated_at;
       //console.log(10,dataEnc);
       //console.log(11,date);
       //console.log(12,hour);
+
+      
     });
 
+    
+
+    
+    
 
   };
 
@@ -92,7 +141,11 @@ export class ResponseformComponent implements OnInit {
 
   ngOnInit(): void {
     //this.data.sort()
-    this.getdata();
+    this.getdata()
+    //JSON.stringify(this.getdata());
+    //console.log(30,JSON.stringify(this.getdata()));
+    console.log(300, this.data);
+    setTimeout(() => console.log(400,this.data), 5000);
 
   }
 

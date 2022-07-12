@@ -1,5 +1,5 @@
-<div class="min-h-screen py-4">
-  <div class="flex flex-col gap-8 w-3/5 mx-auto">
+<div class="card" >
+  <div class="card-body">
     <img src="https://www.maisondesante.org.pe/encuestas/assets/portada.png" alt="img-portada">
     <div class="flex flex-row justify-between p-0 m-0">
       <h2 class="text-4xl font-bold text-[#10004c] p-0 m-0">Resultados de la encuesta</h2>
@@ -14,8 +14,8 @@
         Regresar
       </button>
       <div>
-        {{ data[0] }}
-        <span></span>
+        {{ data }} 
+        <span *ngFor="let item of data ">{{item.registro_fecha | date:'yyyy-MM-dd'}}</span>
       </div>
       <!-- <div>
         <ngx-spinner bdColor="rgba(255,255,255) " size="medium" color="#fff" type="ball-scale-multiple"
@@ -31,9 +31,9 @@
         </div>
       </div>
     </div> -->
-    <table class="table-poll">
-      <thead class="text-xl text-center font-semibold   bg-[#10004c]">
-        <tr class="text-xl text-center font-semibold text-black">
+    <table >
+      <thead >
+        <tr >
           <th>Fecha</th>
           <th>Hora</th>
           <th>Sede</th>
