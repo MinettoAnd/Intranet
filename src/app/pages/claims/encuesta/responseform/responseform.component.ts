@@ -80,16 +80,16 @@ export class ResponseformComponent implements OnInit {
     this.formularioService.getFormulario().subscribe(
     (res:any) => {
       console.log(res);
-      //this.data = res.body;
+      this.data = res.body;
       //this.data = res.body
-      this.data = [
+      /* this.data = [
         {
             registro_fecha: '2022-07-11 17:39:57.000',
             sucursal: 'Lima',
             modalida: 'Hospitalización',
             paciente: 'Institucional' ,
         }
-    ]
+    ] */
 
 
 

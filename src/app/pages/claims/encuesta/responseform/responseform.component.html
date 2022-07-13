@@ -4,19 +4,15 @@
     <div class="flex flex-row justify-between p-0 m-0">
       <h2 class="text-4xl font-bold text-[#10004c] p-0 m-0">Resultados de la encuesta</h2>
       <button type="button"
-        class="mt-4 border rounded-md py-3 px-6 text-xl text-[#10004c] hover:text-slate-50 font-bold hover:bg-blue-900 "
+        class="btn btn-sm btn-primary"
         (click)="refresh()">
         Actualizar
       </button>
       <button type="button"
-        class="mt-4 border rounded-md py-3 px-6 text-xl text-[#10004c] hover:text-slate-50 font-bold hover:bg-blue-900 "
+        class="btn btn-sm btn-primary"
         (click)="returnForm()">
         Regresar
-      </button>
-      <div>
-        {{ data }} 
-        <span *ngFor="let item of data ">{{item.registro_fecha | date:'yyyy-MM-dd'}}</span>
-      </div>
+      </button>      
       <!-- <div>
         <ngx-spinner bdColor="rgba(255,255,255) " size="medium" color="#fff" type="ball-scale-multiple"
           template="<img src='https://www.maisondesante.org.pe/encuestas/assets/LOGO_CMS.gif' />">
@@ -31,7 +27,7 @@
         </div>
       </div>
     </div> -->
-    <table >
+    <table class="table">
       <thead >
         <tr >
           <th>Fecha</th>
