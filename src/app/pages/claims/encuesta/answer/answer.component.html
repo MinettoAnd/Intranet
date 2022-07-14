@@ -1,4 +1,55 @@
-<div class="card" *ngIf="element == false">
+<div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <div class="text-sans-serif">
+            <img src="https://www.maisondesante.org.pe/encuestas/assets/portada.png" alt="img-portada"
+              class="imgencuesta">
+            <div class="box3">
+              <div class="textprincipal ">
+                <h2 class="txtresponse">Gracias..!</h2>
+                <div class="divmensaje ">
+                    <p class="mensaje text-justify">Esta breve encuesta es importante para seguir mejorando y poder brindarte lo mejor en calidad. Gracias por tu respuesta :).</p>
+                </div>
+              </div>
+            </div>
+           
+            <div class="">
+                <h3 class="mensaje2"> Siguenos en nuestras redes sociales!</h3>
+                <div class="urlanswer">
+                    <a href="https://www.maisondesante.org.pe/"> Clinica Maison de Santé </a>
+                </div>
+                <div class="div ">
+                    <h4 class="mensaje2">Puedes realizar una nueva encuesta aquí:</h4>
+                </div>
+            </div>
+              <div class="divbtanswer">
+                <button type="submit" class="btnanswer" (click)="returnForm()">
+                    Nueva encuesta
+                </button>
+              </div>
+              <div class="divbtanswer">
+                <button type="submit" class="btnanswer" (click)="getdataEncuesta()">
+                    Ver Resultados de la encuesta
+                </button>
+              </div>
+            
+            <div>
+              <div>
+            
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+
+
+<!-- <div class="card" *ngIf="element == false">
     <div class="card-body">
     <img src="https://www.maisondesante.org.pe/encuestas/assets/portada.png" alt="img-portada">
         <div class="flex flex-col gap-4 items-center justify-center">
@@ -11,15 +62,7 @@
                 <div class="mt-4 p-4 text-xl text-center font-semibold text-black bg-[#fad819d0] rounded-2xl">
                     <a href="https://www.maisondesante.org.pe/"> Clinica Maison de Santé </a>
                 </div>
-               <!--  <div>
-                    <ngx-spinner
-                        bdColor ="rgba(255,255,255) "
-                        size ="medium"
-                        color ="#fff"
-                        type="ball-scale-multiple"
-                        template="<img src='https://www.maisondesante.org.pe/encuestas/assets/LOGO_CMS.gif' />">
-                    </ngx-spinner>
-                </div> -->
+              
                 <p class="mt-2 text-xl font-bold text-[#10004c]">Puedes realizar una nueva encuesta aquí:</p>
                 <button type="submit" class="border rounded-md py-3 px-6 text-xl bg-[#10004c] text-black font-bold" (click)="returnForm()">Nueva encuesta</button>
             </div>
@@ -32,4 +75,4 @@
             </div>
         </div>
     </div>
-    </div>
+    </div> -->

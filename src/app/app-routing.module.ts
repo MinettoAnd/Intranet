@@ -30,9 +30,10 @@ import { DefaultComponent } from "./pages/default/default.component";
 import { AuthGuard } from "./guards/guards.guard";
 
 //ENCUESTA
-import { HomeComponent } from "./pages/claims/encuesta/home/home.component";
-import { AnswerComponent } from "./pages/claims/encuesta/answer/answer.component";
-import { ResponseformComponent } from "./pages/claims/encuesta/responseform/responseform.component";
+//import { HomeComponent } from "./pages/claims/encuesta/home/home.component";
+import { HomeComponent } from "./pages/encuesta/home/home.component";
+//import { AnswerComponent } from "./pages/claims/encuesta/answer/answer.component";
+//import { ResponseformComponent } from "./pages/claims/encuesta/responseform/responseform.component";
 
 const routes: Routes = [
     {
@@ -97,7 +98,7 @@ const routes: Routes = [
                 component: HomeComponent,
                 data: { extraParameter: "claimsMenu" },
             },
-            {
+            /* {
                 path: "claims/answer",
                 component: AnswerComponent,
                 data: { extraParameter: "claimsMenu" },
@@ -106,7 +107,7 @@ const routes: Routes = [
                 path: "claims/resultadoencuesta",
                 component: ResponseformComponent,
                 data: { extraParameter: "claimsMenu" },
-            },
+            }, */
 
             {
                 path: "rrhh/collaborators",
@@ -117,6 +118,11 @@ const routes: Routes = [
                 path: "report/send",
                 component: SendComponent,
                 data: { extraParameter: "recursosMenu" },
+            },
+            {
+                path: "encuesta/encuesta",
+                component: HomeComponent,
+                data: { extraParameter: "encuestaMenu" },
             },
         ],
     },

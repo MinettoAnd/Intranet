@@ -101,10 +101,10 @@ import { SusaludComponent } from './pages/claims/susalud/susalud.component';
 
 //ENCUESTA
 //import { NgxSpinnerModule } from "ngx-spinner"
-import { HomeComponent } from './pages/claims/encuesta/home/home.component';
-import { QuestionComponent } from './pages/claims/encuesta/question/question.component';
-import { AnswerComponent } from './pages/claims/encuesta/answer/answer.component';
-import { ResponseformComponent } from './pages/claims/encuesta/responseform/responseform.component';
+import { HomeComponent } from './pages/encuesta/home/home.component';
+//import { QuestionComponent } from './pages/claims/encuesta/question/question.component';
+//import { AnswerComponent } from './pages/claims/encuesta/answer/answer.component';
+//import { ResponseformComponent } from './pages/claims/encuesta/responseform/responseform.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -174,9 +174,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
     //ENCUESTA
     HomeComponent,
-    QuestionComponent,
-    AnswerComponent,
-    ResponseformComponent
+    //QuestionComponent,
+    //AnswerComponent,
+    //ResponseformComponent
         
   ],
   imports: [

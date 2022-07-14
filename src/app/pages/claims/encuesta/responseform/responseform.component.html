@@ -1,53 +1,56 @@
-<div class="card" >
-  <div class="card-body">
-    <img src="https://www.maisondesante.org.pe/encuestas/assets/portada.png" alt="img-portada">
-    <div class="flex flex-row justify-between p-0 m-0">
-      <h2 class="text-4xl font-bold text-[#10004c] p-0 m-0">Resultados de la encuesta</h2>
-      <button type="button"
-        class="btn btn-sm btn-primary"
-        (click)="refresh()">
-        Actualizar
-      </button>
-      <button type="button"
-        class="btn btn-sm btn-primary"
-        (click)="returnForm()">
-        Regresar
-      </button>      
-      <!-- <div>
-        <ngx-spinner bdColor="rgba(255,255,255) " size="medium" color="#fff" type="ball-scale-multiple"
-          template="<img src='https://www.maisondesante.org.pe/encuestas/assets/LOGO_CMS.gif' />">
-        </ngx-spinner>
-      </div> -->
-    </div>
-   <!--  <div class="row mt-4">
-      <div class="col">
-        <div [style]="style">
-         <ag-grid-angular>
-        </ag-grid-angular> 
+<div class="row">
+  <div class="col">
+    <div class="card">
+      <div class="card-body">
+        <div class="text-sans-serif">
+          <img src="https://www.maisondesante.org.pe/encuestas/assets/portada.png" alt="img-portada"
+            class="imgencuesta">
+          <div class="box3">
+            <div class="paddingresponse ">
+              <h2 class="txtresponse">Resultados de la encuesta</h2>
+            </div>
+            <div class="paddingresponse ">
+              <button type="button" class="btresponive" (click)="refresh()">
+                Actualizar
+              </button>
+            </div>
+            <div class="paddingresponse ">
+              <button type="button" class="btresponive" (click)="returnForm()">
+                Regresar
+              </button>
+            </div>
+          </div>
+          <div>
+            <div>
+              <table class="tableencuesta">
+                <thead class="titletablerespon">
+                  <tr>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Sede</th>
+                    <th>Origen de Atención</th>
+                    <th>Tipo de Paciente</th>
+          
+                  </tr>
+                </thead>
+                <tbody class="texttablerespon">
+                  <tr *ngFor="let item of data ">
+                    <td>{{item.registro_fecha | date:'yyyy-MM-dd'}}</td>
+                    <td>{{item.registro_fecha | date:'HH:mm:ss' }}</td>
+                    <td>{{item.sucursal}}</td>
+                    <td>{{item.modalidad}}</td>
+                    <td>{{item.paciente}}</td>
+          
+                  </tr>
+          
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
-    </div> -->
-    <table class="table">
-      <thead >
-        <tr >
-          <th>Fecha</th>
-          <th>Hora</th>
-          <th>Sede</th>
-          <th>Origen de Atención</th>
-          <th>Tipo de Paciente</th>
-
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of data ">
-          <td>{{item.registro_fecha | date:'yyyy-MM-dd'}}</td>
-          <td>{{item.registro_fecha | date:'HH:mm:ss' }}</td>
-          <td>{{item.sucursal}}</td>
-          <td>{{item.modalidad}}</td>
-          <td>{{item.paciente}}</td>
-
-        </tr>
-
-      </tbody>
-    </table>
+    </div>
   </div>
+</div>
+
+
