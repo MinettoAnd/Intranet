@@ -318,7 +318,7 @@ export class HomeComponent implements OnInit {
           console.log(data);
           this.patientPoll.reset();
           this.hideData();
-          this.router.navigateByUrl('/claims/answer');
+          this.router.navigateByUrl('encuesta/answer');
           console.log(this.element)
           //this.spinner.show();
 
@@ -345,7 +345,7 @@ export class HomeComponent implements OnInit {
 
   getdataEncuesta(){
     //this.router.navigateByUrl('encuestas/resultadoencuesta');
-    this.router.navigateByUrl('claims/resultadoencuesta');
+    this.router.navigateByUrl('encuesta/resultadoencuesta');
   }
 
   onSubmit(): any {

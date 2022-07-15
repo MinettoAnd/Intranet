@@ -32,8 +32,8 @@ import { AuthGuard } from "./guards/guards.guard";
 //ENCUESTA
 //import { HomeComponent } from "./pages/claims/encuesta/home/home.component";
 import { HomeComponent } from "./pages/encuesta/home/home.component";
-//import { AnswerComponent } from "./pages/claims/encuesta/answer/answer.component";
-//import { ResponseformComponent } from "./pages/claims/encuesta/responseform/responseform.component";
+import { AnswerComponent } from "./pages/encuesta/answer/answer.component";
+import { ResponseformComponent } from "./pages/encuesta/responseform/responseform.component";
 
 const routes: Routes = [
     {
@@ -92,22 +92,7 @@ const routes: Routes = [
                 path: "claims/susalud",
                 component: SusaludComponent,
                 data: { extraParameter: "claimsMenu" },
-            },
-            {
-                path: "claims/encuesta",
-                component: HomeComponent,
-                data: { extraParameter: "claimsMenu" },
-            },
-            /* {
-                path: "claims/answer",
-                component: AnswerComponent,
-                data: { extraParameter: "claimsMenu" },
-            },
-            {
-                path: "claims/resultadoencuesta",
-                component: ResponseformComponent,
-                data: { extraParameter: "claimsMenu" },
-            }, */
+            },                     
 
             {
                 path: "rrhh/collaborators",
@@ -123,6 +108,16 @@ const routes: Routes = [
                 path: "encuesta",
                 component: HomeComponent,
                 data: { extraParameter: "encuestaMenu" },
+            },
+            {
+                path: "encuesta/answer",
+                component: AnswerComponent,
+                data: { extraParameter: "claimsMenu" },
+            },
+            {
+                path: "encuesta/resultadoencuesta",
+                component: ResponseformComponent,
+                data: { extraParameter: "claimsMenu" },
             },
         ],
     },
