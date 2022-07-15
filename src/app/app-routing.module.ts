@@ -120,7 +120,7 @@ const routes: Routes = [
                 data: { extraParameter: "recursosMenu" },
             },
             {
-                path: "encuesta/encuesta",
+                path: "encuesta",
                 component: HomeComponent,
                 data: { extraParameter: "encuestaMenu" },
             },

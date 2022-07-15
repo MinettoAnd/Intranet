@@ -21,20 +21,13 @@ export class FormularioService {
   API: string = environment.api_url;
  // API2: string = environment.api_url2;
 
-  constructor( private http:HttpClient) { }
+  constructor( private http:HttpClient) { }  
   
-  
-  get token(): string {
-    return localStorage.getItem("token") || "";
-}
-
-get headers() {
-    return {
-        headers: {
-            "x-token": this.token,
-        },
-    };
-}
+  httpOption = {
+    headers: new HttpHeaders({
+      'Content-Type':'aplication/json'
+    })
+  };
 
 
   // Router Encuesta
@@ -43,7 +36,7 @@ get headers() {
 }
 
 postFormulario(datoFormulario: Formulario): Observable<any> {
-    return this.http.post(`${this.API}postSWEncuesta`, datoFormulario);
+    return this.http.post(`${this.API}postSWEncuesta`, datoFormulario, this.httpOption);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
