@@ -50,6 +50,7 @@ export class HomeComponent implements OnInit {
   enableTypeagreement = false;
   enableTypesure = false;
   element = false;
+ 
 
   constructor(private formBuilder: FormBuilder,
     private formularioService: FormularioService,
@@ -319,7 +320,8 @@ export class HomeComponent implements OnInit {
           this.patientPoll.reset();
           this.hideData();
           this.router.navigateByUrl('encuesta/answer');
-          console.log(this.element)
+          console.log(this.element);
+          
           //this.spinner.show();
 
            //setTimeout(() => { 
@@ -337,6 +339,7 @@ export class HomeComponent implements OnInit {
     }
 
   }
+ 
 
   /* redirecction(){
     location.href = 'https://www.maisondesante.org.pe/';
