@@ -2,13 +2,13 @@
     <div class="col">
         <div class="card">
             <div class="card-body">
-                <form [formGroup]="patientPoll" (ngSubmit)="onSubmit()" class="text-sans-serif" *ngIf="element == false">
+                <form [formGroup]="patientPoll" (ngSubmit)="onSubmit()" class="formulario text-sans-serif" *ngIf="element == false">
                     <img src="https://www.maisondesante.org.pe/encuestas/assets/portada.png" alt="img-portada"
                         class="imgencuesta">
                     <div class="textprincipal">
-                        <h2 class="txtresponse">Hola!</h2>
+                        <h2 class="txthola">Hola!</h2>
                         <div class="divmensaje ">
-                            <p class="mensaje text-justify">Nos preocupamos por mejorar nuestro servicio y brindarte la
+                            <p class="mensaje ">Nos preocupamos por mejorar nuestro servicio y brindarte la
                                 oportunidad de tener la mejor experiencia. Por ello quisiéramos que contestes esta breve
                                 encuesta para seguir mejorando y poder brindarte lo último en calidad.</p>
                         </div>
@@ -18,9 +18,9 @@
                             <app-question question="¿En qué sede te atendiste?"></app-question>
                         </div>
                     </div>
-                    <div>
+                    <div class="cajaSedesModa">
                         <div class="wrapper">                            
-                            <div class="">
+                            <div class="gap-3">
                                 <img src="https://www.maisondesante.org.pe/encuestas/assets/lima.jpg" alt="img-lima"
                                     class="figure-zise" (click)="selectImage(radioLima)">
                                 <div class="">
@@ -54,40 +54,35 @@
                             <app-question question="¿Bajo que modalidad entraste?"></app-question>
                         </div>
                     </div>
-                    <div>
+                    <div class="cajaSedesModa">
                         <div class="wrapper">
-                            <div class="">
-                                
-                                <img src="https://www.maisondesante.org.pe/encuestas/assets/hospitalizacion.png"
-                                    alt="img-hospitalizacion" class=""
-                                    (click)="selectImage(radioHospital)">
-                                
+                            <div class="gap-3">
+                                <img src="https://www.maisondesante.org.pe/encuestas/assets/hospitalizacion.png" alt="img-hospitalizacion"
+                                    class="figure-flex" (click)="selectImage(radioHospital)">
                                 <div class="">
                                     <p class="textradiobuton">Hospitalización</p>
-                                    <input type="radio" #radioHospital name="inputMode" formControlName="inputMode"
-                                        value="Hospitalización" class="radiobutton">
+                                    <input type="radio" #radioHospital name="inputMode" formControlName="inputMode" value="Hospitalización"
+                                        class="radiobutton">
                                 </div>
                             </div>
-                            <div>
+                            <div class="">
                                 <img src="https://www.maisondesante.org.pe/encuestas/assets/consultorio.png"
-                                    alt="img-consultorio" class="figure-flex"
-                                    (click)="selectImage(radioConsultorio)">
+                                    alt="img-consultorio" class="figure-flex" (click)="selectImage(radioConsultorio)">
                                 <div class="">
-                                    <p class="textradiobuton">Consultorio Externo</p>
+                                    <p class="textradiobuton">Consultorio</p>
                                     <input type="radio" #radioConsultorio name="inputMode" formControlName="inputMode"
                                         value="Consultorio Externo" class="radiobutton">
                                 </div>
                             </div>
-                            <div>
-                                <img src="https://www.maisondesante.org.pe/encuestas/assets/emergencia.png"
-                                    alt="img-emergencia" class="figure-flex"
-                                    (click)="selectImage(radioEmergencia)">
+                            <div class="">
+                                <img src="https://www.maisondesante.org.pe/encuestas/assets/emergencia.png" alt="img-emergencia"
+                                    class="figure-flex" (click)="selectImage(radioEmergencia)">
                                 <div class="">
                                     <p class="textradiobuton">Emergencia</p>
-                                    <input type="radio" #radioEmergencia name="inputMode" formControlName="inputMode"
-                                        value="Emergencia" class="radiobutton">
+                                    <input type="radio" #radioEmergencia name="inputMode" formControlName="inputMode" value="Emergencia"
+                                        class="radiobutton">
                                 </div>
-                            </div>
+                            </div>                           
                         </div>
                     </div>
                     <div>
@@ -333,11 +328,11 @@
                             </thead>
                             <tbody>
                                 <tr class="text-lg font-semibold text-center text-[#10004c]">
-                                    <td class="p-2">Definitivamente no</td>
+                                    <td class="no p-2 ">Definitivamente no</td>
                                     <td class="p-2" *ngFor="let i of generateArray(10)">
                                         <input class="" type="radio" name="scaleRecommendation" [value]="i + 1" formControlName="scaleRecommendation"  ngValue="scaleRecommendation.value" required>
                                     </td>
-                                    <td class="p-2">Definitivamente sí</td>
+                                    <td class="si p-2">Definitivamente sí</td>
                                 </tr>
                             </tbody>
                         </table>
