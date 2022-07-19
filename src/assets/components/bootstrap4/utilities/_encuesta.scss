@@ -1,75 +1,3 @@
-//RESPONSIVE
-//pantallas anchas
-@media (min-width:1400px){
-  .formulario {
-    width: 80%;
-    margin: auto;
-  }
-}
-@media (max-width: 992px){
-  .cselectPaciente, .inputselectpaciente{
-    flex-wrap: wrap;
-  }
-  .box2{
-    img{
-      width: 60%;
-      span{
-        display: block;
-      }
-      
-    }
-  }
-}
-@media (max-width: 420px){
-  .mensaje, .question-title, .textradiobuton {
-    font-size: small;
-  } 
-  .cajaSedesModa, .cselectPaciente {
-    flex-wrap: wrap;
-  }
-  .box2{
-    img{
-      width: 60%;
-      span{
-        display: block;
-      }
-      
-    }
-  }
-  .paddingform{
-    padding: 0;
-  
-    .tableencuesta {
-      .textarrayarea, .textarraycolaborador{
-        font-size: small;
-      }
-      img{
-        width: 90%;
-      }
-    }
-  }
-  .paddingescala{
-    gap: 0;
-   
-    thead th {
-      font-size: small;
-    }
-    tbody tr td input {
-      padding: 0;
-      justify-content: space-evenly;
-    }
-    td{
-      visibility: visible;
-    }
-    td.no {
-      visibility: hidden;
-    }
-    td.si {
-      visibility: hidden;
-    }
-  }
-}
-//*****************************************************************
 //mixin 
 @mixin caja-flex($principal, $cruzado, $wrap) {
   display: flex;
@@ -91,6 +19,233 @@ $color-blue: rgb(3, 56, 124);
 $color-green: green;
 
 //********************************************************
+//RESPONSIVE
+//pantallas anchas
+@media (min-width:2500px){
+  .formulario{
+    width: 60%;
+    margin: auto;
+  }
+  .tableencuesta{
+    width: 60%;
+    margin: auto;
+  }
+ 
+  .txtresponse{
+    padding-top:2%;
+    font-size: 28px;
+    font-weight: bold;
+    color:  rgb(3, 56, 124);
+  }
+}
+@media (min-width:1440px){
+  .formulario{
+    width: 80%;
+    margin: auto;
+  }
+  .divtable{
+    padding-left: 10%;
+    padding-right: 10%;
+  }
+  .txtresponse{
+    padding-top:2%;
+    font-size: 24px;
+    font-weight: bold;
+    color:  rgb(3, 56, 124);
+  }
+  .divBTN{
+    display: flex;
+    padding-top: 0%;
+    padding: 3%;
+    justify-content: space-between;
+    font-size: 20px;
+  }
+}
+@media (min-width:1280px){
+  .divtable{
+    padding-left: 10%;
+    padding-right: 10%;
+  }
+  .txtresponse{
+    padding-top:2%;
+    font-size: 24px;
+    font-weight: bold;
+    color:  rgb(3, 56, 124);
+  }
+  .divBTN{
+    display: flex;
+    padding-top: 0%;
+    padding: 3%;
+    justify-content: space-between;
+    font-size: 18px;
+  }
+}
+@media (max-width: 992px){
+  .tableencuesta {
+    .textarrayarea, .textarraycolaborador{
+      font-size: small;
+    }
+    img{
+      width: 80%;
+    }
+  }
+
+  .divtable{
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+  .cselectPaciente, .inputselectpaciente{
+    flex-wrap: wrap;
+  }
+  .box2{
+    img{
+      width: 40%;
+      span{
+        display: block;
+      }      
+    }
+  }
+  .txtresponse{
+    padding-top:2%;
+    font-size: 20px;
+    font-weight: bold;
+    color:  rgb(3, 56, 124);
+  }
+ 
+  .divBTN{
+    display: flex;
+    padding-top: 0%;
+    padding: 3%;
+    justify-content: space-between;
+    font-size: 14px;
+  }
+  
+}
+@media (max-width: 375px){
+  .box2{
+    img{
+      width: 30%;
+      span{
+        display: block;
+      }
+      
+    }
+  }
+  .divtable{
+    padding-left: 0%;
+    padding-right: 0%;
+  }
+  .paddingescala{
+    input{
+      padding-left: -50px;       
+        width: 90%;
+    }
+  }
+  .txtresponse{
+    padding-top:2%;
+    font-size: 22px;
+    font-weight: bold;
+    color:  rgb(3, 56, 124);
+  }
+  .divBTN{
+    display: flex;
+    padding-top: 0%;
+    padding: 3%;
+    justify-content: space-between;
+    font-size: 12px;
+  }
+  
+  .tableencuesta{
+    width: 30%;
+    .titletablerespon{
+      font-size: 12px;
+    }
+    .texttablerespon{
+      text-align: start;
+      font-size: 12px;
+    }
+  }
+  
+}
+
+
+@media (max-width: 420px){
+  .mensaje, .question-title, .textradiobuton {
+    font-size: small;
+  } 
+  .cajaSedesModa, .cselectPaciente {
+    @include caja-flex(flex-start, center, wrap )
+  }
+  .box2{
+    img{
+      width: 60%;
+      span{
+        display: block;
+      }
+      
+    }
+  }
+  .txtresponse{
+    padding-top:2%;
+    font-size: 20px;
+    font-weight: bold;
+    color:  rgb(3, 56, 124);
+  }
+  .btresponive{    
+    padding-left: 5%;
+    padding-right: 5%;
+    
+  }
+  .divBTN{
+    display: flex;   
+    padding: 3%;
+    justify-content: space-between;
+    
+  }
+  .paddingform{
+    padding: 0;
+    
+    .tableencuesta {
+      .textarrayarea, .textarraycolaborador{
+        font-size: small;
+      }
+      img{
+        width: 90%;
+      }
+    }
+  }
+  .paddingescala{
+    gap: 0;
+    
+   
+    thead th {
+      font-size: small;
+    }
+    tbody tr td input {
+      padding: 0;
+      justify-content: space-evenly;
+    }
+    td{
+      visibility: visible;
+    }
+    td.no {
+      visibility: hidden;
+    }
+    td.si {
+      visibility: hidden;
+    }
+    
+    input {
+        padding: 0;
+        margin: 0;
+        width: 60%;
+      }
+    
+  }
+  
+}
+//*****************************************************************
+
 //TEXTO PRINCIPAL DE LA ENCUESTA
 .textprincipal {   
   padding-top: 2%;
@@ -191,56 +346,76 @@ $color-green: green;
   }
 }
 //seccion escala
-.paddingescala {
-  flex-direction: column;
-  gap: 0.75rem;
-  /* width: 100%;
-  font-size: 16px; */
+.paddingescala { 
+  width: 100%;
+  font-size: 16px; 
 }
 
 
 //////////////////////////
+/// 
+.divfigura {
+  display: flex;
+  
+  text-align: center;
+}
+.question_s {
+  margin: 10px;    
+  
+  background-color: rgb(255, 170, 0);    
+  border-radius: 25px;
+  border-bottom: 2em;
+  ;
+}
+.question-title {
+  margin: 2%;
+  padding: 2%;    
+  
+  background-color:  rgb(78, 170, 80);
+  border-radius: 25px;
+  border-bottom: 2em;
+  color: white;
+  font-size: 16px;
+  
+}
   .box1 {
     display: grid;
     -ms-grid-row-align: center;
-  } 
-  
-  .box3 {
-    display: flex;
+  }
+  .respuesta{
    
-    width: 100%;
-    
-  }
- 
-  .divfigura {
-    display: flex;
-    
+    width: 70%;
     text-align: center;
+  } 
+
+  // grilla
+  .boxgrilla {
+    padding-top: 10%;   
+    @include caja-flex(space-evenly, center, nowrap)     
   }
+  .boxbtns{
+   display: flex;
+  }
+  
+  .btresponive { 
+    display: flex;
+    padding-right: 2rem;  
+    padding-left: 2rem; 
+    background-color:  rgb(3, 56, 124);
+    border-radius: 10px;
+    color: white;
+    font-size: 16px; 
+    
+  }
+  /* .paddingresponse {    
+    padding: 2%;
+    width: 100%;
+    @include caja-flex(space-evenly, center, nowrap)     
+  } */
+  
   
  
-
   
-
-  .question_s {
-    margin: 10px;    
-    
-    background-color: rgb(255, 170, 0);    
-    border-radius: 25px;
-    border-bottom: 2em;
-    ;
-  }
-  .question-title {
-    margin: 2%;
-    padding: 2%;    
-    
-    background-color:  rgb(78, 170, 80);
-    border-radius: 25px;
-    border-bottom: 2em;
-    color: white;
-    font-size: 16px;
-    
-  }
   
   .mensaje2 {
     padding: 3%;
@@ -327,16 +502,7 @@ $color-green: green;
   text-align: center;
   font-size: 16px;
 }
-.btresponive {
-  padding: 5%;
-  margin-left: 40%;
-  
-  background-color:  rgb(3, 56, 124);
-  border-radius: 10px;
-  color: white;
-  font-size: 16px; 
-  
-}
+
 .btnanswer {
   padding: 2%; 
   text-align: center;
@@ -352,14 +518,7 @@ $color-green: green;
   justify-content: center;
 
 }
-.paddingresponse {
-  display: flex;
-  margin:auto;
-  padding: 2%;
-  width: 100%;
-  justify-content: space-between;
-  
-}
+
 .paddingtablerespon {
   padding-left: 10%;
 }

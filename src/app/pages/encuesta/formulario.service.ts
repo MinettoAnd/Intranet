@@ -3,7 +3,7 @@ import { Observable, BehaviorSubject, of } from "rxjs";
 import { tap, map, catchError } from "rxjs/operators";
 import { HttpClient, HttpResponse, HttpHeaders } from "@angular/common/http";
 import { environment } from "src/environments/environment";
-import { Formulario } from 'src/app/pages/models/claims/formulario';
+import { Formulario } from 'src/app/pages/models/encuesta/formulario';
 import Swal from 'sweetalert2';
 @Injectable({
     providedIn: "root",

@@ -1,5 +1,5 @@
 export class Formulario{
-
+    registro_usuario!:string;
     sucursal!:string;
     modalidad!:string;
     paciente!:string;

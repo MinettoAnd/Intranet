@@ -4,6 +4,8 @@ import { convertNumberToAssessment, generateArray, convertNameToSelectedImg, con
 import { FormularioService } from 'src/app/pages/encuesta/formulario.service';
 //import { NgxSpinnerService } from "ngx-spinner";
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth/auth.service';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -15,7 +17,7 @@ export class HomeComponent implements OnInit {
   generateArray: Function = generateArray;
   convertNumberToAssessment: Function = convertNumberToAssessment;
   pollData: any = {
-    //nombre:"",
+    registrousuario:"",
     campus: "",
     inputMode: "",
     patient: "",
@@ -50,15 +52,19 @@ export class HomeComponent implements OnInit {
   enableTypeagreement = false;
   enableTypesure = false;
   element = false;
+  username = localStorage.getItem('username');
  
 
   constructor(private formBuilder: FormBuilder,
     private formularioService: FormularioService,
+    private apiService: AuthService,
     //private spinner: NgxSpinnerService,
     private router: Router) {
     this.patientPoll = this.formBuilder.group({
       //nombre: [ this.pollData.nombre, [Validators.required, Validators.minLength(5)] ],
-      campus: [this.pollData.campus, [Validators.required]],
+       
+      registrousuario: this.username,
+      campus:[this.pollData.campus, [Validators.required]],
       inputMode: [this.pollData.inputMode, [Validators.required]],
       patient: [this.pollData.patient, [Validators.required]],
       // patient: new FormControl('', [Validators.required]),
@@ -92,7 +98,8 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+     let username = localStorage.getItem('username');
+     console.log(2, username);
     //console.log(this.patientPoll);
     // console.log(this.patientPoll.controls['scaleColaborators'].value);
     //console.log('72', this.patientPoll.controls['scaleColaborators'].value['doctor']);
@@ -108,6 +115,7 @@ export class HomeComponent implements OnInit {
     //console.log(this.patientPoll.get('typepatient'));
     console.log(this.patientPoll.value);
     console.log(this.patientPoll.valid);
+    
   }
 
   onChange(event: any) {
@@ -287,6 +295,7 @@ export class HomeComponent implements OnInit {
 
     } else {
       let dataguardar = {
+        registro_usuario: this.patientPoll.controls['registrousuario'].value,
         sucursal: campus,
         modalidad: this.patientPoll.controls['inputMode'].value,
         paciente: this.patientPoll.controls['patient'].value,
@@ -319,6 +328,7 @@ export class HomeComponent implements OnInit {
           console.log(data);
           this.patientPoll.reset();
           this.hideData();
+          this.loading();
           this.router.navigateByUrl('encuesta/answer');
           console.log(this.element);
           
@@ -338,6 +348,16 @@ export class HomeComponent implements OnInit {
         });
     }
 
+  }
+  async loading() {
+    Swal.fire({
+      text: 'Validando ...',
+      width: '200px',
+      
+      onOpen: () => {
+        Swal.showLoading();
+      },
+    });
   }
  
 

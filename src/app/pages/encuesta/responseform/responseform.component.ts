@@ -1,8 +1,9 @@
 import { getLocaleDateFormat } from '@angular/common';
 import { Component, OnInit, ViewChild  } from '@angular/core';
-import { ClaimsService } from 'src/app/pages/claims/claims.service';
+import { FormularioService } from 'src/app/pages/encuesta/formulario.service';
 import { Router } from '@angular/router';
 import { AgGridAngular } from "ag-grid-angular";
+import Swal from 'sweetalert2';
 //import { NgxSpinnerService } from "ngx-spinner";
 
 
@@ -32,17 +33,11 @@ export class ResponseformComponent implements OnInit {
 };
   element = false;
   idData: any;
-  constructor(private formularioService: ClaimsService,
+  constructor(private formularioService: FormularioService,
     private router: Router,
     //private spinner: NgxSpinnerService
     ) {
-      this.columnDefs =[
-        {headerName: "FECHA"},
-        {headerName: "HORA"},
-        {headerName: "SEDE"},
-        {headerName: "ORIGEN DE ATENCIÓN"},
-        {headerName: "TIPO DE PACIENTE"}
-      ]
+      
 
   }
 
@@ -53,6 +48,7 @@ export class ResponseformComponent implements OnInit {
         this.data = res.body;
         console.log(20,this.data);
       });
+      this.loading();
       this.router.navigateByUrl('encuesta/resultadoencuesta');
 
   }
@@ -67,6 +63,7 @@ export class ResponseformComponent implements OnInit {
       //location.href = 'https://www.maisondesante.org.pe/encuestas/'
       //location.href = 'http://localhost:4200'
        //this.router.navigateByUrl('/encuestas');
+       this.loading();
        this.router.navigateByUrl('encuesta');
 
       /** spinner ends after 5 seconds */
@@ -81,36 +78,7 @@ export class ResponseformComponent implements OnInit {
     (res:any) => {
       console.log(res);
       this.data = res.body;
-      //this.data = res.body
-      /* this.data = [
-        {
-            registro_fecha: '2022-07-11 17:39:57.000',
-            sucursal: 'Lima',
-            modalida: 'Hospitalización',
-            paciente: 'Institucional' ,
-        }
-    ] */
-
-
-
-      /* let arraydata = arrdata =>{
-        let item: any;
-        for (item of arrdata){
-          //this.fechaRegistro = item.registro_fecha;
-          this.fechaRegistro = item.registro_fecha;
-          this.sucursal = item.sucursal;
-          this.modalidad = item.modalidad;
-          this.paciente = item.paciente;
-
-          console.log(150,item.registro_fecha);
-          
-          //let paciente = item.paciente
-          return JSON.stringify(this.fechaRegistro);
-
-        }        
-      } */
-      //arraydata(this.data.paciente)
-      //console.log(200, arraydata);
+     
       
       this.idData = this.data[0].paciente;
       //this.data = JSON.stringify(res.body);
@@ -125,17 +93,21 @@ export class ResponseformComponent implements OnInit {
       //let hour = this.data[1].updated_at;
       //console.log(10,dataEnc);
       //console.log(11,date);
-      //console.log(12,hour);
-
-      
-    });
-
-    
-
-    
-    
+      //console.log(12,hour);     
+    }); 
 
   };
+  async loading() {
+    Swal.fire({
+      text: 'Validando ...',
+      width: '200px',
+      allowEscapeKey: false,
+      allowOutsideClick: false,
+      onOpen: () => {
+        Swal.showLoading();
+      },
+    });
+  }
 
 
 

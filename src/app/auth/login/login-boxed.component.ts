@@ -33,6 +33,8 @@ export class LoginBoxedComponent implements OnInit {
 
   ngOnInit() {
     this.subscription = this.sharedService.currentMessage.subscribe(message => this.message = message)
+    console.log(100,this.getUserdata());
+    console.log(30,localStorage.getItem('username'));
     
   }
   ngOnDestroy() {
@@ -106,6 +108,7 @@ export class LoginBoxedComponent implements OnInit {
         //console.log(this.userslist)
         Swal.close();
         this.getRoles(this.userslist[0]?.idrol, this.profiles[0]?.Persona);
+        console.log(200,this.getRoles(this.userslist[0]?.idrol, this.profiles[0]?.Persona));
         //this.router.navigate(['./dashboard/default']);
       }
       else {
