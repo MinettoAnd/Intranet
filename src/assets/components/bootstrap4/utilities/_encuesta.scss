@@ -37,7 +37,19 @@ $color-green: green;
     font-weight: bold;
     color:  rgb(3, 56, 124);
   }
+  .loadingen{
+    position: absolute;
+    left: 30%;
+    top: 30%;
+    margin: auto; 
+    background-color: white;
+
+   .gifmaison{
+    width: 100%;
+   }
+  }
 }
+
 @media (min-width:1440px){
   .formulario{
     width: 80%;
@@ -60,6 +72,17 @@ $color-green: green;
     justify-content: space-between;
     font-size: 20px;
   }
+  .loadingen{
+    position: absolute;
+    left: 30%;
+    top: 30%;
+    margin: auto; 
+    background-color: white;
+
+   .gifmaison{
+    width: 80%;
+   }
+  }
 }
 @media (min-width:1280px){
   .divtable{
@@ -78,6 +101,17 @@ $color-green: green;
     padding: 3%;
     justify-content: space-between;
     font-size: 18px;
+  }
+  .loadingen{
+    position: absolute;
+    left: 30%;
+    top: 30%;
+    margin: auto; 
+    background-color: white;
+
+   .gifmaison{
+    width: 80%;
+   }
   }
 }
 @media (max-width: 992px){
@@ -118,6 +152,17 @@ $color-green: green;
     padding: 3%;
     justify-content: space-between;
     font-size: 14px;
+  }
+  .loadingen{
+    position: absolute;
+    left: 3%;
+    top: 3%;
+    margin: auto; 
+    background-color: white;
+
+   .gifmaison{
+    width: 40%;
+   }
   }
   
 }
@@ -164,6 +209,14 @@ $color-green: green;
       text-align: start;
       font-size: 12px;
     }
+  }
+  .loadingen{  
+   
+    background-color: white;
+
+   .gifmaison{
+    width: 30%;
+   }
   }
   
 }
@@ -214,33 +267,27 @@ $color-green: green;
       }
     }
   }
+  .tableescalapequeña{
+    display: block;
+  }
+  .tablaescala {
+    display: none;
+  }
+
   .paddingescala{
-    gap: 0;
+    width: 50%;
     
-   
-    thead th {
-      font-size: small;
-    }
-    tbody tr td input {
-      padding: 0;
-      justify-content: space-evenly;
-    }
-    td{
-      visibility: visible;
-    }
-    td.no {
-      visibility: hidden;
-    }
-    td.si {
-      visibility: hidden;
-    }
+
+       
     
-    input {
-        padding: 0;
-        margin: 0;
-        width: 60%;
-      }
-    
+  }
+  .loadingen{
+     
+    background-color: white;
+
+   .gifmaison{
+    width: 30%;
+   }
   }
   
 }
@@ -296,18 +343,26 @@ $color-green: green;
   @include caja-flex(space-evenly,center , nowrap)  
 }
 .inputselectpaciente {
-  padding: 6%;
+  position: relative;
+  border: 0.5rem solid orange;
+  border-radius: 4rem;
+  width: 200px;
+  height: 50px;
+  line-height: 25px;
+  margin: auto ;  
+  background-color: #fff;
+ /*  padding: 6%;
   margin: 2%;
   @include box-select(0.5rem solid,orange ,4rem );  
   font-size: 16px;
-  color: black;
+  color: black; */
 }
 
 //seccion menu de escala de satisfaccion
 .paddingselect {
-  margin: 1%;
-  padding-right: 10%;
-  padding-left: 10%;
+  padding: 2%;
+  margin: auto;
+  width: 100%;
   font-size: 16px;
 }
 .box2 {
@@ -553,6 +608,18 @@ $color-green: green;
   font-size: 16px;
   color: black;
 }
+// LOADING 
+.loadingen {
+  position: absolute;
+  left: 45%;
+  top: 45%;
+  margin: auto;   
+  background-color: white;
+  .gifmaison{
+    width: 90%;
+  }
+  
 
+}
 
   

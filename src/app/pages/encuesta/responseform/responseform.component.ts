@@ -31,14 +31,26 @@ export class ResponseformComponent implements OnInit {
     height: "100%",
     flex: "1 1 auto",
 };
-  element = false;
-  idData: any;
+public loadingen: boolean;
+element = false;
+ 
   constructor(private formularioService: FormularioService,
-    private router: Router,
-    //private spinner: NgxSpinnerService
-    ) {
-      
+    private router: Router) 
+    {
+      this.loadingen = false;    
 
+  }
+  showData() {
+    return (this.element = true);
+  }
+  hideData() {
+    return (this.element = false);
+  }
+  showSpinner(){
+    return (this.loadingen = true);
+  }
+  hideSpinner(){
+    return (this.loadingen = false);
   }
 
   refresh(){
@@ -48,27 +60,38 @@ export class ResponseformComponent implements OnInit {
         this.data = res.body;
         console.log(20,this.data);
       });
-      this.loading();
-      this.router.navigateByUrl('encuesta/resultadoencuesta');
+      this.showData();
+    this.showSpinner()
+
+      setTimeout(() => {
+        this.router.navigateByUrl('/encuesta/resultadoencuesta');
+        this.hideSpinner()
+      this.hideData();
+      
+      }, 3000);
 
   }
 
-  hideData() {
-    return (this.element = true);
-  }
+  
   returnForm(){
+    this.showData();
+    this.showSpinner()
+    
+    console.log(this.element);
+
+    setTimeout(() => {
+      this.router.navigateByUrl('/encuesta');
+      this.hideSpinner()
+      this.hideData();
+      
+    }, 3000);
 
     //this.spinner.show();
     //setTimeout(() => {
       //location.href = 'https://www.maisondesante.org.pe/encuestas/'
       //location.href = 'http://localhost:4200'
-       //this.router.navigateByUrl('/encuestas');
-       this.loading();
-       this.router.navigateByUrl('encuesta');
-
-      /** spinner ends after 5 seconds */
-      //this.spinner.hide();
-      this.hideData();
+       //this.router.navigateByUrl('/encuestas');    
+      
 
     //}, 5000);
   }
@@ -77,12 +100,8 @@ export class ResponseformComponent implements OnInit {
     this.formularioService.getFormulario().subscribe(
     (res:any) => {
       console.log(res);
-      this.data = res.body;
-     
-      
-      this.idData = this.data[0].paciente;
-      //this.data = JSON.stringify(res.body);
-      console.log(10,JSON.stringify(this.idData));
+      this.data = res.body;    
+    
 
       //let dataEnc = data.body;
       console.log(20,this.data);
@@ -97,17 +116,7 @@ export class ResponseformComponent implements OnInit {
     }); 
 
   };
-  async loading() {
-    Swal.fire({
-      text: 'Validando ...',
-      width: '200px',
-      allowEscapeKey: false,
-      allowOutsideClick: false,
-      onOpen: () => {
-        Swal.showLoading();
-      },
-    });
-  }
+ 
 
 
 

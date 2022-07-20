@@ -112,12 +112,12 @@ const routes: Routes = [
             {
                 path: "encuesta/answer",
                 component: AnswerComponent,
-                data: { extraParameter: "claimsMenu" },
+                data: { extraParameter: "encuestaMenu" },
             },
             {
                 path: "encuesta/resultadoencuesta",
                 component: ResponseformComponent,
-                data: { extraParameter: "claimsMenu" },
+                data: { extraParameter: "encuestaMenu" },
             },
         ],
     },

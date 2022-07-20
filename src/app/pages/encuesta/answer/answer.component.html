@@ -1,6 +1,11 @@
+<div *ngIf="loadingen">
+  <div class="loadingen">
+      <img class="gifmaison" src="https://www.maisondesante.org.pe/encuestas/assets/LOGO_CMS.gif" alt="">
+  </div>
+</div>
 <div class="row">
     <div class="col">
-      <div class="card">
+      <div class="card" *ngIf="element == false">
         <div class="card-body">
           <div class="text-sans-serif">
             <img src="https://www.maisondesante.org.pe/encuestas/assets/portada.png" alt="img-portada"

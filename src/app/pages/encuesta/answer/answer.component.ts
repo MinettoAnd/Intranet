@@ -8,29 +8,54 @@ import { Router } from '@angular/router';
   styleUrls: ['./answer.component.css']
 })
 export class AnswerComponent implements OnInit {
-
+  public loadingen: boolean;
   element = false;
   constructor(//private spinner: NgxSpinnerService,
-    private router: Router) { }
+    private router: Router) { 
+      this.loadingen = false;
+    }
 
   ngOnInit(): void {
   }
 
   showData() {
-    return (this.element = false);
-  }
-  hideData() {
     return (this.element = true);
   }
-
-  getdataEncuesta(){
-    //this.router.navigateByUrl('encuestas/resultadoencuesta');
-    this.router.navigateByUrl('encuesta/resultadoencuesta');
+  hideData() {
+    return (this.element = false);
   }
-  returnForm(){
-    this.router.navigateByUrl('encuesta');
-    this.hideData();
+  showSpinner(){
+    return (this.loadingen = true);
+  }
+  hideSpinner(){
+    return (this.loadingen = false);
+  }
+
+  getdataEncuesta(){ 
+    this.showData();
+    this.showSpinner()
+    setTimeout(() => {      
+      this.hideSpinner()      
+      this.router.navigateByUrl('/encuesta/resultadoencuesta');
+      
+    }, 3000);
+
+    //this.router.navigateByUrl('encuestas/resultadoencuesta');
+    
+    
+  }
+  returnForm(){    
+    this.showData();
+    this.showSpinner()
+    
     console.log(this.element);
+
+    setTimeout(() => {
+      this.router.navigateByUrl('/encuesta');
+      this.hideSpinner()
+      this.hideData();
+      
+    }, 3000);
     
     //this.spinner.show();
     //setTimeout(() => {

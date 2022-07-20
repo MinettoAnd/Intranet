@@ -53,6 +53,8 @@ export class HomeComponent implements OnInit {
   enableTypesure = false;
   element = false;
   username = localStorage.getItem('username');
+  public loadingen: boolean;
+  
  
 
   constructor(private formBuilder: FormBuilder,
@@ -60,6 +62,7 @@ export class HomeComponent implements OnInit {
     private apiService: AuthService,
     //private spinner: NgxSpinnerService,
     private router: Router) {
+    this.loadingen = false;
     this.patientPoll = this.formBuilder.group({
       //nombre: [ this.pollData.nombre, [Validators.required, Validators.minLength(5)] ],
        
@@ -226,11 +229,18 @@ export class HomeComponent implements OnInit {
 
 
   showData() {
-    return (this.element = false);
-  }
-  hideData() {
     return (this.element = true);
   }
+  hideData() {
+    return (this.element = false);
+  }
+  showSpinner(){
+    return (this.loadingen = true);
+  }
+  hideSpinner(){
+    return (this.loadingen = false);
+  }
+ 
   public message = "Warning";
   guardarForm() {
     let campus = this.patientPoll.controls['campus'].value;
@@ -326,11 +336,17 @@ export class HomeComponent implements OnInit {
         (data) => {
 
           console.log(data);
-          this.patientPoll.reset();
-          this.hideData();
-          this.loading();
-          this.router.navigateByUrl('encuesta/answer');
+          this.patientPoll.reset();         
+          this.showData();
+          this.showSpinner()
+          
+          setTimeout(() => {
+            this.router.navigateByUrl('encuesta/answer');
+            this.hideSpinner()
+            this.hideData();
           console.log(this.element);
+          }, 3000);
+          
           
           //this.spinner.show();
 
@@ -349,16 +365,7 @@ export class HomeComponent implements OnInit {
     }
 
   }
-  async loading() {
-    Swal.fire({
-      text: 'Validando ...',
-      width: '200px',
-      
-      onOpen: () => {
-        Swal.showLoading();
-      },
-    });
-  }
+ 
  
 
   /* redirecction(){
@@ -368,7 +375,14 @@ export class HomeComponent implements OnInit {
 
   getdataEncuesta(){
     //this.router.navigateByUrl('encuestas/resultadoencuesta');
-    this.router.navigateByUrl('encuesta/resultadoencuesta');
+    this.showData();
+    this.showSpinner()
+    
+    setTimeout(() => {      
+      this.hideSpinner()      
+      this.router.navigateByUrl('/encuesta/resultadoencuesta');
+      
+    }, 3000);
   }
 
   onSubmit(): any {
