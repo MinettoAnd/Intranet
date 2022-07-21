@@ -99,7 +99,12 @@ import { DashboardIpressComponent } from './pages/claims/ipress/taps/dashboard/d
 import { LoadingComponent } from './pages/loaging/loading';
 import { SusaludComponent } from './pages/claims/susalud/susalud.component';
 
-
+//ENCUESTA
+//import { NgxSpinnerModule } from "ngx-spinner"
+import { HomeComponent } from './pages/encuesta/home/home.component';
+import { QuestionComponent } from './pages/encuesta/question/question.component';
+import { AnswerComponent } from './pages/encuesta/answer/answer.component';
+import { ResponseformComponent } from './pages/encuesta/responseform/responseform.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -165,7 +170,14 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     PiecharComponent,
     BarcharComponent,
     LoadingComponent,
-    SusaludComponent
+    SusaludComponent,
+
+    //ENCUESTA
+    HomeComponent,
+    QuestionComponent,
+    AnswerComponent,
+    ResponseformComponent
+        
   ],
   imports: [
     BrowserModule,
@@ -186,12 +198,15 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ReactiveFormsModule,
     HttpClientModule,
 
+    //NgxSpinnerModule,
+
     // Charts
 
     ChartsModule,
     AngularEditorModule,
     NgSelectModule,
     AgGridModule.withComponents([]),
+
   ],
   providers: [
     {

@@ -1,0 +1,514 @@
+<div class="spinner" *ngIf="loadingen">
+    <div class="loadingen">
+        <img class="gifmaison" src="https://www.maisondesante.org.pe/encuestas/assets/LOGO_CMS.gif" alt="">
+    </div>
+</div>
+<div class="spinnertwo" *ngIf="loadingen" hidden>
+    <div class="loadingencuesta">
+        <img class="gifmaisonsante" src="https://www.maisondesante.org.pe/encuestas/assets/LOGO_CMS.gif" alt="">
+    </div>
+  </div>
+<div class="row" >
+    <div class="col">
+        <div class="card" *ngIf="element == false">            
+            <div class="card-body">
+                
+                <form [formGroup]="patientPoll" (ngSubmit)="onSubmit()" class="formulario text-sans-serif"
+                    >
+                    <img src="https://www.maisondesante.org.pe/encuestas/assets/portada.png" alt="img-portada"
+                        class="imgencuesta">
+                    <div class="textprincipal">
+                        <h2 class="txthola">Hola!</h2>
+                        <div class="divmensaje ">
+                            <p class="mensaje ">Nos preocupamos por mejorar nuestro servicio y brindarte la
+                                oportunidad de tener la mejor experiencia. Por ello quisiéramos que contestes esta breve
+                                encuesta para seguir mejorando y poder brindarte lo último en calidad.</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="question_s">
+                            <app-question question="¿En qué sede te atendiste?"></app-question>
+                        </div>
+                    </div>
+                    <div class="cajaSedesModa">
+                        <div class="wrapper">
+                            <div class="gap-3">
+                                <img src="https://www.maisondesante.org.pe/encuestas/assets/lima.jpg" alt="img-lima"
+                                    class="figure-zise" (click)="selectImage(radioLima)">
+                                <div class="">
+                                    <p class="textradiobuton">Lima</p>
+                                    <input type="radio" #radioLima name="campus" formControlName="campus" value="0001"
+                                        class="radiobutton">
+                                </div>
+                            </div>
+                            <div class="">
+                                <img src="https://www.maisondesante.org.pe/encuestas/assets/chorrillos.jpg"
+                                    alt="img-chorrillos" class="figure-zise" (click)="selectImage(radioChorrillos)">
+                                <div class="">
+                                    <p class="textradiobuton">Chorrillos</p>
+                                    <input type="radio" #radioChorrillos name="campus" formControlName="campus"
+                                        value="0002" class="radiobutton">
+                                </div>
+                            </div>
+                            <div class="">
+                                <img src="https://www.maisondesante.org.pe/encuestas/assets/surco.jpg" alt="img-surco"
+                                    class="figure-zise" (click)="selectImage(radioSurco)">
+                                <div class="">
+                                    <p class="textradiobuton">Surco</p>
+                                    <input type="radio" #radioSurco name="campus" formControlName="campus" value="0004"
+                                        class="radiobutton">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="question_s">
+                            <app-question question="¿Bajo que modalidad entraste?"></app-question>
+                        </div>
+                    </div>
+                    <div class="cajaSedesModa">
+                        <div class="wrapper">
+                            <div class="gap-3">
+                                <img src="https://www.maisondesante.org.pe/encuestas/assets/hospitalizacion.png"
+                                    alt="img-hospitalizacion" class="figure-flex" (click)="selectImage(radioHospital)">
+                                <div class="">
+                                    <p class="textradiobuton">Hospitalización</p>
+                                    <input type="radio" #radioHospital name="inputMode" formControlName="inputMode"
+                                        value="Hospitalización" class="radiobutton">
+                                </div>
+                            </div>
+                            <div class="">
+                                <img src="https://www.maisondesante.org.pe/encuestas/assets/consultorio.png"
+                                    alt="img-consultorio" class="figure-flex" (click)="selectImage(radioConsultorio)">
+                                <div class="">
+                                    <p class="textradiobuton">Consultorio</p>
+                                    <input type="radio" #radioConsultorio name="inputMode" formControlName="inputMode"
+                                        value="Consultorio Externo" class="radiobutton">
+                                </div>
+                            </div>
+                            <div class="">
+                                <img src="https://www.maisondesante.org.pe/encuestas/assets/emergencia.png"
+                                    alt="img-emergencia" class="figure-flex" (click)="selectImage(radioEmergencia)">
+                                <div class="">
+                                    <p class="textradiobuton">Emergencia</p>
+                                    <input type="radio" #radioEmergencia name="inputMode" formControlName="inputMode"
+                                        value="Emergencia" class="radiobutton">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="question_s">
+                            <app-question question="¿ Que tipo de paciente eres...?"></app-question>
+                        </div>
+                    </div>
+                    <div class="cselectPaciente">
+                        <div class="selectPaciente">
+                            <select class="inputselectpaciente" formControlName="patient" name="patient"
+                                (change)="onChange($event)">
+                                <option class="inputselectpaciente2" *ngFor="let paciente of arrayPatient">
+                                    {{ paciente.split('-')[0]}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="cselectPaciente">
+                            <div class="selectPaciente">
+                                <select class="inputselectpaciente" formControlName="typepatient" name="typepatient"
+                                    *ngIf="enableTypepatient">
+                                    <option class="inputselectpaciente2" *ngFor="let tipo of arrayTypePatient">
+                                        {{tipo.split('-')[0]}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="selectPaciente">
+                                <select class="inputselectpaciente" formControlName="typeagreement" name="typeagreement"
+                                    *ngIf="enableTypeagreement">
+                                    <option class="inputselectpaciente2" *ngFor="let conve of arrayTypeAgreement">
+                                        {{conve.split('-')[0]}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="selectPaciente">
+                                <select class="inputselectpaciente" formControlName="typesure" name="typesure"
+                                    *ngIf="enableTypesure">
+                                    <option class="inputselectpaciente2" *ngFor="let compaSa of arrayTypeSure">
+                                        {{compaSa.split('-')[0]}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="selectpacientetwo" hidden>
+                        <div class="selectPaciente">
+                            <select class="inputselectpaciente" formControlName="patient" name="patient"
+                                (change)="onChange($event)">
+                                <option class="inputselectpaciente2" *ngFor="let paciente of arrayPatient">
+                                    {{ paciente.split('-')[0]}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="selectpacientetwo">
+                            <div class="selectPaciente">
+                                <select class="inputselectpaciente" formControlName="typepatient" name="typepatient"
+                                    *ngIf="enableTypepatient">
+                                    <option class="inputselectpaciente2" *ngFor="let tipo of arrayTypePatient">
+                                        {{tipo.split('-')[0]}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="selectPaciente">
+                                <select class="inputselectpaciente" formControlName="typeagreement" name="typeagreement"
+                                    *ngIf="enableTypeagreement">
+                                    <option class="inputselectpaciente2" *ngFor="let conve of arrayTypeAgreement">
+                                        {{conve.split('-')[0]}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="selectPaciente">
+                                <select class="inputselectpaciente" formControlName="typesure" name="typesure"
+                                    *ngIf="enableTypesure">
+                                    <option class="inputselectpaciente2" *ngFor="let compaSa of arrayTypeSure">
+                                        {{compaSa.split('-')[0]}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="question_s">
+                            <app-question question="¿Cómo fue su experiencia con nuestro/a...?"></app-question>
+                        </div>
+                    </div>
+                    <div class="paddingselect">
+                        <p>*Escala de Satisfacción:</p>
+                        <div class="box2">
+                            <div class="p-2">
+                                <img src="https://www.maisondesante.org.pe/encuestas/assets/cara1.png" alt="img-triste1"
+                                    class="h-12"><br>
+                                <span>(muy mala)</span>
+                            </div>
+                            <div class="p-2">
+                                <img src="https://www.maisondesante.org.pe/encuestas/assets/cara5.png" alt="img-feliz1"
+                                    class="h-12"><br>
+                                <span>(muy buena)</span>
+                            </div>
+                            <div class="p-2">
+                                <p>NA</p>
+                                <p>(No Aplica)*</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="paddingform">
+                        <table class="tableencuesta">
+                            <tbody>
+                                <tr class="textarrayarea" *ngFor="let area of arrayAreas.slice(0,1)">
+                                    <td>{{ area.split('-')[0] }}</td>
+                                </tr>
+                                <tr formGroupName="scaleColaborators" class="textarraycolaborador"
+                                    *ngFor="let mark of arrayMarks.slice(0,1)">
+                                    <td>{{ mark.split("-")[0] }}</td>
+                                    <td *ngFor="let i of [1,2,3,4,5]">
+                                        <img src="{{ 'https://www.maisondesante.org.pe/encuestas/assets/cara'+i+'.png' }}"
+                                            alt="img-scale" class="h-12 mx-auto cursor-pointer"
+                                            (click)="selectOption($event)">
+                                        <input type="radio" [name]="mark.split('-')[1]" [value]="i"
+                                            [formControlName]="mark.split('-')[1]" ngModel name="SS_doctor" hidden>
+                                    </td>
+                                    <td>
+                                        <img src="https://www.maisondesante.org.pe/encuestas/assets/na.png"
+                                            alt="img-scale" class="h-12 mx-auto cursor-pointer"
+                                            (click)="selectOption($event)">
+                                        <input type="radio" [name]="mark.split('-')[1]" [value]="0"
+                                            [formControlName]="mark.split('-')[1]" hidden>
+                                    </td>
+                                </tr>
+                                <tr formGroupName="scaleColaborators" class="textarraycolaborador"
+                                    *ngFor="let mark of arrayMarks.slice(1,2)">
+                                    <td>{{ mark.split("-")[0] }}</td>
+                                    <td *ngFor="let i of [1,2,3,4,5]">
+                                        <img src="{{ 'https://www.maisondesante.org.pe/encuestas/assets/cara'+i+'.png' }}"
+                                            alt="img-scale" class="h-12 mx-auto cursor-pointer"
+                                            (click)="selectOption($event)">
+                                        <input type="radio" [name]="mark.split('-')[1]" [value]="i"
+                                            [formControlName]="mark.split('-')[1]" ngModel name="SS_nurse" hidden>
+                                    </td>
+                                    <td>
+                                        <img src="https://www.maisondesante.org.pe/encuestas/assets/na.png"
+                                            alt="img-scale" class="h-12 mx-auto cursor-pointer"
+                                            (click)="selectOption($event)">
+                                        <input type="radio" [name]="mark.split('-')[1]" [value]="0"
+                                            [formControlName]="mark.split('-')[1]" hidden>
+                                    </td>
+                                </tr>
+                                <tr formGroupName="scaleColaborators" class="textarraycolaborador"
+                                    *ngFor="let mark of arrayMarks.slice(2,3)">
+                                    <td>{{ mark.split("-")[0] }}</td>
+                                    <td *ngFor="let i of [1,2,3,4,5]">
+                                        <img src="{{ 'https://www.maisondesante.org.pe/encuestas/assets/cara'+i+'.png' }}"
+                                            alt="img-scale" class="h-12 mx-auto cursor-pointer"
+                                            (click)="selectOption($event)">
+                                        <input type="radio" [name]="mark.split('-')[1]" [value]="i"
+                                            [formControlName]="mark.split('-')[1]" ngModel name="SS_technical" hidden>
+                                    </td>
+                                    <td>
+                                        <img src="https://www.maisondesante.org.pe/encuestas/assets/na.png"
+                                            alt="img-scale" class="h-12 mx-auto cursor-pointer"
+                                            (click)="selectOption($event)">
+                                        <input type="radio" [name]="mark.split('-')[1]" [value]="0"
+                                            [formControlName]="mark.split('-')[1]" hidden>
+                                    </td>
+                                </tr>
+                                <br>
+                                <tr class="textarrayarea" *ngFor="let area of arrayAreas.slice(3,4)">
+                                    <td>{{ area.split('-')[0] }}</td>
+                                </tr>
+                                <tr formGroupName="scaleColaborators" class="textarraycolaborador"
+                                    *ngFor="let mark of arrayMarks.slice(3,4)">
+                                    <td>{{ mark.split("-")[0] }}</td>
+                                    <td *ngFor="let i of [1,2,3,4,5]">
+                                        <img src="{{ 'https://www.maisondesante.org.pe/encuestas/assets/cara'+i+'.png' }}"
+                                            alt="img-scale" class="h-12 mx-auto cursor-pointer"
+                                            (click)="selectOption($event)">
+                                        <input type="radio" [name]="mark.split('-')[1]" [value]="i"
+                                            [formControlName]="mark.split('-')[1]" hidden>
+                                    </td>
+                                    <td>
+                                        <img src="https://www.maisondesante.org.pe/encuestas/assets/na.png"
+                                            alt="img-scale" class="h-12 mx-auto cursor-pointer"
+                                            (click)="selectOption($event)">
+                                        <input type="radio" [name]="mark.split('-')[1]" [value]="0"
+                                            [formControlName]="mark.split('-')[1]" hidden>
+                                    </td>
+                                </tr>
+                                <tr formGroupName="scaleColaborators" class="textarraycolaborador"
+                                    *ngFor="let mark of arrayMarks.slice(4,5)">
+                                    <td>{{ mark.split("-")[0] }}</td>
+                                    <td *ngFor="let i of [1,2,3,4,5]">
+                                        <img src="{{ 'https://www.maisondesante.org.pe/encuestas/assets/cara'+i+'.png' }}"
+                                            alt="img-scale" class="h-12 mx-auto cursor-pointer"
+                                            (click)="selectOption($event)">
+                                        <input type="radio" [name]="mark.split('-')[1]" [value]="i"
+                                            [formControlName]="mark.split('-')[1]" hidden>
+                                    </td>
+                                    <td>
+                                        <img src="https://www.maisondesante.org.pe/encuestas/assets/na.png"
+                                            alt="img-scale" class="h-12 mx-auto cursor-pointer"
+                                            (click)="selectOption($event)">
+                                        <input type="radio" [name]="mark.split('-')[1]" [value]="0"
+                                            [formControlName]="mark.split('-')[1]" hidden>
+                                    </td>
+                                </tr>
+                                <tr formGroupName="scaleColaborators" class="textarraycolaborador"
+                                    *ngFor="let mark of arrayMarks.slice(5,6)">
+                                    <td>{{ mark.split("-")[0] }}</td>
+                                    <td *ngFor="let i of [1,2,3,4,5]">
+                                        <img src="{{ 'https://www.maisondesante.org.pe/encuestas/assets/cara'+i+'.png' }}"
+                                            alt="img-scale" class="h-12 mx-auto cursor-pointer"
+                                            (click)="selectOption($event)">
+                                        <input type="radio" [name]="mark.split('-')[1]" [value]="i"
+                                            [formControlName]="mark.split('-')[1]" hidden>
+                                    </td>
+                                    <td>
+                                        <img src="https://www.maisondesante.org.pe/encuestas/assets/na.png"
+                                            alt="img-scale" class="h-12 mx-auto cursor-pointer"
+                                            (click)="selectOption($event)">
+                                        <input type="radio" [name]="mark.split('-')[1]" [value]="0"
+                                            [formControlName]="mark.split('-')[1]" hidden>
+                                    </td>
+                                </tr>
+                                <br>
+                                <tr class="textarrayarea" *ngFor="let area of arrayAreas.slice(1,2)">
+                                    <td>{{ area.split('-')[0] }}</td>
+                                </tr>
+                                <tr formGroupName="scaleColaborators" class="textarraycolaborador"
+                                    *ngFor="let mark of arrayMarks.slice(6,7)">
+                                    <td>{{ mark.split("-")[0] }}</td>
+                                    <td *ngFor="let i of [1,2,3,4,5]">
+                                        <img src="{{ 'https://www.maisondesante.org.pe/encuestas/assets/cara'+i+'.png' }}"
+                                            alt="img-scale" class="h-12 mx-auto cursor-pointer"
+                                            (click)="selectOption($event)">
+                                        <input type="radio" [name]="mark.split('-')[1]" [value]="i"
+                                            [formControlName]="mark.split('-')[1]" hidden>
+                                    </td>
+                                    <td>
+                                        <img src="https://www.maisondesante.org.pe/encuestas/assets/na.png"
+                                            alt="img-scale" class="h-12 mx-auto cursor-pointer"
+                                            (click)="selectOption($event)">
+                                        <input type="radio" [name]="mark.split('-')[1]" [value]="0"
+                                            [formControlName]="mark.split('-')[1]" hidden>
+                                    </td>
+                                </tr>
+                                <tr formGroupName="scaleColaborators" class="textarraycolaborador"
+                                    *ngFor="let mark of arrayMarks.slice(7,8)">
+                                    <td>{{ mark.split("-")[0] }}</td>
+                                    <td *ngFor="let i of [1,2,3,4,5]">
+                                        <img src="{{ 'https://www.maisondesante.org.pe/encuestas/assets/cara'+i+'.png' }}"
+                                            alt="img-scale" class="h-12 mx-auto cursor-pointer"
+                                            (click)="selectOption($event)">
+                                        <input type="radio" [name]="mark.split('-')[1]" [value]="i"
+                                            [formControlName]="mark.split('-')[1]" hidden>
+                                    </td>
+                                    <td>
+                                        <img src="https://www.maisondesante.org.pe/encuestas/assets/na.png"
+                                            alt="img-scale" class="h-12 mx-auto cursor-pointer"
+                                            (click)="selectOption($event)">
+                                        <input type="radio" [name]="mark.split('-')[1]" [value]="0"
+                                            [formControlName]="mark.split('-')[1]" hidden>
+                                    </td>
+                                </tr>
+                                <tr formGroupName="scaleColaborators" class="textarraycolaborador"
+                                    *ngFor="let mark of arrayMarks.slice(8,9)">
+                                    <td>{{ mark.split("-")[0] }}</td>
+                                    <td *ngFor="let i of [1,2,3,4,5]">
+                                        <img src="{{ 'https://www.maisondesante.org.pe/encuestas/assets/cara'+i+'.png' }}"
+                                            alt="img-scale" class="h-12 mx-auto cursor-pointer"
+                                            (click)="selectOption($event)">
+                                        <input type="radio" [name]="mark.split('-')[1]" [value]="i"
+                                            [formControlName]="mark.split('-')[1]" hidden>
+                                    </td>
+                                    <td>
+                                        <img src="https://www.maisondesante.org.pe/encuestas/assets/na.png"
+                                            alt="img-scale" class="h-12 mx-auto cursor-pointer"
+                                            (click)="selectOption($event)">
+                                        <input type="radio" [name]="mark.split('-')[1]" [value]="0"
+                                            [formControlName]="mark.split('-')[1]" hidden>
+                                    </td>
+                                </tr>
+                                <br>
+                                <tr class="textarrayarea" *ngFor="let area of arrayAreas.slice(2,3)">
+                                    <td>{{ area.split('-')[0] }}</td>
+                                </tr>
+                                <tr formGroupName="scaleColaborators" class="textarraycolaborador"
+                                    *ngFor="let mark of arrayMarks.slice(9,10)">
+                                    <td>{{ mark.split("-")[0] }}</td>
+                                    <td *ngFor="let i of [1,2,3,4,5]">
+                                        <img src="{{ 'https://www.maisondesante.org.pe/encuestas/assets/cara'+i+'.png' }}"
+                                            alt="img-scale" class="h-12 mx-auto cursor-pointer"
+                                            (click)="selectOption($event)">
+                                        <input type="radio" [name]="mark.split('-')[1]" [value]="i"
+                                            [formControlName]="mark.split('-')[1]" hidden>
+                                    </td>
+                                    <td>
+                                        <img src="https://www.maisondesante.org.pe/encuestas/assets/na.png"
+                                            alt="img-scale" class="h-12 mx-auto cursor-pointer"
+                                            (click)="selectOption($event)">
+                                        <input type="radio" [name]="mark.split('-')[1]" [value]="0"
+                                            [formControlName]="mark.split('-')[1]" hidden>
+                                    </td>
+                                </tr>
+                                <tr formGroupName="scaleColaborators" class="textarraycolaborador"
+                                    *ngFor="let mark of arrayMarks.slice(10,11)">
+                                    <td>{{ mark.split("-")[0] }}</td>
+                                    <td *ngFor="let i of [1,2,3,4,5]">
+                                        <img src="{{ 'https://www.maisondesante.org.pe/encuestas/assets/cara'+i+'.png' }}"
+                                            alt="img-scale" class="h-12 mx-auto cursor-pointer"
+                                            (click)="selectOption($event)">
+                                        <input type="radio" [name]="mark.split('-')[1]" [value]="i"
+                                            [formControlName]="mark.split('-')[1]" hidden>
+                                    </td>
+                                    <td>
+                                        <img src="https://www.maisondesante.org.pe/encuestas/assets/na.png"
+                                            alt="img-scale" class="h-12 mx-auto cursor-pointer"
+                                            (click)="selectOption($event)">
+                                        <input type="radio" [name]="mark.split('-')[1]" [value]="0"
+                                            [formControlName]="mark.split('-')[1]" hidden>
+                                    </td>
+                                </tr>
+                                <tr formGroupName="scaleColaborators" class="textarraycolaborador"
+                                    *ngFor="let mark of arrayMarks.slice(11,12)">
+                                    <td> {{ mark.split("-")[0] }}</td>
+                                    <td *ngFor="let i of [1,2,3,4,5]">
+                                        <img src="{{ 'https://www.maisondesante.org.pe/encuestas/assets/cara'+i+'.png' }}"
+                                            alt="img-scale" class="h-12 mx-auto cursor-pointer"
+                                            (click)="selectOption($event)">
+                                        <input type="radio" [name]="mark.split('-')[1]" [value]="i"
+                                            [formControlName]="mark.split('-')[1]" hidden>
+                                    </td>
+                                    <td>
+                                        <img src="https://www.maisondesante.org.pe/encuestas/assets/na.png"
+                                            alt="img-scale" class="h-12 mx-auto cursor-pointer"
+                                            (click)="selectOption($event)">
+                                        <input type="radio" [name]="mark.split('-')[1]" [value]="0"
+                                            [formControlName]="mark.split('-')[1]" hidden>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <div class="question_s">
+                            <app-question question="¿Recomendarías a la Clínica Maison de Santé?"></app-question>
+                        </div>
+                    </div>
+                    <div class="tableone">
+                        <table class="paddingescala">
+                            <thead class="text-xl text-[#10004c]">
+                                <th></th>
+                                <th class="num py-2" *ngFor="let i of generateArray(10)">
+                                    {{ i + 1 }}
+                                </th>
+                                <th></th>
+                            </thead>
+                            <tbody>
+                                <tr class="text-lg font-semibold text-center text-[#10004c]">                                    
+                                    <td class="no p-2 ">Definitivamente no</td>
+                                    <td class="p-2" *ngFor="let i of generateArray(10)">
+                                        <input class="" type="radio" name="scaleRecommendation" [value]="i + 1"
+                                            formControlName="scaleRecommendation" ngValue="scaleRecommendation.value"
+                                            required>
+                                    </td>
+                                    <td class="si p-2">Definitivamente sí</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tabletwo" hidden>
+                        <table class="tabletwoescala">
+                            <thead class="text-xl text-[#10004c]">
+                                <th></th>
+                                <th class="num py-2" *ngFor="let i of generateArray(10)">
+                                    {{ i + 1 }}
+                                </th>
+                                <th></th>
+                            </thead>
+                            <tbody>
+                                <tr class="text-lg font-semibold text-center text-[#10004c]">                                    
+                                    <td class="no py-2 ">Definitivamente NO</td>
+                                    <td class="p-1" *ngFor="let i of generateArray(10)">
+                                        <input class="" type="radio" name="scaleRecommendation" [value]="i + 1"
+                                            formControlName="scaleRecommendation" ngValue="scaleRecommendation.value"
+                                            required>
+                                    </td>
+                                    <td class="si py-2">Definitivamente SI</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <div class="question_s">
+                            <app-question question="¿Quisieras comentarnos algo más?"></app-question>
+                        </div>
+                    </div>
+                    <div class="paddingform">
+                        <textarea class="textarea" placeholder="Comentarios adicionales"
+                            formControlName="additionalComments" rows="6"></textarea>
+                    </div>
+                    <br>
+                    <div class="paddingencuesta">
+                        <button type="submit" class="btsubmitencuesta" [disabled]="patientPoll.valid">Grabar
+                            Formulario</button>
+
+
+                    </div>
+                    <div class=" paddingencuesta">
+                        <button type="button" class="btsubmitencuesta" (click)="getdataEncuesta()">Ver Resultados de la
+                            encuesta</button>
+                    </div>
+                    <a routerLink="/encuesta/answer">RESPUESTA</a>
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

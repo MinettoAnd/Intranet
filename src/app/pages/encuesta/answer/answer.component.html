@@ -1,0 +1,88 @@
+<div class="spinner" *ngIf="loadingen">
+  <div class="loadingen">
+      <img class="gifmaison" src="https://www.maisondesante.org.pe/encuestas/assets/LOGO_CMS.gif" alt="">
+  </div>
+</div>
+<div class="spinnertwo" *ngIf="loadingen" hidden>
+  <div class="loadingencuesta">
+      <img class="gifmaisonsante" src="https://www.maisondesante.org.pe/encuestas/assets/LOGO_CMS.gif" alt="">
+  </div>
+</div>
+<div class="row">
+    <div class="col">
+      <div class="card" *ngIf="element == false">
+        <div class="card-body">
+          <div class="text-sans-serif formulario">
+            <img src="https://www.maisondesante.org.pe/encuestas/assets/portada.png" alt="img-portada"
+              class="imgencuesta">
+            <div class="box3">
+              <div class="textprincipal ">
+                <h2 class="txtresponse">Gracias..!</h2>
+                <div class="divmensaje ">
+                    <p class="mensaje text-justify">Esta breve encuesta es importante para seguir mejorando y poder brindarte lo mejor en calidad. Gracias por tu respuesta :).</p>
+                </div>
+              </div>
+            </div>
+           
+            <div class="answerbox">
+                <h3 class="mensaje2"> Siguenos en nuestras redes sociales!</h3>
+                <div class="urlanswer">
+                    <a href="https://www.maisondesante.org.pe/"> Clinica Maison de Santé </a>
+                </div>
+                <div class="div ">
+                    <h4 class="mensaje2">Puedes realizar una nueva encuesta aquí:</h4>
+                </div>
+            </div>
+              <div class="divbtanswer">
+                <button type="submit" class="btnanswer" (click)="returnForm()">
+                    Nueva encuesta
+                </button>
+              </div>
+              <div class="divbtanswer">
+                <button type="submit" class="btnanswer" (click)="getdataEncuesta()">
+                    Ver Resultados de la encuesta
+                </button>
+              </div>
+            
+            <div>
+              <div>
+            
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+
+
+<!-- <div class="card" *ngIf="element == false">
+    <div class="card-body">
+    <img src="https://www.maisondesante.org.pe/encuestas/assets/portada.png" alt="img-portada">
+        <div class="flex flex-col gap-4 items-center justify-center">
+            <hr>
+            <h2 class="text-6xl font-bold text-black">Gracias!</h2>
+            <hr>
+            <p class="justify-center align-center text-black rounded-2xl p-4 text-2xl bg-[#2f50f1]">Esta breve encuesta es importante para seguir mejorando y poder brindarte lo mejor en calidad. Gracias por tu respuesta :)</p>
+            <div class="flex flex-col mt-10 gap-4 items-center justify-center">
+                <h3 class="text-3xl font-bold text-black"> Siguenos en nuestras redes sociales!</h3>
+                <div class="mt-4 p-4 text-xl text-center font-semibold text-black bg-[#fad819d0] rounded-2xl">
+                    <a href="https://www.maisondesante.org.pe/"> Clinica Maison de Santé </a>
+                </div>
+              
+                <p class="mt-2 text-xl font-bold text-[#10004c]">Puedes realizar una nueva encuesta aquí:</p>
+                <button type="submit" class="border rounded-md py-3 px-6 text-xl bg-[#10004c] text-black font-bold" (click)="returnForm()">Nueva encuesta</button>
+            </div>
+            <div class="mt-20">
+                <button type="submit"
+                        class="mt-4 border rounded-md py-3 px-6 text-xl text-black hover:text-slate-50 font-bold hover:bg-blue-800"
+                        (click)="getdataEncuesta()">
+                        Ver Resultados de la encuesta
+                </button>
+            </div>
+        </div>
+    </div>
+    </div> -->

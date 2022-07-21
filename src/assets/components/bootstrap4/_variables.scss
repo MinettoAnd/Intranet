@@ -125,6 +125,7 @@ $enable-validation-icons:                     true !default;
 // You can add more entries to the $spacers map, should you need more variation.
 
 $spacer: 1rem !default;
+$spacerenc: 2rem !default;
 $spacers: () !default;
 // stylelint-disable-next-line scss/dollar-variable-default
 $spacers: map-merge(
@@ -351,6 +352,7 @@ $hr-margin-y:                 $spacer !default;
 
 $table-cell-padding:          .75rem !default;
 $table-cell-padding-sm:       .3rem !default;
+$table-encuesta-padding:      .1rem;
 
 $table-bg:                    transparent !default;
 $table-accent-bg:             rgba($black, .05) !default;
@@ -359,6 +361,7 @@ $table-active-bg:             $table-hover-bg !default;
 
 $table-border-width:          $border-width !default;
 $table-border-color:          $gray-300 !default;
+$table-border-colorenc:       $black;
 
 $table-head-bg:               $gray-200 !default;
 $table-head-color:            $gray-700 !default;
