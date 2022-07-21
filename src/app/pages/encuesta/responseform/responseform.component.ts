@@ -61,12 +61,13 @@ element = false;
         console.log(20,this.data);
       });
       this.showData();
-    this.showSpinner()
+      this.showSpinner()
 
       setTimeout(() => {
         this.router.navigateByUrl('/encuesta/resultadoencuesta');
-        this.hideSpinner()
-      this.hideData();
+        
+        this.hideData();
+        this.hideSpinner();
       
       }, 3000);
 
@@ -81,8 +82,9 @@ element = false;
 
     setTimeout(() => {
       this.router.navigateByUrl('/encuesta');
-      this.hideSpinner()
+      
       this.hideData();
+      this.hideSpinner()
       
     }, 3000);
 

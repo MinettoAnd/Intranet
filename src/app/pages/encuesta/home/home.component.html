@@ -1,8 +1,13 @@
-<div *ngIf="loadingen">
+<div class="spinner" *ngIf="loadingen">
     <div class="loadingen">
         <img class="gifmaison" src="https://www.maisondesante.org.pe/encuestas/assets/LOGO_CMS.gif" alt="">
     </div>
 </div>
+<div class="spinnertwo" *ngIf="loadingen" hidden>
+    <div class="loadingencuesta">
+        <img class="gifmaisonsante" src="https://www.maisondesante.org.pe/encuestas/assets/LOGO_CMS.gif" alt="">
+    </div>
+  </div>
 <div class="row" >
     <div class="col">
         <div class="card" *ngIf="element == false">            
@@ -133,6 +138,42 @@
                             </div>
                         </div>
                     </div>
+                    <div class="selectpacientetwo" hidden>
+                        <div class="selectPaciente">
+                            <select class="inputselectpaciente" formControlName="patient" name="patient"
+                                (change)="onChange($event)">
+                                <option class="inputselectpaciente2" *ngFor="let paciente of arrayPatient">
+                                    {{ paciente.split('-')[0]}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="selectpacientetwo">
+                            <div class="selectPaciente">
+                                <select class="inputselectpaciente" formControlName="typepatient" name="typepatient"
+                                    *ngIf="enableTypepatient">
+                                    <option class="inputselectpaciente2" *ngFor="let tipo of arrayTypePatient">
+                                        {{tipo.split('-')[0]}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="selectPaciente">
+                                <select class="inputselectpaciente" formControlName="typeagreement" name="typeagreement"
+                                    *ngIf="enableTypeagreement">
+                                    <option class="inputselectpaciente2" *ngFor="let conve of arrayTypeAgreement">
+                                        {{conve.split('-')[0]}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="selectPaciente">
+                                <select class="inputselectpaciente" formControlName="typesure" name="typesure"
+                                    *ngIf="enableTypesure">
+                                    <option class="inputselectpaciente2" *ngFor="let compaSa of arrayTypeSure">
+                                        {{compaSa.split('-')[0]}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                     <div>
                         <div class="question_s">
                             <app-question question="¿Cómo fue su experiencia con nuestro/a...?"></app-question>
@@ -141,17 +182,17 @@
                     <div class="paddingselect">
                         <p>*Escala de Satisfacción:</p>
                         <div class="box2">
-                            <div>
+                            <div class="p-2">
                                 <img src="https://www.maisondesante.org.pe/encuestas/assets/cara1.png" alt="img-triste1"
-                                    class="h-12">
+                                    class="h-12"><br>
                                 <span>(muy mala)</span>
                             </div>
-                            <div>
+                            <div class="p-2">
                                 <img src="https://www.maisondesante.org.pe/encuestas/assets/cara5.png" alt="img-feliz1"
-                                    class="h-12">
+                                    class="h-12"><br>
                                 <span>(muy buena)</span>
                             </div>
-                            <div>
+                            <div class="p-2">
                                 <p>NA</p>
                                 <p>(No Aplica)*</p>
                             </div>
@@ -399,11 +440,11 @@
                             <app-question question="¿Recomendarías a la Clínica Maison de Santé?"></app-question>
                         </div>
                     </div>
-                    <div class="paddingescala">
+                    <div class="tableone">
                         <table class="paddingescala">
                             <thead class="text-xl text-[#10004c]">
                                 <th></th>
-                                <th class="py-2" *ngFor="let i of generateArray(10)">
+                                <th class="num py-2" *ngFor="let i of generateArray(10)">
                                     {{ i + 1 }}
                                 </th>
                                 <th></th>
@@ -417,6 +458,28 @@
                                             required>
                                     </td>
                                     <td class="si p-2">Definitivamente sí</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tabletwo" hidden>
+                        <table class="tabletwoescala">
+                            <thead class="text-xl text-[#10004c]">
+                                <th></th>
+                                <th class="num py-2" *ngFor="let i of generateArray(10)">
+                                    {{ i + 1 }}
+                                </th>
+                                <th></th>
+                            </thead>
+                            <tbody>
+                                <tr class="text-lg font-semibold text-center text-[#10004c]">                                    
+                                    <td class="no py-2 ">Definitivamente NO</td>
+                                    <td class="p-1" *ngFor="let i of generateArray(10)">
+                                        <input class="" type="radio" name="scaleRecommendation" [value]="i + 1"
+                                            formControlName="scaleRecommendation" ngValue="scaleRecommendation.value"
+                                            required>
+                                    </td>
+                                    <td class="si py-2">Definitivamente SI</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -441,7 +504,7 @@
                         <button type="button" class="btsubmitencuesta" (click)="getdataEncuesta()">Ver Resultados de la
                             encuesta</button>
                     </div>
-                    <a routerLink="/encuesta/resultadoencuesta">RESPUESTA</a>
+                    <a routerLink="/encuesta/answer">RESPUESTA</a>
 
 
                 </form>

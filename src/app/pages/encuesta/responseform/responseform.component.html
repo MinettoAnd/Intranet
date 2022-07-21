@@ -2,7 +2,7 @@
   <div class="col">
     <div class="card" *ngIf="element == false">
       <div class="card-body">
-        <div class="divtable text-sans-serif">
+        <div class="text-sans-serif divtable ">
           <img src="https://www.maisondesante.org.pe/encuestas/assets/portada.png" alt="img-portada"
             class="imgencuesta">
           <div class="box3">
@@ -22,9 +22,9 @@
             </div>
           </div>
           </div>
-          <div>
-            <div class="">
-              <table class="tableencuesta">
+          
+            <div class="divtablerespon">
+              <table class="tableencuestares">
                 <thead class="titletablerespon">
                   <tr>
                     <th>Fecha</th>
@@ -46,15 +46,45 @@
                   </tr>
           
                 </tbody>
-              </table>
+              </table>           
             </div>
-          </div>
+
+            <div class="divtablerespontwo" hidden>
+              <table class="tableencuestares">
+                <thead class="titletablerespontwo">
+                  <tr>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Sede</th>
+                    <th>Origen de Atención</th>
+                    <th>Tipo de Paciente</th>
+          
+                  </tr>
+                </thead>
+                <tbody class="texttablerespontwo">
+                  <tr *ngFor="let item of data ">
+                    <td>{{item.registro_fecha | date:'yyyy-MM-dd'}}</td>
+                    <td>{{item.registro_fecha | date:'HH:mm:ss' }}</td>
+                    <td>{{item.sucursal}}</td>
+                    <td>{{item.modalidad}}</td>
+                    <td>{{item.paciente}}</td>
+          
+                  </tr>
+          
+                </tbody>
+              </table>           
+            </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-<div *ngIf="loadingen">
+<div class="spinnertwo" *ngIf="loadingen" hidden>
+  <div class="loadingencuesta">
+      <img class="gifmaisonsante" src="https://www.maisondesante.org.pe/encuestas/assets/LOGO_CMS.gif" alt="">
+  </div>
+</div>
+<div class="spinner" *ngIf="loadingen">
   <div class="loadingen">
       <img class="gifmaison" src="https://www.maisondesante.org.pe/encuestas/assets/LOGO_CMS.gif" alt="">
 </div>
