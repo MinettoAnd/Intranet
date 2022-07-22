@@ -221,7 +221,7 @@ $color-green: green;
     .loadingencuesta {          
       position: absolute;
       margin: auto;     
-      left: 20%;
+      left: 35%;
       top: 45%;
       background-color: white;
 
@@ -232,6 +232,28 @@ $color-green: green;
   }
 
 }
+@media only screen and (min-width: 1200px) and (max-width: 1479px){
+  .spinner {
+    display: none !important;
+  }
+
+  .spinnertwo {
+    display: block !important;   
+
+    .loadingencuesta {          
+      position: absolute;
+      margin: auto;     
+      left: 45%;
+      top: 45%;
+      background-color: white;
+
+      .gifmaisonsante {
+        width: 80%;
+      }
+    }
+  }
+}
+
 @media only screen and (max-width: 992px) {
   .tableencuesta {
 
@@ -325,7 +347,7 @@ $color-green: green;
     .loadingencuesta {          
       position: absolute;
       margin: auto;     
-      left: 20%;
+      left: 25%;
       top: 45%;
       background-color: white;
 
