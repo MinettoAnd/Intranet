@@ -22,7 +22,7 @@ $color-green: green;
 //********************************************************
 //RESPONSIVE
 //pantallas anchas
-@media only screen and  (max-width:2500px) {
+@media only screen and  (min-width:2500px) {
   .formulario {
     width: 60%;
     margin: auto;
@@ -53,7 +53,7 @@ $color-green: green;
   }
 }
 
-@media (min-width:1440px) {
+@media only screen and  (min-width:1440px) {
   .formulario {
     width: 80%;
     margin: auto;
@@ -92,7 +92,8 @@ $color-green: green;
   }
 }
 
-@media only screen and  (max-width:1480px) {
+
+@media only screen and (min-width:1480px) {
   .divtable {
     padding-left: 10%;
     padding-right: 10%;
@@ -125,7 +126,7 @@ $color-green: green;
   }
 }
 
-@media only screen and (max-width: 992px) {
+@media only screen and (max-width: 1479px) {
   .tableencuesta {
 
     .textarrayarea,
@@ -230,6 +231,276 @@ $color-green: green;
       }
     }
   }
+
+}
+@media only screen and (max-width: 992px) {
+  .tableencuesta {
+
+    .textarrayarea,
+    .textarraycolaborador {
+      font-size: small;
+    }
+
+    img {
+      width: 80%;
+    }
+  }
+
+  .divtable {
+    padding-left: 5%;
+    padding-right: 5%;
+
+  }
+
+  .divtablerespon {
+    display: none !important;
+  }
+
+  .divtablerespontwo {
+    display: block !important;
+    margin: auto;
+
+    .tableencuestares {
+      .titletablerespontwo {
+        font-size: 16px;
+        color: white;
+        font-weight: bold;
+        text-align: center;
+        background-color: rgb(3, 56, 124);
+      }
+
+      .texttablerespontwo {
+        font-size: 16px;
+        color: black;
+      }
+    }
+  }
+
+  
+
+  .box2 {
+    margin: auto;
+    text-align: center;
+
+    img {
+      width: 50%;
+
+      span {
+        display: block;
+      }
+
+    }
+  }
+
+  .txtresponse {
+    padding-top: 2%;
+    font-size: 20px;
+    font-weight: bold;
+    color: rgb(3, 56, 124);
+  }
+
+  .divBTN {
+    display: flex;
+    padding-top: 0%;
+    padding: 3%;
+    justify-content: space-between;
+    font-size: 14px;
+  }
+
+  .divbtanswer {
+    .btnanswer {
+      padding: 10px 30px;
+      margin: 5px;
+
+      border-radius: 10px;
+      font-size: 14px;
+    }
+  }
+  .spinner {
+    display: none !important;
+  }
+
+  .spinnertwo {
+    display: block !important;   
+
+    .loadingencuesta {          
+      position: absolute;
+      margin: auto;     
+      left: 20%;
+      top: 45%;
+      background-color: white;
+
+      .gifmaisonsante {
+        width: 80%;
+      }
+    }
+  }
+
+}
+@media only screen and (max-width: 640px) {
+
+  .mensaje,
+  .question-title,
+  .textradiobuton {
+    font-size: small;
+  }
+
+ 
+
+  .cselectPaciente {
+    display: none !important;
+  }
+
+  .selectpacientetwo {
+    display: block !important;
+    flex-wrap: wrap;
+    justify-items: center;
+    text-align: center;
+
+    .selectPaciente {
+      padding-top: 10px;
+    }
+
+  }
+
+  .box2 {
+    margin: auto;
+    text-align: center;
+
+    img {
+      width: 50%;
+
+      span {
+        display: block;
+      }
+
+    }
+  }
+
+  .txtresponse {
+    padding-top: 2%;
+    font-size: 20px;
+    font-weight: bold;
+    color: rgb(3, 56, 124);
+  }
+
+  .btresponive {
+    padding-left: 5%;
+    padding-right: 5%;
+
+  }
+
+  .divBTN {
+    display: flex;
+    padding: 3%;
+    justify-content: space-between;
+
+  }
+
+  .paddingform {
+    padding: 0;
+
+    .tableencuesta {
+
+      .textarrayarea,
+      .textarraycolaborador {
+        font-size: small;
+      }
+
+      img {
+        width: 90%;
+      }
+    }
+  }
+
+  .divtablerespon {
+    display: none !important;
+  }
+
+  .divtablerespontwo {
+    display: block !important;
+    margin: auto;
+
+    .tableencuestares {
+      .titletablerespontwo {
+        font-size: 14px;
+        color: white;
+        font-weight: bold;
+        text-align: center;
+        background-color: rgb(3, 56, 124);
+      }
+
+      .texttablerespontwo {
+        font-size: 14px;
+        color: black;
+      }
+    }
+  }
+
+
+
+  .tableone {
+    display: none !important;
+  }
+
+  .tabletwo {
+    display: block !important;
+
+    .tabletwoescala {
+      margin: auto;
+      padding: 0;
+      width: 20%;
+      text-align: center;
+      font-size: 14px;
+    }
+  }
+
+  .div {
+    .mensaje2 {
+      font-size: 12px;
+    }
+  }
+
+  .answerbox {
+    margin-top: 10px;
+
+    .urlanswer {
+      padding: 0.5rem;
+      margin: auto;
+      margin-bottom: 25px;
+      width: 80%;
+      font-size: 12px;
+      border-radius: 10px;
+    }
+  }
+
+  .divbtanswer {
+    .btnanswer {
+      padding: 5px 20px;
+      margin: 5px;
+      width: 100%;
+      border-radius: 10px;
+      font-size: 12px;
+    }
+  }
+
+  .spinner {
+    display: none !important;
+  }
+  .spinnertwo{
+    display: block !important;
+    .loadingencuesta{
+      position: absolute;
+      margin: auto;     
+      left: 20%;
+      top: 40%;
+      background-color: white;
+      .gifmaisonsante {
+        width: 80%;
+      }
+    }
+  }
+
 
 }
 
@@ -383,7 +654,7 @@ $color-green: green;
 }
 
 
-@media only screen and (max-width: 414px) {
+@media only screen and (max-width: 484px) {
 
   .mensaje,
   .question-title,
@@ -416,7 +687,7 @@ $color-green: green;
     text-align: center;
 
     img {
-      width: 40%;
+      width: 50%;
 
       span {
         display: block;
@@ -551,7 +822,6 @@ $color-green: green;
 
 
 }
-
 //*****************************************************************
 
 //TEXTO PRINCIPAL DE LA ENCUESTA
