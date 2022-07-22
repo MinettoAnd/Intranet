@@ -22,7 +22,7 @@ $color-green: green;
 //********************************************************
 //RESPONSIVE
 //pantallas anchas
-@media only screen and  (max-width:2500px) {
+@media only screen and  (min-width:2500px) {
   .formulario {
     width: 60%;
     margin: auto;
@@ -53,7 +53,7 @@ $color-green: green;
   }
 }
 
-@media (min-width:1440px) {
+@media only screen and  (min-width:1440px) {
   .formulario {
     width: 80%;
     margin: auto;
@@ -92,7 +92,39 @@ $color-green: green;
   }
 }
 
-@media only screen and  (max-width:1480px) {
+@media only screen and (min-width:1480px) {
+  .divtable {
+    padding-left: 10%;
+    padding-right: 10%;
+  }
+
+  .txtresponse {
+    padding-top: 2%;
+    font-size: 24px;
+    font-weight: bold;
+    color: rgb(3, 56, 124);
+  }
+
+  .divBTN {
+    display: flex;
+    padding-top: 0%;
+    padding: 3%;
+    justify-content: space-between;
+    font-size: 18px;
+  }
+  .loadingen {
+    position: absolute;
+    left: 30%;
+    top: 30%;
+    margin: auto;
+    background-color: white;
+
+    .gifmaison {
+      width: 80%;
+    }
+  }
+}
+@media only screen and (min-width:1480px) {
   .divtable {
     padding-left: 10%;
     padding-right: 10%;
@@ -125,7 +157,7 @@ $color-green: green;
   }
 }
 
-@media only screen and (max-width: 992px) {
+@media only screen and (max-width: 1479px) {
   .tableencuesta {
 
     .textarrayarea,
@@ -383,7 +415,7 @@ $color-green: green;
 }
 
 
-@media only screen and (max-width: 414px) {
+@media only screen and (max-width: 484px) {
 
   .mensaje,
   .question-title,
