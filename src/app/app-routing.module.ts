@@ -105,7 +105,7 @@ const routes: Routes = [
                 data: { extraParameter: "recursosMenu" },
             },
             {
-                path: "encuesta",
+                path: "encuesta/encuesta",
                 component: HomeComponent,
                 data: { extraParameter: "encuestaMenu" },
             },
