@@ -51,7 +51,7 @@ export class AnswerComponent implements OnInit {
     console.log(this.element);
 
     setTimeout(() => {
-      this.router.navigateByUrl('/encuesta');
+      this.router.navigateByUrl('/encuesta/encuesta');
       this.hideSpinner()
       this.hideData();
       

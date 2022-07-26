@@ -81,7 +81,7 @@ element = false;
     console.log(this.element);
 
     setTimeout(() => {
-      this.router.navigateByUrl('/encuesta');
+      this.router.navigateByUrl('/encuesta/encuesta');
       
       this.hideData();
       this.hideSpinner()
