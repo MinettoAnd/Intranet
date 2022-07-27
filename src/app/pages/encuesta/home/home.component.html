@@ -444,16 +444,16 @@
                         <table class="paddingescala">
                             <thead class="text-xl text-[#10004c]">
                                 <th></th>
-                                <th class="num py-2" *ngFor="let i of generateArray(10)">
+                                <th class="num" *ngFor="let i of generateArray(10)">
                                     {{ i + 1 }}
                                 </th>
                                 <th></th>
                             </thead>
                             <tbody>
                                 <tr class="text-lg font-semibold text-center text-[#10004c]">                                    
-                                    <td class="no p-2 ">Definitivamente no</td>
-                                    <td class="p-2" *ngFor="let i of generateArray(10)">
-                                        <input class="" type="radio" name="scaleRecommendation" [value]="i + 1"
+                                    <td class="no">Definitivamente no</td>
+                                    <td class="array" *ngFor="let i of generateArray(10)">
+                                        <input class="radioescala " type="radio" name="scaleRecommendation" [value]="i + 1"
                                             formControlName="scaleRecommendation" ngValue="scaleRecommendation.value"
                                             required>
                                     </td>
@@ -462,7 +462,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="tabletwo" hidden>
+                    <!-- <div class="tabletwo" hidden>
                         <table class="tabletwoescala">
                             <thead class="text-xl text-[#10004c]">
                                 <th></th>
@@ -483,7 +483,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                    </div>
+                    </div> -->
                     <div>
                         <div class="question_s">
                             <app-question question="¿Quisieras comentarnos algo más?"></app-question>
