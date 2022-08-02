@@ -46,6 +46,12 @@ export class DashboardIpressComponent implements OnInit {
     responsive: true,
     legend: {
       position: 'top',
+      labels: {
+        fontColor: "#454545",
+        fontSize: 12,
+        fontStyle: "bold",
+        boxWidth: 12
+      }
     },
     plugins: {
       datalabels: {
@@ -60,6 +66,15 @@ export class DashboardIpressComponent implements OnInit {
             return percentage;
           }
         },
+        color: "black",
+        font: {
+          weight: "bold",
+          size: 14
+        },
+        anchor: "end",
+        clamp :true,
+        align: "start",
+        offset:30,
 
       },
 
@@ -72,7 +87,7 @@ export class DashboardIpressComponent implements OnInit {
   public pieChartPlugins = [pluginDataLabels];
   public pieChartColors = [
     {
-      backgroundColor: ['rgba(255,0,0,0.3)', 'rgba(0,255,0,0.3)', 'rgba(0,0,255,0.3)', 'rgba(94, 208, 243, 1)', 'rgba(220, 243, 94, 1)'],
+      backgroundColor: ['rgba(67,168,128,1)', 'rgba(22,73,126,1)', 'rgba(100,22,157,1)', 'rgba(159, 24, 0, 1)', 'rgba(67,168,128,1)'],
 
     },
 
@@ -123,6 +138,7 @@ export class DashboardIpressComponent implements OnInit {
 
     }
   };
+  //RECLAMOS RESUELTOS
   public pieChartLabels2: Label[] = [];
   public pieChartData2: number[] = [];
   public pieChartType2: ChartType = 'pie';
@@ -159,6 +175,7 @@ export class DashboardIpressComponent implements OnInit {
 
     }
   };
+  //RECLAMOS POR ESTADO
   public pieChartLabels3: Label[] = [];
   public pieChartData3: number[] = [];
   public pieChartType3: ChartType = 'pie';
