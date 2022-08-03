@@ -22,7 +22,7 @@ $color-green: green;
 //********************************************************
 //RESPONSIVE
 //pantallas anchas
-@media only screen and  (min-width:2500px) {
+@media only screen and (min-width:2500px) {
   .formulario {
     width: 60%;
     margin: auto;
@@ -39,6 +39,48 @@ $color-green: green;
     font-weight: bold;
     color: rgb(3, 56, 124);
   }
+  .tableone {
+    /* display: block !important; */
+
+    .paddingescala {
+      margin: auto;
+      padding: 0;
+      width: 100%;
+      text-align: center;
+      font-size: 16px;
+
+      thead {
+        .num {
+          padding-top: 0.5rem;
+          padding-bottom: 0.5rem;
+        }
+      }
+
+      tbody {
+        tr {
+          .no {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+          }
+
+          .array {
+            padding: 0.25rem;
+            .radioescala {
+              width: 20px;
+              height: 20px;
+            }
+          }
+
+          .si {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+          }
+        }
+
+      }
+
+    }
+  }
 
   .loadingen {
     position: absolute;
@@ -53,7 +95,7 @@ $color-green: green;
   }
 }
 
-@media only screen and  (min-width:1440px) {
+@media only screen and (min-width:1440px) {
   .formulario {
     width: 80%;
     margin: auto;
@@ -78,6 +120,48 @@ $color-green: green;
     justify-content: space-between;
     font-size: 20px;
   }
+  .tableone {
+    /* display: block !important; */
+
+    .paddingescala {
+      margin: auto;
+      padding: 0;
+      width: 100%;
+      text-align: center;
+      font-size: 16px;
+
+      thead {
+        .num {
+          padding-top: 0.5rem;
+          padding-bottom: 0.5rem;
+        }
+      }
+
+      tbody {
+        tr {
+          .no {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+          }
+
+          .array {
+            padding: 0.25rem;
+            .radioescala {
+              width: 20px;
+              height: 20px;
+            }
+          }
+
+          .si {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+          }
+        }
+
+      }
+
+    }
+  }
 
   .loadingen {
     position: absolute;
@@ -112,38 +196,49 @@ $color-green: green;
     justify-content: space-between;
     font-size: 18px;
   }
-  .loadingen {
-    position: absolute;
-    left: 30%;
-    top: 30%;
-    margin: auto;
-    background-color: white;
+  .tableone {
+    /* display: block !important; */
 
-    .gifmaison {
-      width: 80%;
+    .paddingescala {
+      margin: auto;
+      padding: 0;
+      width: 100%;
+      text-align: center;
+      font-size: 16px;
+
+      thead {
+        .num {
+          padding-top: 0.5rem;
+          padding-bottom: 0.5rem;
+        }
+      }
+
+      tbody {
+        tr {
+          .no {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+          }
+
+          .array {
+            padding: 0.25rem;
+            .radioescala {
+              width: 20px;
+              height: 20px;
+            }
+          }
+
+          .si {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+          }
+        }
+
+      }
+
     }
   }
-}
-@media only screen and (min-width:1480px) {
-  .divtable {
-    padding-left: 10%;
-    padding-right: 10%;
-  }
 
-  .txtresponse {
-    padding-top: 2%;
-    font-size: 24px;
-    font-weight: bold;
-    color: rgb(3, 56, 124);
-  }
-
-  .divBTN {
-    display: flex;
-    padding-top: 0%;
-    padding: 3%;
-    justify-content: space-between;
-    font-size: 18px;
-  }
   .loadingen {
     position: absolute;
     left: 30%;
@@ -243,17 +338,60 @@ $color-green: green;
       font-size: 14px;
     }
   }
+  .tableone {
+    /* display: block !important; */
+
+    .paddingescala {
+      margin: auto;
+      padding: 0;
+      width: 100%;
+      text-align: center;
+      font-size: 16px;
+
+      thead {
+        .num {
+          padding-top: 0.5rem;
+          padding-bottom: 0.5rem;
+        }
+      }
+
+      tbody {
+        tr {
+          .no {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+          }
+
+          .array {
+            padding: 0.25rem;
+            .radioescala {
+              width: 20px;
+              height: 20px;
+            }
+          }
+
+          .si {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+          }
+        }
+
+      }
+
+    }
+  }
+
   .spinner {
     display: none !important;
   }
 
   .spinnertwo {
-    display: block !important;   
+    display: block !important;
 
-    .loadingencuesta {          
+    .loadingencuesta {
       position: absolute;
-      margin: auto;     
-      left: 20%;
+      margin: auto;
+      left: 35%;
       top: 45%;
       background-color: white;
 
@@ -262,6 +400,420 @@ $color-green: green;
       }
     }
   }
+
+}
+
+@media only screen and (min-width: 1200px) and (max-width: 1479px) {
+  .tableone {
+    /* display: block !important; */
+
+    .paddingescala {
+      margin: auto;
+      padding: 0;
+      width: 100%;
+      text-align: center;
+      font-size: 16px;
+
+      thead {
+        .num {
+          padding-top: 0.5rem;
+          padding-bottom: 0.5rem;
+        }
+      }
+
+      tbody {
+        tr {
+          .no {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+          }
+
+          .array {
+            padding: 0.25rem;
+            .radioescala {
+              width: 20px;
+              height: 20px;
+            }
+          }
+
+          .si {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+          }
+        }
+
+      }
+
+    }
+  }
+  .spinner {
+    display: none !important;
+  }
+
+  .spinnertwo {
+    display: block !important;
+
+    .loadingencuesta {
+      position: absolute;
+      margin: auto;
+      left: 45%;
+      top: 45%;
+      background-color: white;
+
+      .gifmaisonsante {
+        width: 80%;
+      }
+    }
+  }
+}
+
+
+@media only screen and (max-width: 992px) {
+  .tableencuesta {
+
+    .textarrayarea,
+    .textarraycolaborador {
+      font-size: small;
+    }
+
+    img {
+      width: 80%;
+    }
+  }
+
+  .divtable {
+    padding-left: 5%;
+    padding-right: 5%;
+
+  }
+
+  .divtablerespon {
+    display: none !important;
+  }
+
+  .divtablerespontwo {
+    display: block !important;
+    margin: auto;
+
+    .tableencuestares {
+      .titletablerespontwo {
+        font-size: 16px;
+        color: white;
+        font-weight: bold;
+        text-align: center;
+        background-color: rgb(3, 56, 124);
+      }
+
+      .texttablerespontwo {
+        font-size: 16px;
+        color: black;
+      }
+    }
+  }
+
+
+
+  .box2 {
+    margin: auto;
+    text-align: center;
+
+    img {
+      width: 50%;
+
+      span {
+        display: block;
+      }
+
+    }
+  }
+
+  .txtresponse {
+    padding-top: 2%;
+    font-size: 20px;
+    font-weight: bold;
+    color: rgb(3, 56, 124);
+  }
+
+  .divBTN {
+    display: flex;
+    padding-top: 0%;
+    padding: 3%;
+    justify-content: space-between;
+    font-size: 14px;
+  }
+
+  .divbtanswer {
+    .btnanswer {
+      padding: 10px 30px;
+      margin: 5px;
+
+      border-radius: 10px;
+      font-size: 14px;
+    }
+  }
+  .tableone {
+    /* display: block !important; */
+
+    .paddingescala {
+      margin: auto;
+      padding: 0;
+      width: 100%;
+      text-align: center;
+      font-size: 16px;
+
+      thead {
+        .num {
+          padding-top: 0.5rem;
+          padding-bottom: 0.5rem;
+        }
+      }
+
+      tbody {
+        tr {
+          .no {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+          }
+
+          .array {
+            padding: 0.25rem;
+            .radioescala {
+              width: 20px;
+              height: 20px;
+            }
+          }
+
+          .si {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+          }
+        }
+
+      }
+
+    }
+  }
+
+  .spinner {
+    display: none !important;
+  }
+
+  .spinnertwo {
+    display: block !important;
+
+    .loadingencuesta {
+      position: absolute;
+      margin: auto;
+      left: 25%;
+      top: 45%;
+      background-color: white;
+
+      .gifmaisonsante {
+        width: 80%;
+      }
+    }
+  }
+
+}
+
+@media only screen and (max-width: 640px) {
+
+  .mensaje,
+  .question-title,
+  .textradiobuton {
+    font-size: small;
+  }
+
+
+
+  .cselectPaciente {
+    display: none !important;
+  }
+
+  .selectpacientetwo {
+    display: block !important;
+    flex-wrap: wrap;
+    justify-items: center;
+    text-align: center;
+
+    .selectPaciente {
+      padding-top: 10px;
+    }
+
+  }
+
+  .box2 {
+    margin: auto;
+    text-align: center;
+
+    img {
+      width: 50%;
+
+      span {
+        display: block;
+      }
+
+    }
+  }
+
+  .txtresponse {
+    padding-top: 2%;
+    font-size: 20px;
+    font-weight: bold;
+    color: rgb(3, 56, 124);
+  }
+
+  .btresponive {
+    padding-left: 5%;
+    padding-right: 5%;
+
+  }
+
+  .divBTN {
+    display: flex;
+    padding: 3%;
+    justify-content: space-between;
+
+  }
+
+  .paddingform {
+    padding: 0;
+
+    .tableencuesta {
+
+      .textarrayarea,
+      .textarraycolaborador {
+        font-size: small;
+      }
+
+      img {
+        width: 90%;
+      }
+    }
+  }
+
+  .divtablerespon {
+    display: none !important;
+  }
+
+  .divtablerespontwo {
+    display: block !important;
+    margin: auto;
+
+    .tableencuestares {
+      .titletablerespontwo {
+        font-size: 14px;
+        color: white;
+        font-weight: bold;
+        text-align: center;
+        background-color: rgb(3, 56, 124);
+      }
+
+      .texttablerespontwo {
+        font-size: 14px;
+        color: black;
+      }
+    }
+  }
+
+
+
+  /*   .tableone {
+    display: none !important;
+  } */
+
+  .tableone {
+    /* display: block !important; */
+
+    .paddingescala {
+      margin: auto;
+      padding: 0;
+      width: 20%;
+      text-align: center;
+      font-size: 14px;
+
+      thead {
+        .num {
+          padding-top: 0.5rem;
+          padding-bottom: 0.5rem;
+        }
+      }
+
+      tbody {
+        tr {
+          .no {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+          }
+
+          .array {
+            padding: 0.25rem;
+            .radioescala {
+              width: 15px;
+              height: 15px;
+            }
+          }
+
+          .si {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+          }
+        }
+
+      }
+
+    }
+  }
+
+  .div {
+    .mensaje2 {
+      font-size: 12px;
+    }
+  }
+
+  .answerbox {
+    margin-top: 10px;
+
+    .urlanswer {
+      padding: 0.5rem;
+      margin: auto;
+      margin-bottom: 25px;
+      width: 80%;
+      font-size: 12px;
+      border-radius: 10px;
+    }
+  }
+
+  .divbtanswer {
+    .btnanswer {
+      padding: 5px 20px;
+      margin: 5px;
+      width: 100%;
+      border-radius: 10px;
+      font-size: 12px;
+    }
+  }
+
+  .spinner {
+    display: none !important;
+  }
+
+  .spinnertwo {
+    display: block !important;
+
+    .loadingencuesta {
+      position: absolute;
+      margin: auto;
+      left: 20%;
+      top: 40%;
+      background-color: white;
+
+      .gifmaisonsante {
+        width: 80%;
+      }
+    }
+  }
+
 
 }
 
@@ -326,29 +878,47 @@ $color-green: green;
     }
   }
 
-
-
-
-  .paddingescala {
-    margin: 0;
-    width: 30%;
-    font-size: 8px;
-
-  }
+  /* .tableone {
+    display: none !important;
+  } */
 
   .tableone {
-    display: none !important;
-  }
+    /* display: block !important; */
+    width: 60%;
 
-  .tabletwo {
-    display: block !important;
-
-    .tabletwoescala {
+    .paddingescala {
       margin: auto;
       padding: 0;
       width: 20%;
       text-align: center;
       font-size: 10px;
+
+      thead {
+        .num {
+          padding-top: 0.2rem;
+          padding-bottom: 0.2rem;
+        }
+      }
+
+      tbody {
+        tr {
+          .no {
+            padding-top: 0.2rem;
+            padding-bottom: 0.2rem;
+          }
+
+          .array {
+            padding: 0.10rem;
+          }
+
+          .si {
+            padding-top: 0.2rem;
+            padding-bottom: 0.2rem;
+          }
+        }
+
+      }
+
     }
   }
 
@@ -396,11 +966,11 @@ $color-green: green;
   }
 
   .spinnertwo {
-    display: block !important;   
+    display: block !important;
 
-    .loadingencuesta {          
+    .loadingencuesta {
       position: absolute;
-      margin: auto;     
+      margin: auto;
       left: 20%;
       top: 40%;
       background-color: white;
@@ -448,7 +1018,7 @@ $color-green: green;
     text-align: center;
 
     img {
-      width: 40%;
+      width: 50%;
 
       span {
         display: block;
@@ -519,19 +1089,46 @@ $color-green: green;
 
 
 
-  .tableone {
+  /*  .tableone {
     display: none !important;
-  }
+  } */
 
-  .tabletwo {
-    display: block !important;
+  .tableone {
+    /* display: block !important; */
 
-    .tabletwoescala {
+    .paddingescala {
       margin: auto;
       padding: 0;
       width: 20%;
       text-align: center;
       font-size: 10px;
+
+      thead {
+        .num {
+          padding-top: 0.5rem;
+          padding-bottom: 0.5rem;
+        }
+      }
+
+      tbody {
+        tr {
+          .no {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+          }
+
+          .array {
+            padding: 0.25rem;
+          }
+
+          .si {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+          }
+        }
+
+      }
+
     }
   }
 
@@ -567,14 +1164,17 @@ $color-green: green;
   .spinner {
     display: none !important;
   }
-  .spinnertwo{
+
+  .spinnertwo {
     display: block !important;
-    .loadingencuesta{
+
+    .loadingencuesta {
       position: absolute;
-      margin: auto;     
+      margin: auto;
       left: 20%;
       top: 40%;
       background-color: white;
+
       .gifmaisonsante {
         width: 80%;
       }
@@ -733,10 +1333,13 @@ $color-green: green;
 
 //seccion escala
 .paddingescala {
+  width: 100%;
   margin: auto;
   text-align: center;
-  font-size: 14px;
-}
+  font-size: 16px;}
+
+
+
 
 
 //////////////////////////
@@ -873,6 +1476,8 @@ $color-green: green;
   cursor: pointer;
 }
 
+
+
 .radiorecom {
   height: 20px;
   width: 20px;
@@ -934,10 +1539,7 @@ $color-green: green;
   margin: 1%;
 }
 
-.paddingescala {
-  width: 100%;
-  font-size: 16px;
-}
+
 
 .textarrayarea {
   text-align: center;
