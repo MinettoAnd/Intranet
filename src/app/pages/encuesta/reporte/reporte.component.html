@@ -1,125 +1,95 @@
 <section class="section mt-2">
-    <div class="card">
-      <div class="card-body align-items-center">
-        <form [formGroup]="seachForm">
-          <div class="form-row">
-            <div class="col-md-3">
-              <div class="position-relative form-group">
-                <label for="exampleEmail11" class=""
-                  >Seleccionar por fechas/periodo</label
-                >
-                <select
-                  class="form-control form-control-sm"
-                  formControlName="opselect"
-                  (change)="onChange($event)"
-                >
-                  <option value="">Seleccionar</option>
-                  <option value="1" selected>Periodo</option>
-                  <option value="2">Rango de fechas</option>
-                </select>
-              </div>
+  <div class="card">
+    <div class="card-body align-items-center">
+      <form [formGroup]="seachForm">
+        <div class="form-row">
+          <div class="col-md-3">
+            <div class="position-relative form-group">
+              <label for="exampleEmail11" class="">Seleccionar por fechas/periodo</label>
+              <select class="form-control form-control-sm" formControlName="opselect" (change)="onChange($event)">
+                <option value="">Seleccionar</option>
+                <option value="1" selected>Periodo</option>
+                <option value="2">Rango de fechas</option>
+              </select>
             </div>
-            <div class="col-md-3" *ngIf="isPeriodo">
-              <div class="position-relative form-group">
-                <label class="">Periodo</label>
-                <input
-                  class="form-control form-control-sm"
-                  [(ngModel)]="ngperiodo"
-                  formControlName="periodo"
-                  type="month"
-                />
-              </div>
+          </div>
+          <div class="col-md-3" *ngIf="isPeriodo">
+            <div class="position-relative form-group">
+              <label class="">Periodo</label>
+              <input class="form-control form-control-sm" [(ngModel)]="ngperiodo" formControlName="periodo"
+                type="month" />
             </div>
-            <div class="col-md-4" *ngIf="isRangoFecha">
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="position-relative form-group">
-                    <label class="">Fecha Inicio</label>
-                    <input
-                      name="password"
-                      type="date"
-                      formControlName="fecha_inicio"
-                      class="form-control form-control-sm"
-                    />
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="position-relative form-group">
-                    <label class="">Fecha Final</label>
-                    <input
-                      name="password"
-                      type="date"
-                      formControlName="fecha_fin"
-                      class="form-control form-control-sm"
-                    />
-                  </div>
+          </div>
+          <div class="col-md-4" *ngIf="isRangoFecha">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="position-relative form-group">
+                  <label class="">Fecha Inicio</label>
+                  <input name="password" type="date" formControlName="fecha_inicio"
+                    class="form-control form-control-sm" />
                 </div>
               </div>
-            </div>
-            <div class="col-md-3">
-              <div class="position-relative form-group">
-                <label for="exampleEmail11" class="">Sede</label>
-                <select
-                  class="form-control form-control-sm"
-                  
-                  formControlName="sede"
-                >
-                  <option value="0">Todos las sedes</option>
-                  <option value="1">Lima</option>
-                  <option value="2">Chorrillos</option>
-                  <option value="4">Surco</option>
-                </select>
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="input-group">
-                <div class="input-group-btn pt-4">
-                  <button
-                    (click)="search()"
-                    class="mb-2 mr-2 btn btn-primary btn-sm float-right"
-                  >
-                    <i class="pe-7s-search"> </i>Procesar
-                  </button>
+              <div class="col-md-6">
+                <div class="position-relative form-group">
+                  <label class="">Fecha Final</label>
+                  <input name="password" type="date" formControlName="fecha_fin" class="form-control form-control-sm" />
                 </div>
               </div>
             </div>
           </div>
-        </form>
-      </div>
+          <div class="col-md-3">
+            <div class="position-relative form-group">
+              <label for="exampleEmail11" class="">Sede</label>
+              <select class="form-control form-control-sm" formControlName="sede">
+                <option value="0">Todos las sedes</option>
+                <option value="1">Lima</option>
+                <option value="2">Chorrillos</option>
+                <option value="4">Surco</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="input-group">
+              <div class="input-group-btn pt-4">
+                <button (click)="search()" class="mb-2 mr-2 btn btn-primary btn-sm float-right">
+                  <i class="pe-7s-search"> </i>Procesar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
     </div>
-    
-    <div class="row">
-      <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
-        <div class="card">
-          <div class="card-statistic-4">
-            <div class="align-items-center justify-content-between">
-              <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
-                  <div class="card-content">
-                    <h5 class="font-15">REGISTRO TOTAL DE ENCUESTA</h5>
-                    <h2 class="mb-3 font-18">
-                      {{ this.listencuesta }}
-                    </h2>
-                    <!--p class="mb-0">
+  </div>
+
+  <div class="row">
+    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+      <div class="card">
+        <div class="card-statistic-4">
+          <div class="align-items-center justify-content-between">
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
+                <div class="card-content">
+                  <h5 class="font-15">REGISTRO TOTAL DE ENCUESTA</h5>
+                  <h2 class="mb-3 font-18">
+                    {{ this.listencuesta }}
+                  </h2>
+                  <!--p class="mb-0">
                         <span class="col-green">10%</span> Increase
                       </p-->
-                  </div>
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
-                  <div class="banner-img">
-                    <img
-                      src="assets/images/banner/reclamos_registrados.png"
-                      width="84"
-                      alt=""
-                    />
-                  </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
+                <div class="banner-img">
+                  <img src="assets/images/banner/reclamos_registrados.png" width="84" alt="" />
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    
+    </div>
+
 
     <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
       <div class="card">
@@ -130,7 +100,7 @@
                 <div class="card-content">
                   <h5 class="font-15">REGISTRO TOTAL DE LIMA</h5>
                   <h2 class="mb-3 font-18">
-                    {{ this.listlima.length }}
+                    {{ this.listlima }}
                   </h2>
                   <!--p class="mb-0">
                       <span class="col-orange">09%</span> Decrease
@@ -139,11 +109,7 @@
               </div>
               <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
                 <div class="banner-img">
-                  <img
-                    src="assets/images/banner/reclamos_resueltos.png"
-                    width="84"
-                    alt=""
-                  />
+                  <img src="assets/images/banner/reclamos_resueltos.png" width="84" alt="" />
                 </div>
               </div>
             </div>
@@ -161,7 +127,7 @@
                 <div class="card-content">
                   <h5 class="font-15">REGISTRO TOTAL DE CHORRILLOS</h5>
                   <h2 class="mb-3 font-18">
-                    {{ this.listchorrillos.length }}
+                    {{ this.listchorrillos }}
                   </h2>
                   <!--p class="mb-0">
                       <span class="col-green">18%</span> Increase
@@ -170,11 +136,7 @@
               </div>
               <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
                 <div class="banner-img">
-                  <img
-                    src="assets/images/banner/reclamos_pendiente.png"
-                    width="84"
-                    alt=""
-                  />
+                  <img src="assets/images/banner/reclamos_pendiente.png" width="84" alt="" />
                 </div>
               </div>
             </div>
@@ -182,7 +144,7 @@
         </div>
       </div>
     </div>
-   
+
     <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
       <div class="card">
         <div class="card-statistic-4">
@@ -192,7 +154,7 @@
                 <div class="card-content">
                   <h5 class="font-15">REGISTRO TOTAL DE SURCO</h5>
                   <h2 class="mb-3 font-18">
-                    {{ this.listsurco.length }}
+                    {{ this.listsurco }}
                   </h2>
                   <!--p class="mb-0">
                       <span class="col-green">18%</span> Increase
@@ -210,159 +172,150 @@
       </div>
     </div>
   </div>
-      
-  
-    <div class="row">
-      <div class="col-md-6 col-lg-12 col-xl-6">
-        <!-- Support tickets -->
-        <div class="card mt-sm-5 mt-md-0">
-          <div class="card-header">
-            <div class="col-md-12">
-              <div class="row">
-                <div class="col-md-8">
-                  <h5>Reclamos por Modo de Recepción</h5>
-                </div>
-                <div class="col-md-4">
-                  <button
-                    type="button"
-                    (click)="showTableDasboard(1, 2)"
-                    class="btn-shadow btn btn-info float-right"
-                  >
-                    <i class="pe-7s-graph3"></i>
-                  </button>
-                  <button
-                    type="button"
-                    (click)="showTableDasboard(1, 1)"
-                    class="btn-shadow mr-3 btn btn-info float-right"
-                  >
-                    <i class="pe-7s-graph"></i>
-                  </button>
-                </div>
+
+
+  <div class="row">
+    <div class="col-md-6 col-lg-12 col-xl-6">
+      <!-- Support tickets -->
+      <div class="card mt-sm-5 mt-md-0">
+        <div class="card-header">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-8">
+                <h5>Total de registros por sede</h5>
+              </div>
+              <div class="col-md-4">
+                <button type="button" (click)="showTableDasboard(1, 2)" class="btn-shadow btn btn-info float-right">
+                  <i class="pe-7s-graph3"></i>
+                </button>
+                <button type="button" (click)="showTableDasboard(1, 1)"
+                  class="btn-shadow mr-3 btn btn-info float-right">
+                  <i class="pe-7s-graph"></i>
+                </button>
               </div>
             </div>
           </div>
-          <div class="card-body" *ngIf="isPosition1">
-            <loading *ngIf="isLoading">{{ isLoading }}</loading>
-            <div class="chart" *ngIf="!isLoading">
-              <canvas id="canvas">
-                {{chart}}
-              </canvas>
-            </div>
+        </div>
+        <div class="card-body" *ngIf="isPosition1">
+          <loading *ngIf="isLoading">{{ isLoading }}</loading>
+          <div class="chart" *ngIf="!isLoading">
+            <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+              [plugins]="barChartPlugins" [legend]="barChartLegend" [chartType]="barChartType">
+            </canvas>
           </div>
-         <!--  <div class="card-body" *ngIf="!isPosition1">
-            <div class="table-responsive p-4">
-              <table
-                class="
+        </div>
+        <div class="card-body" *ngIf="!isPosition1">
+          <div class="table-responsive p-4">
+            <table class="
                   align-middle
                   text-truncate
                   mb-0
                   table table-sm table-borderless table-hover
-                "
-              >
+                ">
+              <thead>
+                <tr>
+                  <th class="text-left">Sede</th>
+                  <th class="text-left">Total</th>
+                  <th class="text-left">Porcentaje</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="text-left">Lima</td>
+                  <td>{{ this.listlima }}</td>
+                  <td>{{ getporcentaje(this.listlima) }}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Chorrillos</td>
+                  <td>{{ this.listchorrillos }}</td>
+                  <td>{{getporcentaje(this.listchorrillos) }}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Surco</td>
+                  <td class="text-left">{{ this.listsurco }}</td>
+                  <td class="text-left">{{ getporcentaje(this.listsurco)}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- Support tickets -->
+    </div>
+    <div class="col-md-6 col-lg-12 col-xl-6">
+      <div class="card">
+        <div class="card-header">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-8">
+                <h4>Reclamos Generados por mes</h4>
+              </div>
+              <div class="col-md-4">
+                <button type="button" (click)="showTableDasboard(2, 2)" class="btn-shadow btn btn-info float-right">
+                  <i class="pe-7s-graph3"></i>
+                </button>
+                <button type="button" (click)="showTableDasboard(2, 1)"
+                  class="btn-shadow mr-3 btn btn-info float-right">
+                  <i class="pe-7s-graph"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body" *ngIf="isPosition2">
+          <loading *ngIf="isLoading2">{{ isLoading }}</loading>
+          <div class="d-block" *ngIf="!isLoading2">
+            <canvas baseChart 
+              [datasets]="pieChartData" 
+              [labels]="pieChartLabels" 
+              [options]="pieChartOptions"
+              [plugins]="pieChartPlugins" 
+              [legend]="pieChartLegend" 
+              [chartType]="pieChartType">
+            </canvas>
+          </div>       
+          
+        </div>
+        <div class="card-body" *ngIf="!isPosition2">
+          <div class="table-responsive p-4">
+            <table class="
+                  align-middle
+                  text-truncate
+                  mb-0
+                  table table-sm table-borderless table-hover
+                ">
                 <thead>
                   <tr>
-                    <th class="text-left">Nombres</th>
-                    <th class="text-left">Cantidad</th>
+                    <th class="text-left">Modalidad</th>
+                    <th class="text-left">Total</th>
                     <th class="text-left">Porcentaje</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let item of receptions">
-                    <td class="text-left">{{ item.nombre }}</td>
-                    <td class="text-left">{{ item.total }}</td>
-                    <td class="text-left">{{ getPorcentaje(item.total) }}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div> -->
-        </div>
-        <!-- Support tickets -->
-      </div>
-<!--       <div class="col-md-6 col-lg-12 col-xl-6">
-        <div class="card">
-          <div class="card-header">
-            <div class="col-md-12">
-              <div class="row">
-                <div class="col-md-8"><h4>Reclamos Generados por mes</h4></div>
-                <div class="col-md-4">
-                  <button
-                    type="button"
-                    (click)="showTableDasboard(2, 2)"
-                    class="btn-shadow btn btn-info float-right"
-                  >
-                    <i class="pe-7s-graph3"></i>
-                  </button>
-                  <button
-                    type="button"
-                    (click)="showTableDasboard(2, 1)"
-                    class="btn-shadow mr-3 btn btn-info float-right"
-                  >
-                    <i class="pe-7s-graph"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="card-body" *ngIf="isPosition2">
-            <loading *ngIf="isLoading2">{{ isLoading }}</loading>
-            <div class="d-block" *ngIf="!isLoading2"> -->
-              <!-- <canvas
-                baseChart
-                [datasets]="barChartData"
-                [labels]="barChartLabels"
-                [options]="barChartOptions"
-                [plugins]="barChartPlugins"
-                [legend]="barChartLegend"
-                [chartType]="barChartType"
-                
-              >
-              </canvas> -->
-            </div>
-            <!--   <div class="divider"></div>
-            <div class="text-center">
-              <button
-                mat-button
-                mat-raised-button
-                color="primary"
-                (click)="randomize()"
-              >
-                Update
-              </button>
-            </div> -->
-        <!--   </div>
-          <div class="card-body" *ngIf="!isPosition2">
-            <div class="table-responsive p-4">
-              <table
-                class="
-                  align-middle
-                  text-truncate
-                  mb-0
-                  table table-sm table-borderless table-hover
-                "
-              >
-                <thead>
                   <tr>
-                    <th class="text-left">Mes</th>
-                    <th class="text-left">Cantidad</th>
+                    <td class="text-left">Hospitalización</td>
+                    <td>{{ this.listhospita }}</td>
+                    <td>{{ getporcentaje(this.listhospita) }}</td>
                   </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let item of listMes; let i = index">
-                    <td class="text-left">{{ item.mes }}</td>
-                    <td class="text-left">
-                      {{ getCantidadPorMes(item) }}
-                    </td>
+                  <tr>
+                    <td class="text-left">Consultorio</td>
+                    <td>{{ this.listconsultorio }}</td>
+                    <td>{{getporcentaje(this.listconsultorio) }}</td>
+                  </tr>
+                  <tr>
+                    <td class="text-left">Emergencia</td>
+                    <td class="text-left">{{  this.listemergencia }}</td>
+                    <td class="text-left">{{ getporcentaje( this.listemergencia)}}</td>
                   </tr>
                 </tbody>
-              </table>
-            </div>
+            </table>
           </div>
         </div>
       </div>
-    </div> -->
-  
-   <!--  <div class="row">
+    </div>
+  </div>
+
+  <div class="row">
       <div class="col-md-6 col-lg-12 col-xl-6">
         
         <div class="card mt-sm-5 mt-md-0">
@@ -417,33 +370,41 @@
               >
                 <thead>
                   <tr>
-                    <th class="text-left">Nombres</th>
-                    <th class="text-left">Cantidad</th>
+                    <th class="text-left">Tipo de Usuario</th>
+                    <th class="text-left">Total</th>
                     <th class="text-left">Porcentaje</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td class="text-left">
-                      {{ title }}
-                    </td>
-                    <td class="text-left">
-                      {{ cantidad }}
-                    </td>
-                    <td class="text-left">
-                      {{ getValorAtiempo(cantidad) }}
-                    </td>
+                    <td class="text-left">Plan Salud</td>
+                    <td>{{ this.plansalud }}</td>
+                    <td>{{ getporcentaje(this.plansalud) }}</td>
                   </tr>
                   <tr>
-                    <td class="text-left">
-                      {{ title2 }}
-                    </td>
-                    <td class="text-left">
-                      {{ cantidad2 }}
-                    </td>
-                    <td class="text-left">
-                      {{ getValorAtiempo(cantidad2) }}
-                    </td>
+                    <td class="text-left">Institucional</td>
+                    <td>{{ this.institucional }}</td>
+                    <td>{{getporcentaje(this.institucional) }}</td>
+                  </tr>
+                  <tr>
+                    <td class="text-left">Convenio</td>
+                    <td class="text-left">{{ this.convenio }}</td>
+                    <td class="text-left">{{ getporcentaje(this.convenio)}}</td>
+                  </tr>
+                  <tr>
+                    <td class="text-left">Compañia Seguro</td>
+                    <td class="text-left">{{ this.compania }}</td>
+                    <td class="text-left">{{ getporcentaje(this.compania)}}</td>
+                  </tr>
+                  <tr>
+                    <td class="text-left">Madre Niño</td>
+                    <td class="text-left">{{ this.madrenino }}</td>
+                    <td class="text-left">{{ getporcentaje(this.madrenino)}}</td>
+                  </tr>
+                  <tr>
+                    <td class="text-left">Otros</td>
+                    <td class="text-left">{{ this.otross }}</td>
+                    <td class="text-left">{{ getporcentaje(this.otross)}}</td>
                   </tr>
                 </tbody>
               </table>
@@ -522,6 +483,5 @@
           </div>
         </div>
       </div>
-    </div> -->
-  </section>
-  
+    </div> 
+</section>

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormularioService } from '../formulario.service';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 import { Label } from 'ng2-charts';
-import { Chart, ChartDataSets, ChartOptions, ChartType } from 'chart.js';
+import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
@@ -23,10 +23,26 @@ export class ReporteComponent implements OnInit {
   public tipopacientelima: any = [];
   public escalalima: any = [];
   public satisfaccionlima: any = [];
-  public liststate: any = [];
+  public listemergencia: any = [];
+  public listhospita: any = [];
+  public listconsultorio: any = [];
+  public listpaciente: any = [];
+  public plansalud: any = [];
+  public institucional: any = [];
+  public convenio: any = [];
+  public compania: any = [];
+  public madrenino: any = [];
+  public otross: any = [];
+  public muymalo: any = [];
+  public maloo: any = [];
+  public regular: any = [];
+  public buenoo: any = [];
+  public muybueno: any = [];
+  public listadmi: any = [];
+
 
   public barcharList: any = [];
-  public TIPO_RECLAMO: string = "IPRESS";
+  public TIPO_RECLAMO: string = "";
   isLoading = false;
   isLoading2 = false;
   isLoading3 = false;
@@ -40,68 +56,342 @@ export class ReporteComponent implements OnInit {
   isPosition3 = true;
   isPosition4 = true;
 
-  model: NgbDateStruct;
-  // Pie 
-  title = "TOTAL DE LOS REGISTROS DE LA ENCUESTA";
-  etiquetas = ["Lima", "Chorrillos", "Surco"];
-  dataLima = {
-    label: "Registros en Lima",
-    data: this.getRegisterSedeLima(),
-  }
-  dataChorrillos = {
-    label: "Registros en Chorrillos",
-    data: this.getRegisterSedeChorrillos(),
-  }
-  dataSurco = {
-    label: "Registros en Surco",
-    data: this.getRegisterSedeSurco(),
-  }
+  model: NgbDateStruct; 
   //CANVAS
+  public barChartOptions: ChartOptions = {
+    responsive: true,    
+    scales: { xAxes: [{}], yAxes: [{}] },
+    plugins: {
+      datalabels: {
+        anchor: 'end',
+        align: 'end',
+      }
+    }
+  };
+  public barChartLabels: Label[] = [];
+  public barChartType: ChartType = 'bar';
+  public barChartLegend = true;
+  public barChartPlugins = [pluginDataLabels];
+  public barChartData: ChartDataSets[] = [    
+  ];
+
+  public pieChartOptions: ChartOptions = {
+    responsive: true,
+    legend: {
+      position: 'top',
+      labels: {
+        fontColor: "#454545",
+        fontSize: 12,
+        fontStyle: "bold",
+        boxWidth: 12
+      }
+    },
+    plugins: {
+      datalabels: {
+        formatter: (value, ctx) => {
+          let datasets = ctx.chart.data.datasets;
+          if (datasets.indexOf(ctx.dataset) === datasets.length - 1) {
+            //let sum = datasets[0].data.reduce((a, b) => a + b, 0);
+            //var percentage = Math.round((value / sum) * 100) + '%';
+            var percentage = ((value * 100) / this.listencuesta[0]).toFixed(2) + '%';
+            return percentage;
+          } else {
+            return percentage;
+          }
+        },
+        color: "black",
+        font: {
+          weight: "bold",
+          size: 14
+        },
+        anchor: "end",
+        clamp :true,
+        align: "start",
+        offset:30,
+
+      },
+
+    }
+  };
+  public pieChartLabels: Label[] = [];
+  public pieChartData: number[] = [];
+  public pieChartType: ChartType = 'pie';
+  public pieChartLegend = true;
+  public pieChartPlugins = [pluginDataLabels];
+  public pieChartColors = [
+    {
+      backgroundColor: [' ', 'rgba(22,73,126,1)', 'rgba(100,22,157,1)', 'rgba(159, 24, 0, 1)', 'rgba(67,168,128,1)'],
+
+    },
+
+  ];
 
 
+  sucursal;
+
+  //public title: string = ""
+  public title2: string = ""
+  public cantidad: number = 0;
+  public cantidad2: number = 0;
+  public ngperiodo: string = null;
+  public ngfecha01: string = null;
+  public ngfecha02: string = null;
+  seachForm: FormGroup;
+  constructor(private formularioService: FormularioService, private formBuilder: FormBuilder, private datePipe: DatePipe) {
+    this.seachForm = this.formBuilder.group({
+      opselect: ['2'],
+      periodo: [''],
+      fecha_inicio: [''],
+      fecha_fin: [''],
+      sede: ['0'],
+    });
+  }
+
+  ngOnInit() {
+    if (parseInt(localStorage.getItem('idrol')) == 1) {
+      this.sucursal = 0;
+    } else {
+      this.sucursal = parseInt(localStorage.getItem('sede'));
+    }
+    this.getRegisteredEncuesta()
+  };
 
   getRegisteredEncuesta() {
+    this.isLoading = true;
+    this.barChartLabels = [];
+    this.barChartData= [];
     this.formularioService.getFormulario().subscribe(
       (res: any) => {
         console.log(res);
         this.listencuesta = res.body.length;
-
-        let Lima = this.data.filter(sede => sede.sucursal == 'Lima');
+        this.data = res.body;
+        this.isLoading = false;
+        //POR SEDE
+        let Lima = this.data.filter(sede => sede.sucursal == 'Lima');       
         this.listlima = Lima.length;
-        console.log(800, this.listencuesta);
+        this.barChartData.push(this.listlima);
+        this.barChartLabels.push(Lima[0].sucursal);
 
-        this.char = new Chart('canvas', {
-          type: 'bar',
-          data: {
-            labels: ['Lima', 'Chorrillos', 'Surco'],
-            datasets: [
-              {
-                data: this.listlima,
-                borderColor: 'rgba(67,168,128,0.3)',
-                borderWidth: 3,
-                backgroundColor: 'rgba(67,168,128,1)'
+        let surco = this.data.filter(sede => sede.sucursal === 'Surco');
+        this.listsurco = surco.length;
+        this.barChartData.push(this.listsurco);
+        this.barChartLabels.push(surco[0].sucursal);
 
-              }
-            ]
-          },
-          options: {
-            legend: {
-              display: true,
-            }
-          }
-        })
+        let chorrillos = this.data.filter(sede => sede.sucursal === 'Chorrillos');
+        this.listchorrillos = chorrillos.length;
+        this.barChartData.push(this.listchorrillos);
+        this.barChartLabels.push(chorrillos[0].sucursal);
+        //return this.barChartData;
+
+        console.log(600, this.barChartData);
+        console.log(700, this.barChartLabels);
+        console.log(800, this.listencuesta); 
+        //POR MODALIDAD
+        let emergencia = this.data.filter(moda => moda.modalidad == 'Emergencia');
+        this.listemergencia = emergencia.length;
+        this.pieChartData.push(this.listemergencia);
+        this.pieChartLabels.push(emergencia[0].modalidad);
+
+        let consultorio = this.data.filter(moda => moda.modalidad == 'Consultorio Externo');
+        this.listconsultorio = consultorio.length;
+        this.pieChartData.push(this.listconsultorio);
+        this.pieChartLabels.push(consultorio[0].modalidad);
+
+        let hospitalizacion = this.data.filter(moda => moda.modalidad == 'Hospitalización');
+        this.listhospita = hospitalizacion.length;
+        this.pieChartData.push(this.listhospita);
+        this.pieChartLabels.push(hospitalizacion[0].modalidad);
+
+        console.log(500, this.pieChartData);
+        console.log(400, this.pieChartLabels);
+        
+        let tipo = this.data.filter(item => item.paciente === 'Plan Salud');
+        this.plansalud = tipo.length;
+        let inst = this.data.filter(item => item.paciente === 'Institucional');
+        this.institucional = inst.length;
+        let conv = this.data.filter(item => item.paciente === 'Convenios');
+        this.convenio = conv.length;
+        let compa = this.data.filter(item => item.paciente === 'Compañia Seguro');
+        this.compania = compa.length;
+        let madre = this.data.filter(item => item.paciente === 'Madre Niño');
+        this.madrenino = madre.length;
+        let otro =this.data.filter(item => item.paciente === 'Otros');
+        this.otross = otro.length;
+        
+        console.log(1,this.convenio);
+        console.log(1,conv)
+        console.log(1,this.getporcentaje(this.convenio));
+
+        let admi1 = this.data.filter(item => item.SA_admision === '1');
+        let admi2 = this.data.filter(item => item.SA_admision === '2');
+        let admi3 = this.data.filter(item => item.SA_admision === '3');
+        let admi4 = this.data.filter(item => item.SA_admision === '4');
+        let admi5 = this.data.filter(item => item.SA_admision === '5');
+        this.muymalo.push(admi1.length);
+        this.maloo.push(admi2.length);
+        this.regular.push(admi3.length);
+        this.buenoo.push(admi4.length);
+        this.muybueno.push(admi5.length);
+
+        let cliente1 = this.data.filter(item => item.SA_atencionCliente === '1');
+        let cliente2 = this.data.filter(item => item.SA_atencionCliente === '2');
+        let cliente3 = this.data.filter(item => item.SA_atencionCliente === '3');
+        let cliente4 = this.data.filter(item => item.SA_atencionCliente === '4');
+        let cliente5 = this.data.filter(item => item.SA_atencionCliente === '5');
+        this.muymalo.push(cliente1.length);
+        this.maloo.push(cliente2.length);
+        this.regular.push(cliente3.length);
+        this.buenoo.push( cliente4.length);
+        this.muybueno.push(cliente5.length);
+
+        let convenio1 = this.data.filter(item => item.SA_convenios === '1');
+        let convenio2 = this.data.filter(item => item.SA_convenios === '2');
+        let convenio3 = this.data.filter(item => item.SA_convenios === '3');
+        let convenio4 = this.data.filter(item => item.SA_convenios === '4');
+        let convenio5 = this.data.filter(item => item.SA_convenios === '5');
+        this.muymalo.push ( convenio1.length);
+        this.maloo.push   ( convenio2.length);
+        this.regular.push ( convenio3.length);
+        this.buenoo.push  ( convenio4.length);
+        this.muybueno.push( convenio5.length);
+
+        let farmacia1 = this.data.filter(item => item.SA_farmacia === '1');
+        let farmacia2 = this.data.filter(item => item.SA_farmacia === '2');
+        let farmacia3 = this.data.filter(item => item.SA_farmacia === '3');
+        let farmacia4 = this.data.filter(item => item.SA_farmacia === '4');
+        let farmacia5 = this.data.filter(item => item.SA_farmacia === '5');
+        this.muymalo.push ( farmacia1.length);
+        this.maloo.push   ( farmacia2.length);
+        this.regular.push ( farmacia3.length);
+        this.buenoo.push  ( farmacia4.length);
+        this.muybueno.push( farmacia5.length);
+
+        let imagenes1 = this.data.filter(item => item.SA_imagenes === '1');
+        let imagenes2 = this.data.filter(item => item.SA_imagenes === '2');
+        let imagenes3 = this.data.filter(item => item.SA_imagenes === '3');
+        let imagenes4 = this.data.filter(item => item.SA_imagenes === '4');
+        let imagenes5 = this.data.filter(item => item.SA_imagenes === '5');
+        this.muymalo.push ( imagenes1.length);
+        this.maloo.push   ( imagenes2.length);
+        this.regular.push ( imagenes3.length);
+        this.buenoo.push  ( imagenes4.length);
+        this.muybueno.push( imagenes5.length);
+
+        let laboratorio1 = this.data.filter(item => item.SA_laboratorio === '1');
+        let laboratorio2 = this.data.filter(item => item.SA_laboratorio === '2');
+        let laboratorio3 = this.data.filter(item => item.SA_laboratorio === '3');
+        let laboratorio4 = this.data.filter(item => item.SA_laboratorio === '4');
+        let laboratorio5 = this.data.filter(item => item.SA_laboratorio === '5');
+        this.muymalo.push ( laboratorio1.length);
+        this.maloo.push   ( laboratorio2.length);
+        this.regular.push ( laboratorio3.length);
+        this.buenoo.push  ( laboratorio4.length);
+        this.muybueno.push( laboratorio5.length);
+        
+        
+        let comodidad1 = this.data.filter(item => item.SI_comodidad === '1');
+        let comodidad2 = this.data.filter(item => item.SI_comodidad === '2');
+        let comodidad3 = this.data.filter(item => item.SI_comodidad === '3');
+        let comodidad4 = this.data.filter(item => item.SI_comodidad === '4');
+        let comodidad5 = this.data.filter(item => item.SI_comodidad === '5');
+        this.muymalo.push ( comodidad1.length);
+        this.maloo.push   ( comodidad2.length);
+        this.regular.push ( comodidad3.length);
+        this.buenoo.push  ( comodidad4.length);
+        this.muybueno.push( comodidad5.length);
+
+        let limpieza1 = this.data.filter(item => item.SI_limpieza === '1');
+        let limpieza2 = this.data.filter(item => item.SI_limpieza === '2');
+        let limpieza3 = this.data.filter(item => item.SI_limpieza === '3');
+        let limpieza4 = this.data.filter(item => item.SI_limpieza === '4');
+        let limpieza5 = this.data.filter(item => item.SI_limpieza === '5');
+        this.muymalo.push ( limpieza1.length);
+        this.maloo.push   ( limpieza2.length);
+        this.regular.push ( limpieza3.length);
+        this.buenoo.push  ( limpieza4.length);
+        this.muybueno.push( limpieza5.length);
+
+        let modernidad1 = this.data.filter(item => item.SI_modernidad === '1');
+        let modernidad2 = this.data.filter(item => item.SI_modernidad === '2');
+        let modernidad3 = this.data.filter(item => item.SI_modernidad === '3');
+        let modernidad4 = this.data.filter(item => item.SI_modernidad === '4');
+        let modernidad5 = this.data.filter(item => item.SI_modernidad === '5');
+        this.muymalo.push ( modernidad1.length);
+        this.maloo.push   ( modernidad2.length);
+        this.regular.push ( modernidad3.length);
+        this.buenoo.push  ( modernidad4.length);
+        this.muybueno.push( modernidad5.length);
+
+        let doc1 = this.data.filter(item => item.SS_doctor === '1');
+        let doc2 = this.data.filter(item => item.SS_doctor === '2');
+        let doc3 = this.data.filter(item => item.SS_doctor === '3');
+        let doc4 = this.data.filter(item => item.SS_doctor === '4');
+        let doc5 = this.data.filter(item => item.SS_doctor === '5');
+        this.muymalo.push ( doc1.length);
+        this.maloo.push   ( doc2.length);
+        this.regular.push ( doc3.length);
+        this.buenoo.push  ( doc4.length);
+        this.muybueno.push( doc5.length);
+
+        let enfer1 = this.data.filter(item => item.SS_enfermera === '1');
+        let enfer2 = this.data.filter(item => item.SS_enfermera === '2');
+        let enfer3 = this.data.filter(item => item.SS_enfermera === '3');
+        let enfer4 = this.data.filter(item => item.SS_enfermera === '4');
+        let enfer5 = this.data.filter(item => item.SS_enfermera === '5');
+        this.muymalo.push ( enfer1.length);
+        this.maloo.push   ( enfer2.length);
+        this.regular.push ( enfer3.length);
+        this.buenoo.push  ( enfer4.length);
+        this.muybueno.push( enfer5.length);
+
+        let tecnica1 = this.data.filter(item => item.SS_tecnica === '1');
+        let tecnica2 = this.data.filter(item => item.SS_tecnica === '2');
+        let tecnica3 = this.data.filter(item => item.SS_tecnica === '3');
+        let tecnica4 = this.data.filter(item => item.SS_tecnica === '4');
+        let tecnica5 = this.data.filter(item => item.SS_tecnica === '5');
+        this.muymalo.push ( tecnica1.length);
+        this.maloo.push   ( tecnica2.length);
+        this.regular.push ( tecnica3.length);
+        this.buenoo.push  ( tecnica4.length);
+        this.muybueno.push( tecnica5.length);
+
+
+        console.log(9,this.muymalo)
+        console.log(8,this.muybueno)
+        console.log(7,this.maloo)
+        console.log(6,this.regular)
+        console.log(5,this.buenoo)
+        console.log(4,tecnica1)
+        console.log(4,tecnica2)
+        console.log(4,tecnica3)
+        console.log(4,tecnica4)
+        console.log(4,tecnica5)
+        console.log(3,enfer1);
+        console.log( enfer2);
+        console.log( enfer3);
+        console.log( enfer4.length);
+        console.log( enfer5.length);
+        
+        
+
+
       }
     )
   }
 
+  getporcentaje(dato){
+    return ((dato * 100) / this.listencuesta).toFixed(2) + '%';
+  }
   //SEDE LIMA
   getRegisterSedeLima() {
+    
     this.formularioService.getFormulario().subscribe(
       (res: any) => {
         console.log(res);
         this.data = res.body;
-        let Lima = this.data.filter(sede => sede.sucursal == 'Lima');
+        let Lima = this.data.filter(sede => sede.sucursal == 'Lima');       
         this.listlima = Lima.length;
+            
         console.log(900, this.listlima);
       }
     )
@@ -206,62 +496,6 @@ export class ReporteComponent implements OnInit {
         //console.log(this.data);
       })
   }
-
-  sucursal;
-
-  //public title: string = ""
-  public title2: string = ""
-  public cantidad: number = 0;
-  public cantidad2: number = 0;
-  public ngperiodo: string = null;
-  public ngfecha01: string = null;
-  public ngfecha02: string = null;
-  seachForm: FormGroup;
-  constructor(private formularioService: FormularioService, private formBuilder: FormBuilder, private datePipe: DatePipe) {
-    this.seachForm = this.formBuilder.group({
-      opselect: ['2'],
-      periodo: [''],
-      fecha_inicio: [''],
-      fecha_fin: [''],
-      sede: ['0'],
-    });
-  }
-
-  ngOnInit() {
-    this.formularioService.getFormulario().subscribe(
-      (res: any) => {
-        console.log(res);
-        this.listencuesta = res.body.length;
-
-        let Lima = this.data.filter(sede => sede.sucursal == 'Lima');
-        this.listlima = Lima.length;
-        console.log(800, this.listencuesta);
-
-        this.char = new Chart('canvas', {
-          type: 'bar',
-          data: {
-            labels: ['Lima', 'Chorrillos', 'Surco'],
-            datasets: [
-              {
-                data: this.listlima,
-                borderColor: 'rgba(67,168,128,0.3)',
-                borderWidth: 3,
-                fill: false,
-                backgroundColor: 'rgba(67,168,128,1)'
-
-              }
-            ]
-          },
-          options: {
-            legend: {
-              display: true,
-            }
-          }
-        })
-      }
-    )
-  };
-
 
   /*  this.getRegisteredEncuesta();
    this.getRegisterSedeLima();

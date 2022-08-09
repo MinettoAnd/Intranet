@@ -87,7 +87,7 @@ export class DashboardIpressComponent implements OnInit {
   public pieChartPlugins = [pluginDataLabels];
   public pieChartColors = [
     {
-      backgroundColor: ['rgba(67,168,128,1)', 'rgba(22,73,126,1)', 'rgba(100,22,157,1)', 'rgba(159, 24, 0, 1)', 'rgba(67,168,128,1)'],
+      backgroundColor: [' ', 'rgba(22,73,126,1)', 'rgba(100,22,157,1)', 'rgba(159, 24, 0, 1)', 'rgba(67,168,128,1)'],
 
     },
 
