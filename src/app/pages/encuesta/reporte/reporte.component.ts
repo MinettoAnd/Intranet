@@ -87,14 +87,29 @@ export class ReporteComponent implements OnInit {
   }],
   },
     legend: {
-      position: 'top',
-      
+      position: 'top',      
     },
+    plugins: {
+      datalabels: {
+        formatter: (value, ctx) => {
+          let datasets = ctx.chart.data.datasets;
+          if (datasets.indexOf(ctx.dataset) === datasets.length - 1) {
+            var percentage = ((value * 100) / this.listencuesta).toFixed(2) + '%';
+            // console.log(percentage);
+            return percentage;
+          } else {
+            return percentage;
+          }
+        },
+
+      },
+
+    }
     
   };
   
   public pieChartData = [];
-  public pieChartType: ChartType = 'horizontalBar';
+  public pieChartType: ChartType = 'pie';
   public pieChartLegend = true;
   
   public pieChartColors = [
@@ -197,6 +212,9 @@ export class ReporteComponent implements OnInit {
         moda3.push(hospitalizacion.length);
         this.listhospita = moda3;
 
+        /* this.pieChartData.push(this.listemergencia);
+        this.pieChartData.push(this.listhospita);
+        this.pieChartData.push(this.listconsultorio); */
         this.pieChartData = 
         [
           {data: this.listemergencia, label: 'Emergencia'},
