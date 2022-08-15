@@ -55,69 +55,48 @@ export class ReporteComponent implements OnInit {
   isPosition2 = true;
   isPosition3 = true;
   isPosition4 = true;
-
+  arrLima: any = [];
   model: NgbDateStruct; 
   //CANVAS
-  public barChartOptions: ChartOptions = {
+  barChartOptions: ChartOptions = {
     responsive: true,    
-    scales: { xAxes: [{}], yAxes: [{}] },
-    plugins: {
-      datalabels: {
-        anchor: 'end',
-        align: 'end',
-      }
+    scales: {
+      yAxes: [{
+        ticks: {
+            beginAtZero: true
+        }
+    }]
     }
-  };
-  public barChartLabels: Label[] = [];
-  public barChartType: ChartType = 'bar';
-  public barChartLegend = true;
-  public barChartPlugins = [pluginDataLabels];
-  public barChartData: ChartDataSets[] = [    
+  };    
+  chartData: ChartDataSets[] = [   
   ];
+  
 
   public pieChartOptions: ChartOptions = {
     responsive: true,
+    scales: {
+      yAxes: [{
+        ticks: {
+            beginAtZero: true
+        }
+    }],
+    xAxes: [{
+      ticks: {
+          beginAtZero: true
+      }
+  }],
+  },
     legend: {
       position: 'top',
-      labels: {
-        fontColor: "#454545",
-        fontSize: 12,
-        fontStyle: "bold",
-        boxWidth: 12
-      }
+      
     },
-    plugins: {
-      datalabels: {
-        formatter: (value, ctx) => {
-          let datasets = ctx.chart.data.datasets;
-          if (datasets.indexOf(ctx.dataset) === datasets.length - 1) {
-            //let sum = datasets[0].data.reduce((a, b) => a + b, 0);
-            //var percentage = Math.round((value / sum) * 100) + '%';
-            var percentage = ((value * 100) / this.listencuesta[0]).toFixed(2) + '%';
-            return percentage;
-          } else {
-            return percentage;
-          }
-        },
-        color: "black",
-        font: {
-          weight: "bold",
-          size: 14
-        },
-        anchor: "end",
-        clamp :true,
-        align: "start",
-        offset:30,
-
-      },
-
-    }
+    
   };
-  public pieChartLabels: Label[] = [];
-  public pieChartData: number[] = [];
-  public pieChartType: ChartType = 'pie';
+  
+  public pieChartData = [];
+  public pieChartType: ChartType = 'horizontalBar';
   public pieChartLegend = true;
-  public pieChartPlugins = [pluginDataLabels];
+  
   public pieChartColors = [
     {
       backgroundColor: [' ', 'rgba(22,73,126,1)', 'rgba(100,22,157,1)', 'rgba(159, 24, 0, 1)', 'rgba(67,168,128,1)'],
@@ -126,8 +105,7 @@ export class ReporteComponent implements OnInit {
 
   ];
 
-
-  sucursal;
+  sucursal: number;
 
   //public title: string = ""
   public title2: string = ""
@@ -147,6 +125,7 @@ export class ReporteComponent implements OnInit {
     });
   }
 
+  
   ngOnInit() {
     if (parseInt(localStorage.getItem('idrol')) == 1) {
       this.sucursal = 0;
@@ -154,12 +133,29 @@ export class ReporteComponent implements OnInit {
       this.sucursal = parseInt(localStorage.getItem('sede'));
     }
     this.getRegisteredEncuesta()
+    this.formularioService.getFormulario().subscribe(
+      (res: any) => {
+        this.data = res.body.length > 0 ? res.body : [];
+        let Lima = this.data.filter((sede: { sucursal: string; }) => sede.sucursal == 'Lima');  
+        //this.listlima = Lima;
+        
+        //this.barChartData.push();
+        console.log(2020,this.data);
+        //console.log(2021,this.barChartData);
+      }
+    )
   };
 
   getRegisteredEncuesta() {
     this.isLoading = true;
-    this.barChartLabels = [];
-    this.barChartData= [];
+    //this.barChartLabels = [];
+    //this.barChartData= [];
+    let dato = []
+    let dato2 = []
+    let dato3 = []
+    let moda = []
+    let moda2 = []
+    let moda3 = []
     this.formularioService.getFormulario().subscribe(
       (res: any) => {
         console.log(res);
@@ -167,188 +163,196 @@ export class ReporteComponent implements OnInit {
         this.data = res.body;
         this.isLoading = false;
         //POR SEDE
-        let Lima = this.data.filter(sede => sede.sucursal == 'Lima');       
-        this.listlima = Lima.length;
-        this.barChartData.push(this.listlima);
-        this.barChartLabels.push(Lima[0].sucursal);
+        let Lima = this.data.filter((sede: { sucursal: string; }) => sede.sucursal == 'Lima');       
+        dato.push(Lima.length);
+        this.listlima = dato;        
 
-        let surco = this.data.filter(sede => sede.sucursal === 'Surco');
-        this.listsurco = surco.length;
-        this.barChartData.push(this.listsurco);
-        this.barChartLabels.push(surco[0].sucursal);
+        let surco = this.data.filter((sede: { sucursal: string; }) => sede.sucursal === 'Surco');
+        dato2.push(surco.length);
+        this.listsurco = dato2;
 
-        let chorrillos = this.data.filter(sede => sede.sucursal === 'Chorrillos');
-        this.listchorrillos = chorrillos.length;
-        this.barChartData.push(this.listchorrillos);
-        this.barChartLabels.push(chorrillos[0].sucursal);
-        //return this.barChartData;
+        let chorrillos = this.data.filter((sede: { sucursal: string; }) => sede.sucursal === 'Chorrillos');
+        dato3.push(chorrillos.length);
+        this.listchorrillos = dato3;
 
-        console.log(600, this.barChartData);
-        console.log(700, this.barChartLabels);
+        this.chartData = 
+        [
+          {data: this.listlima , label: 'Lima'},
+          {data: this.listchorrillos, label: 'Chorrillos'},
+          {data: this.listsurco, label: 'Surco'}
+        ];
+        
+        
         console.log(800, this.listencuesta); 
         //POR MODALIDAD
-        let emergencia = this.data.filter(moda => moda.modalidad == 'Emergencia');
-        this.listemergencia = emergencia.length;
-        this.pieChartData.push(this.listemergencia);
-        this.pieChartLabels.push(emergencia[0].modalidad);
+        let emergencia = this.data.filter((moda: { modalidad: string; }) => moda.modalidad == 'Emergencia');
+        moda.push(emergencia.length);
+        this.listemergencia = moda;
+       
+        let consultorio = this.data.filter((moda: { modalidad: string; }) => moda.modalidad == 'Consultorio Externo');
+        moda2.push(consultorio.length);
+        this.listconsultorio = moda2;        
 
-        let consultorio = this.data.filter(moda => moda.modalidad == 'Consultorio Externo');
-        this.listconsultorio = consultorio.length;
-        this.pieChartData.push(this.listconsultorio);
-        this.pieChartLabels.push(consultorio[0].modalidad);
+        let hospitalizacion = this.data.filter((moda: { modalidad: string; }) => moda.modalidad == 'Hospitalización');
+        moda3.push(hospitalizacion.length);
+        this.listhospita = moda3;
 
-        let hospitalizacion = this.data.filter(moda => moda.modalidad == 'Hospitalización');
-        this.listhospita = hospitalizacion.length;
-        this.pieChartData.push(this.listhospita);
-        this.pieChartLabels.push(hospitalizacion[0].modalidad);
+        this.pieChartData = 
+        [
+          {data: this.listemergencia, label: 'Emergencia'},
+          {data: this.listhospita, label: 'Hospitalizacón'},
+          {data: this.listconsultorio, label: 'Consultorio'}
+        ]
+          
+        //this.pieChartLabels.push(hospitalizacion[0].modalidad);
 
-        console.log(500, this.pieChartData);
-        console.log(400, this.pieChartLabels);
+        //console.log(500, this.pieChartData);
+        //console.log(400, this.pieChartLabels);
         
-        let tipo = this.data.filter(item => item.paciente === 'Plan Salud');
+        let tipo = this.data.filter((item: { paciente: string; }) => item.paciente === 'Plan Salud');
         this.plansalud = tipo.length;
-        let inst = this.data.filter(item => item.paciente === 'Institucional');
+        let inst = this.data.filter((item: { paciente: string; }) => item.paciente === 'Institucional');
         this.institucional = inst.length;
-        let conv = this.data.filter(item => item.paciente === 'Convenios');
+        let conv = this.data.filter((item: { paciente: string; }) => item.paciente === 'Convenios');
         this.convenio = conv.length;
-        let compa = this.data.filter(item => item.paciente === 'Compañia Seguro');
+        let compa = this.data.filter((item: { paciente: string; }) => item.paciente === 'Compañia Seguro');
         this.compania = compa.length;
-        let madre = this.data.filter(item => item.paciente === 'Madre Niño');
+        let madre = this.data.filter((item: { paciente: string; }) => item.paciente === 'Madre Niño');
         this.madrenino = madre.length;
-        let otro =this.data.filter(item => item.paciente === 'Otros');
+        let otro =this.data.filter((item: { paciente: string; }) => item.paciente === 'Otros');
         this.otross = otro.length;
         
         console.log(1,this.convenio);
         console.log(1,conv)
         console.log(1,this.getporcentaje(this.convenio));
 
-        let admi1 = this.data.filter(item => item.SA_admision === '1');
-        let admi2 = this.data.filter(item => item.SA_admision === '2');
-        let admi3 = this.data.filter(item => item.SA_admision === '3');
-        let admi4 = this.data.filter(item => item.SA_admision === '4');
-        let admi5 = this.data.filter(item => item.SA_admision === '5');
-        this.muymalo.push(admi1.length);
+        let admi1 = this.data.filter((item: { SA_admision: string; }) => item.SA_admision === '1');
+        let admi2 = this.data.filter((item: { SA_admision: string; }) => item.SA_admision === '2');
+        let admi3 = this.data.filter((item: { SA_admision: string; }) => item.SA_admision === '3');
+        let admi4 = this.data.filter((item: { SA_admision: string; }) => item.SA_admision === '4');
+        let admi5 = this.data.filter((item: { SA_admision: string; }) => item.SA_admision === '5');
+        this.muymalo.push(admi1);
         this.maloo.push(admi2.length);
         this.regular.push(admi3.length);
         this.buenoo.push(admi4.length);
         this.muybueno.push(admi5.length);
 
-        let cliente1 = this.data.filter(item => item.SA_atencionCliente === '1');
-        let cliente2 = this.data.filter(item => item.SA_atencionCliente === '2');
-        let cliente3 = this.data.filter(item => item.SA_atencionCliente === '3');
-        let cliente4 = this.data.filter(item => item.SA_atencionCliente === '4');
-        let cliente5 = this.data.filter(item => item.SA_atencionCliente === '5');
-        this.muymalo.push(cliente1.length);
+        let cliente1 = this.data.filter((item: { SA_atencionCliente: string; }) => item.SA_atencionCliente === '1');
+        let cliente2 = this.data.filter((item: { SA_atencionCliente: string; }) => item.SA_atencionCliente === '2');
+        let cliente3 = this.data.filter((item: { SA_atencionCliente: string; }) => item.SA_atencionCliente === '3');
+        let cliente4 = this.data.filter((item: { SA_atencionCliente: string; }) => item.SA_atencionCliente === '4');
+        let cliente5 = this.data.filter((item: { SA_atencionCliente: string; }) => item.SA_atencionCliente === '5');
+        this.muymalo.push(cliente1);
         this.maloo.push(cliente2.length);
         this.regular.push(cliente3.length);
         this.buenoo.push( cliente4.length);
         this.muybueno.push(cliente5.length);
 
-        let convenio1 = this.data.filter(item => item.SA_convenios === '1');
-        let convenio2 = this.data.filter(item => item.SA_convenios === '2');
-        let convenio3 = this.data.filter(item => item.SA_convenios === '3');
-        let convenio4 = this.data.filter(item => item.SA_convenios === '4');
-        let convenio5 = this.data.filter(item => item.SA_convenios === '5');
-        this.muymalo.push ( convenio1.length);
+        let convenio1 = this.data.filter((item: { SA_convenios: string; }) => item.SA_convenios === '1');
+        let convenio2 = this.data.filter((item: { SA_convenios: string; }) => item.SA_convenios === '2');
+        let convenio3 = this.data.filter((item: { SA_convenios: string; }) => item.SA_convenios === '3');
+        let convenio4 = this.data.filter((item: { SA_convenios: string; }) => item.SA_convenios === '4');
+        let convenio5 = this.data.filter((item: { SA_convenios: string; }) => item.SA_convenios === '5');
+        this.muymalo.push ( convenio1);
         this.maloo.push   ( convenio2.length);
         this.regular.push ( convenio3.length);
         this.buenoo.push  ( convenio4.length);
         this.muybueno.push( convenio5.length);
 
-        let farmacia1 = this.data.filter(item => item.SA_farmacia === '1');
-        let farmacia2 = this.data.filter(item => item.SA_farmacia === '2');
-        let farmacia3 = this.data.filter(item => item.SA_farmacia === '3');
-        let farmacia4 = this.data.filter(item => item.SA_farmacia === '4');
-        let farmacia5 = this.data.filter(item => item.SA_farmacia === '5');
-        this.muymalo.push ( farmacia1.length);
+        let farmacia1 = this.data.filter((item: { SA_farmacia: string; }) => item.SA_farmacia === '1');
+        let farmacia2 = this.data.filter((item: { SA_farmacia: string; }) => item.SA_farmacia === '2');
+        let farmacia3 = this.data.filter((item: { SA_farmacia: string; }) => item.SA_farmacia === '3');
+        let farmacia4 = this.data.filter((item: { SA_farmacia: string; }) => item.SA_farmacia === '4');
+        let farmacia5 = this.data.filter((item: { SA_farmacia: string; }) => item.SA_farmacia === '5');
+        this.muymalo.push ( farmacia1);
         this.maloo.push   ( farmacia2.length);
         this.regular.push ( farmacia3.length);
         this.buenoo.push  ( farmacia4.length);
         this.muybueno.push( farmacia5.length);
 
-        let imagenes1 = this.data.filter(item => item.SA_imagenes === '1');
-        let imagenes2 = this.data.filter(item => item.SA_imagenes === '2');
-        let imagenes3 = this.data.filter(item => item.SA_imagenes === '3');
-        let imagenes4 = this.data.filter(item => item.SA_imagenes === '4');
-        let imagenes5 = this.data.filter(item => item.SA_imagenes === '5');
-        this.muymalo.push ( imagenes1.length);
+        let imagenes1 = this.data.filter((item: { SA_imagenes: string; }) => item.SA_imagenes === '1');
+        let imagenes2 = this.data.filter((item: { SA_imagenes: string; }) => item.SA_imagenes === '2');
+        let imagenes3 = this.data.filter((item: { SA_imagenes: string; }) => item.SA_imagenes === '3');
+        let imagenes4 = this.data.filter((item: { SA_imagenes: string; }) => item.SA_imagenes === '4');
+        let imagenes5 = this.data.filter((item: { SA_imagenes: string; }) => item.SA_imagenes === '5');
+        this.muymalo.push ( imagenes1);
         this.maloo.push   ( imagenes2.length);
         this.regular.push ( imagenes3.length);
         this.buenoo.push  ( imagenes4.length);
         this.muybueno.push( imagenes5.length);
 
-        let laboratorio1 = this.data.filter(item => item.SA_laboratorio === '1');
-        let laboratorio2 = this.data.filter(item => item.SA_laboratorio === '2');
-        let laboratorio3 = this.data.filter(item => item.SA_laboratorio === '3');
-        let laboratorio4 = this.data.filter(item => item.SA_laboratorio === '4');
-        let laboratorio5 = this.data.filter(item => item.SA_laboratorio === '5');
-        this.muymalo.push ( laboratorio1.length);
+        let laboratorio1 = this.data.filter((item: { SA_laboratorio: string; }) => item.SA_laboratorio === '1');
+        let laboratorio2 = this.data.filter((item: { SA_laboratorio: string; }) => item.SA_laboratorio === '2');
+        let laboratorio3 = this.data.filter((item: { SA_laboratorio: string; }) => item.SA_laboratorio === '3');
+        let laboratorio4 = this.data.filter((item: { SA_laboratorio: string; }) => item.SA_laboratorio === '4');
+        let laboratorio5 = this.data.filter((item: { SA_laboratorio: string; }) => item.SA_laboratorio === '5');
+        this.muymalo.push ( laboratorio1);
         this.maloo.push   ( laboratorio2.length);
         this.regular.push ( laboratorio3.length);
         this.buenoo.push  ( laboratorio4.length);
         this.muybueno.push( laboratorio5.length);
         
         
-        let comodidad1 = this.data.filter(item => item.SI_comodidad === '1');
-        let comodidad2 = this.data.filter(item => item.SI_comodidad === '2');
-        let comodidad3 = this.data.filter(item => item.SI_comodidad === '3');
-        let comodidad4 = this.data.filter(item => item.SI_comodidad === '4');
-        let comodidad5 = this.data.filter(item => item.SI_comodidad === '5');
-        this.muymalo.push ( comodidad1.length);
+        let comodidad1 = this.data.filter((item: { SI_comodidad: string; }) => item.SI_comodidad === '1');
+        let comodidad2 = this.data.filter((item: { SI_comodidad: string; }) => item.SI_comodidad === '2');
+        let comodidad3 = this.data.filter((item: { SI_comodidad: string; }) => item.SI_comodidad === '3');
+        let comodidad4 = this.data.filter((item: { SI_comodidad: string; }) => item.SI_comodidad === '4');
+        let comodidad5 = this.data.filter((item: { SI_comodidad: string; }) => item.SI_comodidad === '5');
+        this.muymalo.push ( comodidad1);
         this.maloo.push   ( comodidad2.length);
         this.regular.push ( comodidad3.length);
         this.buenoo.push  ( comodidad4.length);
         this.muybueno.push( comodidad5.length);
 
-        let limpieza1 = this.data.filter(item => item.SI_limpieza === '1');
-        let limpieza2 = this.data.filter(item => item.SI_limpieza === '2');
-        let limpieza3 = this.data.filter(item => item.SI_limpieza === '3');
-        let limpieza4 = this.data.filter(item => item.SI_limpieza === '4');
-        let limpieza5 = this.data.filter(item => item.SI_limpieza === '5');
-        this.muymalo.push ( limpieza1.length);
+        let limpieza1 = this.data.filter((item: { SI_limpieza: string; }) => item.SI_limpieza === '1');
+        let limpieza2 = this.data.filter((item: { SI_limpieza: string; }) => item.SI_limpieza === '2');
+        let limpieza3 = this.data.filter((item: { SI_limpieza: string; }) => item.SI_limpieza === '3');
+        let limpieza4 = this.data.filter((item: { SI_limpieza: string; }) => item.SI_limpieza === '4');
+        let limpieza5 = this.data.filter((item: { SI_limpieza: string; }) => item.SI_limpieza === '5');
+        this.muymalo.push ( limpieza1);
         this.maloo.push   ( limpieza2.length);
         this.regular.push ( limpieza3.length);
         this.buenoo.push  ( limpieza4.length);
         this.muybueno.push( limpieza5.length);
 
-        let modernidad1 = this.data.filter(item => item.SI_modernidad === '1');
-        let modernidad2 = this.data.filter(item => item.SI_modernidad === '2');
-        let modernidad3 = this.data.filter(item => item.SI_modernidad === '3');
-        let modernidad4 = this.data.filter(item => item.SI_modernidad === '4');
-        let modernidad5 = this.data.filter(item => item.SI_modernidad === '5');
-        this.muymalo.push ( modernidad1.length);
+        let modernidad1 = this.data.filter((item: { SI_modernidad: string; }) => item.SI_modernidad === '1');
+        let modernidad2 = this.data.filter((item: { SI_modernidad: string; }) => item.SI_modernidad === '2');
+        let modernidad3 = this.data.filter((item: { SI_modernidad: string; }) => item.SI_modernidad === '3');
+        let modernidad4 = this.data.filter((item: { SI_modernidad: string; }) => item.SI_modernidad === '4');
+        let modernidad5 = this.data.filter((item: { SI_modernidad: string; }) => item.SI_modernidad === '5');
+        this.muymalo.push ( modernidad1);
         this.maloo.push   ( modernidad2.length);
         this.regular.push ( modernidad3.length);
         this.buenoo.push  ( modernidad4.length);
         this.muybueno.push( modernidad5.length);
 
-        let doc1 = this.data.filter(item => item.SS_doctor === '1');
-        let doc2 = this.data.filter(item => item.SS_doctor === '2');
-        let doc3 = this.data.filter(item => item.SS_doctor === '3');
-        let doc4 = this.data.filter(item => item.SS_doctor === '4');
-        let doc5 = this.data.filter(item => item.SS_doctor === '5');
+        let doc1 = this.data.filter((item: { SS_doctor: string; }) => item.SS_doctor === '1');
+        let doc2 = this.data.filter((item: { SS_doctor: string; }) => item.SS_doctor === '2');
+        let doc3 = this.data.filter((item: { SS_doctor: string; }) => item.SS_doctor === '3');
+        let doc4 = this.data.filter((item: { SS_doctor: string; }) => item.SS_doctor === '4');
+        let doc5 = this.data.filter((item: { SS_doctor: string; }) => item.SS_doctor === '5');
         this.muymalo.push ( doc1.length);
         this.maloo.push   ( doc2.length);
         this.regular.push ( doc3.length);
         this.buenoo.push  ( doc4.length);
         this.muybueno.push( doc5.length);
 
-        let enfer1 = this.data.filter(item => item.SS_enfermera === '1');
-        let enfer2 = this.data.filter(item => item.SS_enfermera === '2');
-        let enfer3 = this.data.filter(item => item.SS_enfermera === '3');
-        let enfer4 = this.data.filter(item => item.SS_enfermera === '4');
-        let enfer5 = this.data.filter(item => item.SS_enfermera === '5');
+        let enfer1 = this.data.filter((item: { SS_enfermera: string; }) => item.SS_enfermera === '1');
+        let enfer2 = this.data.filter((item: { SS_enfermera: string; }) => item.SS_enfermera === '2');
+        let enfer3 = this.data.filter((item: { SS_enfermera: string; }) => item.SS_enfermera === '3');
+        let enfer4 = this.data.filter((item: { SS_enfermera: string; }) => item.SS_enfermera === '4');
+        let enfer5 = this.data.filter((item: { SS_enfermera: string; }) => item.SS_enfermera === '5');
         this.muymalo.push ( enfer1.length);
         this.maloo.push   ( enfer2.length);
         this.regular.push ( enfer3.length);
         this.buenoo.push  ( enfer4.length);
         this.muybueno.push( enfer5.length);
 
-        let tecnica1 = this.data.filter(item => item.SS_tecnica === '1');
-        let tecnica2 = this.data.filter(item => item.SS_tecnica === '2');
-        let tecnica3 = this.data.filter(item => item.SS_tecnica === '3');
-        let tecnica4 = this.data.filter(item => item.SS_tecnica === '4');
-        let tecnica5 = this.data.filter(item => item.SS_tecnica === '5');
+        let tecnica1 = this.data.filter((item: { SS_tecnica: string; }) => item.SS_tecnica === '1');
+        let tecnica2 = this.data.filter((item: { SS_tecnica: string; }) => item.SS_tecnica === '2');
+        let tecnica3 = this.data.filter((item: { SS_tecnica: string; }) => item.SS_tecnica === '3');
+        let tecnica4 = this.data.filter((item: { SS_tecnica: string; }) => item.SS_tecnica === '4');
+        let tecnica5 = this.data.filter((item: { SS_tecnica: string; }) => item.SS_tecnica === '5');
         this.muymalo.push ( tecnica1.length);
         this.maloo.push   ( tecnica2.length);
         this.regular.push ( tecnica3.length);
@@ -356,22 +360,23 @@ export class ReporteComponent implements OnInit {
         this.muybueno.push( tecnica5.length);
 
 
-        console.log(9,this.muymalo)
-        console.log(8,this.muybueno)
-        console.log(7,this.maloo)
-        console.log(6,this.regular)
-        console.log(5,this.buenoo)
-        console.log(4,tecnica1)
-        console.log(4,tecnica2)
-        console.log(4,tecnica3)
-        console.log(4,tecnica4)
-        console.log(4,tecnica5)
-        console.log(3,enfer1);
-        console.log( enfer2);
-        console.log( enfer3);
-        console.log( enfer4.length);
-        console.log( enfer5.length);
+        console.log(9,admi1.map((item: { SA_admision: { value: any; }; }) => item.SA_admision.value))
+        console.log(8,cliente1)
+        console.log(7,convenio1)
+        console.log(6,farmacia1)
+        console.log(5,imagenes1)
+        console.log(4,laboratorio1)
+        console.log(3,comodidad1)
+        console.log(2,limpieza1)
+        console.log(1,modernidad1)
+        console.log(0,doc1)
+        console.log(0.1,enfer1)
+        console.log(0.2,tecnica1)
+
+      
         
+
+
         
 
 
@@ -379,7 +384,7 @@ export class ReporteComponent implements OnInit {
     )
   }
 
-  getporcentaje(dato){
+  getporcentaje(dato: number){
     return ((dato * 100) / this.listencuesta).toFixed(2) + '%';
   }
   //SEDE LIMA
@@ -389,7 +394,7 @@ export class ReporteComponent implements OnInit {
       (res: any) => {
         console.log(res);
         this.data = res.body;
-        let Lima = this.data.filter(sede => sede.sucursal == 'Lima');       
+        let Lima = this.data.filter((sede: { sucursal: string; }) => sede.sucursal == 'Lima');       
         this.listlima = Lima.length;
             
         console.log(900, this.listlima);
@@ -404,7 +409,7 @@ export class ReporteComponent implements OnInit {
         // this.listencuesta = res.data.body[0].length > 0 ? res.data.body : []; 
         this.data = res.body;
 
-        this.listlima = this.data.filter(sede => sede.sucursal === 'Lima')
+        this.listlima = this.data.filter((sede: { sucursal: string; }) => sede.sucursal === 'Lima')
         for (var i = 0; i < this.listlima.length; i++) {
           this.tipopacientelima.push(this.listlima[i].modalidad)
         }
@@ -420,7 +425,7 @@ export class ReporteComponent implements OnInit {
         this.data = res.body;
         console.log(this.data);
 
-        this.listlima = this.data.filter(sede => sede.sucursal === 'Lima')
+        this.listlima = this.data.filter((sede: { sucursal: string; }) => sede.sucursal === 'Lima')
         for (var i = 0; i < this.listlima.length; i++) {
           this.modalima.push(this.listlima[i].paciente)
         }
@@ -434,7 +439,7 @@ export class ReporteComponent implements OnInit {
         console.log(res);
         this.data = res.body;
         console.log(this.data);
-        this.listlima = this.data.filter(sede => sede.sucursal === 'Lima')
+        this.listlima = this.data.filter((sede: { sucursal: string; }) => sede.sucursal === 'Lima')
         for (var i = 0; i < this.listlima.length; i++) {
           this.satisfaccionlima.push(this.listlima[i].SS_doctor);
           this.satisfaccionlima.push(this.listlima[i].SS_enfermera);
@@ -461,7 +466,7 @@ export class ReporteComponent implements OnInit {
         this.data = res.body;
         console.log(this.data);
 
-        this.listlima = this.data.filter(sede => sede.sucursal === 'Lima')
+        this.listlima = this.data.filter((sede: { sucursal: string; }) => sede.sucursal === 'Lima')
         for (var i = 0; i < this.listlima.length; i++) {
           this.escalalima.push(this.listlima[i].escalaRecomendacion);
         }
@@ -477,7 +482,7 @@ export class ReporteComponent implements OnInit {
         console.log(res);
 
         this.data = res.body;
-        let surco = this.data.filter(sede => sede.sucursal === 'Surco');
+        let surco = this.data.filter((sede: { sucursal: string; }) => sede.sucursal === 'Surco');
         this.listsurco = surco.length;
         console.log(1000, this.listsurco);
         //console.log(1000, this.data);
@@ -490,7 +495,7 @@ export class ReporteComponent implements OnInit {
         console.log(res);
 
         this.data = res.body;
-        let chorrillos = this.data.filter(sede => sede.sucursal === 'Chorrillos');
+        let chorrillos = this.data.filter((sede: { sucursal: string; }) => sede.sucursal === 'Chorrillos');
         this.listchorrillos = chorrillos.length;
         console.log(1100, this.listchorrillos);
         //console.log(this.data);
@@ -543,7 +548,7 @@ search() {
   this.getClaimsMeses(data);
   this.getClaimsEstado(data); */
 }
-onChange(event) {
+onChange(event: { target: { value: string; }; }) {
   if (parseInt(event.target.value) === 1) {
     this.isPeriodo = true;
     this.isRangoFecha = false;
@@ -558,7 +563,7 @@ onChange(event) {
 }
 
 
-showTableDasboard(id, position) {
+showTableDasboard(id: number, position: number) {
   if (id == 1) {
     if (position == 1) {
       this.isPosition1 = true;

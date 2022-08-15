@@ -197,10 +197,15 @@
           </div>
         </div>
         <div class="card-body" *ngIf="isPosition1">
-          <loading *ngIf="isLoading">{{ isLoading }}</loading>
-          <div class="chart" *ngIf="!isLoading">
-            <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
-              [plugins]="barChartPlugins" [legend]="barChartLegend" [chartType]="barChartType">
+          <loading *ngIf="isLoading2">{{ isLoading }}</loading>
+          <div class="d-block" *ngIf="!isLoading2">
+            <canvas
+              baseChart
+              [datasets]="chartData"              
+              [options]="barChartOptions"             
+              [legend]="true"
+              [chartType]="'bar'"
+            >
             </canvas>
           </div>
         </div>
@@ -248,7 +253,7 @@
           <div class="col-md-12">
             <div class="row">
               <div class="col-md-8">
-                <h4>Reclamos Generados por mes</h4>
+                <h4>Total de encuestados por Modalidad</h4>
               </div>
               <div class="col-md-4">
                 <button type="button" (click)="showTableDasboard(2, 2)" class="btn-shadow btn btn-info float-right">
@@ -265,16 +270,11 @@
         <div class="card-body" *ngIf="isPosition2">
           <loading *ngIf="isLoading2">{{ isLoading }}</loading>
           <div class="d-block" *ngIf="!isLoading2">
-            <canvas baseChart 
-              [datasets]="pieChartData" 
-              [labels]="pieChartLabels" 
-              [options]="pieChartOptions"
-              [plugins]="pieChartPlugins" 
-              [legend]="pieChartLegend" 
-              [chartType]="pieChartType">
+            <canvas baseChart [datasets]="pieChartData"  [options]="pieChartOptions"
+               [legend]="pieChartLegend" [chartType]="pieChartType">
             </canvas>
-          </div>       
-          
+          </div>
+
         </div>
         <div class="card-body" *ngIf="!isPosition2">
           <div class="table-responsive p-4">
@@ -284,30 +284,30 @@
                   mb-0
                   table table-sm table-borderless table-hover
                 ">
-                <thead>
-                  <tr>
-                    <th class="text-left">Modalidad</th>
-                    <th class="text-left">Total</th>
-                    <th class="text-left">Porcentaje</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="text-left">Hospitalización</td>
-                    <td>{{ this.listhospita }}</td>
-                    <td>{{ getporcentaje(this.listhospita) }}</td>
-                  </tr>
-                  <tr>
-                    <td class="text-left">Consultorio</td>
-                    <td>{{ this.listconsultorio }}</td>
-                    <td>{{getporcentaje(this.listconsultorio) }}</td>
-                  </tr>
-                  <tr>
-                    <td class="text-left">Emergencia</td>
-                    <td class="text-left">{{  this.listemergencia }}</td>
-                    <td class="text-left">{{ getporcentaje( this.listemergencia)}}</td>
-                  </tr>
-                </tbody>
+              <thead>
+                <tr>
+                  <th class="text-left">Modalidad</th>
+                  <th class="text-left">Total</th>
+                  <th class="text-left">Porcentaje</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="text-left">Hospitalización</td>
+                  <td>{{ this.listhospita }}</td>
+                  <td>{{ getporcentaje(this.listhospita) }}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Consultorio</td>
+                  <td>{{ this.listconsultorio }}</td>
+                  <td>{{getporcentaje(this.listconsultorio) }}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Emergencia</td>
+                  <td class="text-left">{{ this.listemergencia }}</td>
+                  <td class="text-left">{{ getporcentaje( this.listemergencia)}}</td>
+                </tr>
+              </tbody>
             </table>
           </div>
         </div>
@@ -316,172 +316,146 @@
   </div>
 
   <div class="row">
-      <div class="col-md-6 col-lg-12 col-xl-6">
-        
-        <div class="card mt-sm-5 mt-md-0">
-          <div class="card-header">
-            <div class="col-md-12">
-              <div class="row">
-                <div class="col-md-8"><h4>Reclamos Resueltos</h4></div>
-                <div class="col-md-4">
-                  <button
-                    type="button"
-                    (click)="showTableDasboard(3, 2)"
-                    class="btn-shadow btn btn-info float-right"
-                  >
-                    <i class="pe-7s-graph3"></i>
-                  </button>
-                  <button
-                    type="button"
-                    (click)="showTableDasboard(3, 1)"
-                    class="btn-shadow mr-3 btn btn-info float-right"
-                  >
-                    <i class="pe-7s-graph"></i>
-                  </button>
-                </div>
+    <div class="col-md-6 col-lg-12 col-xl-6">
+
+      <div class="card mt-sm-5 mt-md-0">
+        <div class="card-header">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-8">
+                <h4>Reclamos Resueltos</h4>
+              </div>
+              <div class="col-md-4">
+                <button type="button" (click)="showTableDasboard(3, 2)" class="btn-shadow btn btn-info float-right">
+                  <i class="pe-7s-graph3"></i>
+                </button>
+                <button type="button" (click)="showTableDasboard(3, 1)"
+                  class="btn-shadow mr-3 btn btn-info float-right">
+                  <i class="pe-7s-graph"></i>
+                </button>
               </div>
             </div>
           </div>
-          <div class="card-body" *ngIf="isPosition3">
-            <loading *ngIf="isLoading3">{{ isLoading }}</loading>
-            <div class="chart" *ngIf="!isLoading3">
-              <canvas
-                baseChart
-                [data]="pieChartData2"
-                [labels]="pieChartLabels2"
-                [chartType]="pieChartType2"
-                [options]="pieChartOptions2"
-                [plugins]="pieChartPlugins2"
-                [colors]="pieChartColors2"
-                [legend]="pieChartLegend2"
-              >
-              </canvas>
-            </div>
+        </div>
+        <div class="card-body" *ngIf="isPosition3">
+          <loading *ngIf="isLoading3">{{ isLoading }}</loading>
+          <div class="chart" *ngIf="!isLoading3">
+            <canvas baseChart [data]="pieChartData2" [labels]="pieChartLabels2" [chartType]="pieChartType2"
+              [options]="pieChartOptions2" [plugins]="pieChartPlugins2" [colors]="pieChartColors2"
+              [legend]="pieChartLegend2">
+            </canvas>
           </div>
-          <div class="card-body" *ngIf="!isPosition3">
-            <div class="table-responsive p-4">
-              <table
-                class="
+        </div>
+        <div class="card-body" *ngIf="!isPosition3">
+          <div class="table-responsive p-4">
+            <table class="
                   align-middle
                   text-truncate
                   mb-0
                   table table-sm table-borderless table-hover
-                "
-              >
-                <thead>
-                  <tr>
-                    <th class="text-left">Tipo de Usuario</th>
-                    <th class="text-left">Total</th>
-                    <th class="text-left">Porcentaje</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="text-left">Plan Salud</td>
-                    <td>{{ this.plansalud }}</td>
-                    <td>{{ getporcentaje(this.plansalud) }}</td>
-                  </tr>
-                  <tr>
-                    <td class="text-left">Institucional</td>
-                    <td>{{ this.institucional }}</td>
-                    <td>{{getporcentaje(this.institucional) }}</td>
-                  </tr>
-                  <tr>
-                    <td class="text-left">Convenio</td>
-                    <td class="text-left">{{ this.convenio }}</td>
-                    <td class="text-left">{{ getporcentaje(this.convenio)}}</td>
-                  </tr>
-                  <tr>
-                    <td class="text-left">Compañia Seguro</td>
-                    <td class="text-left">{{ this.compania }}</td>
-                    <td class="text-left">{{ getporcentaje(this.compania)}}</td>
-                  </tr>
-                  <tr>
-                    <td class="text-left">Madre Niño</td>
-                    <td class="text-left">{{ this.madrenino }}</td>
-                    <td class="text-left">{{ getporcentaje(this.madrenino)}}</td>
-                  </tr>
-                  <tr>
-                    <td class="text-left">Otros</td>
-                    <td class="text-left">{{ this.otross }}</td>
-                    <td class="text-left">{{ getporcentaje(this.otross)}}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+                ">
+              <thead>
+                <tr>
+                  <th class="text-left">Tipo de Usuario</th>
+                  <th class="text-left">Total</th>
+                  <th class="text-left">Porcentaje</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="text-left">Plan Salud</td>
+                  <td>{{ this.plansalud }}</td>
+                  <td>{{ getporcentaje(this.plansalud) }}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Institucional</td>
+                  <td>{{ this.institucional }}</td>
+                  <td>{{getporcentaje(this.institucional) }}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Convenio</td>
+                  <td class="text-left">{{ this.convenio }}</td>
+                  <td class="text-left">{{ getporcentaje(this.convenio)}}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Compañia Seguro</td>
+                  <td class="text-left">{{ this.compania }}</td>
+                  <td class="text-left">{{ getporcentaje(this.compania)}}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Madre Niño</td>
+                  <td class="text-left">{{ this.madrenino }}</td>
+                  <td class="text-left">{{ getporcentaje(this.madrenino)}}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Otros</td>
+                  <td class="text-left">{{ this.otross }}</td>
+                  <td class="text-left">{{ getporcentaje(this.otross)}}</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
-       
       </div>
-      <div class="col-md-6 col-lg-12 col-xl-6">
-        <div class="card">
-          <div class="card-header">
-            <div class="col-md-12">
-              <div class="row">
-                <div class="col-md-8"><h4>Reclamos por Estado</h4></div>
-                <div class="col-md-4">
-                  <button
-                    type="button"
-                    (click)="showTableDasboard(4, 2)"
-                    class="btn-shadow btn btn-info float-right"
-                  >
-                    <i class="pe-7s-graph3"></i>
-                  </button>
-                  <button
-                    type="button"
-                    (click)="showTableDasboard(4, 1)"
-                    class="btn-shadow mr-3 btn btn-info float-right"
-                  >
-                    <i class="pe-7s-graph"></i>
-                  </button>
-                </div>
+
+    </div>
+    <div class="col-md-6 col-lg-12 col-xl-6">
+      <div class="card">
+        <div class="card-header">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-8">
+                <h4>Reclamos por Estado</h4>
+              </div>
+              <div class="col-md-4">
+                <button type="button" (click)="showTableDasboard(4, 2)" class="btn-shadow btn btn-info float-right">
+                  <i class="pe-7s-graph3"></i>
+                </button>
+                <button type="button" (click)="showTableDasboard(4, 1)"
+                  class="btn-shadow mr-3 btn btn-info float-right">
+                  <i class="pe-7s-graph"></i>
+                </button>
               </div>
             </div>
           </div>
-          <div class="card-body" *ngIf="isPosition4">
-            <loading *ngIf="isLoading4">{{ isLoading }}</loading>
-            <div class="chart" *ngIf="!isLoading4">
-              <canvas
-                baseChart
-                [data]="pieChartData3"
-                [labels]="pieChartLabels3"
-                [chartType]="pieChartType3"
-                [options]="pieChartOptions3"
-                [plugins]="pieChartPlugins3"
-                [colors]="pieChartColors3"
-                [legend]="pieChartLegend3"
-              >
-              </canvas>
-            </div>
+        </div>
+        <div class="card-body" *ngIf="isPosition4">
+          <loading *ngIf="isLoading4">{{ isLoading }}</loading>
+          <div class="chart" *ngIf="!isLoading4">
+            <canvas baseChart [data]="pieChartData3" [labels]="pieChartLabels3" [chartType]="pieChartType3"
+              [options]="pieChartOptions3" [plugins]="pieChartPlugins3" [colors]="pieChartColors3"
+              [legend]="pieChartLegend3">
+            </canvas>
           </div>
-          <div class="card-body" *ngIf="!isPosition4">
-            <div class="table-responsive p-4">
-              <table
-                class="
+        </div>
+        <div class="card-body" *ngIf="!isPosition4">
+          <div class="table-responsive p-4">
+            <table class="
                   align-middle
                   text-truncate
                   mb-0
                   table table-sm table-borderless table-hover
-                "
-              >
-                <thead>
-                  <tr>
-                    <th class="text-left">Nombres</th>
-                    <th class="text-left">Cantidad</th>
-                    <th class="text-left">Porcentaje</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let item of liststate">
-                    <td class="text-left">{{ item.nombre }}</td>
-                    <td class="text-left">{{ item.total }}</td>
-                    <td class="text-left">{{ getPorcentaje(item.total) }}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+                ">
+              <thead>
+                <tr>
+                  <th class="text-left">Nombres</th>
+                  <th class="text-left">Cantidad</th>
+                  <th class="text-left">Porcentaje</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of liststate">
+                  <td class="text-left">{{ item.nombre }}</td>
+                  <td class="text-left">{{ item.total }}</td>
+                  <td class="text-left">{{ getPorcentaje(item.total) }}</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
-    </div> 
+    </div>
+  </div>
+  <canvas baseChart [datasets]="chartData" [legend]="true" [chartType]="'bar'">
+  </canvas>
 </section>

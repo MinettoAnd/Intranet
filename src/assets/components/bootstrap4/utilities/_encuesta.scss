@@ -403,7 +403,51 @@ $color-green: green;
 
 }
 
-@media only screen and (min-width: 1200px) and (max-width: 1479px) {
+@media only screen and (min-width: 993px) and (max-width: 1479px) {
+  .formulario {
+    width: 90%;
+    margin: auto;
+  }
+  .txtresponse {
+    padding-top: 2%;
+    font-size: 28px;
+    font-weight: bold;
+    color: rgb(3, 56, 124);
+  }
+
+
+  .box2 {
+    margin: auto;
+    text-align: center;
+
+    img {
+      width: 70%;
+
+      span {
+        display: block;
+      }
+
+    }
+  }
+  .paddingform {
+    .tableencuesta {
+
+      .textarrayarea,
+      .textarraycolaborador {
+        font-size: medium;
+      }
+  
+      img {
+        width: 70%;
+      }
+    }
+  }
+  .cajaSedesModa {
+    padding-top: 1%;
+  }
+  .cselectPaciente {
+    padding: 1%;
+  }
   .tableone {
     /* display: block !important; */
 
@@ -469,17 +513,27 @@ $color-green: green;
 
 
 @media only screen and (max-width: 992px) {
-  .tableencuesta {
+  .txtresponse {
+    padding-top: 2%;
+    font-size: 28px;
+    font-weight: bold;
+    color: rgb(3, 56, 124);
+  }
 
-    .textarrayarea,
-    .textarraycolaborador {
-      font-size: small;
-    }
+  .paddingform {
+    .tableencuesta {
 
-    img {
-      width: 80%;
+      .textarrayarea,
+      .textarraycolaborador {
+        font-size: medium;
+      }
+  
+      img {
+        width: 70%;
+      }
     }
   }
+  
 
   .divtable {
     padding-left: 5%;
@@ -518,7 +572,7 @@ $color-green: green;
     text-align: center;
 
     img {
-      width: 50%;
+      width: 60%;
 
       span {
         display: block;
@@ -529,7 +583,7 @@ $color-green: green;
 
   .txtresponse {
     padding-top: 2%;
-    font-size: 20px;
+    font-size: 28px;
     font-weight: bold;
     color: rgb(3, 56, 124);
   }
@@ -1189,6 +1243,7 @@ $color-green: green;
 //TEXTO PRINCIPAL DE LA ENCUESTA
 .textprincipal {
   padding-top: 2%;
+  padding-bottom: 1%;
   text-align: justify;
 
   .txthola {
@@ -1355,15 +1410,15 @@ $color-green: green;
 
   background-color: rgb(255, 170, 0);
   border-radius: 25px;
-  border-bottom: 2em;
+  border-left: 2em;
   ;
 }
 
 .question-title {
-  margin: 2%;
+  margin-left: 2%;
   padding: 2%;
 
-  background-color: rgb(78, 170, 80);
+  background-color: rgb(3, 56, 124);
   border-radius: 25px;
   border-bottom: 2em;
   color: white;
@@ -1428,10 +1483,11 @@ $color-green: green;
   margin-left: 30%;
   margin-right: 30%;
   font-size: 18px;
-  background-color: rgb(246, 213, 46);
+  background-color: orange;
   border-radius: 10px;
   text-align: center;
   font-weight: bold;
+  
 }
 
 .divanswerpadding {
