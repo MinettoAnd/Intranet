@@ -100,7 +100,7 @@
                 <div class="card-content">
                   <h5 class="font-15">REGISTRO TOTAL DE LIMA</h5>
                   <h2 class="mb-3 font-18">
-                    {{ this.listlima }}
+                    {{ this.listlima.length }}
                   </h2>
                   <!--p class="mb-0">
                       <span class="col-orange">09%</span> Decrease
@@ -127,7 +127,7 @@
                 <div class="card-content">
                   <h5 class="font-15">REGISTRO TOTAL DE CHORRILLOS</h5>
                   <h2 class="mb-3 font-18">
-                    {{ this.listchorrillos }}
+                    {{ this.listchorrillos.length }}
                   </h2>
                   <!--p class="mb-0">
                       <span class="col-green">18%</span> Increase
@@ -154,7 +154,7 @@
                 <div class="card-content">
                   <h5 class="font-15">REGISTRO TOTAL DE SURCO</h5>
                   <h2 class="mb-3 font-18">
-                    {{ this.listsurco }}
+                    {{ this.listsurco.length }}
                   </h2>
                   <!--p class="mb-0">
                       <span class="col-green">18%</span> Increase
@@ -199,13 +199,8 @@
         <div class="card-body" *ngIf="isPosition1">
           <loading *ngIf="isLoading2">{{ isLoading }}</loading>
           <div class="d-block" *ngIf="!isLoading2">
-            <canvas
-              baseChart
-              [datasets]="chartData"              
-              [options]="barChartOptions"             
-              [legend]="true"
-              [chartType]="'bar'"
-            >
+            <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+              [plugins]="barChartPlugins" [legend]="barChartLegend" [chartType]="barChartType">
             </canvas>
           </div>
         </div>
@@ -227,25 +222,24 @@
               <tbody>
                 <tr>
                   <td class="text-left">Lima</td>
-                  <td>{{ this.listlima }}</td>
-                  <td>{{ getporcentaje(this.listlima) }}</td>
+                  <td>{{ this.listlima.length }}</td>
+                  <td>{{ getporcentaje(this.listlima.length) }}</td>
                 </tr>
                 <tr>
                   <td class="text-left">Chorrillos</td>
-                  <td>{{ this.listchorrillos }}</td>
-                  <td>{{getporcentaje(this.listchorrillos) }}</td>
+                  <td>{{ this.listchorrillos.length }}</td>
+                  <td>{{getporcentaje(this.listchorrillos.length) }}</td>
                 </tr>
                 <tr>
                   <td class="text-left">Surco</td>
-                  <td class="text-left">{{ this.listsurco }}</td>
-                  <td class="text-left">{{ getporcentaje(this.listsurco)}}</td>
+                  <td class="text-left">{{ this.listsurco.length }}</td>
+                  <td class="text-left">{{ getporcentaje(this.listsurco.length)}}</td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
-      </div>
-      <!-- Support tickets -->
+      </div>    
     </div>
     <div class="col-md-6 col-lg-12 col-xl-6">
       <div class="card">
@@ -269,12 +263,12 @@
         </div>
         <div class="card-body" *ngIf="isPosition2">
           <loading *ngIf="isLoading2">{{ isLoading }}</loading>
-          <div class="d-block" *ngIf="!isLoading2">
-            <canvas baseChart [datasets]="pieChartData"  [options]="pieChartOptions"
-               [legend]="pieChartLegend" [chartType]="pieChartType">
+          <div class="chart" *ngIf="!isLoading">
+            <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"
+              [options]="pieChartOptions" [plugins]="pieChartPlugins" [colors]="pieChartColors"
+              [legend]="pieChartLegend">
             </canvas>
           </div>
-
         </div>
         <div class="card-body" *ngIf="!isPosition2">
           <div class="table-responsive p-4">
@@ -294,18 +288,18 @@
               <tbody>
                 <tr>
                   <td class="text-left">Hospitalización</td>
-                  <td>{{ this.listhospita }}</td>
-                  <td>{{ getporcentaje(this.listhospita) }}</td>
+                  <td>{{ this.listhospita.length }}</td>
+                  <td>{{ getporcentaje(this.listhospita.length) }}</td>
                 </tr>
                 <tr>
                   <td class="text-left">Consultorio</td>
-                  <td>{{ this.listconsultorio }}</td>
-                  <td>{{getporcentaje(this.listconsultorio) }}</td>
+                  <td>{{ this.listconsultorio.length }}</td>
+                  <td>{{getporcentaje(this.listconsultorio.length) }}</td>
                 </tr>
                 <tr>
                   <td class="text-left">Emergencia</td>
-                  <td class="text-left">{{ this.listemergencia }}</td>
-                  <td class="text-left">{{ getporcentaje( this.listemergencia)}}</td>
+                  <td class="text-left">{{ this.listemergencia.length }}</td>
+                  <td class="text-left">{{ getporcentaje( this.listemergencia.length)}}</td>
                 </tr>
               </tbody>
             </table>
@@ -364,33 +358,33 @@
               <tbody>
                 <tr>
                   <td class="text-left">Plan Salud</td>
-                  <td>{{ this.plansalud }}</td>
-                  <td>{{ getporcentaje(this.plansalud) }}</td>
+                  <td>{{ this.plansalud.length }}</td>
+                  <td>{{ getporcentaje(this.plansalud.length) }}</td>
                 </tr>
                 <tr>
                   <td class="text-left">Institucional</td>
-                  <td>{{ this.institucional }}</td>
-                  <td>{{getporcentaje(this.institucional) }}</td>
+                  <td>{{ this.institucional.length }}</td>
+                  <td>{{getporcentaje(this.institucional.length) }}</td>
                 </tr>
                 <tr>
                   <td class="text-left">Convenio</td>
-                  <td class="text-left">{{ this.convenio }}</td>
-                  <td class="text-left">{{ getporcentaje(this.convenio)}}</td>
+                  <td class="text-left">{{ this.convenio.length }}</td>
+                  <td class="text-left">{{ getporcentaje(this.convenio.length)}}</td>
                 </tr>
                 <tr>
                   <td class="text-left">Compañia Seguro</td>
-                  <td class="text-left">{{ this.compania }}</td>
-                  <td class="text-left">{{ getporcentaje(this.compania)}}</td>
+                  <td class="text-left">{{ this.compania.length }}</td>
+                  <td class="text-left">{{ getporcentaje(this.compania.length)}}</td>
                 </tr>
                 <tr>
                   <td class="text-left">Madre Niño</td>
-                  <td class="text-left">{{ this.madrenino }}</td>
-                  <td class="text-left">{{ getporcentaje(this.madrenino)}}</td>
+                  <td class="text-left">{{ this.madrenino.length }}</td>
+                  <td class="text-left">{{ getporcentaje(this.madrenino.length)}}</td>
                 </tr>
                 <tr>
                   <td class="text-left">Otros</td>
-                  <td class="text-left">{{ this.otross }}</td>
-                  <td class="text-left">{{ getporcentaje(this.otross)}}</td>
+                  <td class="text-left">{{ this.otross.length }}</td>
+                  <td class="text-left">{{ getporcentaje(this.otross.length)}}</td>
                 </tr>
               </tbody>
             </table>
@@ -456,6 +450,5 @@
       </div>
     </div>
   </div>
-  <canvas baseChart [datasets]="chartData" [legend]="true" [chartType]="'bar'">
-  </canvas>
+
 </section>

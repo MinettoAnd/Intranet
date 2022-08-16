@@ -31,13 +31,16 @@ export class FormularioService {
 
 
   // Router Encuesta
-  getFormulario(): Observable<HttpResponse<any>> {
+getFormulario(): Observable<HttpResponse<any>> {
     return this.http.get(`${this.API}getSWEncuesta`, { observe: 'response' });
 }
 
 postFormulario(datoFormulario: Formulario): Observable<any> {
     return this.http.post(`${this.API}postSWEncuesta`, datoFormulario, this.httpOption);
 }
+
+
+
 
 ////////////////////////////////////////////////////////////////////////////////////
 
