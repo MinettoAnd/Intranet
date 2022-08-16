@@ -536,6 +536,7 @@ export class ReporteComponent implements OnInit {
       (res: any) => {
         this.data = res.body.length > 0 ? res.body : []; 
         this.recomen = this.data.filter((item: { escalarecomendacion: number; }) => item.escalarecomendacion === 1)
+        console.log(1,)
         this.arrescala = this.recomen.length 
 
         this. pieChartData3.push(this.arrescala);
