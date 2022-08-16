@@ -51,8 +51,9 @@ export class ReporteComponent implements OnInit {
   public recomen7: any = [];
   public recomen8: any = [];
   public recomen9: any = [];
-  
-  arrescala: any = []
+  public recomen10: any = [];
+  arrescala: any = [];
+  cantrecom: any = [];
   arrLima: any = [];
 
 
@@ -186,12 +187,13 @@ export class ReporteComponent implements OnInit {
   ];
 
   public pieChartOptions3: ChartOptions = {
-    responsive: true,
-    legend: {
-      position: 'left',
-    },
+    responsive: true,   
     scales: {
-      yAxes: [{}],
+      yAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }],
       xAxes: [{
         ticks: {
           beginAtZero: true
@@ -236,7 +238,7 @@ export class ReporteComponent implements OnInit {
   public cantidad: number = 0;
   public cantidad2: number = 0;
   public cantmoda: number = 0;
-  public cantrecom: number = 0;
+  //public cantrecom: number = 0;
   public ngperiodo: string = null;
   public ngfecha01: string = null;
   public ngfecha02: string = null;
@@ -535,52 +537,67 @@ export class ReporteComponent implements OnInit {
     this.formularioService.getFormulario().subscribe(
       (res: any) => {
         this.data = res.body.length > 0 ? res.body : []; 
-        this.recomen = this.data.filter((item: { escalarecomendacion: number; }) => item.escalarecomendacion === 1)
-        console.log(1,)
-        this.arrescala = this.recomen.length 
-
-        this. pieChartData3.push(this.arrescala);
+        this.recomen = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '1')
+        console.log(1,this.recomen)
+        this.cantrecom = this.recomen.length 
+        this.arrescala = this.recomen[0].escalaRecomendacion;
+        this.pieChartData3.push(this.cantrecom);
+        this.pieChartLabels3.push(this.arrescala);
         
-        this.recomen2 = this.data.filter((item: { escalarecomendacion: number; }) => item.escalarecomendacion === 2)
-        this.arrescala = this.recomen2.length 
-
-        this. pieChartData3.push(this.arrescala);
-
-        this.recomen3 = this.data.filter((item: { escalarecomendacion: number; }) => item.escalarecomendacion === 3)
-        this.arrescala = this.recomen3.length 
-
-        this. pieChartData3.push(this.arrescala);
-
-        this.recomen4 = this.data.filter((item: { escalarecomendacion: number; }) => item.escalarecomendacion === 4)
-        this.arrescala = this.recomen4.length 
-
-        this. pieChartData3.push(this.arrescala);
         
-        this.recomen5 = this.data.filter((item: { escalarecomendacion: number; }) => item.escalarecomendacion === 5)
-        this.arrescala = this.recomen5.length 
+        this.recomen2 = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '2')
+        console.log(2,this.recomen2)
+        this.cantrecom = this.recomen2.length 
 
-        this. pieChartData3.push(this.arrescala);
+        this. pieChartData3.push(this.cantrecom);
 
-        this.recomen6 = this.data.filter((item: { escalarecomendacion: number; }) => item.escalarecomendacion === 6)
-        this.arrescala = this.recomen6.length 
+        this.recomen3 = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '3')
+        console.log(3,this.recomen3)
+        this.cantrecom = this.recomen3.length 
 
-        this. pieChartData3.push(this.arrescala);
+        this. pieChartData3.push(this.cantrecom);
 
-        this.recomen7 = this.data.filter((item: { escalarecomendacion: number; }) => item.escalarecomendacion === 7)
-        this.arrescala = this.recomen7.length 
+        this.recomen4 = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '4')
+        console.log(4,this.recomen4)
+        this.cantrecom = this.recomen4.length 
 
-        this. pieChartData3.push(this.arrescala);
+        this. pieChartData3.push(this.cantrecom);
+        
+        this.recomen5 = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '5')
+        console.log(5,this.recomen5)
+        this.cantrecom = this.recomen5.length 
 
-        this.recomen8 = this.data.filter((item: { escalarecomendacion: number; }) => item.escalarecomendacion === 8)
-        this.arrescala = this.recomen8.length 
+        this. pieChartData3.push(this.cantrecom);
 
-        this. pieChartData3.push(this.arrescala);
+        this.recomen6 = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '6')
+        console.log(6,this.recomen6)
+        this.cantrecom = this.recomen6.length 
 
-        this.recomen9 = this.data.filter((item: { escalarecomendacion: number; }) => item.escalarecomendacion === 9)
-        this.arrescala = this.recomen9.length 
+        this. pieChartData3.push(this.cantrecom);
 
-        this. pieChartData3.push(this.arrescala);
+        this.recomen7 = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '7')
+        console.log(7,this.recomen7)
+        this.cantrecom = this.recomen7.length 
 
+        this. pieChartData3.push(this.cantrecom);
+
+        this.recomen8 = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '8')
+        console.log(8,this.recomen8)
+        this.cantrecom = this.recomen8.length 
+
+        this. pieChartData3.push(this.cantrecom);
+
+        this.recomen9 = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '9')
+        console.log(9,this.recomen9)
+        this.cantrecom = this.recomen9.length 
+        this. pieChartData3.push(this.cantrecom);
+
+        this.recomen10 = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '10')
+        console.log(10,this.recomen10)
+        this.cantrecom = this.recomen10.length 
+
+        this. pieChartData3.push(this.cantrecom);
+        console.log(0,this.data)
         console.log(5555, this.pieChartData3)
       })
   }
