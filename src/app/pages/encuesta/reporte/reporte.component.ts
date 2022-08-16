@@ -20,8 +20,7 @@ export class ReporteComponent implements OnInit {
   public listlima: any = [];
   public listchorrillos: any = [];
   public listsurco: any = [];
-  public modalima: any = [];
-  public tipopacientelima: any = [];
+  public modalima: any = [];  
   public escalalima: any = [];
   public satisfaccionlima: any = [];
   public listemergencia: any = [];
@@ -43,6 +42,18 @@ export class ReporteComponent implements OnInit {
   public arrmoda: any = [];
   public arrsucursal: any = [];
   public cantsucursal: any = [];
+  public recomen: any = [];
+  public recomen2: any = [];
+  public recomen3: any = [];
+  public recomen4: any = [];
+  public recomen5: any = [];
+  public recomen6: any = [];
+  public recomen7: any = [];
+  public recomen8: any = [];
+  public recomen9: any = [];
+  
+  arrescala: any = []
+  arrLima: any = [];
 
 
   public barcharList: any = [];
@@ -59,7 +70,7 @@ export class ReporteComponent implements OnInit {
   isPosition2 = true;
   isPosition3 = true;
   isPosition4 = true;
-  arrLima: any = [];
+  
   model: NgbDateStruct;
   //CANVAS
 
@@ -90,13 +101,13 @@ export class ReporteComponent implements OnInit {
     plugins: {
       datalabels: {
         anchor: 'end',
-        align: 'end',
+        align: 'start',
       }
     }
   };
   public barChartLabels: Label[] = [];
   public barChartType: ChartType = 'bar';
-  public barChartLegend = true;
+  public barChartLegend = false;
   public barChartPlugins = [pluginDataLabels];
   public barChartData: ChartDataSets[] = [
 
@@ -125,8 +136,8 @@ export class ReporteComponent implements OnInit {
     }
   };
   public pieChartLabels: Label[] = [];
-  public pieChartData: number[] = [];
-  public pieChartType: ChartType = 'pie';
+  public pieChartData = [];
+  public pieChartType: ChartType = 'doughnut';
   public pieChartLegend = true;
   public pieChartPlugins = [pluginDataLabels];
   public pieChartColors = [
@@ -174,6 +185,50 @@ export class ReporteComponent implements OnInit {
 
   ];
 
+  public pieChartOptions3: ChartOptions = {
+    responsive: true,
+    legend: {
+      position: 'left',
+    },
+    scales: {
+      yAxes: [{}],
+      xAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }]
+    },
+    plugins: {
+      datalabels: {
+        formatter: (value, ctx) => {
+          let datasets = ctx.chart.data.datasets;
+          if (datasets.indexOf(ctx.dataset) === datasets.length - 1) {
+            var percentage = ((value * 100) / this.listencuesta).toFixed(2) + '%';
+            // console.log(percentage);
+            return percentage;
+          } else {
+            return percentage;
+          }
+        },
+
+      },
+
+    }
+  };
+  //RECLAMOS RESUELTOS
+  public pieChartLabels3: Label[] = [];
+  public pieChartData3 = [];
+  public pieChartType3: ChartType = "horizontalBar";
+  public pieChartLegend3 = true;
+  public pieChartPlugins3 = [pluginDataLabels];
+  public pieChartColors3 = [
+    {
+      backgroundColor: ['rgba(0,255,0,0.3)', 'rgba(255,0,0,0.3)'],
+
+    },
+
+  ];
+
   sucursal: number;
 
   //public title: string = ""
@@ -181,7 +236,7 @@ export class ReporteComponent implements OnInit {
   public cantidad: number = 0;
   public cantidad2: number = 0;
   public cantmoda: number = 0;
-
+  public cantrecom: number = 0;
   public ngperiodo: string = null;
   public ngfecha01: string = null;
   public ngfecha02: string = null;
@@ -210,6 +265,7 @@ export class ReporteComponent implements OnInit {
     this.getTipoPaciente();
     this.getModalidad();
     this.getSucursal();
+    this.getrecomendacion();
   };
 
   getSucursal() {
@@ -472,6 +528,62 @@ export class ReporteComponent implements OnInit {
      console.log(0.1,enfer1)
      console.log(0.2,tecnica1) */
   }
+  getrecomendacion(): void{
+    this.pieChartLabels3 = [];
+    this.pieChartData3 = [];
+    
+    this.formularioService.getFormulario().subscribe(
+      (res: any) => {
+        this.data = res.body.length > 0 ? res.body : []; 
+        this.recomen = this.data.filter((item: { escalarecomendacion: number; }) => item.escalarecomendacion === 1)
+        this.arrescala = this.recomen.length 
+
+        this. pieChartData3.push(this.arrescala);
+        
+        this.recomen2 = this.data.filter((item: { escalarecomendacion: number; }) => item.escalarecomendacion === 2)
+        this.arrescala = this.recomen2.length 
+
+        this. pieChartData3.push(this.arrescala);
+
+        this.recomen3 = this.data.filter((item: { escalarecomendacion: number; }) => item.escalarecomendacion === 3)
+        this.arrescala = this.recomen3.length 
+
+        this. pieChartData3.push(this.arrescala);
+
+        this.recomen4 = this.data.filter((item: { escalarecomendacion: number; }) => item.escalarecomendacion === 4)
+        this.arrescala = this.recomen4.length 
+
+        this. pieChartData3.push(this.arrescala);
+        
+        this.recomen5 = this.data.filter((item: { escalarecomendacion: number; }) => item.escalarecomendacion === 5)
+        this.arrescala = this.recomen5.length 
+
+        this. pieChartData3.push(this.arrescala);
+
+        this.recomen6 = this.data.filter((item: { escalarecomendacion: number; }) => item.escalarecomendacion === 6)
+        this.arrescala = this.recomen6.length 
+
+        this. pieChartData3.push(this.arrescala);
+
+        this.recomen7 = this.data.filter((item: { escalarecomendacion: number; }) => item.escalarecomendacion === 7)
+        this.arrescala = this.recomen7.length 
+
+        this. pieChartData3.push(this.arrescala);
+
+        this.recomen8 = this.data.filter((item: { escalarecomendacion: number; }) => item.escalarecomendacion === 8)
+        this.arrescala = this.recomen8.length 
+
+        this. pieChartData3.push(this.arrescala);
+
+        this.recomen9 = this.data.filter((item: { escalarecomendacion: number; }) => item.escalarecomendacion === 9)
+        this.arrescala = this.recomen9.length 
+
+        this. pieChartData3.push(this.arrescala);
+
+        console.log(5555, this.pieChartData3)
+      })
+  }
+
   getporcentaje(dato: number) {
     return ((dato * 100) / this.listencuesta).toFixed(2) + '%';
   }
@@ -499,9 +611,9 @@ export class ReporteComponent implements OnInit {
 
         this.listlima = this.data.filter((sede: { sucursal: string; }) => sede.sucursal === 'Lima')
         for (var i = 0; i < this.listlima.length; i++) {
-          this.tipopacientelima.push(this.listlima[i].modalidad)
+          //this.tipopacientelima.push(this.listlima[i].modalidad)
         }
-        console.log(20, this.tipopacientelima);
+        //console.log(20, this.tipopacientelima);
         //console.log(1000, this.data);
       })
   }
