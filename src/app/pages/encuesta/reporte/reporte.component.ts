@@ -70,12 +70,75 @@ export class ReporteComponent implements OnInit {
   public _ACmuybueno: any = [];
   public _ACna: any = [];
 
-  /* public _ACmuymalo: any = [];
-  public _ACmaloo: any = [];
-  public _ACregular: any = [];
-  public _ACbuenoo: any = [];
-  public _ACmuybueno: any = [];
-  public _ACna: any = []; */
+  public _COmuymalo: any = [];
+  public _COmaloo: any = [];
+  public _COregular: any = [];
+  public _CObuenoo: any = [];
+  public _COmuybueno: any = [];
+  public _COna: any = []; 
+
+  public _FAmuymalo: any = [];
+  public _FAmaloo: any = [];
+  public _FAregular: any = [];
+  public _FAbuenoo: any = [];
+  public _FAmuybueno: any = [];
+  public _FAna: any = [];
+
+  public _IMmuymalo: any = [];
+  public _IMmaloo: any = [];
+  public _IMregular: any = [];
+  public _IMbuenoo: any = [];
+  public _IMmuybueno: any = [];
+  public _IMna: any = []; 
+  
+  public _LAmuymalo: any = [];
+  public _LAmaloo: any = [];
+  public _LAregular: any = [];
+  public _LAbuenoo: any = [];
+  public _LAmuybueno: any = [];
+  public _LAna: any = []; 
+
+  public _COMmuymalo: any = [];
+  public _COMmaloo: any = [];
+  public _COMregular: any = [];
+  public _COMbuenoo: any = [];
+  public _COMmuybueno: any = [];
+  public _COMna: any = []; 
+
+  public _LIMmuymalo: any = [];
+  public _LIMmaloo: any = [];
+  public _LIMregular: any = [];
+  public _LIMbuenoo: any = [];
+  public _LIMmuybueno: any = [];
+  public _LIMna: any = []; 
+
+  public _MOmuymalo: any = [];
+  public _MOmaloo: any = [];
+  public _MOregular: any = [];
+  public _MObuenoo: any = [];
+  public _MOmuybueno: any = [];
+  public _MOna: any = []; 
+
+  public _DOCmuymalo: any = [];
+  public _DOCmaloo: any = [];
+  public _DOCregular: any = [];
+  public _DOCbuenoo: any = [];
+  public _DOCmuybueno: any = [];
+  public _DOCna: any = []; 
+
+  public _ENmuymalo: any = [];
+  public _ENmaloo: any = [];
+  public _ENregular: any = [];
+  public _ENbuenoo: any = [];
+  public _ENmuybueno: any = [];
+  public _ENna: any = []; 
+
+  public _TECmuymalo: any = [];
+  public _TECmaloo: any = [];
+  public _TECregular: any = [];
+  public _TECbuenoo: any = [];
+  public _TECmuybueno: any = [];
+  public _TECna: any = []; 
 
 
 
@@ -531,6 +594,66 @@ export class ReporteComponent implements OnInit {
      let ateBueno = [];
      let ateMuybueno = [];
      let ateNa = [];
+     let coMuymalo = [];
+     let coMalo = [];
+     let coRegular = [];
+     let coBueno = [];
+     let coMuybueno = [];
+     let coNa = [];
+     let faMuymalo = [];
+     let faMalo = [];
+     let faRegular = [];
+     let faBueno = [];
+     let faMuybueno = [];
+     let faNa = [];
+     let imMuymalo = [];
+     let imMalo = [];
+     let imRegular = [];
+     let imBueno = [];
+     let imMuybueno = [];
+     let imNa = [];
+     let laMuymalo = [];
+     let laMalo = [];
+     let laRegular = [];
+     let laBueno = [];
+     let laMuybueno = [];
+     let laNa = [];
+     let comMuymalo = [];
+     let comMalo = [];
+     let comRegular = [];
+     let comBueno = [];
+     let comMuybueno = [];
+     let comNa = [];
+     let liMuymalo = [];
+     let liMalo = [];
+     let liRegular = [];
+     let liBueno = [];
+     let liMuybueno = [];
+     let liNa = [];
+     let moMuymalo = [];
+     let moMalo = [];
+     let moRegular = [];
+     let moBueno = [];
+     let moMuybueno = [];
+     let moNa = [];
+     let docMuymalo = [];
+     let docMalo = [];
+     let docRegular = [];
+     let docBueno = [];
+     let docMuybueno = [];
+     let docNa = [];
+     let enMuymalo = [];
+     let enMalo = [];
+     let enRegular = [];
+     let enBueno = [];
+     let enMuybueno = [];
+     let enNa = [];
+     let tecMuymalo = [];
+     let tecMalo = [];
+     let tecRegular = [];
+     let tecBueno = [];
+     let tecMuybueno = [];
+     let tecNa = [];
      this.formularioService.getFormulario().subscribe(
       (res: any) => {
      this.data = res.body;
@@ -573,27 +696,205 @@ export class ReporteComponent implements OnInit {
                
     });
 
-    this.data.map((item: { SA_atencionCliente: any; }) => {
-      let dato = item.SA_atencionCliente;
+    this.data.map((item: { SA_convenios: any; }) => {
+      let dato = item.SA_convenios;
       switch(dato){
-        case '1': ateMuymalo += dato; break;
-        case '2': ateMalo += dato; break;
-        case '3': ateRegular += dato; break;
-        case '4': ateBueno += dato; break;
-        case '5': ateMuybueno += dato; break;
-        default: ateNa += dato;
+        case '1': coMuymalo += dato; break;
+        case '2': coMalo += dato; break;
+        case '3': coRegular += dato; break;
+        case '4': coBueno += dato; break;
+        case '5': coMuybueno += dato; break;
+        default: coNa += dato;
       }
-      this._ACmuybueno = ateMuybueno;
-      this._ACbuenoo = ateBueno;
-      this._ACregular = ateRegular;
-      this._ACmaloo = ateMalo;
-      this._ACmuymalo = ateMuymalo;
-      this._ACna = ateNa;      
+      this._COmuybueno = coMuybueno;
+      this._CObuenoo = coBueno;
+      this._COregular = coRegular;
+      this._COmaloo = coMalo;
+      this._COmuymalo = coMuymalo;
+      this._COna = coNa;      
+           
+               
+    });
+
+    this.data.map((item: { SA_farmacia: any; }) => {
+      let dato = item.SA_farmacia;
+      switch(dato){
+        case '1': faMuymalo += dato; break;
+        case '2': faMalo += dato; break;
+        case '3': faRegular += dato; break;
+        case '4': faBueno += dato; break;
+        case '5': faMuybueno += dato; break;
+        default: faNa += dato;
+      }
+      this._FAmuybueno = faMuybueno;
+      this._FAbuenoo = faBueno;
+      this._FAregular = faRegular;
+      this._FAmaloo = faMalo;
+      this._FAmuymalo = faMuymalo;
+      this._FAna = faNa;      
            
                
     });
    
- 
+    this.data.map((item: { SA_imagenes: any; }) => {
+      let dato = item.SA_imagenes;
+      switch(dato){
+        case '1': imMuymalo += dato; break;
+        case '2': imMalo += dato; break;
+        case '3': imRegular += dato; break;
+        case '4': imBueno += dato; break;
+        case '5': imMuybueno += dato; break;
+        default: imNa += dato;
+      }
+      this._IMmuybueno = imMuybueno;
+      this._IMbuenoo = imBueno;
+      this._IMregular = imRegular;
+      this._IMmaloo = imMalo;
+      this._IMmuymalo = imMuymalo;
+      this._IMna = imNa;      
+           
+               
+    });
+
+    this.data.map((item: { SA_laboratorio: any; }) => {
+      let dato = item.SA_laboratorio;
+      switch(dato){
+        case '1': laMuymalo += dato; break;
+        case '2': laMalo += dato; break;
+        case '3': laRegular += dato; break;
+        case '4': laBueno += dato; break;
+        case '5': laMuybueno += dato; break;
+        default: laNa += dato;
+      }
+      this._LAmuybueno = laMuybueno;
+      this._LAbuenoo = laBueno;
+      this._LAregular = laRegular;
+      this._LAmaloo = laMalo;
+      this._LAmuymalo = laMuymalo;
+      this._LAna = laNa;      
+           
+               
+    });
+
+    this.data.map((item: { SI_comodidad: any; }) => {
+      let dato = item.SI_comodidad;
+      switch(dato){
+        case '1': comMuymalo += dato; break;
+        case '2': comMalo += dato; break;
+        case '3': comRegular += dato; break;
+        case '4': comBueno += dato; break;
+        case '5': comMuybueno += dato; break;
+        default: comNa += dato;
+      }
+      this._COMmuybueno = comMuybueno;
+      this._COMbuenoo = comBueno;
+      this._COMregular = comRegular;
+      this._COMmaloo = comMalo;
+      this._COMmuymalo = comMuymalo;
+      this._COMna = comNa;      
+           
+               
+    });
+
+    this.data.map((item: { SI_limpieza: any; }) => {
+      let dato = item.SI_limpieza;
+      switch(dato){
+        case '1': liMuymalo += dato; break;
+        case '2': liMalo += dato; break;
+        case '3': liRegular += dato; break;
+        case '4': liBueno += dato; break;
+        case '5': liMuybueno += dato; break;
+        default: liNa += dato;
+      }
+      this._LIMmuybueno = liMuybueno;
+      this._LIMbuenoo = liBueno;
+      this._LIMregular = liRegular;
+      this._LIMmaloo = liMalo;
+      this._LIMmuymalo = liMuymalo;
+      this._LIMna = liNa;      
+           
+               
+    });
+
+    this.data.map((item: { SI_modernidad: any; }) => {
+      let dato = item.SI_modernidad;
+      switch(dato){
+        case '1': moMuymalo += dato; break;
+        case '2': moMalo += dato; break;
+        case '3': moRegular += dato; break;
+        case '4': moBueno += dato; break;
+        case '5': moMuybueno += dato; break;
+        default: moNa += dato;
+      }
+      this._MOmuybueno = moMuybueno;
+      this._MObuenoo = moBueno;
+      this._MOregular = moRegular;
+      this._MOmaloo = moMalo;
+      this._MOmuymalo = moMuymalo;
+      this._MOna = moNa;      
+           
+               
+    });
+
+    this.data.map((item: { SS_doctor: any; }) => {
+      let dato = item.SS_doctor;
+      switch(dato){
+        case '1': docMuymalo += dato; break;
+        case '2': docMalo += dato; break;
+        case '3': docRegular += dato; break;
+        case '4': docBueno += dato; break;
+        case '5': docMuybueno += dato; break;
+        default: docNa += dato;
+      }
+      this._DOCmuybueno = docMuybueno;
+      this._DOCbuenoo = docBueno;
+      this._DOCregular = docRegular;
+      this._DOCmaloo = docMalo;
+      this._DOCmuymalo = docMuymalo;
+      this._DOCna = docNa;      
+           
+               
+    });
+
+    this.data.map((item: { SS_enfermera: any; }) => {
+      let dato = item.SS_enfermera;
+      switch(dato){
+        case '1': enMuymalo += dato; break;
+        case '2': enMalo += dato; break;
+        case '3': enRegular += dato; break;
+        case '4': enBueno += dato; break;
+        case '5': enMuybueno += dato; break;
+        default: enNa += dato;
+      }
+      this._ENmuybueno = enMuybueno;
+      this._ENbuenoo = enBueno;
+      this._ENregular = enRegular;
+      this._ENmaloo = enMalo;
+      this._ENmuymalo = enMuymalo;
+      this._ENna = enNa;      
+           
+               
+    });
+
+    this.data.map((item: { SS_tecnica: any; }) => {
+      let dato = item.SS_tecnica;
+      switch(dato){
+        case '1': tecMuymalo += dato; break;
+        case '2': tecMalo += dato; break;
+        case '3': tecRegular += dato; break;
+        case '4': tecBueno += dato; break;
+        case '5': tecMuybueno += dato; break;
+        default: tecNa += dato;
+      }
+      this._TECmuybueno = tecMuybueno;
+      this._TECbuenoo = tecBueno;
+      this._TECregular = tecRegular;
+      this._TECmaloo = tecMalo;
+      this._TECmuymalo = tecMuymalo;
+      this._TECna = tecNa;      
+           
+               
+    });
      
  
      
