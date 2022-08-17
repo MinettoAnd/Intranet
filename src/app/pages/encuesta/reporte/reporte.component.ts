@@ -7,6 +7,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { ValueCache } from 'ag-grid-community';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-reporte',
@@ -20,7 +21,7 @@ export class ReporteComponent implements OnInit {
   public listlima: any = [];
   public listchorrillos: any = [];
   public listsurco: any = [];
-  public modalima: any = [];  
+  public modalima: any = [];
   public escalalima: any = [];
   public satisfaccionlima: any = [];
   public listemergencia: any = [];
@@ -33,11 +34,7 @@ export class ReporteComponent implements OnInit {
   public compania: any = [];
   public madrenino: any = [];
   public otross: any = [];
-  public muymalo: any = [];
-  public maloo: any = [];
-  public regular: any = [];
-  public buenoo: any = [];
-  public muybueno: any = [];
+ 
   public listadmi: any = [];
   public arrmoda: any = [];
   public arrsucursal: any = [];
@@ -52,9 +49,34 @@ export class ReporteComponent implements OnInit {
   public recomen8: any = [];
   public recomen9: any = [];
   public recomen10: any = [];
+  public escalatotal: any = [];
+  public satistotal: any = [];
   arrescala: any = [];
   cantrecom: any = [];
   arrLima: any = [];
+
+  //Escala de Satisfaccion
+  public muymalo: any = [];
+  public maloo: any = [];
+  public regular: any = [];
+  public buenoo: any = [];
+  public muybueno: any = [];
+  public na: any = [];
+  
+  public _ACmuymalo: any = [];
+  public _ACmaloo: any = [];
+  public _ACregular: any = [];
+  public _ACbuenoo: any = [];
+  public _ACmuybueno: any = [];
+  public _ACna: any = [];
+
+  /* public _ACmuymalo: any = [];
+  public _ACmaloo: any = [];
+  public _ACregular: any = [];
+  public _ACbuenoo: any = [];
+  public _ACmuybueno: any = [];
+  public _ACna: any = []; */
+
 
 
   public barcharList: any = [];
@@ -71,7 +93,9 @@ export class ReporteComponent implements OnInit {
   isPosition2 = true;
   isPosition3 = true;
   isPosition4 = true;
-  
+  isPosition5 = true;
+  isPosition6 = true;
+
   model: NgbDateStruct;
   //CANVAS
 
@@ -187,7 +211,59 @@ export class ReporteComponent implements OnInit {
   ];
 
   public pieChartOptions3: ChartOptions = {
-    responsive: true,   
+    responsive: true,
+    legend: {
+      position: 'left',
+    },
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: false
+        }
+      }],
+      xAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }]
+    },
+    plugins: {
+      datalabels: {
+        formatter: (value, ctx) => {
+          let datasets = ctx.chart.data.datasets;
+          if (datasets.indexOf(ctx.dataset) === datasets.length - 1) {
+            var percentage = ((value * 100) / this.escalatotal.length).toFixed(2) + '%';
+            //console.log(percentage);
+            return percentage;
+          } else {
+            return percentage;
+          }
+        },
+
+      },
+
+    }
+  };
+  //horizontalBar
+  //RECLAMOS RESUELTOS
+  public pieChartLabels3: Label[] = [];
+  public pieChartData3 = [];
+  public pieChartType3: ChartType = "horizontalBar";
+  public pieChartLegend3 = true;
+  public pieChartPlugins3 = [pluginDataLabels];
+  public pieChartColors3 = [
+    {
+      backgroundColor: ['rgba(0,255,0,0.3)', 'rgba(255,0,0,0.3)', 'rgba(0,0,255,0.3)', 'rgba(20,0,80,0.3)', 'rgba(0,20,230,0.3)', 'rgba(50,0,25,0.3)'],
+
+    },
+
+  ];
+
+  public pieChartOptions4: ChartOptions = {
+    responsive: true,
+    legend: {
+      position: 'left',
+    },
     scales: {
       yAxes: [{
         ticks: {
@@ -205,8 +281,8 @@ export class ReporteComponent implements OnInit {
         formatter: (value, ctx) => {
           let datasets = ctx.chart.data.datasets;
           if (datasets.indexOf(ctx.dataset) === datasets.length - 1) {
-            var percentage = ((value * 100) / this.listencuesta).toFixed(2) + '%';
-            // console.log(percentage);
+            var percentage = ((value * 100) / this.satistotal.length).toFixed(2) + '%';
+            //console.log(percentage);
             return percentage;
           } else {
             return percentage;
@@ -217,15 +293,16 @@ export class ReporteComponent implements OnInit {
 
     }
   };
+  //horizontalBar
   //RECLAMOS RESUELTOS
-  public pieChartLabels3: Label[] = [];
-  public pieChartData3 = [];
-  public pieChartType3: ChartType = "horizontalBar";
-  public pieChartLegend3 = true;
-  public pieChartPlugins3 = [pluginDataLabels];
-  public pieChartColors3 = [
+  public pieChartLabels4: Label[] = [];
+  public pieChartData4 = [];
+  public pieChartType4: ChartType = "bar";
+  public pieChartLegend4 = true;
+  public pieChartPlugins4 = [pluginDataLabels];
+  public pieChartColors4 = [
     {
-      backgroundColor: ['rgba(0,255,0,0.3)', 'rgba(255,0,0,0.3)'],
+      backgroundColor: ['rgba(0,255,0,0.3)', 'rgba(255,0,0,0.3)', 'rgba(0,0,255,0.3)', 'rgba(20,0,80,0.3)', 'rgba(0,20,230,0.3)', 'rgba(50,0,25,0.3)'],
 
     },
 
@@ -263,18 +340,77 @@ export class ReporteComponent implements OnInit {
     this.formularioService.getFormulario().subscribe(
       (res: any) => {
         this.listencuesta = res.body.length;
+        console.log(res.body)
+        this.escalatotal = res.body.map((item: { escalaRecomendacion: any; }) => {
+          let dato = item.escalaRecomendacion;
+          return dato;
+        });
+        let sum = [];
+        res.body.map((item: { SA_admision: any; }) => {
+          let dato = item.SA_admision; 
+          sum += dato;                         
+        });        
+        res.body.map((item: { SA_atencionCliente: any; }) => {
+          let dato = item.SA_atencionCliente;          
+          sum += dato;                
+        }); 
+        res.body.map((item: { SA_convenios: any; }) => {
+          let dato = item.SA_convenios;          
+          sum += dato;      
+        }); 
+        res.body.map((item: { SA_farmacia: any; }) => {
+          let dato = item.SA_farmacia;          
+          sum += dato;          
+        }); 
+        res.body.map((item: { SA_imagenes: any; }) => {
+          let dato = item.SA_imagenes;          
+          sum += dato;           
+        }); 
+        res.body.map((item: { SA_laboratorio: any; }) => {
+          let dato = item.SA_laboratorio;          
+          sum += dato;               
+        }); 
+        res.body.map((item: { SI_comodidad: any; }) => {
+          let dato = item.SI_comodidad;          
+          sum += dato;              
+        }); 
+        res.body.map((item: { SI_limpieza: any; }) => {
+          let dato = item.SI_limpieza;          
+          sum += dato;                
+        }); 
+        res.body.map((item: { SI_modernidad: any; }) => {
+          let dato = item.SI_modernidad;          
+          sum += dato;               
+        }); 
+        res.body.map((item: { SS_doctor: any; }) => {
+          let dato = item.SS_doctor;          
+          sum += dato;               
+        }); 
+        res.body.map((item: { SS_enfermera: any; }) => {
+          let dato = item.SS_enfermera;          
+          sum += dato;                 
+        }); 
+        res.body.map((item: { SS_tecnica: any; }) => {
+          let dato = item.SS_tecnica;          
+          sum += dato;             
+        }); 
+        this.satistotal = sum;
+       
+        console.log(24, this.satistotal.length);
+
       })
     this.getTipoPaciente();
     this.getModalidad();
     this.getSucursal();
     this.getrecomendacion();
+    this.getsatisfaccion();
   };
 
   getSucursal() {
-    this.isLoading = true;
+    //this.isLoading = true;
     this.barChartLabels = [];
     this.barChartData = [];
-    let dato = []    
+    let dato = []
     this.formularioService.getFormulario().subscribe(
       (res: any) => {
         this.data = res.body.length > 0 ? res.body : [];
@@ -301,7 +437,7 @@ export class ReporteComponent implements OnInit {
         this.barChartData = [{ data: this.cantsucursal, label: 'Surco' }]
         this.barChartLabels.push(this.listsurco[0].sucursal);
       }
-    )    
+    )
   }
   getModalidad() {
     this.pieChartLabels = [];
@@ -381,229 +517,169 @@ export class ReporteComponent implements OnInit {
         this.pieChartData2.push(this.cantidad);
       })
   }
+  
   getsatisfaccion() {
+     let sumMuymalo = [];
+     let sumMalo = [];
+     let sumRegular = [];
+     let sumBueno = [];
+     let sumMuybueno = [];
+     let sumNa = [];
+     let ateMuymalo = [];
+     let ateMalo = [];
+     let ateRegular = [];
+     let ateBueno = [];
+     let ateMuybueno = [];
+     let ateNa = [];
+     this.formularioService.getFormulario().subscribe(
+      (res: any) => {
+     this.data = res.body;
+     this.data.map((item: { SA_admision: any; }) => {
+      let dato = item.SA_admision;
+      switch(dato){
+        case '1': sumMuymalo += dato; break;
+        case '2': sumMalo += dato; break;
+        case '3': sumRegular += dato; break;
+        case '4': sumBueno += dato; break;
+        case '5': sumMuybueno += dato; break;
+        default: sumNa += dato;
+      }
+      this.muybueno = sumMuybueno;
+      this.buenoo = sumBueno;
+      this.regular = sumRegular;
+      this.maloo = sumMalo;
+      this.muymalo = sumMuymalo;
+      this.na = sumNa;      
+          
+               
+    });
+    this.data.map((item: { SA_atencionCliente: any; }) => {
+      let dato = item.SA_atencionCliente;
+      switch(dato){
+        case '1': ateMuymalo += dato; break;
+        case '2': ateMalo += dato; break;
+        case '3': ateRegular += dato; break;
+        case '4': ateBueno += dato; break;
+        case '5': ateMuybueno += dato; break;
+        default: ateNa += dato;
+      }
+      this._ACmuybueno = ateMuybueno;
+      this._ACbuenoo = ateBueno;
+      this._ACregular = ateRegular;
+      this._ACmaloo = ateMalo;
+      this._ACmuymalo = ateMuymalo;
+      this._ACna = ateNa;      
+           
+               
+    });
 
-    /*  let admi1 = this.data.filter((item: { SA_admision: string; }) => item.SA_admision === '1');
-     let admi2 = this.data.filter((item: { SA_admision: string; }) => item.SA_admision === '2');
-     let admi3 = this.data.filter((item: { SA_admision: string; }) => item.SA_admision === '3');
-     let admi4 = this.data.filter((item: { SA_admision: string; }) => item.SA_admision === '4');
-     let admi5 = this.data.filter((item: { SA_admision: string; }) => item.SA_admision === '5');
-     this.muymalo.push(admi1);
-     this.maloo.push(admi2.length);
-     this.regular.push(admi3.length);
-     this.buenoo.push(admi4.length);
-     this.muybueno.push(admi5.length);
+    this.data.map((item: { SA_atencionCliente: any; }) => {
+      let dato = item.SA_atencionCliente;
+      switch(dato){
+        case '1': ateMuymalo += dato; break;
+        case '2': ateMalo += dato; break;
+        case '3': ateRegular += dato; break;
+        case '4': ateBueno += dato; break;
+        case '5': ateMuybueno += dato; break;
+        default: ateNa += dato;
+      }
+      this._ACmuybueno = ateMuybueno;
+      this._ACbuenoo = ateBueno;
+      this._ACregular = ateRegular;
+      this._ACmaloo = ateMalo;
+      this._ACmuymalo = ateMuymalo;
+      this._ACna = ateNa;      
+           
+               
+    });
+   
  
-     let cliente1 = this.data.filter((item: { SA_atencionCliente: string; }) => item.SA_atencionCliente === '1');
-     let cliente2 = this.data.filter((item: { SA_atencionCliente: string; }) => item.SA_atencionCliente === '2');
-     let cliente3 = this.data.filter((item: { SA_atencionCliente: string; }) => item.SA_atencionCliente === '3');
-     let cliente4 = this.data.filter((item: { SA_atencionCliente: string; }) => item.SA_atencionCliente === '4');
-     let cliente5 = this.data.filter((item: { SA_atencionCliente: string; }) => item.SA_atencionCliente === '5');
-     this.muymalo.push(cliente1);
-     this.maloo.push(cliente2.length);
-     this.regular.push(cliente3.length);
-     this.buenoo.push( cliente4.length);
-     this.muybueno.push(cliente5.length);
- 
-     let convenio1 = this.data.filter((item: { SA_convenios: string; }) => item.SA_convenios === '1');
-     let convenio2 = this.data.filter((item: { SA_convenios: string; }) => item.SA_convenios === '2');
-     let convenio3 = this.data.filter((item: { SA_convenios: string; }) => item.SA_convenios === '3');
-     let convenio4 = this.data.filter((item: { SA_convenios: string; }) => item.SA_convenios === '4');
-     let convenio5 = this.data.filter((item: { SA_convenios: string; }) => item.SA_convenios === '5');
-     this.muymalo.push ( convenio1);
-     this.maloo.push   ( convenio2.length);
-     this.regular.push ( convenio3.length);
-     this.buenoo.push  ( convenio4.length);
-     this.muybueno.push( convenio5.length);
- 
-     let farmacia1 = this.data.filter((item: { SA_farmacia: string; }) => item.SA_farmacia === '1');
-     let farmacia2 = this.data.filter((item: { SA_farmacia: string; }) => item.SA_farmacia === '2');
-     let farmacia3 = this.data.filter((item: { SA_farmacia: string; }) => item.SA_farmacia === '3');
-     let farmacia4 = this.data.filter((item: { SA_farmacia: string; }) => item.SA_farmacia === '4');
-     let farmacia5 = this.data.filter((item: { SA_farmacia: string; }) => item.SA_farmacia === '5');
-     this.muymalo.push ( farmacia1);
-     this.maloo.push   ( farmacia2.length);
-     this.regular.push ( farmacia3.length);
-     this.buenoo.push  ( farmacia4.length);
-     this.muybueno.push( farmacia5.length);
- 
-     let imagenes1 = this.data.filter((item: { SA_imagenes: string; }) => item.SA_imagenes === '1');
-     let imagenes2 = this.data.filter((item: { SA_imagenes: string; }) => item.SA_imagenes === '2');
-     let imagenes3 = this.data.filter((item: { SA_imagenes: string; }) => item.SA_imagenes === '3');
-     let imagenes4 = this.data.filter((item: { SA_imagenes: string; }) => item.SA_imagenes === '4');
-     let imagenes5 = this.data.filter((item: { SA_imagenes: string; }) => item.SA_imagenes === '5');
-     this.muymalo.push ( imagenes1);
-     this.maloo.push   ( imagenes2.length);
-     this.regular.push ( imagenes3.length);
-     this.buenoo.push  ( imagenes4.length);
-     this.muybueno.push( imagenes5.length);
- 
-     let laboratorio1 = this.data.filter((item: { SA_laboratorio: string; }) => item.SA_laboratorio === '1');
-     let laboratorio2 = this.data.filter((item: { SA_laboratorio: string; }) => item.SA_laboratorio === '2');
-     let laboratorio3 = this.data.filter((item: { SA_laboratorio: string; }) => item.SA_laboratorio === '3');
-     let laboratorio4 = this.data.filter((item: { SA_laboratorio: string; }) => item.SA_laboratorio === '4');
-     let laboratorio5 = this.data.filter((item: { SA_laboratorio: string; }) => item.SA_laboratorio === '5');
-     this.muymalo.push ( laboratorio1);
-     this.maloo.push   ( laboratorio2.length);
-     this.regular.push ( laboratorio3.length);
-     this.buenoo.push  ( laboratorio4.length);
-     this.muybueno.push( laboratorio5.length);
      
+ 
      
-     let comodidad1 = this.data.filter((item: { SI_comodidad: string; }) => item.SI_comodidad === '1');
-     let comodidad2 = this.data.filter((item: { SI_comodidad: string; }) => item.SI_comodidad === '2');
-     let comodidad3 = this.data.filter((item: { SI_comodidad: string; }) => item.SI_comodidad === '3');
-     let comodidad4 = this.data.filter((item: { SI_comodidad: string; }) => item.SI_comodidad === '4');
-     let comodidad5 = this.data.filter((item: { SI_comodidad: string; }) => item.SI_comodidad === '5');
-     this.muymalo.push ( comodidad1);
-     this.maloo.push   ( comodidad2.length);
-     this.regular.push ( comodidad3.length);
-     this.buenoo.push  ( comodidad4.length);
-     this.muybueno.push( comodidad5.length);
- 
-     let limpieza1 = this.data.filter((item: { SI_limpieza: string; }) => item.SI_limpieza === '1');
-     let limpieza2 = this.data.filter((item: { SI_limpieza: string; }) => item.SI_limpieza === '2');
-     let limpieza3 = this.data.filter((item: { SI_limpieza: string; }) => item.SI_limpieza === '3');
-     let limpieza4 = this.data.filter((item: { SI_limpieza: string; }) => item.SI_limpieza === '4');
-     let limpieza5 = this.data.filter((item: { SI_limpieza: string; }) => item.SI_limpieza === '5');
-     this.muymalo.push ( limpieza1);
-     this.maloo.push   ( limpieza2.length);
-     this.regular.push ( limpieza3.length);
-     this.buenoo.push  ( limpieza4.length);
-     this.muybueno.push( limpieza5.length);
- 
-     let modernidad1 = this.data.filter((item: { SI_modernidad: string; }) => item.SI_modernidad === '1');
-     let modernidad2 = this.data.filter((item: { SI_modernidad: string; }) => item.SI_modernidad === '2');
-     let modernidad3 = this.data.filter((item: { SI_modernidad: string; }) => item.SI_modernidad === '3');
-     let modernidad4 = this.data.filter((item: { SI_modernidad: string; }) => item.SI_modernidad === '4');
-     let modernidad5 = this.data.filter((item: { SI_modernidad: string; }) => item.SI_modernidad === '5');
-     this.muymalo.push ( modernidad1);
-     this.maloo.push   ( modernidad2.length);
-     this.regular.push ( modernidad3.length);
-     this.buenoo.push  ( modernidad4.length);
-     this.muybueno.push( modernidad5.length);
- 
-     let doc1 = this.data.filter((item: { SS_doctor: string; }) => item.SS_doctor === '1');
-     let doc2 = this.data.filter((item: { SS_doctor: string; }) => item.SS_doctor === '2');
-     let doc3 = this.data.filter((item: { SS_doctor: string; }) => item.SS_doctor === '3');
-     let doc4 = this.data.filter((item: { SS_doctor: string; }) => item.SS_doctor === '4');
-     let doc5 = this.data.filter((item: { SS_doctor: string; }) => item.SS_doctor === '5');
-     this.muymalo.push ( doc1.length);
-     this.maloo.push   ( doc2.length);
-     this.regular.push ( doc3.length);
-     this.buenoo.push  ( doc4.length);
-     this.muybueno.push( doc5.length);
- 
-     let enfer1 = this.data.filter((item: { SS_enfermera: string; }) => item.SS_enfermera === '1');
-     let enfer2 = this.data.filter((item: { SS_enfermera: string; }) => item.SS_enfermera === '2');
-     let enfer3 = this.data.filter((item: { SS_enfermera: string; }) => item.SS_enfermera === '3');
-     let enfer4 = this.data.filter((item: { SS_enfermera: string; }) => item.SS_enfermera === '4');
-     let enfer5 = this.data.filter((item: { SS_enfermera: string; }) => item.SS_enfermera === '5');
-     this.muymalo.push ( enfer1.length);
-     this.maloo.push   ( enfer2.length);
-     this.regular.push ( enfer3.length);
-     this.buenoo.push  ( enfer4.length);
-     this.muybueno.push( enfer5.length);
- 
-     let tecnica1 = this.data.filter((item: { SS_tecnica: string; }) => item.SS_tecnica === '1');
-     let tecnica2 = this.data.filter((item: { SS_tecnica: string; }) => item.SS_tecnica === '2');
-     let tecnica3 = this.data.filter((item: { SS_tecnica: string; }) => item.SS_tecnica === '3');
-     let tecnica4 = this.data.filter((item: { SS_tecnica: string; }) => item.SS_tecnica === '4');
-     let tecnica5 = this.data.filter((item: { SS_tecnica: string; }) => item.SS_tecnica === '5');
-     this.muymalo.push ( tecnica1.length);
-     this.maloo.push   ( tecnica2.length);
-     this.regular.push ( tecnica3.length);
-     this.buenoo.push  ( tecnica4.length);
-     this.muybueno.push( tecnica5.length);
- 
- 
-     console.log(9,admi1.map((item: { SA_admision: { value: any; }; }) => item.SA_admision.value))
-     console.log(8,cliente1)
-     console.log(7,convenio1)
-     console.log(6,farmacia1)
-     console.log(5,imagenes1)
-     console.log(4,laboratorio1)
-     console.log(3,comodidad1)
-     console.log(2,limpieza1)
-     console.log(1,modernidad1)
-     console.log(0,doc1)
-     console.log(0.1,enfer1)
-     console.log(0.2,tecnica1) */
+      })
   }
-  getrecomendacion(): void{
+  getrecomendacion(): void {
     this.pieChartLabels3 = [];
     this.pieChartData3 = [];
-    
+
     this.formularioService.getFormulario().subscribe(
       (res: any) => {
-        this.data = res.body.length > 0 ? res.body : []; 
-        this.recomen = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '1')
-        console.log(1,this.recomen)
-        this.cantrecom = this.recomen.length 
+        this.data = res.body.length > 0 ? res.body : [];
+        this.recomen = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '10');
+        this.cantrecom = this.recomen.length;
         this.arrescala = this.recomen[0].escalaRecomendacion;
         this.pieChartData3.push(this.cantrecom);
         this.pieChartLabels3.push(this.arrescala);
-        
-        
-        this.recomen2 = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '2')
-        console.log(2,this.recomen2)
-        this.cantrecom = this.recomen2.length 
 
-        this. pieChartData3.push(this.cantrecom);
 
-        this.recomen3 = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '3')
-        console.log(3,this.recomen3)
-        this.cantrecom = this.recomen3.length 
+        this.recomen2 = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '9');
+        this.cantrecom = this.recomen2.length;
+        this.arrescala = this.recomen2[0].escalaRecomendacion;
+        this.pieChartData3.push(this.cantrecom);
+        this.pieChartLabels3.push(this.arrescala);
 
-        this. pieChartData3.push(this.cantrecom);
 
-        this.recomen4 = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '4')
-        console.log(4,this.recomen4)
-        this.cantrecom = this.recomen4.length 
+        this.recomen3 = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '8')
+        this.cantrecom = this.recomen3.length;
+        this.arrescala = this.recomen3[0].escalaRecomendacion;
+        this.pieChartData3.push(this.cantrecom);
+        this.pieChartLabels3.push(this.arrescala);
 
-        this. pieChartData3.push(this.cantrecom);
-        
-        this.recomen5 = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '5')
-        console.log(5,this.recomen5)
-        this.cantrecom = this.recomen5.length 
 
-        this. pieChartData3.push(this.cantrecom);
+        this.recomen4 = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '7')
+        this.cantrecom = this.recomen4.length;
+        this.arrescala = this.recomen4[0].escalaRecomendacion;
+        this.pieChartData3.push(this.cantrecom);
+        this.pieChartLabels3.push(this.arrescala);
 
-        this.recomen6 = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '6')
-        console.log(6,this.recomen6)
-        this.cantrecom = this.recomen6.length 
 
-        this. pieChartData3.push(this.cantrecom);
+        this.recomen5 = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '6')
+        this.cantrecom = this.recomen5.length;
+        this.arrescala = this.recomen5[0].escalaRecomendacion;
+        this.pieChartData3.push(this.cantrecom);
+        this.pieChartLabels3.push(this.arrescala);
 
-        this.recomen7 = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '7')
-        console.log(7,this.recomen7)
-        this.cantrecom = this.recomen7.length 
 
-        this. pieChartData3.push(this.cantrecom);
+        this.recomen6 = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '5')
+        this.cantrecom = this.recomen6.length;
+        this.arrescala = this.recomen6[0].escalaRecomendacion;
+        this.pieChartData3.push(this.cantrecom);
+        this.pieChartLabels3.push(this.arrescala);
 
-        this.recomen8 = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '8')
-        console.log(8,this.recomen8)
-        this.cantrecom = this.recomen8.length 
 
-        this. pieChartData3.push(this.cantrecom);
+        this.recomen7 = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '4')
+        this.cantrecom = this.recomen7.length;
+        this.arrescala = this.recomen7[0].escalaRecomendacion;
+        this.pieChartData3.push(this.cantrecom);
+        this.pieChartLabels3.push(this.arrescala);
 
-        this.recomen9 = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '9')
-        console.log(9,this.recomen9)
-        this.cantrecom = this.recomen9.length 
-        this. pieChartData3.push(this.cantrecom);
 
-        this.recomen10 = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '10')
-        console.log(10,this.recomen10)
-        this.cantrecom = this.recomen10.length 
+        this.recomen8 = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '3')
+        this.cantrecom = this.recomen8.length;
+        this.arrescala = this.recomen8[0].escalaRecomendacion;
+        this.pieChartData3.push(this.cantrecom);
+        this.pieChartLabels3.push(this.arrescala);
 
-        this. pieChartData3.push(this.cantrecom);
-        console.log(0,this.data)
-        console.log(5555, this.pieChartData3)
+
+        this.recomen9 = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '2')
+        this.cantrecom = this.recomen9.length;
+        this.arrescala = this.recomen9[0].escalaRecomendacion;
+        this.pieChartData3.push(this.cantrecom);
+        this.pieChartLabels3.push(this.arrescala);
+
+        this.recomen10 = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '1')
+        this.cantrecom = this.recomen10.length;
+        this.arrescala = this.recomen10[0].escalaRecomendacion;
+        this.pieChartData3.push(this.cantrecom);
+        this.pieChartLabels3.push(this.arrescala);        
       })
   }
-
   getporcentaje(dato: number) {
     return ((dato * 100) / this.listencuesta).toFixed(2) + '%';
+  }
+  getporcentajesati(dato: number) {
+    return ((dato * 100) / this.satistotal.length).toFixed(2) + '%';
   }
   //SEDE LIMA
   getRegisterSedeLima() {
@@ -720,22 +796,6 @@ export class ReporteComponent implements OnInit {
       })
   }
 
-  /*  this.getRegisteredEncuesta();
-   this.getRegisterSedeLima();
-   this.getRegisterSedeChorrillos();
-   this.getRegisterSedeSurco();
-   this.getmodalidadLima();
-   this.gettipopacienteLima();
-   this.getrecomedacionLima();
-   this.getexperienciaLima(); */
-  /* if (parseInt(localStorage.getItem('idrol')) == 1) {
-    this.sucursal = 0;
-  } else {
-    this.sucursal = parseInt(localStorage.getItem('sede'));
-  }
-  this.search(); */
-
-
 
   search() {
     const formValue = this.seachForm.value;
@@ -805,6 +865,18 @@ export class ReporteComponent implements OnInit {
         this.isPosition4 = true;
       } else {
         this.isPosition4 = false;
+      }
+    }else if (id == 5) {
+      if (position == 1) {
+        this.isPosition5 = true;
+      } else {
+        this.isPosition5 = false;
+      }
+    }else if (id == 6) {
+      if (position == 1) {
+        this.isPosition6 = true;
+      } else {
+        this.isPosition6 = false;
       }
     }
   }
