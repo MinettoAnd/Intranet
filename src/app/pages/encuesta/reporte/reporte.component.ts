@@ -293,7 +293,7 @@ export class ReporteComponent implements OnInit {
         formatter: (value, ctx) => {
           let datasets = ctx.chart.data.datasets;
           if (datasets.indexOf(ctx.dataset) === datasets.length - 1) {
-            var percentage = ((value * 100) / this.listencuesta).toFixed(2) + '%';
+            var percentage = ((value * 100) / this.sumtarjeta).toFixed(2) + '%';
             // console.log(percentage);
             return percentage;
           } else {
@@ -309,7 +309,7 @@ export class ReporteComponent implements OnInit {
   public pieChartLabels22: Label[] = [];
   public pieChartData22 = [];
   public pieChartType22: ChartType = "bar";
-  public pieChartLegend22 = true;
+  public pieChartLegend22 = false;
   public pieChartPlugins22 = [pluginDataLabels];
   public pieChartColors22 = [
     {
@@ -321,7 +321,7 @@ export class ReporteComponent implements OnInit {
   //CONVENIO
   public pieChartOptions23: ChartOptions = {
     responsive: true,
-
+    
     scales: {
       xAxes: [{
         ticks: {
@@ -335,7 +335,7 @@ export class ReporteComponent implements OnInit {
         formatter: (value, ctx) => {
           let datasets = ctx.chart.data.datasets;
           if (datasets.indexOf(ctx.dataset) === datasets.length - 1) {
-            var percentage = ((value * 100) / this.listencuesta).toFixed(2) + '%';
+            var percentage = ((value * 100) / this.sumconvenio).toFixed(2) + '%';
             // console.log(percentage);
             return percentage;
           } else {
@@ -351,7 +351,7 @@ export class ReporteComponent implements OnInit {
   public pieChartLabels23: Label[] = [];
   public pieChartData23 = [];
   public pieChartType23: ChartType = "horizontalBar";
-  public pieChartLegend23 = true;
+  public pieChartLegend23 = false;
   public pieChartPlugins23 = [pluginDataLabels];
   public pieChartColors23 = [
     {
@@ -363,7 +363,9 @@ export class ReporteComponent implements OnInit {
 
   public pieChartOptions24: ChartOptions = {
     responsive: true,
-    
+    legend: {
+      position: 'left',
+    },
     plugins: {
       datalabels: {
         formatter: (value, ctx) => {
@@ -376,7 +378,7 @@ export class ReporteComponent implements OnInit {
             return percentage;
           }
         },
-        align: "end",
+        
 
       },
 
@@ -424,7 +426,7 @@ export class ReporteComponent implements OnInit {
             return percentage;
           }
         },
-
+        align: "end",
       },
 
     }
@@ -434,7 +436,7 @@ export class ReporteComponent implements OnInit {
   public pieChartLabels3: Label[] = [];
   public pieChartData3 = [];
   public pieChartType3: ChartType = "horizontalBar";
-  public pieChartLegend3 = true;
+  public pieChartLegend3 = false;
   public pieChartPlugins3 = [pluginDataLabels];
   public pieChartColors3 = [
     {
@@ -483,7 +485,7 @@ export class ReporteComponent implements OnInit {
   public pieChartLabels4: Label[] = [];
   public pieChartData4 = [];
   public pieChartType4: ChartType = "bar";
-  public pieChartLegend4 = true;
+  public pieChartLegend4 = false;
   public pieChartPlugins4 = [pluginDataLabels];
   public pieChartColors4 = [
     {
@@ -717,10 +719,11 @@ export class ReporteComponent implements OnInit {
   diamante = [];
   arrpaciente = [];
   arrcantpa = 0;
-  sumtarjeta = [];
+  sumtarjeta = 0;  
   getTarjetaClasica() {
     this.pieChartLabels22 = [];
     this.pieChartData22 = [];
+    let dato = 0;
     this.formularioService.getFormulario().subscribe(
       (res: any) => {
         this.data = res.body.length > 0 ? res.body : [];
@@ -744,6 +747,11 @@ export class ReporteComponent implements OnInit {
         this.arrcantpa = this.diamante.length;
         this.pieChartLabels22.push(this.arrpaciente);
         this.pieChartData22.push(this.arrcantpa);
+
+        dato = this.clasica.length + this.dorada.length + this.diamante.length;
+        console.log(120,dato)
+        this.sumtarjeta = dato;
+        console.log(121,this.sumtarjeta)
       });
   }
   saludpol = [];
@@ -756,11 +764,11 @@ export class ReporteComponent implements OnInit {
   otrocon = [];
   arrconvenio = [];
   arrcantco = 0;
-  sumconvenio = [];
+  sumconvenio = 0;
   getConvenio() {
     this.pieChartLabels23 = [];
     this.pieChartData23 = [];
-    
+    let dato = 0;
     this.formularioService.getFormulario().subscribe(
       (res: any) => {
         this.data = res.body.length > 0 ? res.body : [];
@@ -823,6 +831,11 @@ export class ReporteComponent implements OnInit {
         this.pieChartLabels23.push(this.arrconvenio);
         this.pieChartData23.push(this.arrcantco);
         
+        dato = this.rimac.length + this.pacifico.length + this.positiva.length 
+          + this.mapfre.length + this.sanitas.length + this.interseguro.length 
+          + this.otrocomp.length;
+        
+          this.sumconvenio = dato;
 
         
       })
@@ -1335,6 +1348,12 @@ export class ReporteComponent implements OnInit {
   }
   getporcentaje(dato: number) {
     return ((dato * 100) / this.listencuesta).toFixed(2) + '%';
+  }
+  getporcentajetarjeta(dato: number) {
+    return ((dato * 100) / this.sumtarjeta).toFixed(2) + '%';
+  }
+  getporcentajeconvenio(dato: number) {
+    return ((dato * 100) / this.sumconvenio).toFixed(2) + '%';
   }
   getporcentajeescala(dato: number) {
     return ((dato * 100) / this.escalatotal.length).toFixed(2) + '%';
