@@ -173,7 +173,7 @@
     </div>
   </div>
 
-
+  <!-- SEDE Y MODALIDAD -->
   <div class="row">
     <div class="col-md-6 col-lg-12 col-xl-6">
       <!-- Support tickets -->
@@ -182,7 +182,7 @@
           <div class="col-md-12">
             <div class="row">
               <div class="col-md-8">
-                <h5>Total de registros por sede</h5>
+                <h5>Registro general por sucursal</h5>
               </div>
               <div class="col-md-4">
                 <button type="button" (click)="showTableDasboard(1, 2)" class="btn-shadow btn btn-info float-right">
@@ -199,13 +199,8 @@
         <div class="card-body" *ngIf="isPosition1">
           <loading *ngIf="isLoading">{{ isLoading }}</loading>
           <div class="d-block" *ngIf="!isLoading">
-            <canvas baseChart 
-              [datasets]="barChartData" 
-              [labels]="barChartLabels" 
-              [options]="barChartOptions"
-              [plugins]="barChartPlugins" 
-              [legend]="barChartLegend" 
-              [chartType]="barChartType">
+            <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+              [plugins]="barChartPlugins" [legend]="barChartLegend" [chartType]="barChartType">
             </canvas>
           </div>
         </div>
@@ -220,7 +215,7 @@
               <thead>
                 <tr>
                   <th class="text-left">Sede</th>
-                  <th class="text-left">Total</th>
+                  <th class="text-left">Cantidad</th>
                   <th class="text-left">Porcentaje</th>
                 </tr>
               </thead>
@@ -240,11 +235,16 @@
                   <td class="text-left">{{ this.listsurco.length }}</td>
                   <td class="text-left">{{ getporcentaje(this.listsurco.length)}}</td>
                 </tr>
+                <tr>
+                  <th class="text-left">Total</th>
+                  <td class="text-left">{{ this.listlima.length + this.listchorrillos.length + this.listsurco.length  }}</td>
+                  <td class="text-left">{{ getporcentaje(this.listlima.length + this.listchorrillos.length + this.listsurco.length )}}</td>
+                </tr>
               </tbody>
             </table>
           </div>
         </div>
-      </div>    
+      </div>
     </div>
     <div class="col-md-6 col-lg-12 col-xl-6">
       <div class="card">
@@ -252,7 +252,7 @@
           <div class="col-md-12">
             <div class="row">
               <div class="col-md-8">
-                <h5>Total de encuestados por Origen de ingreso</h5>
+                <h6>Registros general por Origen de ingreso</h6>
               </div>
               <div class="col-md-4">
                 <button type="button" (click)="showTableDasboard(2, 2)" class="btn-shadow btn btn-info float-right">
@@ -269,13 +269,8 @@
         <div class="card-body" *ngIf="isPosition2">
           <loading *ngIf="isLoading2">{{ isLoading }}</loading>
           <div class="chart" *ngIf="!isLoading2">
-            <canvas baseChart 
-              [data]="pieChartData" 
-              [labels]="pieChartLabels" 
-              [chartType]="pieChartType"
-              [options]="pieChartOptions" 
-              [plugins]="pieChartPlugins" 
-              [colors]="pieChartColors"
+            <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"
+              [options]="pieChartOptions" [plugins]="pieChartPlugins" [colors]="pieChartColors"
               [legend]="pieChartLegend">
             </canvas>
           </div>
@@ -291,7 +286,7 @@
               <thead>
                 <tr>
                   <th class="text-left">Modalidad</th>
-                  <th class="text-left">Total</th>
+                  <th class="text-left">Cantidad</th>
                   <th class="text-left">Porcentaje</th>
                 </tr>
               </thead>
@@ -311,6 +306,11 @@
                   <td class="text-left">{{ this.listemergencia.length }}</td>
                   <td class="text-left">{{ getporcentaje( this.listemergencia.length)}}</td>
                 </tr>
+                <tr>
+                  <th class="text-left">Total</th>
+                  <td class="text-left">{{ this.listhospita.length + this.listconsultorio.length + this.listemergencia.length }}</td>
+                  <td class="text-left">{{ getporcentaje( this.listhospita.length + this.listconsultorio.length + this.listemergencia.length)}}</td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -318,16 +318,15 @@
       </div>
     </div>
   </div>
-
+  <!-- TIPO PACIENTE Y PLAN SALUD-->
   <div class="row">
     <div class="col-md-6 col-lg-12 col-xl-6">
-
       <div class="card mt-sm-5 mt-md-0">
         <div class="card-header">
           <div class="col-md-12">
             <div class="row">
               <div class="col-md-8">
-                <h4>Reclamos Resueltos</h4>
+                <h5>Registro general por tipo de paciente</h5>
               </div>
               <div class="col-md-4">
                 <button type="button" (click)="showTableDasboard(3, 2)" class="btn-shadow btn btn-info float-right">
@@ -344,13 +343,8 @@
         <div class="card-body" *ngIf="isPosition3">
           <loading *ngIf="isLoading3">{{ isLoading }}</loading>
           <div class="chart" *ngIf="!isLoading3">
-            <canvas baseChart 
-              [data]="pieChartData2" 
-              [labels]="pieChartLabels2" 
-              [chartType]="pieChartType2"
-              [options]="pieChartOptions2" 
-              [plugins]="pieChartPlugins2" 
-              [colors]="pieChartColors2"
+            <canvas baseChart [data]="pieChartData2" [labels]="pieChartLabels2" [chartType]="pieChartType2"
+              [options]="pieChartOptions2" [plugins]="pieChartPlugins2" [colors]="pieChartColors2"
               [legend]="pieChartLegend2">
             </canvas>
           </div>
@@ -366,7 +360,7 @@
               <thead>
                 <tr>
                   <th class="text-left">Tipo de Usuario</th>
-                  <th class="text-left">Total</th>
+                  <th class="text-left">Cantidad</th>
                   <th class="text-left">Porcentaje</th>
                 </tr>
               </thead>
@@ -401,26 +395,31 @@
                   <td class="text-left">{{ this.otross.length }}</td>
                   <td class="text-left">{{ getporcentaje(this.otross.length)}}</td>
                 </tr>
+                <tr>
+                  <th class="text-left">Total</th>
+                  <td class="text-left">{{ this.sumtipopaciente }}</td>
+                  <td class="text-left">{{ getporcentaje(this.sumtipopaciente)}}</td>
+                </tr>
               </tbody>
             </table>
           </div>
         </div>
       </div>
-
     </div>
+
     <div class="col-md-6 col-lg-12 col-xl-6">
-      <div class="card">
+      <div class="card mt-sm-5 mt-md-0">
         <div class="card-header">
           <div class="col-md-12">
             <div class="row">
               <div class="col-md-8">
-                <h4>Reclamos por Estado</h4>
+                <h5>Tipo de paciente: Plan Salud</h5>
               </div>
               <div class="col-md-4">
-                <button type="button" (click)="showTableDasboard(4, 2)" class="btn-shadow btn btn-info float-right">
+                <button type="button" (click)="showTableDasboard(3, 2)" class="btn-shadow btn btn-info float-right">
                   <i class="pe-7s-graph3"></i>
                 </button>
-                <button type="button" (click)="showTableDasboard(4, 1)"
+                <button type="button" (click)="showTableDasboard(3, 1)"
                   class="btn-shadow mr-3 btn btn-info float-right">
                   <i class="pe-7s-graph"></i>
                 </button>
@@ -428,21 +427,16 @@
             </div>
           </div>
         </div>
-        <div class="card-body" *ngIf="isPosition4">
-          <loading *ngIf="isLoading4">{{ isLoading }}</loading>
-          <div class="chart" *ngIf="!isLoading4">
-            <canvas baseChart 
-              [data]="pieChartData3" 
-              [labels]="pieChartLabels3" 
-              [chartType]="pieChartType3"
-              [options]="pieChartOptions3" 
-              [plugins]="pieChartPlugins3" 
-              [colors]="pieChartColors3"
-              [legend]="pieChartLegend3">
+        <div class="card-body" *ngIf="isPosition3">
+          <loading *ngIf="isLoading3">{{ isLoading }}</loading>
+          <div class="chart" *ngIf="!isLoading3">
+            <canvas baseChart [data]="pieChartData22" [labels]="pieChartLabels22" [chartType]="pieChartType22"
+              [options]="pieChartOptions22" [plugins]="pieChartPlugins22" [colors]="pieChartColors22"
+              [legend]="pieChartLegend22">
             </canvas>
           </div>
         </div>
-        <div class="card-body" *ngIf="!isPosition4">
+        <div class="card-body" *ngIf="!isPosition3">
           <div class="table-responsive p-4">
             <table class="
                   align-middle
@@ -452,61 +446,212 @@
                 ">
               <thead>
                 <tr>
-                  <th class="text-left">Escala de Recomendación</th>
+                  <th class="text-left">Tipo de Usuario</th>
                   <th class="text-left">Cantidad</th>
                   <th class="text-left">Porcentaje</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td class="text-left">{{ this.recomen[0].escalaRecomendacion }}</td>
-                  <td class="text-left">{{ this.recomen.length }}</td>
-                  <td class="text-left">{{ getPorcentaje(this.recomen.length) }}</td>
+                  <td class="text-left">Tarjeta CLASICA</td>
+                  <td>{{ this.clasica.length }}</td>
+                  <td>{{ getporcentaje(this.clasica.length) }}</td>
                 </tr>
                 <tr>
-                  <td class="text-left">{{ this.recomen2[0].escalaRecomendacion }}</td>
-                  <td class="text-left">{{ this.recomen2.length }}</td>
-                  <td class="text-left">{{ getPorcentaje(this.recomen2.length) }}</td>
+                  <td class="text-left">Tarjeta DORADA</td>
+                  <td>{{ this.dorada.length }}</td>
+                  <td>{{getporcentaje(this.dorada.length) }}</td>
                 </tr>
                 <tr>
-                  <td class="text-left">{{ this.recomen3[0].escalaRecomendacion }}</td>
-                  <td class="text-left">{{ this.recomen3.length }}</td>
-                  <td class="text-left">{{ getPorcentaje(this.recomen3.length) }}</td>
+                  <td class="text-left">Tarjeta DIAMANTE</td>
+                  <td class="text-left">{{ this.diamante.length }}</td>
+                  <td class="text-left">{{ getporcentaje(this.diamante.length)}}</td>
+                </tr>                
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- CONVENIO Y COMPAÑIA SEGURO-->
+  <div class="row">
+    <div class="col-md-6 col-lg-12 col-xl-6">
+      <div class="card mt-sm-5 mt-md-0">
+        <div class="card-header">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-8">
+                <h5>Tipo de paciente: Convenio</h5>
+              </div>
+              <div class="col-md-4">
+                <button type="button" (click)="showTableDasboard(3, 2)" class="btn-shadow btn btn-info float-right">
+                  <i class="pe-7s-graph3"></i>
+                </button>
+                <button type="button" (click)="showTableDasboard(3, 1)"
+                  class="btn-shadow mr-3 btn btn-info float-right">
+                  <i class="pe-7s-graph"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body" *ngIf="isPosition3">
+          <loading *ngIf="isLoading3">{{ isLoading }}</loading>
+          <div class="chart" *ngIf="!isLoading3">
+            <canvas baseChart [data]="pieChartData23" [labels]="pieChartLabels23" [chartType]="pieChartType23"
+              [options]="pieChartOptions23" [plugins]="pieChartPlugins23" [colors]="pieChartColors23"
+              [legend]="pieChartLegend23">
+            </canvas>
+          </div>
+        </div>
+        <div class="card-body" *ngIf="!isPosition3">
+          <div class="table-responsive p-4">
+            <table class="
+                  align-middle
+                  text-truncate
+                  mb-0
+                  table table-sm table-borderless table-hover
+                ">
+              <thead>
+                <tr>
+                  <th class="text-left">Tipo de Usuario</th>
+                  <th class="text-left">Cantidad</th>
+                  <th class="text-left">Porcentaje</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="text-left">Saludpol</td>
+                  <td>{{ this.saludpol.length }}</td>
+                  <td>{{ getporcentaje(this.saludpol.length) }}</td>
                 </tr>
                 <tr>
-                  <td class="text-left">{{ this.recomen4[0].escalaRecomendacion }}</td>
-                  <td class="text-left">{{ this.recomen4.length }}</td>
-                  <td class="text-left">{{ getPorcentaje(this.recomen4.length) }}</td>
+                  <td class="text-left">Fopasef</td>
+                  <td>{{ this.fopasef.length }}</td>
+                  <td>{{getporcentaje(this.fopasef.length) }}</td>
                 </tr>
                 <tr>
-                  <td class="text-left">{{ this.recomen5[0].escalaRecomendacion }}</td>
-                  <td class="text-left">{{ this.recomen5.length }}</td>
-                  <td class="text-left">{{ getPorcentaje(this.recomen5.length) }}</td>
+                  <td class="text-left">Sedapal</td>
+                  <td class="text-left">{{ this.sedapal.length }}</td>
+                  <td class="text-left">{{ getporcentaje(this.sedapal.length)}}</td>
                 </tr>
                 <tr>
-                  <td class="text-left">{{ this.recomen6[0].escalaRecomendacion }}</td>
-                  <td class="text-left">{{ this.recomen6.length }}</td>
-                  <td class="text-left">{{ getPorcentaje(this.recomen6.length) }}</td>
+                  <td class="text-left">Petroperu</td>
+                  <td class="text-left">{{ this.petroperu.length }}</td>
+                  <td class="text-left">{{ getporcentaje(this.petroperu.length)}}</td>
                 </tr>
                 <tr>
-                  <td class="text-left">{{ this.recomen7[0].escalaRecomendacion }}</td>
-                  <td class="text-left">{{ this.recomen7.length }}</td>
-                  <td class="text-left">{{ getPorcentaje(this.recomen7.length) }}</td>
+                  <td class="text-left">Crecer</td>
+                  <td class="text-left">{{ this.crecer.length }}</td>
+                  <td class="text-left">{{ getporcentaje(this.crecer.length)}}</td>
                 </tr>
                 <tr>
-                  <td class="text-left">{{ this.recomen8[0].escalaRecomendacion }}</td>
-                  <td class="text-left">{{ this.recomen8.length }}</td>
-                  <td class="text-left">{{ getPorcentaje(this.recomen8.length) }}</td>
+                  <td class="text-left">CMP</td>
+                  <td class="text-left">{{ this.cmp.length }}</td>
+                  <td class="text-left">{{ getporcentaje(this.cmp.length)}}</td>
                 </tr>
                 <tr>
-                  <td class="text-left">{{ this.recomen9[0].escalaRecomendacion }}</td>
-                  <td class="text-left">{{ this.recomen9.length }}</td>
-                  <td class="text-left">{{ getPorcentaje(this.recomen9.length) }}</td>
+                  <td class="text-left">BCRP</td>
+                  <td class="text-left">{{ this.bcrp.length }}</td>
+                  <td class="text-left">{{ getporcentaje(this.bcrp.length)}}</td>
                 </tr>
                 <tr>
-                  <td class="text-left">{{ this.recomen10[0].escalaRecomendacion }}</td>
-                  <td class="text-left">{{ this.recomen10.length }}</td>
-                  <td class="text-left">{{ getPorcentaje(this.recomen10.length) }}</td>
+                  <td class="text-left">Otros</td>
+                  <td class="text-left">{{ this.otrocon.length }}</td>
+                  <td class="text-left">{{ getporcentaje(this.otrocon.length)}}</td>
+                </tr>
+                <tr>
+                  <th class="text-left">Total</th>
+                  <td class="text-left">{{ this.sumconvenio}}</td>
+                  <td class="text-left">{{ getporcentaje(this.sumconvenio)}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-12 col-xl-6">
+      <div class="card mt-sm-5 mt-md-0">
+        <div class="card-header">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-8">
+                <h5>Tipo de paciente: Compañia Seguro</h5>
+              </div>
+              <div class="col-md-4">
+                <button type="button" (click)="showTableDasboard(3, 2)" class="btn-shadow btn btn-info float-right">
+                  <i class="pe-7s-graph3"></i>
+                </button>
+                <button type="button" (click)="showTableDasboard(3, 1)"
+                  class="btn-shadow mr-3 btn btn-info float-right">
+                  <i class="pe-7s-graph"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body" *ngIf="isPosition3">
+          <loading *ngIf="isLoading3">{{ isLoading }}</loading>
+          <div class="chart" *ngIf="!isLoading3">
+            <canvas baseChart [data]="pieChartData24" [labels]="pieChartLabels24" [chartType]="pieChartType24"
+              [options]="pieChartOptions24" [plugins]="pieChartPlugins24" [colors]="pieChartColors24"
+              [legend]="pieChartLegend24">
+            </canvas>
+          </div>
+        </div>
+        <div class="card-body" *ngIf="!isPosition3">
+          <div class="table-responsive p-4">
+            <table class="
+                  align-middle
+                  text-truncate
+                  mb-0
+                  table table-sm table-borderless table-hover
+                ">
+              <thead>
+                <tr>
+                  <th class="text-left">Tipo de Usuario</th>
+                  <th class="text-left">Cantidad</th>
+                  <th class="text-left">Porcentaje</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="text-left">Rimac</td>
+                  <td>{{ tthis.rimac.length }}</td>
+                  <td>{{ getporcentaje(this.rimac.length) }}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Pacifico</td>
+                  <td>{{ this.pacifico.length }}</td>
+                  <td>{{getporcentaje(this.pacifico.length) }}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">La Positiva</td>
+                  <td class="text-left">{{ this.positiva.length }}</td>
+                  <td class="text-left">{{ getporcentaje(this.positiva.length)}}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Mapfre</td>
+                  <td class="text-left">{{ this.mapfre.length }}</td>
+                  <td class="text-left">{{ getporcentaje(this.mapfre.length)}}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Sanitas</td>
+                  <td class="text-left">{{ this.sanitas.length }}</td>
+                  <td class="text-left">{{ getporcentaje(this.sanitas.length)}}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">InterSeguro</td>
+                  <td class="text-left">{{ this.interseguro.length }}</td>
+                  <td class="text-left">{{ getporcentaje(this.interseguro.length)}}</td>
+                </tr>
+                <tr>
+                  <th class="text-left">Total</th>
+                  <td class="text-left">{{ this.sumtipopaciente }}</td>
+                  <td class="text-left">{{ getporcentaje(this.sumtipopaciente)}}</td>
                 </tr>
               </tbody>
             </table>
@@ -515,16 +660,15 @@
       </div>
     </div>
   </div>
-
+  <!-- ESCALA DE SATISFACCION Y RECOMENDACION-->
   <div class="row">
     <div class="col-md-6 col-lg-12 col-xl-6">
-
       <div class="card mt-sm-5 mt-md-0">
         <div class="card-header">
           <div class="col-md-12">
             <div class="row">
               <div class="col-md-8">
-                <h4>Reclamos Resueltos</h4>
+                <h6>Reegistro general de Satisfaccion por servicio</h6>
               </div>
               <div class="col-md-4">
                 <button type="button" (click)="showTableDasboard(5, 2)" class="btn-shadow btn btn-info float-right">
@@ -541,13 +685,8 @@
         <div class="card-body" *ngIf="isPosition5">
           <loading *ngIf="isLoading5">{{ isLoading }}</loading>
           <div class="chart" *ngIf="!isLoading5">
-            <canvas baseChart 
-              [data]="pieChartData4" 
-              [labels]="pieChartLabels4" 
-              [chartType]="pieChartType4"
-              [options]="pieChartOptions4" 
-              [plugins]="pieChartPlugins4" 
-              [colors]="pieChartColors4"
+            <canvas baseChart [data]="pieChartData4" [labels]="pieChartLabels4" [chartType]="pieChartType4"
+              [options]="pieChartOptions4" [plugins]="pieChartPlugins4" [colors]="pieChartColors4"
               [legend]="pieChartLegend4">
             </canvas>
           </div>
@@ -555,36 +694,36 @@
         <div class="card-body" *ngIf="!isPosition5">
           <div class="table-responsive p-4">
             <table class="
-                  align-middle
-                  text-truncate
-                  mb-0
-                  table table-sm table-borderless table-hover
-                ">
+                    align-middle
+                    text-truncate
+                    mb-0
+                    table table-sm table-borderless table-hover
+                  ">
               <thead>
                 <tr>
-                  <th class="text-left"></th>                  
+                  <th class="text-left"></th>
                   <th class="text-left">Muy Bueno</th>
                   <th class="text-left">Bueno</th>
                   <th class="text-left">Regular</th>
                   <th class="text-left">Malo</th>
                   <th class="text-left">Muy Malo</th>
-                  <th class="text-left">NA</th>                                    
+                  <th class="text-left">NA</th>
                 </tr>
                 <tr>
-                  <th class="text-left">Servicio de Salud</th>                  
-                </tr>               
+                  <th class="text-left">Servicio de Salud</th>
+                </tr>
               </thead>
-              <tbody>                
-                <tr>                                  
+              <tbody>
+                <tr>
                   <td class="text-left">Medico</td>
                   <td>{{ getporcentajesati(this._DOCmuybueno.length) }}</td>
                   <td>{{ getporcentajesati(this._DOCbuenoo.length) }}</td>
                   <td>{{ getporcentajesati(this._DOCregular.length) }}</td>
                   <td>{{ getporcentajesati(this._DOCmaloo.length) }}</td>
                   <td>{{ getporcentajesati(this._DOCmuymalo.length) }}</td>
-                  <td>{{ getporcentajesati(this._DOCna.length) }}</td>                  
+                  <td>{{ getporcentajesati(this._DOCna.length) }}</td>
                 </tr>
-                <tr>                  
+                <tr>
                   <td class="text-left">Enfermera</td>
                   <td>{{ getporcentajesati(this._ENmuybueno.length) }}</td>
                   <td>{{ getporcentajesati(this._ENbuenoo.length) }}</td>
@@ -593,7 +732,7 @@
                   <td>{{ getporcentajesati(this._ENmuymalo.length) }}</td>
                   <td>{{ getporcentajesati(this._ENna.length) }}</td>
                 </tr>
-                <tr>                  
+                <tr>
                   <td class="text-left">Técnica</td>
                   <td>{{ getporcentajesati(this._TECmuybueno.length) }}</td>
                   <td>{{ getporcentajesati(this._TECbuenoo.length) }}</td>
@@ -601,15 +740,15 @@
                   <td>{{ getporcentajesati(this._TECmaloo.length) }}</td>
                   <td>{{ getporcentajesati(this._TECmuymalo.length) }}</td>
                   <td>{{ getporcentajesati(this._TECna.length) }}</td>
-                </tr>                
+                </tr>
               </tbody>
-              <thead>                
+              <thead>
                 <tr>
-                  <th class="text-left">Servicios Auxiliares</th>                  
-                </tr>               
+                  <th class="text-left">Servicios Auxiliares</th>
+                </tr>
               </thead>
-              <tbody>                
-                <tr>                                   
+              <tbody>
+                <tr>
                   <td class="text-left">Farmacia</td>
                   <td>{{ getporcentajesati(this._FAmuybueno.length) }}</td>
                   <td>{{ getporcentajesati(this._FAbuenoo.length) }}</td>
@@ -617,9 +756,9 @@
                   <td>{{ getporcentajesati(this._FAmaloo.length) }}</td>
                   <td>{{ getporcentajesati(this._FAmuymalo.length) }}</td>
                   <td>{{ getporcentajesati(this._FAna.length) }}</td>
-                  
+
                 </tr>
-                <tr>                 
+                <tr>
                   <td class="text-left">Laboratorio</td>
                   <td>{{ getporcentajesati(this._LAmuybueno.length) }}</td>
                   <td>{{ getporcentajesati(this._LAbuenoo.length) }}</td>
@@ -628,7 +767,7 @@
                   <td>{{ getporcentajesati(this._LAmuymalo.length) }}</td>
                   <td>{{ getporcentajesati(this._LAna.length) }}</td>
                 </tr>
-                <tr>                  
+                <tr>
                   <td class="text-left">Imágenes</td>
                   <td>{{ getporcentajesati(this._IMmuybueno.length) }}</td>
                   <td>{{ getporcentajesati(this._IMbuenoo.length) }}</td>
@@ -636,15 +775,15 @@
                   <td>{{ getporcentajesati(this._IMmaloo.length) }}</td>
                   <td>{{ getporcentajesati(this._IMmuymalo.length) }}</td>
                   <td>{{ getporcentajesati(this._IMna.length) }}</td>
-                </tr>                
+                </tr>
               </tbody>
-              <thead>                
+              <thead>
                 <tr>
-                  <th class="text-left">Servicios Administrativo</th>                  
-                </tr>               
+                  <th class="text-left">Servicios Administrativo</th>
+                </tr>
               </thead>
-              <tbody>                
-                <tr>                                   
+              <tbody>
+                <tr>
                   <td class="text-left">Admisión</td>
                   <td>{{ getporcentajesati(this.muybueno.length) }}</td>
                   <td>{{ getporcentajesati(this.buenoo.length) }}</td>
@@ -652,9 +791,9 @@
                   <td>{{ getporcentajesati(this.maloo.length) }}</td>
                   <td>{{ getporcentajesati(this.muymalo.length) }}</td>
                   <td>{{ getporcentajesati(this.na.length) }}</td>
-                  
+
                 </tr>
-                <tr>                  
+                <tr>
                   <td class="text-left">Convenios</td>
                   <td>{{ getporcentajesati(this._COmuybueno.length) }}</td>
                   <td>{{ getporcentajesati(this._CObuenoo.length) }}</td>
@@ -663,7 +802,7 @@
                   <td>{{ getporcentajesati(this._COmuymalo.length) }}</td>
                   <td>{{ getporcentajesati(this._COna.length) }}</td>
                 </tr>
-                <tr>                  
+                <tr>
                   <td class="text-left">Atención al Cliente</td>
                   <td>{{ getporcentajesati(this._ACmuybueno.length) }}</td>
                   <td>{{ getporcentajesati(this._ACbuenoo.length) }}</td>
@@ -671,15 +810,15 @@
                   <td>{{ getporcentajesati(this._ACmaloo.length) }}</td>
                   <td>{{ getporcentajesati(this._ACmuymalo.length) }}</td>
                   <td>{{ getporcentajesati(this._ACna.length) }}</td>
-                </tr>                
+                </tr>
               </tbody>
-              <thead>                
+              <thead>
                 <tr>
-                  <th class="text-left">Infraestructura</th>                  
-                </tr>               
+                  <th class="text-left">Infraestructura</th>
+                </tr>
               </thead>
-              <tbody>                
-                <tr>                                  
+              <tbody>
+                <tr>
                   <td class="text-left">Aseo y Limpieza</td>
                   <td>{{ getporcentajesati(this._LIMmuybueno.length) }}</td>
                   <td>{{ getporcentajesati(this._LIMbuenoo.length) }}</td>
@@ -688,7 +827,7 @@
                   <td>{{ getporcentajesati(this._LIMmuymalo.length) }}</td>
                   <td>{{ getporcentajesati(this._LIMna.length) }}</td>
                 </tr>
-                <tr>                  
+                <tr>
                   <td class="text-left">Modernidad</td>
                   <td>{{ getporcentajesati(this._MOmuybueno.length) }}</td>
                   <td>{{ getporcentajesati(this._MObuenoo.length) }}</td>
@@ -697,7 +836,7 @@
                   <td>{{ getporcentajesati(this._MOmuymalo.length) }}</td>
                   <td>{{ getporcentajesati(this._MOna.length) }}</td>
                 </tr>
-                <tr>                  
+                <tr>
                   <td class="text-left">Comnodidad</td>
                   <td>{{ getporcentajesati(this._COMmuybueno.length) }}</td>
                   <td>{{ getporcentajesati(this._COMbuenoo.length) }}</td>
@@ -705,22 +844,131 @@
                   <td>{{ getporcentajesati(this._COMmaloo.length) }}</td>
                   <td>{{ getporcentajesati(this._COMmuymalo.length) }}</td>
                   <td>{{ getporcentajesati(this._COMna.length) }}</td>
-                </tr>                
+                </tr>
               </tbody>
-              <thead>                
+              <thead>
                 <tr>
                   <th class="text-left">TOTAL</th>
                   <td>{{ this.muybueno.length }}</td>
-                  <td>{{ getporcentaje(this.muybueno.length) }}</td>                  
-                </tr>               
+                  <td>{{ getporcentaje(this.muybueno.length) }}</td>
+                </tr>
               </thead>
-              
+
             </table>
           </div>
         </div>
       </div>
-
     </div>
+    <div class="col-md-6 col-lg-12 col-xl-6">
+      <div class="card">
+        <div class="card-header">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-8">
+                <h6>Registro general de recomendación</h6>
+              </div>
+              <div class="col-md-4">
+                <button type="button" (click)="showTableDasboard(4, 2)" class="btn-shadow btn btn-info float-right">
+                  <i class="pe-7s-graph3"></i>
+                </button>
+                <button type="button" (click)="showTableDasboard(4, 1)"
+                  class="btn-shadow mr-3 btn btn-info float-right">
+                  <i class="pe-7s-graph"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body" *ngIf="isPosition4">
+          <loading *ngIf="isLoading4">{{ isLoading }}</loading>
+          <div class="chart" *ngIf="!isLoading4">
+            <canvas baseChart [data]="pieChartData3" [labels]="pieChartLabels3" [chartType]="pieChartType3"
+              [options]="pieChartOptions3" [plugins]="pieChartPlugins3" [colors]="pieChartColors3"
+              [legend]="pieChartLegend3">
+            </canvas>
+          </div>
+        </div>
+        <div class="card-body" *ngIf="!isPosition4">
+          <div class="table-responsive p-4">
+            <table class="
+                align-middle
+                text-truncate
+                mb-0
+                table table-sm table-borderless table-hover
+              ">
+              <thead>
+                <tr>
+                  <th class="text-left">Escala de Recomendación</th>
+                  <th class="text-left">Cantidad</th>
+                  <th class="text-left">Porcentaje</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="text-left">{{ this.datolabel }}</td>
+                  <td class="text-left">{{ this.datonum }}</td>
+                  <td class="text-left">{{ getporcentajeescala(this.datonum)}}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">{{ this.datolabel2}}</td>
+                  <td class="text-left">{{ this.datonum2 }}</td>
+                  <td class="text-left">{{ getporcentajeescala(this.datonum2)}}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">{{ this.datolabel3}}</td>
+                  <td class="text-left">{{ this.datonum3 }}</td>
+                  <td class="text-left">{{ getporcentajeescala(this.datonum3)}}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">{{ this.datolabel4}}</td>
+                  <td class="text-left">{{ this.datonum4 }}</td>
+                  <td class="text-left">{{ getporcentajeescala(this.datonum4)}}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">{{ this.datolabel5}}</td>
+                  <td class="text-left">{{ this.datonum5 }}</td>
+                  <td class="text-left">{{ getporcentajeescala(this.datonum5)}}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">{{ this.datolabel6}}</td>
+                  <td class="text-left">{{ this.datonum6 }}</td>
+                  <td class="text-left">{{ getporcentajeescala(this.datonum6)}}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">{{ this.datolabel7}}</td>
+                  <td class="text-left">{{ this.datonum7 }}</td>
+                  <td class="text-left">{{ getporcentajeescala(this.datonum7)}}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">{{ this.datolabel8}}</td>
+                  <td class="text-left">{{ this.datonum8 }}</td>
+                  <td class="text-left">{{ getporcentajeescala(this.datonum8)}}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">{{ this.datolabel9}}</td>
+                  <td class="text-left">{{ this.datonum9 }}</td>
+                  <td class="text-left">{{ getporcentajeescala(this.datonum9)}}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">{{ this.datolabel10}}</td>
+                  <td class="text-left">{{ this.datonum10 }}</td>
+                  <td class="text-left">{{ getporcentajeescala(this.datonum10)}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </div>
+
+
+
+      
+
+
+
     <!-- <div class="col-md-6 col-lg-12 col-xl-6">
       <div class="card">
         <div class="card-header">
@@ -777,6 +1025,6 @@
         </div>
       </div>
     </div> -->
-  </div>
+  
 
 </section>
