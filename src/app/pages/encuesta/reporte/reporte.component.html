@@ -1,0 +1,1030 @@
+<section class="section mt-2">
+  <div class="card">
+    <div class="card-body align-items-center">
+      <form [formGroup]="seachForm">
+        <div class="form-row">
+          <div class="col-md-3">
+            <div class="position-relative form-group">
+              <label for="exampleEmail11" class="">Seleccionar por fechas/periodo</label>
+              <select class="form-control form-control-sm" formControlName="opselect" (change)="onChange($event)">
+                <option value="">Seleccionar</option>
+                <option value="1" selected>Periodo</option>
+                <option value="2">Rango de fechas</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-3" *ngIf="isPeriodo">
+            <div class="position-relative form-group">
+              <label class="">Periodo</label>
+              <input class="form-control form-control-sm" [(ngModel)]="ngperiodo" formControlName="periodo"
+                type="month" />
+            </div>
+          </div>
+          <div class="col-md-4" *ngIf="isRangoFecha">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="position-relative form-group">
+                  <label class="">Fecha Inicio</label>
+                  <input name="password" type="date" formControlName="fecha_inicio"
+                    class="form-control form-control-sm" />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="position-relative form-group">
+                  <label class="">Fecha Final</label>
+                  <input name="password" type="date" formControlName="fecha_fin" class="form-control form-control-sm" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="position-relative form-group">
+              <label for="exampleEmail11" class="">Sede</label>
+              <select class="form-control form-control-sm" formControlName="sede">
+                <option value="0">Todos las sedes</option>
+                <option value="1">Lima</option>
+                <option value="2">Chorrillos</option>
+                <option value="4">Surco</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="input-group">
+              <div class="input-group-btn pt-4">
+                <button (click)="search()" class="mb-2 mr-2 btn btn-primary btn-sm float-right">
+                  <i class="pe-7s-search"> </i>Procesar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+      <div class="card">
+        <div class="card-statistic-4">
+          <div class="align-items-center justify-content-between">
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
+                <div class="card-content">
+                  <h5 class="font-15">REGISTRO TOTAL DE ENCUESTA</h5>
+                  <h2 class="mb-3 font-18">
+                    {{ this.listencuesta }}
+                  </h2>
+                  <!--p class="mb-0">
+                        <span class="col-green">10%</span> Increase
+                      </p-->
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
+                <div class="banner-img">
+                  <img src="assets/images/banner/reclamos_registrados.png" width="84" alt="" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+      <div class="card">
+        <div class="card-statistic-4">
+          <div class="align-items-center justify-content-between">
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
+                <div class="card-content">
+                  <h5 class="font-15">REGISTRO TOTAL DE LIMA</h5>
+                  <h2 class="mb-3 font-18">
+                    {{ this.listlima.length }}
+                  </h2>
+                  <!--p class="mb-0">
+                      <span class="col-orange">09%</span> Decrease
+                    </p-->
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
+                <div class="banner-img">
+                  <img src="assets/images/banner/reclamos_resueltos.png" width="84" alt="" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+      <div class="card">
+        <div class="card-statistic-4">
+          <div class="align-items-center justify-content-between">
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
+                <div class="card-content">
+                  <h5 class="font-15">REGISTRO TOTAL DE CHORRILLOS</h5>
+                  <h2 class="mb-3 font-18">
+                    {{ this.listchorrillos.length }}
+                  </h2>
+                  <!--p class="mb-0">
+                      <span class="col-green">18%</span> Increase
+                    </p-->
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
+                <div class="banner-img">
+                  <img src="assets/images/banner/reclamos_pendiente.png" width="84" alt="" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+      <div class="card">
+        <div class="card-statistic-4">
+          <div class="align-items-center justify-content-between">
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
+                <div class="card-content">
+                  <h5 class="font-15">REGISTRO TOTAL DE SURCO</h5>
+                  <h2 class="mb-3 font-18">
+                    {{ this.listsurco.length }}
+                  </h2>
+                  <!--p class="mb-0">
+                      <span class="col-green">18%</span> Increase
+                    </p-->
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
+                <div class="banner-img">
+                  <img src="assets/images/banner/otros.png" width="84" alt="" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEDE Y MODALIDAD -->
+  <div class="row">
+    <div class="col-md-6 col-lg-12 col-xl-6">
+      <!-- Support tickets -->
+      <div class="card mt-sm-5 mt-md-0">
+        <div class="card-header">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-8">
+                <h5>Registro general por sucursal</h5>
+              </div>
+              <div class="col-md-4">
+                <button type="button" (click)="showTableDasboard(1, 2)" class="btn-shadow btn btn-info float-right">
+                  <i class="pe-7s-graph3"></i>
+                </button>
+                <button type="button" (click)="showTableDasboard(1, 1)"
+                  class="btn-shadow mr-3 btn btn-info float-right">
+                  <i class="pe-7s-graph"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body" *ngIf="isPosition1">
+          <loading *ngIf="isLoading">{{ isLoading }}</loading>
+          <div class="d-block" *ngIf="!isLoading">
+            <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+              [plugins]="barChartPlugins" [legend]="barChartLegend" [chartType]="barChartType">
+            </canvas>
+          </div>
+        </div>
+        <div class="card-body" *ngIf="!isPosition1">
+          <div class="table-responsive p-4">
+            <table class="
+                  align-middle
+                  text-truncate
+                  mb-0
+                  table table-sm table-borderless table-hover
+                ">
+              <thead>
+                <tr>
+                  <th class="text-left">Sede</th>
+                  <th class="text-left">Cantidad</th>
+                  <th class="text-left">Porcentaje</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="text-left">Lima</td>
+                  <td>{{ this.listlima.length }}</td>
+                  <td>{{ getporcentaje(this.listlima.length) }}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Chorrillos</td>
+                  <td>{{ this.listchorrillos.length }}</td>
+                  <td>{{getporcentaje(this.listchorrillos.length) }}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Surco</td>
+                  <td class="text-left">{{ this.listsurco.length }}</td>
+                  <td class="text-left">{{ getporcentaje(this.listsurco.length)}}</td>
+                </tr>
+                <tr>
+                  <th class="text-left">Total</th>
+                  <td class="text-left">{{ this.listlima.length + this.listchorrillos.length + this.listsurco.length  }}</td>
+                  <td class="text-left">{{ getporcentaje(this.listlima.length + this.listchorrillos.length + this.listsurco.length )}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-12 col-xl-6">
+      <div class="card">
+        <div class="card-header">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-8">
+                <h6>Registros general por Origen de ingreso</h6>
+              </div>
+              <div class="col-md-4">
+                <button type="button" (click)="showTableDasboard(2, 2)" class="btn-shadow btn btn-info float-right">
+                  <i class="pe-7s-graph3"></i>
+                </button>
+                <button type="button" (click)="showTableDasboard(2, 1)"
+                  class="btn-shadow mr-3 btn btn-info float-right">
+                  <i class="pe-7s-graph"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body" *ngIf="isPosition2">
+          <loading *ngIf="isLoading2">{{ isLoading }}</loading>
+          <div class="chart" *ngIf="!isLoading2">
+            <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"
+              [options]="pieChartOptions" [plugins]="pieChartPlugins" [colors]="pieChartColors"
+              [legend]="pieChartLegend">
+            </canvas>
+          </div>
+        </div>
+        <div class="card-body" *ngIf="!isPosition2">
+          <div class="table-responsive p-4">
+            <table class="
+                  align-middle
+                  text-truncate
+                  mb-0
+                  table table-sm table-borderless table-hover
+                ">
+              <thead>
+                <tr>
+                  <th class="text-left">Modalidad</th>
+                  <th class="text-left">Cantidad</th>
+                  <th class="text-left">Porcentaje</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="text-left">Hospitalización</td>
+                  <td>{{ this.listhospita.length }}</td>
+                  <td>{{ getporcentaje(this.listhospita.length) }}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Consultorio</td>
+                  <td>{{ this.listconsultorio.length }}</td>
+                  <td>{{getporcentaje(this.listconsultorio.length) }}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Emergencia</td>
+                  <td class="text-left">{{ this.listemergencia.length }}</td>
+                  <td class="text-left">{{ getporcentaje( this.listemergencia.length)}}</td>
+                </tr>
+                <tr>
+                  <th class="text-left">Total</th>
+                  <td class="text-left">{{ this.listhospita.length + this.listconsultorio.length + this.listemergencia.length }}</td>
+                  <td class="text-left">{{ getporcentaje( this.listhospita.length + this.listconsultorio.length + this.listemergencia.length)}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- TIPO PACIENTE Y PLAN SALUD-->
+  <div class="row">
+    <div class="col-md-6 col-lg-12 col-xl-6">
+      <div class="card mt-sm-5 mt-md-0">
+        <div class="card-header">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-8">
+                <h5>Registro general por tipo de paciente</h5>
+              </div>
+              <div class="col-md-4">
+                <button type="button" (click)="showTableDasboard(3, 2)" class="btn-shadow btn btn-info float-right">
+                  <i class="pe-7s-graph3"></i>
+                </button>
+                <button type="button" (click)="showTableDasboard(3, 1)"
+                  class="btn-shadow mr-3 btn btn-info float-right">
+                  <i class="pe-7s-graph"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body" *ngIf="isPosition3">
+          <loading *ngIf="isLoading3">{{ isLoading }}</loading>
+          <div class="chart" *ngIf="!isLoading3">
+            <canvas baseChart [data]="pieChartData2" [labels]="pieChartLabels2" [chartType]="pieChartType2"
+              [options]="pieChartOptions2" [plugins]="pieChartPlugins2" [colors]="pieChartColors2"
+              [legend]="pieChartLegend2">
+            </canvas>
+          </div>
+        </div>
+        <div class="card-body" *ngIf="!isPosition3">
+          <div class="table-responsive p-4">
+            <table class="
+                  align-middle
+                  text-truncate
+                  mb-0
+                  table table-sm table-borderless table-hover
+                ">
+              <thead>
+                <tr>
+                  <th class="text-left">Tipo de Usuario</th>
+                  <th class="text-left">Cantidad</th>
+                  <th class="text-left">Porcentaje</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="text-left">Plan Salud</td>
+                  <td>{{ this.plansalud.length }}</td>
+                  <td>{{ getporcentaje(this.plansalud.length) }}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Institucional</td>
+                  <td>{{ this.institucional.length }}</td>
+                  <td>{{getporcentaje(this.institucional.length) }}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Convenio</td>
+                  <td class="text-left">{{ this.convenio.length }}</td>
+                  <td class="text-left">{{ getporcentaje(this.convenio.length)}}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Compañia Seguro</td>
+                  <td class="text-left">{{ this.compania.length }}</td>
+                  <td class="text-left">{{ getporcentaje(this.compania.length)}}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Madre Niño</td>
+                  <td class="text-left">{{ this.madrenino.length }}</td>
+                  <td class="text-left">{{ getporcentaje(this.madrenino.length)}}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Otros</td>
+                  <td class="text-left">{{ this.otross.length }}</td>
+                  <td class="text-left">{{ getporcentaje(this.otross.length)}}</td>
+                </tr>
+                <tr>
+                  <th class="text-left">Total</th>
+                  <td class="text-left">{{ this.sumtipopaciente }}</td>
+                  <td class="text-left">{{ getporcentaje(this.sumtipopaciente)}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-12 col-xl-6">
+      <div class="card mt-sm-5 mt-md-0">
+        <div class="card-header">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-8">
+                <h5>Tipo de paciente: Plan Salud</h5>
+              </div>
+              <div class="col-md-4">
+                <button type="button" (click)="showTableDasboard(3, 2)" class="btn-shadow btn btn-info float-right">
+                  <i class="pe-7s-graph3"></i>
+                </button>
+                <button type="button" (click)="showTableDasboard(3, 1)"
+                  class="btn-shadow mr-3 btn btn-info float-right">
+                  <i class="pe-7s-graph"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body" *ngIf="isPosition3">
+          <loading *ngIf="isLoading3">{{ isLoading }}</loading>
+          <div class="chart" *ngIf="!isLoading3">
+            <canvas baseChart [data]="pieChartData22" [labels]="pieChartLabels22" [chartType]="pieChartType22"
+              [options]="pieChartOptions22" [plugins]="pieChartPlugins22" [colors]="pieChartColors22"
+              [legend]="pieChartLegend22">
+            </canvas>
+          </div>
+        </div>
+        <div class="card-body" *ngIf="!isPosition3">
+          <div class="table-responsive p-4">
+            <table class="
+                  align-middle
+                  text-truncate
+                  mb-0
+                  table table-sm table-borderless table-hover
+                ">
+              <thead>
+                <tr>
+                  <th class="text-left">Tipo de Usuario</th>
+                  <th class="text-left">Cantidad</th>
+                  <th class="text-left">Porcentaje</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="text-left">Tarjeta CLASICA</td>
+                  <td>{{ this.clasica.length }}</td>
+                  <td>{{ getporcentajetarjeta(this.clasica.length) }}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Tarjeta DORADA</td>
+                  <td>{{ this.dorada.length }}</td>
+                  <td>{{getporcentajetarjeta(this.dorada.length) }}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Tarjeta DIAMANTE</td>
+                  <td class="text-left">{{ this.diamante.length }}</td>
+                  <td class="text-left">{{ getporcentajetarjeta(this.diamante.length)}}</td>
+                </tr>                
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- CONVENIO Y COMPAÑIA SEGURO-->
+  <div class="row">
+    <div class="col-md-6 col-lg-12 col-xl-6">
+      <div class="card mt-sm-5 mt-md-0">
+        <div class="card-header">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-8">
+                <h5>Tipo de paciente: Convenio</h5>
+              </div>
+              <div class="col-md-4">
+                <button type="button" (click)="showTableDasboard(3, 2)" class="btn-shadow btn btn-info float-right">
+                  <i class="pe-7s-graph3"></i>
+                </button>
+                <button type="button" (click)="showTableDasboard(3, 1)"
+                  class="btn-shadow mr-3 btn btn-info float-right">
+                  <i class="pe-7s-graph"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body" *ngIf="isPosition3">
+          <loading *ngIf="isLoading3">{{ isLoading }}</loading>
+          <div class="chart" *ngIf="!isLoading3">
+            <canvas baseChart [data]="pieChartData23" [labels]="pieChartLabels23" [chartType]="pieChartType23"
+              [options]="pieChartOptions23" [plugins]="pieChartPlugins23" [colors]="pieChartColors23"
+              [legend]="pieChartLegend23">
+            </canvas>
+          </div>
+        </div>
+        <div class="card-body" *ngIf="!isPosition3">
+          <div class="table-responsive p-4">
+            <table class="
+                  align-middle
+                  text-truncate
+                  mb-0
+                  table table-sm table-borderless table-hover
+                ">
+              <thead>
+                <tr>
+                  <th class="text-left">Tipo de Usuario</th>
+                  <th class="text-left">Cantidad</th>
+                  <th class="text-left">Porcentaje</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="text-left">Saludpol</td>
+                  <td>{{ this.saludpol.length }}</td>
+                  <td>{{ getporcentaje(this.saludpol.length) }}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Fopasef</td>
+                  <td>{{ this.fopasef.length }}</td>
+                  <td>{{getporcentaje(this.fopasef.length) }}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Sedapal</td>
+                  <td class="text-left">{{ this.sedapal.length }}</td>
+                  <td class="text-left">{{ getporcentaje(this.sedapal.length)}}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Petroperu</td>
+                  <td class="text-left">{{ this.petroperu.length }}</td>
+                  <td class="text-left">{{ getporcentaje(this.petroperu.length)}}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Crecer</td>
+                  <td class="text-left">{{ this.crecer.length }}</td>
+                  <td class="text-left">{{ getporcentaje(this.crecer.length)}}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">CMP</td>
+                  <td class="text-left">{{ this.cmp.length }}</td>
+                  <td class="text-left">{{ getporcentaje(this.cmp.length)}}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">BCRP</td>
+                  <td class="text-left">{{ this.bcrp.length }}</td>
+                  <td class="text-left">{{ getporcentaje(this.bcrp.length)}}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Otros</td>
+                  <td class="text-left">{{ this.otrocon.length }}</td>
+                  <td class="text-left">{{ getporcentaje(this.otrocon.length)}}</td>
+                </tr>
+                <tr>
+                  <th class="text-left">Total</th>
+                  <td class="text-left">{{ this.sumconvenio}}</td>
+                  <td class="text-left">{{ getporcentaje(this.sumconvenio)}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-12 col-xl-6">
+      <div class="card mt-sm-5 mt-md-0">
+        <div class="card-header">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-8">
+                <h5>Tipo de paciente: Compañia Seguro</h5>
+              </div>
+              <div class="col-md-4">
+                <button type="button" (click)="showTableDasboard(3, 2)" class="btn-shadow btn btn-info float-right">
+                  <i class="pe-7s-graph3"></i>
+                </button>
+                <button type="button" (click)="showTableDasboard(3, 1)"
+                  class="btn-shadow mr-3 btn btn-info float-right">
+                  <i class="pe-7s-graph"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body" *ngIf="isPosition3">
+          <loading *ngIf="isLoading3">{{ isLoading }}</loading>
+          <div class="chart" *ngIf="!isLoading3">
+            <canvas baseChart [data]="pieChartData24" [labels]="pieChartLabels24" [chartType]="pieChartType24"
+              [options]="pieChartOptions24" [plugins]="pieChartPlugins24" [colors]="pieChartColors24"
+              [legend]="pieChartLegend24">
+            </canvas>
+          </div>
+        </div>
+        <div class="card-body" *ngIf="!isPosition3">
+          <div class="table-responsive p-4">
+            <table class="
+                  align-middle
+                  text-truncate
+                  mb-0
+                  table table-sm table-borderless table-hover
+                ">
+              <thead>
+                <tr>
+                  <th class="text-left">Tipo de Usuario</th>
+                  <th class="text-left">Cantidad</th>
+                  <th class="text-left">Porcentaje</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="text-left">Rimac</td>
+                  <td>{{ this.rimac.length }}</td>
+                  <td>{{ getporcentaje(this.rimac.length) }}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Pacifico</td>
+                  <td>{{ this.pacifico.length }}</td>
+                  <td>{{getporcentaje(this.pacifico.length) }}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">La Positiva</td>
+                  <td class="text-left">{{ this.positiva.length }}</td>
+                  <td class="text-left">{{ getporcentaje(this.positiva.length)}}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Mapfre</td>
+                  <td class="text-left">{{ this.mapfre.length }}</td>
+                  <td class="text-left">{{ getporcentaje(this.mapfre.length)}}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Sanitas</td>
+                  <td class="text-left">{{ this.sanitas.length }}</td>
+                  <td class="text-left">{{ getporcentaje(this.sanitas.length)}}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">InterSeguro</td>
+                  <td class="text-left">{{ this.interseguro.length }}</td>
+                  <td class="text-left">{{ getporcentaje(this.interseguro.length)}}</td>
+                </tr>
+                <tr>
+                  <th class="text-left">Total</th>
+                  <td class="text-left">{{ this.sumtipopaciente }}</td>
+                  <td class="text-left">{{ getporcentaje(this.sumtipopaciente)}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ESCALA DE SATISFACCION Y RECOMENDACION-->
+  <div class="row">
+    <div class="col-md-6 col-lg-12 col-xl-6">
+      <div class="card mt-sm-5 mt-md-0">
+        <div class="card-header">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-8">
+                <h6>Reegistro general de Satisfaccion por servicio</h6>
+              </div>
+              <div class="col-md-4">
+                <button type="button" (click)="showTableDasboard(5, 2)" class="btn-shadow btn btn-info float-right">
+                  <i class="pe-7s-graph3"></i>
+                </button>
+                <button type="button" (click)="showTableDasboard(5, 1)"
+                  class="btn-shadow mr-3 btn btn-info float-right">
+                  <i class="pe-7s-graph"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body" *ngIf="isPosition5">
+          <loading *ngIf="isLoading5">{{ isLoading }}</loading>
+          <div class="chart" *ngIf="!isLoading5">
+            <canvas baseChart [data]="pieChartData4" [labels]="pieChartLabels4" [chartType]="pieChartType4"
+              [options]="pieChartOptions4" [plugins]="pieChartPlugins4" [colors]="pieChartColors4"
+              [legend]="pieChartLegend4">
+            </canvas>
+          </div>
+        </div>
+        <div class="card-body" *ngIf="!isPosition5">
+          <div class="table-responsive p-4">
+            <table class="
+                    align-middle
+                    text-truncate
+                    mb-0
+                    table table-sm table-borderless table-hover
+                  ">
+              <thead>
+                <tr>
+                  <th class="text-left"></th>
+                  <th class="text-left">Muy Bueno</th>
+                  <th class="text-left">Bueno</th>
+                  <th class="text-left">Regular</th>
+                  <th class="text-left">Malo</th>
+                  <th class="text-left">Muy Malo</th>
+                  <th class="text-left">NA</th>
+                </tr>
+                <tr>
+                  <th class="text-left">Servicio de Salud</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="text-left">Medico</td>
+                  <td>{{ getporcentajesati(this._DOCmuybueno.length) }}</td>
+                  <td>{{ getporcentajesati(this._DOCbuenoo.length) }}</td>
+                  <td>{{ getporcentajesati(this._DOCregular.length) }}</td>
+                  <td>{{ getporcentajesati(this._DOCmaloo.length) }}</td>
+                  <td>{{ getporcentajesati(this._DOCmuymalo.length) }}</td>
+                  <td>{{ getporcentajesati(this._DOCna.length) }}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Enfermera</td>
+                  <td>{{ getporcentajesati(this._ENmuybueno.length) }}</td>
+                  <td>{{ getporcentajesati(this._ENbuenoo.length) }}</td>
+                  <td>{{ getporcentajesati(this._ENregular.length) }}</td>
+                  <td>{{ getporcentajesati(this._ENmaloo.length) }}</td>
+                  <td>{{ getporcentajesati(this._ENmuymalo.length) }}</td>
+                  <td>{{ getporcentajesati(this._ENna.length) }}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Técnica</td>
+                  <td>{{ getporcentajesati(this._TECmuybueno.length) }}</td>
+                  <td>{{ getporcentajesati(this._TECbuenoo.length) }}</td>
+                  <td>{{ getporcentajesati(this._TECregular.length) }}</td>
+                  <td>{{ getporcentajesati(this._TECmaloo.length) }}</td>
+                  <td>{{ getporcentajesati(this._TECmuymalo.length) }}</td>
+                  <td>{{ getporcentajesati(this._TECna.length) }}</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr>
+                  <th class="text-left">Servicios Auxiliares</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="text-left">Farmacia</td>
+                  <td>{{ getporcentajesati(this._FAmuybueno.length) }}</td>
+                  <td>{{ getporcentajesati(this._FAbuenoo.length) }}</td>
+                  <td>{{ getporcentajesati(this._FAregular.length) }}</td>
+                  <td>{{ getporcentajesati(this._FAmaloo.length) }}</td>
+                  <td>{{ getporcentajesati(this._FAmuymalo.length) }}</td>
+                  <td>{{ getporcentajesati(this._FAna.length) }}</td>
+
+                </tr>
+                <tr>
+                  <td class="text-left">Laboratorio</td>
+                  <td>{{ getporcentajesati(this._LAmuybueno.length) }}</td>
+                  <td>{{ getporcentajesati(this._LAbuenoo.length) }}</td>
+                  <td>{{ getporcentajesati(this._LAregular.length) }}</td>
+                  <td>{{ getporcentajesati(this._LAmaloo.length) }}</td>
+                  <td>{{ getporcentajesati(this._LAmuymalo.length) }}</td>
+                  <td>{{ getporcentajesati(this._LAna.length) }}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Imágenes</td>
+                  <td>{{ getporcentajesati(this._IMmuybueno.length) }}</td>
+                  <td>{{ getporcentajesati(this._IMbuenoo.length) }}</td>
+                  <td>{{ getporcentajesati(this._IMregular.length) }}</td>
+                  <td>{{ getporcentajesati(this._IMmaloo.length) }}</td>
+                  <td>{{ getporcentajesati(this._IMmuymalo.length) }}</td>
+                  <td>{{ getporcentajesati(this._IMna.length) }}</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr>
+                  <th class="text-left">Servicios Administrativo</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="text-left">Admisión</td>
+                  <td>{{ getporcentajesati(this.muybueno.length) }}</td>
+                  <td>{{ getporcentajesati(this.buenoo.length) }}</td>
+                  <td>{{ getporcentajesati(this.regular.length) }}</td>
+                  <td>{{ getporcentajesati(this.maloo.length) }}</td>
+                  <td>{{ getporcentajesati(this.muymalo.length) }}</td>
+                  <td>{{ getporcentajesati(this.na.length) }}</td>
+
+                </tr>
+                <tr>
+                  <td class="text-left">Convenios</td>
+                  <td>{{ getporcentajesati(this._COmuybueno.length) }}</td>
+                  <td>{{ getporcentajesati(this._CObuenoo.length) }}</td>
+                  <td>{{ getporcentajesati(this._COregular.length) }}</td>
+                  <td>{{ getporcentajesati(this._COmaloo.length) }}</td>
+                  <td>{{ getporcentajesati(this._COmuymalo.length) }}</td>
+                  <td>{{ getporcentajesati(this._COna.length) }}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Atención al Cliente</td>
+                  <td>{{ getporcentajesati(this._ACmuybueno.length) }}</td>
+                  <td>{{ getporcentajesati(this._ACbuenoo.length) }}</td>
+                  <td>{{ getporcentajesati(this._ACregular.length) }}</td>
+                  <td>{{ getporcentajesati(this._ACmaloo.length) }}</td>
+                  <td>{{ getporcentajesati(this._ACmuymalo.length) }}</td>
+                  <td>{{ getporcentajesati(this._ACna.length) }}</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr>
+                  <th class="text-left">Infraestructura</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="text-left">Aseo y Limpieza</td>
+                  <td>{{ getporcentajesati(this._LIMmuybueno.length) }}</td>
+                  <td>{{ getporcentajesati(this._LIMbuenoo.length) }}</td>
+                  <td>{{ getporcentajesati(this._LIMregular.length) }}</td>
+                  <td>{{ getporcentajesati(this._LIMmaloo.length) }}</td>
+                  <td>{{ getporcentajesati(this._LIMmuymalo.length) }}</td>
+                  <td>{{ getporcentajesati(this._LIMna.length) }}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Modernidad</td>
+                  <td>{{ getporcentajesati(this._MOmuybueno.length) }}</td>
+                  <td>{{ getporcentajesati(this._MObuenoo.length) }}</td>
+                  <td>{{ getporcentajesati(this._MOregular.length) }}</td>
+                  <td>{{ getporcentajesati(this._MOmaloo.length) }}</td>
+                  <td>{{ getporcentajesati(this._MOmuymalo.length) }}</td>
+                  <td>{{ getporcentajesati(this._MOna.length) }}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Comnodidad</td>
+                  <td>{{ getporcentajesati(this._COMmuybueno.length) }}</td>
+                  <td>{{ getporcentajesati(this._COMbuenoo.length) }}</td>
+                  <td>{{ getporcentajesati(this._COMregular.length) }}</td>
+                  <td>{{ getporcentajesati(this._COMmaloo.length) }}</td>
+                  <td>{{ getporcentajesati(this._COMmuymalo.length) }}</td>
+                  <td>{{ getporcentajesati(this._COMna.length) }}</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr>
+                  <th class="text-left">TOTAL</th>
+                  <td>{{ this.muybueno.length }}</td>
+                  <td>{{ getporcentaje(this.muybueno.length) }}</td>
+                </tr>
+              </thead>
+
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-12 col-xl-6">
+      <div class="card">
+        <div class="card-header">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-8">
+                <h6>Registro general de recomendación</h6>
+              </div>
+              <div class="col-md-4">
+                <button type="button" (click)="showTableDasboard(4, 2)" class="btn-shadow btn btn-info float-right">
+                  <i class="pe-7s-graph3"></i>
+                </button>
+                <button type="button" (click)="showTableDasboard(4, 1)"
+                  class="btn-shadow mr-3 btn btn-info float-right">
+                  <i class="pe-7s-graph"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body" *ngIf="isPosition4">
+          <loading *ngIf="isLoading4">{{ isLoading }}</loading>
+          <div class="chart" *ngIf="!isLoading4">
+            <canvas baseChart [data]="pieChartData3" [labels]="pieChartLabels3" [chartType]="pieChartType3"
+              [options]="pieChartOptions3" [plugins]="pieChartPlugins3" [colors]="pieChartColors3"
+              [legend]="pieChartLegend3">
+            </canvas>
+          </div>
+        </div>
+        <div class="card-body" *ngIf="!isPosition4">
+          <div class="table-responsive p-4">
+            <table class="
+                align-middle
+                text-truncate
+                mb-0
+                table table-sm table-borderless table-hover
+              ">
+              <thead>
+                <tr>
+                  <th class="text-left">Escala de Recomendación</th>
+                  <th class="text-left">Cantidad</th>
+                  <th class="text-left">Porcentaje</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="text-left">{{ this.datolabel }}</td>
+                  <td class="text-left">{{ this.datonum }}</td>
+                  <td class="text-left">{{ getporcentajeescala(this.datonum)}}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">{{ this.datolabel2}}</td>
+                  <td class="text-left">{{ this.datonum2 }}</td>
+                  <td class="text-left">{{ getporcentajeescala(this.datonum2)}}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">{{ this.datolabel3}}</td>
+                  <td class="text-left">{{ this.datonum3 }}</td>
+                  <td class="text-left">{{ getporcentajeescala(this.datonum3)}}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">{{ this.datolabel4}}</td>
+                  <td class="text-left">{{ this.datonum4 }}</td>
+                  <td class="text-left">{{ getporcentajeescala(this.datonum4)}}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">{{ this.datolabel5}}</td>
+                  <td class="text-left">{{ this.datonum5 }}</td>
+                  <td class="text-left">{{ getporcentajeescala(this.datonum5)}}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">{{ this.datolabel6}}</td>
+                  <td class="text-left">{{ this.datonum6 }}</td>
+                  <td class="text-left">{{ getporcentajeescala(this.datonum6)}}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">{{ this.datolabel7}}</td>
+                  <td class="text-left">{{ this.datonum7 }}</td>
+                  <td class="text-left">{{ getporcentajeescala(this.datonum7)}}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">{{ this.datolabel8}}</td>
+                  <td class="text-left">{{ this.datonum8 }}</td>
+                  <td class="text-left">{{ getporcentajeescala(this.datonum8)}}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">{{ this.datolabel9}}</td>
+                  <td class="text-left">{{ this.datonum9 }}</td>
+                  <td class="text-left">{{ getporcentajeescala(this.datonum9)}}</td>
+                </tr>
+                <tr>
+                  <td class="text-left">{{ this.datolabel10}}</td>
+                  <td class="text-left">{{ this.datonum10 }}</td>
+                  <td class="text-left">{{ getporcentajeescala(this.datonum10)}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </div>
+
+
+
+      
+
+
+
+    <!-- <div class="col-md-6 col-lg-12 col-xl-6">
+      <div class="card">
+        <div class="card-header">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-8">
+                <h4>Reclamos por Estado</h4>
+              </div>
+              <div class="col-md-4">
+                <button type="button" (click)="showTableDasboard(6, 2)" class="btn-shadow btn btn-info float-right">
+                  <i class="pe-7s-graph3"></i>
+                </button>
+                <button type="button" (click)="showTableDasboard(6, 1)"
+                  class="btn-shadow mr-3 btn btn-info float-right">
+                  <i class="pe-7s-graph"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body" *ngIf="isPosition6">
+          <loading *ngIf="isLoading6">{{ isLoading }}</loading>
+          <div class="chart" *ngIf="!isLoading6">
+            <canvas baseChart [data]="pieChartData4" [labels]="pieChartLabels4" [chartType]="pieChartType4"
+              [options]="pieChartOptions4" [plugins]="pieChartPlugins4" [colors]="pieChartColors4"
+              [legend]="pieChartLegend4">
+            </canvas>
+          </div>
+        </div>
+        <div class="card-body" *ngIf="!isPosition4">
+          <div class="table-responsive p-4">
+            <table class="
+                  align-middle
+                  text-truncate
+                  mb-0
+                  table table-sm table-borderless table-hover
+                ">
+              <thead>
+                <tr>
+                  <th class="text-left">Nombres</th>
+                  <th class="text-left">Cantidad</th>
+                  <th class="text-left">Porcentaje</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of liststate">
+                  <td class="text-left">{{ item.nombre }}</td>
+                  <td class="text-left">{{ item.total }}</td>
+                  <td class="text-left">{{ getPorcentaje(item.total) }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div> -->
+  
+
+</section>
