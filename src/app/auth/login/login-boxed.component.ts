@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { SharedService } from 'src/app/Layout/shared.service';
@@ -19,15 +19,16 @@ export class LoginBoxedComponent implements OnInit {
   public acceso = 0;
   loginForm: FormGroup;
   submitted = false;
+  showPassword = false;
   message: string;
   subscription: Subscription;
   constructor(private formBuilder: FormBuilder, private router: Router,
     private apiService: AuthService,
     private sharedService: SharedService,
     private datePipe: DatePipe) {
-    this.loginForm = this.formBuilder.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required],
+    this.loginForm = new FormGroup({
+      username: new FormControl('', Validators.required),
+      password: new FormControl('', Validators.required),
     });
   }
 
@@ -191,5 +192,9 @@ export class LoginBoxedComponent implements OnInit {
       title: 'Acceso Denegado...',
       text: 'Usted no tiene permisos asignados para la aplicación web!',
     });
+  }
+
+  goStepOne() {
+    this.router.navigate(['/auth/step-one']);
   }
 }
