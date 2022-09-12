@@ -199,8 +199,7 @@
         <div class="card-body" *ngIf="isPosition1">
           <loading *ngIf="isLoading">{{ isLoading }}</loading>
           <div class="d-block" *ngIf="!isLoading">
-            <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
-              [plugins]="barChartPlugins" [legend]="barChartLegend" [chartType]="barChartType">
+            <canvas #baseChart id="chart-1">
             </canvas>
           </div>
         </div>
@@ -269,9 +268,8 @@
         <div class="card-body" *ngIf="isPosition2">
           <loading *ngIf="isLoading2">{{ isLoading }}</loading>
           <div class="chart" *ngIf="!isLoading2">
-            <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"
-              [options]="pieChartOptions" [plugins]="pieChartPlugins" [colors]="pieChartColors"
-              [legend]="pieChartLegend">
+            
+            <canvas #baseChart id="chart-2">
             </canvas>
           </div>
         </div>
@@ -343,9 +341,7 @@
         <div class="card-body" *ngIf="isPosition3">
           <loading *ngIf="isLoading3">{{ isLoading }}</loading>
           <div class="chart" *ngIf="!isLoading3">
-            <canvas baseChart [data]="pieChartData2" [labels]="pieChartLabels2" [chartType]="pieChartType2"
-              [options]="pieChartOptions2" [plugins]="pieChartPlugins2" [colors]="pieChartColors2"
-              [legend]="pieChartLegend2">
+            <canvas #baseChart id="chart-3">
             </canvas>
           </div>
         </div>
@@ -382,8 +378,8 @@
                 </tr>
                 <tr>
                   <td class="text-left">Compañia Seguro</td>
-                  <td class="text-left">{{ this.compania.length }}</td>
-                  <td class="text-left">{{ getporcentaje(this.compania.length)}}</td>
+                  <td class="text-left">{{ this.company.length }}</td>
+                  <td class="text-left">{{ getporcentaje(this.company.length)}}</td>
                 </tr>
                 <tr>
                   <td class="text-left">Madre Niño</td>
@@ -430,9 +426,7 @@
         <div class="card-body" *ngIf="isPosition3">
           <loading *ngIf="isLoading3">{{ isLoading }}</loading>
           <div class="chart" *ngIf="!isLoading3">
-            <canvas baseChart [data]="pieChartData22" [labels]="pieChartLabels22" [chartType]="pieChartType22"
-              [options]="pieChartOptions22" [plugins]="pieChartPlugins22" [colors]="pieChartColors22"
-              [legend]="pieChartLegend22">
+            <canvas #baseChart id="chart-4">
             </canvas>
           </div>
         </div>
@@ -499,9 +493,7 @@
         <div class="card-body" *ngIf="isPosition3">
           <loading *ngIf="isLoading3">{{ isLoading }}</loading>
           <div class="chart" *ngIf="!isLoading3">
-            <canvas baseChart [data]="pieChartData23" [labels]="pieChartLabels23" [chartType]="pieChartType23"
-              [options]="pieChartOptions23" [plugins]="pieChartPlugins23" [colors]="pieChartColors23"
-              [legend]="pieChartLegend23">
+            <canvas #baseChart id="chart-5">
             </canvas>
           </div>
         </div>
@@ -596,9 +588,7 @@
         <div class="card-body" *ngIf="isPosition3">
           <loading *ngIf="isLoading3">{{ isLoading }}</loading>
           <div class="chart" *ngIf="!isLoading3">
-            <canvas baseChart [data]="pieChartData24" [labels]="pieChartLabels24" [chartType]="pieChartType24"
-              [options]="pieChartOptions24" [plugins]="pieChartPlugins24" [colors]="pieChartColors24"
-              [legend]="pieChartLegend24">
+            <canvas #baseChart id="chart-6">
             </canvas>
           </div>
         </div>
@@ -685,9 +675,7 @@
         <div class="card-body" *ngIf="isPosition5">
           <loading *ngIf="isLoading5">{{ isLoading }}</loading>
           <div class="chart" *ngIf="!isLoading5">
-            <canvas baseChart [data]="pieChartData4" [labels]="pieChartLabels4" [chartType]="pieChartType4"
-              [options]="pieChartOptions4" [plugins]="pieChartPlugins4" [colors]="pieChartColors4"
-              [legend]="pieChartLegend4">
+            <canvas #baseChart id="chart-7">
             </canvas>
           </div>
         </div>
@@ -882,9 +870,7 @@
         <div class="card-body" *ngIf="isPosition4">
           <loading *ngIf="isLoading4">{{ isLoading }}</loading>
           <div class="chart" *ngIf="!isLoading4">
-            <canvas baseChart [data]="pieChartData3" [labels]="pieChartLabels3" [chartType]="pieChartType3"
-              [options]="pieChartOptions3" [plugins]="pieChartPlugins3" [colors]="pieChartColors3"
-              [legend]="pieChartLegend3">
+            <canvas #baseChart id="chart-8">
             </canvas>
           </div>
         </div>
@@ -992,7 +978,7 @@
         <div class="card-body" *ngIf="isPosition6">
           <loading *ngIf="isLoading6">{{ isLoading }}</loading>
           <div class="chart" *ngIf="!isLoading6">
-            <canvas baseChart [data]="pieChartData4" [labels]="pieChartLabels4" [chartType]="pieChartType4"
+            <canvas #baseChart [data]="pieChartData4" [labels]="pieChartLabels4" [chartType]="pieChartType4"
               [options]="pieChartOptions4" [plugins]="pieChartPlugins4" [colors]="pieChartColors4"
               [legend]="pieChartLegend4">
             </canvas>

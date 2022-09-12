@@ -494,23 +494,17 @@
                             formControlName="additionalComments" rows="6"></textarea>
                     </div>
                     <br>
-                    <div class="paddingencuesta">
-                        <button type="submit" class="btsubmitencuesta" [disabled]="patientPoll.valid">Grabar
-                            Formulario</button>
-
-
+                    <div class="row paddingencuesta">
+                        <div class="col-6">
+                            <button type="submit" class="btsubmitencuesta" [disabled]="patientPoll.valid">Grabar
+                                Formulario</button>
+                        </div>
+                        <div class="col-6">
+                            <button type="button" class="btsubmitencuesta" (click)="getdataEncuesta()">Ver Resultados de la
+                                encuesta</button>
+                        </div>  
                     </div>
-                    <div class=" paddingencuesta">
-                        <button type="button" class="btsubmitencuesta" (click)="getdataEncuesta()">Ver Resultados de la
-                            encuesta</button>
-
-                   
-                   
-
-                    </div>                    
-
-
-
+                                      
                 </form>
             </div>
         </div>

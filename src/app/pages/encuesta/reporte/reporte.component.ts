@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormularioService } from '../formulario.service';
-import * as pluginDataLabels from 'chartjs-plugin-datalabels';
-import { Label } from 'ng2-charts';
-import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
+// import * as pluginDataLabels from 'chartjs-plugin-datalabels';
+// import { Label } from 'ng2-charts';
+// import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { ValueCache } from 'ag-grid-community';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-
+import * as Chart from 'chart.js';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 @Component({
   selector: 'app-reporte',
@@ -16,8 +17,42 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
   styleUrls: ['./reporte.component.scss']
 })
 export class ReporteComponent implements OnInit {
+  private baseChart: ElementRef;
+  isPosition1 = true;
+  isPosition2 = true;
+  isPosition3 = true;
+  isPosition4 = true;
+  isPosition5 = true;
+  isPosition6 = true;
+  public barChartLabels = [];
+  public barChartData = [];
+  public pieChartLabels = [];
+  public pieChartData = [];
+  public pieChartLabels2 = [];
+  public pieChartData2 = [];
+  public pieChartLabels22 = [];
+  public pieChartData22 = [];
+  @ViewChild("baseChart", { static: false }) set content(
+    content: ElementRef
+  ) {
+    if (content) {
+      
+      // initially setter gets called with undefined
+      this.baseChart = content;
+
+console.log(content.nativeElement.id );
+
+      
+      this.getBarChart(this.barChartLabels, this.barChartData, 'chart-1', 'Sucursales');
+      this.getPieChart(this.pieChartLabels, this.pieChartData, 'chart-2');
+      this.getPieChart(this.pieChartLabels2, this.pieChartData2, 'chart-3');
+      this.getBarChart(this.pieChartLabels22, this.pieChartData22, 'chart-4', 'Plan de salud');
+      
+    }
+  }
   data: any = [];
   char: any = [];
+  totales;
   public listencuesta: any = [];
   public listlima: any = [];
   public listchorrillos: any = [];
@@ -32,7 +67,7 @@ export class ReporteComponent implements OnInit {
   public plansalud: any = [];
   public institucional: any = [];
   public convenio: any = [];
-  public compania: any = [];
+  public company: any = [];
   public madrenino: any = [];
   public otross: any = [];
 
@@ -153,12 +188,7 @@ export class ReporteComponent implements OnInit {
   isPeriodo = false;
   isRangoFecha = true;
 
-  isPosition1 = true;
-  isPosition2 = true;
-  isPosition3 = true;
-  isPosition4 = true;
-  isPosition5 = true;
-  isPosition6 = true;
+
 
   model: NgbDateStruct;
   //CANVAS
@@ -175,107 +205,187 @@ export class ReporteComponent implements OnInit {
   };    
   chartData: ChartDataSets[] = [   
   ]; */
+// barChart
+getChart(context, chartType, data, options?) {
+  return new Chart(context, {
+    data,
+    options,
+    type: chartType,
+    plugins: [ChartDataLabels]
+  });
+}
 
-  public barChartOptions: ChartOptions = {
+getBarChart(barChartLabels, barChartData, chartNum, title) {
+  const data = {
+    labels: barChartLabels,
+    datasets: [
+      {
+        label: title,
+        // borderColor: 'rgba(99, 255, 132, 1)',
+        borderWidth: 1,
+        data: barChartData,
+        backgroundColor: ['#2266d3', '#ffa408', '#eb445a'],
+        hoverBackgroundColor: ['#2266d3', '#ffa408', '#eb445a']
+      }]
+  };
+  const options = {
     responsive: true,
     // We use these empty structures as placeholders for dynamic theming.
     scales: {
-      xAxes: [{}],
-      yAxes: [{
-        ticks: {
-          beginAtZero: true
-        }
-      }]
-    },
+          yAxes: [{
+              ticks: {
+                  beginAtZero: true
+              }
+          }]
+      },
     plugins: {
       datalabels: {
-        anchor: 'end',
-        align: 'start',
+        /* anchor puede ser "start", "center" o "end" */
+        anchor: 'center',
+        /* Podemos modificar el texto a mostrar */
+        formatter: (dato) => Math.floor((dato / this.totales) * 100) + '%',
+        /* Color del texto */
+        color: '#ffffff',
+        /* Formato de la fuente */
+        font: {
+          // family: '"Times New Roman", Times, serif',
+          size: '20',
+          weight: 'bold',
+        },
+        /* Formato de la caja contenedora */
+        // padding: '4',
+        // borderWidth: 2,
+        // borderColor: 'darkblue',
+        // borderRadius: 8,
+        // backgroundColor: 'lightblue'
       }
     }
   };
-  public barChartLabels: Label[] = [];
-  public barChartType: ChartType = 'bar';
-  public barChartLegend = false;
-  public barChartPlugins = [pluginDataLabels];
-  public barChartData: ChartDataSets[] = [
-
-  ];
-
-
-  public pieChartOptions: ChartOptions = {
+  return this.getChart(chartNum, 'bar', data, options);
+  
+}
+getPieChart(barChartLabels, barChartData, chartNum) {
+  const data = {
+    labels: barChartLabels,
+    datasets: [
+      {
+        // label: title,
+        // borderColor: 'rgba(99, 255, 132, 1)',
+        borderWidth: 1,
+        data: barChartData,
+        // backgroundColor: ['rgba(22,73,126,0.3)', 'rgba(100,22,157,0.3)', 'rgba(159, 24, 0, 0.3)', 'rgba(67,168,128,0.3)']
+        backgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#ffc107', '#28a745'],
+        hoverBackgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#ffc107', '#28a745']
+      }]
+  };
+  const options = {
     responsive: true,
-    legend: {
-      position: 'top',
-    },
+    // We use these empty structures as placeholders for dynamic theming.
+    scales: {
+          yAxes: [{
+              ticks: {
+                  beginAtZero: true
+              }
+          }]
+      },
     plugins: {
       datalabels: {
-        formatter: (value, ctx) => {
-          let datasets = ctx.chart.data.datasets;
-          if (datasets.indexOf(ctx.dataset) === datasets.length - 1) {
-            var percentage = ((value * 100) / this.listencuesta).toFixed(2) + '%';
-            // console.log(percentage);
-            return percentage;
-          } else {
-            return percentage;
-          }
+        /* anchor puede ser "start", "center" o "end" */
+        anchor: 'center',
+        /* Podemos modificar el texto a mostrar */
+        formatter: (dato) => Math.floor((dato / this.listencuesta) * 100) + '%',
+        /* Color del texto */
+        color: '#ffffff',
+        /* Formato de la fuente */
+        font: {
+          // family: '"Times New Roman", Times, serif',
+          size: '20',
+          weight: 'bold',
         },
-
-      },
+        /* Formato de la caja contenedora */
+        // padding: '4',
+        // borderWidth: 2,
+        // borderColor: 'darkblue',
+        // borderRadius: 8,
+        // backgroundColor: 'lightblue'
+      }
     }
   };
-  public pieChartLabels: Label[] = [];
-  public pieChartData = [];
-  public pieChartType: ChartType = 'doughnut';
-  public pieChartLegend = true;
-  public pieChartPlugins = [pluginDataLabels];
-  public pieChartColors = [
-    {
-      backgroundColor: ['rgba(22,73,126,0.3)', 'rgba(100,22,157,0.3)', 'rgba(159, 24, 0, 0.3)', 'rgba(67,168,128,0.3)']
-    }
-  ]
+  return this.getChart(chartNum, 'doughnut', data, options);
+}
+
+// pieChart
+  // public pieChartOptions = {
+  //   responsive: true,
+  //   legend: {
+  //     position: 'top',
+  //   },
+  //   plugins: {
+  //     datalabels: {
+  //       formatter: (value, ctx) => {
+  //         let datasets = ctx.chart.data.datasets;
+  //         if (datasets.indexOf(ctx.dataset) === datasets.length - 1) {
+  //           var percentage = ((value * 100) / this.listencuesta).toFixed(2) + '%';
+  //           // console.log(percentage);
+  //           return percentage;
+  //         } else {
+  //           return percentage;
+  //         }
+  //       },
+
+  //     },
+  //   }
+  // };
+
+  // public pieChartType = 'doughnut';
+  // public pieChartLegend = true;
+  // public pieChartPlugins;
+  // public pieChartColors = [
+  //   {
+  //     backgroundColor: ['rgba(22,73,126,0.3)', 'rgba(100,22,157,0.3)', 'rgba(159, 24, 0, 0.3)', 'rgba(67,168,128,0.3)']
+  //   }
+  // ]
 
 
 
 
-  public pieChartOptions2: ChartOptions = {
-    responsive: true,
+  // public pieChartOptions2 = {
+  //   responsive: true,
 
-    legend: {
-      position: 'left',
-    },
-    plugins: {
-      datalabels: {
-        formatter: (value, ctx) => {
-          let datasets = ctx.chart.data.datasets;
-          if (datasets.indexOf(ctx.dataset) === datasets.length - 1) {
-            var percentage = ((value * 100) / this.listencuesta).toFixed(2) + '%';
-            // console.log(percentage);
-            return percentage;
-          } else {
-            return percentage;
-          }
-        },
+  //   legend: {
+  //     position: 'left',
+  //   },
+  //   plugins: {
+  //     datalabels: {
+  //       formatter: (value, ctx) => {
+  //         let datasets = ctx.chart.data.datasets;
+  //         if (datasets.indexOf(ctx.dataset) === datasets.length - 1) {
+  //           var percentage = ((value * 100) / this.listencuesta).toFixed(2) + '%';
+  //           // console.log(percentage);
+  //           return percentage;
+  //         } else {
+  //           return percentage;
+  //         }
+  //       },
 
-      },
+  //     },
 
-    }
-  };
+  //   }
+  // };
   //RECLAMOS RESUELTOS
-  public pieChartLabels2: Label[] = [];
-  public pieChartData2 = [];
-  public pieChartType2: ChartType = "doughnut";
-  public pieChartLegend2 = true;
-  public pieChartPlugins2 = [pluginDataLabels];
-  public pieChartColors2 = [
-    {
-      backgroundColor: ['rgba(0,255,0,0.3)', 'rgba(255,0,0,0.3)'],
 
-    },
+  // public pieChartType2 = "doughnut";
+  // public pieChartLegend2 = true;
+  // public pieChartPlugins2;
+  // public pieChartColors2 = [
+  //   {
+  //     backgroundColor: ['rgba(0,255,0,0.3)', 'rgba(255,0,0,0.3)'],
 
-  ];
+  //   },
+
+  // ];
   //TARJETA
-  public pieChartOptions22: ChartOptions = {
+  public pieChartOptions22 = {
     responsive: true,
     legend: {
       position: 'top',
@@ -306,11 +416,10 @@ export class ReporteComponent implements OnInit {
 
     }
   };
-  public pieChartLabels22: Label[] = [];
-  public pieChartData22 = [];
-  public pieChartType22: ChartType = "bar";
+
+  public pieChartType22 = "bar";
   public pieChartLegend22 = false;
-  public pieChartPlugins22 = [pluginDataLabels];
+  public pieChartPlugins22;
   public pieChartColors22 = [
     {
       backgroundColor: ['rgba(0,255,0,0.3)', 'rgba(255,0,0,0.3)', 'rgba(0,0,255,0.3)'],
@@ -319,7 +428,7 @@ export class ReporteComponent implements OnInit {
 
   ];
   //CONVENIO
-  public pieChartOptions23: ChartOptions = {
+  public pieChartOptions23 = {
     responsive: true,
     
     scales: {
@@ -348,11 +457,11 @@ export class ReporteComponent implements OnInit {
 
     }
   };
-  public pieChartLabels23: Label[] = [];
+  public pieChartLabels23 = [];
   public pieChartData23 = [];
-  public pieChartType23: ChartType = "horizontalBar";
+  public pieChartType23 = "horizontalBar";
   public pieChartLegend23 = false;
-  public pieChartPlugins23 = [pluginDataLabels];
+  public pieChartPlugins23;
   public pieChartColors23 = [
     {
       backgroundColor: ['rgba(0,255,0,0.3)', 'rgba(255,0,0,0.3)', 'rgba(0,0,255,0.3)'],
@@ -361,7 +470,7 @@ export class ReporteComponent implements OnInit {
 
   ];
 
-  public pieChartOptions24: ChartOptions = {
+  public pieChartOptions24 = {
     responsive: true,
     legend: {
       position: 'left',
@@ -384,11 +493,11 @@ export class ReporteComponent implements OnInit {
 
     }
   };
-  public pieChartLabels24: Label[] = [];
+  public pieChartLabels24 = [];
   public pieChartData24 = [];
-  public pieChartType24: ChartType = "doughnut";
+  public pieChartType24 = "doughnut";
   public pieChartLegend24 = true;
-  public pieChartPlugins24 = [pluginDataLabels];
+  public pieChartPlugins24;
   public pieChartColors24 = [
     {
       backgroundColor: ['rgba(0,255,0,0.3)', 'rgba(255,0,0,0.3)', 'rgba(0,0,255,0.3)'],
@@ -397,7 +506,7 @@ export class ReporteComponent implements OnInit {
 
   ];
 
-  public pieChartOptions3: ChartOptions = {
+  public pieChartOptions3 = {
     responsive: true,
     legend: {
       position: 'left',
@@ -433,11 +542,11 @@ export class ReporteComponent implements OnInit {
   };
   //horizontalBar
   //RECLAMOS RESUELTOS
-  public pieChartLabels3: Label[] = [];
+  public pieChartLabels3 = [];
   public pieChartData3 = [];
-  public pieChartType3: ChartType = "horizontalBar";
+  public pieChartType3 = "horizontalBar";
   public pieChartLegend3 = false;
-  public pieChartPlugins3 = [pluginDataLabels];
+  public pieChartPlugins3;
   public pieChartColors3 = [
     {
       backgroundColor: ['rgba(0,255,0,0.3)', 'rgba(255,0,0,0.3)', 'rgba(0,0,255,0.3)', 'rgba(20,0,80,0.3)', 'rgba(0,20,230,0.3)', 'rgba(50,0,25,0.3)'],
@@ -446,7 +555,7 @@ export class ReporteComponent implements OnInit {
 
   ];
 
-  public pieChartOptions4: ChartOptions = {
+  public pieChartOptions4 = {
     responsive: true,
     legend: {
       position: 'left',
@@ -482,11 +591,11 @@ export class ReporteComponent implements OnInit {
   };
   //horizontalBar
   //RECLAMOS RESUELTOS
-  public pieChartLabels4: Label[] = [];
+  public pieChartLabels4 = [];
   public pieChartData4 = [];
-  public pieChartType4: ChartType = "bar";
+  public pieChartType4 = "bar";
   public pieChartLegend4 = false;
-  public pieChartPlugins4 = [pluginDataLabels];
+  public pieChartPlugins4;
   public pieChartColors4 = [
     {
       backgroundColor: ['rgba(0,255,0,0.3)', 'rgba(255,0,0,0.3)', 'rgba(0,0,255,0.3)', 'rgba(20,0,80,0.3)', 'rgba(0,20,230,0.3)', 'rgba(50,0,25,0.3)'],
@@ -594,7 +703,7 @@ export class ReporteComponent implements OnInit {
     this.getsatisfaccion();
     this.getTarjetaClasica();
     this.getConvenio();
-    this.getCompañia();
+    this.getCompany();
   };
 
   getSucursal() {
@@ -602,12 +711,14 @@ export class ReporteComponent implements OnInit {
     this.barChartLabels = [];
     this.barChartData = [];
     let dato = []
+    this.totales = 0;
     this.formularioService.getFormulario().subscribe(
       (res: any) => {
         this.data = res.body.length > 0 ? res.body : [];
         this.listlima = this.data.filter((sede: { sucursal: string; }) => sede.sucursal == 'Lima');
         this.arrsucursal = this.listlima[0].sucursal;
         dato.push(this.listlima.length);
+        this.totales = this.listlima.length;
         this.cantsucursal = dato;
         this.barChartData = [{ data: this.cantsucursal, label: 'Lima' }]
         this.barChartLabels.push(this.listlima[0].sucursal);
@@ -617,6 +728,7 @@ export class ReporteComponent implements OnInit {
         this.listchorrillos = this.data.filter((sede: { sucursal: string; }) => sede.sucursal == 'Chorrillos');
         this.arrsucursal = this.listchorrillos[0].sucursal;
         dato.push(this.listchorrillos.length);
+        this.totales += this.listchorrillos.length;
         this.cantsucursal = dato;
         this.barChartData = [{ data: this.cantsucursal, label: 'Chorrillos' }]
         this.barChartLabels.push(this.listchorrillos[0].sucursal);
@@ -624,9 +736,14 @@ export class ReporteComponent implements OnInit {
         this.listsurco = this.data.filter((sede: { sucursal: string; }) => sede.sucursal == 'Surco');
         this.arrsucursal = this.listsurco[0].sucursal;
         dato.push(this.listsurco.length);
+        this.totales += this.listsurco.length;
         this.cantsucursal = dato;
         this.barChartData = [{ data: this.cantsucursal, label: 'Surco' }]
         this.barChartLabels.push(this.listsurco[0].sucursal);
+        console.log(this.totales);
+        this.barChartData = dato;
+        // console.log(this.barChartData);
+        this.getBarChart(this.barChartLabels, this.barChartData, 'chart-1', 'Sucursales');
       }
     )
   }
@@ -659,7 +776,7 @@ export class ReporteComponent implements OnInit {
         this.pieChartData.push(this.cantmoda)
         console.log(223, this.pieChartLabels)
         console.log(222, this.pieChartData)
-
+        this.getPieChart(this.pieChartLabels, this.pieChartData, 'chart-2');
       })
 
   }
@@ -691,9 +808,9 @@ export class ReporteComponent implements OnInit {
         this.pieChartLabels2.push(this.arrLima);
         this.pieChartData2.push(this.cantidad);
 
-        this.compania = this.data.filter((item: { paciente: string; }) => item.paciente === 'Compañia Seguro');
-        this.arrLima = this.compania[0].paciente;
-        this.cantidad = this.compania.length;
+        this.company = this.data.filter((item: { paciente: string; }) => item.paciente === 'Compañia Seguro');
+        this.arrLima = this.company[0].paciente;
+        this.cantidad = this.company.length;
         this.pieChartLabels2.push(this.arrLima);
         this.pieChartData2.push(this.cantidad);
 
@@ -710,8 +827,8 @@ export class ReporteComponent implements OnInit {
         this.pieChartData2.push(this.cantidad);
 
         this.sumtipopaciente = this.plansalud.length + this.institucional.length + this.convenio.length
-          + this.compania.length + this.madrenino.length + this.otross.length;
-        console.log(66, this.sumtipopaciente)
+          + this.company.length + this.madrenino.length + this.otross.length;
+          this.getPieChart(this.pieChartLabels2, this.pieChartData2, 'chart-3');
       })
   }
   clasica = [];
@@ -751,7 +868,8 @@ export class ReporteComponent implements OnInit {
         dato = this.clasica.length + this.dorada.length + this.diamante.length;
         console.log(120,dato)
         this.sumtarjeta = dato;
-        console.log(121,this.sumtarjeta)
+        this.totales = dato;
+        this.getBarChart(this.pieChartLabels22, this.pieChartData22, 'chart-4', 'Plan de salud');
       });
   }
   saludpol = [];
@@ -772,6 +890,7 @@ export class ReporteComponent implements OnInit {
     this.formularioService.getFormulario().subscribe(
       (res: any) => {
         this.data = res.body.length > 0 ? res.body : [];
+        console.log(this.data);
         //SALUDPOL
         this.saludpol = this.data.filter((item: { tipoConvenio: string; }) => item.tipoConvenio === 'SALUDPOL');
         console.log(65, this.saludpol)
@@ -781,8 +900,6 @@ export class ReporteComponent implements OnInit {
         console.log(69, this.arrcantco)
         this.pieChartLabels23.push(this.arrconvenio);
         this.pieChartData23.push(this.arrcantco);
-        
-        
         //FOPASEF
         this.fopasef = this.data.filter((item: { tipoConvenio: string; }) => item.tipoConvenio === 'FOPASEF');
         this.arrconvenio = this.fopasef[0].tipoConvenio;
@@ -812,24 +929,33 @@ export class ReporteComponent implements OnInit {
        
         //CMP
         this.cmp = this.data.filter((item: { tipoConvenio: string; }) => item.tipoConvenio === 'CMP');
-        this.arrconvenio = this.cmp[0].tipoConvenio;
-        this.arrcantco = this.cmp.length;
-        this.pieChartLabels23.push(this.arrconvenio);
-        this.pieChartData23.push(this.arrcantco);
+        if(this.cmp.length > 0 ){
+          this.arrconvenio = this.cmp[0].tipoConvenio;
+          this.arrcantco = this.cmp.length;
+          this.pieChartLabels23.push(this.arrconvenio);
+          this.pieChartData23.push(this.arrcantco);
+        }
+        
         
         //BCRP
         this.bcrp = this.data.filter((item: { tipoConvenio: string; }) => item.tipoConvenio === 'BCRP');
-        this.arrconvenio = this.bcrp[0].tipoConvenio;
-        this.arrcantco = this.bcrp.length;
-        this.pieChartLabels23.push(this.arrconvenio);
-        this.pieChartData23.push(this.arrcantco);
+        if(this.bcrp.length > 0 ){
+          this.arrconvenio = this.bcrp[0].tipoConvenio;
+          this.arrcantco = this.bcrp.length;
+          this.pieChartLabels23.push(this.arrconvenio);
+          this.pieChartData23.push(this.arrcantco);
+        }
+        
         
         //OTROS
         this.otrocon = this.data.filter((item: { tipoConvenio: string; }) => item.tipoConvenio === 'OTROS');
-        this.arrconvenio = this.otrocon[0].tipoConvenio;
-        this.arrcantco = this.otrocon.length;
-        this.pieChartLabels23.push(this.arrconvenio);
-        this.pieChartData23.push(this.arrcantco);
+        if(this.bcrp.length > 0 ){
+          this.arrconvenio = this.otrocon[0].tipoConvenio;
+          this.arrcantco = this.otrocon.length;
+          this.pieChartLabels23.push(this.arrconvenio);
+          this.pieChartData23.push(this.arrcantco);
+        }
+        
         
         dato = this.rimac.length + this.pacifico.length + this.positiva.length 
           + this.mapfre.length + this.sanitas.length + this.interseguro.length 
@@ -847,9 +973,9 @@ export class ReporteComponent implements OnInit {
   sanitas = [];
   interseguro = [];
   otrocomp = [];   
-  arrcompañia = [];
+  arrCompany = [];
   arrcantcomp = 0;
-  getCompañia() {
+  getCompany() {
     this.pieChartLabels24 = [];
     this.pieChartData24 = [];
     
@@ -859,53 +985,56 @@ export class ReporteComponent implements OnInit {
         //SALUDPOL
         this.rimac = this.data.filter((item: { tipoSeguro: string; }) => item.tipoSeguro === 'RIMAC');
         console.log(70,this.rimac)
-        this.arrcompañia = this.rimac[0].tipoSeguro;
-        console.log(701,this.arrcompañia)        
+        this.arrCompany = this.rimac[0].tipoSeguro;
+        console.log(701,this.arrCompany)        
         this.arrcantcomp = this.rimac.length;        
-        this.pieChartLabels24.push(this.arrcompañia);
+        this.pieChartLabels24.push(this.arrCompany);
         this.pieChartData24.push(this.arrcantcomp);
 
         this.pacifico = this.data.filter((item: { tipoSeguro: string; }) => item.tipoSeguro === 'PACIFICO');
         console.log(71,this.pacifico)
-        this.arrcompañia = this.pacifico[0].tipoSeguro;              
+        this.arrCompany = this.pacifico[0].tipoSeguro;              
         this.arrcantcomp = this.pacifico.length;        
-        this.pieChartLabels24.push(this.arrcompañia);
+        this.pieChartLabels24.push(this.arrCompany);
         this.pieChartData24.push(this.arrcantcomp);
 
         this.positiva = this.data.filter((item: { tipoSeguro: string; }) => item.tipoSeguro === 'LA POSITIVA');
         console.log(72,this.positiva)
-        this.arrcompañia = this.positiva[0].tipoSeguro;        
+        this.arrCompany = this.positiva[0].tipoSeguro;        
         this.arrcantcomp = this.positiva.length;        
-        this.pieChartLabels24.push(this.arrcompañia);
+        this.pieChartLabels24.push(this.arrCompany);
         this.pieChartData24.push(this.arrcantcomp);
 
         this.mapfre = this.data.filter((item: { tipoSeguro: string; }) => item.tipoSeguro === 'MAPFRE');
         console.log(73,this.mapfre)
-        this.arrcompañia = this.mapfre[0].tipoSeguro;        
+        this.arrCompany = this.mapfre[0].tipoSeguro;        
         this.arrcantcomp = this.mapfre.length;        
-        this.pieChartLabels24.push(this.arrcompañia);
+        this.pieChartLabels24.push(this.arrCompany);
         this.pieChartData24.push(this.arrcantcomp);
         
         this.sanitas = this.data.filter((item: { tipoSeguro: string; }) => item.tipoSeguro === 'SANITAS');
         console.log(74,this.sanitas)
-        this.arrcompañia = this.sanitas[0].tipoSeguro;        
+        this.arrCompany = this.sanitas[0].tipoSeguro;        
         this.arrcantcomp = this.sanitas.length;        
-        this.pieChartLabels24.push(this.arrcompañia);
+        this.pieChartLabels24.push(this.arrCompany);
         this.pieChartData24.push(this.arrcantcomp);
 
         this.interseguro = this.data.filter((item: { tipoSeguro: string; }) => item.tipoSeguro === 'INTERSEGURO');
         console.log(75,this.interseguro)
-        this.arrcompañia = this.interseguro[0].tipoSeguro;        
+        this.arrCompany = this.interseguro[0].tipoSeguro;        
         this.arrcantcomp = this.interseguro.length;        
-        this.pieChartLabels24.push(this.arrcompañia);
+        this.pieChartLabels24.push(this.arrCompany);
         this.pieChartData24.push(this.arrcantcomp);
 
         this.otrocomp = this.data.filter((item: { tipoSeguro: string; }) => item.tipoSeguro === 'OTROS');
-        console.log(76,this.otrocomp)
-        this.arrcompañia = this.otrocomp[0].tipoSeguro;        
-        this.arrcantcomp = this.otrocomp.length;        
-        this.pieChartLabels24.push(this.arrcompañia);
-        this.pieChartData24.push(this.arrcantcomp);
+        console.log(76,this.otrocomp);
+        if (this.otrocomp.length > 0 ){
+          this.arrCompany = this.otrocomp[0].tipoSeguro;        
+          this.arrcantcomp = this.otrocomp.length;        
+          this.pieChartLabels24.push(this.arrCompany);
+          this.pieChartData24.push(this.arrcantcomp);
+        }
+        
         
       })
   }
@@ -1522,10 +1651,13 @@ export class ReporteComponent implements OnInit {
 
 
   showTableDasboard(id: number, position: number) {
+    
     if (id == 1) {
       if (position == 1) {
         this.isPosition1 = true;
+        
       } else {
+        
         this.isPosition1 = false;
       }
     } else if (id == 2) {
@@ -1561,6 +1693,3 @@ export class ReporteComponent implements OnInit {
     }
   }
 }
-
-
-
