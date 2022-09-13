@@ -32,6 +32,15 @@ export class ReporteComponent implements OnInit {
   public pieChartData2 = [];
   public pieChartLabels22 = [];
   public pieChartData22 = [];
+
+  public pieChartLabels23 = [];
+  public pieChartData23 = [];
+  public pieChartLabels24 = [];
+  public pieChartData24 = [];
+  public pieChartLabels3 = [];
+  public pieChartData3 = [];
+  public pieChartLabels4 = [];
+  public pieChartData4 = [];
   @ViewChild("baseChart", { static: false }) set content(
     content: ElementRef
   ) {
@@ -43,16 +52,21 @@ export class ReporteComponent implements OnInit {
 console.log(content.nativeElement.id );
 
       
-      this.getBarChart(this.barChartLabels, this.barChartData, 'chart-1', 'Sucursales', this.totales);
-      this.getPieChart(this.pieChartLabels, this.pieChartData, 'chart-2');
-      this.getPieChart(this.pieChartLabels2, this.pieChartData2, 'chart-3');
-      this.getBarChart(this.pieChartLabels22, this.pieChartData22, 'chart-4', 'Plan de salud', this.sumtarjeta);
-      
+      this.getBarChart(this.barChartLabels, this.barChartData, 'chart-1', 'Sucursales', this.totales, 'bar');
+      this.getBarChart(this.pieChartLabels, this.pieChartData, 'chart-2', 'Origen de ingreso', this.listencuesta, 'pie');
+      this.getBarChart(this.pieChartLabels2, this.pieChartData2, 'chart-3', 'Tipo de paciente', this.listencuesta, 'bar');
+      this.getBarChart(this.pieChartLabels22, this.pieChartData22, 'chart-4', 'Plan de salud', this.sumtarjeta, 'pie');
+      this.getBarChart(this.pieChartLabels23, this.pieChartData23, 'chart-5', 'Convenio', this.sumconvenio, 'bar');
+      this.getBarChart(this.pieChartLabels24, this.pieChartData24, 'chart-6', 'Compañía Seguro', this.listencuesta, 'doughnut');
+      this.getBarChart(this.pieChartLabels3, this.pieChartData3, 'chart-7', 'Satisfacción por servicio', this.recomendacionTotal, 'doughnut');
+      // this.getBarChart(this.pieChartLabels4, this.pieChartData4, 'chart-8', 'Registro de Recomendación', this.listencuesta, 'doughnut');
     }
   }
   data: any = [];
   char: any = [];
   totales;
+  companyTotals;
+  recomendacionTotal;
   public listencuesta: any = [];
   public listlima: any = [];
   public listchorrillos: any = [];
@@ -215,7 +229,7 @@ getChart(context, chartType, data, options?) {
   });
 }
 
-getBarChart(barChartLabels, barChartData, chartNum, title, totales) {
+getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
   const data = {
     labels: barChartLabels,
     datasets: [
@@ -224,8 +238,8 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales) {
         // borderColor: 'rgba(99, 255, 132, 1)',
         borderWidth: 1,
         data: barChartData,
-        backgroundColor: ['#2266d3', '#ffa408', '#eb445a'],
-        hoverBackgroundColor: ['#2266d3', '#ffa408', '#eb445a']
+        backgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#ffc107', '#28a745'],
+        hoverBackgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#ffc107', '#28a745']
       }]
   };
   const options = {
@@ -249,7 +263,7 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales) {
         /* Formato de la fuente */
         font: {
           // family: '"Times New Roman", Times, serif',
-          size: '20',
+          size: '16',
           weight: 'bold',
         },
         /* Formato de la caja contenedora */
@@ -261,58 +275,58 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales) {
       }
     }
   };
-  return this.getChart(chartNum, 'bar', data, options);
+  return this.getChart(chartNum, typeChart, data, options);
   
 }
-getPieChart(barChartLabels, barChartData, chartNum) {
-  const data = {
-    labels: barChartLabels,
-    datasets: [
-      {
-        // label: title,
-        // borderColor: 'rgba(99, 255, 132, 1)',
-        borderWidth: 1,
-        data: barChartData,
-        // backgroundColor: ['rgba(22,73,126,0.3)', 'rgba(100,22,157,0.3)', 'rgba(159, 24, 0, 0.3)', 'rgba(67,168,128,0.3)']
-        backgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#ffc107', '#28a745'],
-        hoverBackgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#ffc107', '#28a745']
-      }]
-  };
-  const options = {
-    responsive: true,
-    // We use these empty structures as placeholders for dynamic theming.
-    scales: {
-          yAxes: [{
-              ticks: {
-                  beginAtZero: true
-              }
-          }]
-      },
-    plugins: {
-      datalabels: {
-        /* anchor puede ser "start", "center" o "end" */
-        anchor: 'center',
-        /* Podemos modificar el texto a mostrar */
-        formatter: (dato) => Math.floor((dato / this.listencuesta) * 100) + '%',
-        /* Color del texto */
-        color: '#ffffff',
-        /* Formato de la fuente */
-        font: {
-          // family: '"Times New Roman", Times, serif',
-          size: '20',
-          weight: 'bold',
-        },
-        /* Formato de la caja contenedora */
-        // padding: '4',
-        // borderWidth: 2,
-        // borderColor: 'darkblue',
-        // borderRadius: 8,
-        // backgroundColor: 'lightblue'
-      }
-    }
-  };
-  return this.getChart(chartNum, 'doughnut', data, options);
-}
+// getPieChart(barChartLabels, barChartData, chartNum) {
+//   const data = {
+//     labels: barChartLabels,
+//     datasets: [
+//       {
+//         // label: title,
+//         // borderColor: 'rgba(99, 255, 132, 1)',
+//         borderWidth: 1,
+//         data: barChartData,
+//         // backgroundColor: ['rgba(22,73,126,0.3)', 'rgba(100,22,157,0.3)', 'rgba(159, 24, 0, 0.3)', 'rgba(67,168,128,0.3)']
+//         backgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#ffc107', '#28a745'],
+//         hoverBackgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#ffc107', '#28a745']
+//       }]
+//   };
+//   const options = {
+//     responsive: true,
+//     // We use these empty structures as placeholders for dynamic theming.
+//     scales: {
+//           yAxes: [{
+//               ticks: {
+//                   beginAtZero: true
+//               }
+//           }]
+//       },
+//     plugins: {
+//       datalabels: {
+//         /* anchor puede ser "start", "center" o "end" */
+//         anchor: 'center',
+//         /* Podemos modificar el texto a mostrar */
+//         formatter: (dato) => Math.floor((dato / this.listencuesta) * 100) + '%',
+//         /* Color del texto */
+//         color: '#ffffff',
+//         /* Formato de la fuente */
+//         font: {
+//           // family: '"Times New Roman", Times, serif',
+//           size: '20',
+//           weight: 'bold',
+//         },
+//         /* Formato de la caja contenedora */
+//         // padding: '4',
+//         // borderWidth: 2,
+//         // borderColor: 'darkblue',
+//         // borderRadius: 8,
+//         // backgroundColor: 'lightblue'
+//       }
+//     }
+//   };
+//   return this.getChart(chartNum, 'doughnut', data, options);
+// }
 
 // pieChart
   // public pieChartOptions = {
@@ -457,8 +471,7 @@ getPieChart(barChartLabels, barChartData, chartNum) {
 
     }
   };
-  public pieChartLabels23 = [];
-  public pieChartData23 = [];
+
   public pieChartType23 = "horizontalBar";
   public pieChartLegend23 = false;
   public pieChartPlugins23;
@@ -493,8 +506,7 @@ getPieChart(barChartLabels, barChartData, chartNum) {
 
     }
   };
-  public pieChartLabels24 = [];
-  public pieChartData24 = [];
+
   public pieChartType24 = "doughnut";
   public pieChartLegend24 = true;
   public pieChartPlugins24;
@@ -542,8 +554,7 @@ getPieChart(barChartLabels, barChartData, chartNum) {
   };
   //horizontalBar
   //RECLAMOS RESUELTOS
-  public pieChartLabels3 = [];
-  public pieChartData3 = [];
+
   public pieChartType3 = "horizontalBar";
   public pieChartLegend3 = false;
   public pieChartPlugins3;
@@ -591,8 +602,7 @@ getPieChart(barChartLabels, barChartData, chartNum) {
   };
   //horizontalBar
   //RECLAMOS RESUELTOS
-  public pieChartLabels4 = [];
-  public pieChartData4 = [];
+
   public pieChartType4 = "bar";
   public pieChartLegend4 = false;
   public pieChartPlugins4;
@@ -741,7 +751,7 @@ getPieChart(barChartLabels, barChartData, chartNum) {
         this.totales = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
         this.barChartData = dato;
         // console.log(this.barChartData);
-        this.getBarChart(this.barChartLabels, this.barChartData, 'chart-1', 'Sucursales',  this.totales);
+        this.getBarChart(this.barChartLabels, this.barChartData, 'chart-1', 'Sucursales',  this.totales, 'bar');
       }
     )
   }
@@ -774,7 +784,8 @@ getPieChart(barChartLabels, barChartData, chartNum) {
         this.pieChartData.push(this.cantmoda)
         console.log(223, this.pieChartLabels)
         console.log(222, this.pieChartData)
-        this.getPieChart(this.pieChartLabels, this.pieChartData, 'chart-2');
+        this.getBarChart(this.pieChartLabels, this.pieChartData, 'chart-2', 'Plan de salud', this.listencuesta, 'pie');
+
       })
 
   }
@@ -826,7 +837,7 @@ getPieChart(barChartLabels, barChartData, chartNum) {
 
         this.sumtipopaciente = this.plansalud.length + this.institucional.length + this.convenio.length
           + this.company.length + this.madrenino.length + this.otross.length;
-          this.getPieChart(this.pieChartLabels2, this.pieChartData2, 'chart-3');
+          this.getBarChart(this.pieChartLabels2, this.pieChartData2, 'chart-3', 'Plan de salud', this.listencuesta, 'bar');
       })
   }
   clasica = [];
@@ -868,7 +879,7 @@ getPieChart(barChartLabels, barChartData, chartNum) {
         console.log(120,dato)
         this.sumtarjeta = dato;
         
-        this.getBarChart(this.pieChartLabels22, this.pieChartData22, 'chart-4', 'Plan de salud', this.sumtarjeta);
+        this.getBarChart(this.pieChartLabels22, this.pieChartData22, 'chart-4', 'Plan de salud', this.sumtarjeta, 'pie');
       });
   }
   saludpol = [];
@@ -955,12 +966,13 @@ getPieChart(barChartLabels, barChartData, chartNum) {
           this.pieChartData23.push(this.arrcantco);
         }
         
-        
-        dato = this.rimac.length + this.pacifico.length + this.positiva.length 
-          + this.mapfre.length + this.sanitas.length + this.interseguro.length 
-          + this.otrocomp.length;
+        dato = this.saludpol.length + this.fopasef.length + this.sedapal.length 
+          + this.petroperu.length + this.crecer.length + this.cmp.length + this.bcrp.length
+          + this.otrocon.length;
         
           this.sumconvenio = dato;
+          console.log(dato);
+          this.getBarChart(this.pieChartLabels23, this.pieChartData23, 'chart-5', 'Convenio', this.sumconvenio, 'bar');
 
         
       })
@@ -1033,8 +1045,11 @@ getPieChart(barChartLabels, barChartData, chartNum) {
           this.pieChartLabels24.push(this.arrCompany);
           this.pieChartData24.push(this.arrcantcomp);
         }
-        
-        
+        let dato = this.rimac.length + this.pacifico.length + this.positiva.length 
+          + this.mapfre.length + this.sanitas.length + this.interseguro.length
+          + this.otrocomp.length;
+          this.companyTotals = dato;
+        this.getBarChart(this.pieChartLabels24, this.pieChartData24, 'chart-6', 'Compañía Seguro', this.companyTotals, 'doughnut');
       })
   }
   getsatisfaccion() {
@@ -1472,6 +1487,9 @@ getPieChart(barChartLabels, barChartData, chartNum) {
         this.datonum10 = this.cantrecom;
         this.pieChartData3.push(this.cantrecom);
         this.pieChartLabels3.push(this.arrescala);
+        this.recomendacionTotal = this.recomen.length + this.recomen2.length + this.recomen3.length + this.recomen4.length + this.recomen5.length +
+        this.recomen6.length + this.recomen7.length + this.recomen8.length + this.recomen9.length + this.recomen10.length
+        this.getBarChart(this.pieChartLabels3, this.pieChartData3, 'chart-7', 'Satisfacción por servicio', this.recomendacionTotal, 'doughnut');
       })
   }
   getporcentaje(dato: number) {
