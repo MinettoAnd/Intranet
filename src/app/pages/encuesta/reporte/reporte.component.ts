@@ -43,10 +43,10 @@ export class ReporteComponent implements OnInit {
 console.log(content.nativeElement.id );
 
       
-      this.getBarChart(this.barChartLabels, this.barChartData, 'chart-1', 'Sucursales');
+      this.getBarChart(this.barChartLabels, this.barChartData, 'chart-1', 'Sucursales', this.totales);
       this.getPieChart(this.pieChartLabels, this.pieChartData, 'chart-2');
       this.getPieChart(this.pieChartLabels2, this.pieChartData2, 'chart-3');
-      this.getBarChart(this.pieChartLabels22, this.pieChartData22, 'chart-4', 'Plan de salud');
+      this.getBarChart(this.pieChartLabels22, this.pieChartData22, 'chart-4', 'Plan de salud', this.sumtarjeta);
       
     }
   }
@@ -215,7 +215,7 @@ getChart(context, chartType, data, options?) {
   });
 }
 
-getBarChart(barChartLabels, barChartData, chartNum, title) {
+getBarChart(barChartLabels, barChartData, chartNum, title, totales) {
   const data = {
     labels: barChartLabels,
     datasets: [
@@ -243,7 +243,7 @@ getBarChart(barChartLabels, barChartData, chartNum, title) {
         /* anchor puede ser "start", "center" o "end" */
         anchor: 'center',
         /* Podemos modificar el texto a mostrar */
-        formatter: (dato) => Math.floor((dato / this.totales) * 100) + '%',
+        formatter: (dato) => Math.floor((dato / totales) * 100) + '%',
         /* Color del texto */
         color: '#ffffff',
         /* Formato de la fuente */
@@ -711,14 +711,14 @@ getPieChart(barChartLabels, barChartData, chartNum) {
     this.barChartLabels = [];
     this.barChartData = [];
     let dato = []
-    this.totales = 0;
+    
     this.formularioService.getFormulario().subscribe(
       (res: any) => {
+
         this.data = res.body.length > 0 ? res.body : [];
         this.listlima = this.data.filter((sede: { sucursal: string; }) => sede.sucursal == 'Lima');
         this.arrsucursal = this.listlima[0].sucursal;
         dato.push(this.listlima.length);
-        this.totales = this.listlima.length;
         this.cantsucursal = dato;
         this.barChartData = [{ data: this.cantsucursal, label: 'Lima' }]
         this.barChartLabels.push(this.listlima[0].sucursal);
@@ -728,7 +728,6 @@ getPieChart(barChartLabels, barChartData, chartNum) {
         this.listchorrillos = this.data.filter((sede: { sucursal: string; }) => sede.sucursal == 'Chorrillos');
         this.arrsucursal = this.listchorrillos[0].sucursal;
         dato.push(this.listchorrillos.length);
-        this.totales += this.listchorrillos.length;
         this.cantsucursal = dato;
         this.barChartData = [{ data: this.cantsucursal, label: 'Chorrillos' }]
         this.barChartLabels.push(this.listchorrillos[0].sucursal);
@@ -736,14 +735,13 @@ getPieChart(barChartLabels, barChartData, chartNum) {
         this.listsurco = this.data.filter((sede: { sucursal: string; }) => sede.sucursal == 'Surco');
         this.arrsucursal = this.listsurco[0].sucursal;
         dato.push(this.listsurco.length);
-        this.totales += this.listsurco.length;
         this.cantsucursal = dato;
         this.barChartData = [{ data: this.cantsucursal, label: 'Surco' }]
         this.barChartLabels.push(this.listsurco[0].sucursal);
-        console.log(this.totales);
+        this.totales = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
         this.barChartData = dato;
         // console.log(this.barChartData);
-        this.getBarChart(this.barChartLabels, this.barChartData, 'chart-1', 'Sucursales');
+        this.getBarChart(this.barChartLabels, this.barChartData, 'chart-1', 'Sucursales',  this.totales);
       }
     )
   }
@@ -841,6 +839,7 @@ getPieChart(barChartLabels, barChartData, chartNum) {
     this.pieChartLabels22 = [];
     this.pieChartData22 = [];
     let dato = 0;
+    this.totales = 0;
     this.formularioService.getFormulario().subscribe(
       (res: any) => {
         this.data = res.body.length > 0 ? res.body : [];
@@ -868,8 +867,8 @@ getPieChart(barChartLabels, barChartData, chartNum) {
         dato = this.clasica.length + this.dorada.length + this.diamante.length;
         console.log(120,dato)
         this.sumtarjeta = dato;
-        this.totales = dato;
-        this.getBarChart(this.pieChartLabels22, this.pieChartData22, 'chart-4', 'Plan de salud');
+        
+        this.getBarChart(this.pieChartLabels22, this.pieChartData22, 'chart-4', 'Plan de salud', this.sumtarjeta);
       });
   }
   saludpol = [];
