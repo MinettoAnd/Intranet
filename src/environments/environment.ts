@@ -4,9 +4,11 @@
 
 export const environment = {
     production: true,
-    baseURL: "http://localhost:3000/api",
-    // baseURL: 'http://servicios.maisondesante.org.pe/api',
-    api_url: 'http://127.0.0.1:8000/api/v1/',
+    // baseURL: "http://localhost:3000/api",
+    // api_url: 'http://127.0.0.1:8000/api/v1/',
+    baseURL: 'http://servicios.maisondesante.org.pe/api',
+    api_url: 'https://api.maisondesante.org.pe/api/v1/',
+    
 };
 
 /*
