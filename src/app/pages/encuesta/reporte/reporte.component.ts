@@ -39,7 +39,7 @@ export class ReporteComponent implements OnInit {
   public pieChartData24 = [];
   public pieChartLabels3 = [];
   public pieChartData3 = [];
-  public pieChartLabels4 = [];
+  public pieChartLabels4 = ['Médico', 'Enfermera', 'Técnica', 'Farmacia', 'Laboratorio', 'Imágenes', 'Admisión', 'Convenios', 'Atención al Cliente', 'Aseo y Limpieza', 'Modernidad', 'Comodidad'];
   public pieChartData4 = [];
   @ViewChild("baseChart", { static: false }) set content(
     content: ElementRef
@@ -49,7 +49,7 @@ export class ReporteComponent implements OnInit {
       // initially setter gets called with undefined
       this.baseChart = content;
 
-console.log(content.nativeElement.id );
+// console.log(content.nativeElement.id );
 
       
       this.getBarChart(this.barChartLabels, this.barChartData, 'chart-1', 'Sucursales', this.totales, 'bar');
@@ -57,16 +57,38 @@ console.log(content.nativeElement.id );
       this.getBarChart(this.pieChartLabels2, this.pieChartData2, 'chart-3', 'Tipo de paciente', this.listencuesta, 'bar');
       this.getBarChart(this.pieChartLabels22, this.pieChartData22, 'chart-4', 'Plan de salud', this.sumtarjeta, 'pie');
       this.getBarChart(this.pieChartLabels23, this.pieChartData23, 'chart-5', 'Convenio', this.sumconvenio, 'bar');
-      this.getBarChart(this.pieChartLabels24, this.pieChartData24, 'chart-6', 'Compañía Seguro', this.listencuesta, 'doughnut');
-      this.getBarChart(this.pieChartLabels3, this.pieChartData3, 'chart-7', 'Satisfacción por servicio', this.recomendacionTotal, 'doughnut');
-      // this.getBarChart(this.pieChartLabels4, this.pieChartData4, 'chart-8', 'Registro de Recomendación', this.listencuesta, 'doughnut');
+      this.getBarChart(this.pieChartLabels24, this.pieChartData24, 'chart-6', 'Compañía Seguro', this.companyTotals, 'doughnut');
+      // this.getMultChart(this.pieChartLabels4, this.dataMuyBueno, this.dataBueno, this.dataRegular, this.dataMalo, this.dataMuyMalo, this.dataNa,
+      //   'chart-7', 'Satisfacción por servicio',
+      //   this.dataMuyBueno.length , this.dataBueno.length, this.dataRegular.length, this.dataMalo.length, this.dataMuyMalo.length, this.dataNa.length,
+      //     'line');
+      this.getBarChart(this.pieChartLabels3, this.pieChartData3, 'chart-8', 'Escala de Recomendación', this.recomendacionTotal, 'doughnut');
     }
   }
   data: any = [];
   char: any = [];
   totales;
   companyTotals;
+  satisfaccionTotal;
   recomendacionTotal;
+  dataMuyBueno: any = [];
+  dataBueno: any = [];
+  dataRegular: any = [];
+  dataMalo: any = [];
+  dataMuyMalo: any = [];
+  dataNa: any = [];
+  totalMedico;
+  totalEnfermera;
+  totalTecnica;
+  totalFarmacia;
+  totalLaboratorio;
+  totalImagenes;
+  totalAdmision;
+  totalConvenios;
+  totalAtencionCliente;
+  totalAseoLimpieza;
+  totalModernidad;
+  totalComodidad;
   public listencuesta: any = [];
   public listlima: any = [];
   public listchorrillos: any = [];
@@ -228,7 +250,209 @@ getChart(context, chartType, data, options?) {
     plugins: [ChartDataLabels]
   });
 }
+getMultChart(barChartLabels, dataMuyBueno, dataBueno, dataRegular, dataMalo, dataMuyMalo, dataNa, chartNum, title, 
+  totalMuyBueno, totalBueno, totalRegular, totalMalo, totalMuyMalo, totalNa, typeChart) {
 
+  const datosMuyBueno = {
+      label: "Muy Bueno",
+      data: dataMuyBueno, 
+      backgroundColor: 'rgba(211,93,110, 0.2)',
+      borderColor: 'rgba(211,93,110, 1)',
+      borderWidth: 1,
+      plugins: {
+        datalabels: {
+          /* anchor puede ser "start", "center" o "end" */
+          anchor: 'center',
+          /* Podemos modificar el texto a mostrar */
+          // formatter: (dato) => Math.floor((dato / totalMuyBueno) * 100) + '%',
+          /* Color del texto */
+          color: '#ffffff',
+          /* Formato de la fuente */
+          font: {
+            // family: '"Times New Roman", Times, serif',
+            size: '16',
+            weight: 'bold',
+          },
+          /* Formato de la caja contenedora */
+          // padding: '4',
+          // borderWidth: 2,
+          // borderColor: 'darkblue',
+          // borderRadius: 8,
+          // backgroundColor: 'lightblue'
+        }
+      }
+  };
+  const datosBueno = {
+      label: "Bueno",
+      data: dataBueno, 
+      backgroundColor: 'rgba(209,234,163,0.5)',
+      borderColor: 'rgba(209,234,163,1)',
+      borderWidth: 1,
+      plugins: {
+        datalabels: {
+          /* anchor puede ser "start", "center" o "end" */
+          anchor: 'center',
+          /* Podemos modificar el texto a mostrar */
+          // formatter: (dato) => Math.floor((dato / totalBueno) * 100) + '%',
+          /* Color del texto */
+          color: '#ffffff',
+          /* Formato de la fuente */
+          font: {
+            // family: '"Times New Roman", Times, serif',
+            size: '16',
+            weight: 'bold',
+          },
+          /* Formato de la caja contenedora */
+          // padding: '4',
+          // borderWidth: 2,
+          // borderColor: 'darkblue',
+          // borderRadius: 8,
+          // backgroundColor: 'lightblue'
+        }
+      }
+  };
+  const datosRegular = {
+      label: "Regular",
+      data: dataRegular, 
+      backgroundColor: 'rgba(54, 162, 235, 0.2)', 
+      borderColor: 'rgba(54, 162, 235, 1)', 
+      borderWidth: 1,
+      plugins: {
+        datalabels: {
+          /* anchor puede ser "start", "center" o "end" */
+          anchor: 'center',
+          /* Podemos modificar el texto a mostrar */
+          // formatter: (dato) => Math.floor((dato / totalRegular) * 100) + '%',
+          /* Color del texto */
+          color: '#ffffff',
+          /* Formato de la fuente */
+          font: {
+            // family: '"Times New Roman", Times, serif',
+            size: '16',
+            weight: 'bold',
+          },
+          /* Formato de la caja contenedora */
+          // padding: '4',
+          // borderWidth: 2,
+          // borderColor: 'darkblue',
+          // borderRadius: 8,
+          // backgroundColor: 'lightblue'
+        }
+      }
+  };
+  const datosMalo = {
+      label: "Malo",
+      data: dataMalo, 
+      backgroundColor: 'rgba(255, 159, 64, 0.2)',
+      borderColor: 'rgba(255, 159, 64, 1)',
+      borderWidth: 1,
+      plugins: {
+        datalabels: {
+          /* anchor puede ser "start", "center" o "end" */
+          anchor: 'center',
+          /* Podemos modificar el texto a mostrar */
+          // formatter: (dato) => Math.floor((dato / totalMalo) * 100) + '%',
+          /* Color del texto */
+          color: '#ffffff',
+          /* Formato de la fuente */
+          font: {
+            // family: '"Times New Roman", Times, serif',
+            size: '16',
+            weight: 'bold',
+          },
+          /* Formato de la caja contenedora */
+          // padding: '4',
+          // borderWidth: 2,
+          // borderColor: 'darkblue',
+          // borderRadius: 8,
+          // backgroundColor: 'lightblue'
+        }
+      }
+  };
+  const datosMuyMalo = {
+    label: "Muy Malo",
+    data: dataMuyMalo, 
+    backgroundColor: 'rgba(255, 159, 64, 0.2)',
+    borderColor: 'rgba(255, 159, 64, 1)',
+    borderWidth: 1,
+    plugins: {
+      datalabels: {
+        /* anchor puede ser "start", "center" o "end" */
+        anchor: 'center',
+        /* Podemos modificar el texto a mostrar */
+        // formatter: (dato) => Math.floor((dato / totalMuyMalo) * 100) + '%',
+        /* Color del texto */
+        color: '#ffffff',
+        /* Formato de la fuente */
+        font: {
+          // family: '"Times New Roman", Times, serif',
+          size: '16',
+          weight: 'bold',
+        },
+        /* Formato de la caja contenedora */
+        // padding: '4',
+        // borderWidth: 2,
+        // borderColor: 'darkblue',
+        // borderRadius: 8,
+        // backgroundColor: 'lightblue'
+      }
+    }
+  };
+  const datosNa = {
+    label: "NA",
+    data: dataNa, 
+    backgroundColor: 'rgba(255, 159, 64, 0.2)',
+    borderColor: 'rgba(255, 159, 64, 1)',
+    borderWidth: 1,
+    plugins: {
+      datalabels: {
+        /* anchor puede ser "start", "center" o "end" */
+        anchor: 'center',
+        /* Podemos modificar el texto a mostrar */
+        // formatter: (dato) => Math.floor((dato / totalNa) * 100) + '%',
+        /* Color del texto */
+        color: '#ffffff',
+        /* Formato de la fuente */
+        font: {
+          // family: '"Times New Roman", Times, serif',
+          size: '16',
+          weight: 'bold',
+        },
+        /* Formato de la caja contenedora */
+        // padding: '4',
+        // borderWidth: 2,
+        // borderColor: 'darkblue',
+        // borderRadius: 8,
+        // backgroundColor: 'lightblue'
+      }
+    }
+  };
+
+  const data = {
+    labels: barChartLabels,
+    datasets: [
+      datosMuyBueno,
+      datosBueno,
+      datosRegular,
+      datosMalo,
+      datosMuyMalo
+    ]
+  };
+  const options = {
+    responsive: true,
+    // We use these empty structures as placeholders for dynamic theming.
+    scales: {
+          yAxes: [{
+              ticks: {
+                  beginAtZero: true
+              }
+          }]
+      },
+    
+  };
+  return this.getChart(chartNum, typeChart, data, options);
+  
+}
 getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
   const data = {
     labels: barChartLabels,
@@ -238,8 +462,8 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
         // borderColor: 'rgba(99, 255, 132, 1)',
         borderWidth: 1,
         data: barChartData,
-        backgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#ffc107', '#28a745'],
-        hoverBackgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#ffc107', '#28a745']
+        backgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#adb5bd','#ffc107', '#28a745', '#6610f2','#20c997'],
+        hoverBackgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14','#adb5bd', '#ffc107', '#28a745', '#6610f2', '#20c997']
       }]
   };
   const options = {
@@ -257,13 +481,14 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
         /* anchor puede ser "start", "center" o "end" */
         anchor: 'center',
         /* Podemos modificar el texto a mostrar */
-        formatter: (dato) => Math.floor((dato / totales) * 100) + '%',
+        formatter: (dato) => ((dato * 100) / totales).toFixed(2) + '%',
+        // formatter: (dato) => Math.floor((dato / totales) * 100) + '%',
         /* Color del texto */
         color: '#ffffff',
         /* Formato de la fuente */
         font: {
           // family: '"Times New Roman", Times, serif',
-          size: '16',
+          size: '11',
           weight: 'bold',
         },
         /* Formato de la caja contenedora */
@@ -646,12 +871,12 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
     this.formularioService.getFormulario().subscribe(
       (res: any) => {
         this.listencuesta = res.body.length;
-        console.log(res.body)
+        // console.log(res.body)
         this.escalatotal = res.body.map((item: { escalaRecomendacion: any; }) => {
           let dato = item.escalaRecomendacion;
           return dato;
         });
-        console.log(44, this.escalatotal)
+        // console.log(44, this.escalatotal)
         let sum = [];
         res.body.map((item: { SA_admision: any; }) => {
           let dato = item.SA_admision;
@@ -703,17 +928,17 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
         });
         this.satistotal = sum;
 
-        console.log(24, this.satistotal.length);
+        // console.log(24, this.satistotal.length);
 
       })
-    this.getTipoPaciente();
-    this.getModalidad();
     this.getSucursal();
-    this.getrecomendacion();
-    this.getsatisfaccion();
+    this.getModalidad();
+    this.getTipoPaciente();
     this.getTarjetaClasica();
     this.getConvenio();
     this.getCompany();
+    this.getsatisfaccion();
+    this.getrecomendacion();
   };
 
   getSucursal() {
@@ -732,8 +957,8 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
         this.cantsucursal = dato;
         this.barChartData = [{ data: this.cantsucursal, label: 'Lima' }]
         this.barChartLabels.push(this.listlima[0].sucursal);
-        console.log(223, this.barChartLabels)
-        console.log(222, this.barChartData)
+        // console.log(223, this.barChartLabels)
+        // console.log(222, this.barChartData)
 
         this.listchorrillos = this.data.filter((sede: { sucursal: string; }) => sede.sucursal == 'Chorrillos');
         this.arrsucursal = this.listchorrillos[0].sucursal;
@@ -766,24 +991,24 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
         this.cantmoda = this.listemergencia.length;
         this.pieChartLabels.push(this.arrmoda);
         this.pieChartData.push(this.cantmoda)
-        console.log(223, this.pieChartLabels)
-        console.log(222, this.pieChartData)
+        // console.log(223, this.pieChartLabels)
+        // console.log(222, this.pieChartData)
 
         this.listconsultorio = this.data.filter((item: { modalidad: string }) => item.modalidad === 'Consultorio Externo');
         this.arrmoda = this.listconsultorio[0].modalidad;
         this.cantmoda = this.listconsultorio.length;
         this.pieChartLabels.push(this.arrmoda);
         this.pieChartData.push(this.cantmoda)
-        console.log(223, this.pieChartLabels)
-        console.log(222, this.pieChartData)
+        // console.log(223, this.pieChartLabels)
+        // console.log(222, this.pieChartData)
 
         this.listhospita = this.data.filter((item: { modalidad: string }) => item.modalidad === 'Hospitalización');
         this.arrmoda = this.listhospita[0].modalidad;
         this.cantmoda = this.listhospita.length;
         this.pieChartLabels.push(this.arrmoda);
         this.pieChartData.push(this.cantmoda)
-        console.log(223, this.pieChartLabels)
-        console.log(222, this.pieChartData)
+        // console.log(223, this.pieChartLabels)
+        // console.log(222, this.pieChartData)
         this.getBarChart(this.pieChartLabels, this.pieChartData, 'chart-2', 'Plan de salud', this.listencuesta, 'pie');
 
       })
@@ -802,7 +1027,7 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
         this.cantidad = this.plansalud.length
         this.pieChartLabels2.push(this.arrLima);
         this.pieChartData2.push(this.cantidad);
-        console.log(111, this.arrLima)
+        // console.log(111, this.arrLima)
 
 
         this.institucional = this.data.filter((item: { paciente: string; }) => item.paciente === 'Institucional');
@@ -856,10 +1081,10 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
         this.data = res.body.length > 0 ? res.body : [];
         //TARJETA CLASICA
         this.clasica = this.data.filter((item: { tipoPaciente: string; }) => item.tipoPaciente === 'Tarjeta CLASICA');
-        console.log(65, this.clasica)
+        // console.log(65, this.clasica)
         this.arrpaciente = this.clasica[0].tipoPaciente;
         this.arrcantpa = this.clasica.length;
-        console.log(67, this.arrpaciente)
+        // console.log(67, this.arrpaciente)
         this.pieChartLabels22.push(this.arrpaciente);
         this.pieChartData22.push(this.arrcantpa);
         //TARJETA DORADA
@@ -876,7 +1101,7 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
         this.pieChartData22.push(this.arrcantpa);
 
         dato = this.clasica.length + this.dorada.length + this.diamante.length;
-        console.log(120,dato)
+        // console.log(120,dato)
         this.sumtarjeta = dato;
         
         this.getBarChart(this.pieChartLabels22, this.pieChartData22, 'chart-4', 'Plan de salud', this.sumtarjeta, 'pie');
@@ -900,14 +1125,14 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
     this.formularioService.getFormulario().subscribe(
       (res: any) => {
         this.data = res.body.length > 0 ? res.body : [];
-        console.log(this.data);
+        // console.log(this.data);
         //SALUDPOL
         this.saludpol = this.data.filter((item: { tipoConvenio: string; }) => item.tipoConvenio === 'SALUDPOL');
-        console.log(65, this.saludpol)
+        // console.log(65, this.saludpol)
         this.arrconvenio = this.saludpol[0].tipoConvenio;        
         this.arrcantco = this.saludpol.length;
-        console.log(68, this.arrconvenio)
-        console.log(69, this.arrcantco)
+        // console.log(68, this.arrconvenio)
+        // console.log(69, this.arrcantco)
         this.pieChartLabels23.push(this.arrconvenio);
         this.pieChartData23.push(this.arrcantco);
         //FOPASEF
@@ -971,7 +1196,7 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
           + this.otrocon.length;
         
           this.sumconvenio = dato;
-          console.log(dato);
+          // console.log(dato);
           this.getBarChart(this.pieChartLabels23, this.pieChartData23, 'chart-5', 'Convenio', this.sumconvenio, 'bar');
 
         
@@ -995,50 +1220,50 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
         this.data = res.body.length > 0 ? res.body : [];
         //SALUDPOL
         this.rimac = this.data.filter((item: { tipoSeguro: string; }) => item.tipoSeguro === 'RIMAC');
-        console.log(70,this.rimac)
+        // console.log(70,this.rimac)
         this.arrCompany = this.rimac[0].tipoSeguro;
-        console.log(701,this.arrCompany)        
+        // console.log(701,this.arrCompany)        
         this.arrcantcomp = this.rimac.length;        
         this.pieChartLabels24.push(this.arrCompany);
         this.pieChartData24.push(this.arrcantcomp);
 
         this.pacifico = this.data.filter((item: { tipoSeguro: string; }) => item.tipoSeguro === 'PACIFICO');
-        console.log(71,this.pacifico)
+        // console.log(71,this.pacifico)
         this.arrCompany = this.pacifico[0].tipoSeguro;              
         this.arrcantcomp = this.pacifico.length;        
         this.pieChartLabels24.push(this.arrCompany);
         this.pieChartData24.push(this.arrcantcomp);
 
         this.positiva = this.data.filter((item: { tipoSeguro: string; }) => item.tipoSeguro === 'LA POSITIVA');
-        console.log(72,this.positiva)
+        // console.log(72,this.positiva)
         this.arrCompany = this.positiva[0].tipoSeguro;        
         this.arrcantcomp = this.positiva.length;        
         this.pieChartLabels24.push(this.arrCompany);
         this.pieChartData24.push(this.arrcantcomp);
 
         this.mapfre = this.data.filter((item: { tipoSeguro: string; }) => item.tipoSeguro === 'MAPFRE');
-        console.log(73,this.mapfre)
+        // console.log(73,this.mapfre)
         this.arrCompany = this.mapfre[0].tipoSeguro;        
         this.arrcantcomp = this.mapfre.length;        
         this.pieChartLabels24.push(this.arrCompany);
         this.pieChartData24.push(this.arrcantcomp);
         
         this.sanitas = this.data.filter((item: { tipoSeguro: string; }) => item.tipoSeguro === 'SANITAS');
-        console.log(74,this.sanitas)
+        // console.log(74,this.sanitas)
         this.arrCompany = this.sanitas[0].tipoSeguro;        
         this.arrcantcomp = this.sanitas.length;        
         this.pieChartLabels24.push(this.arrCompany);
         this.pieChartData24.push(this.arrcantcomp);
 
         this.interseguro = this.data.filter((item: { tipoSeguro: string; }) => item.tipoSeguro === 'INTERSEGURO');
-        console.log(75,this.interseguro)
+        // console.log(75,this.interseguro)
         this.arrCompany = this.interseguro[0].tipoSeguro;        
         this.arrcantcomp = this.interseguro.length;        
         this.pieChartLabels24.push(this.arrCompany);
         this.pieChartData24.push(this.arrcantcomp);
 
         this.otrocomp = this.data.filter((item: { tipoSeguro: string; }) => item.tipoSeguro === 'OTROS');
-        console.log(76,this.otrocomp);
+        // console.log(76,this.otrocomp);
         if (this.otrocomp.length > 0 ){
           this.arrCompany = this.otrocomp[0].tipoSeguro;        
           this.arrcantcomp = this.otrocomp.length;        
@@ -1053,6 +1278,7 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
       })
   }
   getsatisfaccion() {
+
     let sumMuymalo = [];
     let sumMalo = [];
     let sumRegular = [];
@@ -1144,9 +1370,8 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
           this.maloo = sumMalo;
           this.muymalo = sumMuymalo;
           this.na = sumNa;
-
-
         });
+        this.totalAdmision = this.muybueno.length + this.buenoo.length + this.regular.length + this.maloo.length + this.muymalo.length + this.na.length;
         this.data.map((item: { SA_atencionCliente: any; }) => {
           let dato = item.SA_atencionCliente;
           switch (dato) {
@@ -1164,9 +1389,8 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
           this._ACmuymalo = ateMuymalo;
           this._ACna = ateNa;
 
-
         });
-
+        this.totalAtencionCliente = this._ACmuybueno.length + this._ACbuenoo.length + this._ACregular.length + this._ACmaloo.length + this._ACmuymalo.length + this._ACna.length;
         this.data.map((item: { SA_convenios: any; }) => {
           let dato = item.SA_convenios;
           switch (dato) {
@@ -1184,9 +1408,8 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
           this._COmuymalo = coMuymalo;
           this._COna = coNa;
 
-
         });
-
+        this.totalConvenios = this._COmuybueno.length + this._CObuenoo.length + this._COregular.length + this._COmaloo.length + this._COmuymalo.length + this._COna.length;
         this.data.map((item: { SA_farmacia: any; }) => {
           let dato = item.SA_farmacia;
           switch (dato) {
@@ -1204,9 +1427,8 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
           this._FAmuymalo = faMuymalo;
           this._FAna = faNa;
 
-
         });
-
+        this.totalFarmacia = this._FAmuybueno.length + this._FAbuenoo.length + this._FAregular.length + this._FAmaloo.length + this._FAmuymalo.length + this._FAna.length;
         this.data.map((item: { SA_imagenes: any; }) => {
           let dato = item.SA_imagenes;
           switch (dato) {
@@ -1224,9 +1446,8 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
           this._IMmuymalo = imMuymalo;
           this._IMna = imNa;
 
-
         });
-
+        this.totalImagenes = this._IMmuybueno.length + this._IMbuenoo.length + this._IMregular.length + this._IMmaloo.length + this._IMmuymalo.length + this._IMna.length;
         this.data.map((item: { SA_laboratorio: any; }) => {
           let dato = item.SA_laboratorio;
           switch (dato) {
@@ -1244,9 +1465,8 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
           this._LAmuymalo = laMuymalo;
           this._LAna = laNa;
 
-
         });
-
+        this.totalLaboratorio = this._LAmuybueno.length + this._LAbuenoo.length + this._LAregular.length + this._LAmaloo.length + this._LAmuymalo.length + this._LAna.length;
         this.data.map((item: { SI_comodidad: any; }) => {
           let dato = item.SI_comodidad;
           switch (dato) {
@@ -1264,9 +1484,8 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
           this._COMmuymalo = comMuymalo;
           this._COMna = comNa;
 
-
         });
-
+        this.totalComodidad = this._COMmuybueno.length + this._COMbuenoo.length + this._COMregular.length + this._COMmaloo.length + this._COMmuymalo.length + this._COMna.length;
         this.data.map((item: { SI_limpieza: any; }) => {
           let dato = item.SI_limpieza;
           switch (dato) {
@@ -1284,9 +1503,8 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
           this._LIMmuymalo = liMuymalo;
           this._LIMna = liNa;
 
-
         });
-
+        this.totalAseoLimpieza = this._LIMmuybueno.length + this._LIMbuenoo.length + this._LIMregular.length + this._LIMmaloo.length + this._LIMmuymalo.length + this._LIMna.length;
         this.data.map((item: { SI_modernidad: any; }) => {
           let dato = item.SI_modernidad;
           switch (dato) {
@@ -1304,8 +1522,8 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
           this._MOmuymalo = moMuymalo;
           this._MOna = moNa;
 
-
         });
+        this.totalModernidad = this._MOmuybueno.length + this._MObuenoo.length + this._MOregular.length + this._MOmaloo.length + this._MOmuymalo.length + this._MOna.length;
 
         this.data.map((item: { SS_doctor: any; }) => {
           let dato = item.SS_doctor;
@@ -1323,9 +1541,8 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
           this._DOCmaloo = docMalo;
           this._DOCmuymalo = docMuymalo;
           this._DOCna = docNa;
-
-
         });
+        this.totalMedico = this._DOCmuybueno.length + this._DOCbuenoo.length + this._DOCregular.length + this._DOCmaloo.length + this._DOCmuymalo.length + this._DOCna.length;
 
         this.data.map((item: { SS_enfermera: any; }) => {
           let dato = item.SS_enfermera;
@@ -1343,10 +1560,9 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
           this._ENmaloo = enMalo;
           this._ENmuymalo = enMuymalo;
           this._ENna = enNa;
-
-
+          
         });
-
+        this.totalEnfermera = this._ENmuybueno.length + this._ENbuenoo.length + this._ENregular.length + this._ENmaloo.length + this._ENmuymalo.length + this._ENna.length;
         this.data.map((item: { SS_tecnica: any; }) => {
           let dato = item.SS_tecnica;
           switch (dato) {
@@ -1363,13 +1579,12 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
           this._TECmaloo = tecMalo;
           this._TECmuymalo = tecMuymalo;
           this._TECna = tecNa;
-
-
         });
-
-
+        
+        this.totalTecnica = this._TECmuybueno.length + this._TECbuenoo.length + this._TECregular.length + this._TECmaloo.length + this._TECmuymalo.length + this._TECna.length;
 
       })
+      
   }
   public datolabel = [];
   public datonum = [];
@@ -1401,7 +1616,7 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
         this.data = res.body.length > 0 ? res.body : [];
         this.recomen = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '10');
         this.cantrecom = this.recomen.length;
-        console.log(55, this.recomen)
+        // console.log(55, this.recomen)
         this.arrescala = this.recomen[0].escalaRecomendacion;
         this.datolabel = this.arrescala;
         this.datonum = this.cantrecom;
@@ -1489,7 +1704,7 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
         this.pieChartLabels3.push(this.arrescala);
         this.recomendacionTotal = this.recomen.length + this.recomen2.length + this.recomen3.length + this.recomen4.length + this.recomen5.length +
         this.recomen6.length + this.recomen7.length + this.recomen8.length + this.recomen9.length + this.recomen10.length
-        this.getBarChart(this.pieChartLabels3, this.pieChartData3, 'chart-7', 'Satisfacción por servicio', this.recomendacionTotal, 'doughnut');
+        this.getBarChart(this.pieChartLabels3, this.pieChartData3, 'chart-8', 'Escala de Recomendación', this.recomendacionTotal, 'doughnut');
       })
   }
   getporcentaje(dato: number) {
@@ -1501,23 +1716,27 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
   getporcentajeconvenio(dato: number) {
     return ((dato * 100) / this.sumconvenio).toFixed(2) + '%';
   }
+  getporcentajeCompany(dato: number) {
+    return ((dato * 100) / this.companyTotals).toFixed(2) + '%';
+  }
   getporcentajeescala(dato: number) {
-    return ((dato * 100) / this.escalatotal.length).toFixed(2) + '%';
+    return ((dato * 100) / this.recomendacionTotal).toFixed(2) + '%';
   }
   getporcentajesati(dato: number) {
-    return ((dato * 100) / this.satistotal.length).toFixed(2) + '%';
+    
+    return ((dato * 100) / this.listencuesta).toFixed(2) + '%';
   }
   //SEDE LIMA
   getRegisterSedeLima() {
 
     this.formularioService.getFormulario().subscribe(
       (res: any) => {
-        console.log(res);
+        // console.log(res);
         this.data = res.body;
         let Lima = this.data.filter((sede: { sucursal: string; }) => sede.sucursal == 'Lima');
         this.listlima = Lima.length;
 
-        console.log(900, this.listlima);
+        // console.log(900, this.listlima);
       }
     )
   }
@@ -1525,7 +1744,7 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
   getmodalidadLima() {
     this.formularioService.getFormulario().subscribe(
       (res: any) => {
-        console.log(res);
+        // console.log(res);
         // this.listencuesta = res.data.body[0].length > 0 ? res.data.body : []; 
         this.data = res.body;
 
@@ -1540,25 +1759,25 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
   gettipopacienteLima() {
     this.formularioService.getFormulario().subscribe(
       (res: any) => {
-        console.log(res);
+        // console.log(res);
 
         this.data = res.body;
-        console.log(this.data);
+        // console.log(this.data);
 
         this.listlima = this.data.filter((sede: { sucursal: string; }) => sede.sucursal === 'Lima')
         for (var i = 0; i < this.listlima.length; i++) {
           this.modalima.push(this.listlima[i].paciente)
         }
-        console.log(10, this.modalima);
+        // console.log(10, this.modalima);
         //console.log(1000, this.data);
       })
   }
   getexperienciaLima() {
     this.formularioService.getFormulario().subscribe(
       (res: any) => {
-        console.log(res);
+        // console.log(res);
         this.data = res.body;
-        console.log(this.data);
+        // console.log(this.data);
         this.listlima = this.data.filter((sede: { sucursal: string; }) => sede.sucursal === 'Lima')
         for (var i = 0; i < this.listlima.length; i++) {
           this.satisfaccionlima.push(this.listlima[i].SS_doctor);
@@ -1574,23 +1793,23 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
           this.satisfaccionlima.push(this.listlima[i].SI_modernidad);
           this.satisfaccionlima.push(this.listlima[i].SI_comodidad);
         }
-        console.log(30, this.satisfaccionlima);
+        // console.log(30, this.satisfaccionlima);
         //console.log(1000, this.data);
       })
   }
   getrecomedacionLima() {
     this.formularioService.getFormulario().subscribe(
       (res: any) => {
-        console.log(res);
+        // console.log(res);
 
         this.data = res.body;
-        console.log(this.data);
+        // console.log(this.data);
 
         this.listlima = this.data.filter((sede: { sucursal: string; }) => sede.sucursal === 'Lima')
         for (var i = 0; i < this.listlima.length; i++) {
           this.escalalima.push(this.listlima[i].escalaRecomendacion);
         }
-        console.log(10, this.escalalima);
+        // console.log(10, this.escalalima);
         //console.log(1000, this.data);
       })
   }
@@ -1599,12 +1818,12 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
   getRegisterSedeSurco() {
     this.formularioService.getFormulario().subscribe(
       (res: any) => {
-        console.log(res);
+        // console.log(res);
 
         this.data = res.body;
         let surco = this.data.filter((sede: { sucursal: string; }) => sede.sucursal === 'Surco');
         this.listsurco = surco.length;
-        console.log(1000, this.listsurco);
+        // console.log(1000, this.listsurco);
         //console.log(1000, this.data);
       })
   }
@@ -1612,12 +1831,12 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
   getRegisterSedeChorrillos() {
     this.formularioService.getFormulario().subscribe(
       (res: any) => {
-        console.log(res);
+        // console.log(res);
 
         this.data = res.body;
         let chorrillos = this.data.filter((sede: { sucursal: string; }) => sede.sucursal === 'Chorrillos');
         this.listchorrillos = chorrillos.length;
-        console.log(1100, this.listchorrillos);
+        // console.log(1100, this.listchorrillos);
         //console.log(this.data);
       })
   }
@@ -1640,7 +1859,7 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
       idrol: parseInt(localStorage.getItem('idrol')),
       empresa: this.TIPO_RECLAMO
     };
-    console.log(data)
+    // console.log(data)
 
     this.getRegisterSedeLima();
     /* this.getRegisteredClaims(data);

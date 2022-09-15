@@ -460,7 +460,12 @@
                   <td class="text-left">Tarjeta DIAMANTE</td>
                   <td class="text-left">{{ this.diamante.length }}</td>
                   <td class="text-left">{{ getporcentajetarjeta(this.diamante.length)}}</td>
-                </tr>                
+                </tr>
+                <tr>
+                  <th class="text-left">Total</th>
+                  <td class="text-left">{{ this.sumtarjeta }}</td>
+                  <td class="text-left">{{ getporcentajetarjeta(this.sumtarjeta)}}</td>
+                </tr>           
               </tbody>
             </table>
           </div>
@@ -516,47 +521,47 @@
                 <tr>
                   <td class="text-left">Saludpol</td>
                   <td>{{ this.saludpol.length }}</td>
-                  <td>{{ getporcentaje(this.saludpol.length) }}</td>
+                  <td>{{ getporcentajeconvenio(this.saludpol.length) }}</td>
                 </tr>
                 <tr>
                   <td class="text-left">Fopasef</td>
                   <td>{{ this.fopasef.length }}</td>
-                  <td>{{getporcentaje(this.fopasef.length) }}</td>
+                  <td>{{getporcentajeconvenio(this.fopasef.length) }}</td>
                 </tr>
                 <tr>
                   <td class="text-left">Sedapal</td>
                   <td class="text-left">{{ this.sedapal.length }}</td>
-                  <td class="text-left">{{ getporcentaje(this.sedapal.length)}}</td>
+                  <td class="text-left">{{ getporcentajeconvenio(this.sedapal.length)}}</td>
                 </tr>
                 <tr>
                   <td class="text-left">Petroperu</td>
                   <td class="text-left">{{ this.petroperu.length }}</td>
-                  <td class="text-left">{{ getporcentaje(this.petroperu.length)}}</td>
+                  <td class="text-left">{{ getporcentajeconvenio(this.petroperu.length)}}</td>
                 </tr>
                 <tr>
                   <td class="text-left">Crecer</td>
                   <td class="text-left">{{ this.crecer.length }}</td>
-                  <td class="text-left">{{ getporcentaje(this.crecer.length)}}</td>
+                  <td class="text-left">{{ getporcentajeconvenio(this.crecer.length)}}</td>
                 </tr>
                 <tr>
                   <td class="text-left">CMP</td>
                   <td class="text-left">{{ this.cmp.length }}</td>
-                  <td class="text-left">{{ getporcentaje(this.cmp.length)}}</td>
+                  <td class="text-left">{{ getporcentajeconvenio(this.cmp.length)}}</td>
                 </tr>
                 <tr>
                   <td class="text-left">BCRP</td>
                   <td class="text-left">{{ this.bcrp.length }}</td>
-                  <td class="text-left">{{ getporcentaje(this.bcrp.length)}}</td>
+                  <td class="text-left">{{ getporcentajeconvenio(this.bcrp.length)}}</td>
                 </tr>
                 <tr>
                   <td class="text-left">Otros</td>
                   <td class="text-left">{{ this.otrocon.length }}</td>
-                  <td class="text-left">{{ getporcentaje(this.otrocon.length)}}</td>
+                  <td class="text-left">{{ getporcentajeconvenio(this.otrocon.length)}}</td>
                 </tr>
                 <tr>
                   <th class="text-left">Total</th>
                   <td class="text-left">{{ this.sumconvenio}}</td>
-                  <td class="text-left">{{ getporcentaje(this.sumconvenio)}}</td>
+                  <td class="text-left">{{ getporcentajeconvenio(this.sumconvenio)}}</td>
                 </tr>
               </tbody>
             </table>
@@ -611,37 +616,37 @@
                 <tr>
                   <td class="text-left">Rimac</td>
                   <td>{{ this.rimac.length }}</td>
-                  <td>{{ getporcentaje(this.rimac.length) }}</td>
+                  <td>{{ getporcentajeCompany(this.rimac.length) }}</td>
                 </tr>
                 <tr>
                   <td class="text-left">Pacifico</td>
                   <td>{{ this.pacifico.length }}</td>
-                  <td>{{getporcentaje(this.pacifico.length) }}</td>
+                  <td>{{getporcentajeCompany(this.pacifico.length) }}</td>
                 </tr>
                 <tr>
                   <td class="text-left">La Positiva</td>
                   <td class="text-left">{{ this.positiva.length }}</td>
-                  <td class="text-left">{{ getporcentaje(this.positiva.length)}}</td>
+                  <td class="text-left">{{ getporcentajeCompany(this.positiva.length)}}</td>
                 </tr>
                 <tr>
                   <td class="text-left">Mapfre</td>
                   <td class="text-left">{{ this.mapfre.length }}</td>
-                  <td class="text-left">{{ getporcentaje(this.mapfre.length)}}</td>
+                  <td class="text-left">{{ getporcentajeCompany(this.mapfre.length)}}</td>
                 </tr>
                 <tr>
                   <td class="text-left">Sanitas</td>
                   <td class="text-left">{{ this.sanitas.length }}</td>
-                  <td class="text-left">{{ getporcentaje(this.sanitas.length)}}</td>
+                  <td class="text-left">{{ getporcentajeCompany(this.sanitas.length)}}</td>
                 </tr>
                 <tr>
                   <td class="text-left">InterSeguro</td>
                   <td class="text-left">{{ this.interseguro.length }}</td>
-                  <td class="text-left">{{ getporcentaje(this.interseguro.length)}}</td>
+                  <td class="text-left">{{ getporcentajeCompany(this.interseguro.length)}}</td>
                 </tr>
                 <tr>
                   <th class="text-left">Total</th>
-                  <td class="text-left">{{ this.sumtipopaciente }}</td>
-                  <td class="text-left">{{ getporcentaje(this.sumtipopaciente)}}</td>
+                  <td class="text-left">{{ this.companyTotals }}</td>
+                  <td class="text-left">{{ getporcentajeCompany(this.companyTotals)}}</td>
                 </tr>
               </tbody>
             </table>
@@ -658,9 +663,9 @@
           <div class="col-md-12">
             <div class="row">
               <div class="col-md-8">
-                <h6>Reegistro general de Satisfaccion por servicio</h6>
+                <h6>Registro general de Satisfaccion por servicio</h6>
               </div>
-              <div class="col-md-4">
+              <!-- <div class="col-md-4">
                 <button type="button" (click)="showTableDasboard(5, 2)" class="btn-shadow btn btn-info float-right">
                   <i class="pe-7s-graph3"></i>
                 </button>
@@ -668,18 +673,18 @@
                   class="btn-shadow mr-3 btn btn-info float-right">
                   <i class="pe-7s-graph"></i>
                 </button>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
-        <div class="card-body" *ngIf="isPosition5">
+        <!-- <div class="card-body" *ngIf="isPosition5">
           <loading *ngIf="isLoading5">{{ isLoading }}</loading>
           <div class="chart" *ngIf="!isLoading5">
             <canvas #baseChart id="chart-7">
             </canvas>
           </div>
-        </div>
-        <div class="card-body" *ngIf="!isPosition5">
+        </div> -->
+        <div class="card-body">
           <div class="table-responsive p-4">
             <table class="
                     align-middle
@@ -696,7 +701,13 @@
                   <th class="text-left">Malo</th>
                   <th class="text-left">Muy Malo</th>
                   <th class="text-left">NA</th>
+                  <th class="text-left">Total</th>
                 </tr>
+                <!-- <tr>
+                  <th class="text-left">Total</th>
+                  <td class="text-left">{{ this.recomendacionTotal }}</td>
+                  <td class="text-left">{{ getporcentajeescala(this.recomendacionTotal)}}</td>
+                </tr> -->
                 <tr>
                   <th class="text-left">Servicio de Salud</th>
                 </tr>
@@ -710,6 +721,7 @@
                   <td>{{ getporcentajesati(this._DOCmaloo.length) }}</td>
                   <td>{{ getporcentajesati(this._DOCmuymalo.length) }}</td>
                   <td>{{ getporcentajesati(this._DOCna.length) }}</td>
+                  <td>{{ getporcentajesati(this.totalMedico) }}</td>
                 </tr>
                 <tr>
                   <td class="text-left">Enfermera</td>
@@ -719,6 +731,7 @@
                   <td>{{ getporcentajesati(this._ENmaloo.length) }}</td>
                   <td>{{ getporcentajesati(this._ENmuymalo.length) }}</td>
                   <td>{{ getporcentajesati(this._ENna.length) }}</td>
+                  <td>{{ getporcentajesati(this.totalEnfermera) }}</td>
                 </tr>
                 <tr>
                   <td class="text-left">Técnica</td>
@@ -728,6 +741,7 @@
                   <td>{{ getporcentajesati(this._TECmaloo.length) }}</td>
                   <td>{{ getporcentajesati(this._TECmuymalo.length) }}</td>
                   <td>{{ getporcentajesati(this._TECna.length) }}</td>
+                  <td>{{ getporcentajesati(this.totalTecnica) }}</td>
                 </tr>
               </tbody>
               <thead>
@@ -744,7 +758,7 @@
                   <td>{{ getporcentajesati(this._FAmaloo.length) }}</td>
                   <td>{{ getporcentajesati(this._FAmuymalo.length) }}</td>
                   <td>{{ getporcentajesati(this._FAna.length) }}</td>
-
+                  <td>{{ getporcentajesati(this.totalFarmacia) }}</td>
                 </tr>
                 <tr>
                   <td class="text-left">Laboratorio</td>
@@ -754,6 +768,7 @@
                   <td>{{ getporcentajesati(this._LAmaloo.length) }}</td>
                   <td>{{ getporcentajesati(this._LAmuymalo.length) }}</td>
                   <td>{{ getporcentajesati(this._LAna.length) }}</td>
+                  <td>{{ getporcentajesati(this.totalLaboratorio) }}</td>
                 </tr>
                 <tr>
                   <td class="text-left">Imágenes</td>
@@ -763,6 +778,7 @@
                   <td>{{ getporcentajesati(this._IMmaloo.length) }}</td>
                   <td>{{ getporcentajesati(this._IMmuymalo.length) }}</td>
                   <td>{{ getporcentajesati(this._IMna.length) }}</td>
+                  <td>{{ getporcentajesati(this.totalImagenes) }}</td>
                 </tr>
               </tbody>
               <thead>
@@ -779,7 +795,7 @@
                   <td>{{ getporcentajesati(this.maloo.length) }}</td>
                   <td>{{ getporcentajesati(this.muymalo.length) }}</td>
                   <td>{{ getporcentajesati(this.na.length) }}</td>
-
+                  <td>{{ getporcentajesati(this.totalAdmision) }}</td>
                 </tr>
                 <tr>
                   <td class="text-left">Convenios</td>
@@ -789,6 +805,7 @@
                   <td>{{ getporcentajesati(this._COmaloo.length) }}</td>
                   <td>{{ getporcentajesati(this._COmuymalo.length) }}</td>
                   <td>{{ getporcentajesati(this._COna.length) }}</td>
+                  <td>{{ getporcentajesati(this.totalConvenios) }}</td>
                 </tr>
                 <tr>
                   <td class="text-left">Atención al Cliente</td>
@@ -798,6 +815,7 @@
                   <td>{{ getporcentajesati(this._ACmaloo.length) }}</td>
                   <td>{{ getporcentajesati(this._ACmuymalo.length) }}</td>
                   <td>{{ getporcentajesati(this._ACna.length) }}</td>
+                  <td>{{ getporcentajesati(this.totalAtencionCliente) }}</td>
                 </tr>
               </tbody>
               <thead>
@@ -814,6 +832,7 @@
                   <td>{{ getporcentajesati(this._LIMmaloo.length) }}</td>
                   <td>{{ getporcentajesati(this._LIMmuymalo.length) }}</td>
                   <td>{{ getporcentajesati(this._LIMna.length) }}</td>
+                  <td>{{ getporcentajesati(this.totalAseoLimpieza) }}</td>
                 </tr>
                 <tr>
                   <td class="text-left">Modernidad</td>
@@ -823,24 +842,26 @@
                   <td>{{ getporcentajesati(this._MOmaloo.length) }}</td>
                   <td>{{ getporcentajesati(this._MOmuymalo.length) }}</td>
                   <td>{{ getporcentajesati(this._MOna.length) }}</td>
+                  <td>{{ getporcentajesati(this.totalModernidad) }}</td>
                 </tr>
                 <tr>
-                  <td class="text-left">Comnodidad</td>
+                  <td class="text-left">Comodidad</td>
                   <td>{{ getporcentajesati(this._COMmuybueno.length) }}</td>
                   <td>{{ getporcentajesati(this._COMbuenoo.length) }}</td>
                   <td>{{ getporcentajesati(this._COMregular.length) }}</td>
                   <td>{{ getporcentajesati(this._COMmaloo.length) }}</td>
                   <td>{{ getporcentajesati(this._COMmuymalo.length) }}</td>
                   <td>{{ getporcentajesati(this._COMna.length) }}</td>
+                  <td>{{ getporcentajesati(this.totalComodidad) }}</td>
                 </tr>
               </tbody>
-              <thead>
+              <!-- <thead>
                 <tr>
                   <th class="text-left">TOTAL</th>
                   <td>{{ this.muybueno.length }}</td>
                   <td>{{ getporcentaje(this.muybueno.length) }}</td>
                 </tr>
-              </thead>
+              </thead> -->
 
             </table>
           </div>
@@ -939,6 +960,11 @@
                   <td class="text-left">{{ this.datolabel10}}</td>
                   <td class="text-left">{{ this.datonum10 }}</td>
                   <td class="text-left">{{ getporcentajeescala(this.datonum10)}}</td>
+                </tr>
+                <tr>
+                  <th class="text-left">Total</th>
+                  <td class="text-left">{{ this.recomendacionTotal }}</td>
+                  <td class="text-left">{{ getporcentajeescala(this.recomendacionTotal)}}</td>
                 </tr>
               </tbody>
             </table>
