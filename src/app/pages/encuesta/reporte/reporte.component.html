@@ -4,11 +4,30 @@
       <form [formGroup]="seachForm">
         <div class="form-row">
           <div class="col-md-3">
+            <!-- <div class="content">
+              <h4>datepicker should display current date:</h4>
+              <div class="row">
+                <div class="col-xs-12 col-12 col-md-4 form-group">
+                  <input type="text"
+                        class="form-control"
+                        [minDate]="minDate"
+                        [maxDate]="maxDate"
+                        #dp="bsDatepicker" mask="00/00/0000"
+                        bsDatepicker [(bsValue)]="myDateValue" [bsConfig]="{dateInputFormat: 'DD/MM/YYYY'}">
+                </div>
+              </div>
+            </div> -->
             <div class="position-relative form-group">
               <label for="exampleEmail11" class="">Seleccionar por fechas/periodo</label>
               <select class="form-control form-control-sm" formControlName="opselect" (change)="onChange($event)">
                 <option value="">Seleccionar</option>
-                <option value="1" selected>Periodo</option>
+                <option value="1" selected>Hoy</option>
+                <option value="3" selected>Ayer</option>
+                <option value="4" selected>Últimos 7 Días</option>
+                <option value="5" selected>Últimos 30 Días</option>
+                <option value="6" selected>Mes actual</option>
+                <option value="7" selected>Mes anterior</option>
+                <!-- <option value="1" selected>Periodo</option> -->
                 <option value="2">Rango de fechas</option>
               </select>
             </div>
