@@ -126,13 +126,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     LogoComponent,
     FooterComponent,
     LoginBoxedComponent,
-  
-
-
-
-
-
-
     UsersComponent,
     RolesComponent,
     MrolesComponent,
