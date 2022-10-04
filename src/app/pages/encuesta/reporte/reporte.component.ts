@@ -10,6 +10,7 @@ import { ValueCache } from 'ag-grid-community';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import * as Chart from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-reporte',
@@ -66,6 +67,7 @@ maxDate: any;
   companyTotals;
   satisfaccionTotal;
   recomendacionTotal;
+  dataSelect;
   dataMuyBueno: any = [];
   dataBueno: any = [];
   dataRegular: any = [];
@@ -217,7 +219,7 @@ maxDate: any;
   isLoading4 = false;
 
   isPeriodo = false;
-  isRangoFecha = true;
+  isRangoFecha = false;
 
 
 
@@ -297,7 +299,7 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
   seachForm: FormGroup;
   constructor(private formularioService: FormularioService, private formBuilder: FormBuilder, private datePipe: DatePipe) {
     this.seachForm = this.formBuilder.group({
-      opselect: ['2'],
+      opselect: ['1'],
       periodo: [''],
       fecha_inicio: [''],
       fecha_fin: [''],
@@ -376,61 +378,98 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
         // console.log(24, this.satistotal.length);
 
       })
-    this.getSucursal();
-    this.getModalidad();
-    this.getTipoPaciente();
-    this.getTarjetaClasica();
-    this.getConvenio();
-    this.getCompany();
-    this.getsatisfaccion();
-    this.getrecomendacion();
+    this.getSucursal(this.dataSelect);
+    this.getModalidad(this.dataSelect);
+    this.getTipoPaciente(this.dataSelect);
+    this.getTarjetaClasica(this.dataSelect);
+    this.getConvenio(this.dataSelect);
+    this.getCompany(this.dataSelect);
+    this.getsatisfaccion(this.dataSelect);
+    this.getrecomendacion(this.dataSelect);
   };
 
-  getSucursal() {
+  getSucursal(data) {
     //this.isLoading = true;
     this.barChartLabels = [];
     this.barChartData = [];
     let dato = []
-    
+
     this.formularioService.getFormulario().subscribe(
       (res: any) => {
 
         this.data = res.body.length > 0 ? res.body : [];
-        this.listlima = this.data.filter((sede: { sucursal: string; }) => sede.sucursal == 'Lima');
-        if(this.listlima[0] !== undefined ){
-          this.arrsucursal = this.listlima[0].sucursal;
-          dato.push(this.listlima.length);
-          this.cantsucursal = dato;
-          this.barChartData = [{ data: this.cantsucursal, label: 'Lima' }]
-          this.barChartLabels.push(this.listlima[0].sucursal);
-        }
-        // console.log(223, this.barChartLabels)
-        // console.log(222, this.barChartData)
+        if(data.sede === 0){
+          console.log(data.onSelect)
+            if(data.onSelect < 3 && data.periodo !== null){
 
-        this.listchorrillos = this.data.filter((sede: { sucursal: string; }) => sede.sucursal == 'Chorrillos');
-        if(this.listchorrillos[0] !== undefined ){
-          this.arrsucursal = this.listchorrillos[0].sucursal;
-          dato.push(this.listchorrillos.length);
-          this.cantsucursal = dato;
-          this.barChartData = [{ data: this.cantsucursal, label: 'Chorrillos' }]
-          this.barChartLabels.push(this.listchorrillos[0].sucursal);
+              this.listlima = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => sede.sucursal == 'Lima' && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo);
+
+              this.listchorrillos = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => sede.sucursal == 'Chorrillos' && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo);
+
+              this.listsurco = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => sede.sucursal == 'Surco' && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo);
+
+            }else if((data.onSelect === '3' || data.onSelect === '4') && data.periodo !== null){
+
+              this.listlima = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => sede.sucursal == 'Lima' && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'));
+
+              this.listchorrillos = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => sede.sucursal == 'Chorrillos' && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'));
+
+              this.listsurco = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => sede.sucursal == 'Surco' && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'));
+
+            }else if((data.onSelect === '5' || data.onSelect === '6') && data.mes !== null){
+
+              this.listlima = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => sede.sucursal == 'Lima' && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth());
+
+              this.listchorrillos = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => sede.sucursal == 'Chorrillos' && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth());
+
+              this.listsurco = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => sede.sucursal == 'Surco' && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth());
+
+            }else if(data.onSelect === '7' && data.fecha_inicio !== null && data.fecha_fin !== null){
+
+              this.listlima = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => sede.sucursal == 'Lima' && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin);
+
+              this.listchorrillos = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => sede.sucursal == 'Chorrillos' && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin);
+
+              this.listsurco = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => sede.sucursal == 'Surco' && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin);
+
+            }
+          if(this.listlima[0] !== undefined ){
+            this.arrsucursal = this.listlima[0].sucursal;
+            dato.push(this.listlima.length);
+            this.cantsucursal = dato;
+            this.barChartData = [{ data: this.cantsucursal, label: 'Lima' }]
+            this.barChartLabels.push(this.listlima[0].sucursal);
+          }
+          console.log(this.listlima)
+          // console.log(223, this.barChartLabels)
+          // console.log(222, this.barChartData)
+
+          if(this.listchorrillos[0] !== undefined ){
+            this.arrsucursal = this.listchorrillos[0].sucursal;
+            dato.push(this.listchorrillos.length);
+            this.cantsucursal = dato;
+            this.barChartData = [{ data: this.cantsucursal, label: 'Chorrillos' }]
+            this.barChartLabels.push(this.listchorrillos[0].sucursal);
+          }
+          console.log(this.listchorrillos)
+
+          if(this.listsurco[0] !== undefined ){
+            this.arrsucursal = this.listsurco[0].sucursal;
+            dato.push(this.listsurco.length);
+            this.cantsucursal = dato;
+            this.barChartData = [{ data: this.cantsucursal, label: 'Surco' }]
+            this.barChartLabels.push(this.listsurco[0].sucursal);
+          }
+          console.log(this.listsurco)
+          this.totales = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+          this.barChartData = dato;
+          // console.log(this.barChartData);
+          this.getBarChart(this.barChartLabels, this.barChartData, 'chart-1', 'Sucursales',  this.totales, 'bar');
         }
-        this.listsurco = this.data.filter((sede: { sucursal: string; }) => sede.sucursal == 'Surco');
-        if(this.listsurco[0] !== undefined ){
-          this.arrsucursal = this.listsurco[0].sucursal;
-          dato.push(this.listsurco.length);
-          this.cantsucursal = dato;
-          this.barChartData = [{ data: this.cantsucursal, label: 'Surco' }]
-          this.barChartLabels.push(this.listsurco[0].sucursal);
-        }
-        this.totales = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
-        this.barChartData = dato;
-        // console.log(this.barChartData);
-        this.getBarChart(this.barChartLabels, this.barChartData, 'chart-1', 'Sucursales',  this.totales, 'bar');
       }
     )
   }
-  getModalidad() {
+  getModalidad(data) {
     this.pieChartLabels = [];
     this.pieChartData = [];
     this.formularioService.getFormulario().subscribe(
@@ -472,7 +511,7 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
   }
 
   sumtipopaciente = [];
-  getTipoPaciente() {
+  getTipoPaciente(data) {
     this.pieChartLabels2 = [];
     this.pieChartData2 = [];
     this.formularioService.getFormulario().subscribe(
@@ -533,7 +572,7 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
   arrpaciente = [];
   arrcantpa = 0;
   sumtarjeta = 0;  
-  getTarjetaClasica() {
+  getTarjetaClasica(data) {
     this.pieChartLabels22 = [];
     this.pieChartData22 = [];
     let dato = 0;
@@ -584,7 +623,7 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
   arrconvenio = [];
   arrcantco = 0;
   sumconvenio = 0;
-  getConvenio() {
+  getConvenio(data) {
     this.pieChartLabels23 = [];
     this.pieChartData23 = [];
     let dato = 0;
@@ -684,7 +723,7 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
   otrocomp = [];   
   arrCompany = [];
   arrcantcomp = 0;
-  getCompany() {
+  getCompany(data) {
     this.pieChartLabels24 = [];
     this.pieChartData24 = [];
     
@@ -750,7 +789,7 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
         this.getBarChart(this.pieChartLabels24, this.pieChartData24, 'chart-6', 'Compañía Seguro', this.companyTotals, 'doughnut');
       })
   }
-  getsatisfaccion() {
+  getsatisfaccion(data) {
 
     let sumMuymalo = [];
     let sumMalo = [];
@@ -1079,7 +1118,7 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
   public datonum9 = [];
   public datolabel10 = [];
   public datonum10 = [];
-  getrecomendacion(): void {
+  getrecomendacion(data): void {
     this.pieChartLabels3 = [];
     this.pieChartData3 = [];
 
@@ -1210,156 +1249,323 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
     
     return ((dato * 100) / this.listencuesta).toFixed(2) + '%';
   }
-  //SEDE LIMA
-  getRegisterSedeLima(data) {
-console.log(data);
-    this.formularioService.getFormulario().subscribe(
-      (res: any) => {
-        
-        this.data = res.body;
-        this.listlima = this.data.filter((sede: { sucursal: string; }) => sede.sucursal == 'Lima');
+
+  onChange(event: { target: { value: string; }; }) {
+    if (parseInt(event.target.value) === 7) {
+      // this.isPeriodo = true;
+      this.isRangoFecha = true;
+      this.ngfecha01 = null;
+      this.ngfecha02 = null;
+    } else {
+      this.isPeriodo = false;
+      this.isRangoFecha = false;
+      this.ngperiodo = null;
+
+    }
+  }
+  search() {
+    let periodo;
+    let mes;
+    const formValue = this.seachForm.value;
+    if (this.isPeriodo) {
+      this.ngperiodo = this.datePipe.transform(formValue.periodo, 'yyyyMM');
+    }
+
+    if(formValue.opselect === '1'){
+      periodo =  new Date;
+      this.ngperiodo = moment(periodo).format("YYYY-MM-DD");
+    }else if(formValue.opselect === '2'){
+      this.ngperiodo = moment(periodo).subtract(1, 'days').format("YYYY-MM-DD");
+    }else if(formValue.opselect === '3'){
+      this.ngperiodo = moment(periodo).subtract(7, 'days').format("YYYY-MM-DD");
+    }else if(formValue.opselect === '4'){
+      this.ngperiodo = moment(periodo).subtract(30, 'days').format("YYYY-MM-DD");
+    }else if(formValue.opselect === '5'){
+      mes = moment().month().toString();
+    }else if(formValue.opselect === '6'){
+      let mesAnterior = moment().month()-1
+      mes = mesAnterior.toString();
+    }else if(formValue.opselect === '7'){
+      if (this.isRangoFecha) {
+        this.ngfecha01 = this.datePipe.transform(formValue.fecha_inicio, 'yyyy-MM-dd');
+        this.ngfecha02 = this.datePipe.transform(formValue.fecha_fin, 'yyyy-MM-dd');
       }
-    )
+    }
+    // console.log(this.ngfecha01 , this.ngfecha02);
+    const data = {
+      periodo: this.ngperiodo,
+      onSelect: formValue.opselect,
+      fecha_inicio: this.ngfecha01,
+      fecha_fin: this.ngfecha02,
+      mes: mes,
+      sede: parseInt(formValue.sede),
+      idrol: parseInt(localStorage.getItem('idrol')),
+      empresa: this.TIPO_RECLAMO
+    };
+    this.dataSelect = data
+    this.getRegisterSede(this.dataSelect);
+    this.getSucursal(this.dataSelect);
+    this.getModalidad(this.dataSelect);
+    this.getTipoPaciente(this.dataSelect);
+    this.getTarjetaClasica(this.dataSelect);
+    this.getConvenio(this.dataSelect);
+    this.getCompany(this.dataSelect);
+    this.getsatisfaccion(this.dataSelect);
+    this.getrecomendacion(this.dataSelect);
+
+    // this.getModality(data);
+    // this.getPatientType(data);
+    // this.getHealthPlan(data);
+    // this.getConveny(data);
+    // this.getCompanySg(data);
+    // this.getExperience(data);
+    // this.getRecomendation(data);
+
   }
-  //SEDE CHORRILLOS
-  getRegisterSedeSurco() {
-    this.formularioService.getFormulario().subscribe(
-      (res: any) => {
-        // console.log(res);
-        this.data = res.body;
-        this.listsurco = this.data.filter((sede: { sucursal: string; }) => sede.sucursal === 'Surco');
-      })
-  }
-  //SEDE SURCO
-  getRegisterSedeChorrillos() {
-    this.formularioService.getFormulario().subscribe(
-      (res: any) => {
-        // console.log(res);
-        this.data = res.body;
-        this.listchorrillos = this.data.filter((sede: { sucursal: string; }) => sede.sucursal === 'Chorrillos');
-      })
-  }
-  getmodalidadLima() {
+
+    getRegisterSede(data) {
+      
+      this.formularioService.getFormulario().subscribe(
+        (res: any) => {
+          this.data = res.body;
+          if(data.sede == 1){
+            console.log('hola')
+            this.listlima = this.data.filter((sede: { sucursal: string; }) => sede.sucursal == 'Lima');
+          }else if(data.sede === 2){
+            this.listchorrillos = this.data.filter((sede: { sucursal: string; }) => sede.sucursal === 'Chorrillos');
+          }else if(data.sede === 3){
+            this.listsurco = this.data.filter((sede: { sucursal: string; }) => sede.sucursal === 'Surco');
+          }else{
+            this.listchorrillos = this.data.filter((sede: { sucursal: string; }) => sede.sucursal === 'Chorrillos');
+            this.listsurco = this.data.filter((sede: { sucursal: string; }) => sede.sucursal === 'Surco');
+            this.listlima = this.data.filter((sede: { sucursal: string; }) => sede.sucursal == 'Lima');
+          }
+        })
+    }
+
+  // Origen de ingreso
+  getModality(data) {
+    let sucursal;
+    if(data.sede === 1){
+      sucursal = 'Lima'
+    }else if(data.sede === 2){
+      sucursal = 'Chorrillos'
+    }else if(data.sede === 3){
+      sucursal = 'Surco'
+    }else{
+      sucursal = '';
+    }
     this.formularioService.getFormulario().subscribe(
       (res: any) => {
         // console.log(res);
         // this.listencuesta = res.data.body[0].length > 0 ? res.data.body : []; 
         this.data = res.body;
-
-        this.listlima = this.data.filter((sede: { sucursal: string; }) => sede.sucursal === 'Lima')
-        for (var i = 0; i < this.listlima.length; i++) {
-          //this.tipopacientelima.push(this.listlima[i].modalidad)
+        if(sucursal){
+          this.listlima = this.data.filter((sede: { sucursal: string; }) => sede.sucursal === sucursal)
+          for (var i = 0; i < this.listlima.length; i++) {
+            //this.tipopacientelima.push(this.listlima[i].modalidad)
+          }
+        }else{
+          // console.log(sucursal)
         }
-        //console.log(20, this.tipopacientelima);
-        //console.log(1000, this.data);
       })
   }
-  gettipopacienteLima() {
+  // Por tipo de paciente 
+  getPatientType(data) {
+    let sucursal;
+    if(data.sede === 1){
+      sucursal = 'Lima'
+    }else if(data.sede === 2){
+      sucursal = 'Chorrillos'
+    }else if(data.sede === 3){
+      sucursal = 'Surco'
+    }else{
+      sucursal = '';
+    }
     this.formularioService.getFormulario().subscribe(
       (res: any) => {
         // console.log(res);
 
         this.data = res.body;
         // console.log(this.data);
-
-        this.listlima = this.data.filter((sede: { sucursal: string; }) => sede.sucursal === 'Lima')
-        for (var i = 0; i < this.listlima.length; i++) {
-          this.modalima.push(this.listlima[i].paciente)
+        if(sucursal){
+          this.listlima = this.data.filter((sede: { sucursal: string; }) => sede.sucursal === sucursal)
+          for (var i = 0; i < this.listlima.length; i++) {
+            this.modalima.push(this.listlima[i].paciente)
+          }
+        }else{
+          // console.log('first')
         }
         // console.log(10, this.modalima);
         //console.log(1000, this.data);
       })
   }
-  getexperienciaLima() {
-    this.formularioService.getFormulario().subscribe(
-      (res: any) => {
-        // console.log(res);
-        this.data = res.body;
-        // console.log(this.data);
-        this.listlima = this.data.filter((sede: { sucursal: string; }) => sede.sucursal === 'Lima')
-        for (var i = 0; i < this.listlima.length; i++) {
-          this.satisfaccionlima.push(this.listlima[i].SS_doctor);
-          this.satisfaccionlima.push(this.listlima[i].SS_enfermera);
-          this.satisfaccionlima.push(this.listlima[i].SS_tecnica);
-          this.satisfaccionlima.push(this.listlima[i].SA_farmacia);
-          this.satisfaccionlima.push(this.listlima[i].SA_laboratorio);
-          this.satisfaccionlima.push(this.listlima[i].SA_imagenes);
-          this.satisfaccionlima.push(this.listlima[i].SA_admision);
-          this.satisfaccionlima.push(this.listlima[i].SA_convenios);
-          this.satisfaccionlima.push(this.listlima[i].SA_atencionCliente);
-          this.satisfaccionlima.push(this.listlima[i].SI_limpieza);
-          this.satisfaccionlima.push(this.listlima[i].SI_modernidad);
-          this.satisfaccionlima.push(this.listlima[i].SI_comodidad);
-        }
-        // console.log(30, this.satisfaccionlima);
-        //console.log(1000, this.data);
-      })
-  }
-  getrecomedacionLima() {
+
+  // Plan de salud
+  getHealthPlan(data){
+    let sucursal;
+    if(data.sede === 1){
+      sucursal = 'Lima'
+    }else if(data.sede === 2){
+      sucursal = 'Chorrillos'
+    }else if(data.sede === 3){
+      sucursal = 'Surco'
+    }else{
+      sucursal = '';
+    }
     this.formularioService.getFormulario().subscribe(
       (res: any) => {
         // console.log(res);
 
         this.data = res.body;
         // console.log(this.data);
+        if(sucursal){
+          this.listlima = this.data.filter((sede: { sucursal: string; }) => sede.sucursal === sucursal)
+          for (var i = 0; i < this.listlima.length; i++) {
+            this.escalalima.push(this.listlima[i].escalaRecomendacion);
+          }
+        }else{
 
-        this.listlima = this.data.filter((sede: { sucursal: string; }) => sede.sucursal === 'Lima')
-        for (var i = 0; i < this.listlima.length; i++) {
-          this.escalalima.push(this.listlima[i].escalaRecomendacion);
         }
+        
         // console.log(10, this.escalalima);
         //console.log(1000, this.data);
       })
   }
-
-
-
-
-  search() {
-    const formValue = this.seachForm.value;
-    if (this.isPeriodo) {
-      this.ngperiodo = this.datePipe.transform(formValue.periodo, 'yyyyMM');
+  // Convenio
+  getConveny(data){
+    let sucursal;
+    if(data.sede === 1){
+      sucursal = 'Lima'
+    }else if(data.sede === 2){
+      sucursal = 'Chorrillos'
+    }else if(data.sede === 3){
+      sucursal = 'Surco'
+    }else{
+      sucursal = '';
     }
-    if (this.isRangoFecha) {
-      this.ngfecha01 = this.datePipe.transform(formValue.fecha_inicio, 'yyyy-MM-dd');
-      this.ngfecha02 = this.datePipe.transform(formValue.fecha_fin, 'yyyy-MM-dd');
-    }
-    const data = {
-      periodo: this.ngperiodo,
-      fecha_inicio: this.ngfecha01,
-      fecha_fin: this.ngfecha02,
-      sede: parseInt(formValue.sede),
-      idrol: parseInt(localStorage.getItem('idrol')),
-      empresa: this.TIPO_RECLAMO
-    };
-    // console.log(data)
+    this.formularioService.getFormulario().subscribe(
+      (res: any) => {
+        // console.log(res);
 
-    this.getRegisterSedeLima(data);
-    this.getRegisterSedeSurco();
-    this.getRegisterSedeChorrillos();
-    /* this.getRegisteredClaims(data);
-    this.getResolvedClaims(data);
-    this.getPendingClaims(data);
-    this.getOthersClaims(data);
-    this.getReceptionModeClaims(data);
-    this.getClaimsTimepoDestiempo(data);
-    this.getClaimsMeses(data);
-    this.getClaimsEstado(data); */
+        this.data = res.body;
+        // console.log(this.data);
+        if(sucursal){
+          this.listlima = this.data.filter((sede: { sucursal: string; }) => sede.sucursal === sucursal)
+          for (var i = 0; i < this.listlima.length; i++) {
+            this.escalalima.push(this.listlima[i].escalaRecomendacion);
+          }
+        }else{
+
+        }
+        
+        // console.log(10, this.escalalima);
+        //console.log(1000, this.data);
+      })
   }
-  onChange(event: { target: { value: string; }; }) {
-    if (parseInt(event.target.value) === 1) {
-      this.isPeriodo = true;
-      this.isRangoFecha = false;
-      this.ngfecha01 = null;
-      this.ngfecha02 = null;
-    } else {
-      this.isPeriodo = false;
-      this.isRangoFecha = true;
-      this.ngperiodo = null;
-
+  // Compania de seguros
+  getCompanySg(data){
+    let sucursal;
+    if(data.sede === 1){
+      sucursal = 'Lima'
+    }else if(data.sede === 2){
+      sucursal = 'Chorrillos'
+    }else if(data.sede === 3){
+      sucursal = 'Surco'
+    }else{
+      sucursal = '';
     }
+    this.formularioService.getFormulario().subscribe(
+      (res: any) => {
+        // console.log(res);
+
+        this.data = res.body;
+        // console.log(this.data);
+        if(sucursal){
+          this.listlima = this.data.filter((sede: { sucursal: string; }) => sede.sucursal === sucursal)
+          for (var i = 0; i < this.listlima.length; i++) {
+            this.escalalima.push(this.listlima[i].escalaRecomendacion);
+          }
+        }else{
+
+        }
+        
+        // console.log(10, this.escalalima);
+        //console.log(1000, this.data);
+      })
+  }
+  // Satisfacción por servicio
+  getExperience(data) {
+    let sucursal;
+    if(data.sede === 1){
+      sucursal = 'Lima'
+    }else if(data.sede === 2){
+      sucursal = 'Chorrillos'
+    }else if(data.sede === 3){
+      sucursal = 'Surco'
+    }else{
+      sucursal = '';
+    }
+    this.formularioService.getFormulario().subscribe(
+      (res: any) => {
+        // console.log(res);
+        this.data = res.body;
+        if(sucursal){
+          this.listlima = this.data.filter((sede: { sucursal: string; }) => sede.sucursal === sucursal)
+          for (var i = 0; i < this.listlima.length; i++) {
+            this.satisfaccionlima.push(this.listlima[i].SS_doctor);
+            this.satisfaccionlima.push(this.listlima[i].SS_enfermera);
+            this.satisfaccionlima.push(this.listlima[i].SS_tecnica);
+            this.satisfaccionlima.push(this.listlima[i].SA_farmacia);
+            this.satisfaccionlima.push(this.listlima[i].SA_laboratorio);
+            this.satisfaccionlima.push(this.listlima[i].SA_imagenes);
+            this.satisfaccionlima.push(this.listlima[i].SA_admision);
+            this.satisfaccionlima.push(this.listlima[i].SA_convenios);
+            this.satisfaccionlima.push(this.listlima[i].SA_atencionCliente);
+            this.satisfaccionlima.push(this.listlima[i].SI_limpieza);
+            this.satisfaccionlima.push(this.listlima[i].SI_modernidad);
+            this.satisfaccionlima.push(this.listlima[i].SI_comodidad);
+          }
+        }else{
+
+        }
+        
+        // console.log(30, this.satisfaccionlima);
+        //console.log(1000, this.data);
+      })
   }
 
+  // Registro de recomendacion
+  getRecomendation(data) {
+    let sucursal;
+    if(data.sede === 1){
+      sucursal = 'Lima'
+    }else if(data.sede === 2){
+      sucursal = 'Chorrillos'
+    }else if(data.sede === 3){
+      sucursal = 'Surco'
+    }else{
+      sucursal = '';
+    }
+    this.formularioService.getFormulario().subscribe(
+      (res: any) => {
+        // console.log(res);
+
+        this.data = res.body;
+        // console.log(this.data);
+        if(sucursal){
+          this.listlima = this.data.filter((sede: { sucursal: string; }) => sede.sucursal === sucursal)
+          for (var i = 0; i < this.listlima.length; i++) {
+            this.escalalima.push(this.listlima[i].escalaRecomendacion);
+          }
+        }else{
+
+        }
+        
+        // console.log(10, this.escalalima);
+        //console.log(1000, this.data);
+      })
+  }
 
   showTableDasboard(id: number, position: number) {
     

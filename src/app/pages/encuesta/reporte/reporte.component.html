@@ -18,27 +18,26 @@
               </div>
             </div> -->
             <div class="position-relative form-group">
-              <label for="exampleEmail11" class="">Seleccionar por fechas/periodo</label>
+              <label for="exampleEmail11" class="">Seleccionar</label>
               <select class="form-control form-control-sm" formControlName="opselect" (change)="onChange($event)">
                 <option value="">Seleccionar</option>
                 <option value="1" selected>Hoy</option>
-                <option value="3" selected>Ayer</option>
-                <option value="4" selected>Últimos 7 Días</option>
-                <option value="5" selected>Últimos 30 Días</option>
-                <option value="6" selected>Mes actual</option>
-                <option value="7" selected>Mes anterior</option>
-                <!-- <option value="1" selected>Periodo</option> -->
-                <option value="2">Rango de fechas</option>
+                <option value="2" selected>Ayer</option>
+                <option value="3" selected>Últimos 7 Días</option>
+                <option value="4" selected>Últimos 30 Días</option>
+                <option value="5" selected>Mes actual</option>
+                <option value="6" selected>Mes anterior</option>
+                <option value="7" selected>Rango de fechas</option>
               </select>
             </div>
           </div>
-          <div class="col-md-3" *ngIf="isPeriodo">
+          <!-- <div class="col-md-3" *ngIf="isPeriodo">
             <div class="position-relative form-group">
               <label class="">Periodo</label>
               <input class="form-control form-control-sm" [(ngModel)]="ngperiodo" formControlName="periodo"
                 type="month" />
             </div>
-          </div>
+          </div> -->
           <div class="col-md-4" *ngIf="isRangoFecha">
             <div class="row">
               <div class="col-md-6">
