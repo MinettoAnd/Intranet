@@ -508,11 +508,11 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
     
             this.listsurco = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo);
       
-              this.listemergencia = this.data.filter((sede: { registro_fecha: string; modalidad:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.modalidad === 'Emergencia');
+              this.listemergencia = this.data.filter((sede: { registro_fecha: string; modalidad:string;}) => moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.modalidad === 'Emergencia');
       
-              this.listconsultorio = this.data.filter((sede: { registro_fecha: string; modalidad:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.modalidad === 'Consultorio Externo');
+              this.listconsultorio = this.data.filter((sede: { registro_fecha: string; modalidad:string;}) => moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.modalidad === 'Consultorio Externo');
       
-              this.listhospita = this.data.filter((sede: { registro_fecha: string; modalidad:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.modalidad === 'Hospitalización');
+              this.listhospita = this.data.filter((sede: { registro_fecha: string; modalidad:string;}) => moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.modalidad === 'Hospitalización');
               
               this.listencuesta = this.listemergencia.length + this.listconsultorio.length + this.listhospita.length;
               console.log(this.listencuesta);
@@ -525,11 +525,11 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
     
             this.listsurco = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'));
       
-              this.listemergencia = this.data.filter((sede: { registro_fecha: string; modalidad:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.modalidad === 'Emergencia');
+              this.listemergencia = this.data.filter((sede: { registro_fecha: string; modalidad:string;}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.modalidad === 'Emergencia');
       
-              this.listconsultorio = this.data.filter((sede: { registro_fecha: string; modalidad:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.modalidad === 'Consultorio Externo');
+              this.listconsultorio = this.data.filter((sede: { registro_fecha: string; modalidad:string;}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.modalidad === 'Consultorio Externo');
       
-              this.listhospita = this.data.filter((sede: { registro_fecha: string; modalidad:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.modalidad === 'Hospitalización');
+              this.listhospita = this.data.filter((sede: { registro_fecha: string; modalidad:string;}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.modalidad === 'Hospitalización');
       
               this.listencuesta = this.listemergencia.length + this.listconsultorio.length + this.listhospita.length;
               console.log(this.listencuesta);
@@ -542,11 +542,11 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
     
             this.listsurco = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Surco' || sede.sucursal === '0004') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth());
       
-              this.listemergencia = this.data.filter((sede: { registro_fecha: string; modalidad:string}) => new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.modalidad === 'Emergencia');
+              this.listemergencia = this.data.filter((sede: { registro_fecha: string; modalidad:string;}) => new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.modalidad === 'Emergencia');
       
-              this.listconsultorio = this.data.filter((sede: { registro_fecha: string; modalidad:string}) => new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.modalidad === 'Consultorio Externo');
+              this.listconsultorio = this.data.filter((sede: { registro_fecha: string; modalidad:string;}) => new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.modalidad === 'Consultorio Externo');
       
-              this.listhospita = this.data.filter((sede: { registro_fecha: string; modalidad:string}) => new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.modalidad === 'Hospitalización');
+              this.listhospita = this.data.filter((sede: { registro_fecha: string; modalidad:string;}) => new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.modalidad === 'Hospitalización');
               
               this.listencuesta = this.listemergencia.length + this.listconsultorio.length + this.listhospita.length;
               console.log(this.listencuesta);
@@ -559,11 +559,11 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
     
             this.listsurco = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) =>(sede.sucursal === 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin);
 
-              this.listemergencia = this.data.filter((sede: { registro_fecha: string; modalidad:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.modalidad === 'Emergencia');
+              this.listemergencia = this.data.filter((sede: { registro_fecha: string; modalidad:string;}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.modalidad === 'Emergencia');
       
-              this.listconsultorio = this.data.filter((sede: { registro_fecha: string; modalidad:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.modalidad === 'Consultorio Externo');
+              this.listconsultorio = this.data.filter((sede: { registro_fecha: string; modalidad:string;}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.modalidad === 'Consultorio Externo');
       
-              this.listhospita = this.data.filter((sede: { registro_fecha: string; modalidad:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.modalidad === 'Hospitalización');
+              this.listhospita = this.data.filter((sede: { registro_fecha: string; modalidad:string;}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.modalidad === 'Hospitalización');
       
               this.listencuesta = this.listemergencia.length + this.listconsultorio.length + this.listhospita.length;
               
@@ -581,11 +581,11 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
             
             this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
 
-              this.listemergencia = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.modalidad === 'Emergencia');
+              this.listemergencia = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.modalidad === 'Emergencia');
               
-              this.listconsultorio = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.modalidad === 'Consultorio Externo');
+              this.listconsultorio = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.modalidad === 'Consultorio Externo');
       
-              this.listhospita = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.modalidad === 'Hospitalización');
+              this.listhospita = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.modalidad === 'Hospitalización');
               
           }else if((data.onSelect === '3' || data.onSelect === '4') && data.periodo !== null){
 
@@ -597,11 +597,11 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
             
             this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
 
-              this.listemergencia = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.modalidad === 'Emergencia');
+              this.listemergencia = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.modalidad === 'Emergencia');
               
-              this.listconsultorio = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.modalidad === 'Consultorio Externo');
+              this.listconsultorio = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.modalidad === 'Consultorio Externo');
       
-              this.listhospita = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.modalidad === 'Hospitalización');
+              this.listhospita = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.modalidad === 'Hospitalización');
               
           }else if((data.onSelect === '5' || data.onSelect === '6') && data.mes !== null){
 
@@ -612,11 +612,11 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
             this.listsurco = [];
             
             this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
-              this.listemergencia = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.modalidad === 'Emergencia');
+              this.listemergencia = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.modalidad === 'Emergencia');
               
-              this.listconsultorio = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.modalidad === 'Consultorio Externo');
+              this.listconsultorio = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.modalidad === 'Consultorio Externo');
       
-              this.listhospita = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.modalidad === 'Hospitalización');
+              this.listhospita = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.modalidad === 'Hospitalización');
               
           }else if(data.onSelect === '7' && data.fecha_inicio !== null && data.fecha_fin !== null){
 
@@ -628,11 +628,11 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
             
             this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
             console.log(this.listlima);
-              this.listemergencia = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.modalidad === 'Emergencia');
+              this.listemergencia = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.modalidad === 'Emergencia');
               
-              this.listconsultorio = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.modalidad === 'Consultorio Externo');
+              this.listconsultorio = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.modalidad === 'Consultorio Externo');
       
-              this.listhospita = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.modalidad === 'Hospitalización');
+              this.listhospita = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.modalidad === 'Hospitalización');
               console.log(this.listemergencia, this.listconsultorio, this.listhospita);
               
           }
@@ -648,11 +648,11 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
             
             this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
 
-              this.listemergencia = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.modalidad === 'Emergencia');
+              this.listemergencia = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string;}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.modalidad === 'Emergencia');
               
-              this.listconsultorio = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.modalidad === 'Consultorio Externo');
+              this.listconsultorio = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string;}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.modalidad === 'Consultorio Externo');
       
-              this.listhospita = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.modalidad === 'Hospitalización');
+              this.listhospita = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string;}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.modalidad === 'Hospitalización');
       
           }else if((data.onSelect === '3' || data.onSelect === '4') && data.periodo !== null){
       
@@ -664,11 +664,11 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
             
             this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
 
-              this.listemergencia = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.modalidad === 'Emergencia');
+              this.listemergencia = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string;}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.modalidad === 'Emergencia');
       
-              this.listconsultorio = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.modalidad === 'Consultorio Externo');
+              this.listconsultorio = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string;}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.modalidad === 'Consultorio Externo');
       
-              this.listhospita = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.modalidad === 'Hospitalización');
+              this.listhospita = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string;}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.modalidad === 'Hospitalización');
       
           }else if((data.onSelect === '5' || data.onSelect === '6') && data.mes !== null){
       
@@ -680,11 +680,11 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
             
             this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
 
-              this.listemergencia = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.modalidad === 'Emergencia');
+              this.listemergencia = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string;}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.modalidad === 'Emergencia');
       
-              this.listconsultorio = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.modalidad === 'Consultorio Externo');
+              this.listconsultorio = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string;}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.modalidad === 'Consultorio Externo');
       
-              this.listhospita = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.modalidad === 'Hospitalización');
+              this.listhospita = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string;}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.modalidad === 'Hospitalización');
       
           }else if(data.onSelect === '7' && data.fecha_inicio !== null && data.fecha_fin !== null){
       
@@ -696,11 +696,11 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
             
             this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
 
-              this.listemergencia = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.modalidad === 'Emergencia');
+              this.listemergencia = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string;}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.modalidad === 'Emergencia');
       
-              this.listconsultorio = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.modalidad === 'Consultorio Externo');
+              this.listconsultorio = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string;}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.modalidad === 'Consultorio Externo');
       
-              this.listhospita = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.modalidad === 'Hospitalización');
+              this.listhospita = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string;}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.modalidad === 'Hospitalización');
       
           }
       
@@ -715,11 +715,11 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
             
             this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
 
-              this.listemergencia = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.modalidad === 'Emergencia');
+              this.listemergencia = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string;}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.modalidad === 'Emergencia');
               
-              this.listconsultorio = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.modalidad === 'Consultorio Externo');
+              this.listconsultorio = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string;}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.modalidad === 'Consultorio Externo');
       
-              this.listhospita = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.modalidad === 'Hospitalización');
+              this.listhospita = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string;}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.modalidad === 'Hospitalización');
       
           }else if((data.onSelect === '3' || data.onSelect === '4') && data.periodo !== null){
 
@@ -731,11 +731,11 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
               
               this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
       
-              this.listemergencia = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.modalidad === 'Emergencia');
+              this.listemergencia = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string;}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.modalidad === 'Emergencia');
       
-              this.listconsultorio = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.modalidad === 'Consultorio Externo');
+              this.listconsultorio = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string;}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.modalidad === 'Consultorio Externo');
       
-              this.listhospita = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.modalidad === 'Hospitalización');
+              this.listhospita = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string;}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.modalidad === 'Hospitalización');
       
           }else if((data.onSelect === '5' || data.onSelect === '6') && data.mes !== null){
 
@@ -747,11 +747,11 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
             
             this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
       
-              this.listemergencia = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.modalidad === 'Emergencia');
+              this.listemergencia = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string;}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.modalidad === 'Emergencia');
       
-              this.listconsultorio = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.modalidad === 'Consultorio Externo');
+              this.listconsultorio = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string;}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.modalidad === 'Consultorio Externo');
       
-              this.listhospita = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.modalidad === 'Hospitalización');
+              this.listhospita = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string;}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.modalidad === 'Hospitalización');
       
           }else if(data.onSelect === '7' && data.fecha_inicio !== null && data.fecha_fin !== null){
 
@@ -763,11 +763,11 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
             
             this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
       
-              this.listemergencia = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.modalidad === 'Emergencia');
+              this.listemergencia = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string;}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.modalidad === 'Emergencia');
       
-              this.listconsultorio = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.modalidad === 'Consultorio Externo');
+              this.listconsultorio = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string;}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.modalidad === 'Consultorio Externo');
       
-              this.listhospita = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.modalidad === 'Hospitalización');
+              this.listhospita = this.data.filter((sede: { sucursal: string; registro_fecha: string; modalidad:string;}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.modalidad === 'Hospitalización');
       
           }
       }     
@@ -815,7 +815,383 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
     this.formularioService.getFormulario().subscribe(
       (res: any) => {
         this.data = res.body.length > 0 ? res.body : [];
-        this.plansalud = this.data.filter((item: { paciente: string; }) => item.paciente === 'Plan Salud');
+        if(data.sede === 0){
+
+          if(data.onSelect < 3 && data.periodo !== null){
+        
+            this.listlima = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo);
+        
+            this.listchorrillos = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo);
+        
+            this.listsurco = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo);
+            //	Aqui empieza los planes de convenio
+            this.plansalud = this.data.filter((sede: { registro_fecha: string; paciente: string;}) => moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.paciente === 'Plan Salud');
+        
+            this.institucional = this.data.filter((sede: { registro_fecha: string; paciente: string;}) => moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.paciente === 'Institucional');
+        
+            this.convenio = this.data.filter((sede: { registro_fecha: string; paciente: string;}) => moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.paciente === 'Convenios');
+            
+            this.company = this.data.filter((sede: { registro_fecha: string; paciente: string;}) => moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.paciente === 'Compañia Seguro');
+        
+            this.madrenino = this.data.filter((sede: { registro_fecha: string; paciente: string;}) => moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.paciente === 'Madre Niño');
+            
+            this.otross = this.data.filter((sede: { registro_fecha: string; paciente: string;}) => moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.paciente === 'Otros');
+            
+            this.listencuesta = this.plansalud.length + this.institucional.length + this.convenio.length + 
+                      this.company.length + this.madrenino.length + this.otross.length;
+            console.log(this.listencuesta);
+        
+          }else if((data.onSelect === '3' || data.onSelect === '4') && data.periodo !== null){
+        
+            this.listlima = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'));
+        
+            this.listchorrillos = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Chorrillos'  || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'));
+        
+            this.listsurco = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'));
+            
+            //			Aqui empieza los planes de convenio
+            this.plansalud = this.data.filter((sede: { registro_fecha: string; paciente:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.paciente === 'Plan Salud');
+        
+            this.institucional = this.data.filter((sede: { registro_fecha: string; paciente:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.paciente === 'Institucional');
+        
+            this.convenio = this.data.filter((sede: { registro_fecha: string; paciente:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.paciente === 'Convenios');
+            
+            this.company = this.data.filter((sede: { registro_fecha: string; paciente:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.paciente === 'Compañia Seguro');
+        
+            this.madrenino = this.data.filter((sede: { registro_fecha: string; paciente:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.paciente === 'Madre Niño');
+        
+            this.otross = this.data.filter((sede: { registro_fecha: string; paciente:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.paciente === 'Otros');
+        
+            this.listencuesta = this.plansalud.length + this.institucional.length + this.convenio.length +
+                      this.company.length + this.madrenino.length + this.otross.length;
+            console.log(this.listencuesta);
+        
+          }else if((data.onSelect === '5' || data.onSelect === '6') && data.mes !== null){
+        
+            this.listlima = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth());
+        
+            this.listchorrillos = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Chorrillos'  || sede.sucursal === '0002') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth());
+        
+            this.listsurco = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Surco' || sede.sucursal === '0004') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth());
+        //Aqui empiezan los convenios
+            this.plansalud = this.data.filter((sede: { registro_fecha: string; paciente:string}) => new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.paciente === 'Plan Salud');
+        
+            this.institucional = this.data.filter((sede: { registro_fecha: string; paciente:string}) => new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.paciente === 'Institucional');
+        
+            this.convenio = this.data.filter((sede: { registro_fecha: string; paciente:string}) => new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.paciente === 'Convenios');
+            
+            this.company = this.data.filter((sede: { registro_fecha: string; paciente:string}) => new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.paciente === 'Compañia Seguro');
+        
+            this.madrenino = this.data.filter((sede: { registro_fecha: string; paciente:string}) => new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.paciente === 'Madre Niño');
+        
+            this.otross = this.data.filter((sede: { registro_fecha: string; paciente:string}) => new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.paciente === 'Otros');
+        
+            this.listencuesta = this.plansalud.length + this.institucional.length + this.convenio.length +
+              this.company.length + this.madrenino.length + this.otross.length;
+            console.log(this.listencuesta);
+        
+          }else if(data.onSelect === '7' && data.fecha_inicio !== null && data.fecha_fin !== null){
+        
+            this.listlima = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin);
+        
+            this.listchorrillos = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Chorrillos'  || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin);
+        
+            this.listsurco = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) =>(sede.sucursal === 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin);
+            //	Aqui empiezan los convenios
+            this.plansalud = this.data.filter((sede: { registro_fecha: string; paciente:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.paciente === 'Plan Salud');
+        
+            this.institucional = this.data.filter((sede: { registro_fecha: string; paciente:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.paciente === 'Institucional');
+        
+            this.convenio = this.data.filter((sede: { registro_fecha: string; paciente:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.paciente === 'Convenios');
+        
+            this.company = this.data.filter((sede: { registro_fecha: string; paciente:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.paciente === 'Compañia Seguro');
+        
+            this.madrenino = this.data.filter((sede: { registro_fecha: string; paciente:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.paciente === 'Madre Niño');
+        
+            this.otross = this.data.filter((sede: { registro_fecha: string; paciente:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.paciente === 'Otros');
+            
+            this.listencuesta = this.plansalud.length + this.institucional.length + this.convenio.length +
+              this.company.length + this.madrenino.length + this.otross.length;
+        
+          }
+        
+        } else if(data.sede === 1){
+        
+          if(data.onSelect < 3 && data.periodo !== null){
+        
+            this.listlima = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo);
+        
+            this.listchorrillos = [];
+        
+            this.listsurco = [];
+        
+            this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+        //Aqui empiezan los convenios
+            this.plansalud = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.paciente === 'Plan Salud');
+        
+            this.institucional = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.paciente === 'Institucional');
+        
+            this.convenio = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.paciente === 'Convenios');
+            
+            this.company = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.paciente === 'Compañia Seguro');
+        
+            this.madrenino = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.paciente === 'Madre Niño');
+        
+            this.otross = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.paciente === 'Otros');
+        
+          }else if((data.onSelect === '3' || data.onSelect === '4') && data.periodo !== null){
+        
+            this.listlima = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'));
+        
+            this.listchorrillos = [];
+        
+            this.listsurco = [];
+        
+            this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+        
+            this.plansalud = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.paciente === 'Plan Salud');
+        
+            this.institucional = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.paciente === 'Institucional');
+        
+            this.convenio = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.paciente === 'Convenios');
+            
+            this.company = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.paciente === 'Compañia Seguro');
+        
+            this.madrenino = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.paciente === 'Madre Niño');
+        
+            this.otross = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.paciente === 'Otros');
+        
+          }else if((data.onSelect === '5' || data.onSelect === '6') && data.mes !== null){
+        
+            this.listlima = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth());
+        
+            this.listchorrillos = [];
+        
+            this.listsurco = [];
+        
+            this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+            //Aqui empiezan los convenios
+            this.plansalud = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.paciente === 'Plan Salud');
+        
+            this.institucional = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.paciente === 'Institucional');
+        
+            this.convenio = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.paciente === 'Convenios');
+            
+            this.company = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.paciente === 'Compañia Seguro');
+        
+            this.madrenino = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.paciente === 'Madre Niño');
+        
+            this.otross = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.paciente === 'Otros');
+            
+        
+          }else if(data.onSelect === '7' && data.fecha_inicio !== null && data.fecha_fin !== null){
+        
+            this.listlima = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin);
+        
+            this.listchorrillos = [];
+        
+            this.listsurco = [];
+        
+            this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+            console.log(this.listlima);
+        //Aqui empiezan los convenios
+            this.plansalud = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.paciente === 'Plan Salud');
+        
+            this.institucional = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.paciente === 'Institucional');
+        
+            this.convenio = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.paciente === 'Convenios');
+            
+            this.company = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.paciente === 'Compañia Seguro');
+        
+            this.madrenino = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.paciente === 'Madre Niño');
+        
+            this.otross = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.paciente === 'Otros');
+        
+          }
+        } else if(data.sede === 2){
+        
+          if(data.onSelect < 3 && data.periodo !== null){
+        
+            this.listlima = [];
+        
+            this.listchorrillos = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo);
+        
+            this.listsurco = [];
+        
+            this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+        //Aqui empiezan los convenios
+            this.plansalud = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.paciente === 'Plan Salud');
+        
+            this.institucional = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.paciente === 'Institucional');
+        
+            this.convenio = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.paciente === 'Convenios');
+            
+            this.company = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.paciente === 'Compañia Seguro');
+        
+            this.madrenino = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.paciente === 'Madre Niño');
+        
+            this.otross = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.paciente === 'Otros');
+        
+          }else if((data.onSelect === '3' || data.onSelect === '4') && data.periodo !== null){
+        
+            this.listlima = [];
+        
+            this.listchorrillos = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'));
+        
+            this.listsurco = [];
+        
+            this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+        //Aqui empiezan los convenios
+            this.plansalud = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.paciente === 'Plan Salud');
+        
+            this.institucional = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.paciente === 'Institucional');
+        
+            this.convenio = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.paciente === 'Convenios');
+            
+            this.company = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.paciente === 'Compañia Seguro');
+        
+            this.madrenino = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.paciente === 'Madre Niño');
+        
+            this.otross = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.paciente === 'Otros');
+        
+          }else if((data.onSelect === '5' || data.onSelect === '6') && data.mes !== null){
+        
+            this.listlima = [];
+        
+            this.listchorrillos = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Chorrillos' || sede.sucursal === '0002') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth());
+        
+            this.listsurco = [];
+        
+            this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+        //Aqui empiezan los convenios
+            this.plansalud = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.paciente === 'Plan Salud');
+        
+            this.institucional = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.paciente === 'Institucional');
+        
+            this.convenio = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.paciente === 'Convenios');
+            
+            this.company = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.paciente === 'Compañia Seguro');
+        
+            this.madrenino = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.paciente === 'Madre Niño');
+        
+            this.otross = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.paciente === 'Otros');
+            
+        
+          }else if(data.onSelect === '7' && data.fecha_inicio !== null && data.fecha_fin !== null){
+        
+            this.listlima = [];
+        
+            this.listchorrillos = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin);
+        
+            this.listsurco = [];
+        
+            this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+        //Aqui empiezam los convenios
+            this.plansalud = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.paciente === 'Plan Salud');
+        
+            this.institucional = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.paciente === 'Institucional');
+        
+            this.convenio = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.paciente === 'Convenios');
+        
+            this.company = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.paciente === 'Compañia Seguro');
+        
+            this.madrenino = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.paciente === 'Madre Niño');
+        
+            this.otross = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.paciente === 'Otros');
+          }
+        
+        } else if(data.sede === 4){
+          if(data.onSelect < 3 && data.periodo !== null){
+        
+            this.listlima = [];
+        
+            this.listchorrillos = [];
+        
+            this.listsurco = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo);
+        
+            this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+        //Aqui empiezam los convenios
+            this.plansalud = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.paciente === 'Plan Salud');
+        
+            this.institucional = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.paciente === 'Institucional');
+        
+            this.convenio = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.paciente === 'Convenios');
+            
+            this.company = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.paciente === 'Compañia Seguro');
+        
+            this.madrenino = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.paciente === 'Madre Niño');
+        
+            this.otross = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.paciente === 'Otros');
+        
+          }else if((data.onSelect === '3' || data.onSelect === '4') && data.periodo !== null){
+        
+            this.listlima = [];
+        
+            this.listchorrillos = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'));
+        
+            this.listsurco = [];
+        
+            this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+        //Aqui empiezam los convenios
+            this.plansalud = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.paciente === 'Plan Salud');
+        
+            this.institucional = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.paciente === 'Institucional');
+        
+            this.convenio = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.paciente === 'Convenios');
+            
+            this.company = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.paciente === 'Compañia Seguro');
+        
+            this.madrenino = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.paciente === 'Madre Niño');
+        
+            this.otross = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.paciente === 'Otros');
+        
+          }else if((data.onSelect === '5' || data.onSelect === '6') && data.mes !== null){
+        
+            this.listlima = [];
+        
+            this.listchorrillos = [];
+        
+            this.listsurco = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Surco' || sede.sucursal === '0004') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth());
+        
+            this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+        //Aqui empiezam los convenios
+            this.plansalud = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.paciente === 'Plan Salud');
+        
+            this.institucional = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.paciente === 'Institucional');
+        
+            this.convenio = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.paciente === 'Convenios');
+            
+            this.company = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.paciente === 'Compañia Seguro');
+        
+            this.madrenino = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.paciente === 'Madre Niño');
+        
+            this.otross = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.paciente === 'Otros');
+        
+          }else if(data.onSelect === '7' && data.fecha_inicio !== null && data.fecha_fin !== null){
+        
+            this.listlima = [];
+        
+            this.listchorrillos = [];
+        
+            this.listsurco = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin);
+        
+            this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+        //Aqui empiezam los convenios
+            this.plansalud = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.paciente === 'Plan Salud');
+        
+            this.institucional = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.paciente === 'Institucional');
+        
+            this.convenio = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.paciente === 'Convenios');
+            
+            this.company = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.paciente === 'Compañia Seguro');
+        
+            this.madrenino = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.paciente === 'Madre Niño');
+        
+            this.otross = this.data.filter((sede: { sucursal: string; registro_fecha: string; paciente:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.paciente === 'Otros');
+        
+          }
+        }
+        // this.plansalud = this.data.filter((item: { paciente: string; }) => item.paciente === 'Plan Salud');
         if(this.plansalud[0] !== undefined ){
           this.arrLima = this.plansalud[0].paciente;
           this.cantidad = this.plansalud.length
@@ -824,35 +1200,35 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
         // console.log(111, this.arrLima)
         }
 
-        this.institucional = this.data.filter((item: { paciente: string; }) => item.paciente === 'Institucional');
+        // this.institucional = this.data.filter((item: { paciente: string; }) => item.paciente === 'Institucional');
         if(this.institucional[0] !== undefined ){
           this.arrLima = this.institucional[0].paciente;
           this.cantidad = this.institucional.length;
           this.pieChartLabels2.push(this.arrLima);
           this.pieChartData2.push(this.cantidad);
         }
-        this.convenio = this.data.filter((item: { paciente: string; }) => item.paciente === 'Convenios');
+        // this.convenio = this.data.filter((item: { paciente: string; }) => item.paciente === 'Convenios');
         if(this.convenio[0] !== undefined ){
           this.arrLima = this.convenio[0].paciente;
           this.cantidad = this.convenio.length;
           this.pieChartLabels2.push(this.arrLima);
           this.pieChartData2.push(this.cantidad);
         }
-        this.company = this.data.filter((item: { paciente: string; }) => item.paciente === 'Compañia Seguro');
+        // this.company = this.data.filter((item: { paciente: string; }) => item.paciente === 'Compañia Seguro');
         if(this.company[0] !== undefined ){
           this.arrLima = this.company[0].paciente;
           this.cantidad = this.company.length;
           this.pieChartLabels2.push(this.arrLima);
           this.pieChartData2.push(this.cantidad);
         }
-        this.madrenino = this.data.filter((item: { paciente: string; }) => item.paciente === 'Madre Niño');
+        // this.madrenino = this.data.filter((item: { paciente: string; }) => item.paciente === 'Madre Niño');
         if(this.madrenino[0] !== undefined ){
           this.arrLima = this.madrenino[0].paciente;
           this.cantidad = this.madrenino.length;
           this.pieChartLabels2.push(this.arrLima);
           this.pieChartData2.push(this.cantidad);
         }
-        this.otross = this.data.filter((item: { paciente: string; }) => item.paciente === 'Otros');
+        // this.otross = this.data.filter((item: { paciente: string; }) => item.paciente === 'Otros');
         if(this.otross[0] !== undefined ){
           this.arrLima = this.otross[0].paciente;
           this.cantidad = this.otross.length;
@@ -878,8 +1254,281 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
     this.formularioService.getFormulario().subscribe(
       (res: any) => {
         this.data = res.body.length > 0 ? res.body : [];
+        if(data.sede === 0){
+
+          if(data.onSelect < 3 && data.periodo !== null){
+      
+              this.listlima = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo);
+      
+              this.listchorrillos = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo);
+      
+              this.listsurco = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo);
+      
+              this.clasica = this.data.filter((sede: { registro_fecha: string; tipoPaciente:string;}) => moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoPaciente === 'Tarjeta CLASICA');
+      
+              this.dorada = this.data.filter((sede: { registro_fecha: string; tipoPaciente:string;}) => moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoPaciente === 'Tarjeta DORADA');
+      
+              this.diamante = this.data.filter((sede: { registro_fecha: string; tipoPaciente:string;}) => moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoPaciente === 'Tarjeta DIAMANTE');
+      
+              this.listencuesta = this.clasica.length + this.dorada.length + this.diamante.length;
+              console.log(this.listencuesta);
+      
+          }else if((data.onSelect === '3' || data.onSelect === '4') && data.periodo !== null){
+      
+              this.listlima = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'));
+      
+              this.listchorrillos = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Chorrillos'  || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'));
+      
+              this.listsurco = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'));
+      
+              this.clasica = this.data.filter((sede: { registro_fecha: string; tipoPaciente:string;}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.tipoPaciente === 'Tarjeta CLASICA');
+      
+              this.dorada = this.data.filter((sede: { registro_fecha: string; tipoPaciente:string;}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.tipoPaciente === 'Tarjeta DORADA');
+      
+              this.diamante = this.data.filter((sede: { registro_fecha: string; tipoPaciente:string;}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.tipoPaciente === 'Tarjeta DIAMANTE');
+      
+              this.listencuesta = this.clasica.length + this.dorada.length + this.diamante.length;
+              console.log(this.listencuesta);
+      
+          }else if((data.onSelect === '5' || data.onSelect === '6') && data.mes !== null){
+      
+              this.listlima = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth());
+      
+              this.listchorrillos = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Chorrillos'  || sede.sucursal === '0002') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth());
+      
+              this.listsurco = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Surco' || sede.sucursal === '0004') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth());
+      
+              this.clasica = this.data.filter((sede: { registro_fecha: string; tipoPaciente:string;}) => new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoPaciente === 'Tarjeta CLASICA');
+      
+              this.dorada = this.data.filter((sede: { registro_fecha: string; tipoPaciente:string;}) => new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoPaciente === 'Tarjeta DORADA');
+      
+              this.diamante = this.data.filter((sede: { registro_fecha: string; tipoPaciente:string;}) => new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoPaciente === 'Tarjeta DIAMANTE');
+      
+              this.listencuesta = this.clasica.length + this.dorada.length + this.diamante.length;
+              console.log(this.listencuesta);
+      
+          }else if(data.onSelect === '7' && data.fecha_inicio !== null && data.fecha_fin !== null){
+      
+              this.listlima = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin);
+      
+              this.listchorrillos = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Chorrillos'  || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin);
+      
+              this.listsurco = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) =>(sede.sucursal === 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin);
+      
+              this.clasica = this.data.filter((sede: { registro_fecha: string; tipoPaciente:string;}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoPaciente === 'Tarjeta CLASICA');
+      
+              this.dorada = this.data.filter((sede: { registro_fecha: string; tipoPaciente:string;}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoPaciente === 'Tarjeta DORADA');
+      
+              this.diamante = this.data.filter((sede: { registro_fecha: string; tipoPaciente:string;}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoPaciente === 'Tarjeta DIAMANTE');
+      
+              this.listencuesta = this.clasica.length + this.dorada.length + this.diamante.length;
+      
+          }
+      
+      } else if(data.sede === 1){
+      
+          if(data.onSelect < 3 && data.periodo !== null){
+      
+              this.listlima = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo);
+      
+              this.listchorrillos = [];
+      
+              this.listsurco = [];
+      
+              this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+      
+              this.clasica = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoPaciente:string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoPaciente === 'Tarjeta CLASICA');
+      
+              this.dorada = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoPaciente:string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoPaciente === 'Tarjeta DORADA');
+      
+              this.diamante = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoPaciente:string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoPaciente === 'Tarjeta DIAMANTE');
+      
+          }else if((data.onSelect === '3' || data.onSelect === '4') && data.periodo !== null){
+      
+              this.listlima = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'));
+      
+              this.listchorrillos = [];
+      
+              this.listsurco = [];
+      
+              this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+      
+              this.clasica = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoPaciente:string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.tipoPaciente === 'Tarjeta CLASICA');
+      
+              this.dorada = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoPaciente:string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.tipoPaciente === 'Tarjeta DORADA');
+      
+              this.diamante = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoPaciente:string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.tipoPaciente === 'Tarjeta DIAMANTE');
+      
+          }else if((data.onSelect === '5' || data.onSelect === '6') && data.mes !== null){
+      
+              this.listlima = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth());
+      
+              this.listchorrillos = [];
+      
+              this.listsurco = [];
+      
+              this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+              this.clasica = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoPaciente:string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoPaciente === 'Tarjeta CLASICA');
+      
+              this.dorada = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoPaciente:string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoPaciente === 'Tarjeta DORADA');
+      
+              this.diamante = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoPaciente:string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoPaciente === 'Tarjeta DIAMANTE');
+      
+          }else if(data.onSelect === '7' && data.fecha_inicio !== null && data.fecha_fin !== null){
+      
+              this.listlima = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin);
+      
+              this.listchorrillos = [];
+      
+              this.listsurco = [];
+      
+              this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+              console.log(this.listlima);
+              this.clasica = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoPaciente:string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoPaciente === 'Tarjeta CLASICA');
+      
+              this.dorada = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoPaciente:string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoPaciente === 'Tarjeta DORADA');
+      
+              this.diamante = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoPaciente:string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoPaciente === 'Tarjeta DIAMANTE');
+              console.log(this.clasica, this.dorada, this.diamante);
+      
+          }
+      } else if(data.sede === 2){
+      
+          if(data.onSelect < 3 && data.periodo !== null){
+      
+              this.listlima = [];
+      
+              this.listchorrillos = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo);
+      
+              this.listsurco = [];
+      
+              this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+      
+              this.clasica = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoPaciente:string;}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoPaciente === 'Tarjeta CLASICA');
+      
+              this.dorada = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoPaciente:string;}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoPaciente === 'Tarjeta DORADA');
+      
+              this.diamante = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoPaciente:string;}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoPaciente === 'Tarjeta DIAMANTE');
+      
+          }else if((data.onSelect === '3' || data.onSelect === '4') && data.periodo !== null){
+      
+              this.listlima = [];
+      
+              this.listchorrillos = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'));
+      
+              this.listsurco = [];
+      
+              this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+      
+              this.clasica = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoPaciente:string;}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.tipoPaciente === 'Tarjeta CLASICA');
+      
+              this.dorada = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoPaciente:string;}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.tipoPaciente === 'Tarjeta DORADA');
+      
+              this.diamante = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoPaciente:string;}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.tipoPaciente === 'Tarjeta DIAMANTE');
+      
+          }else if((data.onSelect === '5' || data.onSelect === '6') && data.mes !== null){
+      
+              this.listlima = [];
+      
+              this.listchorrillos = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Chorrillos' || sede.sucursal === '0002') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth());
+      
+              this.listsurco = [];
+      
+              this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+      
+              this.clasica = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoPaciente:string;}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoPaciente === 'Tarjeta CLASICA');
+      
+              this.dorada = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoPaciente:string;}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoPaciente === 'Tarjeta DORADA');
+      
+              this.diamante = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoPaciente:string;}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoPaciente === 'Tarjeta DIAMANTE');
+      
+          }else if(data.onSelect === '7' && data.fecha_inicio !== null && data.fecha_fin !== null){
+      
+              this.listlima = [];
+      
+              this.listchorrillos = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin);
+      
+              this.listsurco = [];
+      
+              this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+      
+              this.clasica = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoPaciente:string;}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoPaciente === 'Tarjeta CLASICA');
+      
+              this.dorada = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoPaciente:string;}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoPaciente === 'Tarjeta DORADA');
+      
+              this.diamante = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoPaciente:string;}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoPaciente === 'Tarjeta DIAMANTE');
+      
+          }
+      
+      } else if(data.sede === 4){
+          if(data.onSelect < 3 && data.periodo !== null){
+      
+              this.listlima = [];
+      
+              this.listchorrillos = [];
+      
+              this.listsurco = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo);
+      
+              this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+      
+              this.clasica = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoPaciente:string;}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoPaciente === 'Tarjeta CLASICA');
+      
+              this.dorada = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoPaciente:string;}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoPaciente === 'Tarjeta DORADA');
+      
+              this.diamante = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoPaciente:string;}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoPaciente === 'Tarjeta DIAMANTE');
+      
+          }else if((data.onSelect === '3' || data.onSelect === '4') && data.periodo !== null){
+      
+              this.listlima = [];
+      
+              this.listchorrillos = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'));
+      
+              this.listsurco = [];
+      
+              this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+      
+              this.clasica = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoPaciente:string;}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.tipoPaciente === 'Tarjeta CLASICA');
+      
+              this.dorada = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoPaciente:string;}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.tipoPaciente === 'Tarjeta DORADA');
+      
+              this.diamante = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoPaciente:string;}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.tipoPaciente === 'Tarjeta DIAMANTE');
+      
+          }else if((data.onSelect === '5' || data.onSelect === '6') && data.mes !== null){
+      
+              this.listlima = [];
+      
+              this.listchorrillos = [];
+      
+              this.listsurco = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Surco' || sede.sucursal === '0004') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth());
+      
+              this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+      
+              this.clasica = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoPaciente:string;}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoPaciente === 'Tarjeta CLASICA');
+      
+              this.dorada = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoPaciente:string;}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoPaciente === 'Tarjeta DORADA');
+      
+              this.diamante = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoPaciente:string;}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoPaciente === 'Tarjeta DIAMANTE');
+      
+          }else if(data.onSelect === '7' && data.fecha_inicio !== null && data.fecha_fin !== null){
+      
+              this.listlima = [];
+      
+              this.listchorrillos = [];
+      
+              this.listsurco = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin);
+      
+              this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+      
+              this.clasica = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoPaciente:string;}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoPaciente === 'Tarjeta CLASICA');
+      
+              this.dorada = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoPaciente:string;}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoPaciente === 'Tarjeta DORADA');
+      
+              this.diamante = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoPaciente:string;}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoPaciente === 'Tarjeta DIAMANTE');
+      
+          }
+      }     
         //TARJETA CLASICA
-        this.clasica = this.data.filter((item: { tipoPaciente: string; }) => item.tipoPaciente === 'Tarjeta CLASICA');
+        // this.clasica = this.data.filter((item: { tipoPaciente: string; }) => item.tipoPaciente === 'Tarjeta CLASICA');
         if(this.clasica[0] !== undefined ){
           this.arrpaciente = this.clasica[0].tipoPaciente;
           this.arrcantpa = this.clasica.length;
@@ -888,7 +1537,7 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
           this.pieChartData22.push(this.arrcantpa);
         }
         //TARJETA DORADA
-        this.dorada = this.data.filter((item: { tipoPaciente: string; }) => item.tipoPaciente === 'Tarjeta DORADA');
+        // this.dorada = this.data.filter((item: { tipoPaciente: string; }) => item.tipoPaciente === 'Tarjeta DORADA');
         if(this.dorada[0] !== undefined ){
           this.arrpaciente = this.dorada[0].tipoPaciente;
           this.arrcantpa = this.dorada.length;
@@ -896,7 +1545,7 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
           this.pieChartData22.push(this.arrcantpa);
         }
         //TARJETA DIAMANTE
-        this.diamante = this.data.filter((item: { tipoPaciente: string; }) => item.tipoPaciente === 'Tarjeta DIAMANTE');
+        // this.diamante = this.data.filter((item: { tipoPaciente: string; }) => item.tipoPaciente === 'Tarjeta DIAMANTE');
         if(this.diamante[0] !== undefined ){
           this.arrpaciente = this.diamante[0].tipoPaciente;
           this.arrcantpa = this.diamante.length;
@@ -929,8 +1578,449 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
       (res: any) => {
         this.data = res.body.length > 0 ? res.body : [];
         // console.log(this.data);
+        if(data.sede === 0){
+
+          if(data.onSelect < 3 && data.periodo !== null){
+        
+            this.listlima = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo);
+        
+            this.listchorrillos = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo);
+        
+            this.listsurco = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo);
+            //	Aqui empieza los planes de sedapal
+            this.saludpol = this.data.filter((sede: { registro_fecha: string; tipoConvenio: string;}) => moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoConvenio === 'SALUDPOL');
+        
+            this.fopasef = this.data.filter((sede: { registro_fecha: string; tipoConvenio: string;}) => moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoConvenio === 'FOPASEF');
+        
+            this.sedapal = this.data.filter((sede: { registro_fecha: string; tipoConvenio: string;}) => moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoConvenio === 'SEDAPAL');
+            
+            this.petroperu = this.data.filter((sede: { registro_fecha: string; tipoConvenio: string;}) => moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoConvenio === 'PETROPERU');
+        
+            this.crecer = this.data.filter((sede: { registro_fecha: string; tipoConvenio: string;}) => moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoConvenio === 'CRECER');
+            
+            this.cmp = this.data.filter((sede: { registro_fecha: string; tipoConvenio: string;}) => moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoConvenio === 'CMP');
+            
+            this.bcrp = this.data.filter((sede: { registro_fecha: string; tipoConvenio: string;}) => moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoConvenio === 'BCRP');
+        
+            this.otrocon = this.data.filter((sede: { registro_fecha: string; tipoConvenio: string;}) => moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoConvenio === 'OTROS');
+            
+            this.listencuesta = this.saludpol.length + this.fopasef.length + this.sedapal.length + 
+                      this.petroperu.length + this.crecer.length + this.cmp.length +
+              this.bcrp.length + this.otrocon.length;
+            console.log(this.listencuesta);
+        
+          }else if((data.onSelect === '3' || data.onSelect === '4') && data.periodo !== null){
+        
+            this.listlima = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'));
+        
+            this.listchorrillos = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Chorrillos'  || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'));
+        
+            this.listsurco = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'));
+            
+            //			Aqui empieza los planes de sedapal
+            this.saludpol = this.data.filter((sede: { registro_fecha: string; tipoConvenio:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.tipoConvenio === 'SALUDPOL');
+        
+            this.fopasef = this.data.filter((sede: { registro_fecha: string; tipoConvenio:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.tipoConvenio === 'FOPASEF');
+        
+            this.sedapal = this.data.filter((sede: { registro_fecha: string; tipoConvenio:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.tipoConvenio === 'SEDAPAL');
+            
+            this.petroperu = this.data.filter((sede: { registro_fecha: string; tipoConvenio:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.tipoConvenio === 'PETROPERU');
+        
+            this.crecer = this.data.filter((sede: { registro_fecha: string; tipoConvenio:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.tipoConvenio === 'CRECER');
+        
+            this.cmp = this.data.filter((sede: { registro_fecha: string; tipoConvenio:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.tipoConvenio === 'CMP');
+        
+            this.bcrp = this.data.filter((sede: { registro_fecha: string; tipoConvenio:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.tipoConvenio === 'BCRP');
+        
+            this.otrocon = this.data.filter((sede: { registro_fecha: string; tipoConvenio:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.tipoConvenio === 'OTROS');
+            
+            this.listencuesta = this.saludpol.length + this.fopasef.length + this.sedapal.length +
+              this.petroperu.length + this.crecer.length + this.cmp.length +
+              this.bcrp.length + this.otrocon.length;
+            console.log(this.listencuesta);
+        
+          }else if((data.onSelect === '5' || data.onSelect === '6') && data.mes !== null){
+        
+            this.listlima = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth());
+        
+            this.listchorrillos = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Chorrillos'  || sede.sucursal === '0002') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth());
+        
+            this.listsurco = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Surco' || sede.sucursal === '0004') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth());
+        //Aqui empiezan los sedapals
+            this.saludpol = this.data.filter((sede: { registro_fecha: string; tipoConvenio:string}) => new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoConvenio === 'SALUDPOL');
+        
+            this.fopasef = this.data.filter((sede: { registro_fecha: string; tipoConvenio:string}) => new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoConvenio === 'FOPASEF');
+        
+            this.sedapal = this.data.filter((sede: { registro_fecha: string; tipoConvenio:string}) => new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoConvenio === 'SEDAPAL');
+            
+            this.petroperu = this.data.filter((sede: { registro_fecha: string; tipoConvenio:string}) => new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoConvenio === 'PETROPERU');
+        
+            this.crecer = this.data.filter((sede: { registro_fecha: string; tipoConvenio:string}) => new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoConvenio === 'CRECER');
+        
+            this.cmp = this.data.filter((sede: { registro_fecha: string; tipoConvenio:string}) => new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoConvenio === 'CMP');
+            
+            this.bcrp = this.data.filter((sede: { registro_fecha: string; tipoConvenio:string}) => new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoConvenio === 'BCRP');
+        
+            this.otrocon = this.data.filter((sede: { registro_fecha: string; tipoConvenio:string}) => new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoConvenio === 'OTROS');
+        
+            this.listencuesta = this.saludpol.length + this.fopasef.length + this.sedapal.length +
+              this.petroperu.length + this.crecer.length + this.cmp.length +
+              this.bcrp.length + this.otrocon.length;
+            console.log(this.listencuesta);
+        
+          }else if(data.onSelect === '7' && data.fecha_inicio !== null && data.fecha_fin !== null){
+        
+            this.listlima = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin);
+        
+            this.listchorrillos = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Chorrillos'  || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin);
+        
+            this.listsurco = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) =>(sede.sucursal === 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin);
+            //	Aqui empiezan los sedapals
+            this.saludpol = this.data.filter((sede: { registro_fecha: string; tipoConvenio:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoConvenio === 'SALUDPOL');
+        
+            this.fopasef = this.data.filter((sede: { registro_fecha: string; tipoConvenio:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoConvenio === 'FOPASEF');
+        
+            this.sedapal = this.data.filter((sede: { registro_fecha: string; tipoConvenio:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoConvenio === 'SEDAPAL');
+        
+            this.petroperu = this.data.filter((sede: { registro_fecha: string; tipoConvenio:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoConvenio === 'PETROPERU');
+        
+            this.crecer = this.data.filter((sede: { registro_fecha: string; tipoConvenio:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoConvenio === 'CRECER');
+        
+            this.cmp = this.data.filter((sede: { registro_fecha: string; tipoConvenio:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoConvenio === 'CMP');
+            
+            this.bcrp = this.data.filter((sede: { registro_fecha: string; tipoConvenio:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoConvenio === 'BCRP');
+        
+            this.otrocon = this.data.filter((sede: { registro_fecha: string; tipoConvenio:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoConvenio === 'OTROS');
+            
+            this.listencuesta = this.saludpol.length + this.fopasef.length + this.sedapal.length +
+              this.petroperu.length + this.crecer.length + this.cmp.length +
+              this.bcrp.length + this.otrocon.length;
+        
+          }
+        
+        } else if(data.sede === 1){
+        
+          if(data.onSelect < 3 && data.periodo !== null){
+        
+            this.listlima = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo);
+        
+            this.listchorrillos = [];
+        
+            this.listsurco = [];
+        
+            this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+        //Aqui empiezan los sedapals
+            this.saludpol = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoConvenio === 'SALUDPOL');
+        
+            this.fopasef = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoConvenio === 'FOPASEF');
+        
+            this.sedapal = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoConvenio === 'SEDAPAL');
+            
+            this.petroperu = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoConvenio === 'PETROPERU');
+        
+            this.crecer = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoConvenio === 'CRECER');
+        
+            this.cmp = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoConvenio === 'CMP');
+            
+            this.bcrp = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoConvenio === 'BCRP');
+        
+            this.otrocon = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoConvenio === 'OTROS');
+        
+          }else if((data.onSelect === '3' || data.onSelect === '4') && data.periodo !== null){
+        
+            this.listlima = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'));
+        
+            this.listchorrillos = [];
+        
+            this.listsurco = [];
+        
+            this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+        
+            this.saludpol = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.tipoConvenio === 'SALUDPOL');
+        
+            this.fopasef = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.tipoConvenio === 'FOPASEF');
+        
+            this.sedapal = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.tipoConvenio === 'SEDAPAL');
+            
+            this.petroperu = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.tipoConvenio === 'PETROPERU');
+        
+            this.crecer = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.tipoConvenio === 'CRECER');
+        
+            this.cmp = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.tipoConvenio === 'CMP');
+            
+            this.bcrp = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.tipoConvenio === 'BCRP');
+        
+            this.otrocon = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.tipoConvenio === 'OTROS');
+        
+          }else if((data.onSelect === '5' || data.onSelect === '6') && data.mes !== null){
+        
+            this.listlima = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth());
+        
+            this.listchorrillos = [];
+        
+            this.listsurco = [];
+        
+            this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+            //Aqui empiezan los sedapals
+            this.saludpol = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoConvenio === 'SALUDPOL');
+        
+            this.fopasef = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoConvenio === 'FOPASEF');
+        
+            this.sedapal = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoConvenio === 'SEDAPAL');
+            
+            this.petroperu = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoConvenio === 'PETROPERU');
+        
+            this.crecer = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoConvenio === 'CRECER');
+        
+            this.cmp = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoConvenio === 'CMP');
+            
+            this.bcrp = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoConvenio === 'BCRP');
+        
+            this.otrocon = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoConvenio === 'OTROS');
+        
+          }else if(data.onSelect === '7' && data.fecha_inicio !== null && data.fecha_fin !== null){
+        
+            this.listlima = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin);
+        
+            this.listchorrillos = [];
+        
+            this.listsurco = [];
+        
+            this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+            console.log(this.listlima);
+        //Aqui empiezan los sedapals
+            this.saludpol = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoConvenio === 'SALUDPOL');
+        
+            this.fopasef = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoConvenio === 'FOPASEF');
+        
+            this.sedapal = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoConvenio === 'SEDAPAL');
+            
+            this.petroperu = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoConvenio === 'PETROPERU');
+        
+            this.crecer = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoConvenio === 'CRECER');
+        
+            this.cmp = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoConvenio === 'CMP');
+        
+            this.bcrp = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoConvenio === 'BCRP');
+        
+            this.otrocon = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoConvenio === 'OTROS');
+          }
+        } else if(data.sede === 2){
+        
+          if(data.onSelect < 3 && data.periodo !== null){
+        
+            this.listlima = [];
+        
+            this.listchorrillos = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo);
+        
+            this.listsurco = [];
+        
+            this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+        //Aqui empiezan los sedapals
+            this.saludpol = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoConvenio === 'SALUDPOL');
+        
+            this.fopasef = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoConvenio === 'FOPASEF');
+        
+            this.sedapal = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoConvenio === 'SEDAPAL');
+            
+            this.petroperu = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoConvenio === 'PETROPERU');
+        
+            this.crecer = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoConvenio === 'CRECER');
+        
+            this.cmp = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoConvenio === 'CMP');
+            
+            this.bcrp = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoConvenio === 'BCRP');
+        
+            this.otrocon = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoConvenio === 'OTROS');
+        
+          }else if((data.onSelect === '3' || data.onSelect === '4') && data.periodo !== null){
+        
+            this.listlima = [];
+        
+            this.listchorrillos = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'));
+        
+            this.listsurco = [];
+        
+            this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+        //Aqui empiezan los sedapals
+            this.saludpol = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.tipoConvenio === 'SALUDPOL');
+        
+            this.fopasef = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.tipoConvenio === 'FOPASEF');
+        
+            this.sedapal = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.tipoConvenio === 'SEDAPAL');
+            
+            this.petroperu = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.tipoConvenio === 'PETROPERU');
+        
+            this.crecer = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.tipoConvenio === 'CRECER');
+        
+            this.cmp = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.tipoConvenio === 'CMP');
+            
+            this.bcrp = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.tipoConvenio === 'BCRP');
+        
+            this.otrocon = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.tipoConvenio === 'OTROS');
+        
+          }else if((data.onSelect === '5' || data.onSelect === '6') && data.mes !== null){
+        
+            this.listlima = [];
+        
+            this.listchorrillos = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Chorrillos' || sede.sucursal === '0002') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth());
+        
+            this.listsurco = [];
+        
+            this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+        //Aqui empiezan los sedapals
+            this.saludpol = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoConvenio === 'SALUDPOL');
+        
+            this.fopasef = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoConvenio === 'FOPASEF');
+        
+            this.sedapal = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoConvenio === 'SEDAPAL');
+            
+            this.petroperu = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoConvenio === 'PETROPERU');
+        
+            this.crecer = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoConvenio === 'CRECER');
+        
+            this.cmp = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoConvenio === 'CMP');
+            
+            this.bcrp = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoConvenio === 'BCRP');
+        
+            this.otrocon = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoConvenio === 'OTROS');
+            
+        
+          }else if(data.onSelect === '7' && data.fecha_inicio !== null && data.fecha_fin !== null){
+        
+            this.listlima = [];
+        
+            this.listchorrillos = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin);
+        
+            this.listsurco = [];
+        
+            this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+        //Aqui empiezam los sedapals
+            this.saludpol = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoConvenio === 'SALUDPOL');
+        
+            this.fopasef = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoConvenio === 'FOPASEF');
+        
+            this.sedapal = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoConvenio === 'SEDAPAL');
+        
+            this.petroperu = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoConvenio === 'PETROPERU');
+        
+            this.crecer = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoConvenio === 'CRECER');
+        
+            this.cmp = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoConvenio === 'CMP');
+            
+            this.bcrp = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoConvenio === 'BCRP');
+        
+            this.otrocon = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoConvenio === 'OTROS');
+          }
+        
+        } else if(data.sede === 4){
+          if(data.onSelect < 3 && data.periodo !== null){
+        
+            this.listlima = [];
+        
+            this.listchorrillos = [];
+        
+            this.listsurco = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo);
+        
+            this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+        //Aqui empiezam los sedapals
+            this.saludpol = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoConvenio === 'SALUDPOL');
+        
+            this.fopasef = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoConvenio === 'FOPASEF');
+        
+            this.sedapal = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoConvenio === 'SEDAPAL');
+            
+            this.petroperu = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoConvenio === 'PETROPERU');
+        
+            this.crecer = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoConvenio === 'CRECER');
+        
+            this.cmp = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoConvenio === 'CMP');
+        
+            this.bcrp = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoConvenio === 'BCRP');
+        
+            this.otrocon = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoConvenio === 'OTROS');
+          }else if((data.onSelect === '3' || data.onSelect === '4') && data.periodo !== null){
+        
+            this.listlima = [];
+        
+            this.listchorrillos = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'));
+        
+            this.listsurco = [];
+        
+            this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+        //Aqui empiezam los sedapals
+            this.saludpol = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.tipoConvenio === 'SALUDPOL');
+        
+            this.fopasef = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.tipoConvenio === 'FOPASEF');
+        
+            this.sedapal = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.tipoConvenio === 'SEDAPAL');
+            
+            this.petroperu = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.tipoConvenio === 'PETROPERU');
+        
+            this.crecer = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.tipoConvenio === 'CRECER');
+        
+            this.cmp = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.tipoConvenio === 'CMP');
+            
+            this.bcrp = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.tipoConvenio === 'BCRP');
+        
+            this.otrocon = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.tipoConvenio === 'OTROS');
+        
+          }else if((data.onSelect === '5' || data.onSelect === '6') && data.mes !== null){
+        
+            this.listlima = [];
+        
+            this.listchorrillos = [];
+        
+            this.listsurco = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Surco' || sede.sucursal === '0004') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth());
+        
+            this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+        //Aqui empiezam los sedapals
+            this.saludpol = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoConvenio === 'SALUDPOL');
+        
+            this.fopasef = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoConvenio === 'FOPASEF');
+        
+            this.sedapal = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoConvenio === 'SEDAPAL');
+            
+            this.petroperu = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoConvenio === 'PETROPERU');
+        
+            this.crecer = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoConvenio === 'CRECER');
+        
+            this.cmp = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoConvenio === 'CMP');
+            
+            this.bcrp = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoConvenio === 'BCRP');
+        
+            this.otrocon = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoConvenio === 'OTROS');
+        
+          }else if(data.onSelect === '7' && data.fecha_inicio !== null && data.fecha_fin !== null){
+        
+            this.listlima = [];
+        
+            this.listchorrillos = [];
+        
+            this.listsurco = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin);
+        
+            this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+        //Aqui empiezam los sedapals
+            this.saludpol = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoConvenio === 'SALUDPOL');
+        
+            this.fopasef = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoConvenio === 'FOPASEF');
+        
+            this.sedapal = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoConvenio === 'SEDAPAL');
+            
+            this.petroperu = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoConvenio === 'PETROPERU');
+        
+            this.crecer = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoConvenio === 'CRECER');
+        
+            this.cmp = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoConvenio === 'CMP');
+            
+            this.bcrp = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoConvenio === 'BCRP');
+        
+            this.otrocon = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoConvenio:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoConvenio === 'OTROS');
+        
+          }
+        }
         //SALUDPOL
-        this.saludpol = this.data.filter((item: { tipoConvenio: string; }) => item.tipoConvenio === 'SALUDPOL');
+        // this.saludpol = this.data.filter((item: { tipoConvenio: string; }) => item.tipoConvenio === 'SALUDPOL');
         if(this.saludpol[0] !== undefined ){
           this.arrconvenio = this.saludpol[0].tipoConvenio;        
           this.arrcantco = this.saludpol.length;
@@ -940,7 +2030,7 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
           this.pieChartData23.push(this.arrcantco);
         }
         //FOPASEF
-        this.fopasef = this.data.filter((item: { tipoConvenio: string; }) => item.tipoConvenio === 'FOPASEF');
+        // this.fopasef = this.data.filter((item: { tipoConvenio: string; }) => item.tipoConvenio === 'FOPASEF');
         if(this.fopasef[0] !== undefined ){
           this.arrconvenio = this.fopasef[0].tipoConvenio;
           this.arrcantco = this.fopasef.length;
@@ -948,7 +2038,7 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
           this.pieChartData23.push(this.arrcantco);
         }
         //SEDAPAL
-        this.sedapal = this.data.filter((item: { tipoConvenio: string; }) => item.tipoConvenio === 'SEDAPAL');
+        // this.sedapal = this.data.filter((item: { tipoConvenio: string; }) => item.tipoConvenio === 'SEDAPAL');
 
         if(this.sedapal[0] !== undefined ){
           this.arrconvenio = this.sedapal[0].tipoConvenio;
@@ -957,7 +2047,7 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
           this.pieChartData23.push(this.arrcantco);
         }
         //PETROPERU
-        this.petroperu = this.data.filter((item: { tipoConvenio: string; }) => item.tipoConvenio === 'PETROPERU');
+        // this.petroperu = this.data.filter((item: { tipoConvenio: string; }) => item.tipoConvenio === 'PETROPERU');
         if(this.petroperu[0] !== undefined ){
           this.arrconvenio = this.petroperu[0].tipoConvenio;
           this.arrcantco = this.petroperu.length;
@@ -965,7 +2055,7 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
           this.pieChartData23.push(this.arrcantco);
         }
         //CRECER
-        this.crecer = this.data.filter((item: { tipoConvenio: string; }) => item.tipoConvenio === 'CRECER');
+        // this.crecer = this.data.filter((item: { tipoConvenio: string; }) => item.tipoConvenio === 'CRECER');
         if(this.crecer[0] !== undefined ){
           this.arrconvenio = this.crecer[0].tipoConvenio;
           this.arrcantco = this.crecer.length;
@@ -973,7 +2063,7 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
           this.pieChartData23.push(this.arrcantco);
         }
         //CMP
-        this.cmp = this.data.filter((item: { tipoConvenio: string; }) => item.tipoConvenio === 'CMP');
+        // this.cmp = this.data.filter((item: { tipoConvenio: string; }) => item.tipoConvenio === 'CMP');
         if(this.cmp[0] !== undefined ){
           this.arrconvenio = this.cmp[0].tipoConvenio;
           this.arrcantco = this.cmp.length;
@@ -983,7 +2073,7 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
         
         
         //BCRP
-        this.bcrp = this.data.filter((item: { tipoConvenio: string; }) => item.tipoConvenio === 'BCRP');
+        // this.bcrp = this.data.filter((item: { tipoConvenio: string; }) => item.tipoConvenio === 'BCRP');
         if(this.bcrp[0] !== undefined ){
           this.arrconvenio = this.bcrp[0].tipoConvenio;
           this.arrcantco = this.bcrp.length;
@@ -993,7 +2083,7 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
         
         
         //OTROS
-        this.otrocon = this.data.filter((item: { tipoConvenio: string; }) => item.tipoConvenio === 'OTROS');
+        // this.otrocon = this.data.filter((item: { tipoConvenio: string; }) => item.tipoConvenio === 'OTROS');
         if(this.otrocon[0] !== undefined ){
           this.arrconvenio = this.otrocon[0].tipoConvenio;
           this.arrcantco = this.otrocon.length;
@@ -1029,7 +2119,448 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
       (res: any) => {
         this.data = res.body.length > 0 ? res.body : [];
         //SALUDPOL
-        this.rimac = this.data.filter((item: { tipoSeguro: string; }) => item.tipoSeguro === 'RIMAC');
+        console.log(this.data);
+        if(data.sede === 0){
+
+          if(data.onSelect < 3 && data.periodo !== null){
+        
+            this.listlima = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo);
+        
+            this.listchorrillos = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo);
+        
+            this.listsurco = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo);
+            //	Aqui empieza los planes de convenio
+            this.rimac = this.data.filter((sede: { registro_fecha: string; tipoSeguro: string;}) => moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoSeguro === 'RIMAC');
+        
+            this.pacifico = this.data.filter((sede: { registro_fecha: string; tipoSeguro: string;}) => moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoSeguro === 'PACIFICO');
+        
+            this.positiva = this.data.filter((sede: { registro_fecha: string; tipoSeguro: string;}) => moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoSeguro === 'LA POSITIVA');
+            
+            this.mapfre = this.data.filter((sede: { registro_fecha: string; tipoSeguro: string;}) => moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoSeguro === 'MAPFRE');
+        
+            this.sanitas = this.data.filter((sede: { registro_fecha: string; tipoSeguro: string;}) => moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoSeguro === 'SANITAS');
+            
+            this.interseguro = this.data.filter((sede: { registro_fecha: string; tipoSeguro: string;}) => moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoSeguro === 'INTERSEGURO');
+            
+            
+        
+            this.otrocomp = this.data.filter((sede: { registro_fecha: string; tipoSeguro: string;}) => moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoSeguro === 'OTROS');
+            
+            this.listencuesta = this.rimac.length + this.pacifico.length + this.positiva.length + 
+                      this.mapfre.length + this.sanitas.length + this.interseguro.length +
+               this.otrocomp.length;
+            console.log(this.listencuesta);
+        
+          }else if((data.onSelect === '3' || data.onSelect === '4') && data.periodo !== null){
+        
+            this.listlima = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'));
+        
+            this.listchorrillos = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Chorrillos'  || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'));
+        
+            this.listsurco = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'));
+            
+            //			Aqui empieza los planes de positiva
+            this.rimac = this.data.filter((sede: { registro_fecha: string; tipoSeguro:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.tipoSeguro === 'RIMAC');
+        
+            this.pacifico = this.data.filter((sede: { registro_fecha: string; tipoSeguro:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.tipoSeguro === 'PACIFICO');
+        
+            this.positiva = this.data.filter((sede: { registro_fecha: string; tipoSeguro:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.tipoSeguro === 'LA POSITIVA');
+            
+            this.mapfre = this.data.filter((sede: { registro_fecha: string; tipoSeguro:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.tipoSeguro === 'MAPFRE');
+        
+            this.sanitas = this.data.filter((sede: { registro_fecha: string; tipoSeguro:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.tipoSeguro === 'SANITAS');
+        
+            this.interseguro = this.data.filter((sede: { registro_fecha: string; tipoSeguro:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.tipoSeguro === 'INTERSEGURO');
+        
+            
+        
+            this.otrocomp = this.data.filter((sede: { registro_fecha: string; tipoSeguro:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.tipoSeguro === 'OTROS');
+            
+            this.listencuesta = this.rimac.length + this.pacifico.length + this.positiva.length +
+              this.mapfre.length + this.sanitas.length + this.interseguro.length +
+               this.otrocomp.length;
+            console.log(this.listencuesta);
+        
+          }else if((data.onSelect === '5' || data.onSelect === '6') && data.mes !== null){
+        
+            this.listlima = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth());
+        
+            this.listchorrillos = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Chorrillos'  || sede.sucursal === '0002') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth());
+        
+            this.listsurco = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Surco' || sede.sucursal === '0004') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth());
+        //Aqui empiezan los positivas
+            this.rimac = this.data.filter((sede: { registro_fecha: string; tipoSeguro:string}) => new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoSeguro === 'RIMAC');
+        
+            this.pacifico = this.data.filter((sede: { registro_fecha: string; tipoSeguro:string}) => new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoSeguro === 'PACIFICO');
+        
+            this.positiva = this.data.filter((sede: { registro_fecha: string; tipoSeguro:string}) => new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoSeguro === 'LA POSITIVA');
+            
+            this.mapfre = this.data.filter((sede: { registro_fecha: string; tipoSeguro:string}) => new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoSeguro === 'MAPFRE');
+        
+            this.sanitas = this.data.filter((sede: { registro_fecha: string; tipoSeguro:string}) => new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoSeguro === 'SANITAS');
+        
+            this.interseguro = this.data.filter((sede: { registro_fecha: string; tipoSeguro:string}) => new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoSeguro === 'INTERSEGURO');
+            
+            
+        
+            this.otrocomp = this.data.filter((sede: { registro_fecha: string; tipoSeguro:string}) => new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoSeguro === 'OTROS');
+        
+            this.listencuesta = this.rimac.length + this.pacifico.length + this.positiva.length +
+              this.mapfre.length + this.sanitas.length + this.interseguro.length +
+               this.otrocomp.length;
+            console.log(this.listencuesta);
+        
+          }else if(data.onSelect === '7' && data.fecha_inicio !== null && data.fecha_fin !== null){
+        
+            this.listlima = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin);
+        
+            this.listchorrillos = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Chorrillos'  || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin);
+        
+            this.listsurco = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) =>(sede.sucursal === 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin);
+            //	Aqui empiezan los positivas
+            this.rimac = this.data.filter((sede: { registro_fecha: string; tipoSeguro:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoSeguro === 'RIMAC');
+        
+            this.pacifico = this.data.filter((sede: { registro_fecha: string; tipoSeguro:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoSeguro === 'PACIFICO');
+        
+            this.positiva = this.data.filter((sede: { registro_fecha: string; tipoSeguro:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoSeguro === 'LA POSITIVA');
+        
+            this.mapfre = this.data.filter((sede: { registro_fecha: string; tipoSeguro:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoSeguro === 'MAPFRE');
+        
+            this.sanitas = this.data.filter((sede: { registro_fecha: string; tipoSeguro:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoSeguro === 'SANITAS');
+        
+            this.interseguro = this.data.filter((sede: { registro_fecha: string; tipoSeguro:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoSeguro === 'INTERSEGURO');
+            
+            
+        
+            this.otrocomp = this.data.filter((sede: { registro_fecha: string; tipoSeguro:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoSeguro === 'OTROS');
+            
+            this.listencuesta = this.rimac.length + this.pacifico.length + this.positiva.length +
+              this.mapfre.length + this.sanitas.length + this.interseguro.length +
+               this.otrocomp.length;
+        
+          }
+        
+        } else if(data.sede === 1){
+        
+          if(data.onSelect < 3 && data.periodo !== null){
+        
+            this.listlima = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo);
+        
+            this.listchorrillos = [];
+        
+            this.listsurco = [];
+        
+            this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+        //Aqui empiezan los positivas
+            this.rimac = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoSeguro === 'RIMAC');
+        
+            this.pacifico = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoSeguro === 'PACIFICO');
+        
+            this.positiva = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoSeguro === 'LA POSITIVA');
+            
+            this.mapfre = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoSeguro === 'MAPFRE');
+        
+            this.sanitas = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoSeguro === 'SANITAS');
+        
+            this.interseguro = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoSeguro === 'INTERSEGURO');
+            
+            
+        
+            this.otrocomp = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoSeguro === 'OTROS');
+        
+          }else if((data.onSelect === '3' || data.onSelect === '4') && data.periodo !== null){
+        
+            this.listlima = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'));
+        
+            this.listchorrillos = [];
+        
+            this.listsurco = [];
+        
+            this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+        
+            this.rimac = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.tipoSeguro === 'RIMAC');
+        
+            this.pacifico = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.tipoSeguro === 'PACIFICO');
+        
+            this.positiva = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.tipoSeguro === 'LA POSITIVA');
+            
+            this.mapfre = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.tipoSeguro === 'MAPFRE');
+        
+            this.sanitas = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.tipoSeguro === 'SANITAS');
+        
+            this.interseguro = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.tipoSeguro === 'INTERSEGURO');
+            
+            
+        
+            this.otrocomp = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.tipoSeguro === 'OTROS');
+        
+          }else if((data.onSelect === '5' || data.onSelect === '6') && data.mes !== null){
+        
+            this.listlima = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth());
+        
+            this.listchorrillos = [];
+        
+            this.listsurco = [];
+        
+            this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+            //Aqui empiezan los positivas
+            this.rimac = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoSeguro === 'RIMAC');
+        
+            this.pacifico = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoSeguro === 'PACIFICO');
+        
+            this.positiva = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoSeguro === 'LA POSITIVA');
+            
+            this.mapfre = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoSeguro === 'MAPFRE');
+        
+            this.sanitas = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoSeguro === 'SANITAS');
+        
+            this.interseguro = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoSeguro === 'INTERSEGURO');
+            
+            
+        
+            this.otrocomp = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoSeguro === 'OTROS');
+        
+          }else if(data.onSelect === '7' && data.fecha_inicio !== null && data.fecha_fin !== null){
+        
+            this.listlima = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin);
+        
+            this.listchorrillos = [];
+        
+            this.listsurco = [];
+        
+            this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+            console.log(this.listlima);
+        //Aqui empiezan los positivas
+            this.rimac = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoSeguro === 'RIMAC');
+        
+            this.pacifico = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoSeguro === 'PACIFICO');
+        
+            this.positiva = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoSeguro === 'LA POSITIVA');
+            
+            this.mapfre = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoSeguro === 'MAPFRE');
+        
+            this.sanitas = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoSeguro === 'SANITAS');
+        
+            this.interseguro = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoSeguro === 'INTERSEGURO');
+        
+            
+        
+            this.otrocomp = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoSeguro === 'OTROS');
+          }
+        } else if(data.sede === 2){
+        
+          if(data.onSelect < 3 && data.periodo !== null){
+        
+            this.listlima = [];
+        
+            this.listchorrillos = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo);
+        
+            this.listsurco = [];
+        
+            this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+        //Aqui empiezan los positivas
+            this.rimac = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoSeguro === 'RIMAC');
+        
+            this.pacifico = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoSeguro === 'PACIFICO');
+        
+            this.positiva = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoSeguro === 'LA POSITIVA');
+            
+            this.mapfre = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoSeguro === 'MAPFRE');
+        
+            this.sanitas = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoSeguro === 'SANITAS');
+        
+            this.interseguro = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoSeguro === 'INTERSEGURO');
+            
+            
+        
+            this.otrocomp = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoSeguro === 'OTROS');
+        
+          }else if((data.onSelect === '3' || data.onSelect === '4') && data.periodo !== null){
+        
+            this.listlima = [];
+        
+            this.listchorrillos = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'));
+        
+            this.listsurco = [];
+        
+            this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+        //Aqui empiezan los positivas
+            this.rimac = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.tipoSeguro === 'RIMAC');
+        
+            this.pacifico = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.tipoSeguro === 'PACIFICO');
+        
+            this.positiva = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.tipoSeguro === 'LA POSITIVA');
+            
+            this.mapfre = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.tipoSeguro === 'MAPFRE');
+        
+            this.sanitas = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.tipoSeguro === 'SANITAS');
+        
+            this.interseguro = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.tipoSeguro === 'INTERSEGURO');
+            
+            
+        
+            this.otrocomp = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.tipoSeguro === 'OTROS');
+        
+          }else if((data.onSelect === '5' || data.onSelect === '6') && data.mes !== null){
+        
+            this.listlima = [];
+        
+            this.listchorrillos = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Chorrillos' || sede.sucursal === '0002') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth());
+        
+            this.listsurco = [];
+        
+            this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+        //Aqui empiezan los positivas
+            this.rimac = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoSeguro === 'RIMAC');
+        
+            this.pacifico = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoSeguro === 'PACIFICO');
+        
+            this.positiva = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoSeguro === 'LA POSITIVA');
+            
+            this.mapfre = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoSeguro === 'MAPFRE');
+        
+            this.sanitas = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoSeguro === 'SANITAS');
+        
+            this.interseguro = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoSeguro === 'INTERSEGURO');
+            
+            
+        
+            this.otrocomp = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoSeguro === 'OTROS');
+            
+        
+          }else if(data.onSelect === '7' && data.fecha_inicio !== null && data.fecha_fin !== null){
+        
+            this.listlima = [];
+        
+            this.listchorrillos = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin);
+        
+            this.listsurco = [];
+        
+            this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+        //Aqui empiezam los positivas
+            this.rimac = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoSeguro === 'RIMAC');
+        
+            this.pacifico = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoSeguro === 'PACIFICO');
+        
+            this.positiva = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoSeguro === 'LA POSITIVA');
+        
+            this.mapfre = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoSeguro === 'MAPFRE');
+        
+            this.sanitas = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoSeguro === 'SANITAS');
+        
+            this.interseguro = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoSeguro === 'INTERSEGURO');
+            
+            
+        
+            this.otrocomp = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoSeguro === 'OTROS');
+          }
+        
+        } else if(data.sede === 4){
+          if(data.onSelect < 3 && data.periodo !== null){
+        
+            this.listlima = [];
+        
+            this.listchorrillos = [];
+        
+            this.listsurco = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo);
+        
+            this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+        //Aqui empiezam los positivas
+            this.rimac = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoSeguro === 'RIMAC');
+        
+            this.pacifico = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoSeguro === 'PACIFICO');
+        
+            this.positiva = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoSeguro === 'LA POSITIVA');
+            
+            this.mapfre = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoSeguro === 'MAPFRE');
+        
+            this.sanitas = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoSeguro === 'SANITAS');
+        
+            this.interseguro = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoSeguro === 'INTERSEGURO');
+        
+            
+        
+            this.otrocomp = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.tipoSeguro === 'OTROS');
+          }else if((data.onSelect === '3' || data.onSelect === '4') && data.periodo !== null){
+        
+            this.listlima = [];
+        
+            this.listchorrillos = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'));
+        
+            this.listsurco = [];
+        
+            this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+        //Aqui empiezam los positivas
+            this.rimac = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.tipoSeguro === 'RIMAC');
+        
+            this.pacifico = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.tipoSeguro === 'PACIFICO');
+        
+            this.positiva = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.tipoSeguro === 'LA POSITIVA');
+            
+            this.mapfre = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.tipoSeguro === 'MAPFRE');
+        
+            this.sanitas = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.tipoSeguro === 'SANITAS');
+        
+            this.interseguro = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.tipoSeguro === 'INTERSEGURO');
+            
+            
+        
+            this.otrocomp = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.tipoSeguro === 'OTROS');
+        
+          }else if((data.onSelect === '5' || data.onSelect === '6') && data.mes !== null){
+        
+            this.listlima = [];
+        
+            this.listchorrillos = [];
+        
+            this.listsurco = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Surco' || sede.sucursal === '0004') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth());
+        
+            this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+        //Aqui empiezam los positivas
+            this.rimac = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoSeguro === 'RIMAC');
+        
+            this.pacifico = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoSeguro === 'PACIFICO');
+        
+            this.positiva = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoSeguro === 'LA POSITIVA');
+            
+            this.mapfre = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoSeguro === 'MAPFRE');
+        
+            this.sanitas = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoSeguro === 'SANITAS');
+        
+            this.interseguro = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoSeguro === 'INTERSEGURO');
+            
+            
+            this.otrocomp = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.tipoSeguro === 'OTROS');
+        
+          }else if(data.onSelect === '7' && data.fecha_inicio !== null && data.fecha_fin !== null){
+        
+            this.listlima = [];
+        
+            this.listchorrillos = [];
+        
+            this.listsurco = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin);
+        
+            this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+        //Aqui empiezam los positivas
+            this.rimac = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoSeguro === 'RIMAC');
+        
+            this.pacifico = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoSeguro === 'PACIFICO');
+        
+            this.positiva = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoSeguro === 'LA POSITIVA');
+            
+            this.mapfre = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoSeguro === 'MAPFRE');
+        
+            this.sanitas = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoSeguro === 'SANITAS');
+        
+            this.interseguro = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoSeguro === 'INTERSEGURO');
+            
+            
+        
+            this.otrocomp = this.data.filter((sede: { sucursal: string; registro_fecha: string; tipoSeguro:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.tipoSeguro === 'OTROS');
+        
+          }
+        }
+        // this.rimac = this.data.filter((item: { tipoSeguro: string; }) => item.tipoSeguro === 'RIMAC');
         if(this.rimac[0] !== undefined ){
           this.arrCompany = this.rimac[0].tipoSeguro;
           // console.log(701,this.arrCompany)        
@@ -1037,42 +2568,42 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
           this.pieChartLabels24.push(this.arrCompany);
           this.pieChartData24.push(this.arrcantcomp);
         }
-        this.pacifico = this.data.filter((item: { tipoSeguro: string; }) => item.tipoSeguro === 'PACIFICO');
+        // this.pacifico = this.data.filter((item: { tipoSeguro: string; }) => item.tipoSeguro === 'PACIFICO');
         if(this.pacifico[0] !== undefined ){
           this.arrCompany = this.pacifico[0].tipoSeguro;              
           this.arrcantcomp = this.pacifico.length;        
           this.pieChartLabels24.push(this.arrCompany);
           this.pieChartData24.push(this.arrcantcomp);
         }
-        this.positiva = this.data.filter((item: { tipoSeguro: string; }) => item.tipoSeguro === 'LA POSITIVA');
+        // this.positiva = this.data.filter((item: { tipoSeguro: string; }) => item.tipoSeguro === 'LA POSITIVA');
         if(this.positiva[0] !== undefined ){
           this.arrCompany = this.positiva[0].tipoSeguro;        
           this.arrcantcomp = this.positiva.length;        
           this.pieChartLabels24.push(this.arrCompany);
           this.pieChartData24.push(this.arrcantcomp);
         }
-        this.mapfre = this.data.filter((item: { tipoSeguro: string; }) => item.tipoSeguro === 'MAPFRE');
+        // this.mapfre = this.data.filter((item: { tipoSeguro: string; }) => item.tipoSeguro === 'MAPFRE');
         if(this.mapfre[0] !== undefined ){
           this.arrCompany = this.mapfre[0].tipoSeguro;        
           this.arrcantcomp = this.mapfre.length;        
           this.pieChartLabels24.push(this.arrCompany);
           this.pieChartData24.push(this.arrcantcomp);
         }
-        this.sanitas = this.data.filter((item: { tipoSeguro: string; }) => item.tipoSeguro === 'SANITAS');
+        // this.sanitas = this.data.filter((item: { tipoSeguro: string; }) => item.tipoSeguro === 'SANITAS');
         if(this.sanitas[0] !== undefined ){
           this.arrCompany = this.sanitas[0].tipoSeguro;        
           this.arrcantcomp = this.sanitas.length;        
           this.pieChartLabels24.push(this.arrCompany);
           this.pieChartData24.push(this.arrcantcomp);
         }
-        this.interseguro = this.data.filter((item: { tipoSeguro: string; }) => item.tipoSeguro === 'INTERSEGURO');
+        // this.interseguro = this.data.filter((item: { tipoSeguro: string; }) => item.tipoSeguro === 'INTERSEGURO');
         if(this.interseguro[0] !== undefined ){
           this.arrCompany = this.interseguro[0].tipoSeguro;        
           this.arrcantcomp = this.interseguro.length;        
           this.pieChartLabels24.push(this.arrCompany);
           this.pieChartData24.push(this.arrcantcomp);
         }
-        this.otrocomp = this.data.filter((item: { tipoSeguro: string; }) => item.tipoSeguro === 'OTROS');
+        // this.otrocomp = this.data.filter((item: { tipoSeguro: string; }) => item.tipoSeguro === 'OTROS');
         // console.log(76,this.otrocomp);
         if (this.otrocomp[0] !== undefined ){
           this.arrCompany = this.otrocomp[0].tipoSeguro;        
