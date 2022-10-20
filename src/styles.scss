@@ -3,10 +3,10 @@
 @import "./main.css";
 
 .app-theme-white .app-sidebar .app-sidebar-content {
-    background: #343a40;
+    background: RGB(16,0,76);
 }
 .app-header__logo {
-    background: #343a40 !important;
+    background: RGB(16,0,76) !important;
 }
 .v-sidebar-menu .vsm-header {
     color: rgba(255, 255, 255, 0.7);
@@ -103,12 +103,15 @@
     right: 1em;
     bottom: 0;
 }
-
+.app-header .logo-mobile {
+    display: none;
+    // order: 2;
+}
 @media (max-width: 991.98px) {
     .app-theme-white .app-sidebar .app-header__logo,
     .app-theme-white .app-footer .app-footer__inner,
     .app-theme-white .app-header {
-        background-color: #343a40;
+        background-color: RGB(16,0,76);
     }
 
     .app-header .logo-mobile {

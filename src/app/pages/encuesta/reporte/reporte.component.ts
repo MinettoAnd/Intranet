@@ -380,6 +380,7 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
       })
       const hoy =  new Date();
       const mesActual = hoy.getMonth() + 1;
+      this.ngperiodo = moment(hoy).format("YYYY-MM-DD");
       const data = {
         periodo: this.ngperiodo,
         onSelect: 1,
@@ -1570,7 +1571,7 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
   arrconvenio = [];
   arrcantco = 0;
   sumconvenio = 0;
-  getConvenio(data) {
+getConvenio(data) {
     this.pieChartLabels23 = [];
     this.pieChartData23 = [];
     let dato = 0;
@@ -2101,7 +2102,7 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
 
         
       })
-  }
+}
   rimac = [];
   pacifico = [];
   positiva = [];
@@ -2695,7 +2696,8 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
     this.formularioService.getFormulario().subscribe(
       (res: any) => {
         this.data = res.body;
-        if(data.item === 0){
+        if(data.sede === 0){
+            
             if(data.onSelect < 3 && data.periodo !== null){    
                 this.data.map((item: { SA_admision: any; registro_fecha: string;}) => {
                     if (moment(item.registro_fecha).format('YYYY-MM-DD') === data.periodo){
@@ -3437,6 +3439,7 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
                 
                 this.totalTecnica = this._TECmuybueno.length + this._TECbuenoo.length + this._TECregular.length + this._TECmaloo.length + this._TECmuymalo.length + this._TECna.length;
             }else if(data.onSelect === '7' && data.fecha_inicio !== null && data.fecha_fin !== null){
+                
                 this.data.map((item: { SA_admision: any; registro_fecha: string;}) => {
                     if (moment(item.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(item.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin){
                         let dato = item.SA_admision;
@@ -6763,7 +6766,7 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
     this.formularioService.getFormulario().subscribe(
       (res: any) => {
         this.data = res.body.length > 0 ? res.body : [];
-
+console.log(222, this.data);
         if(data.sede === 0){
 
           if(data.onSelect < 3 && data.periodo !== null){
@@ -7271,6 +7274,7 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
 
 
         // this.recomen1 = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '10');
+        
         if (this.recomen1[0] !== undefined ){
           this.cantrecom = this.recomen1.length;
           // console.log(55, this.recomen1)
@@ -7375,23 +7379,39 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
       })
   }
   getporcentaje(dato: number) {
-    return ((dato * 100) / this.listencuesta).toFixed(2) + '%';
+    // console.log(99, dato);
+    // return ((dato * 100) / this.listencuesta).toFixed(2) + '%';
+    return (!Number.isFinite((dato * 100) / this.listencuesta) ? (0).toFixed(2) : ((dato * 100) / this.listencuesta).toFixed(2) + '%');
   }
   getporcentajetarjeta(dato: number) {
-    return ((dato * 100) / this.sumtarjeta).toFixed(2) + '%';
+    console.log(100, dato);
+    // return ((dato * 100) / this.sumtarjeta).toFixed(2) + '%';
+    return (!Number.isFinite((dato * 100) / this.sumtarjeta) ? (0).toFixed(2) : ((dato * 100) / this.sumtarjeta).toFixed(2) + '%');
   }
   getporcentajeconvenio(dato: number) {
-    return ((dato * 100) / this.sumconvenio).toFixed(2) + '%';
+    // console.log(101, dato);
+    // return ((dato * 100) / this.sumconvenio).toFixed(2) + '%';
+    return (!Number.isFinite((dato * 100) / this.sumconvenio) ? (0).toFixed(2) : ((dato * 100) / this.sumconvenio).toFixed(2) + '%');
   }
   getporcentajeCompany(dato: number) {
-    return ((dato * 100) / this.companyTotals).toFixed(2) + '%';
+    // console.log(102, dato);
+    // return ((dato * 100) / this.companyTotals).toFixed(2) + '%';
+    return (!Number.isFinite((dato * 100) / this.companyTotals) ? (0).toFixed(2) : ((dato * 100) / this.companyTotals).toFixed(2) + '%');
   }
   getporcentajeescala(dato: number) {
-    return ((dato * 100) / this.recomendacionTotal).toFixed(2) + '%';
+    // console.log(103, dato);
+    // return ((dato * 100) / this.recomendacionTotal).toFixed(2) + '%';
+    return (!Number.isFinite((dato * 100) / this.recomendacionTotal) ? (0).toFixed(2) : ((dato * 100) / this.recomendacionTotal).toFixed(2) + '%');
   }
   getporcentajesati(dato: number) {
-    
-    return ((dato * 100) / this.listencuesta).toFixed(2) + '%';
+    // if (dato === undefined){
+    //     dato = 0;
+    // }
+    // if (!Number.isFinite((dato * 100) / this.listencuesta)){
+    //     console.log(104, (dato * 100) / 0);
+    //     return (0).toFixed(2) + '%';
+    // }
+    return (!Number.isFinite((dato * 100) / this.listencuesta) ? (0).toFixed(2) : ((dato * 100) / this.listencuesta).toFixed(2) + '%');
   }
 
   onChange(event: { target: { value: string; }; }) {
