@@ -108,7 +108,7 @@ maxDate: any;
   public arrmoda: any = [];
   public arrsucursal: any = [];
   public cantsucursal: any = [];
-  public recomen: any = [];
+  public recomen1: any = [];
   public recomen2: any = [];
   public recomen3: any = [];
   public recomen4: any = [];
@@ -380,6 +380,7 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
       })
       const hoy =  new Date();
       const mesActual = hoy.getMonth() + 1;
+      this.ngperiodo = moment(hoy).format("YYYY-MM-DD");
       const data = {
         periodo: this.ngperiodo,
         onSelect: 1,
@@ -1570,7 +1571,7 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
   arrconvenio = [];
   arrcantco = 0;
   sumconvenio = 0;
-  getConvenio(data) {
+getConvenio(data) {
     this.pieChartLabels23 = [];
     this.pieChartData23 = [];
     let dato = 0;
@@ -2101,7 +2102,7 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
 
         
       })
-  }
+}
   rimac = [];
   pacifico = [];
   positiva = [];
@@ -2695,235 +2696,4045 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
     this.formularioService.getFormulario().subscribe(
       (res: any) => {
         this.data = res.body;
-        this.data.map((item: { SA_admision: any; }) => {
-          let dato = item.SA_admision;
-          switch (dato) {
-            case '1': sumMuymalo += dato; break;
-            case '2': sumMalo += dato; break;
-            case '3': sumRegular += dato; break;
-            case '4': sumBueno += dato; break;
-            case '5': sumMuybueno += dato; break;
-            default: sumNa += dato;
-          }
-          this.muybueno = sumMuybueno;
-          this.buenoo = sumBueno;
-          this.regular = sumRegular;
-          this.maloo = sumMalo;
-          this.muymalo = sumMuymalo;
-          this.na = sumNa;
-        });
-        this.totalAdmision = this.muybueno.length + this.buenoo.length + this.regular.length + this.maloo.length + this.muymalo.length + this.na.length;
-        this.data.map((item: { SA_atencionCliente: any; }) => {
-          let dato = item.SA_atencionCliente;
-          switch (dato) {
-            case '1': ateMuymalo += dato; break;
-            case '2': ateMalo += dato; break;
-            case '3': ateRegular += dato; break;
-            case '4': ateBueno += dato; break;
-            case '5': ateMuybueno += dato; break;
-            default: ateNa += dato;
-          }
-          this._ACmuybueno = ateMuybueno;
-          this._ACbuenoo = ateBueno;
-          this._ACregular = ateRegular;
-          this._ACmaloo = ateMalo;
-          this._ACmuymalo = ateMuymalo;
-          this._ACna = ateNa;
+        if(data.sede === 0){
+            
+            if(data.onSelect < 3 && data.periodo !== null){    
+                this.data.map((item: { SA_admision: any; registro_fecha: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') === data.periodo){
+                        let dato = item.SA_admision;
+                        switch (dato) {
+                            case '1': sumMuymalo += dato; break;
+                            case '2': sumMalo += dato; break;
+                            case '3': sumRegular += dato; break;
+                            case '4': sumBueno += dato; break;
+                            case '5': sumMuybueno += dato; break;
+                            default: sumNa += dato;
+                        }
+                        this.muybueno = sumMuybueno;
+                        this.buenoo = sumBueno;
+                        this.regular = sumRegular;
+                        this.maloo = sumMalo;
+                        this.muymalo = sumMuymalo;
+                        this.na = sumNa;
+                    }
+                });
 
-        });
-        this.totalAtencionCliente = this._ACmuybueno.length + this._ACbuenoo.length + this._ACregular.length + this._ACmaloo.length + this._ACmuymalo.length + this._ACna.length;
-        this.data.map((item: { SA_convenios: any; }) => {
-          let dato = item.SA_convenios;
-          switch (dato) {
-            case '1': coMuymalo += dato; break;
-            case '2': coMalo += dato; break;
-            case '3': coRegular += dato; break;
-            case '4': coBueno += dato; break;
-            case '5': coMuybueno += dato; break;
-            default: coNa += dato;
-          }
-          this._COmuybueno = coMuybueno;
-          this._CObuenoo = coBueno;
-          this._COregular = coRegular;
-          this._COmaloo = coMalo;
-          this._COmuymalo = coMuymalo;
-          this._COna = coNa;
+                this.totalAdmision = this.muybueno.length + this.buenoo.length + this.regular.length + this.maloo.length + this.muymalo.length + this.na.length;
 
-        });
-        this.totalConvenios = this._COmuybueno.length + this._CObuenoo.length + this._COregular.length + this._COmaloo.length + this._COmuymalo.length + this._COna.length;
-        this.data.map((item: { SA_farmacia: any; }) => {
-          let dato = item.SA_farmacia;
-          switch (dato) {
-            case '1': faMuymalo += dato; break;
-            case '2': faMalo += dato; break;
-            case '3': faRegular += dato; break;
-            case '4': faBueno += dato; break;
-            case '5': faMuybueno += dato; break;
-            default: faNa += dato;
-          }
-          this._FAmuybueno = faMuybueno;
-          this._FAbuenoo = faBueno;
-          this._FAregular = faRegular;
-          this._FAmaloo = faMalo;
-          this._FAmuymalo = faMuymalo;
-          this._FAna = faNa;
+                this.data.map((item: { SA_atencionCliente: any; registro_fecha: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') === data.periodo){
+                        let dato = item.SA_atencionCliente;
+                        switch (dato) {
+                            case '1': ateMuymalo += dato; break;
+                            case '2': ateMalo += dato; break;
+                            case '3': ateRegular += dato; break;
+                            case '4': ateBueno += dato; break;
+                            case '5': ateMuybueno += dato; break;
+                            default: ateNa += dato;
+                        }
+                        this._ACmuybueno = ateMuybueno;
+                        this._ACbuenoo = ateBueno;
+                        this._ACregular = ateRegular;
+                        this._ACmaloo = ateMalo;
+                        this._ACmuymalo = ateMuymalo;
+                        this._ACna = ateNa;
+                    }
+                });
+                this.totalAtencionCliente = this._ACmuybueno.length + this._ACbuenoo.length + this._ACregular.length + this._ACmaloo.length + this._ACmuymalo.length + this._ACna.length;
+                this.data.map((item: { SA_convenios: any; registro_fecha: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') === data.periodo){
+                        let dato = item.SA_convenios;
+                        switch (dato) {
+                            case '1': coMuymalo += dato; break;
+                            case '2': coMalo += dato; break;
+                            case '3': coRegular += dato; break;
+                            case '4': coBueno += dato; break;
+                            case '5': coMuybueno += dato; break;
+                            default: coNa += dato;
+                        }
+                        this._COmuybueno = coMuybueno;
+                        this._CObuenoo = coBueno;
+                        this._COregular = coRegular;
+                        this._COmaloo = coMalo;
+                        this._COmuymalo = coMuymalo;
+                        this._COna = coNa;
+                    }
+                });
+                this.totalConvenios = this._COmuybueno.length + this._CObuenoo.length + this._COregular.length + this._COmaloo.length + this._COmuymalo.length + this._COna.length;
+                this.data.map((item: { SA_farmacia: any; registro_fecha: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') === data.periodo){
+                        let dato = item.SA_farmacia;
+                        switch (dato) {
+                            case '1': faMuymalo += dato; break;
+                            case '2': faMalo += dato; break;
+                            case '3': faRegular += dato; break;
+                            case '4': faBueno += dato; break;
+                            case '5': faMuybueno += dato; break;
+                            default: faNa += dato;
+                        }
+                        this._FAmuybueno = faMuybueno;
+                        this._FAbuenoo = faBueno;
+                        this._FAregular = faRegular;
+                        this._FAmaloo = faMalo;
+                        this._FAmuymalo = faMuymalo;
+                        this._FAna = faNa;
+                    }
+                });
+                this.totalFarmacia = this._FAmuybueno.length + this._FAbuenoo.length + this._FAregular.length + this._FAmaloo.length + this._FAmuymalo.length + this._FAna.length;
+                this.data.map((item: { SA_imagenes: any; registro_fecha: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') === data.periodo){
+                        let dato = item.SA_imagenes;
+                        switch (dato) {
+                            case '1': imMuymalo += dato; break;
+                            case '2': imMalo += dato; break;
+                            case '3': imRegular += dato; break;
+                            case '4': imBueno += dato; break;
+                            case '5': imMuybueno += dato; break;
+                            default: imNa += dato;
+                        }
+                        this._IMmuybueno = imMuybueno;
+                        this._IMbuenoo = imBueno;
+                        this._IMregular = imRegular;
+                        this._IMmaloo = imMalo;
+                        this._IMmuymalo = imMuymalo;
+                        this._IMna = imNa;
+                    }
+                });
+                this.totalImagenes = this._IMmuybueno.length + this._IMbuenoo.length + this._IMregular.length + this._IMmaloo.length + this._IMmuymalo.length + this._IMna.length;
+                this.data.map((item: { SA_laboratorio: any; registro_fecha: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') === data.periodo){
+                        let dato = item.SA_laboratorio;
+                        switch (dato) {
+                            case '1': laMuymalo += dato; break;
+                            case '2': laMalo += dato; break;
+                            case '3': laRegular += dato; break;
+                            case '4': laBueno += dato; break;
+                            case '5': laMuybueno += dato; break;
+                            default: laNa += dato;
+                        }
+                        this._LAmuybueno = laMuybueno;
+                        this._LAbuenoo = laBueno;
+                        this._LAregular = laRegular;
+                        this._LAmaloo = laMalo;
+                        this._LAmuymalo = laMuymalo;
+                        this._LAna = laNa;
+                    }
+                });
+                this.totalLaboratorio = this._LAmuybueno.length + this._LAbuenoo.length + this._LAregular.length + this._LAmaloo.length + this._LAmuymalo.length + this._LAna.length;
+                this.data.map((item: { SI_comodidad: any; registro_fecha: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') === data.periodo){
+                        let dato = item.SI_comodidad;
+                        switch (dato) {
+                            case '1': comMuymalo += dato; break;
+                            case '2': comMalo += dato; break;
+                            case '3': comRegular += dato; break;
+                            case '4': comBueno += dato; break;
+                            case '5': comMuybueno += dato; break;
+                            default: comNa += dato;
+                        }
+                        this._COMmuybueno = comMuybueno;
+                        this._COMbuenoo = comBueno;
+                        this._COMregular = comRegular;
+                        this._COMmaloo = comMalo;
+                        this._COMmuymalo = comMuymalo;
+                        this._COMna = comNa;
+                    }
+                });
+                this.totalComodidad = this._COMmuybueno.length + this._COMbuenoo.length + this._COMregular.length + this._COMmaloo.length + this._COMmuymalo.length + this._COMna.length;
+                this.data.map((item: { SI_limpieza: any; registro_fecha: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') === data.periodo){
+                        let dato = item.SI_limpieza;
+                        switch (dato) {
+                            case '1': liMuymalo += dato; break;
+                            case '2': liMalo += dato; break;
+                            case '3': liRegular += dato; break;
+                            case '4': liBueno += dato; break;
+                            case '5': liMuybueno += dato; break;
+                            default: liNa += dato;
+                        }
+                        this._LIMmuybueno = liMuybueno;
+                        this._LIMbuenoo = liBueno;
+                        this._LIMregular = liRegular;
+                        this._LIMmaloo = liMalo;
+                        this._LIMmuymalo = liMuymalo;
+                        this._LIMna = liNa;
+                    }
+                });
+                this.totalAseoLimpieza = this._LIMmuybueno.length + this._LIMbuenoo.length + this._LIMregular.length + this._LIMmaloo.length + this._LIMmuymalo.length + this._LIMna.length;
+                this.data.map((item: { SI_modernidad: any; registro_fecha: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') === data.periodo){
+                        let dato = item.SI_modernidad;
+                        switch (dato) {
+                            case '1': moMuymalo += dato; break;
+                            case '2': moMalo += dato; break;
+                            case '3': moRegular += dato; break;
+                            case '4': moBueno += dato; break;
+                            case '5': moMuybueno += dato; break;
+                            default: moNa += dato;
+                        }
+                        this._MOmuybueno = moMuybueno;
+                        this._MObuenoo = moBueno;
+                        this._MOregular = moRegular;
+                        this._MOmaloo = moMalo;
+                        this._MOmuymalo = moMuymalo;
+                        this._MOna = moNa;
+                    }
+                });
+                this.totalModernidad = this._MOmuybueno.length + this._MObuenoo.length + this._MOregular.length + this._MOmaloo.length + this._MOmuymalo.length + this._MOna.length;
 
-        });
-        this.totalFarmacia = this._FAmuybueno.length + this._FAbuenoo.length + this._FAregular.length + this._FAmaloo.length + this._FAmuymalo.length + this._FAna.length;
-        this.data.map((item: { SA_imagenes: any; }) => {
-          let dato = item.SA_imagenes;
-          switch (dato) {
-            case '1': imMuymalo += dato; break;
-            case '2': imMalo += dato; break;
-            case '3': imRegular += dato; break;
-            case '4': imBueno += dato; break;
-            case '5': imMuybueno += dato; break;
-            default: imNa += dato;
-          }
-          this._IMmuybueno = imMuybueno;
-          this._IMbuenoo = imBueno;
-          this._IMregular = imRegular;
-          this._IMmaloo = imMalo;
-          this._IMmuymalo = imMuymalo;
-          this._IMna = imNa;
+                this.data.map((item: { SS_doctor: any; registro_fecha: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') === data.periodo){
+                        let dato = item.SS_doctor;
+                        switch (dato) {
+                            case '1': docMuymalo += dato; break;
+                            case '2': docMalo += dato; break;
+                            case '3': docRegular += dato; break;
+                            case '4': docBueno += dato; break;
+                            case '5': docMuybueno += dato; break;
+                            default: docNa += dato;
+                        }
+                        this._DOCmuybueno = docMuybueno;
+                        this._DOCbuenoo = docBueno;
+                        this._DOCregular = docRegular;
+                        this._DOCmaloo = docMalo;
+                        this._DOCmuymalo = docMuymalo;
+                        this._DOCna = docNa;
+                    }
+                });
+                this.totalMedico = this._DOCmuybueno.length + this._DOCbuenoo.length + this._DOCregular.length + this._DOCmaloo.length + this._DOCmuymalo.length + this._DOCna.length;
 
-        });
-        this.totalImagenes = this._IMmuybueno.length + this._IMbuenoo.length + this._IMregular.length + this._IMmaloo.length + this._IMmuymalo.length + this._IMna.length;
-        this.data.map((item: { SA_laboratorio: any; }) => {
-          let dato = item.SA_laboratorio;
-          switch (dato) {
-            case '1': laMuymalo += dato; break;
-            case '2': laMalo += dato; break;
-            case '3': laRegular += dato; break;
-            case '4': laBueno += dato; break;
-            case '5': laMuybueno += dato; break;
-            default: laNa += dato;
-          }
-          this._LAmuybueno = laMuybueno;
-          this._LAbuenoo = laBueno;
-          this._LAregular = laRegular;
-          this._LAmaloo = laMalo;
-          this._LAmuymalo = laMuymalo;
-          this._LAna = laNa;
+                this.data.map((item: { SS_enfermera: any; registro_fecha: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') === data.periodo){
+                        let dato = item.SS_enfermera;
+                        switch (dato) {
+                            case '1': enMuymalo += dato; break;
+                            case '2': enMalo += dato; break;
+                            case '3': enRegular += dato; break;
+                            case '4': enBueno += dato; break;
+                            case '5': enMuybueno += dato; break;
+                            default: enNa += dato;
+                        }
+                        this._ENmuybueno = enMuybueno;
+                        this._ENbuenoo = enBueno;
+                        this._ENregular = enRegular;
+                        this._ENmaloo = enMalo;
+                        this._ENmuymalo = enMuymalo;
+                        this._ENna = enNa;
+                    }
+                });
+                this.totalEnfermera = this._ENmuybueno.length + this._ENbuenoo.length + this._ENregular.length + this._ENmaloo.length + this._ENmuymalo.length + this._ENna.length;
+                this.data.map((item: { SS_tecnica: any; registro_fecha: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') === data.periodo){
+                        let dato = item.SS_tecnica;
+                        switch (dato) {
+                            case '1': tecMuymalo += dato; break;
+                            case '2': tecMalo += dato; break;
+                            case '3': tecRegular += dato; break;
+                            case '4': tecBueno += dato; break;
+                            case '5': tecMuybueno += dato; break;
+                            default: tecNa += dato;
+                        }
+                        this._TECmuybueno = tecMuybueno;
+                        this._TECbuenoo = tecBueno;
+                        this._TECregular = tecRegular;
+                        this._TECmaloo = tecMalo;
+                        this._TECmuymalo = tecMuymalo;
+                        this._TECna = tecNa;
+                    }
+                });
+                
+                this.totalTecnica = this._TECmuybueno.length + this._TECbuenoo.length + this._TECregular.length + this._TECmaloo.length + this._TECmuymalo.length + this._TECna.length;
 
-        });
-        this.totalLaboratorio = this._LAmuybueno.length + this._LAbuenoo.length + this._LAregular.length + this._LAmaloo.length + this._LAmuymalo.length + this._LAna.length;
-        this.data.map((item: { SI_comodidad: any; }) => {
-          let dato = item.SI_comodidad;
-          switch (dato) {
-            case '1': comMuymalo += dato; break;
-            case '2': comMalo += dato; break;
-            case '3': comRegular += dato; break;
-            case '4': comBueno += dato; break;
-            case '5': comMuybueno += dato; break;
-            default: comNa += dato;
-          }
-          this._COMmuybueno = comMuybueno;
-          this._COMbuenoo = comBueno;
-          this._COMregular = comRegular;
-          this._COMmaloo = comMalo;
-          this._COMmuymalo = comMuymalo;
-          this._COMna = comNa;
+            }else if((data.onSelect === '3' || data.onSelect === '4') && data.periodo !== null){
 
-        });
-        this.totalComodidad = this._COMmuybueno.length + this._COMbuenoo.length + this._COMregular.length + this._COMmaloo.length + this._COMmuymalo.length + this._COMna.length;
-        this.data.map((item: { SI_limpieza: any; }) => {
-          let dato = item.SI_limpieza;
-          switch (dato) {
-            case '1': liMuymalo += dato; break;
-            case '2': liMalo += dato; break;
-            case '3': liRegular += dato; break;
-            case '4': liBueno += dato; break;
-            case '5': liMuybueno += dato; break;
-            default: liNa += dato;
-          }
-          this._LIMmuybueno = liMuybueno;
-          this._LIMbuenoo = liBueno;
-          this._LIMregular = liRegular;
-          this._LIMmaloo = liMalo;
-          this._LIMmuymalo = liMuymalo;
-          this._LIMna = liNa;
+                this.data.map((item: { SA_admision: any; registro_fecha: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(item.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')){
+                        let dato = item.SA_admision;
+                        switch (dato) {
+                            case '1': sumMuymalo += dato; break;
+                            case '2': sumMalo += dato; break;
+                            case '3': sumRegular += dato; break;
+                            case '4': sumBueno += dato; break;
+                            case '5': sumMuybueno += dato; break;
+                            default: sumNa += dato;
+                        }
+                        this.muybueno = sumMuybueno;
+                        this.buenoo = sumBueno;
+                        this.regular = sumRegular;
+                        this.maloo = sumMalo;
+                        this.muymalo = sumMuymalo;
+                        this.na = sumNa;
+                    }
+                });
 
-        });
-        this.totalAseoLimpieza = this._LIMmuybueno.length + this._LIMbuenoo.length + this._LIMregular.length + this._LIMmaloo.length + this._LIMmuymalo.length + this._LIMna.length;
-        this.data.map((item: { SI_modernidad: any; }) => {
-          let dato = item.SI_modernidad;
-          switch (dato) {
-            case '1': moMuymalo += dato; break;
-            case '2': moMalo += dato; break;
-            case '3': moRegular += dato; break;
-            case '4': moBueno += dato; break;
-            case '5': moMuybueno += dato; break;
-            default: moNa += dato;
-          }
-          this._MOmuybueno = moMuybueno;
-          this._MObuenoo = moBueno;
-          this._MOregular = moRegular;
-          this._MOmaloo = moMalo;
-          this._MOmuymalo = moMuymalo;
-          this._MOna = moNa;
+                this.totalAdmision = this.muybueno.length + this.buenoo.length + this.regular.length + this.maloo.length + this.muymalo.length + this.na.length;
 
-        });
-        this.totalModernidad = this._MOmuybueno.length + this._MObuenoo.length + this._MOregular.length + this._MOmaloo.length + this._MOmuymalo.length + this._MOna.length;
+                this.data.map((item: { SA_atencionCliente: any; registro_fecha: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(item.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')){
+                        let dato = item.SA_atencionCliente;
+                        switch (dato) {
+                            case '1': ateMuymalo += dato; break;
+                            case '2': ateMalo += dato; break;
+                            case '3': ateRegular += dato; break;
+                            case '4': ateBueno += dato; break;
+                            case '5': ateMuybueno += dato; break;
+                            default: ateNa += dato;
+                        }
+                        this._ACmuybueno = ateMuybueno;
+                        this._ACbuenoo = ateBueno;
+                        this._ACregular = ateRegular;
+                        this._ACmaloo = ateMalo;
+                        this._ACmuymalo = ateMuymalo;
+                        this._ACna = ateNa;
+                    }
+                });
+                this.totalAtencionCliente = this._ACmuybueno.length + this._ACbuenoo.length + this._ACregular.length + this._ACmaloo.length + this._ACmuymalo.length + this._ACna.length;
+                this.data.map((item: { SA_convenios: any; registro_fecha: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(item.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')){
+                        let dato = item.SA_convenios;
+                        switch (dato) {
+                            case '1': coMuymalo += dato; break;
+                            case '2': coMalo += dato; break;
+                            case '3': coRegular += dato; break;
+                            case '4': coBueno += dato; break;
+                            case '5': coMuybueno += dato; break;
+                            default: coNa += dato;
+                        }
+                        this._COmuybueno = coMuybueno;
+                        this._CObuenoo = coBueno;
+                        this._COregular = coRegular;
+                        this._COmaloo = coMalo;
+                        this._COmuymalo = coMuymalo;
+                        this._COna = coNa;
+                    }
+                });
+                this.totalConvenios = this._COmuybueno.length + this._CObuenoo.length + this._COregular.length + this._COmaloo.length + this._COmuymalo.length + this._COna.length;
+                this.data.map((item: { SA_farmacia: any; registro_fecha: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(item.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')){
+                        let dato = item.SA_farmacia;
+                        switch (dato) {
+                            case '1': faMuymalo += dato; break;
+                            case '2': faMalo += dato; break;
+                            case '3': faRegular += dato; break;
+                            case '4': faBueno += dato; break;
+                            case '5': faMuybueno += dato; break;
+                            default: faNa += dato;
+                        }
+                        this._FAmuybueno = faMuybueno;
+                        this._FAbuenoo = faBueno;
+                        this._FAregular = faRegular;
+                        this._FAmaloo = faMalo;
+                        this._FAmuymalo = faMuymalo;
+                        this._FAna = faNa;
+                    }
+                });
+                this.totalFarmacia = this._FAmuybueno.length + this._FAbuenoo.length + this._FAregular.length + this._FAmaloo.length + this._FAmuymalo.length + this._FAna.length;
+                this.data.map((item: { SA_imagenes: any; registro_fecha: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(item.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')){
+                        let dato = item.SA_imagenes;
+                        switch (dato) {
+                            case '1': imMuymalo += dato; break;
+                            case '2': imMalo += dato; break;
+                            case '3': imRegular += dato; break;
+                            case '4': imBueno += dato; break;
+                            case '5': imMuybueno += dato; break;
+                            default: imNa += dato;
+                        }
+                        this._IMmuybueno = imMuybueno;
+                        this._IMbuenoo = imBueno;
+                        this._IMregular = imRegular;
+                        this._IMmaloo = imMalo;
+                        this._IMmuymalo = imMuymalo;
+                        this._IMna = imNa;
+                    }
+                });
+                this.totalImagenes = this._IMmuybueno.length + this._IMbuenoo.length + this._IMregular.length + this._IMmaloo.length + this._IMmuymalo.length + this._IMna.length;
+                this.data.map((item: { SA_laboratorio: any; registro_fecha: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(item.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')){
+                        let dato = item.SA_laboratorio;
+                        switch (dato) {
+                            case '1': laMuymalo += dato; break;
+                            case '2': laMalo += dato; break;
+                            case '3': laRegular += dato; break;
+                            case '4': laBueno += dato; break;
+                            case '5': laMuybueno += dato; break;
+                            default: laNa += dato;
+                        }
+                        this._LAmuybueno = laMuybueno;
+                        this._LAbuenoo = laBueno;
+                        this._LAregular = laRegular;
+                        this._LAmaloo = laMalo;
+                        this._LAmuymalo = laMuymalo;
+                        this._LAna = laNa;
+                    }
+                });
+                this.totalLaboratorio = this._LAmuybueno.length + this._LAbuenoo.length + this._LAregular.length + this._LAmaloo.length + this._LAmuymalo.length + this._LAna.length;
+                this.data.map((item: { SI_comodidad: any; registro_fecha: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(item.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')){
+                        let dato = item.SI_comodidad;
+                        switch (dato) {
+                            case '1': comMuymalo += dato; break;
+                            case '2': comMalo += dato; break;
+                            case '3': comRegular += dato; break;
+                            case '4': comBueno += dato; break;
+                            case '5': comMuybueno += dato; break;
+                            default: comNa += dato;
+                        }
+                        this._COMmuybueno = comMuybueno;
+                        this._COMbuenoo = comBueno;
+                        this._COMregular = comRegular;
+                        this._COMmaloo = comMalo;
+                        this._COMmuymalo = comMuymalo;
+                        this._COMna = comNa;
+                    }
+                });
+                this.totalComodidad = this._COMmuybueno.length + this._COMbuenoo.length + this._COMregular.length + this._COMmaloo.length + this._COMmuymalo.length + this._COMna.length;
+                this.data.map((item: { SI_limpieza: any; registro_fecha: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(item.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')){
+                        let dato = item.SI_limpieza;
+                        switch (dato) {
+                            case '1': liMuymalo += dato; break;
+                            case '2': liMalo += dato; break;
+                            case '3': liRegular += dato; break;
+                            case '4': liBueno += dato; break;
+                            case '5': liMuybueno += dato; break;
+                            default: liNa += dato;
+                        }
+                        this._LIMmuybueno = liMuybueno;
+                        this._LIMbuenoo = liBueno;
+                        this._LIMregular = liRegular;
+                        this._LIMmaloo = liMalo;
+                        this._LIMmuymalo = liMuymalo;
+                        this._LIMna = liNa;
+                    }
+                });
+                this.totalAseoLimpieza = this._LIMmuybueno.length + this._LIMbuenoo.length + this._LIMregular.length + this._LIMmaloo.length + this._LIMmuymalo.length + this._LIMna.length;
+                this.data.map((item: { SI_modernidad: any; registro_fecha: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(item.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')){
+                        let dato = item.SI_modernidad;
+                        switch (dato) {
+                            case '1': moMuymalo += dato; break;
+                            case '2': moMalo += dato; break;
+                            case '3': moRegular += dato; break;
+                            case '4': moBueno += dato; break;
+                            case '5': moMuybueno += dato; break;
+                            default: moNa += dato;
+                        }
+                        this._MOmuybueno = moMuybueno;
+                        this._MObuenoo = moBueno;
+                        this._MOregular = moRegular;
+                        this._MOmaloo = moMalo;
+                        this._MOmuymalo = moMuymalo;
+                        this._MOna = moNa;
+                    }
+                });
+                this.totalModernidad = this._MOmuybueno.length + this._MObuenoo.length + this._MOregular.length + this._MOmaloo.length + this._MOmuymalo.length + this._MOna.length;
 
-        this.data.map((item: { SS_doctor: any; }) => {
-          let dato = item.SS_doctor;
-          switch (dato) {
-            case '1': docMuymalo += dato; break;
-            case '2': docMalo += dato; break;
-            case '3': docRegular += dato; break;
-            case '4': docBueno += dato; break;
-            case '5': docMuybueno += dato; break;
-            default: docNa += dato;
-          }
-          this._DOCmuybueno = docMuybueno;
-          this._DOCbuenoo = docBueno;
-          this._DOCregular = docRegular;
-          this._DOCmaloo = docMalo;
-          this._DOCmuymalo = docMuymalo;
-          this._DOCna = docNa;
-        });
-        this.totalMedico = this._DOCmuybueno.length + this._DOCbuenoo.length + this._DOCregular.length + this._DOCmaloo.length + this._DOCmuymalo.length + this._DOCna.length;
+                this.data.map((item: { SS_doctor: any; registro_fecha: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(item.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')){
+                        let dato = item.SS_doctor;
+                        switch (dato) {
+                            case '1': docMuymalo += dato; break;
+                            case '2': docMalo += dato; break;
+                            case '3': docRegular += dato; break;
+                            case '4': docBueno += dato; break;
+                            case '5': docMuybueno += dato; break;
+                            default: docNa += dato;
+                        }
+                        this._DOCmuybueno = docMuybueno;
+                        this._DOCbuenoo = docBueno;
+                        this._DOCregular = docRegular;
+                        this._DOCmaloo = docMalo;
+                        this._DOCmuymalo = docMuymalo;
+                        this._DOCna = docNa;
+                    }
+                });
+                this.totalMedico = this._DOCmuybueno.length + this._DOCbuenoo.length + this._DOCregular.length + this._DOCmaloo.length + this._DOCmuymalo.length + this._DOCna.length;
 
-        this.data.map((item: { SS_enfermera: any; }) => {
-          let dato = item.SS_enfermera;
-          switch (dato) {
-            case '1': enMuymalo += dato; break;
-            case '2': enMalo += dato; break;
-            case '3': enRegular += dato; break;
-            case '4': enBueno += dato; break;
-            case '5': enMuybueno += dato; break;
-            default: enNa += dato;
-          }
-          this._ENmuybueno = enMuybueno;
-          this._ENbuenoo = enBueno;
-          this._ENregular = enRegular;
-          this._ENmaloo = enMalo;
-          this._ENmuymalo = enMuymalo;
-          this._ENna = enNa;
-          
-        });
-        this.totalEnfermera = this._ENmuybueno.length + this._ENbuenoo.length + this._ENregular.length + this._ENmaloo.length + this._ENmuymalo.length + this._ENna.length;
-        this.data.map((item: { SS_tecnica: any; }) => {
-          let dato = item.SS_tecnica;
-          switch (dato) {
-            case '1': tecMuymalo += dato; break;
-            case '2': tecMalo += dato; break;
-            case '3': tecRegular += dato; break;
-            case '4': tecBueno += dato; break;
-            case '5': tecMuybueno += dato; break;
-            default: tecNa += dato;
-          }
-          this._TECmuybueno = tecMuybueno;
-          this._TECbuenoo = tecBueno;
-          this._TECregular = tecRegular;
-          this._TECmaloo = tecMalo;
-          this._TECmuymalo = tecMuymalo;
-          this._TECna = tecNa;
-        });
-        
-        this.totalTecnica = this._TECmuybueno.length + this._TECbuenoo.length + this._TECregular.length + this._TECmaloo.length + this._TECmuymalo.length + this._TECna.length;
+                this.data.map((item: { SS_enfermera: any; registro_fecha: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(item.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')){
+                        let dato = item.SS_enfermera;
+                        switch (dato) {
+                            case '1': enMuymalo += dato; break;
+                            case '2': enMalo += dato; break;
+                            case '3': enRegular += dato; break;
+                            case '4': enBueno += dato; break;
+                            case '5': enMuybueno += dato; break;
+                            default: enNa += dato;
+                        }
+                        this._ENmuybueno = enMuybueno;
+                        this._ENbuenoo = enBueno;
+                        this._ENregular = enRegular;
+                        this._ENmaloo = enMalo;
+                        this._ENmuymalo = enMuymalo;
+                        this._ENna = enNa;
+                    }
+                });
+                this.totalEnfermera = this._ENmuybueno.length + this._ENbuenoo.length + this._ENregular.length + this._ENmaloo.length + this._ENmuymalo.length + this._ENna.length;
+                this.data.map((item: { SS_tecnica: any; registro_fecha: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(item.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')){
+                        let dato = item.SS_tecnica;
+                        switch (dato) {
+                            case '1': tecMuymalo += dato; break;
+                            case '2': tecMalo += dato; break;
+                            case '3': tecRegular += dato; break;
+                            case '4': tecBueno += dato; break;
+                            case '5': tecMuybueno += dato; break;
+                            default: tecNa += dato;
+                        }
+                        this._TECmuybueno = tecMuybueno;
+                        this._TECbuenoo = tecBueno;
+                        this._TECregular = tecRegular;
+                        this._TECmaloo = tecMalo;
+                        this._TECmuymalo = tecMuymalo;
+                        this._TECna = tecNa;
+                    }
+                });
+                
+                this.totalTecnica = this._TECmuybueno.length + this._TECbuenoo.length + this._TECregular.length + this._TECmaloo.length + this._TECmuymalo.length + this._TECna.length;
+            }else if((data.onSelect === '5' || data.onSelect === '6') && data.mes !== null){
+                this.data.map((item: { SA_admision: any; registro_fecha: string;}) => {
+                    if (new Date(item.registro_fecha).getMonth() === new Date(data.mes).getMonth()){
+                        let dato = item.SA_admision;
+                        switch (dato) {
+                            case '1': sumMuymalo += dato; break;
+                            case '2': sumMalo += dato; break;
+                            case '3': sumRegular += dato; break;
+                            case '4': sumBueno += dato; break;
+                            case '5': sumMuybueno += dato; break;
+                            default: sumNa += dato;
+                        }
+                        this.muybueno = sumMuybueno;
+                        this.buenoo = sumBueno;
+                        this.regular = sumRegular;
+                        this.maloo = sumMalo;
+                        this.muymalo = sumMuymalo;
+                        this.na = sumNa;
+                    }
+                });
 
+                this.totalAdmision = this.muybueno.length + this.buenoo.length + this.regular.length + this.maloo.length + this.muymalo.length + this.na.length;
+
+                this.data.map((item: { SA_atencionCliente: any; registro_fecha: string;}) => {
+                    if (new Date(item.registro_fecha).getMonth() === new Date(data.mes).getMonth()){
+                        let dato = item.SA_atencionCliente;
+                        switch (dato) {
+                            case '1': ateMuymalo += dato; break;
+                            case '2': ateMalo += dato; break;
+                            case '3': ateRegular += dato; break;
+                            case '4': ateBueno += dato; break;
+                            case '5': ateMuybueno += dato; break;
+                            default: ateNa += dato;
+                        }
+                        this._ACmuybueno = ateMuybueno;
+                        this._ACbuenoo = ateBueno;
+                        this._ACregular = ateRegular;
+                        this._ACmaloo = ateMalo;
+                        this._ACmuymalo = ateMuymalo;
+                        this._ACna = ateNa;
+                    }
+                });
+                this.totalAtencionCliente = this._ACmuybueno.length + this._ACbuenoo.length + this._ACregular.length + this._ACmaloo.length + this._ACmuymalo.length + this._ACna.length;
+                this.data.map((item: { SA_convenios: any; registro_fecha: string;}) => {
+                    if (new Date(item.registro_fecha).getMonth() === new Date(data.mes).getMonth()){
+                        let dato = item.SA_convenios;
+                        switch (dato) {
+                            case '1': coMuymalo += dato; break;
+                            case '2': coMalo += dato; break;
+                            case '3': coRegular += dato; break;
+                            case '4': coBueno += dato; break;
+                            case '5': coMuybueno += dato; break;
+                            default: coNa += dato;
+                        }
+                        this._COmuybueno = coMuybueno;
+                        this._CObuenoo = coBueno;
+                        this._COregular = coRegular;
+                        this._COmaloo = coMalo;
+                        this._COmuymalo = coMuymalo;
+                        this._COna = coNa;
+                    }
+                });
+                this.totalConvenios = this._COmuybueno.length + this._CObuenoo.length + this._COregular.length + this._COmaloo.length + this._COmuymalo.length + this._COna.length;
+                this.data.map((item: { SA_farmacia: any; registro_fecha: string;}) => {
+                    if (new Date(item.registro_fecha).getMonth() === new Date(data.mes).getMonth()){
+                        let dato = item.SA_farmacia;
+                        switch (dato) {
+                            case '1': faMuymalo += dato; break;
+                            case '2': faMalo += dato; break;
+                            case '3': faRegular += dato; break;
+                            case '4': faBueno += dato; break;
+                            case '5': faMuybueno += dato; break;
+                            default: faNa += dato;
+                        }
+                        this._FAmuybueno = faMuybueno;
+                        this._FAbuenoo = faBueno;
+                        this._FAregular = faRegular;
+                        this._FAmaloo = faMalo;
+                        this._FAmuymalo = faMuymalo;
+                        this._FAna = faNa;
+                    }
+                });
+                this.totalFarmacia = this._FAmuybueno.length + this._FAbuenoo.length + this._FAregular.length + this._FAmaloo.length + this._FAmuymalo.length + this._FAna.length;
+                this.data.map((item: { SA_imagenes: any; registro_fecha: string;}) => {
+                    if (new Date(item.registro_fecha).getMonth() === new Date(data.mes).getMonth()){
+                        let dato = item.SA_imagenes;
+                        switch (dato) {
+                            case '1': imMuymalo += dato; break;
+                            case '2': imMalo += dato; break;
+                            case '3': imRegular += dato; break;
+                            case '4': imBueno += dato; break;
+                            case '5': imMuybueno += dato; break;
+                            default: imNa += dato;
+                        }
+                        this._IMmuybueno = imMuybueno;
+                        this._IMbuenoo = imBueno;
+                        this._IMregular = imRegular;
+                        this._IMmaloo = imMalo;
+                        this._IMmuymalo = imMuymalo;
+                        this._IMna = imNa;
+                    }
+                });
+                this.totalImagenes = this._IMmuybueno.length + this._IMbuenoo.length + this._IMregular.length + this._IMmaloo.length + this._IMmuymalo.length + this._IMna.length;
+                this.data.map((item: { SA_laboratorio: any; registro_fecha: string;}) => {
+                    if (new Date(item.registro_fecha).getMonth() === new Date(data.mes).getMonth()){
+                        let dato = item.SA_laboratorio;
+                        switch (dato) {
+                            case '1': laMuymalo += dato; break;
+                            case '2': laMalo += dato; break;
+                            case '3': laRegular += dato; break;
+                            case '4': laBueno += dato; break;
+                            case '5': laMuybueno += dato; break;
+                            default: laNa += dato;
+                        }
+                        this._LAmuybueno = laMuybueno;
+                        this._LAbuenoo = laBueno;
+                        this._LAregular = laRegular;
+                        this._LAmaloo = laMalo;
+                        this._LAmuymalo = laMuymalo;
+                        this._LAna = laNa;
+                    }
+                });
+                this.totalLaboratorio = this._LAmuybueno.length + this._LAbuenoo.length + this._LAregular.length + this._LAmaloo.length + this._LAmuymalo.length + this._LAna.length;
+                this.data.map((item: { SI_comodidad: any; registro_fecha: string;}) => {
+                    if (new Date(item.registro_fecha).getMonth() === new Date(data.mes).getMonth()){
+                        let dato = item.SI_comodidad;
+                        switch (dato) {
+                            case '1': comMuymalo += dato; break;
+                            case '2': comMalo += dato; break;
+                            case '3': comRegular += dato; break;
+                            case '4': comBueno += dato; break;
+                            case '5': comMuybueno += dato; break;
+                            default: comNa += dato;
+                        }
+                        this._COMmuybueno = comMuybueno;
+                        this._COMbuenoo = comBueno;
+                        this._COMregular = comRegular;
+                        this._COMmaloo = comMalo;
+                        this._COMmuymalo = comMuymalo;
+                        this._COMna = comNa;
+                    }
+                });
+                this.totalComodidad = this._COMmuybueno.length + this._COMbuenoo.length + this._COMregular.length + this._COMmaloo.length + this._COMmuymalo.length + this._COMna.length;
+                this.data.map((item: { SI_limpieza: any; registro_fecha: string;}) => {
+                    if (new Date(item.registro_fecha).getMonth() === new Date(data.mes).getMonth()){
+                        let dato = item.SI_limpieza;
+                        switch (dato) {
+                            case '1': liMuymalo += dato; break;
+                            case '2': liMalo += dato; break;
+                            case '3': liRegular += dato; break;
+                            case '4': liBueno += dato; break;
+                            case '5': liMuybueno += dato; break;
+                            default: liNa += dato;
+                        }
+                        this._LIMmuybueno = liMuybueno;
+                        this._LIMbuenoo = liBueno;
+                        this._LIMregular = liRegular;
+                        this._LIMmaloo = liMalo;
+                        this._LIMmuymalo = liMuymalo;
+                        this._LIMna = liNa;
+                    }
+                });
+                this.totalAseoLimpieza = this._LIMmuybueno.length + this._LIMbuenoo.length + this._LIMregular.length + this._LIMmaloo.length + this._LIMmuymalo.length + this._LIMna.length;
+                this.data.map((item: { SI_modernidad: any; registro_fecha: string;}) => {
+                    if (new Date(item.registro_fecha).getMonth() === new Date(data.mes).getMonth()){
+                        let dato = item.SI_modernidad;
+                        switch (dato) {
+                            case '1': moMuymalo += dato; break;
+                            case '2': moMalo += dato; break;
+                            case '3': moRegular += dato; break;
+                            case '4': moBueno += dato; break;
+                            case '5': moMuybueno += dato; break;
+                            default: moNa += dato;
+                        }
+                        this._MOmuybueno = moMuybueno;
+                        this._MObuenoo = moBueno;
+                        this._MOregular = moRegular;
+                        this._MOmaloo = moMalo;
+                        this._MOmuymalo = moMuymalo;
+                        this._MOna = moNa;
+                    }
+                });
+                this.totalModernidad = this._MOmuybueno.length + this._MObuenoo.length + this._MOregular.length + this._MOmaloo.length + this._MOmuymalo.length + this._MOna.length;
+
+                this.data.map((item: { SS_doctor: any; registro_fecha: string;}) => {
+                    if (new Date(item.registro_fecha).getMonth() === new Date(data.mes).getMonth()){
+                        let dato = item.SS_doctor;
+                        switch (dato) {
+                            case '1': docMuymalo += dato; break;
+                            case '2': docMalo += dato; break;
+                            case '3': docRegular += dato; break;
+                            case '4': docBueno += dato; break;
+                            case '5': docMuybueno += dato; break;
+                            default: docNa += dato;
+                        }
+                        this._DOCmuybueno = docMuybueno;
+                        this._DOCbuenoo = docBueno;
+                        this._DOCregular = docRegular;
+                        this._DOCmaloo = docMalo;
+                        this._DOCmuymalo = docMuymalo;
+                        this._DOCna = docNa;
+                    }
+                });
+                this.totalMedico = this._DOCmuybueno.length + this._DOCbuenoo.length + this._DOCregular.length + this._DOCmaloo.length + this._DOCmuymalo.length + this._DOCna.length;
+
+                this.data.map((item: { SS_enfermera: any; registro_fecha: string;}) => {
+                    if (new Date(item.registro_fecha).getMonth() === new Date(data.mes).getMonth()){
+                        let dato = item.SS_enfermera;
+                        switch (dato) {
+                            case '1': enMuymalo += dato; break;
+                            case '2': enMalo += dato; break;
+                            case '3': enRegular += dato; break;
+                            case '4': enBueno += dato; break;
+                            case '5': enMuybueno += dato; break;
+                            default: enNa += dato;
+                        }
+                        this._ENmuybueno = enMuybueno;
+                        this._ENbuenoo = enBueno;
+                        this._ENregular = enRegular;
+                        this._ENmaloo = enMalo;
+                        this._ENmuymalo = enMuymalo;
+                        this._ENna = enNa;
+                    }
+                });
+                this.totalEnfermera = this._ENmuybueno.length + this._ENbuenoo.length + this._ENregular.length + this._ENmaloo.length + this._ENmuymalo.length + this._ENna.length;
+                this.data.map((item: { SS_tecnica: any; registro_fecha: string;}) => {
+                    if (new Date(item.registro_fecha).getMonth() === new Date(data.mes).getMonth()){
+                        let dato = item.SS_tecnica;
+                        switch (dato) {
+                            case '1': tecMuymalo += dato; break;
+                            case '2': tecMalo += dato; break;
+                            case '3': tecRegular += dato; break;
+                            case '4': tecBueno += dato; break;
+                            case '5': tecMuybueno += dato; break;
+                            default: tecNa += dato;
+                        }
+                        this._TECmuybueno = tecMuybueno;
+                        this._TECbuenoo = tecBueno;
+                        this._TECregular = tecRegular;
+                        this._TECmaloo = tecMalo;
+                        this._TECmuymalo = tecMuymalo;
+                        this._TECna = tecNa;
+                    }
+                });
+                
+                this.totalTecnica = this._TECmuybueno.length + this._TECbuenoo.length + this._TECregular.length + this._TECmaloo.length + this._TECmuymalo.length + this._TECna.length;
+            }else if(data.onSelect === '7' && data.fecha_inicio !== null && data.fecha_fin !== null){
+                
+                this.data.map((item: { SA_admision: any; registro_fecha: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(item.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin){
+                        let dato = item.SA_admision;
+                        switch (dato) {
+                            case '1': sumMuymalo += dato; break;
+                            case '2': sumMalo += dato; break;
+                            case '3': sumRegular += dato; break;
+                            case '4': sumBueno += dato; break;
+                            case '5': sumMuybueno += dato; break;
+                            default: sumNa += dato;
+                        }
+                        this.muybueno = sumMuybueno;
+                        this.buenoo = sumBueno;
+                        this.regular = sumRegular;
+                        this.maloo = sumMalo;
+                        this.muymalo = sumMuymalo;
+                        this.na = sumNa;
+                    }
+                });
+
+                this.totalAdmision = this.muybueno.length + this.buenoo.length + this.regular.length + this.maloo.length + this.muymalo.length + this.na.length;
+
+                this.data.map((item: { SA_atencionCliente: any; registro_fecha: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(item.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin){
+                        let dato = item.SA_atencionCliente;
+                        switch (dato) {
+                            case '1': ateMuymalo += dato; break;
+                            case '2': ateMalo += dato; break;
+                            case '3': ateRegular += dato; break;
+                            case '4': ateBueno += dato; break;
+                            case '5': ateMuybueno += dato; break;
+                            default: ateNa += dato;
+                        }
+                        this._ACmuybueno = ateMuybueno;
+                        this._ACbuenoo = ateBueno;
+                        this._ACregular = ateRegular;
+                        this._ACmaloo = ateMalo;
+                        this._ACmuymalo = ateMuymalo;
+                        this._ACna = ateNa;
+                    }
+                });
+                this.totalAtencionCliente = this._ACmuybueno.length + this._ACbuenoo.length + this._ACregular.length + this._ACmaloo.length + this._ACmuymalo.length + this._ACna.length;
+                this.data.map((item: { SA_convenios: any; registro_fecha: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(item.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin){
+                        let dato = item.SA_convenios;
+                        switch (dato) {
+                            case '1': coMuymalo += dato; break;
+                            case '2': coMalo += dato; break;
+                            case '3': coRegular += dato; break;
+                            case '4': coBueno += dato; break;
+                            case '5': coMuybueno += dato; break;
+                            default: coNa += dato;
+                        }
+                        this._COmuybueno = coMuybueno;
+                        this._CObuenoo = coBueno;
+                        this._COregular = coRegular;
+                        this._COmaloo = coMalo;
+                        this._COmuymalo = coMuymalo;
+                        this._COna = coNa;
+                    }
+                });
+                this.totalConvenios = this._COmuybueno.length + this._CObuenoo.length + this._COregular.length + this._COmaloo.length + this._COmuymalo.length + this._COna.length;
+                this.data.map((item: { SA_farmacia: any; registro_fecha: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(item.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin){
+                        let dato = item.SA_farmacia;
+                        switch (dato) {
+                            case '1': faMuymalo += dato; break;
+                            case '2': faMalo += dato; break;
+                            case '3': faRegular += dato; break;
+                            case '4': faBueno += dato; break;
+                            case '5': faMuybueno += dato; break;
+                            default: faNa += dato;
+                        }
+                        this._FAmuybueno = faMuybueno;
+                        this._FAbuenoo = faBueno;
+                        this._FAregular = faRegular;
+                        this._FAmaloo = faMalo;
+                        this._FAmuymalo = faMuymalo;
+                        this._FAna = faNa;
+                    }
+                });
+                this.totalFarmacia = this._FAmuybueno.length + this._FAbuenoo.length + this._FAregular.length + this._FAmaloo.length + this._FAmuymalo.length + this._FAna.length;
+                this.data.map((item: { SA_imagenes: any; registro_fecha: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(item.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin){
+                        let dato = item.SA_imagenes;
+                        switch (dato) {
+                            case '1': imMuymalo += dato; break;
+                            case '2': imMalo += dato; break;
+                            case '3': imRegular += dato; break;
+                            case '4': imBueno += dato; break;
+                            case '5': imMuybueno += dato; break;
+                            default: imNa += dato;
+                        }
+                        this._IMmuybueno = imMuybueno;
+                        this._IMbuenoo = imBueno;
+                        this._IMregular = imRegular;
+                        this._IMmaloo = imMalo;
+                        this._IMmuymalo = imMuymalo;
+                        this._IMna = imNa;
+                    }
+                });
+                this.totalImagenes = this._IMmuybueno.length + this._IMbuenoo.length + this._IMregular.length + this._IMmaloo.length + this._IMmuymalo.length + this._IMna.length;
+                this.data.map((item: { SA_laboratorio: any; registro_fecha: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(item.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin){
+                        let dato = item.SA_laboratorio;
+                        switch (dato) {
+                            case '1': laMuymalo += dato; break;
+                            case '2': laMalo += dato; break;
+                            case '3': laRegular += dato; break;
+                            case '4': laBueno += dato; break;
+                            case '5': laMuybueno += dato; break;
+                            default: laNa += dato;
+                        }
+                        this._LAmuybueno = laMuybueno;
+                        this._LAbuenoo = laBueno;
+                        this._LAregular = laRegular;
+                        this._LAmaloo = laMalo;
+                        this._LAmuymalo = laMuymalo;
+                        this._LAna = laNa;
+                    }
+                });
+                this.totalLaboratorio = this._LAmuybueno.length + this._LAbuenoo.length + this._LAregular.length + this._LAmaloo.length + this._LAmuymalo.length + this._LAna.length;
+                this.data.map((item: { SI_comodidad: any; registro_fecha: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(item.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin){
+                        let dato = item.SI_comodidad;
+                        switch (dato) {
+                            case '1': comMuymalo += dato; break;
+                            case '2': comMalo += dato; break;
+                            case '3': comRegular += dato; break;
+                            case '4': comBueno += dato; break;
+                            case '5': comMuybueno += dato; break;
+                            default: comNa += dato;
+                        }
+                        this._COMmuybueno = comMuybueno;
+                        this._COMbuenoo = comBueno;
+                        this._COMregular = comRegular;
+                        this._COMmaloo = comMalo;
+                        this._COMmuymalo = comMuymalo;
+                        this._COMna = comNa;
+                    }
+                });
+                this.totalComodidad = this._COMmuybueno.length + this._COMbuenoo.length + this._COMregular.length + this._COMmaloo.length + this._COMmuymalo.length + this._COMna.length;
+                this.data.map((item: { SI_limpieza: any; registro_fecha: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(item.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin){
+                        let dato = item.SI_limpieza;
+                        switch (dato) {
+                            case '1': liMuymalo += dato; break;
+                            case '2': liMalo += dato; break;
+                            case '3': liRegular += dato; break;
+                            case '4': liBueno += dato; break;
+                            case '5': liMuybueno += dato; break;
+                            default: liNa += dato;
+                        }
+                        this._LIMmuybueno = liMuybueno;
+                        this._LIMbuenoo = liBueno;
+                        this._LIMregular = liRegular;
+                        this._LIMmaloo = liMalo;
+                        this._LIMmuymalo = liMuymalo;
+                        this._LIMna = liNa;
+                    }
+                });
+                this.totalAseoLimpieza = this._LIMmuybueno.length + this._LIMbuenoo.length + this._LIMregular.length + this._LIMmaloo.length + this._LIMmuymalo.length + this._LIMna.length;
+                this.data.map((item: { SI_modernidad: any; registro_fecha: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(item.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin){
+                        let dato = item.SI_modernidad;
+                        switch (dato) {
+                            case '1': moMuymalo += dato; break;
+                            case '2': moMalo += dato; break;
+                            case '3': moRegular += dato; break;
+                            case '4': moBueno += dato; break;
+                            case '5': moMuybueno += dato; break;
+                            default: moNa += dato;
+                        }
+                        this._MOmuybueno = moMuybueno;
+                        this._MObuenoo = moBueno;
+                        this._MOregular = moRegular;
+                        this._MOmaloo = moMalo;
+                        this._MOmuymalo = moMuymalo;
+                        this._MOna = moNa;
+                    }
+                });
+                this.totalModernidad = this._MOmuybueno.length + this._MObuenoo.length + this._MOregular.length + this._MOmaloo.length + this._MOmuymalo.length + this._MOna.length;
+
+                this.data.map((item: { SS_doctor: any; registro_fecha: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(item.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin){
+                        let dato = item.SS_doctor;
+                        switch (dato) {
+                            case '1': docMuymalo += dato; break;
+                            case '2': docMalo += dato; break;
+                            case '3': docRegular += dato; break;
+                            case '4': docBueno += dato; break;
+                            case '5': docMuybueno += dato; break;
+                            default: docNa += dato;
+                        }
+                        this._DOCmuybueno = docMuybueno;
+                        this._DOCbuenoo = docBueno;
+                        this._DOCregular = docRegular;
+                        this._DOCmaloo = docMalo;
+                        this._DOCmuymalo = docMuymalo;
+                        this._DOCna = docNa;
+                    }
+                });
+                this.totalMedico = this._DOCmuybueno.length + this._DOCbuenoo.length + this._DOCregular.length + this._DOCmaloo.length + this._DOCmuymalo.length + this._DOCna.length;
+
+                this.data.map((item: { SS_enfermera: any; registro_fecha: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(item.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin){
+                        let dato = item.SS_enfermera;
+                        switch (dato) {
+                            case '1': enMuymalo += dato; break;
+                            case '2': enMalo += dato; break;
+                            case '3': enRegular += dato; break;
+                            case '4': enBueno += dato; break;
+                            case '5': enMuybueno += dato; break;
+                            default: enNa += dato;
+                        }
+                        this._ENmuybueno = enMuybueno;
+                        this._ENbuenoo = enBueno;
+                        this._ENregular = enRegular;
+                        this._ENmaloo = enMalo;
+                        this._ENmuymalo = enMuymalo;
+                        this._ENna = enNa;
+                    }
+                });
+                this.totalEnfermera = this._ENmuybueno.length + this._ENbuenoo.length + this._ENregular.length + this._ENmaloo.length + this._ENmuymalo.length + this._ENna.length;
+                this.data.map((item: { SS_tecnica: any; registro_fecha: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(item.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin){
+                        let dato = item.SS_tecnica;
+                        switch (dato) {
+                            case '1': tecMuymalo += dato; break;
+                            case '2': tecMalo += dato; break;
+                            case '3': tecRegular += dato; break;
+                            case '4': tecBueno += dato; break;
+                            case '5': tecMuybueno += dato; break;
+                            default: tecNa += dato;
+                        }
+                        this._TECmuybueno = tecMuybueno;
+                        this._TECbuenoo = tecBueno;
+                        this._TECregular = tecRegular;
+                        this._TECmaloo = tecMalo;
+                        this._TECmuymalo = tecMuymalo;
+                        this._TECna = tecNa;
+                    }
+                });
+                
+                this.totalTecnica = this._TECmuybueno.length + this._TECbuenoo.length + this._TECregular.length + this._TECmaloo.length + this._TECmuymalo.length + this._TECna.length;
+            }
+        } else if(data.sede === 1){
+
+            if(data.onSelect < 3 && data.periodo !== null){  
+
+                this.data.map((item: { SA_admision: any; registro_fecha: string; sucursal: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') === data.periodo && (item.sucursal === 'Lima' || item.sucursal === '0001')){
+                        let dato = item.SA_admision;
+                        switch (dato) {
+                            case '1': sumMuymalo += dato; break;
+                            case '2': sumMalo += dato; break;
+                            case '3': sumRegular += dato; break;
+                            case '4': sumBueno += dato; break;
+                            case '5': sumMuybueno += dato; break;
+                            default: sumNa += dato;
+                        }
+                        this.muybueno = sumMuybueno;
+                        this.buenoo = sumBueno;
+                        this.regular = sumRegular;
+                        this.maloo = sumMalo;
+                        this.muymalo = sumMuymalo;
+                        this.na = sumNa;
+                    }
+                });
+
+                this.totalAdmision = this.muybueno.length + this.buenoo.length + this.regular.length + this.maloo.length + this.muymalo.length + this.na.length;
+
+                this.data.map((item: { SA_atencionCliente: any; registro_fecha: string; sucursal: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') === data.periodo && (item.sucursal === 'Lima' || item.sucursal === '0001')){
+                        let dato = item.SA_atencionCliente;
+                        switch (dato) {
+                            case '1': ateMuymalo += dato; break;
+                            case '2': ateMalo += dato; break;
+                            case '3': ateRegular += dato; break;
+                            case '4': ateBueno += dato; break;
+                            case '5': ateMuybueno += dato; break;
+                            default: ateNa += dato;
+                        }
+                        this._ACmuybueno = ateMuybueno;
+                        this._ACbuenoo = ateBueno;
+                        this._ACregular = ateRegular;
+                        this._ACmaloo = ateMalo;
+                        this._ACmuymalo = ateMuymalo;
+                        this._ACna = ateNa;
+                    }
+                });
+                this.totalAtencionCliente = this._ACmuybueno.length + this._ACbuenoo.length + this._ACregular.length + this._ACmaloo.length + this._ACmuymalo.length + this._ACna.length;
+                this.data.map((item: { SA_convenios: any; registro_fecha: string; sucursal: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') === data.periodo && (item.sucursal === 'Lima' || item.sucursal === '0001')){
+                        let dato = item.SA_convenios;
+                        switch (dato) {
+                            case '1': coMuymalo += dato; break;
+                            case '2': coMalo += dato; break;
+                            case '3': coRegular += dato; break;
+                            case '4': coBueno += dato; break;
+                            case '5': coMuybueno += dato; break;
+                            default: coNa += dato;
+                        }
+                        this._COmuybueno = coMuybueno;
+                        this._CObuenoo = coBueno;
+                        this._COregular = coRegular;
+                        this._COmaloo = coMalo;
+                        this._COmuymalo = coMuymalo;
+                        this._COna = coNa;
+                    }
+                });
+                this.totalConvenios = this._COmuybueno.length + this._CObuenoo.length + this._COregular.length + this._COmaloo.length + this._COmuymalo.length + this._COna.length;
+                this.data.map((item: { SA_farmacia: any; registro_fecha: string; sucursal: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') === data.periodo && (item.sucursal === 'Lima' || item.sucursal === '0001')){
+                        let dato = item.SA_farmacia;
+                        switch (dato) {
+                            case '1': faMuymalo += dato; break;
+                            case '2': faMalo += dato; break;
+                            case '3': faRegular += dato; break;
+                            case '4': faBueno += dato; break;
+                            case '5': faMuybueno += dato; break;
+                            default: faNa += dato;
+                        }
+                        this._FAmuybueno = faMuybueno;
+                        this._FAbuenoo = faBueno;
+                        this._FAregular = faRegular;
+                        this._FAmaloo = faMalo;
+                        this._FAmuymalo = faMuymalo;
+                        this._FAna = faNa;
+                    }
+                });
+                this.totalFarmacia = this._FAmuybueno.length + this._FAbuenoo.length + this._FAregular.length + this._FAmaloo.length + this._FAmuymalo.length + this._FAna.length;
+                this.data.map((item: { SA_imagenes: any; registro_fecha: string; sucursal: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') === data.periodo && (item.sucursal === 'Lima' || item.sucursal === '0001')){
+                        let dato = item.SA_imagenes;
+                        switch (dato) {
+                            case '1': imMuymalo += dato; break;
+                            case '2': imMalo += dato; break;
+                            case '3': imRegular += dato; break;
+                            case '4': imBueno += dato; break;
+                            case '5': imMuybueno += dato; break;
+                            default: imNa += dato;
+                        }
+                        this._IMmuybueno = imMuybueno;
+                        this._IMbuenoo = imBueno;
+                        this._IMregular = imRegular;
+                        this._IMmaloo = imMalo;
+                        this._IMmuymalo = imMuymalo;
+                        this._IMna = imNa;
+                    }
+                });
+                this.totalImagenes = this._IMmuybueno.length + this._IMbuenoo.length + this._IMregular.length + this._IMmaloo.length + this._IMmuymalo.length + this._IMna.length;
+                this.data.map((item: { SA_laboratorio: any; registro_fecha: string; sucursal: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') === data.periodo && (item.sucursal === 'Lima' || item.sucursal === '0001')){
+                        let dato = item.SA_laboratorio;
+                        switch (dato) {
+                            case '1': laMuymalo += dato; break;
+                            case '2': laMalo += dato; break;
+                            case '3': laRegular += dato; break;
+                            case '4': laBueno += dato; break;
+                            case '5': laMuybueno += dato; break;
+                            default: laNa += dato;
+                        }
+                        this._LAmuybueno = laMuybueno;
+                        this._LAbuenoo = laBueno;
+                        this._LAregular = laRegular;
+                        this._LAmaloo = laMalo;
+                        this._LAmuymalo = laMuymalo;
+                        this._LAna = laNa;
+                    }
+                });
+                this.totalLaboratorio = this._LAmuybueno.length + this._LAbuenoo.length + this._LAregular.length + this._LAmaloo.length + this._LAmuymalo.length + this._LAna.length;
+                this.data.map((item: { SI_comodidad: any; registro_fecha: string; sucursal: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') === data.periodo && (item.sucursal === 'Lima' || item.sucursal === '0001')){
+                        let dato = item.SI_comodidad;
+                        switch (dato) {
+                            case '1': comMuymalo += dato; break;
+                            case '2': comMalo += dato; break;
+                            case '3': comRegular += dato; break;
+                            case '4': comBueno += dato; break;
+                            case '5': comMuybueno += dato; break;
+                            default: comNa += dato;
+                        }
+                        this._COMmuybueno = comMuybueno;
+                        this._COMbuenoo = comBueno;
+                        this._COMregular = comRegular;
+                        this._COMmaloo = comMalo;
+                        this._COMmuymalo = comMuymalo;
+                        this._COMna = comNa;
+                    }
+                });
+                this.totalComodidad = this._COMmuybueno.length + this._COMbuenoo.length + this._COMregular.length + this._COMmaloo.length + this._COMmuymalo.length + this._COMna.length;
+                this.data.map((item: { SI_limpieza: any; registro_fecha: string; sucursal: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') === data.periodo && (item.sucursal === 'Lima' || item.sucursal === '0001')){
+                        let dato = item.SI_limpieza;
+                        switch (dato) {
+                            case '1': liMuymalo += dato; break;
+                            case '2': liMalo += dato; break;
+                            case '3': liRegular += dato; break;
+                            case '4': liBueno += dato; break;
+                            case '5': liMuybueno += dato; break;
+                            default: liNa += dato;
+                        }
+                        this._LIMmuybueno = liMuybueno;
+                        this._LIMbuenoo = liBueno;
+                        this._LIMregular = liRegular;
+                        this._LIMmaloo = liMalo;
+                        this._LIMmuymalo = liMuymalo;
+                        this._LIMna = liNa;
+                    }
+                });
+                this.totalAseoLimpieza = this._LIMmuybueno.length + this._LIMbuenoo.length + this._LIMregular.length + this._LIMmaloo.length + this._LIMmuymalo.length + this._LIMna.length;
+                this.data.map((item: { SI_modernidad: any; registro_fecha: string; sucursal: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') === data.periodo && (item.sucursal === 'Lima' || item.sucursal === '0001')){
+                        let dato = item.SI_modernidad;
+                        switch (dato) {
+                            case '1': moMuymalo += dato; break;
+                            case '2': moMalo += dato; break;
+                            case '3': moRegular += dato; break;
+                            case '4': moBueno += dato; break;
+                            case '5': moMuybueno += dato; break;
+                            default: moNa += dato;
+                        }
+                        this._MOmuybueno = moMuybueno;
+                        this._MObuenoo = moBueno;
+                        this._MOregular = moRegular;
+                        this._MOmaloo = moMalo;
+                        this._MOmuymalo = moMuymalo;
+                        this._MOna = moNa;
+                    }
+                });
+                this.totalModernidad = this._MOmuybueno.length + this._MObuenoo.length + this._MOregular.length + this._MOmaloo.length + this._MOmuymalo.length + this._MOna.length;
+
+                this.data.map((item: { SS_doctor: any; registro_fecha: string; sucursal: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') === data.periodo && (item.sucursal === 'Lima' || item.sucursal === '0001')){
+                        let dato = item.SS_doctor;
+                        switch (dato) {
+                            case '1': docMuymalo += dato; break;
+                            case '2': docMalo += dato; break;
+                            case '3': docRegular += dato; break;
+                            case '4': docBueno += dato; break;
+                            case '5': docMuybueno += dato; break;
+                            default: docNa += dato;
+                        }
+                        this._DOCmuybueno = docMuybueno;
+                        this._DOCbuenoo = docBueno;
+                        this._DOCregular = docRegular;
+                        this._DOCmaloo = docMalo;
+                        this._DOCmuymalo = docMuymalo;
+                        this._DOCna = docNa;
+                    }
+                });
+                this.totalMedico = this._DOCmuybueno.length + this._DOCbuenoo.length + this._DOCregular.length + this._DOCmaloo.length + this._DOCmuymalo.length + this._DOCna.length;
+
+                this.data.map((item: { SS_enfermera: any; registro_fecha: string; sucursal: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') === data.periodo && (item.sucursal === 'Lima' || item.sucursal === '0001')){
+                        let dato = item.SS_enfermera;
+                        switch (dato) {
+                            case '1': enMuymalo += dato; break;
+                            case '2': enMalo += dato; break;
+                            case '3': enRegular += dato; break;
+                            case '4': enBueno += dato; break;
+                            case '5': enMuybueno += dato; break;
+                            default: enNa += dato;
+                        }
+                        this._ENmuybueno = enMuybueno;
+                        this._ENbuenoo = enBueno;
+                        this._ENregular = enRegular;
+                        this._ENmaloo = enMalo;
+                        this._ENmuymalo = enMuymalo;
+                        this._ENna = enNa;
+                    }
+                });
+                this.totalEnfermera = this._ENmuybueno.length + this._ENbuenoo.length + this._ENregular.length + this._ENmaloo.length + this._ENmuymalo.length + this._ENna.length;
+                this.data.map((item: { SS_tecnica: any; registro_fecha: string; sucursal: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') === data.periodo && (item.sucursal === 'Lima' || item.sucursal === '0001')){
+                        let dato = item.SS_tecnica;
+                        switch (dato) {
+                            case '1': tecMuymalo += dato; break;
+                            case '2': tecMalo += dato; break;
+                            case '3': tecRegular += dato; break;
+                            case '4': tecBueno += dato; break;
+                            case '5': tecMuybueno += dato; break;
+                            default: tecNa += dato;
+                        }
+                        this._TECmuybueno = tecMuybueno;
+                        this._TECbuenoo = tecBueno;
+                        this._TECregular = tecRegular;
+                        this._TECmaloo = tecMalo;
+                        this._TECmuymalo = tecMuymalo;
+                        this._TECna = tecNa;
+                    }
+                });
+                
+                this.totalTecnica = this._TECmuybueno.length + this._TECbuenoo.length + this._TECregular.length + this._TECmaloo.length + this._TECmuymalo.length + this._TECna.length;
+
+            }else if((data.onSelect === '3' || data.onSelect === '4') && data.periodo !== null){
+
+                this.data.map((item: { SA_admision: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(item.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')) 
+                    && (item.sucursal === 'Lima' || item.sucursal === '0001')){
+                        let dato = item.SA_admision;
+                        switch (dato) {
+                            case '1': sumMuymalo += dato; break;
+                            case '2': sumMalo += dato; break;
+                            case '3': sumRegular += dato; break;
+                            case '4': sumBueno += dato; break;
+                            case '5': sumMuybueno += dato; break;
+                            default: sumNa += dato;
+                        }
+                        this.muybueno = sumMuybueno;
+                        this.buenoo = sumBueno;
+                        this.regular = sumRegular;
+                        this.maloo = sumMalo;
+                        this.muymalo = sumMuymalo;
+                        this.na = sumNa;
+                    }
+                });
+
+                this.totalAdmision = this.muybueno.length + this.buenoo.length + this.regular.length + this.maloo.length + this.muymalo.length + this.na.length;
+
+                this.data.map((item: { SA_atencionCliente: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(item.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'))
+                    && (item.sucursal === 'Lima' || item.sucursal === '0001')){
+                        let dato = item.SA_atencionCliente;
+                        switch (dato) {
+                            case '1': ateMuymalo += dato; break;
+                            case '2': ateMalo += dato; break;
+                            case '3': ateRegular += dato; break;
+                            case '4': ateBueno += dato; break;
+                            case '5': ateMuybueno += dato; break;
+                            default: ateNa += dato;
+                        }
+                        this._ACmuybueno = ateMuybueno;
+                        this._ACbuenoo = ateBueno;
+                        this._ACregular = ateRegular;
+                        this._ACmaloo = ateMalo;
+                        this._ACmuymalo = ateMuymalo;
+                        this._ACna = ateNa;
+                    }
+                });
+                this.totalAtencionCliente = this._ACmuybueno.length + this._ACbuenoo.length + this._ACregular.length + this._ACmaloo.length + this._ACmuymalo.length + this._ACna.length;
+                this.data.map((item: { SA_convenios: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(item.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'))
+                    && (item.sucursal === 'Lima' || item.sucursal === '0001')){
+                        let dato = item.SA_convenios;
+                        switch (dato) {
+                            case '1': coMuymalo += dato; break;
+                            case '2': coMalo += dato; break;
+                            case '3': coRegular += dato; break;
+                            case '4': coBueno += dato; break;
+                            case '5': coMuybueno += dato; break;
+                            default: coNa += dato;
+                        }
+                        this._COmuybueno = coMuybueno;
+                        this._CObuenoo = coBueno;
+                        this._COregular = coRegular;
+                        this._COmaloo = coMalo;
+                        this._COmuymalo = coMuymalo;
+                        this._COna = coNa;
+                    }
+                });
+                this.totalConvenios = this._COmuybueno.length + this._CObuenoo.length + this._COregular.length + this._COmaloo.length + this._COmuymalo.length + this._COna.length;
+                this.data.map((item: { SA_farmacia: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(item.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'))
+                    && (item.sucursal === 'Lima' || item.sucursal === '0001')){
+                        let dato = item.SA_farmacia;
+                        switch (dato) {
+                            case '1': faMuymalo += dato; break;
+                            case '2': faMalo += dato; break;
+                            case '3': faRegular += dato; break;
+                            case '4': faBueno += dato; break;
+                            case '5': faMuybueno += dato; break;
+                            default: faNa += dato;
+                        }
+                        this._FAmuybueno = faMuybueno;
+                        this._FAbuenoo = faBueno;
+                        this._FAregular = faRegular;
+                        this._FAmaloo = faMalo;
+                        this._FAmuymalo = faMuymalo;
+                        this._FAna = faNa;
+                    }
+                });
+                this.totalFarmacia = this._FAmuybueno.length + this._FAbuenoo.length + this._FAregular.length + this._FAmaloo.length + this._FAmuymalo.length + this._FAna.length;
+                this.data.map((item: { SA_imagenes: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(item.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'))
+                    && (item.sucursal === 'Lima' || item.sucursal === '0001')){
+                        let dato = item.SA_imagenes;
+                        switch (dato) {
+                            case '1': imMuymalo += dato; break;
+                            case '2': imMalo += dato; break;
+                            case '3': imRegular += dato; break;
+                            case '4': imBueno += dato; break;
+                            case '5': imMuybueno += dato; break;
+                            default: imNa += dato;
+                        }
+                        this._IMmuybueno = imMuybueno;
+                        this._IMbuenoo = imBueno;
+                        this._IMregular = imRegular;
+                        this._IMmaloo = imMalo;
+                        this._IMmuymalo = imMuymalo;
+                        this._IMna = imNa;
+                    }
+                });
+                this.totalImagenes = this._IMmuybueno.length + this._IMbuenoo.length + this._IMregular.length + this._IMmaloo.length + this._IMmuymalo.length + this._IMna.length;
+                this.data.map((item: { SA_laboratorio: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(item.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'))
+                    && (item.sucursal === 'Lima' || item.sucursal === '0001')){
+                        let dato = item.SA_laboratorio;
+                        switch (dato) {
+                            case '1': laMuymalo += dato; break;
+                            case '2': laMalo += dato; break;
+                            case '3': laRegular += dato; break;
+                            case '4': laBueno += dato; break;
+                            case '5': laMuybueno += dato; break;
+                            default: laNa += dato;
+                        }
+                        this._LAmuybueno = laMuybueno;
+                        this._LAbuenoo = laBueno;
+                        this._LAregular = laRegular;
+                        this._LAmaloo = laMalo;
+                        this._LAmuymalo = laMuymalo;
+                        this._LAna = laNa;
+                    }
+                });
+                this.totalLaboratorio = this._LAmuybueno.length + this._LAbuenoo.length + this._LAregular.length + this._LAmaloo.length + this._LAmuymalo.length + this._LAna.length;
+                this.data.map((item: { SI_comodidad: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(item.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'))
+                    && (item.sucursal === 'Lima' || item.sucursal === '0001')){
+                        let dato = item.SI_comodidad;
+                        switch (dato) {
+                            case '1': comMuymalo += dato; break;
+                            case '2': comMalo += dato; break;
+                            case '3': comRegular += dato; break;
+                            case '4': comBueno += dato; break;
+                            case '5': comMuybueno += dato; break;
+                            default: comNa += dato;
+                        }
+                        this._COMmuybueno = comMuybueno;
+                        this._COMbuenoo = comBueno;
+                        this._COMregular = comRegular;
+                        this._COMmaloo = comMalo;
+                        this._COMmuymalo = comMuymalo;
+                        this._COMna = comNa;
+                    }
+                });
+                this.totalComodidad = this._COMmuybueno.length + this._COMbuenoo.length + this._COMregular.length + this._COMmaloo.length + this._COMmuymalo.length + this._COMna.length;
+                this.data.map((item: { SI_limpieza: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(item.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'))
+                    && (item.sucursal === 'Lima' || item.sucursal === '0001')){
+                        let dato = item.SI_limpieza;
+                        switch (dato) {
+                            case '1': liMuymalo += dato; break;
+                            case '2': liMalo += dato; break;
+                            case '3': liRegular += dato; break;
+                            case '4': liBueno += dato; break;
+                            case '5': liMuybueno += dato; break;
+                            default: liNa += dato;
+                        }
+                        this._LIMmuybueno = liMuybueno;
+                        this._LIMbuenoo = liBueno;
+                        this._LIMregular = liRegular;
+                        this._LIMmaloo = liMalo;
+                        this._LIMmuymalo = liMuymalo;
+                        this._LIMna = liNa;
+                    }
+                });
+                this.totalAseoLimpieza = this._LIMmuybueno.length + this._LIMbuenoo.length + this._LIMregular.length + this._LIMmaloo.length + this._LIMmuymalo.length + this._LIMna.length;
+                this.data.map((item: { SI_modernidad: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(item.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'))
+                    && (item.sucursal === 'Lima' || item.sucursal === '0001')){
+                        let dato = item.SI_modernidad;
+                        switch (dato) {
+                            case '1': moMuymalo += dato; break;
+                            case '2': moMalo += dato; break;
+                            case '3': moRegular += dato; break;
+                            case '4': moBueno += dato; break;
+                            case '5': moMuybueno += dato; break;
+                            default: moNa += dato;
+                        }
+                        this._MOmuybueno = moMuybueno;
+                        this._MObuenoo = moBueno;
+                        this._MOregular = moRegular;
+                        this._MOmaloo = moMalo;
+                        this._MOmuymalo = moMuymalo;
+                        this._MOna = moNa;
+                    }
+                });
+                this.totalModernidad = this._MOmuybueno.length + this._MObuenoo.length + this._MOregular.length + this._MOmaloo.length + this._MOmuymalo.length + this._MOna.length;
+
+                this.data.map((item: { SS_doctor: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(item.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'))
+                    && (item.sucursal === 'Lima' || item.sucursal === '0001')){
+                        let dato = item.SS_doctor;
+                        switch (dato) {
+                            case '1': docMuymalo += dato; break;
+                            case '2': docMalo += dato; break;
+                            case '3': docRegular += dato; break;
+                            case '4': docBueno += dato; break;
+                            case '5': docMuybueno += dato; break;
+                            default: docNa += dato;
+                        }
+                        this._DOCmuybueno = docMuybueno;
+                        this._DOCbuenoo = docBueno;
+                        this._DOCregular = docRegular;
+                        this._DOCmaloo = docMalo;
+                        this._DOCmuymalo = docMuymalo;
+                        this._DOCna = docNa;
+                    }
+                });
+                this.totalMedico = this._DOCmuybueno.length + this._DOCbuenoo.length + this._DOCregular.length + this._DOCmaloo.length + this._DOCmuymalo.length + this._DOCna.length;
+
+                this.data.map((item: { SS_enfermera: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(item.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'))
+                    && (item.sucursal === 'Lima' || item.sucursal === '0001')){
+                        let dato = item.SS_enfermera;
+                        switch (dato) {
+                            case '1': enMuymalo += dato; break;
+                            case '2': enMalo += dato; break;
+                            case '3': enRegular += dato; break;
+                            case '4': enBueno += dato; break;
+                            case '5': enMuybueno += dato; break;
+                            default: enNa += dato;
+                        }
+                        this._ENmuybueno = enMuybueno;
+                        this._ENbuenoo = enBueno;
+                        this._ENregular = enRegular;
+                        this._ENmaloo = enMalo;
+                        this._ENmuymalo = enMuymalo;
+                        this._ENna = enNa;
+                    }
+                });
+                this.totalEnfermera = this._ENmuybueno.length + this._ENbuenoo.length + this._ENregular.length + this._ENmaloo.length + this._ENmuymalo.length + this._ENna.length;
+                this.data.map((item: { SS_tecnica: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(item.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'))
+                    && (item.sucursal === 'Lima' || item.sucursal === '0001')){
+                        let dato = item.SS_tecnica;
+                        switch (dato) {
+                            case '1': tecMuymalo += dato; break;
+                            case '2': tecMalo += dato; break;
+                            case '3': tecRegular += dato; break;
+                            case '4': tecBueno += dato; break;
+                            case '5': tecMuybueno += dato; break;
+                            default: tecNa += dato;
+                        }
+                        this._TECmuybueno = tecMuybueno;
+                        this._TECbuenoo = tecBueno;
+                        this._TECregular = tecRegular;
+                        this._TECmaloo = tecMalo;
+                        this._TECmuymalo = tecMuymalo;
+                        this._TECna = tecNa;
+                    }
+                });
+                
+                this.totalTecnica = this._TECmuybueno.length + this._TECbuenoo.length + this._TECregular.length + this._TECmaloo.length + this._TECmuymalo.length + this._TECna.length;
+            }else if((data.onSelect === '5' || data.onSelect === '6') && data.mes !== null){
+                this.data.map((item: { SA_admision: any; registro_fecha: string; sucursal: string;}) => {
+                    if (new Date(item.registro_fecha).getMonth() === new Date(data.mes).getMonth() && (item.sucursal === 'Lima' || item.sucursal === '0001')){
+                        let dato = item.SA_admision;
+                        switch (dato) {
+                            case '1': sumMuymalo += dato; break;
+                            case '2': sumMalo += dato; break;
+                            case '3': sumRegular += dato; break;
+                            case '4': sumBueno += dato; break;
+                            case '5': sumMuybueno += dato; break;
+                            default: sumNa += dato;
+                        }
+                        this.muybueno = sumMuybueno;
+                        this.buenoo = sumBueno;
+                        this.regular = sumRegular;
+                        this.maloo = sumMalo;
+                        this.muymalo = sumMuymalo;
+                        this.na = sumNa;
+                    }
+                });
+
+                this.totalAdmision = this.muybueno.length + this.buenoo.length + this.regular.length + this.maloo.length + this.muymalo.length + this.na.length;
+
+                this.data.map((item: { SA_atencionCliente: any; registro_fecha: string; sucursal: string;}) => {
+                    if (new Date(item.registro_fecha).getMonth() === new Date(data.mes).getMonth() && (item.sucursal === 'Lima' || item.sucursal === '0001')){
+                        let dato = item.SA_atencionCliente;
+                        switch (dato) {
+                            case '1': ateMuymalo += dato; break;
+                            case '2': ateMalo += dato; break;
+                            case '3': ateRegular += dato; break;
+                            case '4': ateBueno += dato; break;
+                            case '5': ateMuybueno += dato; break;
+                            default: ateNa += dato;
+                        }
+                        this._ACmuybueno = ateMuybueno;
+                        this._ACbuenoo = ateBueno;
+                        this._ACregular = ateRegular;
+                        this._ACmaloo = ateMalo;
+                        this._ACmuymalo = ateMuymalo;
+                        this._ACna = ateNa;
+                    }
+                });
+                this.totalAtencionCliente = this._ACmuybueno.length + this._ACbuenoo.length + this._ACregular.length + this._ACmaloo.length + this._ACmuymalo.length + this._ACna.length;
+                this.data.map((item: { SA_convenios: any; registro_fecha: string; sucursal: string;}) => {
+                    if (new Date(item.registro_fecha).getMonth() === new Date(data.mes).getMonth() && (item.sucursal === 'Lima' || item.sucursal === '0001')){
+                        let dato = item.SA_convenios;
+                        switch (dato) {
+                            case '1': coMuymalo += dato; break;
+                            case '2': coMalo += dato; break;
+                            case '3': coRegular += dato; break;
+                            case '4': coBueno += dato; break;
+                            case '5': coMuybueno += dato; break;
+                            default: coNa += dato;
+                        }
+                        this._COmuybueno = coMuybueno;
+                        this._CObuenoo = coBueno;
+                        this._COregular = coRegular;
+                        this._COmaloo = coMalo;
+                        this._COmuymalo = coMuymalo;
+                        this._COna = coNa;
+                    }
+                });
+                this.totalConvenios = this._COmuybueno.length + this._CObuenoo.length + this._COregular.length + this._COmaloo.length + this._COmuymalo.length + this._COna.length;
+                this.data.map((item: { SA_farmacia: any; registro_fecha: string; sucursal: string;}) => {
+                    if (new Date(item.registro_fecha).getMonth() === new Date(data.mes).getMonth() && (item.sucursal === 'Lima' || item.sucursal === '0001')){
+                        let dato = item.SA_farmacia;
+                        switch (dato) {
+                            case '1': faMuymalo += dato; break;
+                            case '2': faMalo += dato; break;
+                            case '3': faRegular += dato; break;
+                            case '4': faBueno += dato; break;
+                            case '5': faMuybueno += dato; break;
+                            default: faNa += dato;
+                        }
+                        this._FAmuybueno = faMuybueno;
+                        this._FAbuenoo = faBueno;
+                        this._FAregular = faRegular;
+                        this._FAmaloo = faMalo;
+                        this._FAmuymalo = faMuymalo;
+                        this._FAna = faNa;
+                    }
+                });
+                this.totalFarmacia = this._FAmuybueno.length + this._FAbuenoo.length + this._FAregular.length + this._FAmaloo.length + this._FAmuymalo.length + this._FAna.length;
+                this.data.map((item: { SA_imagenes: any; registro_fecha: string; sucursal: string;}) => {
+                    if (new Date(item.registro_fecha).getMonth() === new Date(data.mes).getMonth() && (item.sucursal === 'Lima' || item.sucursal === '0001')){
+                        let dato = item.SA_imagenes;
+                        switch (dato) {
+                            case '1': imMuymalo += dato; break;
+                            case '2': imMalo += dato; break;
+                            case '3': imRegular += dato; break;
+                            case '4': imBueno += dato; break;
+                            case '5': imMuybueno += dato; break;
+                            default: imNa += dato;
+                        }
+                        this._IMmuybueno = imMuybueno;
+                        this._IMbuenoo = imBueno;
+                        this._IMregular = imRegular;
+                        this._IMmaloo = imMalo;
+                        this._IMmuymalo = imMuymalo;
+                        this._IMna = imNa;
+                    }
+                });
+                this.totalImagenes = this._IMmuybueno.length + this._IMbuenoo.length + this._IMregular.length + this._IMmaloo.length + this._IMmuymalo.length + this._IMna.length;
+                this.data.map((item: { SA_laboratorio: any; registro_fecha: string; sucursal: string;}) => {
+                    if (new Date(item.registro_fecha).getMonth() === new Date(data.mes).getMonth() && (item.sucursal === 'Lima' || item.sucursal === '0001')){
+                        let dato = item.SA_laboratorio;
+                        switch (dato) {
+                            case '1': laMuymalo += dato; break;
+                            case '2': laMalo += dato; break;
+                            case '3': laRegular += dato; break;
+                            case '4': laBueno += dato; break;
+                            case '5': laMuybueno += dato; break;
+                            default: laNa += dato;
+                        }
+                        this._LAmuybueno = laMuybueno;
+                        this._LAbuenoo = laBueno;
+                        this._LAregular = laRegular;
+                        this._LAmaloo = laMalo;
+                        this._LAmuymalo = laMuymalo;
+                        this._LAna = laNa;
+                    }
+                });
+                this.totalLaboratorio = this._LAmuybueno.length + this._LAbuenoo.length + this._LAregular.length + this._LAmaloo.length + this._LAmuymalo.length + this._LAna.length;
+                this.data.map((item: { SI_comodidad: any; registro_fecha: string; sucursal: string;}) => {
+                    if (new Date(item.registro_fecha).getMonth() === new Date(data.mes).getMonth() && (item.sucursal === 'Lima' || item.sucursal === '0001')){
+                        let dato = item.SI_comodidad;
+                        switch (dato) {
+                            case '1': comMuymalo += dato; break;
+                            case '2': comMalo += dato; break;
+                            case '3': comRegular += dato; break;
+                            case '4': comBueno += dato; break;
+                            case '5': comMuybueno += dato; break;
+                            default: comNa += dato;
+                        }
+                        this._COMmuybueno = comMuybueno;
+                        this._COMbuenoo = comBueno;
+                        this._COMregular = comRegular;
+                        this._COMmaloo = comMalo;
+                        this._COMmuymalo = comMuymalo;
+                        this._COMna = comNa;
+                    }
+                });
+                this.totalComodidad = this._COMmuybueno.length + this._COMbuenoo.length + this._COMregular.length + this._COMmaloo.length + this._COMmuymalo.length + this._COMna.length;
+                this.data.map((item: { SI_limpieza: any; registro_fecha: string; sucursal: string;}) => {
+                    if (new Date(item.registro_fecha).getMonth() === new Date(data.mes).getMonth() && (item.sucursal === 'Lima' || item.sucursal === '0001')){
+                        let dato = item.SI_limpieza;
+                        switch (dato) {
+                            case '1': liMuymalo += dato; break;
+                            case '2': liMalo += dato; break;
+                            case '3': liRegular += dato; break;
+                            case '4': liBueno += dato; break;
+                            case '5': liMuybueno += dato; break;
+                            default: liNa += dato;
+                        }
+                        this._LIMmuybueno = liMuybueno;
+                        this._LIMbuenoo = liBueno;
+                        this._LIMregular = liRegular;
+                        this._LIMmaloo = liMalo;
+                        this._LIMmuymalo = liMuymalo;
+                        this._LIMna = liNa;
+                    }
+                });
+                this.totalAseoLimpieza = this._LIMmuybueno.length + this._LIMbuenoo.length + this._LIMregular.length + this._LIMmaloo.length + this._LIMmuymalo.length + this._LIMna.length;
+                this.data.map((item: { SI_modernidad: any; registro_fecha: string; sucursal: string;}) => {
+                    if (new Date(item.registro_fecha).getMonth() === new Date(data.mes).getMonth() && (item.sucursal === 'Lima' || item.sucursal === '0001')){
+                        let dato = item.SI_modernidad;
+                        switch (dato) {
+                            case '1': moMuymalo += dato; break;
+                            case '2': moMalo += dato; break;
+                            case '3': moRegular += dato; break;
+                            case '4': moBueno += dato; break;
+                            case '5': moMuybueno += dato; break;
+                            default: moNa += dato;
+                        }
+                        this._MOmuybueno = moMuybueno;
+                        this._MObuenoo = moBueno;
+                        this._MOregular = moRegular;
+                        this._MOmaloo = moMalo;
+                        this._MOmuymalo = moMuymalo;
+                        this._MOna = moNa;
+                    }
+                });
+                this.totalModernidad = this._MOmuybueno.length + this._MObuenoo.length + this._MOregular.length + this._MOmaloo.length + this._MOmuymalo.length + this._MOna.length;
+
+                this.data.map((item: { SS_doctor: any; registro_fecha: string; sucursal: string;}) => {
+                    if (new Date(item.registro_fecha).getMonth() === new Date(data.mes).getMonth() && (item.sucursal === 'Lima' || item.sucursal === '0001')){
+                        let dato = item.SS_doctor;
+                        switch (dato) {
+                            case '1': docMuymalo += dato; break;
+                            case '2': docMalo += dato; break;
+                            case '3': docRegular += dato; break;
+                            case '4': docBueno += dato; break;
+                            case '5': docMuybueno += dato; break;
+                            default: docNa += dato;
+                        }
+                        this._DOCmuybueno = docMuybueno;
+                        this._DOCbuenoo = docBueno;
+                        this._DOCregular = docRegular;
+                        this._DOCmaloo = docMalo;
+                        this._DOCmuymalo = docMuymalo;
+                        this._DOCna = docNa;
+                    }
+                });
+                this.totalMedico = this._DOCmuybueno.length + this._DOCbuenoo.length + this._DOCregular.length + this._DOCmaloo.length + this._DOCmuymalo.length + this._DOCna.length;
+
+                this.data.map((item: { SS_enfermera: any; registro_fecha: string; sucursal: string;}) => {
+                    if (new Date(item.registro_fecha).getMonth() === new Date(data.mes).getMonth() && (item.sucursal === 'Lima' || item.sucursal === '0001')){
+                        let dato = item.SS_enfermera;
+                        switch (dato) {
+                            case '1': enMuymalo += dato; break;
+                            case '2': enMalo += dato; break;
+                            case '3': enRegular += dato; break;
+                            case '4': enBueno += dato; break;
+                            case '5': enMuybueno += dato; break;
+                            default: enNa += dato;
+                        }
+                        this._ENmuybueno = enMuybueno;
+                        this._ENbuenoo = enBueno;
+                        this._ENregular = enRegular;
+                        this._ENmaloo = enMalo;
+                        this._ENmuymalo = enMuymalo;
+                        this._ENna = enNa;
+                    }
+                });
+                this.totalEnfermera = this._ENmuybueno.length + this._ENbuenoo.length + this._ENregular.length + this._ENmaloo.length + this._ENmuymalo.length + this._ENna.length;
+                this.data.map((item: { SS_tecnica: any; registro_fecha: string; sucursal: string;}) => {
+                    if (new Date(item.registro_fecha).getMonth() === new Date(data.mes).getMonth() && (item.sucursal === 'Lima' || item.sucursal === '0001')){
+                        let dato = item.SS_tecnica;
+                        switch (dato) {
+                            case '1': tecMuymalo += dato; break;
+                            case '2': tecMalo += dato; break;
+                            case '3': tecRegular += dato; break;
+                            case '4': tecBueno += dato; break;
+                            case '5': tecMuybueno += dato; break;
+                            default: tecNa += dato;
+                        }
+                        this._TECmuybueno = tecMuybueno;
+                        this._TECbuenoo = tecBueno;
+                        this._TECregular = tecRegular;
+                        this._TECmaloo = tecMalo;
+                        this._TECmuymalo = tecMuymalo;
+                        this._TECna = tecNa;
+                    }
+                });
+                
+                this.totalTecnica = this._TECmuybueno.length + this._TECbuenoo.length + this._TECregular.length + this._TECmaloo.length + this._TECmuymalo.length + this._TECna.length;
+
+            }else if(data.onSelect === '7' && data.fecha_inicio !== null && data.fecha_fin !== null){
+
+                this.data.map((item: { SA_admision: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(item.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin)
+                    && (item.sucursal === 'Lima' || item.sucursal === '0001')){
+                        let dato = item.SA_admision;
+                        switch (dato) {
+                            case '1': sumMuymalo += dato; break;
+                            case '2': sumMalo += dato; break;
+                            case '3': sumRegular += dato; break;
+                            case '4': sumBueno += dato; break;
+                            case '5': sumMuybueno += dato; break;
+                            default: sumNa += dato;
+                        }
+                        this.muybueno = sumMuybueno;
+                        this.buenoo = sumBueno;
+                        this.regular = sumRegular;
+                        this.maloo = sumMalo;
+                        this.muymalo = sumMuymalo;
+                        this.na = sumNa;
+                    }
+                });
+
+                this.totalAdmision = this.muybueno.length + this.buenoo.length + this.regular.length + this.maloo.length + this.muymalo.length + this.na.length;
+
+                this.data.map((item: { SA_atencionCliente: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(item.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin)
+                    && (item.sucursal === 'Lima' || item.sucursal === '0001')){
+                        let dato = item.SA_atencionCliente;
+                        switch (dato) {
+                            case '1': ateMuymalo += dato; break;
+                            case '2': ateMalo += dato; break;
+                            case '3': ateRegular += dato; break;
+                            case '4': ateBueno += dato; break;
+                            case '5': ateMuybueno += dato; break;
+                            default: ateNa += dato;
+                        }
+                        this._ACmuybueno = ateMuybueno;
+                        this._ACbuenoo = ateBueno;
+                        this._ACregular = ateRegular;
+                        this._ACmaloo = ateMalo;
+                        this._ACmuymalo = ateMuymalo;
+                        this._ACna = ateNa;
+                    }
+                });
+                this.totalAtencionCliente = this._ACmuybueno.length + this._ACbuenoo.length + this._ACregular.length + this._ACmaloo.length + this._ACmuymalo.length + this._ACna.length;
+                this.data.map((item: { SA_convenios: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(item.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin)
+                    && (item.sucursal === 'Lima' || item.sucursal === '0001')){
+                        let dato = item.SA_convenios;
+                        switch (dato) {
+                            case '1': coMuymalo += dato; break;
+                            case '2': coMalo += dato; break;
+                            case '3': coRegular += dato; break;
+                            case '4': coBueno += dato; break;
+                            case '5': coMuybueno += dato; break;
+                            default: coNa += dato;
+                        }
+                        this._COmuybueno = coMuybueno;
+                        this._CObuenoo = coBueno;
+                        this._COregular = coRegular;
+                        this._COmaloo = coMalo;
+                        this._COmuymalo = coMuymalo;
+                        this._COna = coNa;
+                    }
+                });
+                this.totalConvenios = this._COmuybueno.length + this._CObuenoo.length + this._COregular.length + this._COmaloo.length + this._COmuymalo.length + this._COna.length;
+                this.data.map((item: { SA_farmacia: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(item.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin)
+                    && (item.sucursal === 'Lima' || item.sucursal === '0001')){
+                        let dato = item.SA_farmacia;
+                        switch (dato) {
+                            case '1': faMuymalo += dato; break;
+                            case '2': faMalo += dato; break;
+                            case '3': faRegular += dato; break;
+                            case '4': faBueno += dato; break;
+                            case '5': faMuybueno += dato; break;
+                            default: faNa += dato;
+                        }
+                        this._FAmuybueno = faMuybueno;
+                        this._FAbuenoo = faBueno;
+                        this._FAregular = faRegular;
+                        this._FAmaloo = faMalo;
+                        this._FAmuymalo = faMuymalo;
+                        this._FAna = faNa;
+                    }
+                });
+                this.totalFarmacia = this._FAmuybueno.length + this._FAbuenoo.length + this._FAregular.length + this._FAmaloo.length + this._FAmuymalo.length + this._FAna.length;
+                this.data.map((item: { SA_imagenes: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(item.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin)
+                    && (item.sucursal === 'Lima' || item.sucursal === '0001')){
+                        let dato = item.SA_imagenes;
+                        switch (dato) {
+                            case '1': imMuymalo += dato; break;
+                            case '2': imMalo += dato; break;
+                            case '3': imRegular += dato; break;
+                            case '4': imBueno += dato; break;
+                            case '5': imMuybueno += dato; break;
+                            default: imNa += dato;
+                        }
+                        this._IMmuybueno = imMuybueno;
+                        this._IMbuenoo = imBueno;
+                        this._IMregular = imRegular;
+                        this._IMmaloo = imMalo;
+                        this._IMmuymalo = imMuymalo;
+                        this._IMna = imNa;
+                    }
+                });
+                this.totalImagenes = this._IMmuybueno.length + this._IMbuenoo.length + this._IMregular.length + this._IMmaloo.length + this._IMmuymalo.length + this._IMna.length;
+                this.data.map((item: { SA_laboratorio: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(item.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin)
+                    && (item.sucursal === 'Lima' || item.sucursal === '0001')){
+                        let dato = item.SA_laboratorio;
+                        switch (dato) {
+                            case '1': laMuymalo += dato; break;
+                            case '2': laMalo += dato; break;
+                            case '3': laRegular += dato; break;
+                            case '4': laBueno += dato; break;
+                            case '5': laMuybueno += dato; break;
+                            default: laNa += dato;
+                        }
+                        this._LAmuybueno = laMuybueno;
+                        this._LAbuenoo = laBueno;
+                        this._LAregular = laRegular;
+                        this._LAmaloo = laMalo;
+                        this._LAmuymalo = laMuymalo;
+                        this._LAna = laNa;
+                    }
+                });
+                this.totalLaboratorio = this._LAmuybueno.length + this._LAbuenoo.length + this._LAregular.length + this._LAmaloo.length + this._LAmuymalo.length + this._LAna.length;
+                this.data.map((item: { SI_comodidad: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(item.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin)
+                    && (item.sucursal === 'Lima' || item.sucursal === '0001')){
+                        let dato = item.SI_comodidad;
+                        switch (dato) {
+                            case '1': comMuymalo += dato; break;
+                            case '2': comMalo += dato; break;
+                            case '3': comRegular += dato; break;
+                            case '4': comBueno += dato; break;
+                            case '5': comMuybueno += dato; break;
+                            default: comNa += dato;
+                        }
+                        this._COMmuybueno = comMuybueno;
+                        this._COMbuenoo = comBueno;
+                        this._COMregular = comRegular;
+                        this._COMmaloo = comMalo;
+                        this._COMmuymalo = comMuymalo;
+                        this._COMna = comNa;
+                    }
+                });
+                this.totalComodidad = this._COMmuybueno.length + this._COMbuenoo.length + this._COMregular.length + this._COMmaloo.length + this._COMmuymalo.length + this._COMna.length;
+                this.data.map((item: { SI_limpieza: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(item.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin)
+                    && (item.sucursal === 'Lima' || item.sucursal === '0001')){
+                        let dato = item.SI_limpieza;
+                        switch (dato) {
+                            case '1': liMuymalo += dato; break;
+                            case '2': liMalo += dato; break;
+                            case '3': liRegular += dato; break;
+                            case '4': liBueno += dato; break;
+                            case '5': liMuybueno += dato; break;
+                            default: liNa += dato;
+                        }
+                        this._LIMmuybueno = liMuybueno;
+                        this._LIMbuenoo = liBueno;
+                        this._LIMregular = liRegular;
+                        this._LIMmaloo = liMalo;
+                        this._LIMmuymalo = liMuymalo;
+                        this._LIMna = liNa;
+                    }
+                });
+                this.totalAseoLimpieza = this._LIMmuybueno.length + this._LIMbuenoo.length + this._LIMregular.length + this._LIMmaloo.length + this._LIMmuymalo.length + this._LIMna.length;
+                this.data.map((item: { SI_modernidad: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(item.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin)
+                    && (item.sucursal === 'Lima' || item.sucursal === '0001')){
+                        let dato = item.SI_modernidad;
+                        switch (dato) {
+                            case '1': moMuymalo += dato; break;
+                            case '2': moMalo += dato; break;
+                            case '3': moRegular += dato; break;
+                            case '4': moBueno += dato; break;
+                            case '5': moMuybueno += dato; break;
+                            default: moNa += dato;
+                        }
+                        this._MOmuybueno = moMuybueno;
+                        this._MObuenoo = moBueno;
+                        this._MOregular = moRegular;
+                        this._MOmaloo = moMalo;
+                        this._MOmuymalo = moMuymalo;
+                        this._MOna = moNa;
+                    }
+                });
+                this.totalModernidad = this._MOmuybueno.length + this._MObuenoo.length + this._MOregular.length + this._MOmaloo.length + this._MOmuymalo.length + this._MOna.length;
+
+                this.data.map((item: { SS_doctor: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(item.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin)
+                    && (item.sucursal === 'Lima' || item.sucursal === '0001')){
+                        let dato = item.SS_doctor;
+                        switch (dato) {
+                            case '1': docMuymalo += dato; break;
+                            case '2': docMalo += dato; break;
+                            case '3': docRegular += dato; break;
+                            case '4': docBueno += dato; break;
+                            case '5': docMuybueno += dato; break;
+                            default: docNa += dato;
+                        }
+                        this._DOCmuybueno = docMuybueno;
+                        this._DOCbuenoo = docBueno;
+                        this._DOCregular = docRegular;
+                        this._DOCmaloo = docMalo;
+                        this._DOCmuymalo = docMuymalo;
+                        this._DOCna = docNa;
+                    }
+                });
+                this.totalMedico = this._DOCmuybueno.length + this._DOCbuenoo.length + this._DOCregular.length + this._DOCmaloo.length + this._DOCmuymalo.length + this._DOCna.length;
+
+                this.data.map((item: { SS_enfermera: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(item.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin)
+                    && (item.sucursal === 'Lima' || item.sucursal === '0001')){
+                        let dato = item.SS_enfermera;
+                        switch (dato) {
+                            case '1': enMuymalo += dato; break;
+                            case '2': enMalo += dato; break;
+                            case '3': enRegular += dato; break;
+                            case '4': enBueno += dato; break;
+                            case '5': enMuybueno += dato; break;
+                            default: enNa += dato;
+                        }
+                        this._ENmuybueno = enMuybueno;
+                        this._ENbuenoo = enBueno;
+                        this._ENregular = enRegular;
+                        this._ENmaloo = enMalo;
+                        this._ENmuymalo = enMuymalo;
+                        this._ENna = enNa;
+                    }
+                });
+                this.totalEnfermera = this._ENmuybueno.length + this._ENbuenoo.length + this._ENregular.length + this._ENmaloo.length + this._ENmuymalo.length + this._ENna.length;
+                this.data.map((item: { SS_tecnica: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(item.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin)
+                    && (item.sucursal === 'Lima' || item.sucursal === '0001')){
+                        let dato = item.SS_tecnica;
+                        switch (dato) {
+                            case '1': tecMuymalo += dato; break;
+                            case '2': tecMalo += dato; break;
+                            case '3': tecRegular += dato; break;
+                            case '4': tecBueno += dato; break;
+                            case '5': tecMuybueno += dato; break;
+                            default: tecNa += dato;
+                        }
+                        this._TECmuybueno = tecMuybueno;
+                        this._TECbuenoo = tecBueno;
+                        this._TECregular = tecRegular;
+                        this._TECmaloo = tecMalo;
+                        this._TECmuymalo = tecMuymalo;
+                        this._TECna = tecNa;
+                    }
+                });
+                
+                this.totalTecnica = this._TECmuybueno.length + this._TECbuenoo.length + this._TECregular.length + this._TECmaloo.length + this._TECmuymalo.length + this._TECna.length;
+            }
+        } else if(data.sede === 2){
+
+            if(data.onSelect < 3 && data.periodo !== null){  
+
+                this.data.map((item: { SA_admision: any; registro_fecha: string; sucursal: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') === data.periodo && (item.sucursal === 'Chorrillos' || item.sucursal === '0002')){
+                        let dato = item.SA_admision;
+                        switch (dato) {
+                            case '1': sumMuymalo += dato; break;
+                            case '2': sumMalo += dato; break;
+                            case '3': sumRegular += dato; break;
+                            case '4': sumBueno += dato; break;
+                            case '5': sumMuybueno += dato; break;
+                            default: sumNa += dato;
+                        }
+                        this.muybueno = sumMuybueno;
+                        this.buenoo = sumBueno;
+                        this.regular = sumRegular;
+                        this.maloo = sumMalo;
+                        this.muymalo = sumMuymalo;
+                        this.na = sumNa;
+                    }
+                });
+            
+                this.totalAdmision = this.muybueno.length + this.buenoo.length + this.regular.length + this.maloo.length + this.muymalo.length + this.na.length;
+            
+                this.data.map((item: { SA_atencionCliente: any; registro_fecha: string; sucursal: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') === data.periodo && (item.sucursal === 'Chorrillos' || item.sucursal === '0002')){
+                        let dato = item.SA_atencionCliente;
+                        switch (dato) {
+                            case '1': ateMuymalo += dato; break;
+                            case '2': ateMalo += dato; break;
+                            case '3': ateRegular += dato; break;
+                            case '4': ateBueno += dato; break;
+                            case '5': ateMuybueno += dato; break;
+                            default: ateNa += dato;
+                        }
+                        this._ACmuybueno = ateMuybueno;
+                        this._ACbuenoo = ateBueno;
+                        this._ACregular = ateRegular;
+                        this._ACmaloo = ateMalo;
+                        this._ACmuymalo = ateMuymalo;
+                        this._ACna = ateNa;
+                    }
+                });
+                this.totalAtencionCliente = this._ACmuybueno.length + this._ACbuenoo.length + this._ACregular.length + this._ACmaloo.length + this._ACmuymalo.length + this._ACna.length;
+                this.data.map((item: { SA_convenios: any; registro_fecha: string; sucursal: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') === data.periodo && (item.sucursal === 'Chorrillos' || item.sucursal === '0002')){
+                        let dato = item.SA_convenios;
+                        switch (dato) {
+                            case '1': coMuymalo += dato; break;
+                            case '2': coMalo += dato; break;
+                            case '3': coRegular += dato; break;
+                            case '4': coBueno += dato; break;
+                            case '5': coMuybueno += dato; break;
+                            default: coNa += dato;
+                        }
+                        this._COmuybueno = coMuybueno;
+                        this._CObuenoo = coBueno;
+                        this._COregular = coRegular;
+                        this._COmaloo = coMalo;
+                        this._COmuymalo = coMuymalo;
+                        this._COna = coNa;
+                    }
+                });
+                this.totalConvenios = this._COmuybueno.length + this._CObuenoo.length + this._COregular.length + this._COmaloo.length + this._COmuymalo.length + this._COna.length;
+                this.data.map((item: { SA_farmacia: any; registro_fecha: string; sucursal: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') === data.periodo && (item.sucursal === 'Chorrillos' || item.sucursal === '0002')){
+                        let dato = item.SA_farmacia;
+                        switch (dato) {
+                            case '1': faMuymalo += dato; break;
+                            case '2': faMalo += dato; break;
+                            case '3': faRegular += dato; break;
+                            case '4': faBueno += dato; break;
+                            case '5': faMuybueno += dato; break;
+                            default: faNa += dato;
+                        }
+                        this._FAmuybueno = faMuybueno;
+                        this._FAbuenoo = faBueno;
+                        this._FAregular = faRegular;
+                        this._FAmaloo = faMalo;
+                        this._FAmuymalo = faMuymalo;
+                        this._FAna = faNa;
+                    }
+                });
+                this.totalFarmacia = this._FAmuybueno.length + this._FAbuenoo.length + this._FAregular.length + this._FAmaloo.length + this._FAmuymalo.length + this._FAna.length;
+                this.data.map((item: { SA_imagenes: any; registro_fecha: string; sucursal: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') === data.periodo && (item.sucursal === 'Chorrillos' || item.sucursal === '0002')){
+                        let dato = item.SA_imagenes;
+                        switch (dato) {
+                            case '1': imMuymalo += dato; break;
+                            case '2': imMalo += dato; break;
+                            case '3': imRegular += dato; break;
+                            case '4': imBueno += dato; break;
+                            case '5': imMuybueno += dato; break;
+                            default: imNa += dato;
+                        }
+                        this._IMmuybueno = imMuybueno;
+                        this._IMbuenoo = imBueno;
+                        this._IMregular = imRegular;
+                        this._IMmaloo = imMalo;
+                        this._IMmuymalo = imMuymalo;
+                        this._IMna = imNa;
+                    }
+                });
+                this.totalImagenes = this._IMmuybueno.length + this._IMbuenoo.length + this._IMregular.length + this._IMmaloo.length + this._IMmuymalo.length + this._IMna.length;
+                this.data.map((item: { SA_laboratorio: any; registro_fecha: string; sucursal: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') === data.periodo && (item.sucursal === 'Chorrillos' || item.sucursal === '0002')){
+                        let dato = item.SA_laboratorio;
+                        switch (dato) {
+                            case '1': laMuymalo += dato; break;
+                            case '2': laMalo += dato; break;
+                            case '3': laRegular += dato; break;
+                            case '4': laBueno += dato; break;
+                            case '5': laMuybueno += dato; break;
+                            default: laNa += dato;
+                        }
+                        this._LAmuybueno = laMuybueno;
+                        this._LAbuenoo = laBueno;
+                        this._LAregular = laRegular;
+                        this._LAmaloo = laMalo;
+                        this._LAmuymalo = laMuymalo;
+                        this._LAna = laNa;
+                    }
+                });
+                this.totalLaboratorio = this._LAmuybueno.length + this._LAbuenoo.length + this._LAregular.length + this._LAmaloo.length + this._LAmuymalo.length + this._LAna.length;
+                this.data.map((item: { SI_comodidad: any; registro_fecha: string; sucursal: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') === data.periodo && (item.sucursal === 'Chorrillos' || item.sucursal === '0002')){
+                        let dato = item.SI_comodidad;
+                        switch (dato) {
+                            case '1': comMuymalo += dato; break;
+                            case '2': comMalo += dato; break;
+                            case '3': comRegular += dato; break;
+                            case '4': comBueno += dato; break;
+                            case '5': comMuybueno += dato; break;
+                            default: comNa += dato;
+                        }
+                        this._COMmuybueno = comMuybueno;
+                        this._COMbuenoo = comBueno;
+                        this._COMregular = comRegular;
+                        this._COMmaloo = comMalo;
+                        this._COMmuymalo = comMuymalo;
+                        this._COMna = comNa;
+                    }
+                });
+                this.totalComodidad = this._COMmuybueno.length + this._COMbuenoo.length + this._COMregular.length + this._COMmaloo.length + this._COMmuymalo.length + this._COMna.length;
+                this.data.map((item: { SI_limpieza: any; registro_fecha: string; sucursal: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') === data.periodo && (item.sucursal === 'Chorrillos' || item.sucursal === '0002')){
+                        let dato = item.SI_limpieza;
+                        switch (dato) {
+                            case '1': liMuymalo += dato; break;
+                            case '2': liMalo += dato; break;
+                            case '3': liRegular += dato; break;
+                            case '4': liBueno += dato; break;
+                            case '5': liMuybueno += dato; break;
+                            default: liNa += dato;
+                        }
+                        this._LIMmuybueno = liMuybueno;
+                        this._LIMbuenoo = liBueno;
+                        this._LIMregular = liRegular;
+                        this._LIMmaloo = liMalo;
+                        this._LIMmuymalo = liMuymalo;
+                        this._LIMna = liNa;
+                    }
+                });
+                this.totalAseoLimpieza = this._LIMmuybueno.length + this._LIMbuenoo.length + this._LIMregular.length + this._LIMmaloo.length + this._LIMmuymalo.length + this._LIMna.length;
+                this.data.map((item: { SI_modernidad: any; registro_fecha: string; sucursal: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') === data.periodo && (item.sucursal === 'Chorrillos' || item.sucursal === '0002')){
+                        let dato = item.SI_modernidad;
+                        switch (dato) {
+                            case '1': moMuymalo += dato; break;
+                            case '2': moMalo += dato; break;
+                            case '3': moRegular += dato; break;
+                            case '4': moBueno += dato; break;
+                            case '5': moMuybueno += dato; break;
+                            default: moNa += dato;
+                        }
+                        this._MOmuybueno = moMuybueno;
+                        this._MObuenoo = moBueno;
+                        this._MOregular = moRegular;
+                        this._MOmaloo = moMalo;
+                        this._MOmuymalo = moMuymalo;
+                        this._MOna = moNa;
+                    }
+                });
+                this.totalModernidad = this._MOmuybueno.length + this._MObuenoo.length + this._MOregular.length + this._MOmaloo.length + this._MOmuymalo.length + this._MOna.length;
+            
+                this.data.map((item: { SS_doctor: any; registro_fecha: string; sucursal: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') === data.periodo && (item.sucursal === 'Chorrillos' || item.sucursal === '0002')){
+                        let dato = item.SS_doctor;
+                        switch (dato) {
+                            case '1': docMuymalo += dato; break;
+                            case '2': docMalo += dato; break;
+                            case '3': docRegular += dato; break;
+                            case '4': docBueno += dato; break;
+                            case '5': docMuybueno += dato; break;
+                            default: docNa += dato;
+                        }
+                        this._DOCmuybueno = docMuybueno;
+                        this._DOCbuenoo = docBueno;
+                        this._DOCregular = docRegular;
+                        this._DOCmaloo = docMalo;
+                        this._DOCmuymalo = docMuymalo;
+                        this._DOCna = docNa;
+                    }
+                });
+                this.totalMedico = this._DOCmuybueno.length + this._DOCbuenoo.length + this._DOCregular.length + this._DOCmaloo.length + this._DOCmuymalo.length + this._DOCna.length;
+            
+                this.data.map((item: { SS_enfermera: any; registro_fecha: string; sucursal: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') === data.periodo && (item.sucursal === 'Chorrillos' || item.sucursal === '0002')){
+                        let dato = item.SS_enfermera;
+                        switch (dato) {
+                            case '1': enMuymalo += dato; break;
+                            case '2': enMalo += dato; break;
+                            case '3': enRegular += dato; break;
+                            case '4': enBueno += dato; break;
+                            case '5': enMuybueno += dato; break;
+                            default: enNa += dato;
+                        }
+                        this._ENmuybueno = enMuybueno;
+                        this._ENbuenoo = enBueno;
+                        this._ENregular = enRegular;
+                        this._ENmaloo = enMalo;
+                        this._ENmuymalo = enMuymalo;
+                        this._ENna = enNa;
+                    }
+                });
+                this.totalEnfermera = this._ENmuybueno.length + this._ENbuenoo.length + this._ENregular.length + this._ENmaloo.length + this._ENmuymalo.length + this._ENna.length;
+                this.data.map((item: { SS_tecnica: any; registro_fecha: string; sucursal: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') === data.periodo && (item.sucursal === 'Chorrillos' || item.sucursal === '0002')){
+                        let dato = item.SS_tecnica;
+                        switch (dato) {
+                            case '1': tecMuymalo += dato; break;
+                            case '2': tecMalo += dato; break;
+                            case '3': tecRegular += dato; break;
+                            case '4': tecBueno += dato; break;
+                            case '5': tecMuybueno += dato; break;
+                            default: tecNa += dato;
+                        }
+                        this._TECmuybueno = tecMuybueno;
+                        this._TECbuenoo = tecBueno;
+                        this._TECregular = tecRegular;
+                        this._TECmaloo = tecMalo;
+                        this._TECmuymalo = tecMuymalo;
+                        this._TECna = tecNa;
+                    }
+                });
+                
+                this.totalTecnica = this._TECmuybueno.length + this._TECbuenoo.length + this._TECregular.length + this._TECmaloo.length + this._TECmuymalo.length + this._TECna.length;
+            
+            }else if((data.onSelect === '3' || data.onSelect === '4') && data.periodo !== null){
+            
+                this.data.map((item: { SA_admision: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(item.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')) 
+                    && (item.sucursal === 'Chorrillos' || item.sucursal === '0002')){
+                        let dato = item.SA_admision;
+                        switch (dato) {
+                            case '1': sumMuymalo += dato; break;
+                            case '2': sumMalo += dato; break;
+                            case '3': sumRegular += dato; break;
+                            case '4': sumBueno += dato; break;
+                            case '5': sumMuybueno += dato; break;
+                            default: sumNa += dato;
+                        }
+                        this.muybueno = sumMuybueno;
+                        this.buenoo = sumBueno;
+                        this.regular = sumRegular;
+                        this.maloo = sumMalo;
+                        this.muymalo = sumMuymalo;
+                        this.na = sumNa;
+                    }
+                });
+            
+                this.totalAdmision = this.muybueno.length + this.buenoo.length + this.regular.length + this.maloo.length + this.muymalo.length + this.na.length;
+            
+                this.data.map((item: { SA_atencionCliente: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(item.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'))
+                    && (item.sucursal === 'Chorrillos' || item.sucursal === '0002')){
+                        let dato = item.SA_atencionCliente;
+                        switch (dato) {
+                            case '1': ateMuymalo += dato; break;
+                            case '2': ateMalo += dato; break;
+                            case '3': ateRegular += dato; break;
+                            case '4': ateBueno += dato; break;
+                            case '5': ateMuybueno += dato; break;
+                            default: ateNa += dato;
+                        }
+                        this._ACmuybueno = ateMuybueno;
+                        this._ACbuenoo = ateBueno;
+                        this._ACregular = ateRegular;
+                        this._ACmaloo = ateMalo;
+                        this._ACmuymalo = ateMuymalo;
+                        this._ACna = ateNa;
+                    }
+                });
+                this.totalAtencionCliente = this._ACmuybueno.length + this._ACbuenoo.length + this._ACregular.length + this._ACmaloo.length + this._ACmuymalo.length + this._ACna.length;
+                this.data.map((item: { SA_convenios: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(item.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'))
+                    && (item.sucursal === 'Chorrillos' || item.sucursal === '0002')){
+                        let dato = item.SA_convenios;
+                        switch (dato) {
+                            case '1': coMuymalo += dato; break;
+                            case '2': coMalo += dato; break;
+                            case '3': coRegular += dato; break;
+                            case '4': coBueno += dato; break;
+                            case '5': coMuybueno += dato; break;
+                            default: coNa += dato;
+                        }
+                        this._COmuybueno = coMuybueno;
+                        this._CObuenoo = coBueno;
+                        this._COregular = coRegular;
+                        this._COmaloo = coMalo;
+                        this._COmuymalo = coMuymalo;
+                        this._COna = coNa;
+                    }
+                });
+                this.totalConvenios = this._COmuybueno.length + this._CObuenoo.length + this._COregular.length + this._COmaloo.length + this._COmuymalo.length + this._COna.length;
+                this.data.map((item: { SA_farmacia: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(item.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'))
+                    && (item.sucursal === 'Chorrillos' || item.sucursal === '0002')){
+                        let dato = item.SA_farmacia;
+                        switch (dato) {
+                            case '1': faMuymalo += dato; break;
+                            case '2': faMalo += dato; break;
+                            case '3': faRegular += dato; break;
+                            case '4': faBueno += dato; break;
+                            case '5': faMuybueno += dato; break;
+                            default: faNa += dato;
+                        }
+                        this._FAmuybueno = faMuybueno;
+                        this._FAbuenoo = faBueno;
+                        this._FAregular = faRegular;
+                        this._FAmaloo = faMalo;
+                        this._FAmuymalo = faMuymalo;
+                        this._FAna = faNa;
+                    }
+                });
+                this.totalFarmacia = this._FAmuybueno.length + this._FAbuenoo.length + this._FAregular.length + this._FAmaloo.length + this._FAmuymalo.length + this._FAna.length;
+                this.data.map((item: { SA_imagenes: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(item.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'))
+                    && (item.sucursal === 'Chorrillos' || item.sucursal === '0002')){
+                        let dato = item.SA_imagenes;
+                        switch (dato) {
+                            case '1': imMuymalo += dato; break;
+                            case '2': imMalo += dato; break;
+                            case '3': imRegular += dato; break;
+                            case '4': imBueno += dato; break;
+                            case '5': imMuybueno += dato; break;
+                            default: imNa += dato;
+                        }
+                        this._IMmuybueno = imMuybueno;
+                        this._IMbuenoo = imBueno;
+                        this._IMregular = imRegular;
+                        this._IMmaloo = imMalo;
+                        this._IMmuymalo = imMuymalo;
+                        this._IMna = imNa;
+                    }
+                });
+                this.totalImagenes = this._IMmuybueno.length + this._IMbuenoo.length + this._IMregular.length + this._IMmaloo.length + this._IMmuymalo.length + this._IMna.length;
+                this.data.map((item: { SA_laboratorio: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(item.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'))
+                    && (item.sucursal === 'Chorrillos' || item.sucursal === '0002')){
+                        let dato = item.SA_laboratorio;
+                        switch (dato) {
+                            case '1': laMuymalo += dato; break;
+                            case '2': laMalo += dato; break;
+                            case '3': laRegular += dato; break;
+                            case '4': laBueno += dato; break;
+                            case '5': laMuybueno += dato; break;
+                            default: laNa += dato;
+                        }
+                        this._LAmuybueno = laMuybueno;
+                        this._LAbuenoo = laBueno;
+                        this._LAregular = laRegular;
+                        this._LAmaloo = laMalo;
+                        this._LAmuymalo = laMuymalo;
+                        this._LAna = laNa;
+                    }
+                });
+                this.totalLaboratorio = this._LAmuybueno.length + this._LAbuenoo.length + this._LAregular.length + this._LAmaloo.length + this._LAmuymalo.length + this._LAna.length;
+                this.data.map((item: { SI_comodidad: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(item.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'))
+                    && (item.sucursal === 'Chorrillos' || item.sucursal === '0002')){
+                        let dato = item.SI_comodidad;
+                        switch (dato) {
+                            case '1': comMuymalo += dato; break;
+                            case '2': comMalo += dato; break;
+                            case '3': comRegular += dato; break;
+                            case '4': comBueno += dato; break;
+                            case '5': comMuybueno += dato; break;
+                            default: comNa += dato;
+                        }
+                        this._COMmuybueno = comMuybueno;
+                        this._COMbuenoo = comBueno;
+                        this._COMregular = comRegular;
+                        this._COMmaloo = comMalo;
+                        this._COMmuymalo = comMuymalo;
+                        this._COMna = comNa;
+                    }
+                });
+                this.totalComodidad = this._COMmuybueno.length + this._COMbuenoo.length + this._COMregular.length + this._COMmaloo.length + this._COMmuymalo.length + this._COMna.length;
+                this.data.map((item: { SI_limpieza: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(item.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'))
+                    && (item.sucursal === 'Chorrillos' || item.sucursal === '0002')){
+                        let dato = item.SI_limpieza;
+                        switch (dato) {
+                            case '1': liMuymalo += dato; break;
+                            case '2': liMalo += dato; break;
+                            case '3': liRegular += dato; break;
+                            case '4': liBueno += dato; break;
+                            case '5': liMuybueno += dato; break;
+                            default: liNa += dato;
+                        }
+                        this._LIMmuybueno = liMuybueno;
+                        this._LIMbuenoo = liBueno;
+                        this._LIMregular = liRegular;
+                        this._LIMmaloo = liMalo;
+                        this._LIMmuymalo = liMuymalo;
+                        this._LIMna = liNa;
+                    }
+                });
+                this.totalAseoLimpieza = this._LIMmuybueno.length + this._LIMbuenoo.length + this._LIMregular.length + this._LIMmaloo.length + this._LIMmuymalo.length + this._LIMna.length;
+                this.data.map((item: { SI_modernidad: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(item.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'))
+                    && (item.sucursal === 'Chorrillos' || item.sucursal === '0002')){
+                        let dato = item.SI_modernidad;
+                        switch (dato) {
+                            case '1': moMuymalo += dato; break;
+                            case '2': moMalo += dato; break;
+                            case '3': moRegular += dato; break;
+                            case '4': moBueno += dato; break;
+                            case '5': moMuybueno += dato; break;
+                            default: moNa += dato;
+                        }
+                        this._MOmuybueno = moMuybueno;
+                        this._MObuenoo = moBueno;
+                        this._MOregular = moRegular;
+                        this._MOmaloo = moMalo;
+                        this._MOmuymalo = moMuymalo;
+                        this._MOna = moNa;
+                    }
+                });
+                this.totalModernidad = this._MOmuybueno.length + this._MObuenoo.length + this._MOregular.length + this._MOmaloo.length + this._MOmuymalo.length + this._MOna.length;
+            
+                this.data.map((item: { SS_doctor: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(item.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'))
+                    && (item.sucursal === 'Chorrillos' || item.sucursal === '0002')){
+                        let dato = item.SS_doctor;
+                        switch (dato) {
+                            case '1': docMuymalo += dato; break;
+                            case '2': docMalo += dato; break;
+                            case '3': docRegular += dato; break;
+                            case '4': docBueno += dato; break;
+                            case '5': docMuybueno += dato; break;
+                            default: docNa += dato;
+                        }
+                        this._DOCmuybueno = docMuybueno;
+                        this._DOCbuenoo = docBueno;
+                        this._DOCregular = docRegular;
+                        this._DOCmaloo = docMalo;
+                        this._DOCmuymalo = docMuymalo;
+                        this._DOCna = docNa;
+                    }
+                });
+                this.totalMedico = this._DOCmuybueno.length + this._DOCbuenoo.length + this._DOCregular.length + this._DOCmaloo.length + this._DOCmuymalo.length + this._DOCna.length;
+            
+                this.data.map((item: { SS_enfermera: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(item.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'))
+                    && (item.sucursal === 'Chorrillos' || item.sucursal === '0002')){
+                        let dato = item.SS_enfermera;
+                        switch (dato) {
+                            case '1': enMuymalo += dato; break;
+                            case '2': enMalo += dato; break;
+                            case '3': enRegular += dato; break;
+                            case '4': enBueno += dato; break;
+                            case '5': enMuybueno += dato; break;
+                            default: enNa += dato;
+                        }
+                        this._ENmuybueno = enMuybueno;
+                        this._ENbuenoo = enBueno;
+                        this._ENregular = enRegular;
+                        this._ENmaloo = enMalo;
+                        this._ENmuymalo = enMuymalo;
+                        this._ENna = enNa;
+                    }
+                });
+                this.totalEnfermera = this._ENmuybueno.length + this._ENbuenoo.length + this._ENregular.length + this._ENmaloo.length + this._ENmuymalo.length + this._ENna.length;
+                this.data.map((item: { SS_tecnica: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(item.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'))
+                    && (item.sucursal === 'Chorrillos' || item.sucursal === '0002')){
+                        let dato = item.SS_tecnica;
+                        switch (dato) {
+                            case '1': tecMuymalo += dato; break;
+                            case '2': tecMalo += dato; break;
+                            case '3': tecRegular += dato; break;
+                            case '4': tecBueno += dato; break;
+                            case '5': tecMuybueno += dato; break;
+                            default: tecNa += dato;
+                        }
+                        this._TECmuybueno = tecMuybueno;
+                        this._TECbuenoo = tecBueno;
+                        this._TECregular = tecRegular;
+                        this._TECmaloo = tecMalo;
+                        this._TECmuymalo = tecMuymalo;
+                        this._TECna = tecNa;
+                    }
+                });
+                
+                this.totalTecnica = this._TECmuybueno.length + this._TECbuenoo.length + this._TECregular.length + this._TECmaloo.length + this._TECmuymalo.length + this._TECna.length;
+            }else if((data.onSelect === '5' || data.onSelect === '6') && data.mes !== null){
+                this.data.map((item: { SA_admision: any; registro_fecha: string; sucursal: string;}) => {
+                    if (new Date(item.registro_fecha).getMonth() === new Date(data.mes).getMonth() && (item.sucursal === 'Chorrillos' || item.sucursal === '0002')){
+                        let dato = item.SA_admision;
+                        switch (dato) {
+                            case '1': sumMuymalo += dato; break;
+                            case '2': sumMalo += dato; break;
+                            case '3': sumRegular += dato; break;
+                            case '4': sumBueno += dato; break;
+                            case '5': sumMuybueno += dato; break;
+                            default: sumNa += dato;
+                        }
+                        this.muybueno = sumMuybueno;
+                        this.buenoo = sumBueno;
+                        this.regular = sumRegular;
+                        this.maloo = sumMalo;
+                        this.muymalo = sumMuymalo;
+                        this.na = sumNa;
+                    }
+                });
+            
+                this.totalAdmision = this.muybueno.length + this.buenoo.length + this.regular.length + this.maloo.length + this.muymalo.length + this.na.length;
+            
+                this.data.map((item: { SA_atencionCliente: any; registro_fecha: string; sucursal: string;}) => {
+                    if (new Date(item.registro_fecha).getMonth() === new Date(data.mes).getMonth() && (item.sucursal === 'Chorrillos' || item.sucursal === '0002')){
+                        let dato = item.SA_atencionCliente;
+                        switch (dato) {
+                            case '1': ateMuymalo += dato; break;
+                            case '2': ateMalo += dato; break;
+                            case '3': ateRegular += dato; break;
+                            case '4': ateBueno += dato; break;
+                            case '5': ateMuybueno += dato; break;
+                            default: ateNa += dato;
+                        }
+                        this._ACmuybueno = ateMuybueno;
+                        this._ACbuenoo = ateBueno;
+                        this._ACregular = ateRegular;
+                        this._ACmaloo = ateMalo;
+                        this._ACmuymalo = ateMuymalo;
+                        this._ACna = ateNa;
+                    }
+                });
+                this.totalAtencionCliente = this._ACmuybueno.length + this._ACbuenoo.length + this._ACregular.length + this._ACmaloo.length + this._ACmuymalo.length + this._ACna.length;
+                this.data.map((item: { SA_convenios: any; registro_fecha: string; sucursal: string;}) => {
+                    if (new Date(item.registro_fecha).getMonth() === new Date(data.mes).getMonth() && (item.sucursal === 'Chorrillos' || item.sucursal === '0002')){
+                        let dato = item.SA_convenios;
+                        switch (dato) {
+                            case '1': coMuymalo += dato; break;
+                            case '2': coMalo += dato; break;
+                            case '3': coRegular += dato; break;
+                            case '4': coBueno += dato; break;
+                            case '5': coMuybueno += dato; break;
+                            default: coNa += dato;
+                        }
+                        this._COmuybueno = coMuybueno;
+                        this._CObuenoo = coBueno;
+                        this._COregular = coRegular;
+                        this._COmaloo = coMalo;
+                        this._COmuymalo = coMuymalo;
+                        this._COna = coNa;
+                    }
+                });
+                this.totalConvenios = this._COmuybueno.length + this._CObuenoo.length + this._COregular.length + this._COmaloo.length + this._COmuymalo.length + this._COna.length;
+                this.data.map((item: { SA_farmacia: any; registro_fecha: string; sucursal: string;}) => {
+                    if (new Date(item.registro_fecha).getMonth() === new Date(data.mes).getMonth() && (item.sucursal === 'Chorrillos' || item.sucursal === '0002')){
+                        let dato = item.SA_farmacia;
+                        switch (dato) {
+                            case '1': faMuymalo += dato; break;
+                            case '2': faMalo += dato; break;
+                            case '3': faRegular += dato; break;
+                            case '4': faBueno += dato; break;
+                            case '5': faMuybueno += dato; break;
+                            default: faNa += dato;
+                        }
+                        this._FAmuybueno = faMuybueno;
+                        this._FAbuenoo = faBueno;
+                        this._FAregular = faRegular;
+                        this._FAmaloo = faMalo;
+                        this._FAmuymalo = faMuymalo;
+                        this._FAna = faNa;
+                    }
+                });
+                this.totalFarmacia = this._FAmuybueno.length + this._FAbuenoo.length + this._FAregular.length + this._FAmaloo.length + this._FAmuymalo.length + this._FAna.length;
+                this.data.map((item: { SA_imagenes: any; registro_fecha: string; sucursal: string;}) => {
+                    if (new Date(item.registro_fecha).getMonth() === new Date(data.mes).getMonth() && (item.sucursal === 'Chorrillos' || item.sucursal === '0002')){
+                        let dato = item.SA_imagenes;
+                        switch (dato) {
+                            case '1': imMuymalo += dato; break;
+                            case '2': imMalo += dato; break;
+                            case '3': imRegular += dato; break;
+                            case '4': imBueno += dato; break;
+                            case '5': imMuybueno += dato; break;
+                            default: imNa += dato;
+                        }
+                        this._IMmuybueno = imMuybueno;
+                        this._IMbuenoo = imBueno;
+                        this._IMregular = imRegular;
+                        this._IMmaloo = imMalo;
+                        this._IMmuymalo = imMuymalo;
+                        this._IMna = imNa;
+                    }
+                });
+                this.totalImagenes = this._IMmuybueno.length + this._IMbuenoo.length + this._IMregular.length + this._IMmaloo.length + this._IMmuymalo.length + this._IMna.length;
+                this.data.map((item: { SA_laboratorio: any; registro_fecha: string; sucursal: string;}) => {
+                    if (new Date(item.registro_fecha).getMonth() === new Date(data.mes).getMonth() && (item.sucursal === 'Chorrillos' || item.sucursal === '0002')){
+                        let dato = item.SA_laboratorio;
+                        switch (dato) {
+                            case '1': laMuymalo += dato; break;
+                            case '2': laMalo += dato; break;
+                            case '3': laRegular += dato; break;
+                            case '4': laBueno += dato; break;
+                            case '5': laMuybueno += dato; break;
+                            default: laNa += dato;
+                        }
+                        this._LAmuybueno = laMuybueno;
+                        this._LAbuenoo = laBueno;
+                        this._LAregular = laRegular;
+                        this._LAmaloo = laMalo;
+                        this._LAmuymalo = laMuymalo;
+                        this._LAna = laNa;
+                    }
+                });
+                this.totalLaboratorio = this._LAmuybueno.length + this._LAbuenoo.length + this._LAregular.length + this._LAmaloo.length + this._LAmuymalo.length + this._LAna.length;
+                this.data.map((item: { SI_comodidad: any; registro_fecha: string; sucursal: string;}) => {
+                    if (new Date(item.registro_fecha).getMonth() === new Date(data.mes).getMonth() && (item.sucursal === 'Chorrillos' || item.sucursal === '0002')){
+                        let dato = item.SI_comodidad;
+                        switch (dato) {
+                            case '1': comMuymalo += dato; break;
+                            case '2': comMalo += dato; break;
+                            case '3': comRegular += dato; break;
+                            case '4': comBueno += dato; break;
+                            case '5': comMuybueno += dato; break;
+                            default: comNa += dato;
+                        }
+                        this._COMmuybueno = comMuybueno;
+                        this._COMbuenoo = comBueno;
+                        this._COMregular = comRegular;
+                        this._COMmaloo = comMalo;
+                        this._COMmuymalo = comMuymalo;
+                        this._COMna = comNa;
+                    }
+                });
+                this.totalComodidad = this._COMmuybueno.length + this._COMbuenoo.length + this._COMregular.length + this._COMmaloo.length + this._COMmuymalo.length + this._COMna.length;
+                this.data.map((item: { SI_limpieza: any; registro_fecha: string; sucursal: string;}) => {
+                    if (new Date(item.registro_fecha).getMonth() === new Date(data.mes).getMonth() && (item.sucursal === 'Chorrillos' || item.sucursal === '0002')){
+                        let dato = item.SI_limpieza;
+                        switch (dato) {
+                            case '1': liMuymalo += dato; break;
+                            case '2': liMalo += dato; break;
+                            case '3': liRegular += dato; break;
+                            case '4': liBueno += dato; break;
+                            case '5': liMuybueno += dato; break;
+                            default: liNa += dato;
+                        }
+                        this._LIMmuybueno = liMuybueno;
+                        this._LIMbuenoo = liBueno;
+                        this._LIMregular = liRegular;
+                        this._LIMmaloo = liMalo;
+                        this._LIMmuymalo = liMuymalo;
+                        this._LIMna = liNa;
+                    }
+                });
+                this.totalAseoLimpieza = this._LIMmuybueno.length + this._LIMbuenoo.length + this._LIMregular.length + this._LIMmaloo.length + this._LIMmuymalo.length + this._LIMna.length;
+                this.data.map((item: { SI_modernidad: any; registro_fecha: string; sucursal: string;}) => {
+                    if (new Date(item.registro_fecha).getMonth() === new Date(data.mes).getMonth() && (item.sucursal === 'Chorrillos' || item.sucursal === '0002')){
+                        let dato = item.SI_modernidad;
+                        switch (dato) {
+                            case '1': moMuymalo += dato; break;
+                            case '2': moMalo += dato; break;
+                            case '3': moRegular += dato; break;
+                            case '4': moBueno += dato; break;
+                            case '5': moMuybueno += dato; break;
+                            default: moNa += dato;
+                        }
+                        this._MOmuybueno = moMuybueno;
+                        this._MObuenoo = moBueno;
+                        this._MOregular = moRegular;
+                        this._MOmaloo = moMalo;
+                        this._MOmuymalo = moMuymalo;
+                        this._MOna = moNa;
+                    }
+                });
+                this.totalModernidad = this._MOmuybueno.length + this._MObuenoo.length + this._MOregular.length + this._MOmaloo.length + this._MOmuymalo.length + this._MOna.length;
+            
+                this.data.map((item: { SS_doctor: any; registro_fecha: string; sucursal: string;}) => {
+                    if (new Date(item.registro_fecha).getMonth() === new Date(data.mes).getMonth() && (item.sucursal === 'Chorrillos' || item.sucursal === '0002')){
+                        let dato = item.SS_doctor;
+                        switch (dato) {
+                            case '1': docMuymalo += dato; break;
+                            case '2': docMalo += dato; break;
+                            case '3': docRegular += dato; break;
+                            case '4': docBueno += dato; break;
+                            case '5': docMuybueno += dato; break;
+                            default: docNa += dato;
+                        }
+                        this._DOCmuybueno = docMuybueno;
+                        this._DOCbuenoo = docBueno;
+                        this._DOCregular = docRegular;
+                        this._DOCmaloo = docMalo;
+                        this._DOCmuymalo = docMuymalo;
+                        this._DOCna = docNa;
+                    }
+                });
+                this.totalMedico = this._DOCmuybueno.length + this._DOCbuenoo.length + this._DOCregular.length + this._DOCmaloo.length + this._DOCmuymalo.length + this._DOCna.length;
+            
+                this.data.map((item: { SS_enfermera: any; registro_fecha: string; sucursal: string;}) => {
+                    if (new Date(item.registro_fecha).getMonth() === new Date(data.mes).getMonth() && (item.sucursal === 'Chorrillos' || item.sucursal === '0002')){
+                        let dato = item.SS_enfermera;
+                        switch (dato) {
+                            case '1': enMuymalo += dato; break;
+                            case '2': enMalo += dato; break;
+                            case '3': enRegular += dato; break;
+                            case '4': enBueno += dato; break;
+                            case '5': enMuybueno += dato; break;
+                            default: enNa += dato;
+                        }
+                        this._ENmuybueno = enMuybueno;
+                        this._ENbuenoo = enBueno;
+                        this._ENregular = enRegular;
+                        this._ENmaloo = enMalo;
+                        this._ENmuymalo = enMuymalo;
+                        this._ENna = enNa;
+                    }
+                });
+                this.totalEnfermera = this._ENmuybueno.length + this._ENbuenoo.length + this._ENregular.length + this._ENmaloo.length + this._ENmuymalo.length + this._ENna.length;
+                this.data.map((item: { SS_tecnica: any; registro_fecha: string; sucursal: string;}) => {
+                    if (new Date(item.registro_fecha).getMonth() === new Date(data.mes).getMonth() && (item.sucursal === 'Chorrillos' || item.sucursal === '0002')){
+                        let dato = item.SS_tecnica;
+                        switch (dato) {
+                            case '1': tecMuymalo += dato; break;
+                            case '2': tecMalo += dato; break;
+                            case '3': tecRegular += dato; break;
+                            case '4': tecBueno += dato; break;
+                            case '5': tecMuybueno += dato; break;
+                            default: tecNa += dato;
+                        }
+                        this._TECmuybueno = tecMuybueno;
+                        this._TECbuenoo = tecBueno;
+                        this._TECregular = tecRegular;
+                        this._TECmaloo = tecMalo;
+                        this._TECmuymalo = tecMuymalo;
+                        this._TECna = tecNa;
+                    }
+                });
+                
+                this.totalTecnica = this._TECmuybueno.length + this._TECbuenoo.length + this._TECregular.length + this._TECmaloo.length + this._TECmuymalo.length + this._TECna.length;
+            
+            }else if(data.onSelect === '7' && data.fecha_inicio !== null && data.fecha_fin !== null){
+            
+                this.data.map((item: { SA_admision: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(item.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin)
+                    && (item.sucursal === 'Chorrillos' || item.sucursal === '0002')){
+                        let dato = item.SA_admision;
+                        switch (dato) {
+                            case '1': sumMuymalo += dato; break;
+                            case '2': sumMalo += dato; break;
+                            case '3': sumRegular += dato; break;
+                            case '4': sumBueno += dato; break;
+                            case '5': sumMuybueno += dato; break;
+                            default: sumNa += dato;
+                        }
+                        this.muybueno = sumMuybueno;
+                        this.buenoo = sumBueno;
+                        this.regular = sumRegular;
+                        this.maloo = sumMalo;
+                        this.muymalo = sumMuymalo;
+                        this.na = sumNa;
+                    }
+                });
+            
+                this.totalAdmision = this.muybueno.length + this.buenoo.length + this.regular.length + this.maloo.length + this.muymalo.length + this.na.length;
+            
+                this.data.map((item: { SA_atencionCliente: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(item.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin)
+                    && (item.sucursal === 'Chorrillos' || item.sucursal === '0002')){
+                        let dato = item.SA_atencionCliente;
+                        switch (dato) {
+                            case '1': ateMuymalo += dato; break;
+                            case '2': ateMalo += dato; break;
+                            case '3': ateRegular += dato; break;
+                            case '4': ateBueno += dato; break;
+                            case '5': ateMuybueno += dato; break;
+                            default: ateNa += dato;
+                        }
+                        this._ACmuybueno = ateMuybueno;
+                        this._ACbuenoo = ateBueno;
+                        this._ACregular = ateRegular;
+                        this._ACmaloo = ateMalo;
+                        this._ACmuymalo = ateMuymalo;
+                        this._ACna = ateNa;
+                    }
+                });
+                this.totalAtencionCliente = this._ACmuybueno.length + this._ACbuenoo.length + this._ACregular.length + this._ACmaloo.length + this._ACmuymalo.length + this._ACna.length;
+                this.data.map((item: { SA_convenios: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(item.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin)
+                    && (item.sucursal === 'Chorrillos' || item.sucursal === '0002')){
+                        let dato = item.SA_convenios;
+                        switch (dato) {
+                            case '1': coMuymalo += dato; break;
+                            case '2': coMalo += dato; break;
+                            case '3': coRegular += dato; break;
+                            case '4': coBueno += dato; break;
+                            case '5': coMuybueno += dato; break;
+                            default: coNa += dato;
+                        }
+                        this._COmuybueno = coMuybueno;
+                        this._CObuenoo = coBueno;
+                        this._COregular = coRegular;
+                        this._COmaloo = coMalo;
+                        this._COmuymalo = coMuymalo;
+                        this._COna = coNa;
+                    }
+                });
+                this.totalConvenios = this._COmuybueno.length + this._CObuenoo.length + this._COregular.length + this._COmaloo.length + this._COmuymalo.length + this._COna.length;
+                this.data.map((item: { SA_farmacia: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(item.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin)
+                    && (item.sucursal === 'Chorrillos' || item.sucursal === '0002')){
+                        let dato = item.SA_farmacia;
+                        switch (dato) {
+                            case '1': faMuymalo += dato; break;
+                            case '2': faMalo += dato; break;
+                            case '3': faRegular += dato; break;
+                            case '4': faBueno += dato; break;
+                            case '5': faMuybueno += dato; break;
+                            default: faNa += dato;
+                        }
+                        this._FAmuybueno = faMuybueno;
+                        this._FAbuenoo = faBueno;
+                        this._FAregular = faRegular;
+                        this._FAmaloo = faMalo;
+                        this._FAmuymalo = faMuymalo;
+                        this._FAna = faNa;
+                    }
+                });
+                this.totalFarmacia = this._FAmuybueno.length + this._FAbuenoo.length + this._FAregular.length + this._FAmaloo.length + this._FAmuymalo.length + this._FAna.length;
+                this.data.map((item: { SA_imagenes: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(item.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin)
+                    && (item.sucursal === 'Chorrillos' || item.sucursal === '0002')){
+                        let dato = item.SA_imagenes;
+                        switch (dato) {
+                            case '1': imMuymalo += dato; break;
+                            case '2': imMalo += dato; break;
+                            case '3': imRegular += dato; break;
+                            case '4': imBueno += dato; break;
+                            case '5': imMuybueno += dato; break;
+                            default: imNa += dato;
+                        }
+                        this._IMmuybueno = imMuybueno;
+                        this._IMbuenoo = imBueno;
+                        this._IMregular = imRegular;
+                        this._IMmaloo = imMalo;
+                        this._IMmuymalo = imMuymalo;
+                        this._IMna = imNa;
+                    }
+                });
+                this.totalImagenes = this._IMmuybueno.length + this._IMbuenoo.length + this._IMregular.length + this._IMmaloo.length + this._IMmuymalo.length + this._IMna.length;
+                this.data.map((item: { SA_laboratorio: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(item.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin)
+                    && (item.sucursal === 'Chorrillos' || item.sucursal === '0002')){
+                        let dato = item.SA_laboratorio;
+                        switch (dato) {
+                            case '1': laMuymalo += dato; break;
+                            case '2': laMalo += dato; break;
+                            case '3': laRegular += dato; break;
+                            case '4': laBueno += dato; break;
+                            case '5': laMuybueno += dato; break;
+                            default: laNa += dato;
+                        }
+                        this._LAmuybueno = laMuybueno;
+                        this._LAbuenoo = laBueno;
+                        this._LAregular = laRegular;
+                        this._LAmaloo = laMalo;
+                        this._LAmuymalo = laMuymalo;
+                        this._LAna = laNa;
+                    }
+                });
+                this.totalLaboratorio = this._LAmuybueno.length + this._LAbuenoo.length + this._LAregular.length + this._LAmaloo.length + this._LAmuymalo.length + this._LAna.length;
+                this.data.map((item: { SI_comodidad: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(item.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin)
+                    && (item.sucursal === 'Chorrillos' || item.sucursal === '0002')){
+                        let dato = item.SI_comodidad;
+                        switch (dato) {
+                            case '1': comMuymalo += dato; break;
+                            case '2': comMalo += dato; break;
+                            case '3': comRegular += dato; break;
+                            case '4': comBueno += dato; break;
+                            case '5': comMuybueno += dato; break;
+                            default: comNa += dato;
+                        }
+                        this._COMmuybueno = comMuybueno;
+                        this._COMbuenoo = comBueno;
+                        this._COMregular = comRegular;
+                        this._COMmaloo = comMalo;
+                        this._COMmuymalo = comMuymalo;
+                        this._COMna = comNa;
+                    }
+                });
+                this.totalComodidad = this._COMmuybueno.length + this._COMbuenoo.length + this._COMregular.length + this._COMmaloo.length + this._COMmuymalo.length + this._COMna.length;
+                this.data.map((item: { SI_limpieza: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(item.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin)
+                    && (item.sucursal === 'Chorrillos' || item.sucursal === '0002')){
+                        let dato = item.SI_limpieza;
+                        switch (dato) {
+                            case '1': liMuymalo += dato; break;
+                            case '2': liMalo += dato; break;
+                            case '3': liRegular += dato; break;
+                            case '4': liBueno += dato; break;
+                            case '5': liMuybueno += dato; break;
+                            default: liNa += dato;
+                        }
+                        this._LIMmuybueno = liMuybueno;
+                        this._LIMbuenoo = liBueno;
+                        this._LIMregular = liRegular;
+                        this._LIMmaloo = liMalo;
+                        this._LIMmuymalo = liMuymalo;
+                        this._LIMna = liNa;
+                    }
+                });
+                this.totalAseoLimpieza = this._LIMmuybueno.length + this._LIMbuenoo.length + this._LIMregular.length + this._LIMmaloo.length + this._LIMmuymalo.length + this._LIMna.length;
+                this.data.map((item: { SI_modernidad: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(item.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin)
+                    && (item.sucursal === 'Chorrillos' || item.sucursal === '0002')){
+                        let dato = item.SI_modernidad;
+                        switch (dato) {
+                            case '1': moMuymalo += dato; break;
+                            case '2': moMalo += dato; break;
+                            case '3': moRegular += dato; break;
+                            case '4': moBueno += dato; break;
+                            case '5': moMuybueno += dato; break;
+                            default: moNa += dato;
+                        }
+                        this._MOmuybueno = moMuybueno;
+                        this._MObuenoo = moBueno;
+                        this._MOregular = moRegular;
+                        this._MOmaloo = moMalo;
+                        this._MOmuymalo = moMuymalo;
+                        this._MOna = moNa;
+                    }
+                });
+                this.totalModernidad = this._MOmuybueno.length + this._MObuenoo.length + this._MOregular.length + this._MOmaloo.length + this._MOmuymalo.length + this._MOna.length;
+            
+                this.data.map((item: { SS_doctor: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(item.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin)
+                    && (item.sucursal === 'Chorrillos' || item.sucursal === '0002')){
+                        let dato = item.SS_doctor;
+                        switch (dato) {
+                            case '1': docMuymalo += dato; break;
+                            case '2': docMalo += dato; break;
+                            case '3': docRegular += dato; break;
+                            case '4': docBueno += dato; break;
+                            case '5': docMuybueno += dato; break;
+                            default: docNa += dato;
+                        }
+                        this._DOCmuybueno = docMuybueno;
+                        this._DOCbuenoo = docBueno;
+                        this._DOCregular = docRegular;
+                        this._DOCmaloo = docMalo;
+                        this._DOCmuymalo = docMuymalo;
+                        this._DOCna = docNa;
+                    }
+                });
+                this.totalMedico = this._DOCmuybueno.length + this._DOCbuenoo.length + this._DOCregular.length + this._DOCmaloo.length + this._DOCmuymalo.length + this._DOCna.length;
+            
+                this.data.map((item: { SS_enfermera: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(item.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin)
+                    && (item.sucursal === 'Chorrillos' || item.sucursal === '0002')){
+                        let dato = item.SS_enfermera;
+                        switch (dato) {
+                            case '1': enMuymalo += dato; break;
+                            case '2': enMalo += dato; break;
+                            case '3': enRegular += dato; break;
+                            case '4': enBueno += dato; break;
+                            case '5': enMuybueno += dato; break;
+                            default: enNa += dato;
+                        }
+                        this._ENmuybueno = enMuybueno;
+                        this._ENbuenoo = enBueno;
+                        this._ENregular = enRegular;
+                        this._ENmaloo = enMalo;
+                        this._ENmuymalo = enMuymalo;
+                        this._ENna = enNa;
+                    }
+                });
+                this.totalEnfermera = this._ENmuybueno.length + this._ENbuenoo.length + this._ENregular.length + this._ENmaloo.length + this._ENmuymalo.length + this._ENna.length;
+                this.data.map((item: { SS_tecnica: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(item.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin)
+                    && (item.sucursal === 'Chorrillos' || item.sucursal === '0002')){
+                        let dato = item.SS_tecnica;
+                        switch (dato) {
+                            case '1': tecMuymalo += dato; break;
+                            case '2': tecMalo += dato; break;
+                            case '3': tecRegular += dato; break;
+                            case '4': tecBueno += dato; break;
+                            case '5': tecMuybueno += dato; break;
+                            default: tecNa += dato;
+                        }
+                        this._TECmuybueno = tecMuybueno;
+                        this._TECbuenoo = tecBueno;
+                        this._TECregular = tecRegular;
+                        this._TECmaloo = tecMalo;
+                        this._TECmuymalo = tecMuymalo;
+                        this._TECna = tecNa;
+                    }
+                });
+                
+                this.totalTecnica = this._TECmuybueno.length + this._TECbuenoo.length + this._TECregular.length + this._TECmaloo.length + this._TECmuymalo.length + this._TECna.length;
+            }
+        } else if(data.sede === 4){
+
+            if(data.onSelect < 3 && data.periodo !== null){  
+
+                this.data.map((item: { SA_admision: any; registro_fecha: string; sucursal: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') === data.periodo && (item.sucursal === 'Chorrillos' || item.sucursal === '0004')){
+                        let dato = item.SA_admision;
+                        switch (dato) {
+                            case '1': sumMuymalo += dato; break;
+                            case '2': sumMalo += dato; break;
+                            case '3': sumRegular += dato; break;
+                            case '4': sumBueno += dato; break;
+                            case '5': sumMuybueno += dato; break;
+                            default: sumNa += dato;
+                        }
+                        this.muybueno = sumMuybueno;
+                        this.buenoo = sumBueno;
+                        this.regular = sumRegular;
+                        this.maloo = sumMalo;
+                        this.muymalo = sumMuymalo;
+                        this.na = sumNa;
+                    }
+                });
+
+                this.totalAdmision = this.muybueno.length + this.buenoo.length + this.regular.length + this.maloo.length + this.muymalo.length + this.na.length;
+
+                this.data.map((item: { SA_atencionCliente: any; registro_fecha: string; sucursal: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') === data.periodo && (item.sucursal === 'Chorrillos' || item.sucursal === '0004')){
+                        let dato = item.SA_atencionCliente;
+                        switch (dato) {
+                            case '1': ateMuymalo += dato; break;
+                            case '2': ateMalo += dato; break;
+                            case '3': ateRegular += dato; break;
+                            case '4': ateBueno += dato; break;
+                            case '5': ateMuybueno += dato; break;
+                            default: ateNa += dato;
+                        }
+                        this._ACmuybueno = ateMuybueno;
+                        this._ACbuenoo = ateBueno;
+                        this._ACregular = ateRegular;
+                        this._ACmaloo = ateMalo;
+                        this._ACmuymalo = ateMuymalo;
+                        this._ACna = ateNa;
+                    }
+                });
+                this.totalAtencionCliente = this._ACmuybueno.length + this._ACbuenoo.length + this._ACregular.length + this._ACmaloo.length + this._ACmuymalo.length + this._ACna.length;
+                this.data.map((item: { SA_convenios: any; registro_fecha: string; sucursal: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') === data.periodo && (item.sucursal === 'Chorrillos' || item.sucursal === '0004')){
+                        let dato = item.SA_convenios;
+                        switch (dato) {
+                            case '1': coMuymalo += dato; break;
+                            case '2': coMalo += dato; break;
+                            case '3': coRegular += dato; break;
+                            case '4': coBueno += dato; break;
+                            case '5': coMuybueno += dato; break;
+                            default: coNa += dato;
+                        }
+                        this._COmuybueno = coMuybueno;
+                        this._CObuenoo = coBueno;
+                        this._COregular = coRegular;
+                        this._COmaloo = coMalo;
+                        this._COmuymalo = coMuymalo;
+                        this._COna = coNa;
+                    }
+                });
+                this.totalConvenios = this._COmuybueno.length + this._CObuenoo.length + this._COregular.length + this._COmaloo.length + this._COmuymalo.length + this._COna.length;
+                this.data.map((item: { SA_farmacia: any; registro_fecha: string; sucursal: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') === data.periodo && (item.sucursal === 'Chorrillos' || item.sucursal === '0004')){
+                        let dato = item.SA_farmacia;
+                        switch (dato) {
+                            case '1': faMuymalo += dato; break;
+                            case '2': faMalo += dato; break;
+                            case '3': faRegular += dato; break;
+                            case '4': faBueno += dato; break;
+                            case '5': faMuybueno += dato; break;
+                            default: faNa += dato;
+                        }
+                        this._FAmuybueno = faMuybueno;
+                        this._FAbuenoo = faBueno;
+                        this._FAregular = faRegular;
+                        this._FAmaloo = faMalo;
+                        this._FAmuymalo = faMuymalo;
+                        this._FAna = faNa;
+                    }
+                });
+                this.totalFarmacia = this._FAmuybueno.length + this._FAbuenoo.length + this._FAregular.length + this._FAmaloo.length + this._FAmuymalo.length + this._FAna.length;
+                this.data.map((item: { SA_imagenes: any; registro_fecha: string; sucursal: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') === data.periodo && (item.sucursal === 'Chorrillos' || item.sucursal === '0004')){
+                        let dato = item.SA_imagenes;
+                        switch (dato) {
+                            case '1': imMuymalo += dato; break;
+                            case '2': imMalo += dato; break;
+                            case '3': imRegular += dato; break;
+                            case '4': imBueno += dato; break;
+                            case '5': imMuybueno += dato; break;
+                            default: imNa += dato;
+                        }
+                        this._IMmuybueno = imMuybueno;
+                        this._IMbuenoo = imBueno;
+                        this._IMregular = imRegular;
+                        this._IMmaloo = imMalo;
+                        this._IMmuymalo = imMuymalo;
+                        this._IMna = imNa;
+                    }
+                });
+                this.totalImagenes = this._IMmuybueno.length + this._IMbuenoo.length + this._IMregular.length + this._IMmaloo.length + this._IMmuymalo.length + this._IMna.length;
+                this.data.map((item: { SA_laboratorio: any; registro_fecha: string; sucursal: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') === data.periodo && (item.sucursal === 'Chorrillos' || item.sucursal === '0004')){
+                        let dato = item.SA_laboratorio;
+                        switch (dato) {
+                            case '1': laMuymalo += dato; break;
+                            case '2': laMalo += dato; break;
+                            case '3': laRegular += dato; break;
+                            case '4': laBueno += dato; break;
+                            case '5': laMuybueno += dato; break;
+                            default: laNa += dato;
+                        }
+                        this._LAmuybueno = laMuybueno;
+                        this._LAbuenoo = laBueno;
+                        this._LAregular = laRegular;
+                        this._LAmaloo = laMalo;
+                        this._LAmuymalo = laMuymalo;
+                        this._LAna = laNa;
+                    }
+                });
+                this.totalLaboratorio = this._LAmuybueno.length + this._LAbuenoo.length + this._LAregular.length + this._LAmaloo.length + this._LAmuymalo.length + this._LAna.length;
+                this.data.map((item: { SI_comodidad: any; registro_fecha: string; sucursal: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') === data.periodo && (item.sucursal === 'Chorrillos' || item.sucursal === '0004')){
+                        let dato = item.SI_comodidad;
+                        switch (dato) {
+                            case '1': comMuymalo += dato; break;
+                            case '2': comMalo += dato; break;
+                            case '3': comRegular += dato; break;
+                            case '4': comBueno += dato; break;
+                            case '5': comMuybueno += dato; break;
+                            default: comNa += dato;
+                        }
+                        this._COMmuybueno = comMuybueno;
+                        this._COMbuenoo = comBueno;
+                        this._COMregular = comRegular;
+                        this._COMmaloo = comMalo;
+                        this._COMmuymalo = comMuymalo;
+                        this._COMna = comNa;
+                    }
+                });
+                this.totalComodidad = this._COMmuybueno.length + this._COMbuenoo.length + this._COMregular.length + this._COMmaloo.length + this._COMmuymalo.length + this._COMna.length;
+                this.data.map((item: { SI_limpieza: any; registro_fecha: string; sucursal: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') === data.periodo && (item.sucursal === 'Chorrillos' || item.sucursal === '0004')){
+                        let dato = item.SI_limpieza;
+                        switch (dato) {
+                            case '1': liMuymalo += dato; break;
+                            case '2': liMalo += dato; break;
+                            case '3': liRegular += dato; break;
+                            case '4': liBueno += dato; break;
+                            case '5': liMuybueno += dato; break;
+                            default: liNa += dato;
+                        }
+                        this._LIMmuybueno = liMuybueno;
+                        this._LIMbuenoo = liBueno;
+                        this._LIMregular = liRegular;
+                        this._LIMmaloo = liMalo;
+                        this._LIMmuymalo = liMuymalo;
+                        this._LIMna = liNa;
+                    }
+                });
+                this.totalAseoLimpieza = this._LIMmuybueno.length + this._LIMbuenoo.length + this._LIMregular.length + this._LIMmaloo.length + this._LIMmuymalo.length + this._LIMna.length;
+                this.data.map((item: { SI_modernidad: any; registro_fecha: string; sucursal: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') === data.periodo && (item.sucursal === 'Chorrillos' || item.sucursal === '0004')){
+                        let dato = item.SI_modernidad;
+                        switch (dato) {
+                            case '1': moMuymalo += dato; break;
+                            case '2': moMalo += dato; break;
+                            case '3': moRegular += dato; break;
+                            case '4': moBueno += dato; break;
+                            case '5': moMuybueno += dato; break;
+                            default: moNa += dato;
+                        }
+                        this._MOmuybueno = moMuybueno;
+                        this._MObuenoo = moBueno;
+                        this._MOregular = moRegular;
+                        this._MOmaloo = moMalo;
+                        this._MOmuymalo = moMuymalo;
+                        this._MOna = moNa;
+                    }
+                });
+                this.totalModernidad = this._MOmuybueno.length + this._MObuenoo.length + this._MOregular.length + this._MOmaloo.length + this._MOmuymalo.length + this._MOna.length;
+
+                this.data.map((item: { SS_doctor: any; registro_fecha: string; sucursal: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') === data.periodo && (item.sucursal === 'Chorrillos' || item.sucursal === '0004')){
+                        let dato = item.SS_doctor;
+                        switch (dato) {
+                            case '1': docMuymalo += dato; break;
+                            case '2': docMalo += dato; break;
+                            case '3': docRegular += dato; break;
+                            case '4': docBueno += dato; break;
+                            case '5': docMuybueno += dato; break;
+                            default: docNa += dato;
+                        }
+                        this._DOCmuybueno = docMuybueno;
+                        this._DOCbuenoo = docBueno;
+                        this._DOCregular = docRegular;
+                        this._DOCmaloo = docMalo;
+                        this._DOCmuymalo = docMuymalo;
+                        this._DOCna = docNa;
+                    }
+                });
+                this.totalMedico = this._DOCmuybueno.length + this._DOCbuenoo.length + this._DOCregular.length + this._DOCmaloo.length + this._DOCmuymalo.length + this._DOCna.length;
+
+                this.data.map((item: { SS_enfermera: any; registro_fecha: string; sucursal: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') === data.periodo && (item.sucursal === 'Chorrillos' || item.sucursal === '0004')){
+                        let dato = item.SS_enfermera;
+                        switch (dato) {
+                            case '1': enMuymalo += dato; break;
+                            case '2': enMalo += dato; break;
+                            case '3': enRegular += dato; break;
+                            case '4': enBueno += dato; break;
+                            case '5': enMuybueno += dato; break;
+                            default: enNa += dato;
+                        }
+                        this._ENmuybueno = enMuybueno;
+                        this._ENbuenoo = enBueno;
+                        this._ENregular = enRegular;
+                        this._ENmaloo = enMalo;
+                        this._ENmuymalo = enMuymalo;
+                        this._ENna = enNa;
+                    }
+                });
+                this.totalEnfermera = this._ENmuybueno.length + this._ENbuenoo.length + this._ENregular.length + this._ENmaloo.length + this._ENmuymalo.length + this._ENna.length;
+                this.data.map((item: { SS_tecnica: any; registro_fecha: string; sucursal: string;}) => {
+                    if (moment(item.registro_fecha).format('YYYY-MM-DD') === data.periodo && (item.sucursal === 'Chorrillos' || item.sucursal === '0004')){
+                        let dato = item.SS_tecnica;
+                        switch (dato) {
+                            case '1': tecMuymalo += dato; break;
+                            case '2': tecMalo += dato; break;
+                            case '3': tecRegular += dato; break;
+                            case '4': tecBueno += dato; break;
+                            case '5': tecMuybueno += dato; break;
+                            default: tecNa += dato;
+                        }
+                        this._TECmuybueno = tecMuybueno;
+                        this._TECbuenoo = tecBueno;
+                        this._TECregular = tecRegular;
+                        this._TECmaloo = tecMalo;
+                        this._TECmuymalo = tecMuymalo;
+                        this._TECna = tecNa;
+                    }
+                });
+                
+                this.totalTecnica = this._TECmuybueno.length + this._TECbuenoo.length + this._TECregular.length + this._TECmaloo.length + this._TECmuymalo.length + this._TECna.length;
+
+            }else if((data.onSelect === '3' || data.onSelect === '4') && data.periodo !== null){
+
+                this.data.map((item: { SA_admision: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(item.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')) 
+                    && (item.sucursal === 'Chorrillos' || item.sucursal === '0004')){
+                        let dato = item.SA_admision;
+                        switch (dato) {
+                            case '1': sumMuymalo += dato; break;
+                            case '2': sumMalo += dato; break;
+                            case '3': sumRegular += dato; break;
+                            case '4': sumBueno += dato; break;
+                            case '5': sumMuybueno += dato; break;
+                            default: sumNa += dato;
+                        }
+                        this.muybueno = sumMuybueno;
+                        this.buenoo = sumBueno;
+                        this.regular = sumRegular;
+                        this.maloo = sumMalo;
+                        this.muymalo = sumMuymalo;
+                        this.na = sumNa;
+                    }
+                });
+
+                this.totalAdmision = this.muybueno.length + this.buenoo.length + this.regular.length + this.maloo.length + this.muymalo.length + this.na.length;
+
+                this.data.map((item: { SA_atencionCliente: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(item.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'))
+                    && (item.sucursal === 'Chorrillos' || item.sucursal === '0004')){
+                        let dato = item.SA_atencionCliente;
+                        switch (dato) {
+                            case '1': ateMuymalo += dato; break;
+                            case '2': ateMalo += dato; break;
+                            case '3': ateRegular += dato; break;
+                            case '4': ateBueno += dato; break;
+                            case '5': ateMuybueno += dato; break;
+                            default: ateNa += dato;
+                        }
+                        this._ACmuybueno = ateMuybueno;
+                        this._ACbuenoo = ateBueno;
+                        this._ACregular = ateRegular;
+                        this._ACmaloo = ateMalo;
+                        this._ACmuymalo = ateMuymalo;
+                        this._ACna = ateNa;
+                    }
+                });
+                this.totalAtencionCliente = this._ACmuybueno.length + this._ACbuenoo.length + this._ACregular.length + this._ACmaloo.length + this._ACmuymalo.length + this._ACna.length;
+                this.data.map((item: { SA_convenios: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(item.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'))
+                    && (item.sucursal === 'Chorrillos' || item.sucursal === '0004')){
+                        let dato = item.SA_convenios;
+                        switch (dato) {
+                            case '1': coMuymalo += dato; break;
+                            case '2': coMalo += dato; break;
+                            case '3': coRegular += dato; break;
+                            case '4': coBueno += dato; break;
+                            case '5': coMuybueno += dato; break;
+                            default: coNa += dato;
+                        }
+                        this._COmuybueno = coMuybueno;
+                        this._CObuenoo = coBueno;
+                        this._COregular = coRegular;
+                        this._COmaloo = coMalo;
+                        this._COmuymalo = coMuymalo;
+                        this._COna = coNa;
+                    }
+                });
+                this.totalConvenios = this._COmuybueno.length + this._CObuenoo.length + this._COregular.length + this._COmaloo.length + this._COmuymalo.length + this._COna.length;
+                this.data.map((item: { SA_farmacia: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(item.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'))
+                    && (item.sucursal === 'Chorrillos' || item.sucursal === '0004')){
+                        let dato = item.SA_farmacia;
+                        switch (dato) {
+                            case '1': faMuymalo += dato; break;
+                            case '2': faMalo += dato; break;
+                            case '3': faRegular += dato; break;
+                            case '4': faBueno += dato; break;
+                            case '5': faMuybueno += dato; break;
+                            default: faNa += dato;
+                        }
+                        this._FAmuybueno = faMuybueno;
+                        this._FAbuenoo = faBueno;
+                        this._FAregular = faRegular;
+                        this._FAmaloo = faMalo;
+                        this._FAmuymalo = faMuymalo;
+                        this._FAna = faNa;
+                    }
+                });
+                this.totalFarmacia = this._FAmuybueno.length + this._FAbuenoo.length + this._FAregular.length + this._FAmaloo.length + this._FAmuymalo.length + this._FAna.length;
+                this.data.map((item: { SA_imagenes: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(item.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'))
+                    && (item.sucursal === 'Chorrillos' || item.sucursal === '0004')){
+                        let dato = item.SA_imagenes;
+                        switch (dato) {
+                            case '1': imMuymalo += dato; break;
+                            case '2': imMalo += dato; break;
+                            case '3': imRegular += dato; break;
+                            case '4': imBueno += dato; break;
+                            case '5': imMuybueno += dato; break;
+                            default: imNa += dato;
+                        }
+                        this._IMmuybueno = imMuybueno;
+                        this._IMbuenoo = imBueno;
+                        this._IMregular = imRegular;
+                        this._IMmaloo = imMalo;
+                        this._IMmuymalo = imMuymalo;
+                        this._IMna = imNa;
+                    }
+                });
+                this.totalImagenes = this._IMmuybueno.length + this._IMbuenoo.length + this._IMregular.length + this._IMmaloo.length + this._IMmuymalo.length + this._IMna.length;
+                this.data.map((item: { SA_laboratorio: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(item.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'))
+                    && (item.sucursal === 'Chorrillos' || item.sucursal === '0004')){
+                        let dato = item.SA_laboratorio;
+                        switch (dato) {
+                            case '1': laMuymalo += dato; break;
+                            case '2': laMalo += dato; break;
+                            case '3': laRegular += dato; break;
+                            case '4': laBueno += dato; break;
+                            case '5': laMuybueno += dato; break;
+                            default: laNa += dato;
+                        }
+                        this._LAmuybueno = laMuybueno;
+                        this._LAbuenoo = laBueno;
+                        this._LAregular = laRegular;
+                        this._LAmaloo = laMalo;
+                        this._LAmuymalo = laMuymalo;
+                        this._LAna = laNa;
+                    }
+                });
+                this.totalLaboratorio = this._LAmuybueno.length + this._LAbuenoo.length + this._LAregular.length + this._LAmaloo.length + this._LAmuymalo.length + this._LAna.length;
+                this.data.map((item: { SI_comodidad: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(item.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'))
+                    && (item.sucursal === 'Chorrillos' || item.sucursal === '0004')){
+                        let dato = item.SI_comodidad;
+                        switch (dato) {
+                            case '1': comMuymalo += dato; break;
+                            case '2': comMalo += dato; break;
+                            case '3': comRegular += dato; break;
+                            case '4': comBueno += dato; break;
+                            case '5': comMuybueno += dato; break;
+                            default: comNa += dato;
+                        }
+                        this._COMmuybueno = comMuybueno;
+                        this._COMbuenoo = comBueno;
+                        this._COMregular = comRegular;
+                        this._COMmaloo = comMalo;
+                        this._COMmuymalo = comMuymalo;
+                        this._COMna = comNa;
+                    }
+                });
+                this.totalComodidad = this._COMmuybueno.length + this._COMbuenoo.length + this._COMregular.length + this._COMmaloo.length + this._COMmuymalo.length + this._COMna.length;
+                this.data.map((item: { SI_limpieza: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(item.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'))
+                    && (item.sucursal === 'Chorrillos' || item.sucursal === '0004')){
+                        let dato = item.SI_limpieza;
+                        switch (dato) {
+                            case '1': liMuymalo += dato; break;
+                            case '2': liMalo += dato; break;
+                            case '3': liRegular += dato; break;
+                            case '4': liBueno += dato; break;
+                            case '5': liMuybueno += dato; break;
+                            default: liNa += dato;
+                        }
+                        this._LIMmuybueno = liMuybueno;
+                        this._LIMbuenoo = liBueno;
+                        this._LIMregular = liRegular;
+                        this._LIMmaloo = liMalo;
+                        this._LIMmuymalo = liMuymalo;
+                        this._LIMna = liNa;
+                    }
+                });
+                this.totalAseoLimpieza = this._LIMmuybueno.length + this._LIMbuenoo.length + this._LIMregular.length + this._LIMmaloo.length + this._LIMmuymalo.length + this._LIMna.length;
+                this.data.map((item: { SI_modernidad: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(item.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'))
+                    && (item.sucursal === 'Chorrillos' || item.sucursal === '0004')){
+                        let dato = item.SI_modernidad;
+                        switch (dato) {
+                            case '1': moMuymalo += dato; break;
+                            case '2': moMalo += dato; break;
+                            case '3': moRegular += dato; break;
+                            case '4': moBueno += dato; break;
+                            case '5': moMuybueno += dato; break;
+                            default: moNa += dato;
+                        }
+                        this._MOmuybueno = moMuybueno;
+                        this._MObuenoo = moBueno;
+                        this._MOregular = moRegular;
+                        this._MOmaloo = moMalo;
+                        this._MOmuymalo = moMuymalo;
+                        this._MOna = moNa;
+                    }
+                });
+                this.totalModernidad = this._MOmuybueno.length + this._MObuenoo.length + this._MOregular.length + this._MOmaloo.length + this._MOmuymalo.length + this._MOna.length;
+
+                this.data.map((item: { SS_doctor: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(item.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'))
+                    && (item.sucursal === 'Chorrillos' || item.sucursal === '0004')){
+                        let dato = item.SS_doctor;
+                        switch (dato) {
+                            case '1': docMuymalo += dato; break;
+                            case '2': docMalo += dato; break;
+                            case '3': docRegular += dato; break;
+                            case '4': docBueno += dato; break;
+                            case '5': docMuybueno += dato; break;
+                            default: docNa += dato;
+                        }
+                        this._DOCmuybueno = docMuybueno;
+                        this._DOCbuenoo = docBueno;
+                        this._DOCregular = docRegular;
+                        this._DOCmaloo = docMalo;
+                        this._DOCmuymalo = docMuymalo;
+                        this._DOCna = docNa;
+                    }
+                });
+                this.totalMedico = this._DOCmuybueno.length + this._DOCbuenoo.length + this._DOCregular.length + this._DOCmaloo.length + this._DOCmuymalo.length + this._DOCna.length;
+
+                this.data.map((item: { SS_enfermera: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(item.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'))
+                    && (item.sucursal === 'Chorrillos' || item.sucursal === '0004')){
+                        let dato = item.SS_enfermera;
+                        switch (dato) {
+                            case '1': enMuymalo += dato; break;
+                            case '2': enMalo += dato; break;
+                            case '3': enRegular += dato; break;
+                            case '4': enBueno += dato; break;
+                            case '5': enMuybueno += dato; break;
+                            default: enNa += dato;
+                        }
+                        this._ENmuybueno = enMuybueno;
+                        this._ENbuenoo = enBueno;
+                        this._ENregular = enRegular;
+                        this._ENmaloo = enMalo;
+                        this._ENmuymalo = enMuymalo;
+                        this._ENna = enNa;
+                    }
+                });
+                this.totalEnfermera = this._ENmuybueno.length + this._ENbuenoo.length + this._ENregular.length + this._ENmaloo.length + this._ENmuymalo.length + this._ENna.length;
+                this.data.map((item: { SS_tecnica: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(item.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'))
+                    && (item.sucursal === 'Chorrillos' || item.sucursal === '0004')){
+                        let dato = item.SS_tecnica;
+                        switch (dato) {
+                            case '1': tecMuymalo += dato; break;
+                            case '2': tecMalo += dato; break;
+                            case '3': tecRegular += dato; break;
+                            case '4': tecBueno += dato; break;
+                            case '5': tecMuybueno += dato; break;
+                            default: tecNa += dato;
+                        }
+                        this._TECmuybueno = tecMuybueno;
+                        this._TECbuenoo = tecBueno;
+                        this._TECregular = tecRegular;
+                        this._TECmaloo = tecMalo;
+                        this._TECmuymalo = tecMuymalo;
+                        this._TECna = tecNa;
+                    }
+                });
+                
+                this.totalTecnica = this._TECmuybueno.length + this._TECbuenoo.length + this._TECregular.length + this._TECmaloo.length + this._TECmuymalo.length + this._TECna.length;
+            }else if((data.onSelect === '5' || data.onSelect === '6') && data.mes !== null){
+                this.data.map((item: { SA_admision: any; registro_fecha: string; sucursal: string;}) => {
+                    if (new Date(item.registro_fecha).getMonth() === new Date(data.mes).getMonth() && (item.sucursal === 'Chorrillos' || item.sucursal === '0004')){
+                        let dato = item.SA_admision;
+                        switch (dato) {
+                            case '1': sumMuymalo += dato; break;
+                            case '2': sumMalo += dato; break;
+                            case '3': sumRegular += dato; break;
+                            case '4': sumBueno += dato; break;
+                            case '5': sumMuybueno += dato; break;
+                            default: sumNa += dato;
+                        }
+                        this.muybueno = sumMuybueno;
+                        this.buenoo = sumBueno;
+                        this.regular = sumRegular;
+                        this.maloo = sumMalo;
+                        this.muymalo = sumMuymalo;
+                        this.na = sumNa;
+                    }
+                });
+
+                this.totalAdmision = this.muybueno.length + this.buenoo.length + this.regular.length + this.maloo.length + this.muymalo.length + this.na.length;
+
+                this.data.map((item: { SA_atencionCliente: any; registro_fecha: string; sucursal: string;}) => {
+                    if (new Date(item.registro_fecha).getMonth() === new Date(data.mes).getMonth() && (item.sucursal === 'Chorrillos' || item.sucursal === '0004')){
+                        let dato = item.SA_atencionCliente;
+                        switch (dato) {
+                            case '1': ateMuymalo += dato; break;
+                            case '2': ateMalo += dato; break;
+                            case '3': ateRegular += dato; break;
+                            case '4': ateBueno += dato; break;
+                            case '5': ateMuybueno += dato; break;
+                            default: ateNa += dato;
+                        }
+                        this._ACmuybueno = ateMuybueno;
+                        this._ACbuenoo = ateBueno;
+                        this._ACregular = ateRegular;
+                        this._ACmaloo = ateMalo;
+                        this._ACmuymalo = ateMuymalo;
+                        this._ACna = ateNa;
+                    }
+                });
+                this.totalAtencionCliente = this._ACmuybueno.length + this._ACbuenoo.length + this._ACregular.length + this._ACmaloo.length + this._ACmuymalo.length + this._ACna.length;
+                this.data.map((item: { SA_convenios: any; registro_fecha: string; sucursal: string;}) => {
+                    if (new Date(item.registro_fecha).getMonth() === new Date(data.mes).getMonth() && (item.sucursal === 'Chorrillos' || item.sucursal === '0004')){
+                        let dato = item.SA_convenios;
+                        switch (dato) {
+                            case '1': coMuymalo += dato; break;
+                            case '2': coMalo += dato; break;
+                            case '3': coRegular += dato; break;
+                            case '4': coBueno += dato; break;
+                            case '5': coMuybueno += dato; break;
+                            default: coNa += dato;
+                        }
+                        this._COmuybueno = coMuybueno;
+                        this._CObuenoo = coBueno;
+                        this._COregular = coRegular;
+                        this._COmaloo = coMalo;
+                        this._COmuymalo = coMuymalo;
+                        this._COna = coNa;
+                    }
+                });
+                this.totalConvenios = this._COmuybueno.length + this._CObuenoo.length + this._COregular.length + this._COmaloo.length + this._COmuymalo.length + this._COna.length;
+                this.data.map((item: { SA_farmacia: any; registro_fecha: string; sucursal: string;}) => {
+                    if (new Date(item.registro_fecha).getMonth() === new Date(data.mes).getMonth() && (item.sucursal === 'Chorrillos' || item.sucursal === '0004')){
+                        let dato = item.SA_farmacia;
+                        switch (dato) {
+                            case '1': faMuymalo += dato; break;
+                            case '2': faMalo += dato; break;
+                            case '3': faRegular += dato; break;
+                            case '4': faBueno += dato; break;
+                            case '5': faMuybueno += dato; break;
+                            default: faNa += dato;
+                        }
+                        this._FAmuybueno = faMuybueno;
+                        this._FAbuenoo = faBueno;
+                        this._FAregular = faRegular;
+                        this._FAmaloo = faMalo;
+                        this._FAmuymalo = faMuymalo;
+                        this._FAna = faNa;
+                    }
+                });
+                this.totalFarmacia = this._FAmuybueno.length + this._FAbuenoo.length + this._FAregular.length + this._FAmaloo.length + this._FAmuymalo.length + this._FAna.length;
+                this.data.map((item: { SA_imagenes: any; registro_fecha: string; sucursal: string;}) => {
+                    if (new Date(item.registro_fecha).getMonth() === new Date(data.mes).getMonth() && (item.sucursal === 'Chorrillos' || item.sucursal === '0004')){
+                        let dato = item.SA_imagenes;
+                        switch (dato) {
+                            case '1': imMuymalo += dato; break;
+                            case '2': imMalo += dato; break;
+                            case '3': imRegular += dato; break;
+                            case '4': imBueno += dato; break;
+                            case '5': imMuybueno += dato; break;
+                            default: imNa += dato;
+                        }
+                        this._IMmuybueno = imMuybueno;
+                        this._IMbuenoo = imBueno;
+                        this._IMregular = imRegular;
+                        this._IMmaloo = imMalo;
+                        this._IMmuymalo = imMuymalo;
+                        this._IMna = imNa;
+                    }
+                });
+                this.totalImagenes = this._IMmuybueno.length + this._IMbuenoo.length + this._IMregular.length + this._IMmaloo.length + this._IMmuymalo.length + this._IMna.length;
+                this.data.map((item: { SA_laboratorio: any; registro_fecha: string; sucursal: string;}) => {
+                    if (new Date(item.registro_fecha).getMonth() === new Date(data.mes).getMonth() && (item.sucursal === 'Chorrillos' || item.sucursal === '0004')){
+                        let dato = item.SA_laboratorio;
+                        switch (dato) {
+                            case '1': laMuymalo += dato; break;
+                            case '2': laMalo += dato; break;
+                            case '3': laRegular += dato; break;
+                            case '4': laBueno += dato; break;
+                            case '5': laMuybueno += dato; break;
+                            default: laNa += dato;
+                        }
+                        this._LAmuybueno = laMuybueno;
+                        this._LAbuenoo = laBueno;
+                        this._LAregular = laRegular;
+                        this._LAmaloo = laMalo;
+                        this._LAmuymalo = laMuymalo;
+                        this._LAna = laNa;
+                    }
+                });
+                this.totalLaboratorio = this._LAmuybueno.length + this._LAbuenoo.length + this._LAregular.length + this._LAmaloo.length + this._LAmuymalo.length + this._LAna.length;
+                this.data.map((item: { SI_comodidad: any; registro_fecha: string; sucursal: string;}) => {
+                    if (new Date(item.registro_fecha).getMonth() === new Date(data.mes).getMonth() && (item.sucursal === 'Chorrillos' || item.sucursal === '0004')){
+                        let dato = item.SI_comodidad;
+                        switch (dato) {
+                            case '1': comMuymalo += dato; break;
+                            case '2': comMalo += dato; break;
+                            case '3': comRegular += dato; break;
+                            case '4': comBueno += dato; break;
+                            case '5': comMuybueno += dato; break;
+                            default: comNa += dato;
+                        }
+                        this._COMmuybueno = comMuybueno;
+                        this._COMbuenoo = comBueno;
+                        this._COMregular = comRegular;
+                        this._COMmaloo = comMalo;
+                        this._COMmuymalo = comMuymalo;
+                        this._COMna = comNa;
+                    }
+                });
+                this.totalComodidad = this._COMmuybueno.length + this._COMbuenoo.length + this._COMregular.length + this._COMmaloo.length + this._COMmuymalo.length + this._COMna.length;
+                this.data.map((item: { SI_limpieza: any; registro_fecha: string; sucursal: string;}) => {
+                    if (new Date(item.registro_fecha).getMonth() === new Date(data.mes).getMonth() && (item.sucursal === 'Chorrillos' || item.sucursal === '0004')){
+                        let dato = item.SI_limpieza;
+                        switch (dato) {
+                            case '1': liMuymalo += dato; break;
+                            case '2': liMalo += dato; break;
+                            case '3': liRegular += dato; break;
+                            case '4': liBueno += dato; break;
+                            case '5': liMuybueno += dato; break;
+                            default: liNa += dato;
+                        }
+                        this._LIMmuybueno = liMuybueno;
+                        this._LIMbuenoo = liBueno;
+                        this._LIMregular = liRegular;
+                        this._LIMmaloo = liMalo;
+                        this._LIMmuymalo = liMuymalo;
+                        this._LIMna = liNa;
+                    }
+                });
+                this.totalAseoLimpieza = this._LIMmuybueno.length + this._LIMbuenoo.length + this._LIMregular.length + this._LIMmaloo.length + this._LIMmuymalo.length + this._LIMna.length;
+                this.data.map((item: { SI_modernidad: any; registro_fecha: string; sucursal: string;}) => {
+                    if (new Date(item.registro_fecha).getMonth() === new Date(data.mes).getMonth() && (item.sucursal === 'Chorrillos' || item.sucursal === '0004')){
+                        let dato = item.SI_modernidad;
+                        switch (dato) {
+                            case '1': moMuymalo += dato; break;
+                            case '2': moMalo += dato; break;
+                            case '3': moRegular += dato; break;
+                            case '4': moBueno += dato; break;
+                            case '5': moMuybueno += dato; break;
+                            default: moNa += dato;
+                        }
+                        this._MOmuybueno = moMuybueno;
+                        this._MObuenoo = moBueno;
+                        this._MOregular = moRegular;
+                        this._MOmaloo = moMalo;
+                        this._MOmuymalo = moMuymalo;
+                        this._MOna = moNa;
+                    }
+                });
+                this.totalModernidad = this._MOmuybueno.length + this._MObuenoo.length + this._MOregular.length + this._MOmaloo.length + this._MOmuymalo.length + this._MOna.length;
+
+                this.data.map((item: { SS_doctor: any; registro_fecha: string; sucursal: string;}) => {
+                    if (new Date(item.registro_fecha).getMonth() === new Date(data.mes).getMonth() && (item.sucursal === 'Chorrillos' || item.sucursal === '0004')){
+                        let dato = item.SS_doctor;
+                        switch (dato) {
+                            case '1': docMuymalo += dato; break;
+                            case '2': docMalo += dato; break;
+                            case '3': docRegular += dato; break;
+                            case '4': docBueno += dato; break;
+                            case '5': docMuybueno += dato; break;
+                            default: docNa += dato;
+                        }
+                        this._DOCmuybueno = docMuybueno;
+                        this._DOCbuenoo = docBueno;
+                        this._DOCregular = docRegular;
+                        this._DOCmaloo = docMalo;
+                        this._DOCmuymalo = docMuymalo;
+                        this._DOCna = docNa;
+                    }
+                });
+                this.totalMedico = this._DOCmuybueno.length + this._DOCbuenoo.length + this._DOCregular.length + this._DOCmaloo.length + this._DOCmuymalo.length + this._DOCna.length;
+
+                this.data.map((item: { SS_enfermera: any; registro_fecha: string; sucursal: string;}) => {
+                    if (new Date(item.registro_fecha).getMonth() === new Date(data.mes).getMonth() && (item.sucursal === 'Chorrillos' || item.sucursal === '0004')){
+                        let dato = item.SS_enfermera;
+                        switch (dato) {
+                            case '1': enMuymalo += dato; break;
+                            case '2': enMalo += dato; break;
+                            case '3': enRegular += dato; break;
+                            case '4': enBueno += dato; break;
+                            case '5': enMuybueno += dato; break;
+                            default: enNa += dato;
+                        }
+                        this._ENmuybueno = enMuybueno;
+                        this._ENbuenoo = enBueno;
+                        this._ENregular = enRegular;
+                        this._ENmaloo = enMalo;
+                        this._ENmuymalo = enMuymalo;
+                        this._ENna = enNa;
+                    }
+                });
+                this.totalEnfermera = this._ENmuybueno.length + this._ENbuenoo.length + this._ENregular.length + this._ENmaloo.length + this._ENmuymalo.length + this._ENna.length;
+                this.data.map((item: { SS_tecnica: any; registro_fecha: string; sucursal: string;}) => {
+                    if (new Date(item.registro_fecha).getMonth() === new Date(data.mes).getMonth() && (item.sucursal === 'Chorrillos' || item.sucursal === '0004')){
+                        let dato = item.SS_tecnica;
+                        switch (dato) {
+                            case '1': tecMuymalo += dato; break;
+                            case '2': tecMalo += dato; break;
+                            case '3': tecRegular += dato; break;
+                            case '4': tecBueno += dato; break;
+                            case '5': tecMuybueno += dato; break;
+                            default: tecNa += dato;
+                        }
+                        this._TECmuybueno = tecMuybueno;
+                        this._TECbuenoo = tecBueno;
+                        this._TECregular = tecRegular;
+                        this._TECmaloo = tecMalo;
+                        this._TECmuymalo = tecMuymalo;
+                        this._TECna = tecNa;
+                    }
+                });
+                
+                this.totalTecnica = this._TECmuybueno.length + this._TECbuenoo.length + this._TECregular.length + this._TECmaloo.length + this._TECmuymalo.length + this._TECna.length;
+
+            }else if(data.onSelect === '7' && data.fecha_inicio !== null && data.fecha_fin !== null){
+
+                this.data.map((item: { SA_admision: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(item.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin)
+                    && (item.sucursal === 'Chorrillos' || item.sucursal === '0004')){
+                        let dato = item.SA_admision;
+                        switch (dato) {
+                            case '1': sumMuymalo += dato; break;
+                            case '2': sumMalo += dato; break;
+                            case '3': sumRegular += dato; break;
+                            case '4': sumBueno += dato; break;
+                            case '5': sumMuybueno += dato; break;
+                            default: sumNa += dato;
+                        }
+                        this.muybueno = sumMuybueno;
+                        this.buenoo = sumBueno;
+                        this.regular = sumRegular;
+                        this.maloo = sumMalo;
+                        this.muymalo = sumMuymalo;
+                        this.na = sumNa;
+                    }
+                });
+
+                this.totalAdmision = this.muybueno.length + this.buenoo.length + this.regular.length + this.maloo.length + this.muymalo.length + this.na.length;
+
+                this.data.map((item: { SA_atencionCliente: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(item.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin)
+                    && (item.sucursal === 'Chorrillos' || item.sucursal === '0004')){
+                        let dato = item.SA_atencionCliente;
+                        switch (dato) {
+                            case '1': ateMuymalo += dato; break;
+                            case '2': ateMalo += dato; break;
+                            case '3': ateRegular += dato; break;
+                            case '4': ateBueno += dato; break;
+                            case '5': ateMuybueno += dato; break;
+                            default: ateNa += dato;
+                        }
+                        this._ACmuybueno = ateMuybueno;
+                        this._ACbuenoo = ateBueno;
+                        this._ACregular = ateRegular;
+                        this._ACmaloo = ateMalo;
+                        this._ACmuymalo = ateMuymalo;
+                        this._ACna = ateNa;
+                    }
+                });
+                this.totalAtencionCliente = this._ACmuybueno.length + this._ACbuenoo.length + this._ACregular.length + this._ACmaloo.length + this._ACmuymalo.length + this._ACna.length;
+                this.data.map((item: { SA_convenios: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(item.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin)
+                    && (item.sucursal === 'Chorrillos' || item.sucursal === '0004')){
+                        let dato = item.SA_convenios;
+                        switch (dato) {
+                            case '1': coMuymalo += dato; break;
+                            case '2': coMalo += dato; break;
+                            case '3': coRegular += dato; break;
+                            case '4': coBueno += dato; break;
+                            case '5': coMuybueno += dato; break;
+                            default: coNa += dato;
+                        }
+                        this._COmuybueno = coMuybueno;
+                        this._CObuenoo = coBueno;
+                        this._COregular = coRegular;
+                        this._COmaloo = coMalo;
+                        this._COmuymalo = coMuymalo;
+                        this._COna = coNa;
+                    }
+                });
+                this.totalConvenios = this._COmuybueno.length + this._CObuenoo.length + this._COregular.length + this._COmaloo.length + this._COmuymalo.length + this._COna.length;
+                this.data.map((item: { SA_farmacia: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(item.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin)
+                    && (item.sucursal === 'Chorrillos' || item.sucursal === '0004')){
+                        let dato = item.SA_farmacia;
+                        switch (dato) {
+                            case '1': faMuymalo += dato; break;
+                            case '2': faMalo += dato; break;
+                            case '3': faRegular += dato; break;
+                            case '4': faBueno += dato; break;
+                            case '5': faMuybueno += dato; break;
+                            default: faNa += dato;
+                        }
+                        this._FAmuybueno = faMuybueno;
+                        this._FAbuenoo = faBueno;
+                        this._FAregular = faRegular;
+                        this._FAmaloo = faMalo;
+                        this._FAmuymalo = faMuymalo;
+                        this._FAna = faNa;
+                    }
+                });
+                this.totalFarmacia = this._FAmuybueno.length + this._FAbuenoo.length + this._FAregular.length + this._FAmaloo.length + this._FAmuymalo.length + this._FAna.length;
+                this.data.map((item: { SA_imagenes: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(item.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin)
+                    && (item.sucursal === 'Chorrillos' || item.sucursal === '0004')){
+                        let dato = item.SA_imagenes;
+                        switch (dato) {
+                            case '1': imMuymalo += dato; break;
+                            case '2': imMalo += dato; break;
+                            case '3': imRegular += dato; break;
+                            case '4': imBueno += dato; break;
+                            case '5': imMuybueno += dato; break;
+                            default: imNa += dato;
+                        }
+                        this._IMmuybueno = imMuybueno;
+                        this._IMbuenoo = imBueno;
+                        this._IMregular = imRegular;
+                        this._IMmaloo = imMalo;
+                        this._IMmuymalo = imMuymalo;
+                        this._IMna = imNa;
+                    }
+                });
+                this.totalImagenes = this._IMmuybueno.length + this._IMbuenoo.length + this._IMregular.length + this._IMmaloo.length + this._IMmuymalo.length + this._IMna.length;
+                this.data.map((item: { SA_laboratorio: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(item.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin)
+                    && (item.sucursal === 'Chorrillos' || item.sucursal === '0004')){
+                        let dato = item.SA_laboratorio;
+                        switch (dato) {
+                            case '1': laMuymalo += dato; break;
+                            case '2': laMalo += dato; break;
+                            case '3': laRegular += dato; break;
+                            case '4': laBueno += dato; break;
+                            case '5': laMuybueno += dato; break;
+                            default: laNa += dato;
+                        }
+                        this._LAmuybueno = laMuybueno;
+                        this._LAbuenoo = laBueno;
+                        this._LAregular = laRegular;
+                        this._LAmaloo = laMalo;
+                        this._LAmuymalo = laMuymalo;
+                        this._LAna = laNa;
+                    }
+                });
+                this.totalLaboratorio = this._LAmuybueno.length + this._LAbuenoo.length + this._LAregular.length + this._LAmaloo.length + this._LAmuymalo.length + this._LAna.length;
+                this.data.map((item: { SI_comodidad: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(item.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin)
+                    && (item.sucursal === 'Chorrillos' || item.sucursal === '0004')){
+                        let dato = item.SI_comodidad;
+                        switch (dato) {
+                            case '1': comMuymalo += dato; break;
+                            case '2': comMalo += dato; break;
+                            case '3': comRegular += dato; break;
+                            case '4': comBueno += dato; break;
+                            case '5': comMuybueno += dato; break;
+                            default: comNa += dato;
+                        }
+                        this._COMmuybueno = comMuybueno;
+                        this._COMbuenoo = comBueno;
+                        this._COMregular = comRegular;
+                        this._COMmaloo = comMalo;
+                        this._COMmuymalo = comMuymalo;
+                        this._COMna = comNa;
+                    }
+                });
+                this.totalComodidad = this._COMmuybueno.length + this._COMbuenoo.length + this._COMregular.length + this._COMmaloo.length + this._COMmuymalo.length + this._COMna.length;
+                this.data.map((item: { SI_limpieza: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(item.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin)
+                    && (item.sucursal === 'Chorrillos' || item.sucursal === '0004')){
+                        let dato = item.SI_limpieza;
+                        switch (dato) {
+                            case '1': liMuymalo += dato; break;
+                            case '2': liMalo += dato; break;
+                            case '3': liRegular += dato; break;
+                            case '4': liBueno += dato; break;
+                            case '5': liMuybueno += dato; break;
+                            default: liNa += dato;
+                        }
+                        this._LIMmuybueno = liMuybueno;
+                        this._LIMbuenoo = liBueno;
+                        this._LIMregular = liRegular;
+                        this._LIMmaloo = liMalo;
+                        this._LIMmuymalo = liMuymalo;
+                        this._LIMna = liNa;
+                    }
+                });
+                this.totalAseoLimpieza = this._LIMmuybueno.length + this._LIMbuenoo.length + this._LIMregular.length + this._LIMmaloo.length + this._LIMmuymalo.length + this._LIMna.length;
+                this.data.map((item: { SI_modernidad: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(item.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin)
+                    && (item.sucursal === 'Chorrillos' || item.sucursal === '0004')){
+                        let dato = item.SI_modernidad;
+                        switch (dato) {
+                            case '1': moMuymalo += dato; break;
+                            case '2': moMalo += dato; break;
+                            case '3': moRegular += dato; break;
+                            case '4': moBueno += dato; break;
+                            case '5': moMuybueno += dato; break;
+                            default: moNa += dato;
+                        }
+                        this._MOmuybueno = moMuybueno;
+                        this._MObuenoo = moBueno;
+                        this._MOregular = moRegular;
+                        this._MOmaloo = moMalo;
+                        this._MOmuymalo = moMuymalo;
+                        this._MOna = moNa;
+                    }
+                });
+                this.totalModernidad = this._MOmuybueno.length + this._MObuenoo.length + this._MOregular.length + this._MOmaloo.length + this._MOmuymalo.length + this._MOna.length;
+
+                this.data.map((item: { SS_doctor: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(item.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin)
+                    && (item.sucursal === 'Chorrillos' || item.sucursal === '0004')){
+                        let dato = item.SS_doctor;
+                        switch (dato) {
+                            case '1': docMuymalo += dato; break;
+                            case '2': docMalo += dato; break;
+                            case '3': docRegular += dato; break;
+                            case '4': docBueno += dato; break;
+                            case '5': docMuybueno += dato; break;
+                            default: docNa += dato;
+                        }
+                        this._DOCmuybueno = docMuybueno;
+                        this._DOCbuenoo = docBueno;
+                        this._DOCregular = docRegular;
+                        this._DOCmaloo = docMalo;
+                        this._DOCmuymalo = docMuymalo;
+                        this._DOCna = docNa;
+                    }
+                });
+                this.totalMedico = this._DOCmuybueno.length + this._DOCbuenoo.length + this._DOCregular.length + this._DOCmaloo.length + this._DOCmuymalo.length + this._DOCna.length;
+
+                this.data.map((item: { SS_enfermera: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(item.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin)
+                    && (item.sucursal === 'Chorrillos' || item.sucursal === '0004')){
+                        let dato = item.SS_enfermera;
+                        switch (dato) {
+                            case '1': enMuymalo += dato; break;
+                            case '2': enMalo += dato; break;
+                            case '3': enRegular += dato; break;
+                            case '4': enBueno += dato; break;
+                            case '5': enMuybueno += dato; break;
+                            default: enNa += dato;
+                        }
+                        this._ENmuybueno = enMuybueno;
+                        this._ENbuenoo = enBueno;
+                        this._ENregular = enRegular;
+                        this._ENmaloo = enMalo;
+                        this._ENmuymalo = enMuymalo;
+                        this._ENna = enNa;
+                    }
+                });
+                this.totalEnfermera = this._ENmuybueno.length + this._ENbuenoo.length + this._ENregular.length + this._ENmaloo.length + this._ENmuymalo.length + this._ENna.length;
+                this.data.map((item: { SS_tecnica: any; registro_fecha: string; sucursal: string;}) => {
+                    if ((moment(item.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(item.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin)
+                    && (item.sucursal === 'Chorrillos' || item.sucursal === '0004')){
+                        let dato = item.SS_tecnica;
+                        switch (dato) {
+                            case '1': tecMuymalo += dato; break;
+                            case '2': tecMalo += dato; break;
+                            case '3': tecRegular += dato; break;
+                            case '4': tecBueno += dato; break;
+                            case '5': tecMuybueno += dato; break;
+                            default: tecNa += dato;
+                        }
+                        this._TECmuybueno = tecMuybueno;
+                        this._TECbuenoo = tecBueno;
+                        this._TECregular = tecRegular;
+                        this._TECmaloo = tecMalo;
+                        this._TECmuymalo = tecMuymalo;
+                        this._TECna = tecNa;
+                    }
+                });
+                
+                this.totalTecnica = this._TECmuybueno.length + this._TECbuenoo.length + this._TECregular.length + this._TECmaloo.length + this._TECmuymalo.length + this._TECna.length;
+            }
+        }
       })
       
   }
@@ -2955,18 +6766,526 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
     this.formularioService.getFormulario().subscribe(
       (res: any) => {
         this.data = res.body.length > 0 ? res.body : [];
-        this.recomen = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '10');
-        if (this.recomen[0] !== undefined ){
-          this.cantrecom = this.recomen.length;
-          // console.log(55, this.recomen)
-          this.arrescala = this.recomen[0].escalaRecomendacion;
+console.log(222, this.data);
+        if(data.sede === 0){
+
+          if(data.onSelect < 3 && data.periodo !== null){
+      
+              this.listlima = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo);
+      
+              this.listchorrillos = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo);
+      
+              this.listsurco = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo);
+              //	Aqui empieza los planes de recomen3
+              this.recomen1 = this.data.filter((sede: { registro_fecha: string; escalaRecomendacion: string;}) => moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.escalaRecomendacion === '1');
+      
+              this.recomen2 = this.data.filter((sede: { registro_fecha: string; escalaRecomendacion: string;}) => moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.escalaRecomendacion === '2');
+      
+              this.recomen3 = this.data.filter((sede: { registro_fecha: string; escalaRecomendacion: string;}) => moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.escalaRecomendacion === '3');
+      
+              this.recomen4 = this.data.filter((sede: { registro_fecha: string; escalaRecomendacion: string;}) => moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.escalaRecomendacion === '4');
+      
+              this.recomen5 = this.data.filter((sede: { registro_fecha: string; escalaRecomendacion: string;}) => moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.escalaRecomendacion === '5');
+      
+              this.recomen6 = this.data.filter((sede: { registro_fecha: string; escalaRecomendacion: string;}) => moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.escalaRecomendacion === '6');
+      
+              this.recomen7 = this.data.filter((sede: { registro_fecha: string; escalaRecomendacion: string;}) => moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.escalaRecomendacion === '7');
+      
+              this.recomen8 = this.data.filter((sede: { registro_fecha: string; escalaRecomendacion: string;}) => moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.escalaRecomendacion === '8');
+      
+              this.recomen9 = this.data.filter((sede: { registro_fecha: string; escalaRecomendacion: string;}) => moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.escalaRecomendacion === '9');
+      
+              this.recomen10 = this.data.filter((sede: { registro_fecha: string; escalaRecomendacion: string;}) => moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.escalaRecomendacion === '10');
+      
+              this.listencuesta = this.recomen1.length + this.recomen2.length + this.recomen3.length + 
+                  this.recomen4.length + this.recomen5.length + this.recomen6.length +
+                  this.recomen7.length + this.recomen8.length + this.recomen9.length + this.recomen10.length;
+              console.log(this.listencuesta);
+      
+          }else if((data.onSelect === '3' || data.onSelect === '4') && data.periodo !== null){
+      
+              this.listlima = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'));
+      
+              this.listchorrillos = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Chorrillos'  || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'));
+      
+              this.listsurco = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'));
+      
+              //			Aqui empieza los planes de recomen3
+              this.recomen1 = this.data.filter((sede: { registro_fecha: string; escalaRecomendacion:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.escalaRecomendacion === '1');
+      
+              this.recomen2 = this.data.filter((sede: { registro_fecha: string; escalaRecomendacion:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.escalaRecomendacion === '2');
+      
+              this.recomen3 = this.data.filter((sede: { registro_fecha: string; escalaRecomendacion:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.escalaRecomendacion === '3');
+      
+              this.recomen4 = this.data.filter((sede: { registro_fecha: string; escalaRecomendacion:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.escalaRecomendacion === '4');
+      
+              this.recomen5 = this.data.filter((sede: { registro_fecha: string; escalaRecomendacion:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.escalaRecomendacion === '5');
+      
+              this.recomen6 = this.data.filter((sede: { registro_fecha: string; escalaRecomendacion:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.escalaRecomendacion === '6');
+      
+              this.recomen7 = this.data.filter((sede: { registro_fecha: string; escalaRecomendacion:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.escalaRecomendacion === '7');
+      
+              this.recomen8 = this.data.filter((sede: { registro_fecha: string; escalaRecomendacion:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.escalaRecomendacion === '8');
+      
+              this.recomen9 = this.data.filter((sede: { registro_fecha: string; escalaRecomendacion:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.escalaRecomendacion === '9');
+      
+              this.recomen10 = this.data.filter((sede: { registro_fecha: string; escalaRecomendacion:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.escalaRecomendacion === '10');
+      
+              this.listencuesta = this.recomen1.length + this.recomen2.length + this.recomen3.length +
+                  this.recomen4.length + this.recomen5.length + this.recomen6.length +
+                  this.recomen7.length + this.recomen8.length + this.recomen9.length + this.recomen10.length;
+              console.log(this.listencuesta);
+      
+          }else if((data.onSelect === '5' || data.onSelect === '6') && data.mes !== null){
+      
+              this.listlima = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth());
+      
+              this.listchorrillos = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Chorrillos'  || sede.sucursal === '0002') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth());
+      
+              this.listsurco = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Surco' || sede.sucursal === '0004') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth());
+              //Aqui empiezan los recomen3s
+              this.recomen1 = this.data.filter((sede: { registro_fecha: string; escalaRecomendacion:string}) => new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.escalaRecomendacion === '1');
+      
+              this.recomen2 = this.data.filter((sede: { registro_fecha: string; escalaRecomendacion:string}) => new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.escalaRecomendacion === '2');
+      
+              this.recomen3 = this.data.filter((sede: { registro_fecha: string; escalaRecomendacion:string}) => new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.escalaRecomendacion === '3');
+      
+              this.recomen4 = this.data.filter((sede: { registro_fecha: string; escalaRecomendacion:string}) => new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.escalaRecomendacion === '4');
+      
+              this.recomen5 = this.data.filter((sede: { registro_fecha: string; escalaRecomendacion:string}) => new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.escalaRecomendacion === '5');
+      
+              this.recomen6 = this.data.filter((sede: { registro_fecha: string; escalaRecomendacion:string}) => new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.escalaRecomendacion === '6');
+      
+              this.recomen7 = this.data.filter((sede: { registro_fecha: string; escalaRecomendacion:string}) => new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.escalaRecomendacion === '7');
+      
+              this.recomen8 = this.data.filter((sede: { registro_fecha: string; escalaRecomendacion:string}) => new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.escalaRecomendacion === '8');
+      
+              this.recomen9 = this.data.filter((sede: { registro_fecha: string; escalaRecomendacion:string}) => new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.escalaRecomendacion === '9');
+      
+              this.recomen10 = this.data.filter((sede: { registro_fecha: string; escalaRecomendacion:string}) => new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.escalaRecomendacion === '10');
+      
+              this.listencuesta = this.recomen1.length + this.recomen2.length + this.recomen3.length +
+                  this.recomen4.length + this.recomen5.length + this.recomen6.length +
+                  this.recomen7.length + this.recomen8.length + this.recomen9.length + this.recomen10.length;
+              console.log(this.listencuesta);
+      
+          }else if(data.onSelect === '7' && data.fecha_inicio !== null && data.fecha_fin !== null){
+      
+              this.listlima = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin);
+      
+              this.listchorrillos = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Chorrillos'  || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin);
+      
+              this.listsurco = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) =>(sede.sucursal === 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin);
+              //	Aqui empiezan los recomen3s
+              this.recomen1 = this.data.filter((sede: { registro_fecha: string; escalaRecomendacion:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.escalaRecomendacion === '1');
+      
+              this.recomen2 = this.data.filter((sede: { registro_fecha: string; escalaRecomendacion:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.escalaRecomendacion === '2');
+      
+              this.recomen3 = this.data.filter((sede: { registro_fecha: string; escalaRecomendacion:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.escalaRecomendacion === '3');
+      
+              this.recomen4 = this.data.filter((sede: { registro_fecha: string; escalaRecomendacion:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.escalaRecomendacion === '4');
+      
+              this.recomen5 = this.data.filter((sede: { registro_fecha: string; escalaRecomendacion:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.escalaRecomendacion === '5');
+      
+              this.recomen6 = this.data.filter((sede: { registro_fecha: string; escalaRecomendacion:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.escalaRecomendacion === '6');
+      
+              this.recomen7 = this.data.filter((sede: { registro_fecha: string; escalaRecomendacion:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.escalaRecomendacion === '7');
+      
+              this.recomen8 = this.data.filter((sede: { registro_fecha: string; escalaRecomendacion:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.escalaRecomendacion === '8');
+      
+              this.recomen9 = this.data.filter((sede: { registro_fecha: string; escalaRecomendacion:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.escalaRecomendacion === '9');
+      
+              this.recomen10 = this.data.filter((sede: { registro_fecha: string; escalaRecomendacion:string}) => moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.escalaRecomendacion === '10');
+      
+              this.listencuesta = this.recomen1.length + this.recomen2.length + this.recomen3.length +
+                  this.recomen4.length + this.recomen5.length + this.recomen6.length +
+                  this.recomen7.length + this.recomen8.length + this.recomen9.length + this.recomen10.length;
+      
+          }
+      
+      } else if(data.sede === 1){
+      
+          if(data.onSelect < 3 && data.periodo !== null){
+      
+              this.listlima = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo);
+      
+              this.listchorrillos = [];
+      
+              this.listsurco = [];
+      
+              this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+              //Aqui empiezan los recomen3s
+              this.recomen1 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.escalaRecomendacion === '1');
+      
+              this.recomen2 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.escalaRecomendacion === '2');
+      
+              this.recomen3 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.escalaRecomendacion === '3');
+      
+              this.recomen4 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.escalaRecomendacion === '4');
+      
+              this.recomen5 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.escalaRecomendacion === '5');
+      
+              this.recomen6 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.escalaRecomendacion === '6');
+      
+              this.recomen7 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.escalaRecomendacion === '7');
+      
+              this.recomen8 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.escalaRecomendacion === '8');
+      
+              this.recomen9 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.escalaRecomendacion === '9');
+      
+              this.recomen10 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.escalaRecomendacion === '10');
+      
+          }else if((data.onSelect === '3' || data.onSelect === '4') && data.periodo !== null){
+      
+              this.listlima = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'));
+      
+              this.listchorrillos = [];
+      
+              this.listsurco = [];
+      
+              this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+      
+              this.recomen1 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.escalaRecomendacion === '1');
+      
+              this.recomen2 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.escalaRecomendacion === '2');
+      
+              this.recomen3 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.escalaRecomendacion === '3');
+      
+              this.recomen4 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.escalaRecomendacion === '4');
+      
+              this.recomen5 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.escalaRecomendacion === '5');
+      
+              this.recomen6 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.escalaRecomendacion === '6');
+      
+              this.recomen7 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.escalaRecomendacion === '7');
+      
+              this.recomen8 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.escalaRecomendacion === '8');
+      
+              this.recomen7 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.escalaRecomendacion === '9');
+      
+              this.recomen8 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.escalaRecomendacion === '10');
+      
+          }else if((data.onSelect === '5' || data.onSelect === '6') && data.mes !== null){
+      
+              this.listlima = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth());
+      
+              this.listchorrillos = [];
+      
+              this.listsurco = [];
+      
+              this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+              //Aqui empiezan los recomen3s
+              this.recomen1 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.escalaRecomendacion === '1');
+      
+              this.recomen2 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.escalaRecomendacion === '2');
+      
+              this.recomen3 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.escalaRecomendacion === '3');
+      
+              this.recomen4 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.escalaRecomendacion === '4');
+      
+              this.recomen5 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.escalaRecomendacion === '5');
+      
+              this.recomen6 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.escalaRecomendacion === '6');
+      
+              this.recomen7 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.escalaRecomendacion === '7');
+      
+              this.recomen8 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.escalaRecomendacion === '8');
+      
+              this.recomen9 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.escalaRecomendacion === '9');
+      
+              this.recomen10 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.escalaRecomendacion === '10');
+      
+          }else if(data.onSelect === '7' && data.fecha_inicio !== null && data.fecha_fin !== null){
+      
+              this.listlima = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin);
+      
+              this.listchorrillos = [];
+      
+              this.listsurco = [];
+      
+              this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+              console.log(this.listlima);
+              //Aqui empiezan los recomen3s
+              this.recomen1 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.escalaRecomendacion === '1');
+      
+              this.recomen2 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.escalaRecomendacion === '2');
+      
+              this.recomen3 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.escalaRecomendacion === '3');
+      
+              this.recomen4 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.escalaRecomendacion === '4');
+      
+              this.recomen5 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.escalaRecomendacion === '5');
+      
+              this.recomen6 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.escalaRecomendacion === '6');
+      
+              this.recomen7 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.escalaRecomendacion === '7');
+      
+              this.recomen8 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.escalaRecomendacion === '8');
+      
+              this.recomen9 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.escalaRecomendacion === '9');
+      
+              this.recomen10 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal === 'Lima' || sede.sucursal === '0001') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.escalaRecomendacion === '10');
+          }
+      } else if(data.sede === 2){
+      
+          if(data.onSelect < 3 && data.periodo !== null){
+      
+              this.listlima = [];
+      
+              this.listchorrillos = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo);
+      
+              this.listsurco = [];
+      
+              this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+              //Aqui empiezan los recomen3s
+              this.recomen1 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.escalaRecomendacion === '1');
+      
+              this.recomen2 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.escalaRecomendacion === '2');
+      
+              this.recomen3 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.escalaRecomendacion === '3');
+      
+              this.recomen4 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.escalaRecomendacion === '4');
+      
+              this.recomen5 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.escalaRecomendacion === '5');
+      
+              this.recomen6 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.escalaRecomendacion === '6');
+      
+              this.recomen7 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.escalaRecomendacion === '7');
+      
+              this.recomen8 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.escalaRecomendacion === '8');
+      
+              this.recomen9 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.escalaRecomendacion === '9');
+      
+              this.recomen10 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.escalaRecomendacion === '10');
+      
+          }else if((data.onSelect === '3' || data.onSelect === '4') && data.periodo !== null){
+      
+              this.listlima = [];
+      
+              this.listchorrillos = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'));
+      
+              this.listsurco = [];
+      
+              this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+              //Aqui empiezan los recomen3s
+              this.recomen1 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.escalaRecomendacion === '1');
+      
+              this.recomen2 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.escalaRecomendacion === '2');
+      
+              this.recomen3 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.escalaRecomendacion === '3');
+      
+              this.recomen4 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.escalaRecomendacion === '4');
+      
+              this.recomen5 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.escalaRecomendacion === '5');
+      
+              this.recomen6 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.escalaRecomendacion === '6');
+      
+              this.recomen7 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.escalaRecomendacion === '7');
+      
+              this.recomen8 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.escalaRecomendacion === '8');
+      
+              this.recomen9 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.escalaRecomendacion === '9');
+      
+              this.recomen10 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.escalaRecomendacion === '10');
+      
+          }else if((data.onSelect === '5' || data.onSelect === '6') && data.mes !== null){
+      
+              this.listlima = [];
+      
+              this.listchorrillos = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Chorrillos' || sede.sucursal === '0002') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth());
+      
+              this.listsurco = [];
+      
+              this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+              //Aqui empiezan los recomen3s
+              this.recomen1 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.escalaRecomendacion === '1');
+      
+              this.recomen2 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.escalaRecomendacion === '2');
+      
+              this.recomen3 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.escalaRecomendacion === '3');
+      
+              this.recomen4 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.escalaRecomendacion === '4');
+      
+              this.recomen5 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.escalaRecomendacion === '5');
+      
+              this.recomen6 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.escalaRecomendacion === '6');
+      
+              this.recomen7 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.escalaRecomendacion === '7');
+      
+              this.recomen8 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.escalaRecomendacion === '8');
+      
+              this.recomen9 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.escalaRecomendacion === '9');
+      
+              this.recomen10 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.escalaRecomendacion === '10');
+      
+          }else if(data.onSelect === '7' && data.fecha_inicio !== null && data.fecha_fin !== null){
+      
+              this.listlima = [];
+      
+              this.listchorrillos = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin);
+      
+              this.listsurco = [];
+      
+              this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+              //Aqui empiezam los recomen3s
+              this.recomen1 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.escalaRecomendacion === '1');
+      
+              this.recomen2 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.escalaRecomendacion === '2');
+      
+              this.recomen3 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.escalaRecomendacion === '3');
+      
+              this.recomen4 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.escalaRecomendacion === '4');
+      
+              this.recomen5 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.escalaRecomendacion === '5');
+      
+              this.recomen6 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.escalaRecomendacion === '6');
+      
+              this.recomen7 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.escalaRecomendacion === '7');
+      
+              this.recomen8 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.escalaRecomendacion === '8');
+      
+              this.recomen9 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.escalaRecomendacion === '9');
+      
+              this.recomen10 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Chorrillos' || sede.sucursal === '0002') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.escalaRecomendacion === '10');
+          }
+      
+      } else if(data.sede === 4){
+          if(data.onSelect < 3 && data.periodo !== null){
+      
+              this.listlima = [];
+      
+              this.listchorrillos = [];
+      
+              this.listsurco = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo);
+      
+              this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+              //Aqui empiezam los recomen3s
+              this.recomen1 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.escalaRecomendacion === '1');
+      
+              this.recomen2 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.escalaRecomendacion === '2');
+      
+              this.recomen3 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.escalaRecomendacion === '3');
+      
+              this.recomen4 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.escalaRecomendacion === '4');
+      
+              this.recomen5 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.escalaRecomendacion === '5');
+      
+              this.recomen6 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.escalaRecomendacion === '6');
+      
+              this.recomen7 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.escalaRecomendacion === '7');
+      
+              this.recomen8 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.escalaRecomendacion === '8');
+      
+              this.recomen9 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.escalaRecomendacion === '9');
+      
+              this.recomen10 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') === data.periodo && sede.escalaRecomendacion === '10');
+      
+          }else if((data.onSelect === '3' || data.onSelect === '4') && data.periodo !== null){
+      
+              this.listlima = [];
+      
+              this.listchorrillos = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'));
+      
+              this.listsurco = [];
+      
+              this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+              //Aqui empiezam los recomen3s
+              this.recomen1 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.escalaRecomendacion === '1');
+      
+              this.recomen2 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.escalaRecomendacion === '2');
+      
+              this.recomen3 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.escalaRecomendacion === '3');
+      
+              this.recomen4 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.escalaRecomendacion === '4');
+      
+              this.recomen5 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.escalaRecomendacion === '5');
+      
+              this.recomen6 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.escalaRecomendacion === '6');
+      
+              this.recomen7 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.escalaRecomendacion === '7');
+      
+              this.recomen8 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.escalaRecomendacion === '8');
+      
+              this.recomen9 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && sede.escalaRecomendacion === '9');
+      
+              this.recomen10 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.periodo && moment(sede.registro_fecha).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')  && sede.escalaRecomendacion === '10');
+      
+          }else if((data.onSelect === '5' || data.onSelect === '6') && data.mes !== null){
+      
+              this.listlima = [];
+      
+              this.listchorrillos = [];
+      
+              this.listsurco = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Surco' || sede.sucursal === '0004') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth());
+      
+              this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+              //Aqui empiezam los recomen3s
+              this.recomen1 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.escalaRecomendacion === '1');
+      
+              this.recomen2 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.escalaRecomendacion === '2');
+      
+              this.recomen3 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.escalaRecomendacion === '3');
+      
+              this.recomen4 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.escalaRecomendacion === '4');
+      
+              this.recomen5 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.escalaRecomendacion === '5');
+      
+              this.recomen6 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.escalaRecomendacion === '6');
+      
+              this.recomen7 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.escalaRecomendacion === '7');
+      
+              this.recomen8 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.escalaRecomendacion === '8');
+      
+              this.recomen9 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.escalaRecomendacion === '9');
+      
+              this.recomen10 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && new Date(sede.registro_fecha).getMonth() === new Date(data.mes).getMonth() && sede.escalaRecomendacion === '10');
+      
+          }else if(data.onSelect === '7' && data.fecha_inicio !== null && data.fecha_fin !== null){
+      
+              this.listlima = [];
+      
+              this.listchorrillos = [];
+      
+              this.listsurco = this.data.filter((sede: { sucursal: string; registro_fecha: string;}) => (sede.sucursal === 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin);
+      
+              this.listencuesta = this.listlima.length + this.listchorrillos.length + this.listsurco.length;
+              //Aqui empiezam los recomen3s
+              this.recomen1 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.escalaRecomendacion === '1');
+      
+              this.recomen2 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.escalaRecomendacion === '2');
+      
+              this.recomen3 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.escalaRecomendacion === '3');
+      
+              this.recomen4 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.escalaRecomendacion === '4');
+      
+              this.recomen5 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.escalaRecomendacion === '5');
+      
+              this.recomen6 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.escalaRecomendacion === '6');
+      
+              this.recomen7 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.escalaRecomendacion === '7');
+      
+              this.recomen8 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.escalaRecomendacion === '8');
+      
+              this.recomen9 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.escalaRecomendacion === '9');
+      
+              this.recomen10 = this.data.filter((sede: { sucursal: string; registro_fecha: string; escalaRecomendacion:string}) => (sede.sucursal == 'Surco' || sede.sucursal === '0004') && moment(sede.registro_fecha).format('YYYY-MM-DD') >= data.fecha_inicio && moment(sede.registro_fecha).format('YYYY-MM-DD') <= data.fecha_fin && sede.escalaRecomendacion === '10');
+          }
+      }
+
+
+        // this.recomen1 = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '10');
+        
+        if (this.recomen1[0] !== undefined ){
+          this.cantrecom = this.recomen1.length;
+          // console.log(55, this.recomen1)
+          this.arrescala = this.recomen1[0].escalaRecomendacion;
           this.datolabel = this.arrescala;
           this.datonum = this.cantrecom;
           this.pieChartData3.push(this.cantrecom);
           this.pieChartLabels3.push(this.arrescala);
         }
 
-        this.recomen2 = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '9');
+        // this.recomen2 = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '9');
         if (this.recomen2[0] !== undefined ){
           this.cantrecom = this.recomen2.length;
           this.arrescala = this.recomen2[0].escalaRecomendacion;
@@ -2976,7 +7295,7 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
           this.pieChartLabels3.push(this.arrescala);
         }
 
-        this.recomen3 = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '8')
+        // this.recomen3 = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '8');
         if (this.recomen3[0] !== undefined ){
           this.cantrecom = this.recomen3.length;
           this.arrescala = this.recomen3[0].escalaRecomendacion;
@@ -2986,7 +7305,7 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
           this.pieChartLabels3.push(this.arrescala);
         }
 
-        this.recomen4 = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '7')
+        // this.recomen4 = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '7');
         if (this.recomen4[0] !== undefined ){
           this.cantrecom = this.recomen4.length;
           this.arrescala = this.recomen4[0].escalaRecomendacion;
@@ -2996,7 +7315,7 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
           this.pieChartLabels3.push(this.arrescala);
         }
 
-        this.recomen5 = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '6')
+        // this.recomen5 = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '6');
         if (this.recomen5[0] !== undefined ){
           this.cantrecom = this.recomen5.length;
           this.arrescala = this.recomen5[0].escalaRecomendacion;
@@ -3006,7 +7325,7 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
           this.pieChartLabels3.push(this.arrescala);
         }
 
-        this.recomen6 = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '5')
+        // this.recomen6 = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '5');
         if (this.recomen6[0] !== undefined ){
           this.cantrecom = this.recomen6.length;
           this.arrescala = this.recomen6[0].escalaRecomendacion;
@@ -3016,7 +7335,7 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
           this.pieChartLabels3.push(this.arrescala);
         }
 
-        this.recomen7 = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '4')
+        // this.recomen7 = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '4');
         if (this.recomen7[0] !== undefined ){
           this.cantrecom = this.recomen7.length;
           this.arrescala = this.recomen7[0].escalaRecomendacion;
@@ -3026,7 +7345,7 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
           this.pieChartLabels3.push(this.arrescala);
         }
 
-        this.recomen8 = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '3')
+        // this.recomen8 = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '3');
         if (this.recomen8[0] !== undefined ){
           this.cantrecom = this.recomen8.length;
           this.arrescala = this.recomen8[0].escalaRecomendacion;
@@ -3036,7 +7355,7 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
           this.pieChartLabels3.push(this.arrescala);
         }
 
-        this.recomen9 = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '2')
+        // this.recomen9 = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '2');
         if (this.recomen9[0] !== undefined ){
           this.cantrecom = this.recomen9.length;
           this.arrescala = this.recomen9[0].escalaRecomendacion;
@@ -3045,7 +7364,7 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
           this.pieChartData3.push(this.cantrecom);
           this.pieChartLabels3.push(this.arrescala);
         }
-        this.recomen10 = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '1')
+        // this.recomen10 = this.data.filter((item: { escalaRecomendacion: string; }) => item.escalaRecomendacion === '1');
         if (this.recomen10[0] !== undefined ){
           this.cantrecom = this.recomen10.length;
           this.arrescala = this.recomen10[0].escalaRecomendacion;
@@ -3054,29 +7373,45 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
           this.pieChartData3.push(this.cantrecom);
           this.pieChartLabels3.push(this.arrescala);
         }
-        this.recomendacionTotal = this.recomen.length + this.recomen2.length + this.recomen3.length + this.recomen4.length + this.recomen5.length +
-        this.recomen6.length + this.recomen7.length + this.recomen8.length + this.recomen9.length + this.recomen10.length
+        this.recomendacionTotal = this.recomen1.length + this.recomen2.length + this.recomen3.length + this.recomen4.length + this.recomen5.length +
+        this.recomen6.length + this.recomen7.length + this.recomen8.length + this.recomen9.length + this.recomen10.length;
         this.getBarChart(this.pieChartLabels3, this.pieChartData3, 'chart-8', 'Escala de Recomendación', this.recomendacionTotal, 'doughnut');
       })
   }
   getporcentaje(dato: number) {
-    return ((dato * 100) / this.listencuesta).toFixed(2) + '%';
+    // console.log(99, dato);
+    // return ((dato * 100) / this.listencuesta).toFixed(2) + '%';
+    return (!Number.isFinite((dato * 100) / this.listencuesta) ? (0).toFixed(2) : ((dato * 100) / this.listencuesta).toFixed(2) + '%');
   }
   getporcentajetarjeta(dato: number) {
-    return ((dato * 100) / this.sumtarjeta).toFixed(2) + '%';
+    console.log(100, dato);
+    // return ((dato * 100) / this.sumtarjeta).toFixed(2) + '%';
+    return (!Number.isFinite((dato * 100) / this.sumtarjeta) ? (0).toFixed(2) : ((dato * 100) / this.sumtarjeta).toFixed(2) + '%');
   }
   getporcentajeconvenio(dato: number) {
-    return ((dato * 100) / this.sumconvenio).toFixed(2) + '%';
+    // console.log(101, dato);
+    // return ((dato * 100) / this.sumconvenio).toFixed(2) + '%';
+    return (!Number.isFinite((dato * 100) / this.sumconvenio) ? (0).toFixed(2) : ((dato * 100) / this.sumconvenio).toFixed(2) + '%');
   }
   getporcentajeCompany(dato: number) {
-    return ((dato * 100) / this.companyTotals).toFixed(2) + '%';
+    // console.log(102, dato);
+    // return ((dato * 100) / this.companyTotals).toFixed(2) + '%';
+    return (!Number.isFinite((dato * 100) / this.companyTotals) ? (0).toFixed(2) : ((dato * 100) / this.companyTotals).toFixed(2) + '%');
   }
   getporcentajeescala(dato: number) {
-    return ((dato * 100) / this.recomendacionTotal).toFixed(2) + '%';
+    // console.log(103, dato);
+    // return ((dato * 100) / this.recomendacionTotal).toFixed(2) + '%';
+    return (!Number.isFinite((dato * 100) / this.recomendacionTotal) ? (0).toFixed(2) : ((dato * 100) / this.recomendacionTotal).toFixed(2) + '%');
   }
   getporcentajesati(dato: number) {
-    
-    return ((dato * 100) / this.listencuesta).toFixed(2) + '%';
+    // if (dato === undefined){
+    //     dato = 0;
+    // }
+    // if (!Number.isFinite((dato * 100) / this.listencuesta)){
+    //     console.log(104, (dato * 100) / 0);
+    //     return (0).toFixed(2) + '%';
+    // }
+    return (!Number.isFinite((dato * 100) / this.listencuesta) ? (0).toFixed(2) : ((dato * 100) / this.listencuesta).toFixed(2) + '%');
   }
 
   onChange(event: { target: { value: string; }; }) {
