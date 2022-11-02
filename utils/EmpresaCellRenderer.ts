@@ -10,7 +10,7 @@ export class EmpresaCellRenderer implements INoRowsOverlayAngularComp {
   dato: string = "";
   agInit(params): void {
     this.dato = params.value.toString();
-    this.value = ("000000" + this.dato).slice(-6);
+    this.value = ("0000000000" + this.dato).slice(-10);
     // console.log(this.value)
     /*  if (params.value === '01000000') {
         this.value = 'CSALUD';
