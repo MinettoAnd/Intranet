@@ -57,7 +57,7 @@ export class CollaboratorsComponent implements OnInit {
                 headerName: "COD",
                 field: "COD_PERSONAL",
                 sortable: true,
-                width: 65,
+                width: 98,
                 cellRenderer: "empresaCellRenderer",
                 cellEditorParams: {
                     values: ["MA", "FE"],
