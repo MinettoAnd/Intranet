@@ -157,11 +157,11 @@
         <div class="input-group mt-2" style="display: block;">
           
           <div class="input-group-prepend">
-            <span class="input-group-text">Rol (es) Asignados</span>
+            <span class="input-group-text">Roles</span>
           </div>
           
           <div class="form-row ml-4">
-            <div class="col-md-4" *ngFor="let control of rolesList?.controls; let i = index" >
+            <div class="col-md-4" *ngFor="let control of editrol?.controls; let i = index" >
               <label  for="{{ roles[i].idrol }}"><input 
                 type="checkbox" 
                 [formControl]="control" 
@@ -169,8 +169,8 @@
                  
                   [checked]="roles[i].idrol == dato.idrol"
                 /> 
-                {{ roles[i].name}} {{ roles[i].idrol}}
-                </label>
+                {{ roles[i].name}}
+              </label>
               <!-- <div class="custom-checkbox custom-control">
                 <input
                   type="checkbox"

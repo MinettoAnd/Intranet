@@ -15,20 +15,7 @@ import { atLeastOneCheckboxCheckedValidator } from "./atLeastOneCheckboxCheckedV
 })
 export class MusersComponent implements OnInit {
   @Input() dato;
-  public roles: any = [
-  //   {
-  //     idrol: '1',
-  //     name: 'value-1'
-  //   }, 
-  //   {
-  //     idrol: '2',
-  //     name: 'value-2'
-  //   }, 
-  //   {
-  //     idrol: '3',
-  //     name: 'value-3'
-  // }
-];
+  public roles: any = [];
   public userslist: any = [];
   updateForm: FormGroup;
   searchForm: FormGroup;
@@ -42,19 +29,7 @@ export class MusersComponent implements OnInit {
   listpersona: Profile[];
   subscription: Subscription;
   submittedValue: any;
-  checkboxes = [
-    // {
-    //   name: 'Value 1',
-    //   value: 'value-1'
-    // }, {
-    //   name: 'Value 2',
-    //   value: 'value-2'
-    // }, {
-    //   name: 'Value 3',
-    //   value: 'value-3'
-    // }
-
-  ];
+  // checkboxes = [ ];
   constructor(public activeModal: NgbActiveModal, private apiService: AdminService, private formBuilder: FormBuilder, private datePipe: DatePipe) {
     this.searchForm = this.formBuilder.group({
       names: ['', Validators.required],
@@ -65,56 +40,58 @@ export class MusersComponent implements OnInit {
       editname: [{ value: '', disabled: true }],
       editapellidos: [{ value: '', disabled: true }],
       editarea: [{ value: '', disabled: true }],
-      editrol: [''],
-      name: ["", Validators.required]
+      // editrol: [''],
     });
   }
 
   ngOnInit() {
     this.getRoles()
-    // console.log(this.roles);
-    // this.roles.filter(item => {
-    //   const myITem = {
-    //     id: item.idrol,
-    //     value: ''
-    //   }
-
-    //   this.checkboxes.push(myITem);
-    // })
-
   }
   get f() {
     return this.searchForm.controls;
+  }
+  objectValues(obj) {
+    let vals = [];
+    for (const prop in obj) {
+      if (prop === 'idrol'){
+        vals.push(obj[prop]);
+      }
+    }
+    return vals;
+  }
+  getRoles() {
+    this.apiService.getRolesServices().then((response: any) => {
+      // console.log(response);
+      this.roles = response.data.length > 0 ? response.data : [];
+      // const perfil:any =  Array.of(this.dato);
+      const perfil:any =  this.objectValues(this.dato);
+      this.updateForm.addControl("editrol", this.buildRolFormArr(response.data, perfil));
+
+    });
+  }
+  buildRolFormArr(roles, selectedRolIds: string[] = []): FormArray {
+    const controlArr = roles.map(rol => {
+      console.log(this.dato);
+console.log(selectedRolIds);
+      let isSelected = selectedRolIds.some(idrol => idrol === rol.idrol);
+      return this.formBuilder.control(isSelected);
+    })
+    return this.formBuilder.array(controlArr, atLeastOneCheckboxCheckedValidator())
   }
 
   get uf() {
     return this.updateForm && this.updateForm.controls;
   }
 
-  get rolesList(): FormArray {
-    return this.uf && <FormArray>this.uf.rolesList
+  get editrol(): FormArray {
+    return this.uf && <FormArray>this.uf.editrol
   }
+
   get rolesFormArraySelectedIds(): string[] {
-    return this.checkboxes
-      .filter((rol, rolIdx) => this.rolesList.controls.some((control, controlIdx) => rolIdx === controlIdx && control.value))
-      .map(role => role.id);
+    return this.roles
+      .filter((rol, rolIdx) => this.editrol.controls.some((control, controlIdx) => rolIdx === controlIdx && control.value))
+      .map(rol => rol.idrol);
   }
-  getRoles() {
-    this.apiService.getRolesServices().then((response: any) => {
-      // console.log(response);
-      this.roles = response.data.length > 0 ? response.data : [];    
-      this.updateForm.addControl("rolesList", this.buildRolFormArr(response.data));
-
-    });
-  }
-  buildRolFormArr(roles, selectedRolIds: string[] = []): FormArray {
-    const controlArr = roles.map(rol => {
-      let isSelected = selectedRolIds.some(id => id === rol.id);
-      return this.formBuilder.control(isSelected);
-    })
-    return this.formBuilder.array(controlArr, atLeastOneCheckboxCheckedValidator())
-  }
-
 
   refreshCountries() {
     this.listpersona = this.userslist
@@ -159,6 +136,7 @@ export class MusersComponent implements OnInit {
   }
   //TODO:ASIGNAR ROL
   registerUser(state) {
+    
     if (state != 2) {
       this.textLoadion = "Asignado Rol...";
       this.showLoading();
@@ -206,9 +184,11 @@ export class MusersComponent implements OnInit {
 
     } else {
       this.submittedupdate = true;
-
+      // console.log(this.dato)
+      this.updateForm.value.editrol = JSON.stringify(this.rolesFormArraySelectedIds);
+      // console.log(this.updateForm.value)
       if (this.updateForm.invalid) {
-        console.log(this.updateForm.value);
+        // console.log(this.updateForm.value);
         return;
       }
       this.textLoadion = "Actualizando Rol...";
@@ -220,8 +200,8 @@ export class MusersComponent implements OnInit {
         date: this.datePipe.transform(new Date(), 'dd-MM-yyyy'),
       }
 
-      console.log(this.rolesFormArraySelectedIds)
-      return;
+      console.log(data)
+      // return;
       this.apiService.updateUserService(data).then((response: any) => {
         if (response.success === 1) {
           Swal.close();

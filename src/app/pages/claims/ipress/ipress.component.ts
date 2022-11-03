@@ -12,7 +12,7 @@ export class IpressComponent implements OnInit {
     right: false
   };
   public showformclaims = false;
-  public listclaims = true;
+  public listclaims = false;
   public dashboard = false;
   constructor() { }
 
