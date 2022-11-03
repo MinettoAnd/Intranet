@@ -1,12 +1,13 @@
 import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AdminService } from 'src/app/pages/admin/admin.service';
 import { Profile } from 'src/app/pages/models/admin/profile';
 import { Users } from 'src/app/pages/models/admin/user';
 import Swal from 'sweetalert2';
-
+import { Subscription } from 'rxjs';
+import { atLeastOneCheckboxCheckedValidator } from "./atLeastOneCheckboxCheckedValidator";
 @Component({
   selector: 'app-musers',
   templateUrl: './musers.component.html',
@@ -14,7 +15,20 @@ import Swal from 'sweetalert2';
 })
 export class MusersComponent implements OnInit {
   @Input() dato;
-  public roles: any = [];
+  public roles: any = [
+  //   {
+  //     idrol: '1',
+  //     name: 'value-1'
+  //   }, 
+  //   {
+  //     idrol: '2',
+  //     name: 'value-2'
+  //   }, 
+  //   {
+  //     idrol: '3',
+  //     name: 'value-3'
+  // }
+];
   public userslist: any = [];
   updateForm: FormGroup;
   searchForm: FormGroup;
@@ -26,6 +40,21 @@ export class MusersComponent implements OnInit {
   pageSize = 20;
   collectionSize;
   listpersona: Profile[];
+  subscription: Subscription;
+  submittedValue: any;
+  checkboxes = [
+    // {
+    //   name: 'Value 1',
+    //   value: 'value-1'
+    // }, {
+    //   name: 'Value 2',
+    //   value: 'value-2'
+    // }, {
+    //   name: 'Value 3',
+    //   value: 'value-3'
+    // }
+
+  ];
   constructor(public activeModal: NgbActiveModal, private apiService: AdminService, private formBuilder: FormBuilder, private datePipe: DatePipe) {
     this.searchForm = this.formBuilder.group({
       names: ['', Validators.required],
@@ -37,20 +66,56 @@ export class MusersComponent implements OnInit {
       editapellidos: [{ value: '', disabled: true }],
       editarea: [{ value: '', disabled: true }],
       editrol: [''],
+      name: ["", Validators.required]
     });
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.getRoles()
+    // console.log(this.roles);
+    // this.roles.filter(item => {
+    //   const myITem = {
+    //     id: item.idrol,
+    //     value: ''
+    //   }
+
+    //   this.checkboxes.push(myITem);
+    // })
+
   }
   get f() {
     return this.searchForm.controls;
   }
+
+  get uf() {
+    return this.updateForm && this.updateForm.controls;
+  }
+
+  get rolesList(): FormArray {
+    return this.uf && <FormArray>this.uf.rolesList
+  }
+  get rolesFormArraySelectedIds(): string[] {
+    return this.checkboxes
+      .filter((rol, rolIdx) => this.rolesList.controls.some((control, controlIdx) => rolIdx === controlIdx && control.value))
+      .map(role => role.id);
+  }
   getRoles() {
     this.apiService.getRolesServices().then((response: any) => {
-      this.roles = response.data.length > 0 ? response.data : [];
+      // console.log(response);
+      this.roles = response.data.length > 0 ? response.data : [];    
+      this.updateForm.addControl("rolesList", this.buildRolFormArr(response.data));
+
     });
   }
+  buildRolFormArr(roles, selectedRolIds: string[] = []): FormArray {
+    const controlArr = roles.map(rol => {
+      let isSelected = selectedRolIds.some(id => id === rol.id);
+      return this.formBuilder.control(isSelected);
+    })
+    return this.formBuilder.array(controlArr, atLeastOneCheckboxCheckedValidator())
+  }
+
+
   refreshCountries() {
     this.listpersona = this.userslist
       .map((country, i) => ({ id: i + 1, ...country }))
@@ -95,7 +160,7 @@ export class MusersComponent implements OnInit {
   //TODO:ASIGNAR ROL
   registerUser(state) {
     if (state != 2) {
-      this.textLoadion = "Asginado Rol...";
+      this.textLoadion = "Asignado Rol...";
       this.showLoading();
       const fromValue = this.searchForm.value;
       if (fromValue.idrol === '') {
@@ -143,6 +208,7 @@ export class MusersComponent implements OnInit {
       this.submittedupdate = true;
 
       if (this.updateForm.invalid) {
+        console.log(this.updateForm.value);
         return;
       }
       this.textLoadion = "Actualizando Rol...";
@@ -153,7 +219,9 @@ export class MusersComponent implements OnInit {
         idrol: fromValue.editrol,
         date: this.datePipe.transform(new Date(), 'dd-MM-yyyy'),
       }
-      console.log(fromValue)
+
+      console.log(this.rolesFormArraySelectedIds)
+      return;
       this.apiService.updateUserService(data).then((response: any) => {
         if (response.success === 1) {
           Swal.close();
@@ -193,4 +261,6 @@ export class MusersComponent implements OnInit {
       icon: 'success'
     })
   }
+
 }
+
