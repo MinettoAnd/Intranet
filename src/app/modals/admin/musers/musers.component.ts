@@ -52,8 +52,16 @@ export class MusersComponent implements OnInit {
   }
   objectValues(obj) {
     let vals = [];
-    for (const prop in obj) {
+    for (var prop in obj) {
+      
       if (prop === 'idrol'){
+        console.log(obj[prop]);
+        if (obj[prop].includes(',') ? true : false){
+          var array = obj[prop].split(",");
+          console.log(array);
+          vals = array;
+          return vals;
+        }
         vals.push(obj[prop]);
       }
     }
@@ -71,9 +79,8 @@ export class MusersComponent implements OnInit {
   }
   buildRolFormArr(roles, selectedRolIds: string[] = []): FormArray {
     const controlArr = roles.map(rol => {
-      console.log(this.dato);
-console.log(selectedRolIds);
-      let isSelected = selectedRolIds.some(idrol => idrol === rol.idrol);
+      console.log(selectedRolIds);
+      let isSelected = selectedRolIds.some(idrol => idrol === rol.idrol.toString());
       return this.formBuilder.control(isSelected);
     })
     return this.formBuilder.array(controlArr, atLeastOneCheckboxCheckedValidator())
@@ -185,8 +192,12 @@ console.log(selectedRolIds);
     } else {
       this.submittedupdate = true;
       // console.log(this.dato)
-      this.updateForm.value.editrol = JSON.stringify(this.rolesFormArraySelectedIds);
-      // console.log(this.updateForm.value)
+      this.updateForm.value.editrol = JSON.stringify(this.rolesFormArraySelectedIds).replace('[', '');
+      this.updateForm.value.editrol = this.updateForm.value.editrol.replace(']', '');
+      // this.updateForm.value.editrol.replace(']', '');
+      // var a = '[1,2,3]';
+      // console.log(a);
+      // console.log(a.replace('/^\[/', ''));
       if (this.updateForm.invalid) {
         // console.log(this.updateForm.value);
         return;
