@@ -10,6 +10,11 @@
   margin-bottom: 0;
   list-style: none;
 }
+.btn-gray.btn.active{
+  color: #212529;
+  background: #FEB02D linear-gradient(180deg, #febc4d, #FEB02D) repeat-x;
+  border-bottom: 4px solid RGB(16,0,76);
+}
 
 .nav-link {
   display: block;
@@ -52,10 +57,13 @@
       border-color: transparent;
     }
   }
-
+  .nav-link{
+    color: $nav-tabs-link-active-color;
+  }
   .nav-link.active,
   .nav-item.show .nav-link {
     color: $nav-tabs-link-active-color;
+    font-weight: 700;
     background-color: $nav-tabs-link-active-bg;
     border-color: $nav-tabs-link-active-border-color;
   }

@@ -1,0 +1,26 @@
+.search{
+    // float:right;
+    margin-top: 10px;
+}
+.search input {
+    width: 250px;
+    &:focus {
+        outline: 1px solid RGB(16,0,76)!important;
+        border-radius: 3px;
+    }
+}
+
+@media (min-width: 992px){
+    .header-custom{
+    display: flex!important;
+    justify-content: space-between;
+}
+.search{
+    // float:right;
+    margin-top: 0px;
+}
+.search input {
+    width: 300px;
+   
+}
+}

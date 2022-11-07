@@ -154,11 +154,37 @@
             class="form-control"
           />
         </div>
-        <div class="input-group mt-2">
+        <div class="input-group mt-2" style="display: block;">
+          
           <div class="input-group-prepend">
-            <span class="input-group-text">Rol</span>
+            <span class="input-group-text">Roles</span>
           </div>
-          <select
+          
+          <div class="form-row ml-4">
+            <div class="col-md-4" *ngFor="let control of editrol?.controls; let i = index" >
+              <label  for="{{ roles[i].idrol }}"><input 
+                type="checkbox" 
+                [formControl]="control" 
+                id="{{ roles[i].idrol }}"
+                 
+                  [checked]="roles[i].idrol == dato.idrol"
+                /> 
+                {{ roles[i].name}}
+              </label>
+              <!-- <div class="custom-checkbox custom-control">
+                <input
+                  type="checkbox"
+                  [formControl]="control"
+                  id="{{ roles[i].idrol }}"
+                  class="custom-control-input"
+                  [checked]="roles[i].idrol == dato.idrol"
+                /><label for="{{ roles[i].idrol }}" class="custom-control-label">
+                  {{ roles[i].name }}</label
+                >
+              </div> -->
+            </div>
+          </div>
+          <!-- <select
             name="select"
             formControlName="editrol"
             [(ngModel)]="dato.idrol"
@@ -169,7 +195,7 @@
             <option value="{{ item.idrol }}" *ngFor="let item of roles">
               {{ item.name }}
             </option>
-          </select>
+          </select> -->
         </div>
       </div>
     </div>

@@ -4,11 +4,10 @@ import { MusersComponent } from 'src/app/modals/admin/musers/musers.component';
 import Swal from 'sweetalert2';
 import { Users } from '../../models/admin/user';
 import { AdminService } from '../admin.service';
-
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.sass']
+  styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit {
   heading = 'Usuarios';
@@ -27,6 +26,7 @@ export class UsersComponent implements OnInit {
   collectionSize;
   submittedsearh = false;
   userslist: Users[];
+  search;
   constructor(private modalService: NgbModal, private apiService: AdminService) { }
 
   ngOnInit() {
@@ -36,6 +36,7 @@ export class UsersComponent implements OnInit {
   getUserList() {
     this.apiService.getUserListService().then((response: any) => {
       this.listusers = response.data.length > 0 ? response.data : [];
+      // console.log(this.listusers);
       this.collectionSize = this.listusers.length;
       this.refreshCountries();
     });
@@ -106,6 +107,7 @@ export class UsersComponent implements OnInit {
     const modalRef = this.modalService.open(MusersComponent);
     modalRef.componentInstance.dato = data;
     modalRef.result.then((result) => {
+      console.log(result);
       if (result.success === 1) {
         this.getUserList();
       }
