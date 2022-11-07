@@ -75,7 +75,6 @@ export class SidebarComponent implements OnInit {
   getModelsAdmin() {
     this.apiService.getMenuSidebarAdminService().then((response: any) => {
       this.menuItems = response.data.length > 0 ? response.data : [];
-      // console.log(this.menuItems);
     });
 
   }

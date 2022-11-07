@@ -388,7 +388,7 @@ getBarChart(barChartLabels, barChartData, chartNum, title, totales, typeChart) {
         fecha_fin: '',
         mes: mesActual,
         sede: 0,
-        idrol: parseInt(localStorage.getItem('idrol')),
+        idrol: localStorage.getItem('idrol'),
         empresa: this.TIPO_RECLAMO
       };
     this.getSucursal(data);
@@ -7463,7 +7463,7 @@ console.log(222, this.data);
       fecha_fin: this.ngfecha02,
       mes: mes,
       sede: parseInt(formValue.sede),
-      idrol: parseInt(localStorage.getItem('idrol')),
+      idrol: localStorage.getItem('idrol'),
       empresa: this.TIPO_RECLAMO
     };
     this.dataSelect = data
