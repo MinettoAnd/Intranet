@@ -162,10 +162,10 @@ export class LoginBoxedComponent implements OnInit {
         for(let i=0; i< claves.length; i++){
           let clave = claves[i];
           if (claves.length != i + 1){
-            area_access =  area_access + this.listrol[clave].area_access + ',';
+            // area_access =  area_access + this.listrol[clave].area_access + ',';
             idrol =  idrol + this.listrol[clave].idrol + ',';
           }else{
-            area_access =  area_access + this.listrol[clave].area_access;
+            // area_access =  area_access + this.listrol[clave].area_access;
             idrol =  idrol + this.listrol[clave].idrol;
           }
             
@@ -173,9 +173,9 @@ export class LoginBoxedComponent implements OnInit {
         }
         console.log(area_access)
         localStorage.setItem('access', this.acceso.toString());
-        localStorage.setItem('access_area', area_access);
+        // localStorage.setItem('access_area', area_access);
         localStorage.setItem('idrol', idrol);
-        // localStorage.setItem('access_area', this.listrol[0]?.area_access);
+        localStorage.setItem('access_area', this.listrol[0]?.area_access);
         // localStorage.setItem('idrol', this.listrol[0]?.idrol);
         this.router.navigate(['/default']);
       } else {

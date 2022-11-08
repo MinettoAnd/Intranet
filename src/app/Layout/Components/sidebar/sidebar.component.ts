@@ -85,6 +85,7 @@ export class SidebarComponent implements OnInit {
   getModelsUsers() {
     this.apiService.getMenuSidebarPermissionRoleService(localStorage.getItem('idrol')).then((response: any) => {
       this.menuItems = response.data.length > 0 ? response.data : [];
+      console.log(this.menuItems);
     });
 
   }

@@ -231,12 +231,14 @@ export class CollaboratorsComponent implements OnInit {
         this.apiService
             .getColaboradoresFilterService(data)
             .then((response: any) => {
+                console.log(response);
                 this.rowData = response.length > 0 ? response : [];
                 this.getCargo();
             });
     }
     getCargo() {
         this.apiService.getCargoService().then((response: any) => {
+            console.log(response);
             this.cargos = response.length > 0 ? response : [];
         });
     }
