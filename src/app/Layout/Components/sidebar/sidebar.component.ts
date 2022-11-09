@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
+  styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit {
   public extraParameter: any;
@@ -22,6 +23,134 @@ export class SidebarComponent implements OnInit {
   adminmenu = false;
   usersmenu = false;
   message: string;
+  menu = [
+    {
+        "title": "ADMIN",
+        "menu": "adminMenu",
+        "name_model": "Autenticación",
+        "icon": "vsm-icon pe-7s-id",
+        "rides": [
+                {
+                    "name": "Usuarios",
+                    "icon": "fa fa-user",
+                    "header": "",
+                    "url": "admin/users",
+                    "isChecked": true
+                },
+                {
+                    "name": "Roles",
+                    "icon": "fa fa-users",
+                    "header": "",
+                    "url": "admin/roles",
+                    "isChecked": true
+                }
+            ]
+    },
+    {
+        "title": "RECURSOS HUMANOS\r\n",
+        "menu": "recursosMenu",
+        "name_model": "RRHH",
+        "icon": "vsm-icon pe-7s-users",
+        "rides": [
+                {
+                    "name": "Colaboradores",
+                    "icon": "fa fa-users",
+                    "header": "RRHH - COLABORADORES",
+                    "url": "rrhh/collaborators",
+                    "isChecked": true
+                }
+            ]
+    },
+    {
+        "title": "GESTIÓN DE RECLAMOS\r\n",
+        "menu": "claimsMenu",
+        "name_model": "Reclamos",
+        "icon": "vsm-icon pe-7s-portfolio",
+        "rides": [
+            {
+                "name": "Csalud-Iafas",
+                "icon": "fa fa-book",
+                "header": "Reclamos - CSALUD IAFAS",
+                "url": "claims/iafas",
+                "isChecked": true
+            },
+            {
+                "name": "Cms-Ipress",
+                "icon": "fa fa-book",
+                "header": "Reclamos - CMS IPRESS",
+                "url": "claims/ipress",
+                "isChecked": true
+            },
+            {
+                "name": "Portal-Web",
+                "icon": "fa fa-book",
+                "header": "Reclamos Portal Web",
+                "url": "claims/portal",
+                "isChecked": true
+            }
+        ]
+    },
+    {
+        "title": "REPORTES",
+        "menu": "reportMenu",
+        "name_model": "Reportes",
+        "icon": "vsm-icon pe-7s-wallet",
+        "rides": [
+            {
+                "name": "Directores",
+                "icon": "fa fa-book",
+                "header": "Envio de Mensajes",
+                "url": "report/send",
+                "isChecked": true
+            }
+        ]
+    },
+    {
+        "title": "CSALUD",
+        "menu": "reportCsalud",
+        "name_model": "Reporte",
+        "icon": "vsm-icon pe-7s-wallet",
+        "rides": [
+            {
+                "name": "Csalud",
+                "icon": "fa fa-book",
+                "header": "Csalud - Reportes",
+                "url": "reportcsalud",
+                "isChecked": true
+            }
+        ]
+    },
+    {
+        "title": "ENCUESTA",
+        "menu": "encuestaMenu",
+        "name_model": "Encuesta",
+        "icon": "vsm-icon pe-7s-wallet",
+        "rides": [
+                {
+                    "name": "Registro",
+                    "icon": "fa fa-book",
+                    "header": "ENCUESTA",
+                    "url": "encuesta/encuesta",
+                    "isChecked": true
+                },
+                {
+                    "name": "Reporte",
+                    "icon": "fa fa-book",
+                    "header": "Reporte - ENCUESTA",
+                    "url": "encuesta/reportencuesta",
+                    "isChecked": true,
+                    "Team": [{
+                    
+                                "TeamId": "GP3 Parent 4 Child 1"
+                                },
+                            {
+                                "TeamId": "GP3 Parent 4 Child 2"
+                            }
+                        ]
+                }
+        ]
+    }
+]
   subscription: Subscription;
   constructor(public globals: ThemeOptions, private activatedRoute: ActivatedRoute, private apiService: SharedService, private router: Router) {
 

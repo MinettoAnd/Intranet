@@ -1,0 +1,167 @@
+ngb-accordion ::ng-deep .card-header {
+  padding: 0;
+}
+
+ngb-accordion ::ng-deep .card-header button {
+// width: 100%;
+// padding: 1.125rem 2rem;
+// text-decoration: none;
+// text-align: left;
+
+}
+
+
+ngb-accordion ::ng-deep .card-header button {
+  display: inline-block;
+  // padding: 0;
+  // height: 30px;
+  /* Remove this */
+  /*overflow: hidden;*/
+  -webkit-transition: all .5s ease;
+  transition: all .5s ease;
+  margin: 10px 5px 0px 0;
+  vertical-align: top;
+  position: relative;
+  z-index: 999;
+}
+
+ngb-accordion ::ng-deep .card-header button:hover {
+  height: 50px;
+  background-color: blue;
+}
+ngb-accordion ::ng-deep .card-header button:focus {
+  visibility: visible;
+}
+
+ngb-accordion ::ng-deep .card-body {
+  display: block;
+  padding: 0;
+  margin-top: 1px;
+  background-color: red;
+  position: relative;
+}
+
+.languagepicker {
+  display: inline-block;
+  padding: 0;
+  height: 30px;
+  /* Remove this */
+  /*overflow: hidden;*/
+  -webkit-transition: all .5s ease;
+  transition: all .5s ease;
+  margin: 10px 5px 0 0;
+  vertical-align: top;
+  position: relative;
+  z-index: 999;
+}
+
+.languagepicker:hover {
+  height: 50px;
+}
+
+.languagepicker a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.languagepicker li {
+  display: block;
+  padding: 0px 5px;
+  line-height: 35px;
+}
+
+.languagepicker li:hover {
+  // background-color: #afafaf;
+  background: hsla(0,0%,100%,.1)!important;
+  color: #fff!important;
+}
+
+.languagepicker a:first-child li {
+  border: none;
+  background: #bb635a;
+}
+
+.languagepicker li img {
+  margin-right: 5px;
+}
+
+.roundborders {
+  border-radius: 5px;
+}
+
+.large:hover {
+  height: auto;
+}
+
+.activeLink {
+  color: #B0B0B0;
+}
+
+.activeSubLink {
+  color: #4169E1;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* My Edits */
+.languagepicker li:first-child{
+  visibility: visible;
+}
+
+.languagepicker:hover li{
+  visibility: visible;
+}
+
+ul li.testclass {
+  display: block;
+  padding: 0;
+  margin-top: 1px;
+  width: 100%;
+  position: relative;
+  
+}
+li.testclass:hover  {
+  background-color: #4169E1;
+}
+.v-sidebar-menu .vsm-arrow{
+  transform: none!important;
+}
+
+li.testclass > ul,
+li.testclass > ul li ul {
+  position: absolute;
+  top: 30;
+  left: 30%;
+  display: none;
+  width: auto;
+  white-space: nowrap;
+  width: 100%;
+  padding-left: 8%;
+  z-index: 999;
+  background-color: red;
+}
+
+li.testclass:hover > ul,
+li.testclass > ul li:hover ul {
+  display: block;
+}
+
+/* End of Edits */
+
+
+li.testclass ul li {
+  margin-left: 0px;
+  padding: 0;
+  // background-color: blue;
+
+}
+
+li.testclass ul li ul li {
+  margin-left: 0px;
+  padding: 0;
+  background-color: green;
+}

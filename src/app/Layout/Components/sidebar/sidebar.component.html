@@ -22,7 +22,30 @@
     </div>
   </div>
   <div class="app-sidebar-content">
-    <div class="app-sidebar-scroll">
+        <!-- Env Menu starts here -->
+        <div class="v-sidebar-menu vsm-default" >
+          <ul class="languagepicker vsm-list">
+            <li class="testclass" *ngFor="let item of menu"><a href="#">
+              <!-- <div class="vsm-header">{{ item.title }}</div> -->
+                      <button  class="vsm-link">
+                        <i [class]="item.icon"></i>
+                        <span class="vsm-title" *ngIf="!this.globals.toggleSidebar"> {{ item.name_model }}</span>
+                        <span class="vsm-title" *ngIf="this.globals.toggleSidebar">&nbsp;&nbsp;</span>
+                        <i class="vsm-arrow"></i>
+                      </button>
+              </a>
+              <ul>
+                <li *ngFor="let subMenuItem of item.rides"><a href="#">{{subMenuItem.name}}</a>
+                  <ul>
+                    <li *ngFor="let subSubMenuItem of subMenuItem.Team"><a href="#">{{subSubMenuItem.TeamId}}</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>  
+      <!-- Env Menu End here-->
+    <!-- <div class="app-sidebar-scroll">
       <perfect-scrollbar [autoPropagation]="true">
         <div class="v-sidebar-menu vsm-default">
           <div class="vsm-list">
@@ -31,9 +54,11 @@
               [closeOthers]="true"
               [activeIds]="extraParameter"
             >
-              <ngb-panel [id]="item.menu" *ngFor="let item of menuItems">
-                <ng-template ngbPanelHeader>
+            
+              <ngb-panel [id]="item.menu"  *ngFor="let item of menu">
+                <ng-template ngbPanelHeader >
                   <div class="vsm-header">{{ item.title }}</div>
+                  
                   <button ngbPanelToggle class="vsm-link">
                     <i [class]="item.icon"></i>
                     <span class="vsm-title"> {{ item.name_model }}</span>
@@ -67,7 +92,7 @@
           </div>
         </div>
       </perfect-scrollbar>
-    </div>
+    </div> -->
   </div>
 </div>
 
