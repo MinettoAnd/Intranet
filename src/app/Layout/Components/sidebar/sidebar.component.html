@@ -25,19 +25,37 @@
         <!-- Env Menu starts here -->
         <div class="v-sidebar-menu vsm-default" >
           <ul class="languagepicker vsm-list">
-            <li class="testclass" *ngFor="let item of menu"><a href="#">
-              <!-- <div class="vsm-header">{{ item.title }}</div> -->
+            <li class="testclass" *ngFor="let item of menu"><a
+              (click)="goRutePagesHeaderTitle(item.header)"
+              routerLinkActive="active-item"
+              routerLink="{{ item.url }}"
+              >
                       <button  class="vsm-link">
-                        <i [class]="item.icon"></i>
-                        <span class="vsm-title" *ngIf="!this.globals.toggleSidebar"> {{ item.name_model }}</span>
-                        <span class="vsm-title" *ngIf="this.globals.toggleSidebar">&nbsp;&nbsp;</span>
+                        <i [class]="item.icon">&nbsp;</i>
+                        <span class="vsm-title" >&nbsp;{{ item.name_model }}</span>
+                        
                         <i class="vsm-arrow"></i>
                       </button>
               </a>
               <ul>
-                <li *ngFor="let subMenuItem of item.rides"><a href="#">{{subMenuItem.name}}</a>
+                <li *ngFor="let subMenuItem of item.rides">
+                  <a
+                    (click)="goRutePagesHeaderTitle(subMenuItem.header)"
+                    routerLinkActive="active-item"
+                    routerLink="{{ subMenuItem.url }}"
+                    *ngIf="subMenuItem.isChecked"
+                    
+                  >{{subMenuItem.name}}</a>
                   <ul>
-                    <li *ngFor="let subSubMenuItem of subMenuItem.Team"><a href="#">{{subSubMenuItem.TeamId}}</a></li>
+                    <li *ngFor="let subSubMenuItem of subMenuItem.Team">
+                      <a
+                        (click)="goRutePagesHeaderTitle(subSubMenuItem.header)"
+                        routerLinkActive="active-item"
+                        routerLink="{{ subSubMenuItem.url }}"
+                        *ngIf="subSubMenuItem.isChecked"
+                        
+                      >{{subSubMenuItem.name}}</a>
+                    </li>
                   </ul>
                 </li>
               </ul>
@@ -45,56 +63,8 @@
           </ul>
         </div>  
       <!-- Env Menu End here-->
-    <!-- <div class="app-sidebar-scroll">
-      <perfect-scrollbar [autoPropagation]="true">
-        <div class="v-sidebar-menu vsm-default">
-          <div class="vsm-list">
-            <ngb-accordion
-              [destroyOnHide]="false"
-              [closeOthers]="true"
-              [activeIds]="extraParameter"
-            >
-            
-              <ngb-panel [id]="item.menu"  *ngFor="let item of menu">
-                <ng-template ngbPanelHeader >
-                  <div class="vsm-header">{{ item.title }}</div>
-                  
-                  <button ngbPanelToggle class="vsm-link">
-                    <i [class]="item.icon"></i>
-                    <span class="vsm-title"> {{ item.name_model }}</span>
-                    <i class="vsm-arrow"></i>
-                  </button>
-                </ng-template>
-                <ng-template ngbPanelContent>
-                  <div class="vsm-dropdown">
-                    <div class="vsm-list">
-                      <div
-                        class="vsm-item"
-                        *ngFor="let subMenuItem of item.rides"
-                      >
-                        <a
-                          (click)="goRutePagesHeaderTitle(subMenuItem.header)"
-                          routerLinkActive="active-item"
-                          routerLink="{{ subMenuItem.url }}"
-                          *ngIf="subMenuItem.isChecked"
-                          class="vsm-link"
-                        >
-                          <span class="vsm-title">{{
-                            subMenuItem.name
-                          }}</span></a
-                        >
-                      </div>
-                    </div>
-                  </div>
-                </ng-template>
-              </ngb-panel>
-            </ngb-accordion>
-          </div>
-        </div>
-      </perfect-scrollbar>
-    </div> -->
-  </div>
-</div>
+
+
 
 <!--div class="v-sidebar-menu vsm-default">
   <div class="vsm-list">
