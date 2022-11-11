@@ -237,7 +237,7 @@ menu;
       {
         "title": "ENCUESTA",
         "menu": "susalud",
-        "name_model": "SUSALUD",
+        "name_model": "SuSalud",
         "url": "encuesta/encuesta",
         "icon": "vsm-icon pe-7s-wallet",
         "isChecked": true
@@ -286,21 +286,44 @@ menu;
                     // "isChecked": true,
                     "Team": [{
                     
-                              "name": "GP3 Parent 4 Child 1",
+                              "name": "Parent 4 Child 1",
                               "icon": "fa fa-book",
                               "header": "Reporte - ENCUESTA",
                               "url": "encuesta/reportencuesta",
                               "isChecked": true,
                               },
                           {
-                              "name": "GP3 Parent 4 Child 2",
+                              "name": "Parent 4 Child 2",
                               "icon": "fa fa-book",
                               "header": "Reporte - ENCUESTA",
                               "url": "encuesta/reportencuesta",
                               "isChecked": true,
                           }
                         ]
-                  }
+                  },
+                  {
+                    "name": "Logistica",
+                    "icon": "fa fa-book",
+                    "menu": "logistica",
+                    "header": "Reporte - ENCUESTA",
+                    // "isChecked": true,
+                    "Team": [{
+                    
+                                "name": "GP3 Parent 4 Child 1",
+                                "icon": "fa fa-book",
+                                "header": "Reporte - ENCUESTA",
+                                "url": "encuesta/reportencuesta",
+                                "isChecked": true,
+                                },
+                            {
+                                "name": "GP3 Parent 4 Child 2",
+                                "icon": "fa fa-book",
+                                "header": "Reporte - ENCUESTA",
+                                "url": "encuesta/reportencuesta",
+                                "isChecked": true,
+                            }
+                        ]
+                },
           ]
       },
       {
