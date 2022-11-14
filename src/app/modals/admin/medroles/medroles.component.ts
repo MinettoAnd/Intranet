@@ -38,7 +38,9 @@ export class MedrolesComponent implements OnInit {
   }
   get f() { return this.editForm.controls; }
   getPermisosModulosA(id) {
+    console.log(11, id)
     this.apiService.getPermisosModoleAbilitado(id).then((response: any) => {
+      console.log(12, response)
       this.permisosabilitados = response.data.length > 0 ? response.data : [];
       console.log(this.permisosabilitados);
     });

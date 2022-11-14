@@ -192,7 +192,8 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (parseInt(localStorage.getItem('idrol')) == 1) {
+    // const idrol = 1,2,6
+    if (parseInt(localStorage.getItem('idrol')) === 1) {
       this.sucursal = 0;
     } else {
       this.sucursal = parseInt(localStorage.getItem('sede'));
@@ -214,7 +215,7 @@ export class DashboardComponent implements OnInit {
       fecha_inicio: this.ngfecha01,
       fecha_fin: this.ngfecha02,
       sede: parseInt(formValue.sede),
-      idrol: parseInt(localStorage.getItem('idrol')),
+      idrol: localStorage.getItem('idrol'),
       empresa: this.TIPO_RECLAMO
     };
     console.log(data)

@@ -27,21 +27,52 @@ export class UsersComponent implements OnInit {
   submittedsearh = false;
   userslist: Users[];
   search;
+  roles: any;
   constructor(private modalService: NgbModal, private apiService: AdminService) { }
 
   ngOnInit() {
-    this.getUserList();
+    this.getRoles();
+    this.getUserList(); 
   }
-
+  getRoles() {
+    this.apiService.getRolesServices().then((response: any) => {
+      this.roles = response.data.length > 0 ? response.data : [];
+    });
+  }
   getUserList() {
     this.apiService.getUserListService().then((response: any) => {
       this.listusers = response.data.length > 0 ? response.data : [];
-      // console.log(this.listusers);
+      this.listusers.map((item: { idrol: any; name: any; }) => {
+        if (item.idrol.includes(',') ? true : false){
+          console.log('usuarios');
+          var array = item.idrol.split(",");
+          var newName='';
+          for (let index = 0; index < array.length; index++) {
+            const element = array[index]; 
+            console.log(array.length, index);
+            const roles = this.roles.map((rol: {idrol:string; name:string}) => {
+              if(rol.idrol.toString() === element){
+                if (array.length != index + 1){
+                  newName = newName + rol.name + ' ,';
+                }else{
+                  newName = newName + rol.name
+                }
+               
+              }
+            });
+            console.log(newName);
+          }
+          item.name = newName;
+        }
+      });
+      // console.log(usuarios);
+      
       this.collectionSize = this.listusers.length;
       this.refreshCountries();
     });
   }
   refreshCountries() {
+    
     this.userslist = this.listusers
       .map((country, i) => ({ id: i + 1, ...country }))
       .slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);

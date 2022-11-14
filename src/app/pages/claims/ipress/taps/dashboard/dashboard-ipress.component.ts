@@ -231,7 +231,7 @@ export class DashboardIpressComponent implements OnInit {
       fecha_inicio: this.ngfecha01,
       fecha_fin: this.ngfecha02,
       sede: parseInt(formValue.sede),
-      idrol: parseInt(localStorage.getItem('idrol')),
+      idrol: localStorage.getItem('idrol'),
       empresa: this.TIPO_RECLAMO
     };
     console.log(formValue.sede)

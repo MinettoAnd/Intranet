@@ -155,10 +155,28 @@ export class LoginBoxedComponent implements OnInit {
       console.log('lista rol', response);
       Swal.close();
       if (response.data.length > 0) {
-
+// console.log(this.listrol)
+        let claves = Object.keys(this.listrol);
+        var area_access ='';
+        var idrol = '';
+        for(let i=0; i< claves.length; i++){
+          let clave = claves[i];
+          if (claves.length != i + 1){
+            // area_access =  area_access + this.listrol[clave].area_access + ',';
+            idrol =  idrol + this.listrol[clave].idrol + ',';
+          }else{
+            // area_access =  area_access + this.listrol[clave].area_access;
+            idrol =  idrol + this.listrol[clave].idrol;
+          }
+            
+          console.log(111, idrol);
+        }
+        console.log(area_access)
         localStorage.setItem('access', this.acceso.toString());
+        // localStorage.setItem('access_area', area_access);
+        localStorage.setItem('idrol', idrol);
         localStorage.setItem('access_area', this.listrol[0]?.area_access);
-        localStorage.setItem('idrol', this.listrol[0]?.idrol);
+        // localStorage.setItem('idrol', this.listrol[0]?.idrol);
         this.router.navigate(['/default']);
       } else {
         this.InfoLogin();

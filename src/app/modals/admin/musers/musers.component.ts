@@ -56,9 +56,9 @@ export class MusersComponent implements OnInit {
       
       if (prop === 'idrol'){
         console.log(obj[prop]);
-        if (obj[prop].includes(',') ? true : false){
+        if (obj[prop].includes(',')){
           var array = obj[prop].split(",");
-          console.log(array);
+          // console.log(array);
           vals = array;
           return vals;
         }
@@ -79,7 +79,7 @@ export class MusersComponent implements OnInit {
   }
   buildRolFormArr(roles, selectedRolIds: string[] = []): FormArray {
     const controlArr = roles.map(rol => {
-      console.log(selectedRolIds);
+      // console.log(selectedRolIds);
       let isSelected = selectedRolIds.some(idrol => idrol === rol.idrol.toString());
       return this.formBuilder.control(isSelected);
     })
@@ -120,7 +120,7 @@ export class MusersComponent implements OnInit {
       nombres: formControl.names
 
     }
-    console.log(formControl)
+    // console.log(formControl)
     this.textLoadion = "Realizando Busqueda...";
     this.showLoading();
     this.apiService.getProfileUserSearchService(data).then((response: any) => {
@@ -139,7 +139,7 @@ export class MusersComponent implements OnInit {
     } else {
       this.checkedIDs = this.checkedIDs.filter(item => item !== persona);
     }
-    console.log(this.checkedIDs);
+    // console.log(this.checkedIDs);
   }
   //TODO:ASIGNAR ROL
   registerUser(state) {
@@ -178,7 +178,7 @@ export class MusersComponent implements OnInit {
                   success: 1
                 }
                 this.activeModal.close(data)
-                console.log("registro usuario")
+                // console.log("registro usuario")
               }
             }, (error) => {
               Swal.close();

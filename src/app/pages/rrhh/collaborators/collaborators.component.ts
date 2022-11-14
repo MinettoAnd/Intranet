@@ -231,12 +231,14 @@ export class CollaboratorsComponent implements OnInit {
         this.apiService
             .getColaboradoresFilterService(data)
             .then((response: any) => {
+                console.log(response);
                 this.rowData = response.length > 0 ? response : [];
                 this.getCargo();
             });
     }
     getCargo() {
         this.apiService.getCargoService().then((response: any) => {
+            console.log(response);
             this.cargos = response.length > 0 ? response : [];
         });
     }
@@ -276,7 +278,7 @@ export class CollaboratorsComponent implements OnInit {
         var colId = params.column.getId();
         if (colId === "DES_EMAIL") {
             const data = {
-                gmail: params.data.DES_EMAIL,
+                email: params.data.DES_EMAIL,
                 codpersona: params.data.COD_PERSONAL,
             };
             this.showAlert(params.data.DES_EMAIL, params.data.TRABAJADOR, data);
@@ -303,6 +305,19 @@ export class CollaboratorsComponent implements OnInit {
             })
             .then((result) => {
                 if (result.isConfirmed) {
+                    if(!data.email.includes('@')){
+                        
+                        if(data.email.match('clubdelasalud.pe') != null){
+                            console.log(data.email.match('clubdelasalud.pe'));
+                            data.email = data.email.replace("clubdelasalud.pe", "@clubdelasalud.pe"); 
+                        }else if (data.email.match('clubdelasalud') != null) {
+                            data.email = data.email.replace("clubdelasalud", "@clubdelasalud.pe"); 
+                        }else{
+                            data.email = data.email + "@clubdelasalud.pe";
+                        }
+                        
+                    }
+                    // return
                     this.apiService.updateColaboradorEmailService(data).then(
                         (response: any) => {
                             console.log(response);
