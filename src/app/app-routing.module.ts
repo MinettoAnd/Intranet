@@ -35,6 +35,7 @@ import { HomeComponent } from "./pages/encuesta/home/home.component";
 import { AnswerComponent } from "./pages/encuesta/answer/answer.component";
 import { ResponseformComponent } from "./pages/encuesta/responseform/responseform.component";
 import { ReporteComponent } from './pages/encuesta/reporte/reporte.component';
+import { AttentionConsultationComponent } from "./pages/emergencies/attention-consultation/attention-consultation.component";
 
 const routes: Routes = [
     {
@@ -124,6 +125,11 @@ const routes: Routes = [
                 path: "encuesta/reportencuesta",
                 component: ReporteComponent,
                 data: { extraParameter: "encuestaMenu" },
+            },
+            {
+                path: "emergencies/attention-consultation",
+                loadChildren: () => import('../app/pages/emergencies/attention-consultation/attention-consultation.module').then(m => m.AttentionConsultationModule),
+                data: { extraParameter: "emergenciaMenu" },
             },
         ],
     },

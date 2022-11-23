@@ -208,6 +208,17 @@ text-align: left!important;
   // /deep/ .card-header[id^="test"].selected {
   //   background: green;
   // }
+  $gray-100: #f8f9fa !default;
+  $gray-200: #e9ecef !default;
+  $gray-300: #dee2e6 !default;
+  $gray-400: #ced4da !default;
+  $gray-500: #adb5bd !default;
+  $gray-600: #6c757d !default;
+  $gray-700: #495057 !default;
+  $gray-800: #343a40 !default;
+  $gray-900: #212529 !default;
+  $blue:    #007bff !default;
+  $primary:       $blue !default;
   $spacer-lg: 3rem;
   $spacer-sm: 1.5rem;
   
@@ -221,14 +232,14 @@ text-align: left!important;
   $logo-width: 97px;
   
   $app-header-height: 60px;
-
+  $dropdown-link-hover-bg:            $gray-100 !default;
   .v-sidebar-menu-n {
     width: auto !important;
     padding: 0 $layout-spacer-x $layout-spacer-x;
   
     %side-link-hover {
-      // background: $dropdown-link-hover-bg;
-      // color: $primary;
+      background: $dropdown-link-hover-bg;
+      color: $primary;
     }
   
     & .vsm-link-n {
@@ -385,5 +396,17 @@ text-align: left!important;
           font-weight: bold;
         }
       }
+    }
+  }
+    .v-sidebar-menu-n{
+    display: none;
+  }
+
+  @media screen and (min-width: 1024px) {
+    .v-sidebar-menu-n{
+      display: flex;
+    }
+    .sidebar-movil{
+      display: none;
     }
   }

@@ -26,30 +26,47 @@
         <div class="v-sidebar-menu-n vsm-default" >
           <ul class="languagepicker vsm-list-n">
             <div class="row">
-              <li class="testclass" [ngClass]="{'col-5 border-item' :globals.sidebarHover || !globals.toggleSidebar}" *ngFor="let item of menu" ><a
+              <li class="testclass" [ngClass]="{'col-5 border-item' :globals.sidebarHover || !globals.toggleSidebar}" *ngFor="let item of menuItems" >
+                <a
+                  (click)="goRutePagesHeaderTitle(item.header)"
+                  routerLinkActive="active-item"
+                  routerLink="{{ item.url }}"
+                  *ngIf="!item.isChecked"
+                  >
+                  <span style="display: none;" [ngClass]="{'vsm-title-n':globals.sidebarHover || !globals.toggleSidebar}">&nbsp;{{ item.name_model }}</span>
+                  <i class="vsm-arrow" [ngClass]="{'vsm-arrow-n':globals.sidebarHover || !globals.toggleSidebar}"></i>  
+                  <div >
+                    <svg  [ngClass]="globals.sidebarHover || !globals.toggleSidebar ? 'svg-icon' : 'svg-icon-small'" viewBox="0 0 28 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M14 5.71364C11.8936 5.71364 10.1818 7.42136 10.1818 9.52273C10.1818 11.6241 11.8936 13.3318 14 13.3318C16.1064 13.3318 17.8182 11.6241 17.8182 9.52273C17.8182 7.42136 16.1063 5.71364 14 5.71364Z"
+                        fill="#51565B"/>
+                      <path
+                        d="M14 0C7.63635 0 2.20183 3.94872 0 9.52274C2.20183 15.0967 7.63635 19.0455 14 19.0455C20.37 19.0455 25.7982 15.0967 28 9.52274C25.7982 3.94872 20.37 0 14 0ZM14 15.8712C10.4873 15.8712 7.63635 13.027 7.63635 9.52268C7.63635 6.01831 10.4873 3.17423 14 3.17423C17.5127 3.17423 20.3636 6.01837 20.3636 9.52274C20.3636 13.0271 17.5127 15.8712 14 15.8712Z"
+                        fill="#51565B"/>
+                    </svg>
+                  <!-- <img src="../../../../assets/images/svg/first_responder_04_operator.svg"> -->
+                  </div>
+                </a>
+                <a 
                 (click)="goRutePagesHeaderTitle(item.header)"
                 routerLinkActive="active-item"
                 routerLink="{{ item.url }}"
-                >
-                <span style="display: none;" [ngClass]="{'vsm-title-n':globals.sidebarHover || !globals.toggleSidebar}">&nbsp;{{ item.name_model }}</span>
-                <i class="vsm-arrow" [ngClass]="{'vsm-arrow-n':globals.sidebarHover || !globals.toggleSidebar}"></i>
-                        <button  class="vsm-link" [ngClass]="{'vsm-link-n':globals.sidebarHover || !globals.toggleSidebar}">
-                          
-                          <!-- <i [class]="item.icon">&nbsp;</i> -->
-                          <div >
-                            <svg  [ngClass]="globals.sidebarHover || !globals.toggleSidebar ? 'svg-icon' : 'svg-icon-small'" viewBox="0 0 28 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <path
-                                d="M14 5.71364C11.8936 5.71364 10.1818 7.42136 10.1818 9.52273C10.1818 11.6241 11.8936 13.3318 14 13.3318C16.1064 13.3318 17.8182 11.6241 17.8182 9.52273C17.8182 7.42136 16.1063 5.71364 14 5.71364Z"
-                                fill="#51565B"/>
-                              <path
-                                d="M14 0C7.63635 0 2.20183 3.94872 0 9.52274C2.20183 15.0967 7.63635 19.0455 14 19.0455C20.37 19.0455 25.7982 15.0967 28 9.52274C25.7982 3.94872 20.37 0 14 0ZM14 15.8712C10.4873 15.8712 7.63635 13.027 7.63635 9.52268C7.63635 6.01831 10.4873 3.17423 14 3.17423C17.5127 3.17423 20.3636 6.01837 20.3636 9.52274C20.3636 13.0271 17.5127 15.8712 14 15.8712Z"
-                                fill="#51565B"/>
-                            </svg>
-                          <!-- <img src="../../../../assets/images/svg/first_responder_04_operator.svg"> -->
-                          </div>
-                          
-                          
-                        </button>
+                *ngIf="item.isChecked" 
+                
+                >   
+                  <span style="display: none;" [ngClass]="{'vsm-title-n':globals.sidebarHover || !globals.toggleSidebar}">&nbsp;{{ item.name_model }}</span>
+                  <!-- <i class="vsm-arrow" [ngClass]="{'vsm-arrow-n':globals.sidebarHover || !globals.toggleSidebar}"></i>   -->
+                  <div >
+                    <svg  [ngClass]="globals.sidebarHover || !globals.toggleSidebar ? 'svg-icon' : 'svg-icon-small'" viewBox="0 0 28 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M14 5.71364C11.8936 5.71364 10.1818 7.42136 10.1818 9.52273C10.1818 11.6241 11.8936 13.3318 14 13.3318C16.1064 13.3318 17.8182 11.6241 17.8182 9.52273C17.8182 7.42136 16.1063 5.71364 14 5.71364Z"
+                        fill="#51565B"/>
+                      <path
+                        d="M14 0C7.63635 0 2.20183 3.94872 0 9.52274C2.20183 15.0967 7.63635 19.0455 14 19.0455C20.37 19.0455 25.7982 15.0967 28 9.52274C25.7982 3.94872 20.37 0 14 0ZM14 15.8712C10.4873 15.8712 7.63635 13.027 7.63635 9.52268C7.63635 6.01831 10.4873 3.17423 14 3.17423C17.5127 3.17423 20.3636 6.01837 20.3636 9.52274C20.3636 13.0271 17.5127 15.8712 14 15.8712Z"
+                        fill="#51565B"/>
+                    </svg>
+                  <!-- <img src="../../../../assets/images/svg/first_responder_04_operator.svg"> -->
+                  </div>
                 </a>
                 <ul>
                   <li *ngFor="let subMenuItem of item.rides">
@@ -61,7 +78,7 @@
                       
                     >{{subMenuItem.name}}</a>
                     <ul>
-                      <li *ngFor="let subSubMenuItem of subMenuItem.Team">
+                      <li *ngFor="let subSubMenuItem of subMenuItem.Children">
                         <a
                           (click)="goRutePagesHeaderTitle(subSubMenuItem.header)"
                           routerLinkActive="active-item"
@@ -78,158 +95,87 @@
           </ul>
         </div>  
       <!-- Env Menu End here-->
-
-
-
-<!--div class="v-sidebar-menu vsm-default">
-  <div class="vsm-list">
-    <ngb-accordion
-      [destroyOnHide]="false"
-      [closeOthers]="true"
-      [activeIds]="extraParameter"
-    >
-      <ngb-panel>
-        <ng-template ngbPanelHeader>
-          <div class="vsm-header">ADMIN</div>
-        </ng-template>
-      </ngb-panel>
-
-      <ngb-panel id="adminMenu">
-        <ng-template ngbPanelHeader>
-          <button ngbPanelToggle class="vsm-link">
-            <i class="vsm-icon pe-7s-users"></i>
-            <span class="vsm-title">Autenticación</span>
-            <i class="vsm-arrow"></i>
-          </button>
-        </ng-template>
-        <ng-template ngbPanelContent>
-          <div class="vsm-dropdown">
-            <div class="vsm-list">
-              <div class="vsm-item">
-                <a
-                  routerLinkActive="active-item"
-                  routerLink="/admin/users"
-                  class="vsm-link"
-                  ><span class="vsm-title">Usuarios</span></a
-                >
-              </div>
-              <div class="vsm-item">
-                <a
-                  routerLinkActive="active-item"
-                  routerLink="/admin/roles"
-                  class="vsm-link"
-                  ><span class="vsm-title">Roles</span></a
-                >
-              </div>
-            </div>
+      <!-- Movil Menu starts here -->
+      <perfect-scrollbar class="sidebar-movil" [autoPropagation]="true">
+        <div class="v-sidebar-menu vsm-default">
+          <div class="vsm-list">
+            <ngb-accordion
+              [destroyOnHide]="false"
+              [closeOthers]="true"
+              [activeIds]="extraParameter"
+            >
+              <ngb-panel [id]="item.menu" *ngFor="let item of menuItems">
+                <ng-template ngbPanelHeader>
+                  <a
+                    (click)="goRutePagesHeaderTitle(subMenuItem.header)"
+                    routerLinkActive="active-item"
+                    routerLink="{{ item.url }}"
+                    *ngIf="item.isChecked"
+                    class="vsm-link"
+                    >
+                    <span class="vsm-title">{{
+                        item.name_model
+                          }}</span></a>
+                  <button *ngIf="!item.isChecked" ngbPanelToggle class="vsm-link">
+                    <i [class]="item.icon">>&nbsp;</i>
+                    <span class="vsm-title">{{ item.name_model }}</span>
+                    <i class="vsm-arrow"></i>
+                  </button>
+                </ng-template>
+                <ng-template *ngIf="!item.isChecked" ngbPanelContent>
+                  <ngb-accordion
+                    [destroyOnHide]="false"
+                    [closeOthers]="true"
+                    [activeIds]="extraParameter"
+                    >
+                      <ngb-panel [id]="subItem.menu" *ngFor="let subItem of item.rides">
+                          <ng-template ngbPanelHeader>
+                              <div class="vsm-header">{{ subItem.title }}</div>
+                              <a
+                                (click)="goRutePagesHeaderTitle(subMenuItem.header)"
+                                routerLinkActive="active-item"
+                                routerLink="{{ subItem.url }}"
+                                *ngIf="subItem.isChecked"
+                                class="vsm-link"
+                                >
+                                  <span class="vsm-title">{{
+                                    subItem.name
+                                      }}</span></a>
+                              <button *ngIf="!subItem.isChecked" style="display: flex; align-items: baseline;"  ngbPanelToggle class="vsm-link">
+                                  <i [class]="subItem.icon"></i>
+                                  <span class="vsm">&nbsp;{{ subItem.name }}</span>
+                                  <i class="vsm-arrow"></i>
+                              </button>
+                          </ng-template>
+                          <ng-template ngbPanelContent>
+                              <div class="vsm-dropdown">
+                                  <div class="vsm-list">
+                                      <div
+                                          class="vsm-item"
+                                          *ngFor="let subMenuItem of subItem.Children"
+                                          >
+                                          <a
+                                            (click)="goRutePagesHeaderTitle(subMenuItem.header)"
+                                            routerLinkActive="active-item"
+                                            routerLink="{{ subMenuItem.url }}"
+                                            *ngIf="subMenuItem.isChecked"
+                                            class="vsm-link"
+                                            >
+                                              <span class="vsm-title">{{
+                                                  subMenuItem.name
+                                                  }}</span></a
+                                              >
+                                      </div>
+                                  </div>
+                              </div>
+                          </ng-template>
+                      </ngb-panel>
+                  </ngb-accordion>
+                </ng-template>
+              </ngb-panel>
+            </ngb-accordion>
           </div>
-        </ng-template>
-      </ngb-panel>
-      <ngb-panel>
-        <ng-template ngbPanelHeader>
-          <div class="vsm-header">RECURSOS HUMANOS</div>
-        </ng-template>
-      </ngb-panel>
-      <ngb-panel id="recursosMenu">
-        <ng-template ngbPanelHeader>
-          <button ngbPanelToggle class="vsm-link">
-            <i class="vsm-icon pe-7s-diamond"></i>
-            <span class="vsm-title">RRHH</span>
-            <i class="vsm-arrow"></i>
-          </button>
-        </ng-template>
-        <ng-template ngbPanelContent>
-          <div class="vsm-dropdown">
-            <div class="vsm-list">
-              <div class="vsm-item">
-                <a
-                  routerLinkActive="active-item"
-                  routerLink="/rrhh/collaborators"
-                  class="vsm-link"
-                >
-                  <span class="vsm-title">Colaboradores</span></a
-                >
-              </div>
-            </div>
-          </div>
-        </ng-template>
-      </ngb-panel>
-      <ngb-panel>
-        <ng-template ngbPanelHeader>
-          <div class="vsm-header">GESTIÓN DE RECLAMOS</div>
-        </ng-template>
-      </ngb-panel>
-      <ngb-panel id="claimsMenu">
-        <ng-template ngbPanelHeader>
-          <button ngbPanelToggle class="vsm-link">
-            <i class="vsm-icon pe-7s-diamond"></i>
-            <span class="vsm-title">Reclamos</span>
-            <i class="vsm-arrow"></i>
-          </button>
-        </ng-template>
-        <ng-template ngbPanelContent>
-          <div class="vsm-dropdown">
-            <div class="vsm-list">
-              <div class="vsm-item">
-                <a
-                  routerLinkActive="active-item"
-                  routerLink="/claims/iafas"
-                  class="vsm-link"
-                >
-                  <span class="vsm-title">Csalud-Iafas</span></a
-                >
-              </div>
-              <div class="vsm-item">
-                <a
-                  routerLinkActive="active-item"
-                  routerLink="/claims/ipress"
-                  class="vsm-link"
-                >
-                  <span class="vsm-title">Cms-Ipress</span></a
-                >
-              </div>
-              <div class="vsm-item">
-                <a
-                  routerLinkActive="active-item"
-                  routerLink="/claims/portal"
-                  class="vsm-link"
-                  ><span class="vsm-title">Portal-Web</span></a
-                >
-              </div>
-            </div>
-          </div>
-        </ng-template>
-      </ngb-panel>
-
-      <ngb-panel>
-        <ng-template ngbPanelHeader>
-          <div class="vsm-header">REPORTES</div>
-        </ng-template>
-      </ngb-panel>
-      <ngb-panel id="reportMenu">
-        <ng-template ngbPanelHeader>
-          <button ngbPanelToggle class="vsm-link">
-            <i class="vsm-icon pe-7s-diamond"></i>
-            <span class="vsm-title">Reportes</span>
-            <i class="vsm-arrow"></i>
-          </button>
-        </ng-template>
-        <ng-template ngbPanelContent>
-          <div class="vsm-dropdown">
-            <div class="vsm-list">
-              <div class="vsm-item">
-                <a
-                  routerLinkActive="active-item"
-                  routerLink="/report/send"
-                  class="vsm-link"
-                >
-                  <span class="vsm-title">Directores</span></a
-                >
-              </div>
-            </div>
-          </div>
-        </ng-template>
-      </ngb-panel>
-    </ngb-accordion>
+        </div>
+      </perfect-scrollbar>
+      <!-- Movil Menu End here -->
   </div>
-</div-->
