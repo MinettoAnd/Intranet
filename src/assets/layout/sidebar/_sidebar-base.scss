@@ -70,10 +70,11 @@ $sidebar-box-shadow: 7px 0 60px rgba(0, 0, 0, 0.05);
     background: transparent;
     position: relative;
     display: block;
-    padding: 0.1rem 0;
+    padding: 0rem 1rem 1rem 0rem;
 
     .card-body {
       padding: 0;
+      padding: 1rem 0 0rem 1rem;
     }
 
     .card-header {
@@ -106,8 +107,8 @@ $sidebar-box-shadow: 7px 0 60px rgba(0, 0, 0, 0.05);
 
   & .vsm-link {
     display: block;
-    line-height: 2.4rem;
-    height: 2.4rem;
+    // line-height: 2.4rem;
+    // height: 2.4rem;
     padding: 0 1rem 0 2rem;
     position: relative;
     border-radius: 0.25rem;
@@ -202,19 +203,18 @@ $sidebar-box-shadow: 7px 0 60px rgba(0, 0, 0, 0.05);
     }
 
     .vsm-list {
-      padding: ($layout-spacer-x / 2) 0 ($layout-spacer-x / 2) $layout-spacer-x *
-        1.5;
+      // padding: ($layout-spacer-x / 2) 0 ($layout-spacer-x / 2) $layout-spacer-x * 1.5;
     }
 
     .vsm-item {
       .vsm-link {
-        padding: 0 ($layout-spacer-x / 1.5);
+        // padding: 0 ($layout-spacer-x / 1.5);
         height: 1.9rem;
         line-height: 1.9rem;
         font-weight: normal;
 
         &.active-item {
-          font-weight: 600;
+          // font-weight: 600;
         }
       }
     }
@@ -253,7 +253,7 @@ $sidebar-box-shadow: 7px 0 60px rgba(0, 0, 0, 0.05);
       font-weight: normal;
 
       &.active-item {
-        font-weight: bold;
+        // font-weight: bold;
       }
     }
   }

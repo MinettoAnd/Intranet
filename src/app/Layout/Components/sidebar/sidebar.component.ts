@@ -27,7 +27,7 @@ export class SidebarComponent implements OnInit {
 tabSelected = [];
 tabChild = [];
 laptop;
-menu;
+menuI;
   subscription: Subscription;
   constructor(public globals: ThemeOptions, private activatedRoute: ActivatedRoute, private apiService: SharedService, private router: Router) {
 
@@ -48,8 +48,8 @@ menu;
   }
 
   ngOnInit() {
-    this.getLaptop();
-    this.setDefaultTabSelected();
+    this.getMenu();
+    // this.setDefaultTabSelected();
     setTimeout(() => {
       this.innerWidth = window.innerWidth;
       if (this.innerWidth < 1200) {
@@ -65,8 +65,8 @@ menu;
       this.getModelsUsers();
     }
   }
-  getLaptop(){
-    this.menu = [
+  getMenu(){
+    this.menuI = [
       {
           "title": "ADMIN",
           "menu": "adminMenu",
@@ -261,7 +261,7 @@ menu;
                       "menu": "produccion",
                       "header": "Reporte - ENCUESTA",
                       // "isChecked": true,
-                      "Team": [{
+                      "Children": [{
                       
                                   "name": "GP3 Parent 4 Child 1",
                                   "icon": "fa fa-book",
@@ -284,7 +284,7 @@ menu;
                     "menu": "pagoEntreEmpresasBioHealth",
                     "header": "Reporte - ENCUESTA",
                     // "isChecked": true,
-                    "Team": [{
+                    "Children": [{
                     
                               "name": "Parent 4 Child 1",
                               "icon": "fa fa-book",
@@ -307,7 +307,7 @@ menu;
                     "menu": "logistica",
                     "header": "Reporte - ENCUESTA",
                     // "isChecked": true,
-                    "Team": [{
+                    "Children": [{
                     
                                 "name": "GP3 Parent 4 Child 1",
                                 "icon": "fa fa-book",
@@ -360,41 +360,7 @@ menu;
     
   }
   
-  setDefaultTabSelected() {
 
-    this.tabSelected = [];
-    
-    for (let i in this.menu.children) {
-      console.log(12, this.menu.children[i].name);
-      if (this.menu.children[i].name != "Accessories") {
-        this.tabSelected.push(this.menu.children[i].children[0].id);
-        if (this.menu.children[i].name != "None") {
-          // this.OptionSelected.push(this.information[0].children[i].children[0]);
-        }
-      }
-    }
-
-    for (let i in this.tabSelected) {
-      console.log(this.tabSelected[i]);
-    }
-
-  }
-  
-  
-  toggleItem(j) {
-    console.log(j)
-    console.log(this.menu.rides[j]);
-    this.menu.rides[j].open = !this.menu.rides[j].open
-  }
-
-
-  setClickedRow(j, k) {
-
-    console.log(this.tabSelected.indexOf(this.menu.children[j].children[k].id) > -1);
-    //console.log("into function");
-    this.tabSelected[0] = 1;
-    
-  }
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.newInnerWidth = event.target.innerWidth;

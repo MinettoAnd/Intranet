@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgReduxModule } from '@angular-redux/store';
@@ -107,6 +107,7 @@ import { AnswerComponent } from './pages/encuesta/answer/answer.component';
 import { ResponseformComponent } from './pages/encuesta/responseform/responseform.component';
 import { ReporteComponent } from './pages/encuesta/reporte/reporte.component';
 import { CustomFilterPipe } from './pipes/custom-filter.pipe';
+
 // import { BsDatepickerModule, BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -204,7 +205,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     NgSelectModule,
     AgGridModule.withComponents([]),
     // BsDatepickerModule.forRoot(),
+    // NgxDatatableModule
   ],
+
   providers: [
     {
       provide:
@@ -217,7 +220,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ConfigActions,
     DatePipe
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
 })
 
 export class AppModule {
