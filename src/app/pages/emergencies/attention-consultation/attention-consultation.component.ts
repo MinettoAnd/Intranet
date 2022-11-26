@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { NgBlockUI, BlockUI } from 'ng-block-ui';
 import { PerfectScrollbarDirective, PerfectScrollbarComponent, PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { TableApiService } from '../../../_services/table-api.service';
@@ -9,7 +10,7 @@ import { TableApiService } from '../../../_services/table-api.service';
   styleUrls: ['./attention-consultation.component.sass']
 })
 export class AttentionConsultationComponent implements OnInit {
-  // data: any;
+  filtroForm: FormGroup;
   @BlockUI('addRows') blockUIAddRows: NgBlockUI;
   @BlockUI('rowSelection') blockUIRowSelection: NgBlockUI;
 
@@ -30,43 +31,24 @@ export class AttentionConsultationComponent implements OnInit {
   editing = {};
   row: any;
   public breadcrumb: any;
-  data:any = {
-    "rows": [
-        { "id":"1","name": "Marban", "position": "Otto", "office": "@mdo", "age": "34", "salary": "16000", "startdate": "16/05/2017"},
-        { "id":"2","name": "Jacob", "position": "Thornton", "office": "@fat", "age": "36", "salary": "12000", "startdate": "16/05/2017"},
-        { "id":"3","name": "Albart", "position": "the Bird", "office": "@twitter", "age": "38", "salary": "12000", "startdate": "16/05/2017"},
-        { "id":"4","name": "Marken", "position": "Otto", "office": "@mdo", "age": "32", "salary": "12000", "startdate": "26/05/2017"},
-        {  "id":"5","name": "Jacob", "position": "Thornton", "office": "@fat", "age": "34", "salary": "67000", "startdate": "16/05/2017"},
-        {  "id":"6","name": "Larry", "position": "the Bird", "office": "@twitter", "age": "39", "salary": "22000", "startdate": "16/05/2017"},
-        {  "id":"7","name": "Margi", "position": "Otto", "office": "@mdo", "age": "31", "salary": "42000", "startdate": "16/05/2017"},
-        {  "id":"8","name": "Jhon", "position": "Thornton", "office": "@fat", "age": "40", "salary": "52000", "startdate": "16/05/2017"},
-        {  "id":"9","name": "Larry", "position": "the Bird", "office": "@twitter", "age": "48", "salary": "20000", "startdate": "16/05/2018"},
-        {  "id":"10","name": "Mark", "position": "Otto", "office": "@mdo", "age": "36", "salary": "12000", "startdate": "16/05/2017"},
-        {  "id":"11","name": "Jacob", "position": "Thornton", "office": "@fat", "age": "33", "salary": "12000", "startdate": "16/05/2017"},
-        {  "id":"12","name": "Larry", "position": "the Bird", "office": "@twitter", "age": "34", "salary": "19000", "startdate": "16/05/2017"},
-        { "id":"13", "name": "Margi", "position": "Otto", "office": "@mdo", "age": "34", "salary": "16000", "startdate": "16/05/2015"},
-        { "id":"14", "name": "Jacob", "position": "Thornton", "office": "@fat", "age": "34", "salary": "12000", "startdate": "16/05/2017"}
-      ],
-      "row":[ 
-       
-          { "id":"1","name": "Marban", "position": "Otto", "office": "@mdo", "age": "34", "salary": "16000","gender":"female" },
-          { "id":"2","name": "Jacob", "position": "Thornton", "office": "@fat", "age": "36", "salary": "12000","gender":"male" },
-          { "id":"3","name": "Albart", "position": "the Bird", "office": "@twitter", "age": "38", "salary": "12000", "gender":"female" },
-          { "id":"4","name": "Marken", "position": "Otto", "office": "@mdo", "age": "32", "salary": "12000","gender":"male" },
-          {  "id":"5","name": "Jacob", "position": "Thornton", "office": "@fat", "age": "34", "salary": "67000", "gender":"female" },
-          {  "id":"6","name": "Larry", "position": "the Bird", "office": "@twitter", "age": "39", "salary": "22000","gender":"female" },
-          {  "id":"7","name": "Margi", "position": "Otto", "office": "@mdo", "age": "31", "salary": "42000", "gender":"male" },
-          {  "id":"8","name": "Jhon", "position": "Thornton", "office": "@fat", "age": "40", "salary": "52000","gender":"female" },
-          {  "id":"9","name": "Larry", "position": "the Bird", "office": "@twitter", "age": "48", "salary": "20000","gender":"female" },
-          {  "id":"10","name": "Mark", "position": "Otto", "office": "@mdo", "age": "36", "salary": "12000","gender":"male" },
-          {  "id":"11","name": "Jacob", "position": "Thornton", "office": "@fat", "age": "33", "salary": "12000","gender":"female" },
-          {  "id":"12","name": "Larry", "position": "the Bird", "office": "@twitter", "age": "34", "salary": "19000","gender":"male" },
-          { "id":"13", "name": "Margi", "position": "Otto", "office": "@mdo", "age": "34", "salary": "16000","gender":"female" },
-          { "id":"14", "name": "Jacob", "position": "Thornton", "office": "@fat", "age": "34", "salary": "12000","gender":"male" }
-        ]
-  
-  }
-  constructor(private tableApiservice: TableApiService) { }
+  data:any;
+  message;
+  columns:any;
+  optionsWithCaption = {};
+
+
+  constructor(private tableApiservice: TableApiService) {
+    this.filtroForm = new FormGroup({
+      inicio: new FormControl(""),
+      apellidos: new FormControl(""),
+      sedes: new FormControl("NA"),
+      estado: new FormControl("0"),
+      area: new FormControl(""),
+      final: new FormControl(""),
+      cargo: new FormControl(""),
+      correo: new FormControl("3"),
+  });
+   }
 
   ngOnInit() {
     this.breadcrumb = {
@@ -88,16 +70,48 @@ export class AttentionConsultationComponent implements OnInit {
         }
       ]
     };
-      // this.tableApiservice.getTableApiData().subscribe(Response => {
-      // this.data = Response;
+    // this.fetch((data) => {
+    //   this.rows = data;
+    //   console.log(data)
+    // });
+      this.tableApiservice.getTableApiData().subscribe(Response => {
+        console.log(Response.data.data);
+        this.message = Response.message;
+        this.data = Response.data;
+        this.getTabledata();
+      });
       // this.getTabledata();
-      // });
-      this.getTabledata();
   }
   getTabledata() {
-    this.rows = this.data.rows;
-    this.row = this.data.row;
+    // this.rows = this.data.rows;
+    // this.row = this.data.row;
+    this.columns = this.data.cabeceras;
+    console.log(this.columns)
+    this.rows = this.data.data;
   }
+    filter() {
+        const form = this.filtroForm.value;
+        // const data = {
+        //     inicio: this.datePipe.transform(form.inicio, "dd-MM-yyyy"),
+        //     apellidos: form.apellidos,
+        //     sede: form.sedes,
+        //     estado: form.estado,
+        //     area: form.area,
+        //     final: this.datePipe.transform(form.final, "dd-MM-yyyy"),
+        //     cargo: form.cargo,
+        //     correo: form.correo,
+        // };
+        // this.loading();
+        // this.apiService.getColaboradoresFilterService(data).then(
+        //     (response: any) => {
+        //         this.rowData = response.length > 0 ? response : [];
+        //         Swal.close();
+        //     },
+        //     (error) => {
+        //         Swal.close();
+        //     }
+        // );
+    }
   updateFiltername(event) {
     const val = event.target.value.toLowerCase();
 
