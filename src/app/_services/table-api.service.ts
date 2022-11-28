@@ -41,10 +41,9 @@ export class TableApiService {
     return body || {};
   }
 
-  getTableApiData(): Observable<any> {
+  getTableApiData(data): Observable<any> {
 
-    return this.http.get(this.loadTableApiDataURL, httpOptions);
-    
+    return this.http.post(this.loadTableApiDataURL, data);
   }
  
 }

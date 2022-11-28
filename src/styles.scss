@@ -2,6 +2,12 @@
 @import "~@ng-select/ng-select/themes/default.theme.css";
 @import "./main.css";
 
+@import '~@swimlane/ngx-datatable/index.css';
+@import '~@swimlane/ngx-datatable/themes/bootstrap.scss';
+// @import '~@swimlane/ngx-datatable/themes/material.scss';
+@import '~@swimlane/ngx-datatable/themes/dark.scss';
+@import '~@swimlane/ngx-datatable/assets/icons.css';
+
 .app-theme-white .app-sidebar .app-sidebar-content {
     background: RGB(16,0,76);
 }
@@ -144,17 +150,4 @@
     min-width: 971px !important;
     width: 95% !important;
 }
-// .datatable-scroll{
-//     width:50% !important;
-//   }
-// datatable-scroller{
-//     width: 600px; overflow-x:visible; 
-// }
-// // ngx-datatable {
-// //     max-width: 70vh;
-// //     overflow-x: scroll;
-// //   }
-  ::ng-deep .ngx-datatable .datatable-body {
-    max-height: 300px !important;
-    overflow: visible auto;
-}
+
