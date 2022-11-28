@@ -2,8 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { NgBlockUI, BlockUI } from 'ng-block-ui';
 import { PerfectScrollbarDirective, PerfectScrollbarComponent, PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+import Swal from 'sweetalert2';
 import { TableApiService } from '../../../_services/table-api.service';
-
+import {AttentionConsultation} from '../../../interfaces/attentionConsultation';
+import {ApiResponse} from '../../../interfaces/response';
+import * as moment from 'moment';
 @Component({
   selector: 'app-attention-consultation',
   templateUrl: './attention-consultation.component.html',
@@ -35,18 +38,19 @@ export class AttentionConsultationComponent implements OnInit {
   message;
   columns:any;
   optionsWithCaption = {};
-
-
+  datePipe: any;
+  f_inicio = moment(new Date()).format('YYYY-MM-DD');;
+  f_fin = moment(new Date()).format('YYYY-MM-DD');;
   constructor(private tableApiservice: TableApiService) {
     this.filtroForm = new FormGroup({
-      inicio: new FormControl(""),
-      apellidos: new FormControl(""),
-      sedes: new FormControl("NA"),
-      estado: new FormControl("0"),
-      area: new FormControl(""),
-      final: new FormControl(""),
-      cargo: new FormControl(""),
-      correo: new FormControl("3"),
+      f_inicio: new FormControl(""),
+      f_fin: new FormControl(""),
+      id_sede: new FormControl("0000"),
+      id_tipo_paciente: new FormControl("0"),
+      like_empresa: new FormControl(""),
+      like_especialidad: new FormControl(""),
+      like_medico: new FormControl(""),
+      like_paciente: new FormControl(""),
   });
    }
 
@@ -70,48 +74,76 @@ export class AttentionConsultationComponent implements OnInit {
         }
       ]
     };
-    // this.fetch((data) => {
-    //   this.rows = data;
-    //   console.log(data)
-    // });
-      this.tableApiservice.getTableApiData().subscribe(Response => {
-        console.log(Response.data.data);
-        this.message = Response.message;
-        this.data = Response.data;
+    const data = {
+      f_inicio: this.f_inicio,
+      f_fin: this.f_fin,
+      id_sede: '0001',
+      id_tipo_paciente: '0',
+      like_empresa: '',
+      like_especialidad: '',
+      like_medico: '',
+      like_paciente: '',
+    };
+    this.tableApiservice.getTableApiData(data).subscribe(
+      (response: ApiResponse<AttentionConsultation>) => {
+        this.message = response.message;
+        console.log(response.data);
+        this.data = response.data ? response : [];
         this.getTabledata();
-      });
+          Swal.close();
+      },
+      (error) => {
+          Swal.close();
+      }
+  );
       // this.getTabledata();
   }
   getTabledata() {
     // this.rows = this.data.rows;
     // this.row = this.data.row;
-    this.columns = this.data.cabeceras;
+    console.log(this.data);
+    this.columns = this.data.data.cabeceras;
     console.log(this.columns)
-    this.rows = this.data.data;
+    this.rows = this.data.data.data;
   }
     filter() {
+      
         const form = this.filtroForm.value;
-        // const data = {
-        //     inicio: this.datePipe.transform(form.inicio, "dd-MM-yyyy"),
-        //     apellidos: form.apellidos,
-        //     sede: form.sedes,
-        //     estado: form.estado,
-        //     area: form.area,
-        //     final: this.datePipe.transform(form.final, "dd-MM-yyyy"),
-        //     cargo: form.cargo,
-        //     correo: form.correo,
-        // };
-        // this.loading();
-        // this.apiService.getColaboradoresFilterService(data).then(
-        //     (response: any) => {
-        //         this.rowData = response.length > 0 ? response : [];
-        //         Swal.close();
-        //     },
-        //     (error) => {
-        //         Swal.close();
-        //     }
-        // );
+        console.log(this.filtroForm.value);
+        const data = {
+          f_inicio: moment(form.f_inicio).format('YYYY-MM-DD'),
+          f_fin: moment(form.f_fin).format('YYYY-MM-DD'),
+          id_sede: form.id_sede,
+          id_tipo_paciente: form.id_tipo_paciente,
+          like_empresa: form.like_empresa,
+          like_especialidad: form.like_especialidad,
+          like_medico: form.like_medico,
+          like_paciente: form.like_paciente,
+        };
+        this.loading();
+        this.tableApiservice.getTableApiData(data).subscribe(
+            (response: ApiResponse<AttentionConsultation>) => {
+              this.message = response.message;
+              this.data = this.message.length > 0 ? response : [];
+              this.getTabledata();
+                Swal.close();
+            },
+            (error) => {
+                Swal.close();
+            }
+        );
     }
+  async loading() {
+      Swal.fire({
+          html: "<div>Filtrando ...</div>",
+          width: "200px",
+          allowEscapeKey: false,
+          allowOutsideClick: false,
+          onOpen: () => {
+              Swal.showLoading();
+          },
+      });
+  }
   updateFiltername(event) {
     const val = event.target.value.toLowerCase();
 
