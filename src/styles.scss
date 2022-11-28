@@ -144,3 +144,17 @@
     min-width: 971px !important;
     width: 95% !important;
 }
+// .datatable-scroll{
+//     width:50% !important;
+//   }
+// datatable-scroller{
+//     width: 600px; overflow-x:visible; 
+// }
+// // ngx-datatable {
+// //     max-width: 70vh;
+// //     overflow-x: scroll;
+// //   }
+  ::ng-deep .ngx-datatable .datatable-body {
+    max-height: 300px !important;
+    overflow: visible auto;
+}
