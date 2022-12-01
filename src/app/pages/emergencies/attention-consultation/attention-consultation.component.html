@@ -172,19 +172,18 @@
                   <div class="table table-striped table-bordered selection-deletion-row">
 
                     <ngx-datatable
-                      #myTable
-                      class="bootstrap expandable"
+                    class="bootstrap table table-striped"
                       [columns]="columns"
                       [rows]="rows"
-                      [columnMode]="'force'" 
+                      [columnMode]="ColumnMode.force"
                       [headerHeight]="50"
-                      [footerHeight]="'auto'"
-                      [rowHeight]="50"
-                      [scrollbarH]="true"
-                      [limit]="7"
-                      fxFlex="auto" 
-                      [perfectScrollbar]="config"
-                      [loadingIndicator]="loadingIndicator"
+                      [footerHeight]="50"
+                      rowHeight="auto"
+                      [externalPaging]="true"
+                      [count]="page.totalElements"
+                      [offset]="page.pageNumber"
+                      [limit]="page.size"
+                      (page)="setPage($event)"
                       >
                       <ngx-datatable-column  [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
