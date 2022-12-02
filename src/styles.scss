@@ -151,3 +151,10 @@
     width: 95% !important;
 }
 
+.list-group-horizontal{
+    flex-direction: row!important;
+    margin-left: 15px!important;
+}
+.ngx-datatable.bootstrap .datatable-footer {
+    background-color: #10004c!important;
+}

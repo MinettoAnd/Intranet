@@ -9,6 +9,9 @@ import {ApiResponse} from '../../../interfaces/response';
 import * as moment from 'moment';
 import { Page } from './model/page';
 import { ColumnMode } from '@swimlane/ngx-datatable';
+import * as XLSX from 'xlsx';
+import { ExcelJson } from '../../../interfaces/excel-json.interface';
+import { ExportService } from '../../../_services/export.service';
 @Component({
   selector: 'app-attention-consultation',
   templateUrl: './attention-consultation.component.html',
@@ -44,8 +47,8 @@ export class AttentionConsultationComponent implements OnInit {
   datePipe: any;
         // f_inicio: '2022-11-01',
       // f_fin: '2022-11-30',
-  f_inicio = moment(new Date()).format('YYYY-MM-DD');
-  f_fin = moment(new Date()).format('YYYY-MM-DD');
+  f_inicio = moment(new Date('2022-11-01')).format('YYYY-MM-DD');
+  f_fin = moment(new Date('2022-11-30')).format('YYYY-MM-DD');
   id_sede = '0001';
   id_tipo_paciente = '0';
   like_empresa = '';
@@ -54,13 +57,14 @@ export class AttentionConsultationComponent implements OnInit {
   like_paciente = '';
   page = new Page()
   ColumnMode = ColumnMode;
-  constructor(private tableApiservice: TableApiService) {
+  filtered;
+  constructor(private tableApiservice: TableApiService, private exportService: ExportService) {
     this.page.pageNumber = 0;
     this.page.size = 10;
 
     this.filtroForm = new FormGroup({
-      f_inicio: new FormControl(""),
-      f_fin: new FormControl(""),
+      f_inicio: new FormControl(this.f_inicio),
+      f_fin: new FormControl(this.f_fin),
       id_sede: new FormControl("0000"),
       id_tipo_paciente: new FormControl("0"),
       like_empresa: new FormControl(""),
@@ -102,7 +106,7 @@ export class AttentionConsultationComponent implements OnInit {
           this.rows = this.data.data.data;
           console.log(response.data.page);
           this.page = (response as any).data.page;
-  
+          this.temp = this.rows;
           
             Swal.close();
         }else{
@@ -116,7 +120,19 @@ export class AttentionConsultationComponent implements OnInit {
     );
   }
 
+  copyTableToClipboard(){
+    this.exportService.exportToClipboard(this.rows, this.columns);
+    
+  }
 
+  exportToExcel(): void {
+    this.exportService.exportTableElmToExcel(this.rows, 'Atenciones-Realizadas-por-Emergencia');
+  }
+
+
+  exportToCsv(): void {
+    this.exportService.exportToCsv(this.rows, 'Atenciones-Realizadas-por-Emergencia', this.columns);
+  }
   filter() {
   
         const form = this.filtroForm.value;
@@ -215,7 +231,27 @@ export class AttentionConsultationComponent implements OnInit {
     this.rows = temp;
 
   }
+  updateFilter(event) {
+    const input = event.target.value.toLowerCase();
+    console.log(input);
+    // filter our data
+    if (input.length > 0) {
+      const filtered = this.rows
+        .filter(el =>
+          Object.values(el).find( val => val?.toString().toLowerCase().indexOf(input) !== -1 ) != undefined
+        );
+        // console.log(filtered);
+      this.rows = [...filtered]
+      
+    } else {
+      console.log(this.filtered);
+      this.rows = [...this.temp]
+    }
 
+    // update the rows
+    // Whenever the filter changes, always go back to the first page
+    // this.table.offset = 0;
+  }
   // eslint-disable-next-line @typescript-eslint/member-ordering
   private newAttribute = { 'id': 15, name: 'Mark', position: 'Otto', office: '@mdo', age: '31', salary: '12000', startdate: '16/05/2017' };
 
