@@ -47,8 +47,8 @@ export class AttentionConsultationComponent implements OnInit {
   datePipe: any;
         // f_inicio: '2022-11-01',
       // f_fin: '2022-11-30',
-  f_inicio = moment(new Date('2022-11-01')).format('YYYY-MM-DD');
-  f_fin = moment(new Date('2022-11-30')).format('YYYY-MM-DD');
+  f_inicio = moment(new Date()).format('YYYY-MM-DD');
+  f_fin = moment(new Date()).format('YYYY-MM-DD');
   id_sede = '0001';
   id_tipo_paciente = '0';
   like_empresa = '';
