@@ -108,6 +108,8 @@ import { ResponseformComponent } from './pages/encuesta/responseform/responsefor
 import { ReporteComponent } from './pages/encuesta/reporte/reporte.component';
 import { CustomFilterPipe } from './pipes/custom-filter.pipe';
 import { ExportService } from './_services/export.service';
+import { HospitalizationComponent } from './pages/hospitalization/hospitalization.component';
+import { ExternalConsultationComponent } from './pages/external-consultation/external-consultation.component';
 // import { BsDatepickerModule, BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -174,7 +176,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     AnswerComponent,
     ResponseformComponent,
     ReporteComponent,
-    CustomFilterPipe
+    CustomFilterPipe,
+    HospitalizationComponent,
+    ExternalConsultationComponent
         
   ],
   imports: [
