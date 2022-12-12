@@ -1,3 +1,4 @@
+import { Page } from '../pages/emergencies/attention-consultation/model/page';
 /* eslint-disable @typescript-eslint/naming-convention */
 export interface ApiResponse<T> {
   success: boolean;
