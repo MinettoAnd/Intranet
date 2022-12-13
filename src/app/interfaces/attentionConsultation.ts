@@ -1,4 +1,5 @@
 export interface AttentionConsultation {
+title: any;
   // f_inicio: string,
   // f_fin: string,
   // id_sede: string,

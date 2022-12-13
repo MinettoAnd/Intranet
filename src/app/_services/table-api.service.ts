@@ -3,6 +3,7 @@ import { Observable, of, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { HospitalDischargeConsultationComponent } from '../pages/hospitalization/hospital-discharge-consultation/hospital-discharge-consultation.component';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -12,14 +13,10 @@ const httpOptions = {
 })
 export class TableApiService {
 
-  apiBaseURL = 'assets/data';
-
   loadTableApiDataURL = null;
 
    constructor(private http: HttpClient) {
 
-    this.loadTableApiDataURL = `${environment.api_url}getAtenciones`;
-    console.log(this.loadTableApiDataURL);
 
   }
   private handleError(error: HttpErrorResponse) {
@@ -42,9 +39,20 @@ export class TableApiService {
   }
 
   getTableApiData(data): Observable<any> {
-
+    this.loadTableApiDataURL = `${environment.api_url}getAtenciones`;
     return this.http.post(this.loadTableApiDataURL, data);
   }
- 
+  getEmergenciesAttentionConsultation(data): Observable<any> {
+    this.loadTableApiDataURL = `${environment.api_url}emergenciasConsultaAtenciones`;
+    return this.http.post(this.loadTableApiDataURL, data);
+  }
+  getHospitalDischargeConsultation(data): Observable<any> {
+    this.loadTableApiDataURL = `${environment.api_url}hospitalizaConsultaAltas`;
+    return this.http.post(this.loadTableApiDataURL, data);
+  }
+  getExternalAttentionConsultation(data): Observable<any> {
+    this.loadTableApiDataURL = `${environment.api_url}consultaExternaAtenciones`;
+    return this.http.post(this.loadTableApiDataURL, data);
+  }
 }
 
