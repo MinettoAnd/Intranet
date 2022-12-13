@@ -128,8 +128,18 @@ const routes: Routes = [
             },
             {
                 path: "emergencies/attention-consultation",
-                loadChildren: () => import('../app/pages/emergencies/attention-consultation/attention-consultation.module').then(m => m.AttentionConsultationModule),
+                loadChildren: () => import('../app/pages/emergencies/emergencies.module').then(m => m.EmergenciesModule),
                 data: { extraParameter: "emergenciaMenu" },
+            },
+            {
+                path: "hospitalizacion/consulta-altas-hospitalarias",
+                loadChildren: () => import('../app/pages/hospitalization/hospitalization.module').then(m => m.HospitalizationModule),
+                data: { extraParameter: "hospitalizacionMenu" },
+            },
+            {
+                path: "consultoriosExternos/consulta-de-atenciones",
+                loadChildren: () => import('../app/pages/external-consultation/external-consultation.module').then(m => m.ExternalConsultationModule),
+                data: { extraParameter: "hospitalizacionMenu" },
             },
         ],
     },
