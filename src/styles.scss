@@ -162,3 +162,17 @@
 .datatable-header, .datatable-body{
     width: auto!important;
     }
+.min-ancho{
+    min-width: 7.5rem!important;
+}
+.min-ancho-1{
+    min-width: 7.5rem!important;
+    
+}
+.min-row{
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    // margin-left: -15px;
+    margin-left: 0!important;
+}
