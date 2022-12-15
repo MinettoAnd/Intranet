@@ -25,12 +25,11 @@
         <!-- Env Menu starts here -->
         <div class="v-sidebar-menu-n vsm-default" >
           <ul class="languagepicker vsm-list-n">
-            <div class="row">
-              <li class="testclass" [ngClass]="{'col-5 border-item' :globals.sidebarHover || !globals.toggleSidebar}" *ngFor="let item of menuItems" >
+            <div class="" [ngClass]="{'row' :menuItems.length > 1, 'min-row' :menuItems.length < 2}">
+              <li class="testclass" [ngClass]="{'col-5 border-item' :globals.sidebarHover || !globals.toggleSidebar && menuItems.length > 1, 'min-ancho border-item-1' :globals.sidebarHover && menuItems.length < 2, 'min-ancho-1 border-item-1' :!globals.toggleSidebar && menuItems.length < 2}" *ngFor="let item of menuItems" >
                 <a
                   (click)="goRutePagesHeaderTitle(item.header)"
                   routerLinkActive="active-item"
-                  routerLink="{{ item.url }}"
                   *ngIf="!item.isChecked"
                   >
                   <span style="display: none;" [ngClass]="{'vsm-title-n':globals.sidebarHover || !globals.toggleSidebar}">&nbsp;{{ item.name_model }}</span>

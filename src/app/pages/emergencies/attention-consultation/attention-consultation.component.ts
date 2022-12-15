@@ -15,7 +15,7 @@ import { ExportService } from '../../../_services/export.service';
 @Component({
   selector: 'app-attention-consultation',
   templateUrl: './attention-consultation.component.html',
-  styleUrls: ['./attention-consultation.component.sass']
+  styleUrls: ['./attention-consultation.component.scss']
 })
 export class AttentionConsultationComponent implements OnInit {
   filtroForm: FormGroup;
