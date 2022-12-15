@@ -6,12 +6,13 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { AttentionConsultationComponent } from './attention-consultation/attention-consultation.component';
+import { ExternalAttentionConsultationComponent } from './attention-consultation/external-attention-consultation.component';
 @NgModule({
   declarations: [
-    AttentionConsultationComponent
+    ExternalAttentionConsultationComponent
   ],
   imports: [
+    CommonModule,
     NgxDatatableModule,
     NgbModule,
     FormsModule,
@@ -19,7 +20,7 @@ import { AttentionConsultationComponent } from './attention-consultation/attenti
     RouterModule.forChild([
       {
         path: '',
-        component: AttentionConsultationComponent
+        component: ExternalAttentionConsultationComponent
       }
     ])
   ],

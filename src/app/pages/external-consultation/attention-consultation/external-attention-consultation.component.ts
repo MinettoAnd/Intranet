@@ -12,15 +12,12 @@ import { ColumnMode } from '@swimlane/ngx-datatable';
 import * as XLSX from 'xlsx';
 import { ExcelJson } from '../../../interfaces/excel-json.interface';
 import { ExportService } from '../../../_services/export.service';
-
-
 @Component({
   selector: 'app-attention-consultation',
-  templateUrl: './attention-consultation.component.html',
-  styleUrls: ['./attention-consultation.component.sass']
+  templateUrl: './external-attention-consultation.component.html',
+  styleUrls: ['./external-attention-consultation.component.scss']
 })
-export class AttentionConsultationComponent implements OnInit {
-
+export class ExternalAttentionConsultationComponent implements OnInit {
   filtroForm: FormGroup;
   @BlockUI('addRows') blockUIAddRows: NgBlockUI;
   @BlockUI('rowSelection') blockUIRowSelection: NgBlockUI;
@@ -45,6 +42,7 @@ export class AttentionConsultationComponent implements OnInit {
   data:any;
   parameters:any;
   message;
+  title;
   columns:any;
   optionsWithCaption = {};
   datePipe: any;
@@ -61,7 +59,12 @@ export class AttentionConsultationComponent implements OnInit {
   page = new Page()
   ColumnMode = ColumnMode;
   filtered;
-  title: any;
+  public pageLimitOptions = [
+    {value: 10},
+    {value: 25},
+    {value: 50},
+    {value: 100},
+  ];
   constructor(private tableApiservice: TableApiService, private exportService: ExportService) {
     this.page.pageNumber = 0;
     this.page.size = 10;
@@ -80,6 +83,22 @@ export class AttentionConsultationComponent implements OnInit {
 
   ngOnInit() {
     this.setPage({ offset: 0 });
+  }
+  public onLimitChange(limit: any): void {
+    this.changePageLimit(limit);
+    this.setPage({ offset: 0 });
+
+  }
+
+  private changePageLimit(limit: any): void {
+    
+    if (limit === '0'){
+      
+      this.page.size = this.page.totalElements;
+      console.log(this.page.totalElements);
+      return
+    }
+    this.page.size = parseInt(limit, 10);
   }
   setPage(pageInfo) {
     console.log(pageInfo);
@@ -324,5 +343,5 @@ export class AttentionConsultationComponent implements OnInit {
     this.rows = temp;
     this.selected = [];
   }
-
 }
+

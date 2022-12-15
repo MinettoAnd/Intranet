@@ -8,7 +8,7 @@ import {AttentionConsultation} from '../../../interfaces/attentionConsultation';
 import {ApiResponse} from '../../../interfaces/response';
 import * as moment from 'moment';
 import { Page } from '../../../models/forms-data/page';
-import { ColumnMode } from '@swimlane/ngx-datatable';
+import { ColumnMode, NgxDatatableModule, DatatableComponent  } from '@swimlane/ngx-datatable';
 import * as XLSX from 'xlsx';
 import { ExcelJson } from '../../../interfaces/excel-json.interface';
 import { ExportService } from '../../../_services/export.service';
@@ -25,6 +25,8 @@ export class AttentionConsultationComponent implements OnInit {
   public config: PerfectScrollbarConfigInterface = { wheelPropagation: true };
   @ViewChild(PerfectScrollbarComponent) componentRef?: PerfectScrollbarComponent;
   @ViewChild(PerfectScrollbarDirective, { static: true }) directiveRef?: PerfectScrollbarDirective;
+
+  @ViewChild(DatatableComponent) private table: DatatableComponent;
   options = {
     close: true,
     expand: true,
@@ -59,6 +61,12 @@ export class AttentionConsultationComponent implements OnInit {
   page = new Page()
   ColumnMode = ColumnMode;
   filtered;
+  public pageLimitOptions = [
+    {value: 10},
+    {value: 25},
+    {value: 50},
+    {value: 100},
+  ];
   constructor(private tableApiservice: TableApiService, private exportService: ExportService) {
     this.page.pageNumber = 0;
     this.page.size = 10;
@@ -78,6 +86,22 @@ export class AttentionConsultationComponent implements OnInit {
   ngOnInit() {
     this.setPage({ offset: 0 });
   }
+  public onLimitChange(limit: any): void {
+    this.changePageLimit(limit);
+    this.setPage({ offset: 0 });
+
+  }
+
+  private changePageLimit(limit: any): void {
+    
+    if (limit === '0'){
+      
+      this.page.size = this.page.totalElements;
+      console.log(this.page.totalElements);
+      return
+    }
+    this.page.size = parseInt(limit, 10);
+  }
   setPage(pageInfo) {
     console.log(pageInfo);
     this.page.pageNumber = pageInfo.offset;
@@ -93,7 +117,7 @@ export class AttentionConsultationComponent implements OnInit {
       pageNumber: this.page.pageNumber,
       size: this.page.size
     };
-
+console.log(this.parameters);
     this.loading();
     this.tableApiservice.getEmergenciesAttentionConsultation(this.parameters).subscribe(
       (response: ApiResponse<AttentionConsultation>) => {

@@ -162,6 +162,10 @@
 .datatable-header, .datatable-body{
     width: auto!important;
     }
+.ngx-datatable.bootstrap .datatable-header{
+    color: #10004c!important;
+    background-color:#FEAD25!important;
+    }
 .min-ancho{
     min-width: 7.5rem!important;
 }
@@ -175,4 +179,7 @@
     margin-right: -15px;
     // margin-left: -15px;
     margin-left: 0!important;
+}
+.app-main__inner {
+    padding: 15px 15px 0!important;
 }
