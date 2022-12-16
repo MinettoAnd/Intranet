@@ -18,7 +18,7 @@ import { ClaimsService } from "../../../claims.service";
 export class RegisterComponent implements OnInit {
     // datosFormRegistroReclamos: FormDataRegistroReclamo;
     public textoTipoCodigo = "";
-
+    active = 1;
     model: NgbDateStruct;
     public listSearchPerson: any = [];
     seachForm: FormGroup;

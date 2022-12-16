@@ -6,13 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./iafas.component.sass']
 })
 export class IafasComponent implements OnInit {
-  model = {
-    left: true,
-    middle: false,
-    right: false
-  };
+  // model = {
+  //   left: true,
+  //   middle: false,
+  //   right: false
+  // };
+  model = 1;
+  public listclaims = true;
   public showformclaims = false;
-  public listclaims = false;
   public dashboard = false;
   constructor() { }
 

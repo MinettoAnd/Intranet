@@ -17,7 +17,7 @@ import { ClaimsService } from "../../../claims.service";
 })
 export class RegisterIpresComponent implements OnInit {
     public textoTipoCodigo = "";
-
+    active = 1;
     model: NgbDateStruct;
     public listSearchPerson: any = [];
     seachForm: FormGroup;
