@@ -19,7 +19,7 @@
         ngbButton
         type="radio"
         (click)="showComponent(1)"
-        value="middle"
+        [value]="2"
       /><i class="fa fa-fw" aria-hidden="true" title="book"></i>
       Registro de Reclamos
     </label>
@@ -28,7 +28,7 @@
         ngbButton
         type="radio"
         (click)="showComponent(3)"
-        [value]="false"
+        [value]="3"
       /><i class="fa fa-fw" aria-hidden="true" title="tachometer"></i>
       Dashboard
     </label>

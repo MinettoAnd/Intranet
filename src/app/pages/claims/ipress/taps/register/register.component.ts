@@ -17,7 +17,7 @@ import { ClaimsService } from "../../../claims.service";
 })
 export class RegisterIpresComponent implements OnInit {
     public textoTipoCodigo = "";
-
+    active = 1;
     model: NgbDateStruct;
     public listSearchPerson: any = [];
     seachForm: FormGroup;
@@ -606,6 +606,10 @@ export class RegisterIpresComponent implements OnInit {
         this.nameregimen =
             event.target.options[event.target.options.selectedIndex].text;
         // console.log(this.name_estado);
+    }
+    onChangeSede(event) {
+        console.log(event);
+        this.idsurcursal = event;
     }
     onChangeModoRecepcion(event) {
         const opcion = event.target.value;
