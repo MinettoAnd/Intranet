@@ -1,8 +1,8 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 
-import { BaseLayoutComponent } from "./Layout/base-layout/base-layout.component";
-import { PagesLayoutComponent } from "./Layout/pages-layout/pages-layout.component";
+import { BaseLayoutComponent } from "./layout/base-layout/base-layout.component";
+import { PagesLayoutComponent } from "./layout/pages-layout/pages-layout.component";
 
 // DEMO PAGES
 
@@ -140,6 +140,11 @@ const routes: Routes = [
                 path: "consultoriosExternos/consulta-de-atenciones",
                 loadChildren: () => import('../app/pages/external-consultation/external-consultation.module').then(m => m.ExternalConsultationModule),
                 data: { extraParameter: "hospitalizacionMenu" },
+            },
+            {
+                path: "comercial/ventas",
+                loadChildren: () => import('../app/pages/comercial/comercial.module').then(m => m.ComercialModule),
+                data: { extraParameter: "comercialMenu" },
             },
         ],
     },
