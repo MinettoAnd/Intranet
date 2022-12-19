@@ -6,31 +6,19 @@
     [(ngModel)]="model"
   >
     <label ngbButtonLabel class="btn-gray">
-      <input ngbButton type="radio" (click)="showComponent(2)" [value]="1" /><i
-        class="fa fa-fw"
-        aria-hidden="true"
-        title="th-list"
-        ></i
-      >
-      Lista de Reclamos
+      <input ngbButton type="radio" (click)="showComponent(2)" [value]="1" />
+        <i class="fa fa-fw" aria-hidden="true" title="th-list"></i>
+        Lista de Reclamos
     </label>
     <label ngbButtonLabel class="btn-gray">
-      <input
-        ngbButton
-        type="radio"
-        (click)="showComponent(1)"
-        value="middle"
-      /><i class="fa fa-fw" aria-hidden="true" title="book"></i>
-      Registro de Reclamos
+      <input ngbButton type="radio" (click)="showComponent(1)" [value]="2"/>
+        <i class="fa fa-fw" aria-hidden="true" title="book"></i>
+        Registro de Reclamos
     </label>
     <label ngbButtonLabel class="btn-gray">
-      <input
-        ngbButton
-        type="radio"
-        (click)="showComponent(3)"
-        [value]="false"
-      /><i class="fa fa-fw" aria-hidden="true" title="tachometer"></i>
-      Dashboard
+      <input ngbButton type="radio" (click)="showComponent(3)" [value]="3"/>
+        <i class="fa fa-fw" aria-hidden="true" title="tachometer"></i>
+        Dashboard
     </label>
   </div>
 </div>

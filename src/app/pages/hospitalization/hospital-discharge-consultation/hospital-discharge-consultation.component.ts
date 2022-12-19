@@ -61,6 +61,12 @@ export class HospitalDischargeConsultationComponent implements OnInit {
   ColumnMode = ColumnMode;
   filtered;
   title: any;
+  public pageLimitOptions = [
+    {value: 10},
+    {value: 25},
+    {value: 50},
+    {value: 100},
+  ];
   constructor(private tableApiservice: TableApiService, private exportService: ExportService) {
     this.page.pageNumber = 0;
     this.page.size = 10;
@@ -79,6 +85,22 @@ export class HospitalDischargeConsultationComponent implements OnInit {
 
   ngOnInit() {
     this.setPage({ offset: 0 });
+  }
+  public onLimitChange(limit: any): void {
+    this.changePageLimit(limit);
+    this.setPage({ offset: 0 });
+
+  }
+
+  private changePageLimit(limit: any): void {
+    
+    if (limit === '0'){
+      
+      this.page.size = this.page.totalElements;
+      console.log(this.page.totalElements);
+      return
+    }
+    this.page.size = parseInt(limit, 10);
   }
   setPage(pageInfo) {
     console.log(pageInfo);

@@ -8,8 +8,8 @@
           <div class="row">
   
             <div class="col-12">
-              <form [formGroup]="filtroForm" style="padding-bottom: 10px;">
-                <div class="row">
+              <form [formGroup]="filtroForm">
+                <div class="row" style="margin-bottom: -0.5rem;">
                   <div class="form-group col-sm-12 col-md-4 col-lg-3">
                     <div class="input-group input-group-sm">
                       <div class="input-group-prepend">
@@ -195,19 +195,32 @@
                           </ul>
                           <div class="" style="display:flex;margin:15px;align-items: center;">
                             <span>Buscar</span>&nbsp;&nbsp;
-                              <input type="text" style='padding:6px;width:100%;' placeholder="Buscar por cualquier campo" (keyup)='updateFilter($event)'>
+                              <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter($event)'>
                           </div>
                         
                       </div>
-                      
+                      <div class="row" style='margin-left:0px;'>
+                        <div class="col-xs-6">
+                          <select class="form-control form-select" (change)="onLimitChange($event.target.value)">
+                            <option
+                              *ngFor="let option of pageLimitOptions"
+                              [value]="option.value"
+      
+                            >
+                              {{ option.value }} Registros
+                            </option>
+                            <option value="0" *ngIf="this.page.totalElements">Todos los Registros</option>
+                          </select>
+                        </div>
+                      </div>
                       <ngx-datatable #myTable
                       class="bootstrap table table-striped"
                         [columns]="columns"
                         [rows]="rows"
-                        [columnMode]="ColumnMode.force"
+                        [columnMode]="ColumnMode.flex"
                         [headerHeight]="50"
                         [footerHeight]="50"
-                        rowHeight="auto"
+                        [rowHeight]="40"
                         [scrollbarH]="true"
                         [externalPaging]="true"
                         [count]="page.totalElements"
@@ -218,7 +231,7 @@
                         <ngx-datatable-column  [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                           <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                             let-row="row">
-                            {{value}}
+                            <span [title]="value">{{value}}</span>
                             <!-- <span title="Double click to edit" (dblclick)="editing[rowIndex + '-{{column.name}}'] = true"
                               *ngIf="!editing[rowIndex + '-{{column.name}}']">
                               {{value}}

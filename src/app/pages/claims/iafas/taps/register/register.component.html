@@ -1,8 +1,10 @@
+
 <div class="card main-card mb-3 mt-2">
   <div class="card-body">
-    <ngb-tabset>
-      <ngb-tab title="Información Paciente">
-        <ng-template ngbTabContent>
+    <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+      <li [ngbNavItem]="1">
+        <a ngbNavLink>Información Paciente</a>
+        <ng-template ngbNavContent>
           <fieldset>
             <legend>
               <div class="col-12">
@@ -653,9 +655,10 @@
           </fieldset>
           <!--END REPRESENTANTE-->
         </ng-template>
-      </ngb-tab>
-      <ngb-tab title="Descripción Detalle">
-        <ng-template ngbTabContent>
+      </li>
+      <li [ngbNavItem]="2">
+        <a ngbNavLink>Descripción Detalle</a>
+        <ng-template ngbNavContent>
           <form [formGroup]="detailForm">
             <div class="row">
               <div class="col-md-6">
@@ -856,6 +859,7 @@
                   [ngModel]="idsurcursal"
                   class="form-control form-select form-control-sm"
                   formControlName="sede"
+                  (ngModelChange)="onChangeSede($event)"
                 >
                   <option value="">Seleccione...</option>
                   <option *ngFor="let sede of listsedes" [value]="sede.id_sede">
@@ -946,9 +950,10 @@
             </div>
           </form>
         </ng-template>
-      </ngb-tab>
-      <ngb-tab title="Causa">
-        <ng-template ngbTabContent>
+      </li>
+      <li [ngbNavItem]="3">
+        <a ngbNavLink>Causa</a>
+        <ng-template ngbNavContent>
           <form [formGroup]="causaForm">
             <div class="row">
               <div class="col-md-12">
@@ -1122,9 +1127,10 @@
             </div>
           </form>
         </ng-template>
-      </ngb-tab>
-      <ngb-tab title="Involucrados">
-        <ng-template ngbTabContent>
+      </li>
+      <li [ngbNavItem]="4">
+        <a ngbNavLink>Involucrados</a>
+        <ng-template ngbNavContent>
           <form [formGroup]="involucradoForm">
             <div class="row">
               <div class="form-group col-md-4">
@@ -1355,9 +1361,10 @@
             </fieldset>
           </form>
         </ng-template>
-      </ngb-tab>
-      <ngb-tab title="Acciones Tomadas">
-        <ng-template ngbTabContent>
+      </li>
+      <li [ngbNavItem]="5">
+        <a ngbNavLink>Acciones Tomadas</a>
+        <ng-template ngbNavContent>
           <form [formGroup]="accionesForm">
             <div class="row">
               <div class="form-group col-md-12">
@@ -1688,7 +1695,11 @@
             </div>
           </div>
         </ng-template>
-      </ngb-tab>
-    </ngb-tabset>
+      </li>
+    </ul>
+    
+    <div [ngbNavOutlet]="nav" class="mt-2"></div>
+    
+    <!-- <pre>Active: {{ active }}</pre> -->
   </div>
 </div>
