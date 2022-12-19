@@ -607,6 +607,10 @@ export class RegisterIpresComponent implements OnInit {
             event.target.options[event.target.options.selectedIndex].text;
         // console.log(this.name_estado);
     }
+    onChangeSede(event) {
+        console.log(event);
+        this.idsurcursal = event;
+    }
     onChangeModoRecepcion(event) {
         const opcion = event.target.value;
 

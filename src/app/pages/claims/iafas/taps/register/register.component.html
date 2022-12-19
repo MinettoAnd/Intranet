@@ -859,6 +859,7 @@
                   [ngModel]="idsurcursal"
                   class="form-control form-select form-control-sm"
                   formControlName="sede"
+                  (ngModelChange)="onChangeSede($event)"
                 >
                   <option value="">Seleccione...</option>
                   <option *ngFor="let sede of listsedes" [value]="sede.id_sede">
