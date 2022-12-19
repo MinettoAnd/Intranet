@@ -4,7 +4,7 @@
 
 @import '~@swimlane/ngx-datatable/index.css';
 @import '~@swimlane/ngx-datatable/themes/bootstrap.scss';
-// @import '~@swimlane/ngx-datatable/themes/material.scss';
+@import '~@swimlane/ngx-datatable/themes/material.scss';
 @import '~@swimlane/ngx-datatable/themes/dark.scss';
 @import '~@swimlane/ngx-datatable/assets/icons.css';
 
@@ -151,3 +151,28 @@
     width: 95% !important;
 }
 
+.list-group-horizontal{
+    flex-direction: row!important;
+    margin-left: 15px!important;
+}
+.ngx-datatable.bootstrap .datatable-footer {
+    background-color: #10004c!important;
+}
+
+.datatable-header, .datatable-body{
+    width: auto!important;
+    }
+.min-ancho{
+    min-width: 7.5rem!important;
+}
+.min-ancho-1{
+    min-width: 7.5rem!important;
+    
+}
+.min-row{
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    // margin-left: -15px;
+    margin-left: 0!important;
+}

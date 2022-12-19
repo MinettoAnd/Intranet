@@ -1,4 +1,5 @@
 export interface AttentionConsultation {
+title: any;
   // f_inicio: string,
   // f_fin: string,
   // id_sede: string,
@@ -7,9 +8,9 @@ export interface AttentionConsultation {
   // like_especialidad: string,
   // like_medico: string,
   // like_paciente: string,
-data: any;
 cabeceras:any;
-registros: string;
+data: any;
+page: string;
 success:boolean;
-total: string;
+
 }

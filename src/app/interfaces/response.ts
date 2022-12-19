@@ -1,3 +1,4 @@
+import { Page } from '../models/forms-data/page';
 /* eslint-disable @typescript-eslint/naming-convention */
 export interface ApiResponse<T> {
   success: boolean;

@@ -12,12 +12,14 @@ import { ColumnMode } from '@swimlane/ngx-datatable';
 import * as XLSX from 'xlsx';
 import { ExcelJson } from '../../../interfaces/excel-json.interface';
 import { ExportService } from '../../../_services/export.service';
+
 @Component({
-  selector: 'app-attention-consultation',
-  templateUrl: './attention-consultation.component.html',
-  styleUrls: ['./attention-consultation.component.scss']
+  selector: 'app-hospital-discharge-consultation',
+  templateUrl: './hospital-discharge-consultation.component.html',
+  styleUrls: ['./hospital-discharge-consultation.component.sass']
 })
-export class AttentionConsultationComponent implements OnInit {
+export class HospitalDischargeConsultationComponent implements OnInit {
+
   filtroForm: FormGroup;
   @BlockUI('addRows') blockUIAddRows: NgBlockUI;
   @BlockUI('rowSelection') blockUIRowSelection: NgBlockUI;
@@ -42,7 +44,6 @@ export class AttentionConsultationComponent implements OnInit {
   data:any;
   parameters:any;
   message;
-  title;
   columns:any;
   optionsWithCaption = {};
   datePipe: any;
@@ -59,6 +60,7 @@ export class AttentionConsultationComponent implements OnInit {
   page = new Page()
   ColumnMode = ColumnMode;
   filtered;
+  title: any;
   constructor(private tableApiservice: TableApiService, private exportService: ExportService) {
     this.page.pageNumber = 0;
     this.page.size = 10;
@@ -95,7 +97,7 @@ export class AttentionConsultationComponent implements OnInit {
     };
 
     this.loading();
-    this.tableApiservice.getEmergenciesAttentionConsultation(this.parameters).subscribe(
+    this.tableApiservice.getHospitalDischargeConsultation(this.parameters).subscribe(
       (response: ApiResponse<AttentionConsultation>) => {
         
         if(response.data.success){
@@ -321,5 +323,5 @@ export class AttentionConsultationComponent implements OnInit {
     this.rows = temp;
     this.selected = [];
   }
-}
 
+}

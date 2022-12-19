@@ -9,7 +9,6 @@ import { ConfigActions } from './ThemeOptions/store/config.actions';
 import { AppRoutingModule } from './app-routing.module';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 
-
 import { CommonModule, DatePipe } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
@@ -46,15 +45,7 @@ import { LogoComponent } from './Layout/Components/sidebar/elements/logo/logo.co
 
 import { FooterComponent } from './Layout/Components/footer/footer.component';
 
-
-
 import { LoginBoxedComponent } from './auth/login/login-boxed.component';
-
-
-
-
-
-
 
 
 import { UsersComponent } from './pages/admin/users/users.component';
@@ -107,6 +98,7 @@ import { AnswerComponent } from './pages/encuesta/answer/answer.component';
 import { ResponseformComponent } from './pages/encuesta/responseform/responseform.component';
 import { ReporteComponent } from './pages/encuesta/reporte/reporte.component';
 import { CustomFilterPipe } from './pipes/custom-filter.pipe';
+import { ExportService } from './_services/export.service';
 
 // import { BsDatepickerModule, BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -174,7 +166,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     AnswerComponent,
     ResponseformComponent,
     ReporteComponent,
-    CustomFilterPipe
+    CustomFilterPipe,
+
         
   ],
   imports: [
@@ -218,7 +211,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       // DEFAULT_DROPZONE_CONFIG,
     },
     ConfigActions,
-    DatePipe
+    DatePipe,
+    ExportService
   ],
   bootstrap: [AppComponent],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
