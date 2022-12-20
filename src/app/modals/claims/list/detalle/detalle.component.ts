@@ -17,6 +17,7 @@ import { RepresentanteComponent } from "./modal/representante/representante.comp
 })
 export class DetalleComponent implements OnInit {
     @Input() dato;
+    active = 1;
     public listDetalle: any = [];
     public listdepartamentos: any = [];
     public listprovincias: any = [];

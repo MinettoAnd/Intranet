@@ -16,6 +16,7 @@ import { MedidasAdoptadasComponent } from "./medidas-adoptadas/medidas-adoptadas
 })
 export class RespuestaReclamoComponent implements OnInit {
     @Input() dato;
+    active = 1;
     showreclamoprimigenio = false;
     showtraslado = false;
     showtresultado = false;
