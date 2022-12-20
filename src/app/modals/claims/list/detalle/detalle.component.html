@@ -15,9 +15,10 @@
   </button>
 </div>
 <div class="modal-body">
-  <ngb-tabset>
-    <ngb-tab title="Información general del cliente">
-      <ng-template ngbTabContent>
+  <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+    <li [ngbNavItem]="1">
+      <a ngbNavLink>Información general del cliente</a>
+      <ng-template ngbNavContent>
         <div class="main-card mb-3 mt-2 card">
           <div class="card-header">
             Paciente
@@ -282,9 +283,10 @@
           </div>
         </div>
       </ng-template>
-    </ngb-tab>
-    <ngb-tab title="Involucrado/Transferido">
-      <ng-template ngbTabContent>
+    </li>
+    <li [ngbNavItem]="2">
+      <a ngbNavLink>Involucrado/Transferido</a>
+      <ng-template ngbNavContent>
         <div class="main-card mb-3 mt-2 card">
           <div class="card-header">
             Involucrado
@@ -400,9 +402,10 @@
           </div>
         </div>
       </ng-template>
-    </ngb-tab>
-    <ngb-tab title="Características del Reclamo">
-      <ng-template ngbTabContent>
+    </li>
+    <li [ngbNavItem]="3">
+      <a ngbNavLink>Características del Reclamo</a>
+      <ng-template ngbNavContent>
         <div class="main-card mb-3 mt-2 card">
           <div class="card-header">
             <button (click)="open(4)" class="btn btn-info btn-sm float-right">
@@ -575,9 +578,10 @@
           </div>
         </div>
       </ng-template>
-    </ngb-tab>
-    <ngb-tab title="Archivos Adjuntos">
-      <ng-template ngbTabContent>
+    </li>
+    <li [ngbNavItem]="4">
+      <a ngbNavLink>Archivos Adjuntos</a>
+      <ng-template ngbNavContent>
         <div class="col-md-12 col-lg-12 col-xl-12 mt-3">
           <div class="card-shadow-primary card-border mb-3">
             <div class="scroll-area-sm">
@@ -655,8 +659,9 @@
           </div>
         </div>
       </ng-template>
-    </ngb-tab>
-  </ngb-tabset>
+    </li>
+  </ul>
+  <div [ngbNavOutlet]="nav" class="mt-2"></div>
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-primary">
