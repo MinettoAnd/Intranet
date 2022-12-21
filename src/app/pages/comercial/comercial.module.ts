@@ -8,7 +8,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { CuotasProgramasSaludComponent } from './ventas/cuotas-programas-salud/cuotas-programas-salud.component';
 
-
 @NgModule({
   declarations: [CuotasProgramasSaludComponent],
   imports: [
@@ -24,6 +23,7 @@ import { CuotasProgramasSaludComponent } from './ventas/cuotas-programas-salud/c
       }
     ])
   ],
+
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   exports: [RouterModule]
 })

@@ -54,5 +54,22 @@ export class TableApiService {
     this.loadTableApiDataURL = `${environment.api_url}consultaExternaAtenciones`;
     return this.http.post(this.loadTableApiDataURL, data);
   }
+  // Comercial - Ventas - Cuotas Programas de Salud
+  getPagoCuotasMesProgramasSalud(data): Observable<any> {
+    this.loadTableApiDataURL = `${environment.api_url}pagoCuotasMesProgramasSalud`;
+    return this.http.post(this.loadTableApiDataURL, data);
+  }
+  getPagoCuotasContratosMesProgramasSalud(data): Observable<any> {
+    this.loadTableApiDataURL = `${environment.api_url}pagoCuotasContratosMesProgramasSalud`;
+    return this.http.post(this.loadTableApiDataURL, data);
+  }
+  getPagoCuotasProgramasSalud(data): Observable<any> {
+    this.loadTableApiDataURL = `${environment.api_url}pagoCuotasProgramasSalud`;
+    return this.http.post(this.loadTableApiDataURL, data);
+  }
+  getPagoCuotasContratosProgramasSalud(data): Observable<any> {
+    this.loadTableApiDataURL = `${environment.api_url}pagoCuotasContratosProgramasSalud`;
+    return this.http.post(this.loadTableApiDataURL, data);
+  }
 }
 
