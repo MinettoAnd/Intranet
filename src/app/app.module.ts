@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, InjectionToken, DEFAULT_CURRENCY_CODE, LOCALE_ID } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgReduxModule } from '@angular-redux/store';
@@ -9,8 +9,8 @@ import { ConfigActions } from './ThemeOptions/store/config.actions';
 import { AppRoutingModule } from './app-routing.module';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 
-import { CommonModule, DatePipe } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
+import { HttpClientModule, HttpClient  } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { AgGridModule } from 'ag-grid-angular';
 //view docs
@@ -26,24 +26,25 @@ import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 
 // LAYOUT
 
-import { BaseLayoutComponent } from './Layout/base-layout/base-layout.component';
-import { PagesLayoutComponent } from './Layout/pages-layout/pages-layout.component';
-import { PageTitleComponent } from './Layout/Components/page-title/page-title.component';
+import { BaseLayoutComponent } from './layout/base-layout/base-layout.component';
+import { PagesLayoutComponent } from './layout/pages-layout/pages-layout.component';
+import { PageTitleComponent } from './layout/Components/page-title/page-title.component';
 
 // HEADER
 
-import { HeaderComponent } from './Layout/Components/header/header.component';
-import { SearchBoxComponent } from './Layout/Components/header/elements/search-box/search-box.component';
-import { UserBoxComponent } from './Layout/Components/header/elements/user-box/user-box.component';
+import { HeaderComponent } from './layout/Components/header/header.component';
+import { SearchBoxComponent } from './layout/Components/header/elements/search-box/search-box.component';
+import { UserBoxComponent } from './layout/Components/header/elements/user-box/user-box.component';
 
 // SIDEBAR
 
-import { SidebarComponent } from './Layout/Components/sidebar/sidebar.component';
-import { LogoComponent } from './Layout/Components/sidebar/elements/logo/logo.component';
+import { SidebarComponent } from './layout/Components/sidebar/sidebar.component';
+import { HorizontalnavComponent } from './layout/Components/horizontalnav/horizontalnav.component';
+import { LogoComponent } from './layout/Components/sidebar/elements/logo/logo.component';
 
 // FOOTER
 
-import { FooterComponent } from './Layout/Components/footer/footer.component';
+import { FooterComponent } from './layout/Components/footer/footer.component';
 
 import { LoginBoxedComponent } from './auth/login/login-boxed.component';
 
@@ -100,6 +101,13 @@ import { ReporteComponent } from './pages/encuesta/reporte/reporte.component';
 import { CustomFilterPipe } from './pipes/custom-filter.pipe';
 import { ExportService } from './_services/export.service';
 
+
+import { MenuSettingsService, MENU_SETTINGS_CONFIG } from './layout/settings/menu-settings.service';
+import { ThemeSettingsService, THEME_SETTINGS_CONFIG } from './layout/settings/theme-settings.service';
+import { ThemeSettingsConfig } from './layout/settings/theme-settings.config';
+import { MenuSettingsConfig } from './layout/settings/menu-settings.config';
+import { SettingsModule } from './layout/settings/settings.module';
+// import { CuotasProgramasSaludComponent } from './pages/comercial/ventas/cuotas-programas-salud/cuotas-programas-salud.component';
 // import { BsDatepickerModule, BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -117,6 +125,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     SearchBoxComponent,
     UserBoxComponent,
     SidebarComponent,
+    HorizontalnavComponent,
     LogoComponent,
     FooterComponent,
     LoginBoxedComponent,
@@ -167,6 +176,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ResponseformComponent,
     ReporteComponent,
     CustomFilterPipe,
+    // CuotasProgramasSaludComponent,
 
         
   ],
@@ -199,6 +209,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     AgGridModule.withComponents([]),
     // BsDatepickerModule.forRoot(),
     // NgxDatatableModule
+    SettingsModule.forRoot(ThemeSettingsConfig, MenuSettingsConfig),
   ],
 
   providers: [
@@ -210,9 +221,21 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         DEFAULT_PERFECT_SCROLLBAR_CONFIG,
       // DEFAULT_DROPZONE_CONFIG,
     },
+    {
+      provide: MENU_SETTINGS_CONFIG,
+      useClass: 
+        MenuSettingsService,
+    },
+    {
+      provide: THEME_SETTINGS_CONFIG,
+      useClass: ThemeSettingsService,
+    },
+    // { provide: DEFAULT_CURRENCY_CODE, useValue: 'S/. ' },
+    // { provide: LOCALE_ID, useValue: 'es-PE'  },
     ConfigActions,
     DatePipe,
-    ExportService
+    ExportService,
+    CurrencyPipe
   ],
   bootstrap: [AppComponent],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
