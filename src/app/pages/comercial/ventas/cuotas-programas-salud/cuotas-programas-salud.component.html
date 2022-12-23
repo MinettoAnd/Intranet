@@ -68,10 +68,44 @@
                 <li [ngbNavItem]="1">
                   <a ngbNavLink>RESUMEN DEL MES SELECCIONADO</a>
                   <ng-template ngbNavContent>
+                   
                     <div class="card">
+                     
                       <div class="card-header">
                         <h4 class="card-title">{{title}}</h4>
                         <p>{{message}}</p>
+                        <div class="col-md-12" id="div_panel_01_cabecera1">
+                          <div class="col-md-3 col-sm-6 col-xs-12" id="div_panel_01_cabecera1_0">
+                             <div class="info-box">
+                                <span style="background: #57AA50 !important; color:#fff !important;" class="info-box-icon">
+                                  <i class="fa fa-money" aria-hidden="true"></i>
+                                </span>		
+                                <div class="info-box-content">
+                                  <span style="font-family:arial; font-size:15px; " class="info-box-text" id="box_titulo_01">TOTAL RECAUDADO</span>
+                                    <span class="info-box-number" id="imp_total_01">{{ingresoTotal | currency }}</span>
+                                      <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success" id="porc_imp_total_01">En {{ingresoTotalNumComtratos | json}} Contratos Pagados</label>
+                                </div>
+                             </div>
+                          </div>
+                          <div class="col-md-3 col-sm-6 col-xs-12" id="div_panel_01_cabecera1_1">
+                             <div class="info-box">
+                                <span style="background: #10004C !important; color:#fff !important;" class="info-box-icon">			<i class="fa fa-users" aria-hidden="true"></i>		</span>		
+                                <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text" id="box_titulo_02">CUOTAS POR FAMILIAR</span>			<span class="info-box-number" id="imp_total_02">{{ingresoFamil | currency}}</span>			<label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success" id="porc_imp_total_02">En {{ingresoFamilNumComtratos}} Contratos Pagados</label>		</div>
+                             </div>
+                          </div>
+                          <div class="col-md-3 col-sm-6 col-xs-12" id="div_panel_01_cabecera1_2">
+                             <div class="info-box">
+                                <span style="background: #2F50F1 !important; color:#fff !important;" class="info-box-icon">			<i class="fa fa-building-o" aria-hidden="true"></i>		</span>		
+                                <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text" id="box_titulo_03">CUOTAS POR COLECTIVA</span>			<span class="info-box-number" id="imp_total_03">{{ingresoColec | currency}}</span>			<label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success" id="porc_imp_total_03">En {{ingresoColecNumComtratos}} Contratos Pagados</label>		</div>
+                             </div>
+                          </div>
+                          <div class="col-md-3 col-sm-6 col-xs-12" id="div_panel_01_cabecera1_3">
+                             <div class="info-box">
+                                <span style="background: #FA86C3 !important; color:#fff !important;" class="info-box-icon">			<i class="fa fa-child" aria-hidden="true"></i>		</span>		
+                                <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text" id="box_titulo_04">INSCRIPCIONES</span>			<span class="info-box-number" id="imp_total_04">{{ingresoInscr | currency}}</span>			<label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success" id="porc_imp_total_04">En {{ingresoInscrNumComtratos}} Contratos Pagados</label>		</div>
+                             </div>
+                          </div>
+                       </div>
                       </div>
                       <div class="card-content collapse show">
                         <div class="card-body">
@@ -97,6 +131,7 @@
                             <div class="box box-solid">
                               
                               <div id="accordion">
+                               
                                 <div class="card">
                                   <div class="card-header" >
                                     <div class="box-header">
@@ -129,12 +164,25 @@
                                             Export tabla a Excel
                                           </button>
                                         </li>
-                                      </ul>
-                                      <!-- <div class="" style="display:flex;margin:15px;align-items: center;">
-                                        <span>Buscar</span>&nbsp;&nbsp;
-                                          <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter($event)'>
-                                      </div> -->
-                                    
+                                        <li class="list-group-item border-0 pl-0">
+                                          
+                                          <button type="button" (click)="showTableDasboard(1, 1)"
+                                            class="btn-shadow mr-3 btn btn-info">
+                                            <i class="pe-7s-credit"></i>
+                                          </button>
+                                          <button type="button" (click)="showTableDasboard(1, 2)" class="btn-shadow btn btn-info float-right">
+                                            <i class="pe-7s-graph3"></i>
+                                          </button>
+                                        </li>
+                                        
+                                      </ul>                                  
+                                    </div>
+                                    <div class="card-body" *ngIf="isGrafico1">
+                                      <loading *ngIf="isLoading">{{ isLoading }}</loading>
+                                      <div class="d-block" *ngIf="!isLoading">
+                                        <canvas #baseChart id="chart-1">
+                                        </canvas>
+                                      </div>
                                     </div>
                                     <ngx-datatable #myTable
                                     class="bootstrap table table-striped"
@@ -146,6 +194,8 @@
                                       [rowHeight]="40"
                                       [scrollbarH]="true"
                                       (page)="setPage($event)"
+                                      [rowClass]="getRowClass"
+                                      *ngIf="isTable1"
                                       >
                                       <ngx-datatable-column  [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
@@ -165,8 +215,17 @@
                                         </ngx-datatable-column> -->
                                       </ngx-datatable-column>
                                     </ngx-datatable>
+                                    
+                                      <!-- <div class="card-body" *ngIf="isTable1">
+                                        <loading *ngIf="isLoading">{{ isLoading }}</loading>
+                                        <div class="d-block" *ngIf="!isLoading">
+                                          <canvas #baseChart id="chart-1">
+                                          </canvas>
+                                        </div>
+                                      </div> -->
                                   </div>
                                 </div>
+                                
                                 <div class="card">
                                   <div class="card-header" >
                                     <div class="box-header">
@@ -216,6 +275,7 @@
                                       [rowHeight]="40"
                                       [scrollbarH]="true"
                                       (page)="setPage($event)"
+                                      [rowClass]="getRowClass"
                                       >
                                       <ngx-datatable-column  [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
@@ -284,6 +344,7 @@
                                       [rowHeight]="40"
                                       [scrollbarH]="true"
                                       (page)="setPage($event)"
+                                      [rowClass]="getRowClass"
                                       >
                                       <ngx-datatable-column  [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
@@ -385,18 +446,19 @@
                                     class="bootstrap table table-striped"
                                       [columns]="columns2"
                                       [rows]="rows4"
-                                      [columnMode]="ColumnMode.flex"
+                                      [columnMode]="ColumnMode.force"
                                       [headerHeight]="50"
                                       [footerHeight]="50"
-                                      [rowHeight]="40"
                                       [scrollbarH]="true"
                                       (page)="setPage($event)"
+                                      [rowClass]="getRowClass"
+                                      [rowHeight]="$any('auto')"
                                       >
-                                      <ngx-datatable-column  [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns2; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                      <ngx-datatable-column  [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns2; let i = index;" name="{{column.name}}" prop="{{column.prop}}" >
                                         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                           let-row="row">
-                                          <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
-                                            <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
+                                          <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM'}">
+                                            <span  [ngClass]="{'row-paddin': row.item.includes('-') || row.item.includes('TRABAJADORES') || row.item.includes('SOCIOS') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
                                           </div>
                                           
                                           <!-- <span title="Double click to edit" (dblclick)="editing[rowIndex + '-{{column.name}}'] = true"
@@ -459,12 +521,13 @@
                                       [rowHeight]="40"
                                       [scrollbarH]="true"
                                       (page)="setPage($event)"
+                                      [rowClass]="getRowClass"
                                       >
                                       <ngx-datatable-column  [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns2; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                           let-row="row">
-                                          <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
-                                            <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
+                                          <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM'}">
+                                            <span  [ngClass]="{'row-paddin': row.item.includes('-') || row.item.includes('TRABAJADORES') || row.item.includes('SOCIOS') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
                                           </div>
                                           <!-- <span title="Double click to edit" (dblclick)="editing[rowIndex + '-{{column.name}}'] = true"
                                             *ngIf="!editing[rowIndex + '-{{column.name}}']">
@@ -527,12 +590,13 @@
                                       [rowHeight]="40"
                                       [scrollbarH]="true"
                                       (page)="setPage($event)"
+                                      [rowClass]="getRowClass"
                                       >
                                       <ngx-datatable-column  [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns2; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                           let-row="row">
-                                          <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
-                                            <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
+                                          <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM'}">
+                                            <span  [ngClass]="{'row-paddin': row.item.includes('-') || row.item.includes('TRABAJADORES') || row.item.includes('SOCIOS') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
                                           </div>
                                           <!-- <span title="Double click to edit" (dblclick)="editing[rowIndex + '-{{column.name}}'] = true"
                                             *ngIf="!editing[rowIndex + '-{{column.name}}']">

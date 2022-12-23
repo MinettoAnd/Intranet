@@ -230,7 +230,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       provide: THEME_SETTINGS_CONFIG,
       useClass: ThemeSettingsService,
     },
-    // { provide: DEFAULT_CURRENCY_CODE, useValue: 'S/. ' },
+    { provide: DEFAULT_CURRENCY_CODE, useValue: 'S/. ' },
     // { provide: LOCALE_ID, useValue: 'es-PE'  },
     ConfigActions,
     DatePipe,
