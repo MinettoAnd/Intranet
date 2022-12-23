@@ -72,7 +72,7 @@
                     <div class="card">
                      
                       <div class="card-header">
-                        <h4 class="card-title">{{title}}</h4>
+                        <h4 class="card-title" style="bottom:13px;">INGRESOS POR CUOTAS E INSCRIPCIONES DE PLAN SALUD FAMILIAR</h4>
                         <p>{{message}}</p>
                         <div class="col-md-12" id="div_panel_01_cabecera1">
                           <div class="col-md-3 col-sm-6 col-xs-12" id="div_panel_01_cabecera1_0">
@@ -190,14 +190,14 @@
                                       [rows]="rows"
                                       [columnMode]="ColumnMode.flex"
                                       [headerHeight]="50"
-                                      [footerHeight]="50"
                                       [rowHeight]="40"
                                       [scrollbarH]="true"
                                       (page)="setPage($event)"
                                       [rowClass]="getRowClass"
+                                      
                                       *ngIf="isTable1"
                                       >
-                                      <ngx-datatable-column  [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                      <ngx-datatable-column [sortable]="false" [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                           let-row="row">
                                           <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
@@ -258,6 +258,15 @@
                                             Export tabla a Excel
                                           </button>
                                         </li>
+                                        <li class="list-group-item border-0 pl-0">
+                                          <button type="button" (click)="showTableDasboard(2, 1)"
+                                            class="btn-shadow mr-3 btn btn-info">
+                                            <i class="pe-7s-credit"></i>
+                                          </button>
+                                          <button type="button" (click)="showTableDasboard(2, 2)" class="btn-shadow btn btn-info float-right">
+                                            <i class="pe-7s-graph3"></i>
+                                          </button>
+                                        </li>
                                       </ul>
                                       <!-- <div class="" style="display:flex;margin:15px;align-items: center;">
                                         <span>Buscar</span>&nbsp;&nbsp;
@@ -265,19 +274,26 @@
                                       </div> -->
                                     
                                     </div>
+                                    <div class="card-body" *ngIf="isGrafico2">
+                                      <loading *ngIf="isLoading2">{{ isLoading2 }}</loading>
+                                      <div class="d-block" *ngIf="!isLoading2">
+                                        <canvas #baseChart id="chart-2">
+                                        </canvas>
+                                      </div>
+                                    </div>
                                     <ngx-datatable #myTable2
                                     class="bootstrap table table-striped"
                                       [columns]="columns"
                                       [rows]="rows2"
                                       [columnMode]="ColumnMode.flex"
                                       [headerHeight]="50"
-                                      [footerHeight]="50"
                                       [rowHeight]="40"
                                       [scrollbarH]="true"
                                       (page)="setPage($event)"
                                       [rowClass]="getRowClass"
+                                      *ngIf="isTable2"
                                       >
-                                      <ngx-datatable-column  [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                      <ngx-datatable-column [sortable]="false" [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                           let-row="row">
                                           <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
@@ -327,6 +343,15 @@
                                             Export tabla a Excel
                                           </button>
                                         </li>
+                                        <li class="list-group-item border-0 pl-0">
+                                          <button type="button" (click)="showTableDasboard(3, 1)"
+                                            class="btn-shadow mr-3 btn btn-info">
+                                            <i class="pe-7s-credit"></i>
+                                          </button>
+                                          <button type="button" (click)="showTableDasboard(3, 2)" class="btn-shadow btn btn-info float-right">
+                                            <i class="pe-7s-graph3"></i>
+                                          </button>
+                                        </li>
                                       </ul>
                                       <!-- <div class="" style="display:flex;margin:15px;align-items: center;">
                                         <span>Buscar</span>&nbsp;&nbsp;
@@ -334,19 +359,26 @@
                                       </div> -->
                                     
                                     </div>
+                                    <div class="card-body" *ngIf="isGrafico3">
+                                      <loading *ngIf="isLoading3">{{ isLoading3 }}</loading>
+                                      <div class="d-block" *ngIf="!isLoading3">
+                                        <canvas #baseChart id="chart-3">
+                                        </canvas>
+                                      </div>
+                                    </div>
                                     <ngx-datatable #myTable3
                                     class="bootstrap table table-striped"
                                       [columns]="columns"
                                       [rows]="rows3"
                                       [columnMode]="ColumnMode.flex"
                                       [headerHeight]="50"
-                                      [footerHeight]="50"
                                       [rowHeight]="40"
                                       [scrollbarH]="true"
                                       (page)="setPage($event)"
                                       [rowClass]="getRowClass"
+                                      *ngIf="isTable3"
                                       >
-                                      <ngx-datatable-column  [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                      <ngx-datatable-column [sortable]="false" [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                           let-row="row">
                                           <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
@@ -376,7 +408,7 @@
                   <ng-template ngbNavContent>
                     <div class="card">
                       <div class="card-header">
-                        <h4 class="card-title">{{title}}</h4>
+                        <h4 class="card-title" style="bottom:13px;">INGRESOS POR CUOTAS E INSCRIPCIONES DE PLAN SALUD FAMILIAR</h4>
                         <p>{{message}}</p>
                       </div>
                       <div class="card-content collapse show">
@@ -435,6 +467,15 @@
                                             Export tabla a Excel
                                           </button>
                                         </li>
+                                        <li class="list-group-item border-0 pl-0">
+                                          <button type="button" (click)="showTableDasboard(4, 1)"
+                                            class="btn-shadow mr-3 btn btn-info">
+                                            <i class="pe-7s-credit"></i>
+                                          </button>
+                                          <button type="button" (click)="showTableDasboard(4, 2)" class="btn-shadow btn btn-info float-right">
+                                            <i class="pe-7s-graph3"></i>
+                                          </button>
+                                        </li>
                                       </ul>
                                       <!-- <div class="" style="display:flex;margin:15px;align-items: center;">
                                         <span>Buscar</span>&nbsp;&nbsp;
@@ -442,19 +483,26 @@
                                       </div> -->
                                     
                                     </div>
+                                    <div class="card-body" *ngIf="isGrafico4">
+                                      <loading *ngIf="isLoading4">{{ isLoading4 }}</loading>
+                                      <div class="d-block" *ngIf="!isLoading4">
+                                        <canvas #baseChart id="chart-4">
+                                        </canvas>
+                                      </div>
+                                    </div>
                                     <ngx-datatable #myTable4
                                     class="bootstrap table table-striped"
-                                      [columns]="columns2"
+                                      [columns]="columns3"
                                       [rows]="rows4"
                                       [columnMode]="ColumnMode.force"
                                       [headerHeight]="50"
-                                      [footerHeight]="50"
                                       [scrollbarH]="true"
                                       (page)="setPage($event)"
                                       [rowClass]="getRowClass"
                                       [rowHeight]="$any('auto')"
+                                      *ngIf="isTable4"
                                       >
-                                      <ngx-datatable-column  [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns2; let i = index;" name="{{column.name}}" prop="{{column.prop}}" >
+                                      <ngx-datatable-column [sortable]="false" [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns3; let i = index;" name="{{column.name}}" prop="{{column.prop}}" >
                                         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                           let-row="row">
                                           <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM'}">
@@ -504,6 +552,15 @@
                                             Export tabla a Excel
                                           </button>
                                         </li>
+                                        <li class="list-group-item border-0 pl-0">
+                                          <button type="button" (click)="showTableDasboard(5, 1)"
+                                            class="btn-shadow mr-3 btn btn-info">
+                                            <i class="pe-7s-credit"></i>
+                                          </button>
+                                          <button type="button" (click)="showTableDasboard(5, 2)" class="btn-shadow btn btn-info float-right">
+                                            <i class="pe-7s-graph3"></i>
+                                          </button>
+                                        </li>
                                       </ul>
                                       <!-- <div class="" style="display:flex;margin:15px;align-items: center;">
                                         <span>Buscar</span>&nbsp;&nbsp;
@@ -511,19 +568,26 @@
                                       </div> -->
                                     
                                     </div>
+                                    <div class="card-body" *ngIf="isGrafico5">
+                                      <loading *ngIf="isLoading5">{{ isLoading5 }}</loading>
+                                      <div class="d-block" *ngIf="!isLoading5">
+                                        <canvas #baseChart id="chart-5">
+                                        </canvas>
+                                      </div>
+                                    </div>
                                     <ngx-datatable #myTable5
                                     class="bootstrap table table-striped"
-                                      [columns]="columns2"
+                                      [columns]="columns3"
                                       [rows]="rows5"
                                       [columnMode]="ColumnMode.flex"
                                       [headerHeight]="50"
-                                      [footerHeight]="50"
-                                      [rowHeight]="40"
                                       [scrollbarH]="true"
                                       (page)="setPage($event)"
                                       [rowClass]="getRowClass"
+                                      [rowHeight]="$any('auto')"
+                                      *ngIf="isTable5"
                                       >
-                                      <ngx-datatable-column  [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns2; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                      <ngx-datatable-column [sortable]="false" [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns3; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                           let-row="row">
                                           <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM'}">
@@ -573,6 +637,15 @@
                                             Export tabla a Excel
                                           </button>
                                         </li>
+                                        <li class="list-group-item border-0 pl-0">
+                                          <button type="button" (click)="showTableDasboard(6, 1)"
+                                            class="btn-shadow mr-3 btn btn-info">
+                                            <i class="pe-7s-credit"></i>
+                                          </button>
+                                          <button type="button" (click)="showTableDasboard(6, 2)" class="btn-shadow btn btn-info float-right">
+                                            <i class="pe-7s-graph3"></i>
+                                          </button>
+                                        </li>
                                       </ul>
                                       <!-- <div class="" style="display:flex;margin:15px;align-items: center;">
                                         <span>Buscar</span>&nbsp;&nbsp;
@@ -580,19 +653,26 @@
                                       </div> -->
                                     
                                     </div>
+                                    <div class="card-body" *ngIf="isGrafico6">
+                                      <loading *ngIf="isLoading6">{{ isLoading6 }}</loading>
+                                      <div class="d-block" *ngIf="!isLoading6">
+                                        <canvas #baseChart id="chart-6">
+                                        </canvas>
+                                      </div>
+                                    </div>
                                     <ngx-datatable #myTable6
                                     class="bootstrap table table-striped"
-                                      [columns]="columns2"
+                                      [columns]="columns4"
                                       [rows]="rows6"
                                       [columnMode]="ColumnMode.flex"
                                       [headerHeight]="50"
-                                      [footerHeight]="50"
-                                      [rowHeight]="40"
                                       [scrollbarH]="true"
                                       (page)="setPage($event)"
                                       [rowClass]="getRowClass"
+                                      [rowHeight]="$any('auto')"
+                                      *ngIf="isTable6"
                                       >
-                                      <ngx-datatable-column  [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns2; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                      <ngx-datatable-column [sortable]="false" [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns4; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                           let-row="row">
                                           <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM'}">

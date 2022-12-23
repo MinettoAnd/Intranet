@@ -172,18 +172,26 @@
                   <a class="btn btn-primary" id="downloadLink" (click)="copyTableToClipboard()">Copiar tabla</a> -->
                   
                   <div class="table table-striped table-bordered selection-deletion-row">
+                      <div class="row" style='margin-left:0px;'>
+                        <div class="col-xs-6">
+                          <select class="form-control form-select" (change)="onLimitChange($event.target.value)">
+                            <option
+                              *ngFor="let option of pageLimitOptions"
+                              [value]="option.value"
+      
+                            >
+                              {{ option.value }} Registros
+                            </option>
+                            <option value="0" *ngIf="this.page.totalElements">Todos los Registros</option>
+                          </select>
+                        </div>
+                      </div>
                       <div class="row" style="align-items: center;justify-content: space-between;">
                         <ul class="list-group list-group-horizontal list-group-flush">
                           <li class="list-group-item border-0 pl-0">
                             <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard()">
                               <i class="fa fa-external-link"></i>
                               Copiar tabla
-                            </button>
-                          </li>
-                          <li class="list-group-item border-0 pl-0">
-                            <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToCsv()">
-                              <i class="fa fa-external-link"></i>
-                              Exportar tabla a CSV
                             </button>
                           </li>
                           <li class="list-group-item border-0 pl-0">
@@ -199,28 +207,16 @@
                         </div>
                       
                     </div>
-                    <div class="row" style='margin-left:0px;'>
-                      <div class="col-xs-6">
-                        <select class="form-control form-select" (change)="onLimitChange($event.target.value)">
-                          <option
-                            *ngFor="let option of pageLimitOptions"
-                            [value]="option.value"
-    
-                          >
-                            {{ option.value }} Registros
-                          </option>
-                          <option value="0" *ngIf="this.page.totalElements">Todos los Registros</option>
-                        </select>
-                      </div>
-                    </div>
+                    
                     <ngx-datatable #myTable
                     class="bootstrap table table-striped"
+                    id="datatablele"
                       [columns]="columns"
                       [rows]="rows"
-                      [columnMode]="ColumnMode.flex"
+                      [columnMode]="initialSize > 1250 ? ColumnMode.flex : ColumnMode.force"
                       [headerHeight]="50"
                       [footerHeight]="50"
-                      [rowHeight]="40"
+                      [rowHeight]="$any('auto')"
                       [scrollbarH]="true"
                       [externalPaging]="true"
                       [count]="page.totalElements"

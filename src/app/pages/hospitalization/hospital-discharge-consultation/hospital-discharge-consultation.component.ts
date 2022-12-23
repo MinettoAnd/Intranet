@@ -12,14 +12,15 @@ import { ColumnMode } from '@swimlane/ngx-datatable';
 import * as XLSX from 'xlsx';
 import { ExcelJson } from '../../../interfaces/excel-json.interface';
 import { ExportService } from '../../../_services/export.service';
-
+import ResizeObserver from 'resize-observer-polyfill';
 @Component({
   selector: 'app-hospital-discharge-consultation',
   templateUrl: './hospital-discharge-consultation.component.html',
   styleUrls: ['./hospital-discharge-consultation.component.sass']
 })
 export class HospitalDischargeConsultationComponent implements OnInit {
-
+  initialSize = 0;
+  columnSize  = [ 12, 12, 12, 12, 12, 8 , 8, 8, 10, 10, 21, 10, 10, 10, 21];
   filtroForm: FormGroup;
   @BlockUI('addRows') blockUIAddRows: NgBlockUI;
   @BlockUI('rowSelection') blockUIRowSelection: NgBlockUI;
@@ -84,7 +85,55 @@ export class HospitalDischargeConsultationComponent implements OnInit {
    }
 
   ngOnInit() {
+    const item = document.getElementById('datatablele');
+    this.initialSize = item.offsetWidth;
+    console.log(90, this.initialSize);
+    new ResizeObserver((event: any) => {
+      this.escucharResizeDiv(event);
+    }).observe(item);
     this.setPage({ offset: 0 });
+  }
+  escucharResizeDiv(event) {
+    const item = document.getElementById('datatablele');
+
+    if (item.offsetWidth !== this.initialSize) {
+      // HEADER
+      const headerDatatable  = event[0].target.children[0].children[0];
+      headerDatatable.style.width = '100%';
+      headerDatatable.children[0].style.width = '100%';
+      const rowHeader = headerDatatable.children[0].children[1];
+      rowHeader.style.width = '100%';
+      const headerColumns = Array.from( rowHeader.children );
+      // BODY
+      const bodyDatatable  = event[0].target.children[0].children[1].children[0].children[0];
+      bodyDatatable.style.width = '100%';
+      const rowsIterables = Array.from( bodyDatatable.children );
+      // ============ CICLOS ==========================
+      headerColumns.forEach( (column: any, index: number) => {
+        column.style.width = `${this.columnSize[index]}%`;
+      });
+
+      // BODY - Recorremos las filas del datatable
+      rowsIterables.forEach((row: any) => {
+        row.children[0].style.width = '100%';
+        const columns = Array.from( row.children[0].children[1].children );
+
+        if ( columns.length ) {
+          // const cantidadSize = diferenciaSize / columns.length;
+          row.children[0].children[1].style.width = '100%';
+          // Recorremos cada columna del datatable
+          columns.forEach( (column: any, index: number) => {
+            column.style.width = `${this.columnSize[index]}%`;
+          });
+        }
+
+      });
+
+      // Obtenemos el nuevo ancho del div
+      this.initialSize = item.offsetWidth;
+      console.log(134, this.initialSize);
+    }
+
   }
   public onLimitChange(limit: any): void {
     this.changePageLimit(limit);
@@ -156,9 +205,7 @@ export class HospitalDischargeConsultationComponent implements OnInit {
   }
 
 
-  exportToCsv(): void {
-    this.exportService.exportToCsv(this.rows, 'Atenciones-Realizadas-por-Emergencia', this.columns);
-  }
+
   filter() {
   
         const form = this.filtroForm.value;
@@ -184,79 +231,7 @@ export class HospitalDischargeConsultationComponent implements OnInit {
           },
       });
   }
-  updateFiltername(event) {
-    const val = event.target.value.toLowerCase();
 
-    // filter our data
-    const temp = this.rows.filter(function (d) {
-      return d.name.toLowerCase().indexOf(val) !== -1 || !val;
-    });
-
-
-    this.rows = temp;
-
-  }
-  updateFilterposition(event) {
-    const val = event.target.value.toLowerCase();
-
-    // filter our data
-    const temp = this.rows.filter(function (d) {
-      return d.position.toLowerCase().indexOf(val) !== -1 || !val;
-    });
-
-
-    this.rows = temp;
-
-  }
-  updateFilteroffice(event) {
-    const val = event.target.value.toLowerCase();
-
-    // filter our data
-    const temp = this.rows.filter(function (d) {
-      return d.office.toLowerCase().indexOf(val) !== -1 || !val;
-    });
-
-
-    this.rows = temp;
-
-  }
-
-  updateFilterage(event) {
-    const val = event.target.value.toLowerCase();
-
-    // filter our data
-    const temp = this.rows.filter(function (d) {
-      return d.age.toLowerCase().indexOf(val) !== -1 || !val;
-    });
-
-
-    this.rows = temp;
-
-  }
-  updateFiltersalary(event) {
-    const val = event.target.value.toLowerCase();
-
-    // filter our data
-    const temp = this.rows.filter(function (d) {
-      return d.salary.toLowerCase().indexOf(val) !== -1 || !val;
-    });
-
-
-    this.rows = temp;
-
-  }
-  updateFilterstartdate(event) {
-    const val = event.target.value.toLowerCase();
-
-    // filter our data
-    const temp = this.rows.filter(function (d) {
-      return d.startdate.toLowerCase().indexOf(val) !== -1 || !val;
-    });
-
-
-    this.rows = temp;
-
-  }
   updateFilter(event) {
     const input = event.target.value.toLowerCase();
     console.log(input);
@@ -279,71 +254,11 @@ export class HospitalDischargeConsultationComponent implements OnInit {
     // this.table.offset = 0;
   }
   // eslint-disable-next-line @typescript-eslint/member-ordering
-  private newAttribute = { 'id': 15, name: 'Mark', position: 'Otto', office: '@mdo', age: '31', salary: '12000', startdate: '16/05/2017' };
 
-  addFieldValue() {
-    this.rows.push(this.newAttribute);
-    this.rows = [...this.rows];
-  }
-  deleteFieldValue(index) {
-    this.rows.splice(index, 1);
-  }
-  deleteRow(id) {
-    let i = 0;
-    for (const row of this.rows) {
-      if (row.id === id) {
-        break;
-      }
-      i++;
-    }
-    const temp = [...this.rows];
-    temp.splice(i, 1);
-    this.rows = temp;
-  }
-   updateValue(event, cell, rowIndex) {
-
-    this.editing[rowIndex + '-' + cell] = false;
-    this.row[rowIndex][cell] = event.target.value;
-    const temp = [...this.row];
-    this.row = temp;
-  }
-
-  reloadAddRows() {
-    this.blockUIAddRows.start('Loading..');
-
-    setTimeout(() => {
-      this.blockUIAddRows.stop();
-    }, 2500);
-  }
   onSelect({ selected }) {
     this.selected.splice(0, this.selected.length);
     this.selected.push(...selected);
   }
-  reloadRowSelection() {
-    this.blockUIRowSelection.start('Loading..');
 
-    setTimeout(() => {
-      this.blockUIRowSelection.stop();
-    }, 2500);
-  }
-  deleteCheckedRow() {
-    let index = 0;
-    const removedIndex = [];
-    const temp = [...this.rows];
-    for (const row of temp) {
-      for (const selectedRow of this.selected) {
-        if (row.id === selectedRow.id) {
-          removedIndex.push(index);
-        }
-      }
-      index++;
-    }
-
-    for (let i = removedIndex.length - 1; i >= 0; i--) {
-      temp.splice(removedIndex[i], 1);
-    }
-    this.rows = temp;
-    this.selected = [];
-  }
 
 }
