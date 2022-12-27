@@ -1,4 +1,5 @@
 import { map } from 'rxjs/operators';
+
 import { Component, ElementRef, OnInit, PipeTransform, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { NgBlockUI, BlockUI } from 'ng-block-ui';
@@ -16,7 +17,7 @@ import { ExportService } from '../../../../_services/export.service';
 import { CurrencyPipe } from '@angular/common';
 import * as Chart from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-
+import ResizeObserver from 'resize-observer-polyfill';
 @Component({
   selector: 'app-cuotas-programas-salud',
   templateUrl: './cuotas-programas-salud.component.html',
@@ -354,7 +355,7 @@ console.log(223,barChartData2);
     };
   }
 formatPipe(rows) {
-    console.log(rows);
+    // console.log(rows);
     // const editRowslPipe = ((rows) =>{
       rows.map(item => {
         // console.log(item);
@@ -373,7 +374,7 @@ formatPipe(rows) {
   // });
 }
 formatPipe2(rows) {
-  console.log(rows);
+  // console.log(rows);
   // const editRowslPipe = ((rows) =>{
     rows.map(item => {
       // console.log(item);
@@ -441,40 +442,67 @@ console.log(this.parameters);
           });
           this.rows = this.data.query_sin_igv;
           this.rows.map(item => {
-            if (item.item == 'TOTAL CUOTAS') {
-              console.log(332,  typeof item.per2, item.per2);
+            
+            if(item.item.trim() === 'CUOTAS COLECTIVA - CONTINUADORES'){
+              console.log(451, item.item.trim());
+              item.per1 = this.rows[0].per1 - this.rows[1].per1
+              item.per2 = this.rows[0].per2 - this.rows[1].per2
+              item.per3 = this.rows[0].per3 - this.rows[1].per3
+              item.per4 = this.rows[0].per4 - this.rows[1].per4
+
+            }else if(item.item.trim() === 'CUOTAS FAMILIAR EXTERNO - CONTINUADORES'){
+              console.log(451, item.item.trim());
+              item.per1 = this.rows[3].per1 - this.rows[4].per1
+              item.per2 = this.rows[3].per2 - this.rows[4].per2
+              item.per3 = this.rows[3].per3 - this.rows[4].per3
+              item.per4 = this.rows[3].per4 - this.rows[4].per4
+              
+            }else if(item.item.trim() === 'CUOTAS FAMILIAR INTERNO'){
+              
+              if(item.per1 === 0){
+                for (let i = 0; i < this.rows.length; i++) {
+                  if(i === 7 || i === 8){
+                    item.per1 += this.rows[i].per1
+                    item.per2 += this.rows[i].per2
+                    item.per3 += this.rows[i].per3
+                    item.per4 += this.rows[i].per4
+                  }
+
+                }
+              }
+            }else if (item.item.trim() === 'TOTAL CUOTAS') {
+
               this.barChartData.push(typeof item.per1 === 'number' ? item.per1.toFixed(2) : Number(item.per1).toFixed(2));
               this.barChartData.push(typeof item.per2 === 'number' ? item.per2.toFixed(2) : Number(item.per2).toFixed(2));
               this.barChartData.push(typeof item.per3 === 'number' ? item.per3.toFixed(2) : Number(item.per3).toFixed(2));
               this.barChartData.push(typeof item.per4 === 'number' ? item.per4.toFixed(2) : Number(item.per4).toFixed(2));
-              console.log(443,this.barChartData);
+
               // this.totales = item.per1 + item.per2 + item.per3 + item.per1
-            }else if (item.item == 'TOTAL RECAUDADO') {
-              console.log(333, item);
+            }else if (item.item.trim() === 'TOTAL RECAUDADO') {
+
               this.barChartData2.push(typeof item.per1 === 'number' ? item.per1.toFixed(2) : Number(item.per1).toFixed(2));
               this.barChartData2.push(typeof item.per2 === 'number' ? item.per2.toFixed(2) : Number(item.per2).toFixed(2));
               this.barChartData2.push(typeof item.per3 === 'number' ? item.per3.toFixed(2) : Number(item.per3).toFixed(2));
               this.barChartData2.push(typeof item.per4 === 'number' ? item.per4.toFixed(2) : Number(item.per4).toFixed(2));
-              console.log(444, this.barChartData2);
+
 
               // this.totales = item.per1 + item.per2 + item.per3 + item.per1
-            } 
+            }
           });
 
           this.rows2 = this.data.query_con_igv;
-          console.log(this.rows2);
+
           this.rows2.map(item => {
-            if (item.item == 'TOTAL CUOTAS') {
+            if (item.item.trim() === 'TOTAL CUOTAS') {
               
               this.barChartData3.push(typeof item.per1 === 'number' ? item.per1.toFixed(2) : Number(item.per1).toFixed(2));
               this.barChartData3.push(typeof item.per2 === 'number' ? item.per2.toFixed(2) : Number(item.per2).toFixed(2));
               this.barChartData3.push(typeof item.per3 === 'number' ? item.per3.toFixed(2) : Number(item.per3).toFixed(2));
               this.barChartData3.push(typeof item.per4 === 'number' ? item.per4.toFixed(2) : Number(item.per4).toFixed(2));
-              console.log(443,this.barChartData);
+
               // this.totales = item.per1 + item.per2 + item.per3 + item.per1
-            }else if (item.item == 'TOTAL RECAUDADO') {
-              console.log(335, item);
-              console.log(334, typeof item.per1, item.per1);
+            }else if (item.item.trim() === 'TOTAL RECAUDADO') {
+
               this.barChartData4.push(typeof item.per1 === 'number' ? item.per1.toFixed(2) : Number(item.per1).toFixed(2));
               this.barChartData4.push(typeof item.per2 === 'number' ? item.per2.toFixed(2) : Number(item.per2).toFixed(2));
               this.barChartData4.push(typeof item.per3 === 'number' ? item.per3.toFixed(2) : Number(item.per3).toFixed(2));
@@ -523,24 +551,24 @@ console.log(this.parameters);
           });
           this.rows3 = this.data2.data;
           this.rows3.map(item => {
-            if (item.item === 'TOTAL CUOTAS'){
+            if (item.item.trim() === 'TOTAL CUOTAS'){
               this.ingresoTotalNumComtratos = item.per1;
               // para graficos
               this.barChartData5.push(item.per1);
               this.barChartData5.push(item.per2);
               this.barChartData5.push(item.per3);
               this.barChartData5.push(item.per4);
-            }else if (item.item === 'CUOTAS FAMILIAR EXTERNO'){
+            }else if (item.item.trim() === 'CUOTAS FAMILIAR EXTERNO'){
               this.ingresoFamilNumComtratos = item.per1;
-            }else if (item.item === 'CUOTAS FAMILIAR INTERNO' ){
+            }else if (item.item.trim() === 'CUOTAS FAMILIAR INTERNO' ){
               this.ingresoFamilNumComtratos = parseInt(this.ingresoFamilNumComtratos) + parseInt(item.per1);
-            }else if (item.item === 'CUOTAS COLECTIVA'){
+            }else if (item.item.trim() === 'CUOTAS COLECTIVA'){
               
               this.ingresoColecNumComtratos = item.per1;
-            }else if (item.item === 'INSCRIPCIONES'){
+            }else if (item.item.trim() === 'INSCRIPCIONES'){
               this.ingresoInscrNumComtratos = item.per1;
 
-            }else if (item.item === 'TOTAL RECAUDADO'){  //para graficos
+            }else if (item.item.trim() === 'TOTAL RECAUDADO'){  //para graficos
               this.barChartData6.push(item.per1);
               this.barChartData6.push(item.per2);
               this.barChartData6.push(item.per3);
@@ -581,8 +609,82 @@ console.log(this.parameters);
           this.rows4 = this.data3.query_sin_igv;
           
           this.rows4.map(item => {
-            if (item.item == 'TOTAL CUOTAS') {
-              console.log(576,  typeof item.PER2, item.PER2);
+            if(item.item.trim() === 'CUOTAS COLECTIVA - CONTINUADORES'){
+              console.log(451, item.item.trim());
+              item.PER1 = this.rows4[0].PER1 - this.rows4[1].PER1
+              item.PER2 = this.rows4[0].PER2 - this.rows4[1].PER2
+              item.PER3 = this.rows4[0].PER3 - this.rows4[1].PER3
+              item.PER4 = this.rows4[0].PER4 - this.rows4[1].PER4
+
+              item.PER5 = this.rows4[0].PER5 - this.rows4[1].PER5
+              item.PER6 = this.rows4[0].PER6 - this.rows4[1].PER6
+              item.PER7 = this.rows4[0].PER7 - this.rows4[1].PER7
+              item.PER8 = this.rows4[0].PER8 - this.rows4[1].PER8
+              item.PER9 = this.rows4[0].PER9 - this.rows4[1].PER9
+              item.PER10 = this.rows4[0].PER10 - this.rows4[1].PER10
+              item.PER11 = this.rows4[0].PER11 - this.rows4[1].PER11
+              item.PER12 = this.rows4[0].PER12 - this.rows4[1].PER12
+              item.PER13 = this.rows4[0].PER13 - this.rows4[1].PER13
+
+            }else if(item.item.trim() === 'CUOTAS FAMILIAR EXTERNO - CONTINUADORES'){
+              console.log(451, item.item.trim());
+              item.PER1 = this.rows4[3].PER1 - this.rows4[4].PER1
+              item.PER2 = this.rows4[3].PER2 - this.rows4[4].PER2
+              item.PER3 = this.rows4[3].PER3 - this.rows4[4].PER3
+              item.PER4 = this.rows4[3].PER4 - this.rows4[4].PER4
+              item.PER4 = this.rows4[3].PER4 - this.rows4[4].PER4
+              item.PER5 = this.rows4[3].PER5 - this.rows4[4].PER5
+              item.PER6 = this.rows4[3].PER6 - this.rows4[4].PER6
+              item.PER7 = this.rows4[3].PER7 - this.rows4[4].PER7
+              item.PER8 = this.rows4[3].PER8 - this.rows4[4].PER8
+              item.PER9 = this.rows4[3].PER9 - this.rows4[4].PER9
+              item.PER10 = this.rows4[3].PER10 - this.rows4[4].PER10
+              item.PER11 = this.rows4[3].PER11 - this.rows4[4].PER11
+              item.PER12 = this.rows4[3].PER12 - this.rows4[4].PER12
+              item.PER13 = this.rows4[3].PER13 - this.rows4[4].PER13
+            }else if(item.item.trim() === 'CUOTAS FAMILIAR INTERNO'){
+              
+              if(item.PER1 === 0){
+                for (let i = 0; i < this.rows4.length; i++) {
+                  if(i === 7 || i === 8){
+                    item.PER1 += this.rows4[i].PER1
+                    item.PER2 += this.rows4[i].PER2
+                    item.PER3 += this.rows4[i].PER3
+                    item.PER4 += this.rows4[i].PER4
+                    item.PER5 += this.rows4[i].PER5
+                    item.PER6 += this.rows4[i].PER6
+                    item.PER7 += this.rows4[i].PER7
+                    item.PER8 += this.rows4[i].PER8
+                    item.PER9 += this.rows4[i].PER9
+                    item.PER10 += this.rows4[i].PER10
+                    item.PER11 += this.rows4[i].PER11
+                    item.PER12 += this.rows4[i].PER12
+                    item.PER13 += this.rows4[i].PER13
+                  }
+
+                }
+              }
+            }else if (item.item.trim() === 'TOTAL CUOTAS') {
+              if(item.PER1 === 0){
+                for (let i = 0; i < this.rows4.length; i++) {
+                  if(i === 0 || i === 3 || i === 6 ){
+                    item.PER1 += this.rows4[i].PER1
+                    item.PER2 += this.rows4[i].PER2
+                    item.PER3 += this.rows4[i].PER3
+                    item.PER4 += this.rows4[i].PER4
+                    item.PER5 += this.rows4[i].PER5
+                    item.PER6 += this.rows4[i].PER6
+                    item.PER7 += this.rows4[i].PER7
+                    item.PER8 += this.rows4[i].PER8
+                    item.PER9 += this.rows4[i].PER9
+                    item.PER10 += this.rows4[i].PER10
+                    item.PER11 += this.rows4[i].PER11
+                    item.PER12 += this.rows4[i].PER12
+                    item.PER13 += this.rows4[i].PER13
+                  }
+
+                }
+              }
               this.barChartData7.push(typeof item.PER1 === 'number' ? item.PER1.toFixed(2) : Number(item.PER1).toFixed(2));
               this.barChartData7.push(typeof item.PER2 === 'number' ? item.PER2.toFixed(2) : Number(item.PER2).toFixed(2));
               this.barChartData7.push(typeof item.PER3 === 'number' ? item.PER3.toFixed(2) : Number(item.PER3).toFixed(2));
@@ -597,10 +699,24 @@ console.log(this.parameters);
               this.barChartData7.push(typeof item.PER11 === 'number' ? item.PER11.toFixed(2) : Number(item.PER11).toFixed(2));
               this.barChartData7.push(typeof item.PER12 === 'number' ? item.PER12.toFixed(2) : Number(item.PER12).toFixed(2));
               this.barChartData7.push(typeof item.PER13 === 'number' ? item.PER13.toFixed(2) : Number(item.PER13).toFixed(2));
-              console.log(590,this.barChartData7);
+
               // this.totales = item.PER1 + item.PER2 + item.PER3 + item.PER1
-            }else if (item.item == 'TOTAL RECAUDADO') {
-              console.log(593, item);
+            }else if (item.item.trim() === 'TOTAL RECAUDADO') {
+              if(item.PER1 === 0){
+                  item.PER1 = this.rows4[9].PER1 + this.rows4[10].PER1;
+                  item.PER2 = this.rows4[9].PER2 + this.rows4[10].PER2;
+                  item.PER3 = this.rows4[9].PER3 + this.rows4[10].PER3;
+                  item.PER4 = this.rows4[9].PER4 + this.rows4[10].PER4;
+                  item.PER5 = this.rows4[9].PER5 + this.rows4[10].PER5;
+                  item.PER6 = this.rows4[9].PER6 + this.rows4[10].PER6;
+                  item.PER7 = this.rows4[9].PER7 + this.rows4[10].PER7;
+                  item.PER8 = this.rows4[9].PER8 + this.rows4[10].PER8;
+                  item.PER9 = this.rows4[9].PER9 + this.rows4[10].PER9;
+                  item.PER10 = this.rows4[9].PER10 + this.rows4[10].PER10;
+                  item.PER11 = this.rows4[9].PER11 + this.rows4[10].PER11;
+                  item.PER12 = this.rows4[9].PER12 + this.rows4[10].PER12;
+                  item.PER13 = this.rows4[9].PER13 + this.rows4[10].PER13;
+              }
               this.barChartData8.push(typeof item.PER1 === 'number' ? item.PER1.toFixed(2) : Number(item.PER1).toFixed(2));
               this.barChartData8.push(typeof item.PER2 === 'number' ? item.PER2.toFixed(2) : Number(item.PER2).toFixed(2));
               this.barChartData8.push(typeof item.PER3 === 'number' ? item.PER3.toFixed(2) : Number(item.PER3).toFixed(2));
@@ -616,16 +732,17 @@ console.log(this.parameters);
               this.barChartData8.push(typeof item.PER11 === 'number' ? item.PER11.toFixed(2) : Number(item.PER11).toFixed(2));
               this.barChartData8.push(typeof item.PER12 === 'number' ? item.PER12.toFixed(2) : Number(item.PER12).toFixed(2));
               this.barChartData8.push(typeof item.PER13 === 'number' ? item.PER13.toFixed(2) : Number(item.PER13).toFixed(2));
-              console.log(609, this.barChartData8);
 
               // this.totales = item.PER1 + item.PER2 + item.PER3 + item.PER1
             } 
           });
           // console.log(2202, this.barChartData7,  this.barChartData8);
           this.rows5 = this.data3.query_con_igv;
+          console.log(this.rows5);
           this.rows5.map(item => {
-            if (item.item == 'TOTAL CUOTAS') {
-              console.log(576,  typeof item.PER2, item.PER2);
+
+            if (item.item.trim() === 'TOTAL CUOTAS') {
+              
               this.barChartData9.push(typeof item.PER1 === 'number' ? item.PER1.toFixed(2) : Number(item.PER1).toFixed(2));
               this.barChartData9.push(typeof item.PER2 === 'number' ? item.PER2.toFixed(2) : Number(item.PER2).toFixed(2));
               this.barChartData9.push(typeof item.PER3 === 'number' ? item.PER3.toFixed(2) : Number(item.PER3).toFixed(2));
@@ -640,10 +757,10 @@ console.log(this.parameters);
               this.barChartData9.push(typeof item.PER11 === 'number' ? item.PER11.toFixed(2) : Number(item.PER11).toFixed(2));
               this.barChartData9.push(typeof item.PER12 === 'number' ? item.PER12.toFixed(2) : Number(item.PER12).toFixed(2));
               this.barChartData9.push(typeof item.PER13 === 'number' ? item.PER13.toFixed(2) : Number(item.PER13).toFixed(2));
-              console.log(590,this.barChartData9);
+
               // this.totales = item.PER1 + item.PER2 + item.PER3 + item.PER1
-            }else if (item.item == 'TOTAL RECAUDADO') {
-              console.log(593, item);
+            }else if (item.item.trim() === 'TOTAL RECAUDADO') {
+              
               this.barChartData10.push(typeof item.PER1 === 'number' ? item.PER1.toFixed(2) : Number(item.PER1).toFixed(2));
               this.barChartData10.push(typeof item.PER2 === 'number' ? item.PER2.toFixed(2) : Number(item.PER2).toFixed(2));
               this.barChartData10.push(typeof item.PER3 === 'number' ? item.PER3.toFixed(2) : Number(item.PER3).toFixed(2));
@@ -659,7 +776,7 @@ console.log(this.parameters);
               this.barChartData10.push(typeof item.PER11 === 'number' ? item.PER11.toFixed(2) : Number(item.PER11).toFixed(2));
               this.barChartData10.push(typeof item.PER12 === 'number' ? item.PER12.toFixed(2) : Number(item.PER12).toFixed(2));
               this.barChartData10.push(typeof item.PER13 === 'number' ? item.PER13.toFixed(2) : Number(item.PER13).toFixed(2));
-              console.log(609, this.barChartData8);
+
 
               // this.totales = item.PER1 + item.PER2 + item.PER3 + item.PER1
             } 
@@ -694,10 +811,54 @@ console.log(this.parameters);
             } 
           });
           this.rows6 = this.data4.data;
-          console.log(692,this.rows6,this.columns4);
+          // console.log(692,this.rows6,this.columns4);
           this.rows6.map(item => {
-            if (item.item == 'TOTAL CUOTAS') {
-              console.log(576,  typeof item.PER2, item.PER2);
+            if(item.item.trim() === 'CUOTAS FAMILIAR INTERNO'){
+              
+              if(Number(item.PER1) === 0){
+                for (let i = 0; i < this.rows6.length; i++) {
+                  if(i === 7 || i === 8){
+                    item.PER1 = Number(item.PER1) + Number(this.rows6[i].PER1)
+                    item.PER2 = Number(item.PER1) + Number(this.rows6[i].PER2)
+                    item.PER3 = Number(item.PER1) + Number(this.rows6[i].PER3)
+                    item.PER4 = Number(item.PER1) + Number(this.rows6[i].PER4)
+                    item.PER5 = Number(item.PER1) + Number(this.rows6[i].PER5)
+                    item.PER6 = Number(item.PER1) + Number(this.rows6[i].PER6)
+                    item.PER7 = Number(item.PER1) + Number(this.rows6[i].PER7)
+                    item.PER8 = Number(item.PER1) + Number(this.rows6[i].PER8)
+                    item.PER9 = Number(item.PER1) + Number(this.rows6[i].PER9)
+                    item.PER10 = Number(item.PER1) + Number(this.rows6[i].PER10)
+                    item.PER11 = Number(item.PER1) + Number(this.rows6[i].PER11)
+                    item.PER12 = Number(item.PER1) + Number(this.rows6[i].PER12)
+                    item.PER13 = Number(item.PER1) + Number(this.rows6[i].PER13)
+                    console.log(743, item.PER1);
+                  }
+
+                }
+              }
+              console.log(this.rows6);
+            }
+            if (item.item.trim() === 'TOTAL CUOTAS') {
+              if(Number(item.PER1) === 0){
+                for (let i = 0; i < this.rows6.length; i++) {
+                  if(i === 0 || i === 3 || i === 6 ){
+                    item.PER1 = Number(item.PER1) + Number(this.rows6[i].PER1)
+                    item.PER2 = Number(item.PER1) + Number(this.rows6[i].PER2)
+                    item.PER3 = Number(item.PER1) + Number(this.rows6[i].PER3)
+                    item.PER4 = Number(item.PER1) + Number(this.rows6[i].PER4)
+                    item.PER5 = Number(item.PER1) + Number(this.rows6[i].PER5)
+                    item.PER6 = Number(item.PER1) + Number(this.rows6[i].PER6)
+                    item.PER7 = Number(item.PER1) + Number(this.rows6[i].PER7)
+                    item.PER8 = Number(item.PER1) + Number(this.rows6[i].PER8)
+                    item.PER9 = Number(item.PER1) + Number(this.rows6[i].PER9)
+                    item.PER10 = Number(item.PER1) + Number(this.rows6[i].PER10)
+                    item.PER11 = Number(item.PER1) + Number(this.rows6[i].PER11)
+                    item.PER12 = Number(item.PER1) + Number(this.rows6[i].PER12)
+                    item.PER13 = Number(item.PER1) + Number(this.rows6[i].PER13)
+                  }
+
+                }
+              }
               this.barChartData11.push(typeof item.PER1 === 'number' ? item.PER1.toFixed(2) : Number(item.PER1).toFixed(2));
               this.barChartData11.push(typeof item.PER2 === 'number' ? item.PER2.toFixed(2) : Number(item.PER2).toFixed(2));
               this.barChartData11.push(typeof item.PER3 === 'number' ? item.PER3.toFixed(2) : Number(item.PER3).toFixed(2));
@@ -712,10 +873,23 @@ console.log(this.parameters);
               this.barChartData11.push(typeof item.PER11 === 'number' ? item.PER11.toFixed(2) : Number(item.PER11).toFixed(2));
               this.barChartData11.push(typeof item.PER12 === 'number' ? item.PER12.toFixed(2) : Number(item.PER12).toFixed(2));
               this.barChartData11.push(typeof item.PER13 === 'number' ? item.PER13.toFixed(2) : Number(item.PER13).toFixed(2));
-              console.log(590,this.barChartData7);
               // this.totales = item.PER1 + item.PER2 + item.PER3 + item.PER1
-            }else if (item.item == 'TOTAL RECAUDADO') {
-              console.log(593, item);
+            }else if (item.item.trim() === 'TOTAL RECAUDADO') {
+              if(Number(item.PER1) === 0){
+                item.PER1 = Number(this.rows6[9].PER1) + Number(this.rows6[10].PER1);
+                item.PER2 = Number(this.rows6[9].PER2) + Number(this.rows6[10].PER2);
+                item.PER3 = Number(this.rows6[9].PER3) + Number(this.rows6[10].PER3);
+                item.PER4 = Number(this.rows6[9].PER4) + Number(this.rows6[10].PER4);
+                item.PER5 = Number(this.rows6[9].PER5) + Number(this.rows6[10].PER5);
+                item.PER6 = Number(this.rows6[9].PER6) + Number(this.rows6[10].PER6);
+                item.PER7 = Number(this.rows6[9].PER7) + Number(this.rows6[10].PER7);
+                item.PER8 = Number(this.rows6[9].PER8) + Number(this.rows6[10].PER8);
+                item.PER9 = Number(this.rows6[9].PER9) + Number(this.rows6[10].PER9);
+                item.PER10 = Number(this.rows6[9].PER10) + Number(this.rows6[10].PER10);
+                item.PER11 = Number(this.rows6[9].PER11) + Number(this.rows6[10].PER11);
+                item.PER12 = Number(this.rows6[9].PER12) + Number(this.rows6[10].PER12);
+                item.PER13 = Number(this.rows6[9].PER13) + Number(this.rows6[10].PER13);
+              }
               this.barChartData12.push(typeof item.PER1 === 'number' ? item.PER1.toFixed(2) : Number(item.PER1).toFixed(2));
               this.barChartData12.push(typeof item.PER2 === 'number' ? item.PER2.toFixed(2) : Number(item.PER2).toFixed(2));
               this.barChartData12.push(typeof item.PER3 === 'number' ? item.PER3.toFixed(2) : Number(item.PER3).toFixed(2));
@@ -731,12 +905,10 @@ console.log(this.parameters);
               this.barChartData12.push(typeof item.PER11 === 'number' ? item.PER11.toFixed(2) : Number(item.PER11).toFixed(2));
               this.barChartData12.push(typeof item.PER12 === 'number' ? item.PER12.toFixed(2) : Number(item.PER12).toFixed(2));
               this.barChartData12.push(typeof item.PER13 === 'number' ? item.PER13.toFixed(2) : Number(item.PER13).toFixed(2));
-              console.log(609, this.barChartData8);
 
               // this.totales = item.PER1 + item.PER2 + item.PER3 + item.PER1
             } 
           });
-          console.log(777,this.data4.data);
             Swal.close();
         }else{
           Swal.close();
@@ -747,6 +919,7 @@ console.log(this.parameters);
       }
     );
   }
+
   copyTableToClipboard(numberTabla){
     if(numberTabla === 1){
       this.exportService.exportToClipboard(this.rows, this.columns);
