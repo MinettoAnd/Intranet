@@ -104,6 +104,42 @@ menuI;
               ]
       },
       {
+        "title": "ADMIN",
+        "menu": "adminMenu",
+        "name_model": "Facturacióny boleas",
+        "icon": "vsm-icon pe-7s-id",
+        "rides": [
+                {
+                    "name": "Dashboard",
+                    "icon": "fa fa-user",
+                    "header": "",
+                    "url": "admin/users",
+                    "isChecked": true
+                },
+                {
+                    "name": "Producción",
+                    "icon": "fa fa-users",
+                    "header": "",
+                    "url": "admin/roles",
+                    "isChecked": true
+                },
+                {
+                  "name": "Expedientes",
+                  "icon": "fa fa-users",
+                  "header": "",
+                  "url": "admin/roles",
+                  "isChecked": true
+                },
+                {
+                  "name": "Consulta de Tarifario",
+                  "icon": "fa fa-users",
+                  "header": "",
+                  "url": "admin/roles",
+                  "isChecked": true
+                }
+            ]
+    },
+      {
           "title": "RECURSOS HUMANOS\r\n",
           "menu": "recursosMenu",
           "name_model": "Imágenes",
@@ -145,9 +181,84 @@ menuI;
                   "url": "claims/iafas",
                   "isChecked": true
               },
+              {
+                "name": "Csalud-Iafas",
+                "icon": "fa fa-book",
+                "header": "Producción",
+                "url": "claims/iafas",
+                "isChecked": true
+               },
+              {
+                "name": "Csalud-Iafas",
+                "icon": "fa fa-book",
+                "header": "Producción",
+                "url": "claims/iafas",
+                "isChecked": true
+              },
+              {
+                "name": "Csalud-Iafas",
+                "icon": "fa fa-book",
+                "header": "Producción",
+                "url": "claims/iafas",
+                "isChecked": true
+              },
               
           ]
       },
+      {
+        "title": "GESTIÓN DE 3RECLAMOS\r\n",
+        "menu": "claimsMenu",
+        "name_model": "Terapia Física",
+        "icon": "vsm-icon pe-7s-portfolio",
+        "rides": [
+            {
+                "name": "Csalud-Iafas",
+                "icon": "fa fa-book",
+                "header": "Producción",
+                "url": "claims/iafas",
+                "isChecked": true
+            },
+            
+        ]
+      },
+      {
+        "title": "GESTIÓN DE RECLAMOS\r\n",
+        "menu": "claimsMenu",
+        "name_model": "Terapia Física",
+        "icon": "vsm-icon pe-7s-portfolio",
+        "rides": [
+            {
+                "name": "Csalud-Iafas",
+                "icon": "fa fa-book",
+                "header": "Producción",
+                "url": "claims/iafas",
+                "isChecked": true
+            },
+            {
+              "name": "Csalud-Iafas",
+              "icon": "fa fa-book",
+              "header": "Producción",
+              "url": "claims/iafas",
+              "isChecked": true
+             },
+            {
+              "name": "Csalud-Iafas",
+              "icon": "fa fa-book",
+              "header": "Producción",
+              "url": "claims/iafas",
+              "isChecked": true
+            },
+            {
+              "name": "Csalud-Iafas",
+              "icon": "fa fa-book",
+              "header": "Producción",
+              "url": "claims/iafas",
+              "isChecked": true
+            },
+            
+            
+        ]
+       },
       {
           "title": "REPORTES",
           "menu": "reportMenu",
@@ -377,7 +488,7 @@ menuI;
   }
   getModelsAdmin() {
     this.apiService.getMenuSidebarAdminService().then((response: any) => {
-      this.menuItems = response.data.length > 0 ? response.data : [];
+       this.menuItems = response.data.length > 0 ? response.data : [];
     });
 
   }

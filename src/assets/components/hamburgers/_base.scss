@@ -54,7 +54,7 @@
   display: block;
   top: 50%;
   margin-top: $hamburger-layer-height / -2;
-
+  background-color: $hamburger-layer-color!important;
   &,
   &::before,
   &::after {
@@ -72,6 +72,7 @@
   &::after {
     content: "";
     display: block;
+    background-color: $hamburger-layer-color!important;
   }
 
   &::before {

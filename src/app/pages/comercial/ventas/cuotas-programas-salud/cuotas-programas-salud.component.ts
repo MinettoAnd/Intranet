@@ -21,7 +21,7 @@ import ResizeObserver from 'resize-observer-polyfill';
 @Component({
   selector: 'app-cuotas-programas-salud',
   templateUrl: './cuotas-programas-salud.component.html',
-  styleUrls: ['./cuotas-programas-salud.component.sass']
+  styleUrls: ['./cuotas-programas-salud.component.scss']
 })
 export class CuotasProgramasSaludComponent implements OnInit {
   private baseChart: ElementRef;

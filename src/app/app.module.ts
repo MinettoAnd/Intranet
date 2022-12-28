@@ -39,7 +39,6 @@ import { UserBoxComponent } from './layout/Components/header/elements/user-box/u
 // SIDEBAR
 
 import { SidebarComponent } from './layout/Components/sidebar/sidebar.component';
-import { HorizontalnavComponent } from './layout/Components/horizontalnav/horizontalnav.component';
 import { LogoComponent } from './layout/Components/sidebar/elements/logo/logo.component';
 
 // FOOTER
@@ -102,11 +101,6 @@ import { CustomFilterPipe } from './pipes/custom-filter.pipe';
 import { ExportService } from './_services/export.service';
 
 
-import { MenuSettingsService, MENU_SETTINGS_CONFIG } from './layout/settings/menu-settings.service';
-import { ThemeSettingsService, THEME_SETTINGS_CONFIG } from './layout/settings/theme-settings.service';
-import { ThemeSettingsConfig } from './layout/settings/theme-settings.config';
-import { MenuSettingsConfig } from './layout/settings/menu-settings.config';
-import { SettingsModule } from './layout/settings/settings.module';
 // import { CuotasProgramasSaludComponent } from './pages/comercial/ventas/cuotas-programas-salud/cuotas-programas-salud.component';
 // import { BsDatepickerModule, BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -125,7 +119,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     SearchBoxComponent,
     UserBoxComponent,
     SidebarComponent,
-    HorizontalnavComponent,
     LogoComponent,
     FooterComponent,
     LoginBoxedComponent,
@@ -209,7 +202,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     AgGridModule.withComponents([]),
     // BsDatepickerModule.forRoot(),
     // NgxDatatableModule
-    SettingsModule.forRoot(ThemeSettingsConfig, MenuSettingsConfig),
   ],
 
   providers: [
@@ -220,15 +212,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       useValue:
         DEFAULT_PERFECT_SCROLLBAR_CONFIG,
       // DEFAULT_DROPZONE_CONFIG,
-    },
-    {
-      provide: MENU_SETTINGS_CONFIG,
-      useClass: 
-        MenuSettingsService,
-    },
-    {
-      provide: THEME_SETTINGS_CONFIG,
-      useClass: ThemeSettingsService,
     },
     { provide: DEFAULT_CURRENCY_CODE, useValue: 'S/. ' },
     // { provide: LOCALE_ID, useValue: 'es-PE'  },

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { SharedService } from 'src/app/Layout/shared.service';
+import { SharedService } from 'src/app/layout/shared.service';
 import { ThemeOptions } from '../../../../../theme-options';
 import { Subscription } from 'rxjs';
 import Swal from 'sweetalert2';

@@ -1,19 +1,33 @@
 .languagepicker {
-  display: inline-block;
+  display: flex;
+  flex-wrap: wrap;
   padding: 0;
-  height: 30px;
+  // height: 30px;
+  max-width: 100vw;
   /* Remove this */
-  /*overflow: hidden;*/
+  // overflow: hidden;
   -webkit-transition: all .5s ease;
   transition: all .5s ease;
-  margin: 10px 5px 0 0;
-  vertical-align: top;
-  position: relative;
-  z-index: 999;
+  // margin: 10px 5px 0 0;
+  // vertical-align: top;
+  // position: relative;
+  z-index: 9;
+  height: 50px;
   }
-  
+  .menu-list{
+    width: 100vw;
+    flex-wrap: wrap;
+    position: absolute;
+    padding: 0.1rem 15rem;
+    justify-content: center;
+     background-color: rgb(16, 0, 76)!important;
+    margin-right: 0px!important;
+    margin-left: 0px!important;
+  }
+
   .languagepicker:hover {
   height: 50px;
+ 
   }
   .languagepicker a {
   color: #ffffff;
@@ -22,10 +36,10 @@
   
   .languagepicker li {
   display: block;
-  margin: 1.5rem 10px;
+  margin: 0.3rem;
   padding-bottom: 0.5rem!important;;
   text-align: center;
-
+// z-index: 999;
   // padding: 1rem 5px;
   // line-height: 1rem;
   }
@@ -92,9 +106,9 @@
   
   ul li.testclass {
   display: block;
-  padding: 0;
-  margin-top: 1px;
-  width: 100%;
+  padding: 5px;
+  // margin-top: 1px;
+  // width: 100%;
   position: relative;
 
   }
@@ -107,14 +121,14 @@
  
   li.testclass > ul{
   position: absolute;
-  margin-top: 9%;
-  // top: 0;
-  left: 15%;
+  margin-top: 5%;
+  // top: 15;
+  // left: 15%;
   display: none;
   width:100%;
   // padding-left: 8%;
   // padding: 10px 15px;
-  z-index: 1;
+  z-index: 999999;
 
   }
   li.testclass > ul li{
@@ -238,9 +252,9 @@ text-align: left!important;
   $app-header-height: 60px;
   $dropdown-link-hover-bg:            $gray-100 !default;
   .v-sidebar-menu-n {
-    width: auto !important;
-    padding: 0 $layout-spacer-x $layout-spacer-x;
-  
+    // width: auto !important;
+    // padding: 1rem 4rem; //0 $layout-spacer-x $layout-spacer-x;
+    position: absolute;
     %side-link-hover {
       background: $dropdown-link-hover-bg;
       color: $primary;
@@ -402,7 +416,7 @@ text-align: left!important;
       }
     }
   }
-    .v-sidebar-menu-n{
+  .v-sidebar-menu-n{
     display: none;
   }
 
@@ -412,5 +426,11 @@ text-align: left!important;
     }
     .sidebar-movil{
       display: none;
+    }
+    .app-sidebar-content{
+      margin-bottom: 18px!important;
+    }
+    .app-main__outer {
+      padding-top: 0px!important;
     }
   }

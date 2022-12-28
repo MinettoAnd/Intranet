@@ -151,7 +151,7 @@
                               
                                   <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
                                     <div class="row" style="align-items: center;justify-content: space-between;">
-                                      <ul class="list-group list-group-horizontal list-group-flush">
+                                      <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
                                         <li class="list-group-item border-0 pl-0">
                                           <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(1)">
                                             <i class="fa fa-external-link"></i>
@@ -246,7 +246,7 @@
                               
                                   <div #collapse2="ngbCollapse" [(ngbCollapse)]="isCollapsed2">
                                     <div class="row" style="align-items: center;justify-content: space-between;">
-                                      <ul class="list-group list-group-horizontal list-group-flush">
+                                      <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
                                         <li class="list-group-item border-0 pl-0">
                                           <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(2)">
                                             <i class="fa fa-external-link"></i>
@@ -331,7 +331,7 @@
                                   </div>
                                   <div #collapse3="ngbCollapse" [(ngbCollapse)]="isCollapsed3">
                                     <div class="row" style="align-items: center;justify-content: space-between;">
-                                      <ul class="list-group list-group-horizontal list-group-flush">
+                                      <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
                                         <li class="list-group-item border-0 pl-0">
                                           <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(3)">
                                             <i class="fa fa-external-link"></i>
@@ -455,7 +455,7 @@
                               
                                   <div #collapse4="ngbCollapse" [(ngbCollapse)]="isCollapsed4">
                                     <div class="row" style="align-items: center;justify-content: space-between;">
-                                      <ul class="list-group list-group-horizontal list-group-flush">
+                                      <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
                                         <li class="list-group-item border-0 pl-0">
                                           <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(4)">
                                             <i class="fa fa-external-link"></i>
@@ -495,7 +495,7 @@
                                     class="bootstrap table table-striped"
                                       [columns]="columns3"
                                       [rows]="rows4"
-                                      [columnMode]="ColumnMode.force"
+                                      [columnMode]="ColumnMode.flex"
                                       [headerHeight]="50"
                                       [scrollbarH]="true"
                                       (page)="setPage($event)"
@@ -540,7 +540,7 @@
                               
                                   <div #collapse5="ngbCollapse" [(ngbCollapse)]="isCollapsed5">
                                     <div class="row" style="align-items: center;justify-content: space-between;">
-                                      <ul class="list-group list-group-horizontal list-group-flush">
+                                      <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
                                         <li class="list-group-item border-0 pl-0">
                                           <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(5)">
                                             <i class="fa fa-external-link"></i>
@@ -580,7 +580,7 @@
                                     class="bootstrap table table-striped"
                                       [columns]="columns3"
                                       [rows]="rows5"
-                                      [columnMode]="ColumnMode.force"
+                                      [columnMode]="ColumnMode.flex"
                                       [headerHeight]="50"
                                       [scrollbarH]="true"
                                       (page)="setPage($event)"
@@ -625,7 +625,7 @@
                                   </div>
                                   <div #collapse6="ngbCollapse" [(ngbCollapse)]="isCollapsed6">
                                     <div class="row" style="align-items: center;justify-content: space-between;">
-                                      <ul class="list-group list-group-horizontal list-group-flush">
+                                      <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
                                         <li class="list-group-item border-0 pl-0">
                                           <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(6)">
                                             <i class="fa fa-external-link"></i>
@@ -665,7 +665,7 @@
                                     class="bootstrap table table-striped"
                                       [columns]="columns4"
                                       [rows]="rows6"
-                                      [columnMode]="ColumnMode.force"
+                                      [columnMode]="ColumnMode.flex"
                                       [headerHeight]="50"
                                       [scrollbarH]="true"
                                       (page)="setPage($event)"
