@@ -40,11 +40,14 @@ menuI;
   activeId = 'dashboardsMenu';
 
   toggleSidebar() {
-    this.globals.toggleSidebar = !this.globals.toggleSidebar;
+    // this.globals.toggleSidebar = !this.globals.toggleSidebar;
+    console.log(44,this.globals.toggleSidebar)
+    this.globals.toggleSidebar = true;
   }
 
   sidebarHover() {
     this.globals.sidebarHover = !this.globals.sidebarHover;
+    // this.globals.sidebarHover = false;
   }
 
   ngOnInit() {
@@ -52,7 +55,9 @@ menuI;
     // this.setDefaultTabSelected();
     setTimeout(() => {
       this.innerWidth = window.innerWidth;
-      if (this.innerWidth < 1200) {
+      if (this.innerWidth > 1200) {
+        this.globals.toggleSidebar = true;
+      }else{
         this.globals.toggleSidebar = true;
       }
     });
@@ -66,7 +71,7 @@ menuI;
     }
   }
   getMenu(){
-    this.menuI = [
+    this.menuItems = [
       {
           "title": "ADMIN",
           "menu": "adminMenu",
@@ -476,10 +481,10 @@ menuI;
   onResize(event) {
     this.newInnerWidth = event.target.innerWidth;
 
-    if (this.newInnerWidth < 1200) {
+    if (this.newInnerWidth > 1200) {
       this.globals.toggleSidebar = true;
     } else {
-      this.globals.toggleSidebar = false;
+      this.globals.toggleSidebar = true;
     }
 
   }

@@ -31,6 +31,7 @@
   }
   .languagepicker a {
   color: #ffffff;
+
   text-decoration: none;
   }
   
@@ -61,7 +62,9 @@
   }
   .languagepicker li:hover {
   // background-color: #afafaf;
-  background: rgb(57, 13, 234)!important;
+ 
+  // background: rgb(57, 13, 234)!important;
+  background:  #FEA612!important;
   // color: #fff!important;
   // margin: 0;
 
@@ -110,7 +113,11 @@
   // margin-top: 1px;
   // width: 100%;
   position: relative;
-
+  background-color: #fff!important;
+  
+  }
+  ul li.testclass a span{
+    color: rgb(16, 0, 76)!important;
   }
   li.testclass:hover  {
   background-color: red;
@@ -155,6 +162,7 @@ text-align: left!important;
   li.testclass:hover > ul{
   display: block;
   background-color: rgb(30, 1, 133);
+  // background-color: #FEA612;
   // position:relative!important;
   }
   li.testclass > ul li:hover ul {
@@ -180,6 +188,7 @@ text-align: left!important;
   // top: 10%!important;
   // left: 20!important;
   background-color: rgb(36, 5, 151);
+  // background-color:  #FEA612;
   // margin: 0!important;
   padding: 10px 10px;
   // width: 200px;
@@ -188,7 +197,8 @@ text-align: left!important;
   
   }
   li.testclass ul li ul li:hover{
-    background:  rgb(57, 13, 234)!important;
+    // background:  rgb(57, 13, 234)!important;
+    background:   #FEA612!important;
   }
   // /deep/ .card-header{
   //   background-color: #212529;
