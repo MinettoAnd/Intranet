@@ -31,14 +31,20 @@ $mobileIconColor: #fff !default;
 $dropDownColor: #fff !default;
 $dropDownBg: $lightenBg !default;
 $sidebar-box-shadow: 7px 0 60px rgba(0, 0, 0, 0.05);
+.closed-sidebar app-sidebar .app-sidebar {
+height: 12vh!important;
+}
+// .closed-sidebar app-sidebar .app-sidebar .app-sidebar-content{
+//   flex-grow:unset;
+// }
 
 .app-sidebar {
   display: flex;
   z-index: 20;
-  overflow: hidden;
-  width: $app-sidebar-width;
-  position: fixed;
-  height: 100vh;
+  // overflow: hidden;
+  height: 28vh;  //$app-sidebar-width;
+
+  // height: 20vh;
   box-shadow: $sidebar-box-shadow;
   flex-direction: column;
   transition: all 0.3s ease;
@@ -51,6 +57,7 @@ $sidebar-box-shadow: 7px 0 60px rgba(0, 0, 0, 0.05);
     align-items: center;
     transition: width 0.2s;
     flex-shrink: 0;
+    z-index: 20;
   }
 
   .app-sidebar-content {
@@ -276,7 +283,7 @@ $sidebar-box-shadow: 7px 0 60px rgba(0, 0, 0, 0.05);
 
 .closed-sidebar-md.closed-sidebar-open {
   .sidebar-menu-overlay {
-    visibility: visible;
+    // visibility: visible;
     opacity: 1;
     height: 100%;
     width: 100%;

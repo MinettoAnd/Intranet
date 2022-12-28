@@ -6,7 +6,6 @@
     min-width: $app-sidebar-width-collapsed;
     flex: 0 0 $app-sidebar-width-collapsed;
     z-index: 13;
-
     .app-header__logo {
       width: auto;
     }
@@ -60,7 +59,7 @@
   }
 
   .app-main__outer {
-    padding-left: $app-sidebar-width-collapsed;
+    padding-top: $app-sidebar-width-collapsed;
   }
 }
 
@@ -79,8 +78,8 @@
 .closed-sidebar-open {
   &.closed-sidebar {
     .app-sidebar {
-      width: $app-sidebar-width;
-
+      width: 80%;//$app-sidebar-width;
+        background-color: rgb(36, 5, 133)!important;
       .logo-src {
         width: $logo-width;
         margin: 0;

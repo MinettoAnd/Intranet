@@ -5,9 +5,7 @@
 >
   <div class="app-header__logo">
     <!-- class="logo-src" -->
-    <div>
-      <img src="../../../../assets/images/img-text.png" width="200" alt="" />
-    </div>
+    
     <div class="header__pane ml-auto">
       <button
         type="button"
@@ -15,18 +13,23 @@
         [ngClass]="{ 'is-active': globals.toggleSidebar }"
         (click)="toggleSidebar()"
       >
-        <span class="hamburger-box">
+        <!-- <span class="hamburger-box">
           <span class="hamburger-inner"></span>
-        </span>
+          <span class="hamburger-inner"></span>
+        </span> -->
       </button>
+    </div>
+    <!-- <div style="margin-left: 1rem"> -->
+    <div style="position: fixed">
+      <img src="../../../../assets/images/img-text.png" width="200" alt="" />
     </div>
   </div>
   <div class="app-sidebar-content">
         <!-- Env Menu starts here -->
         <div class="v-sidebar-menu-n vsm-default" >
           <ul class="languagepicker vsm-list-n">
-            <div class="" [ngClass]="{'row' :menuItems.length > 1, 'min-row' :menuItems.length < 2}">
-              <li class="testclass" [ngClass]="{'col-5 border-item' :globals.sidebarHover || !globals.toggleSidebar && menuItems.length > 1, 'min-ancho border-item-1' :globals.sidebarHover && menuItems.length < 2, 'min-ancho-1 border-item-1' :!globals.toggleSidebar && menuItems.length < 2}" *ngFor="let item of menuItems" >
+            <div class="menu-list" [ngClass]="{'row' :menuItems.length > 1, 'min-row' :menuItems.length < 2}">
+              <li class="testclass" [ngClass]="{'col-1 border-item' :globals.sidebarHover || !globals.toggleSidebar && menuItems.length > 1, 'min-ancho border-item-1' :globals.sidebarHover && menuItems.length < 2, 'min-ancho-1 border-item-1' :!globals.toggleSidebar && menuItems.length < 2}" *ngFor="let item of menuItems" >
                 <a
                   (click)="goRutePagesHeaderTitle(item.header)"
                   routerLinkActive="active-item"

@@ -109,7 +109,7 @@
                       </div>
                       <div class="card-content collapse show">
                         <div class="card-body">
-                          <!-- <a class="btn btn-primary" id="downloadLink" (click)="exportexcel()">Export tabla a excel</a>
+                          <!-- <a class="btn btn-primary" id="downloadLink" (click)="exportexcel()">Exportar tabla a Excel</a>
                           <a class="btn btn-primary" id="downloadLink" (click)="copyTableToClipboard()">Copiar tabla</a> -->
                           
                           <div class="table table-striped table-bordered selection-deletion-row">
@@ -151,7 +151,7 @@
                               
                                   <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
                                     <div class="row" style="align-items: center;justify-content: space-between;">
-                                      <ul class="list-group list-group-horizontal list-group-flush">
+                                      <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
                                         <li class="list-group-item border-0 pl-0">
                                           <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(1)">
                                             <i class="fa fa-external-link"></i>
@@ -161,7 +161,7 @@
                                         <li class="list-group-item border-0 pl-0">
                                           <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(1)">
                                             <i class="fa fa-external-link"></i>
-                                            Export tabla a Excel
+                                            Exportar tabla a Excel
                                           </button>
                                         </li>
                                         <li class="list-group-item border-0 pl-0">
@@ -246,7 +246,7 @@
                               
                                   <div #collapse2="ngbCollapse" [(ngbCollapse)]="isCollapsed2">
                                     <div class="row" style="align-items: center;justify-content: space-between;">
-                                      <ul class="list-group list-group-horizontal list-group-flush">
+                                      <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
                                         <li class="list-group-item border-0 pl-0">
                                           <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(2)">
                                             <i class="fa fa-external-link"></i>
@@ -256,7 +256,7 @@
                                         <li class="list-group-item border-0 pl-0">
                                           <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(2)">
                                             <i class="fa fa-external-link"></i>
-                                            Export tabla a Excel
+                                            Exportar tabla a Excel
                                           </button>
                                         </li>
                                         <li class="list-group-item border-0 pl-0">
@@ -331,7 +331,7 @@
                                   </div>
                                   <div #collapse3="ngbCollapse" [(ngbCollapse)]="isCollapsed3">
                                     <div class="row" style="align-items: center;justify-content: space-between;">
-                                      <ul class="list-group list-group-horizontal list-group-flush">
+                                      <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
                                         <li class="list-group-item border-0 pl-0">
                                           <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(3)">
                                             <i class="fa fa-external-link"></i>
@@ -341,7 +341,7 @@
                                         <li class="list-group-item border-0 pl-0">
                                           <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(3)">
                                             <i class="fa fa-external-link"></i>
-                                            Export tabla a Excel
+                                            Exportar tabla a Excel
                                           </button>
                                         </li>
                                         <li class="list-group-item border-0 pl-0">
@@ -414,7 +414,7 @@
                       </div>
                       <div class="card-content collapse show">
                         <div class="card-body">
-                          <!-- <a class="btn btn-primary" id="downloadLink" (click)="exportexcel()">Export tabla a excel</a>
+                          <!-- <a class="btn btn-primary" id="downloadLink" (click)="exportexcel()">Exportar tabla a Excel</a>
                           <a class="btn btn-primary" id="downloadLink" (click)="copyTableToClipboard()">Copiar tabla</a> -->
                           
                           <div class="table table-striped table-bordered selection-deletion-row">
@@ -455,7 +455,7 @@
                               
                                   <div #collapse4="ngbCollapse" [(ngbCollapse)]="isCollapsed4">
                                     <div class="row" style="align-items: center;justify-content: space-between;">
-                                      <ul class="list-group list-group-horizontal list-group-flush">
+                                      <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
                                         <li class="list-group-item border-0 pl-0">
                                           <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(4)">
                                             <i class="fa fa-external-link"></i>
@@ -465,7 +465,7 @@
                                         <li class="list-group-item border-0 pl-0">
                                           <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(4)">
                                             <i class="fa fa-external-link"></i>
-                                            Export tabla a Excel
+                                            Exportar tabla a Excel
                                           </button>
                                         </li>
                                         <li class="list-group-item border-0 pl-0">
@@ -495,7 +495,7 @@
                                     class="bootstrap table table-striped"
                                       [columns]="columns3"
                                       [rows]="rows4"
-                                      [columnMode]="ColumnMode.force"
+                                      [columnMode]="ColumnMode.flex"
                                       [headerHeight]="50"
                                       [scrollbarH]="true"
                                       (page)="setPage($event)"
@@ -540,7 +540,7 @@
                               
                                   <div #collapse5="ngbCollapse" [(ngbCollapse)]="isCollapsed5">
                                     <div class="row" style="align-items: center;justify-content: space-between;">
-                                      <ul class="list-group list-group-horizontal list-group-flush">
+                                      <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
                                         <li class="list-group-item border-0 pl-0">
                                           <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(5)">
                                             <i class="fa fa-external-link"></i>
@@ -550,7 +550,7 @@
                                         <li class="list-group-item border-0 pl-0">
                                           <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(5)">
                                             <i class="fa fa-external-link"></i>
-                                            Export tabla a Excel
+                                            Exportar tabla a Excel
                                           </button>
                                         </li>
                                         <li class="list-group-item border-0 pl-0">
@@ -580,7 +580,7 @@
                                     class="bootstrap table table-striped"
                                       [columns]="columns3"
                                       [rows]="rows5"
-                                      [columnMode]="ColumnMode.force"
+                                      [columnMode]="ColumnMode.flex"
                                       [headerHeight]="50"
                                       [scrollbarH]="true"
                                       (page)="setPage($event)"
@@ -625,7 +625,7 @@
                                   </div>
                                   <div #collapse6="ngbCollapse" [(ngbCollapse)]="isCollapsed6">
                                     <div class="row" style="align-items: center;justify-content: space-between;">
-                                      <ul class="list-group list-group-horizontal list-group-flush">
+                                      <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
                                         <li class="list-group-item border-0 pl-0">
                                           <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(6)">
                                             <i class="fa fa-external-link"></i>
@@ -635,7 +635,7 @@
                                         <li class="list-group-item border-0 pl-0">
                                           <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(6)">
                                             <i class="fa fa-external-link"></i>
-                                            Export tabla a Excel
+                                            Exportar tabla a Excel
                                           </button>
                                         </li>
                                         <li class="list-group-item border-0 pl-0">
@@ -665,7 +665,7 @@
                                     class="bootstrap table table-striped"
                                       [columns]="columns4"
                                       [rows]="rows6"
-                                      [columnMode]="ColumnMode.force"
+                                      [columnMode]="ColumnMode.flex"
                                       [headerHeight]="50"
                                       [scrollbarH]="true"
                                       (page)="setPage($event)"

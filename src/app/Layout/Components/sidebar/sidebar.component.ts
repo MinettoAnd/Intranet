@@ -40,11 +40,14 @@ menuI;
   activeId = 'dashboardsMenu';
 
   toggleSidebar() {
-    this.globals.toggleSidebar = !this.globals.toggleSidebar;
+    // this.globals.toggleSidebar = !this.globals.toggleSidebar;
+    console.log(44,this.globals.toggleSidebar)
+    this.globals.toggleSidebar = true;
   }
 
   sidebarHover() {
     this.globals.sidebarHover = !this.globals.sidebarHover;
+    // this.globals.sidebarHover = false;
   }
 
   ngOnInit() {
@@ -52,7 +55,9 @@ menuI;
     // this.setDefaultTabSelected();
     setTimeout(() => {
       this.innerWidth = window.innerWidth;
-      if (this.innerWidth < 1200) {
+      if (this.innerWidth > 1200) {
+        this.globals.toggleSidebar = true;
+      }else{
         this.globals.toggleSidebar = true;
       }
     });
@@ -66,7 +71,7 @@ menuI;
     }
   }
   getMenu(){
-    this.menuI = [
+    this.menuItems = [
       {
           "title": "ADMIN",
           "menu": "adminMenu",
@@ -103,6 +108,42 @@ menuI;
                   }
               ]
       },
+      {
+        "title": "ADMIN",
+        "menu": "adminMenu",
+        "name_model": "Facturacióny boleas",
+        "icon": "vsm-icon pe-7s-id",
+        "rides": [
+                {
+                    "name": "Dashboard",
+                    "icon": "fa fa-user",
+                    "header": "",
+                    "url": "admin/users",
+                    "isChecked": true
+                },
+                {
+                    "name": "Producción",
+                    "icon": "fa fa-users",
+                    "header": "",
+                    "url": "admin/roles",
+                    "isChecked": true
+                },
+                {
+                  "name": "Expedientes",
+                  "icon": "fa fa-users",
+                  "header": "",
+                  "url": "admin/roles",
+                  "isChecked": true
+                },
+                {
+                  "name": "Consulta de Tarifario",
+                  "icon": "fa fa-users",
+                  "header": "",
+                  "url": "admin/roles",
+                  "isChecked": true
+                }
+            ]
+    },
       {
           "title": "RECURSOS HUMANOS\r\n",
           "menu": "recursosMenu",
@@ -145,9 +186,84 @@ menuI;
                   "url": "claims/iafas",
                   "isChecked": true
               },
+              {
+                "name": "Csalud-Iafas",
+                "icon": "fa fa-book",
+                "header": "Producción",
+                "url": "claims/iafas",
+                "isChecked": true
+               },
+              {
+                "name": "Csalud-Iafas",
+                "icon": "fa fa-book",
+                "header": "Producción",
+                "url": "claims/iafas",
+                "isChecked": true
+              },
+              {
+                "name": "Csalud-Iafas",
+                "icon": "fa fa-book",
+                "header": "Producción",
+                "url": "claims/iafas",
+                "isChecked": true
+              },
               
           ]
       },
+      {
+        "title": "GESTIÓN DE 3RECLAMOS\r\n",
+        "menu": "claimsMenu",
+        "name_model": "Terapia Física",
+        "icon": "vsm-icon pe-7s-portfolio",
+        "rides": [
+            {
+                "name": "Csalud-Iafas",
+                "icon": "fa fa-book",
+                "header": "Producción",
+                "url": "claims/iafas",
+                "isChecked": true
+            },
+            
+        ]
+      },
+      {
+        "title": "GESTIÓN DE RECLAMOS\r\n",
+        "menu": "claimsMenu",
+        "name_model": "Terapia Física",
+        "icon": "vsm-icon pe-7s-portfolio",
+        "rides": [
+            {
+                "name": "Csalud-Iafas",
+                "icon": "fa fa-book",
+                "header": "Producción",
+                "url": "claims/iafas",
+                "isChecked": true
+            },
+            {
+              "name": "Csalud-Iafas",
+              "icon": "fa fa-book",
+              "header": "Producción",
+              "url": "claims/iafas",
+              "isChecked": true
+             },
+            {
+              "name": "Csalud-Iafas",
+              "icon": "fa fa-book",
+              "header": "Producción",
+              "url": "claims/iafas",
+              "isChecked": true
+            },
+            {
+              "name": "Csalud-Iafas",
+              "icon": "fa fa-book",
+              "header": "Producción",
+              "url": "claims/iafas",
+              "isChecked": true
+            },
+            
+            
+        ]
+       },
       {
           "title": "REPORTES",
           "menu": "reportMenu",
@@ -365,10 +481,10 @@ menuI;
   onResize(event) {
     this.newInnerWidth = event.target.innerWidth;
 
-    if (this.newInnerWidth < 1200) {
+    if (this.newInnerWidth > 1200) {
       this.globals.toggleSidebar = true;
     } else {
-      this.globals.toggleSidebar = false;
+      this.globals.toggleSidebar = true;
     }
 
   }
@@ -377,7 +493,7 @@ menuI;
   }
   getModelsAdmin() {
     this.apiService.getMenuSidebarAdminService().then((response: any) => {
-      this.menuItems = response.data.length > 0 ? response.data : [];
+       this.menuItems = response.data.length > 0 ? response.data : [];
     });
 
   }

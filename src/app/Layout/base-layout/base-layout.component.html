@@ -10,7 +10,11 @@
 >
   <app-header></app-header>
   <app-sidebar></app-sidebar>
+  
   <div class="app-main__outer">
+    <!-- <ng-container *ngIf="layout === 'horizontal' && isMobile === false">
+      <app-horizontalnav></app-horizontalnav>
+    </ng-container> -->
     <div class="app-main__inner">
       <!-- <div [@architectUIAnimation]="o.isActivated ? o.activatedRoute : ''">
         <router-outlet #o="outlet"></router-outlet>

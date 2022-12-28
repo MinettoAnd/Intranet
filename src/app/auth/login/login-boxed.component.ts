@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { SharedService } from 'src/app/Layout/shared.service';
+import { SharedService } from 'src/app/layout/shared.service';
 import Swal from 'sweetalert2';
 import { AuthService } from '../auth.service';
 

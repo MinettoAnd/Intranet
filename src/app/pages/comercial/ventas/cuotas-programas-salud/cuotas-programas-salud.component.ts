@@ -21,7 +21,7 @@ import ResizeObserver from 'resize-observer-polyfill';
 @Component({
   selector: 'app-cuotas-programas-salud',
   templateUrl: './cuotas-programas-salud.component.html',
-  styleUrls: ['./cuotas-programas-salud.component.sass']
+  styleUrls: ['./cuotas-programas-salud.component.scss']
 })
 export class CuotasProgramasSaludComponent implements OnInit {
   private baseChart: ElementRef;
@@ -60,17 +60,12 @@ export class CuotasProgramasSaludComponent implements OnInit {
       
       // initially setter gets called with undefined
       this.baseChart = content;
-      this.getBarChart(this.barChartLabels, this.barChartData, this.barChartData2, 'chart-1', 'MENSUAL-INGRESO SIN IGV-TOTAL CUOTAS', 'MENSUAL-INGRESO SIN IGV-TOTAL RECAUDADO', 'bar');
-      this.getBarChart(this.barChartLabels, this.barChartData3, this.barChartData4, 'chart-2', 'MENSUAL-INGRESO CON IGV-TOTAL CUOTAS', 'MENSUAL-INGRESO CON IGV-TOTAL RECAUDADO', 'bar');
+      this.getBarChart(this.barChartLabels, this.barChartData, this.barChartData2, 'chart-1', 'MENSUAL-INGRESO SIN IGV - TOTAL CUOTAS', 'MENSUAL-INGRESO SIN IGV - TOTAL RECAUDADO', 'bar');
+      this.getBarChart(this.barChartLabels, this.barChartData3, this.barChartData4, 'chart-2', 'MENSUAL-INGRESO CON IGV - TOTAL CUOTAS', 'MENSUAL-INGRESO CON IGV - TOTAL RECAUDADO', 'bar');
       this.getBarChart(this.barChartLabels2, this.barChartData5, this.barChartData6, 'chart-3', 'MENSUAL-NÚMERO DE CONTRATOS PAGADOS-TOTAL CUOTAS', 'MENSUAL-NÚMERO DE CONTRATOS PAGADOS-TOTAL RECAUDADO', 'bar');
-      this.getBarChart(this.barChartLabels3, this.barChartData7, this.barChartData8, 'chart-4', 'MENSUAL-NÚMERO DE CONTRATOS PAGADOS-TOTAL CUOTAS', 'MENSUAL-NÚMERO DE CONTRATOS PAGADOS-TOTAL RECAUDADO', 'bar');
-      this.getBarChart(this.barChartLabels3, this.barChartData9, this.barChartData10, 'chart-5', 'MENSUAL-NÚMERO DE CONTRATOS PAGADOS-TOTAL CUOTAS', 'MENSUAL-NÚMERO DE CONTRATOS PAGADOS-TOTAL RECAUDADO', 'bar');
-      this.getBarChart(this.barChartLabels4, this.barChartData11, this.barChartData12, 'chart-6', 'MENSUAL-NÚMERO DE CONTRATOS PAGADOS-TOTAL CUOTAS', 'MENSUAL-NÚMERO DE CONTRATOS PAGADOS-TOTAL RECAUDADO', 'bar');
-      // this.getBarChart(this.pieChartLabels2, this.pieChartData2, 'chart-3', 'Tipo de paciente', this.listencuesta, 'bar');
-      // this.getBarChart(this.pieChartLabels22, this.pieChartData22, 'chart-4', 'Plan de salud', this.sumtarjeta, 'pie');
-      // this.getBarChart(this.pieChartLabels23, this.pieChartData23, 'chart-5', 'Convenio', this.sumconvenio, 'bar');
-      // this.getBarChart(this.pieChartLabels24, this.pieChartData24, 'chart-6', 'Compañía Seguro', this.companyTotals, 'doughnut');
-      // this.getBarChart(this.pieChartLabels3, this.pieChartData3, 'chart-8', 'Escala de Recomendación', this.recomendacionTotal, 'doughnut');
+      this.getBarChart(this.barChartLabels3, this.barChartData7, this.barChartData8, 'chart-4', 'ANUAL-INGRESO SIN IGV - TOTAL CUOTAS', 'ANUAL-INGRESO SIN IGV - TOTAL RECAUDADO', 'bar');
+      this.getBarChart(this.barChartLabels3, this.barChartData9, this.barChartData10, 'chart-5', 'ANUAL-INGRESO CON IGV - TOTAL CUOTAS', 'ANUAL-INGRESO CON IGV - TOTAL RECAUDADO', 'bar');
+      this.getBarChart(this.barChartLabels4, this.barChartData11, this.barChartData12, 'chart-6', 'ANUAL-NÚMERO DE CONTRATOS PAGADOS - TOTAL CUOTAS', 'ANUAL-NÚMERO DE CONTRATOS PAGADOS - TOTAL RECAUDADO', 'bar');
     }
   }
   public config: PerfectScrollbarConfigInterface = { wheelPropagation: true };
@@ -603,7 +598,10 @@ console.log(this.parameters);
           this.columns3 = this.data3.cabeceras;
           this.columns3.map(item => {
             if (item.prop !== 'item') {
-              this.barChartLabels3.push(item.name);
+              if (item.prop !== 'PER13'){
+                this.barChartLabels3.push(item.name);
+              }
+              
             } 
           });
           this.rows4 = this.data3.query_sin_igv;
@@ -698,7 +696,7 @@ console.log(this.parameters);
               this.barChartData7.push(typeof item.PER10 === 'number' ? item.PER10.toFixed(2) : Number(item.PER10).toFixed(2));
               this.barChartData7.push(typeof item.PER11 === 'number' ? item.PER11.toFixed(2) : Number(item.PER11).toFixed(2));
               this.barChartData7.push(typeof item.PER12 === 'number' ? item.PER12.toFixed(2) : Number(item.PER12).toFixed(2));
-              this.barChartData7.push(typeof item.PER13 === 'number' ? item.PER13.toFixed(2) : Number(item.PER13).toFixed(2));
+              // this.barChartData7.push(typeof item.PER13 === 'number' ? item.PER13.toFixed(2) : Number(item.PER13).toFixed(2));
 
               // this.totales = item.PER1 + item.PER2 + item.PER3 + item.PER1
             }else if (item.item.trim() === 'TOTAL RECAUDADO') {
@@ -731,7 +729,7 @@ console.log(this.parameters);
               this.barChartData8.push(typeof item.PER10 === 'number' ? item.PER10.toFixed(2) : Number(item.PER10).toFixed(2));
               this.barChartData8.push(typeof item.PER11 === 'number' ? item.PER11.toFixed(2) : Number(item.PER11).toFixed(2));
               this.barChartData8.push(typeof item.PER12 === 'number' ? item.PER12.toFixed(2) : Number(item.PER12).toFixed(2));
-              this.barChartData8.push(typeof item.PER13 === 'number' ? item.PER13.toFixed(2) : Number(item.PER13).toFixed(2));
+              // this.barChartData8.push(typeof item.PER13 === 'number' ? item.PER13.toFixed(2) : Number(item.PER13).toFixed(2));
 
               // this.totales = item.PER1 + item.PER2 + item.PER3 + item.PER1
             } 
@@ -756,7 +754,7 @@ console.log(this.parameters);
               this.barChartData9.push(typeof item.PER10 === 'number' ? item.PER10.toFixed(2) : Number(item.PER10).toFixed(2));
               this.barChartData9.push(typeof item.PER11 === 'number' ? item.PER11.toFixed(2) : Number(item.PER11).toFixed(2));
               this.barChartData9.push(typeof item.PER12 === 'number' ? item.PER12.toFixed(2) : Number(item.PER12).toFixed(2));
-              this.barChartData9.push(typeof item.PER13 === 'number' ? item.PER13.toFixed(2) : Number(item.PER13).toFixed(2));
+              // this.barChartData9.push(typeof item.PER13 === 'number' ? item.PER13.toFixed(2) : Number(item.PER13).toFixed(2));
 
               // this.totales = item.PER1 + item.PER2 + item.PER3 + item.PER1
             }else if (item.item.trim() === 'TOTAL RECAUDADO') {
@@ -775,7 +773,7 @@ console.log(this.parameters);
               this.barChartData10.push(typeof item.PER10 === 'number' ? item.PER10.toFixed(2) : Number(item.PER10).toFixed(2));
               this.barChartData10.push(typeof item.PER11 === 'number' ? item.PER11.toFixed(2) : Number(item.PER11).toFixed(2));
               this.barChartData10.push(typeof item.PER12 === 'number' ? item.PER12.toFixed(2) : Number(item.PER12).toFixed(2));
-              this.barChartData10.push(typeof item.PER13 === 'number' ? item.PER13.toFixed(2) : Number(item.PER13).toFixed(2));
+              // this.barChartData10.push(typeof item.PER13 === 'number' ? item.PER13.toFixed(2) : Number(item.PER13).toFixed(2));
 
 
               // this.totales = item.PER1 + item.PER2 + item.PER3 + item.PER1
@@ -807,11 +805,13 @@ console.log(this.parameters);
           this.columns4 = this.data4.cabeceras;
           this.columns4.map(item => {
             if (item.prop !== 'item') {
-              this.barChartLabels4.push(item.name);
+              if (item.prop !== 'PER13'){
+                this.barChartLabels4.push(item.name);
+              }
             } 
           });
           this.rows6 = this.data4.data;
-          // console.log(692,this.rows6,this.columns4);
+          console.log(814,this.rows6,this.columns4);
           this.rows6.map(item => {
             if(item.item.trim() === 'CUOTAS FAMILIAR INTERNO'){
               
@@ -872,7 +872,7 @@ console.log(this.parameters);
               this.barChartData11.push(typeof item.PER10 === 'number' ? item.PER10.toFixed(2) : Number(item.PER10).toFixed(2));
               this.barChartData11.push(typeof item.PER11 === 'number' ? item.PER11.toFixed(2) : Number(item.PER11).toFixed(2));
               this.barChartData11.push(typeof item.PER12 === 'number' ? item.PER12.toFixed(2) : Number(item.PER12).toFixed(2));
-              this.barChartData11.push(typeof item.PER13 === 'number' ? item.PER13.toFixed(2) : Number(item.PER13).toFixed(2));
+              // this.barChartData11.push(typeof item.PER13 === 'number' ? item.PER13.toFixed(2) : Number(item.PER13).toFixed(2));
               // this.totales = item.PER1 + item.PER2 + item.PER3 + item.PER1
             }else if (item.item.trim() === 'TOTAL RECAUDADO') {
               if(Number(item.PER1) === 0){
@@ -904,7 +904,7 @@ console.log(this.parameters);
               this.barChartData12.push(typeof item.PER10 === 'number' ? item.PER10.toFixed(2) : Number(item.PER10).toFixed(2));
               this.barChartData12.push(typeof item.PER11 === 'number' ? item.PER11.toFixed(2) : Number(item.PER11).toFixed(2));
               this.barChartData12.push(typeof item.PER12 === 'number' ? item.PER12.toFixed(2) : Number(item.PER12).toFixed(2));
-              this.barChartData12.push(typeof item.PER13 === 'number' ? item.PER13.toFixed(2) : Number(item.PER13).toFixed(2));
+              // this.barChartData12.push(typeof item.PER13 === 'number' ? item.PER13.toFixed(2) : Number(item.PER13).toFixed(2));
 
               // this.totales = item.PER1 + item.PER2 + item.PER3 + item.PER1
             } 
@@ -927,16 +927,28 @@ console.log(this.parameters);
       this.exportService.exportToClipboard(this.rows2, this.columns);
     }else if (numberTabla === 3){
       this.exportService.exportToClipboard(this.rows3, this.columns);
+    }else if (numberTabla === 4){
+      this.exportService.exportToClipboard(this.rows4, this.columns2);
+    }else if (numberTabla === 5){
+      this.exportService.exportToClipboard(this.rows5, this.columns2);
+    }else if (numberTabla === 6){
+      this.exportService.exportToClipboard(this.rows6, this.columns2);
     }
   }
 
   exportToExcel(numberTabla): void {
     if(numberTabla === 1){
-      this.exportService.exportTableElmToExcel(this.rows, 'INGRESOS POR CUOTAS-INGRESO SIN IGV');
+      this.exportService.exportTableElmToExcel(this.rows, 'MENSUAL - INGRESOS POR CUOTAS-INGRESO SIN IGV');
     }else if (numberTabla === 2){
-      this.exportService.exportTableElmToExcel(this.rows2, 'INGRESOS POR CUOTAS-INGRESO SIN IGV');
+      this.exportService.exportTableElmToExcel(this.rows2, 'MENSUAL - INGRESOS POR CUOTAS-INGRESO SIN IGV');
     }else if (numberTabla === 3){
-      this.exportService.exportTableElmToExcel(this.rows3, 'INGRESOS POR CUOTAS-NÚMERO DE CONTRATOS PAGADOS');
+      this.exportService.exportTableElmToExcel(this.rows3, 'MENSUAL - INGRESOS POR CUOTAS-NÚMERO DE CONTRATOS PAGADOS');
+    }else if (numberTabla === 4){
+      this.exportService.exportTableElmToExcel(this.rows4, 'ANUAL - INGRESOS POR CUOTAS-INGRESO SIN IGV');
+    }else if (numberTabla === 5){
+      this.exportService.exportTableElmToExcel(this.rows5, 'ANUAL - INGRESOS POR CUOTAS-INGRESO SIN IGV');
+    }else if (numberTabla === 6){
+      this.exportService.exportTableElmToExcel(this.rows6, 'ANUAL - INGRESOS POR CUOTAS-NÚMERO DE CONTRATOS PAGADOS');
     }
   }
 
