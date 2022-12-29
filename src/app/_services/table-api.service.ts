@@ -71,5 +71,26 @@ export class TableApiService {
     this.loadTableApiDataURL = `${environment.api_url}pagoCuotasContratosProgramasSalud`;
     return this.http.post(this.loadTableApiDataURL, data);
   }
+  // Comercial - Programas de Salud - Listados
+  getMorososDetalle(data): Observable<any> {
+    this.loadTableApiDataURL = `${environment.api_url}getMorososDetalle`;
+    return this.http.post(this.loadTableApiDataURL, data);
+  }
+  getVigentesDetalle(data): Observable<any> {
+    this.loadTableApiDataURL = `${environment.api_url}getVigentesDetalle`;
+    return this.http.post(this.loadTableApiDataURL, data);
+  }
+  getAfiliadosVigentesDetalle(data): Observable<any> {
+    this.loadTableApiDataURL = `${environment.api_url}getAfiliadosVigentesDetalle`;
+    return this.http.post(this.loadTableApiDataURL, data);
+  }
+  getMadreNinoDetalle(data): Observable<any> {
+    this.loadTableApiDataURL = `${environment.api_url}getMadreNinoDetalle`;
+    return this.http.post(this.loadTableApiDataURL, data);
+  }
+  getMadreNinoMorososDetalle(data): Observable<any> {
+    this.loadTableApiDataURL = `${environment.api_url}getMadreNinoMorososDetalle`;
+    return this.http.post(this.loadTableApiDataURL, data);
+  }
 }
 

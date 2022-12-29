@@ -1,0 +1,209 @@
+<div class="app-content content">
+    <div class="content-wrapper">
+      <div class="content-header row mb-1">
+        <app-breadcrumb class="col-12" [breadcrumb]="breadcrumb"></app-breadcrumb>
+      </div>
+      <div class="content-body">
+        <section id="selection-n-deletion">
+          <div class="row">
+  
+            <div class="col-12">
+              <form [formGroup]="filtroForm">
+                <div class="row" style="margin-bottom: -0.5rem;">
+                  <div class="form-group col-sm-12 col-md-4 col-lg-3">
+                    <div class="input-group input-group-sm">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">Fecha Inicio</span>
+                      </div>
+                      <input
+                        type="date"
+                        formControlName="fecha"
+                        class="form-control"
+                      />
+                    </div>
+                  </div>
+      
+                  <!-- <div class="form-group col-sm-12 col-md-4 col-lg-3">
+                    <div class="input-group input-group-sm">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">Fecha Fin</span>
+                      </div>
+                      <input
+                        type="date"
+                        formControlName="f_fin"
+                        class="form-control"
+                      />
+                    </div>
+                  </div> -->
+                  <div class="form-group col-sm-12 col-md-4 col-lg-3">
+                    <div class="input-group input-group-sm">
+                      <div class="input-group-append">
+                        <span class="input-group-text">
+                            Meses de Morosidad</span>
+                      </div>
+                      <select
+                        class="form-control form-select"
+                        formControlName="meses"
+                        id="inputGroupSelect04"
+                      >	
+                        <option value="00" selected="">Todos</option>
+                        <option value="1">01 Mes</option>
+                        <option value="2">02 Meses</option>
+                        <option value="3">03 Meses</option>
+                        <option value="4">04 Meses</option>
+                        <option value="5">05 Meses</option>
+                        <option value="2M">02 Meses a mas</option>
+                        <option value="3M">03 Meses a mas</option>
+                        <option value="4M">04 Meses a mas</option>
+                        <option value="5M">05 Meses a mas</option>	
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group col-sm-12 col-md-4 col-lg-3">
+                    <div class="input-group input-group-sm">
+                      <div class="input-group-append">
+                        <span class="input-group-text">Tipos de Paciente</span>
+                      </div>
+                      <select
+                        class="form-control form-select"
+                        formControlName="tipo_paciente"
+                        id="inputGroupSelect05"
+                      >
+                      <optgroup>
+                        <option value="0">Todo tipo de Paciente</option>
+                        <option value="46">Campaña</option>
+                        <option value="3">Institucional</option>
+                        <option value="19">Plan de Salud</option>
+                        <option value="21">Programa Madre Niño</option>
+                        <option value="22">Sante Card</option>
+                        <optgroup label="____________________________________">
+                      </optgroup>  
+                      <optgroup>
+                        <option value="14">SCTR</option>
+                        <option value="13">Soat</option>
+                        <option value="6">EPS</option>
+                        <option value="5">Seguros</option>
+                        <option value="23">Convenios - Contado</option>
+                        <option value="4">Convenios - Crédito</option>
+                        <option value=" ">Grupo Empresa - Credito</option>
+                        <optgroup label="____________________________________">
+                      </optgroup>
+                      <optgroup>
+                        <option value="24">Tarjeta Clásica</option>
+                        <option value="25">Tarjeta Dorada</option>
+                        <option value="26">Tarjeta Diamante</option>
+                        <option value="4,5,6,13,14">Grupo Tarjetas de Salud</option>
+                      </optgroup>
+  
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="input-group">
+                      <div class="input-group-btn">
+                        <button (click)="filter()" class="btn btn-sm btn-primary">
+                          <i class="fa fa-search"></i> Filtrar
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+              <div class="card">
+                <div class="card-header">
+                  <h4 class="card-title">{{title}}</h4>
+                  <p>{{message}}</p>
+                </div>
+                <div class="card-content collapse show">
+                  <div class="card-body">
+                    <!-- <a class="btn btn-primary" id="downloadLink" (click)="exportexcel()">Exportar tabla a Excel</a>
+                    <a class="btn btn-primary" id="downloadLink" (click)="copyTableToClipboard()">Copiar tabla</a> -->
+                    
+                    <div class="table table-striped table-bordered selection-deletion-row">
+                      <!-- <div class="row" style='margin-left:0px;'>
+                        <div class="col-xs-6">
+                          <select class="form-control form-select" (change)="onLimitChange($event.target.value)">
+                            <option
+                              *ngFor="let option of pageLimitOptions"
+                              [value]="option.value"
+      
+                            >
+                              {{ option.value }} Registros
+                            </option>
+                            <option value="0" *ngIf="this.page.totalElements">Todos los Registros</option>
+                          </select>
+                        </div>
+                      </div> -->
+                        <div class="row" style="align-items: center;justify-content: space-between;">
+                          <ul class="list-group list-group-horizontal list-group-flush">
+                            <li class="list-group-item border-0 pl-0">
+                              <select class="form-control form-select" (change)="onLimitChange($event.target.value)">
+                                <option
+                                  *ngFor="let option of pageLimitOptions"
+                                  [value]="option.value"
+          
+                                >
+                                  {{ option.value }} Registros
+                                </option>
+                                <option value="0" *ngIf="this.page.totalElements">Todos los Registros</option>
+                              </select>
+                            </li>
+                            <li class="list-group-item border-0 pl-0">
+                              <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard()">
+                                <i class="fa fa-external-link"></i>
+                                Copiar tabla
+                              </button>
+                            </li>
+                            <li class="list-group-item border-0 pl-0">
+                              <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel()">
+                                <i class="fa fa-external-link"></i>
+                                Exportar tabla a Excel
+                              </button>
+                            </li>
+                          </ul>
+                          <div class="" style="display:flex;margin:15px;align-items: center;">
+                            <span>Buscar</span>&nbsp;&nbsp;
+                              <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter($event)'>
+                          </div>
+                        
+                      </div>
+                      
+                      
+                      <ngx-datatable #myTable
+                      class="bootstrap table table-striped"
+                      id="datatablele"
+                        [columns]="columns"
+                        [rows]="rows"
+                        [columnMode]="initialSize > 1250 ? ColumnMode.flex : ColumnMode.force"
+                        [headerHeight]="$any('auto')"
+                        [footerHeight]="50"
+                        [rowHeight]="$any('auto')"
+                        [scrollbarH]="true"
+                        [limit]="page.size"
+                        >
+                        <ngx-datatable-column  [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                            let-row="row">
+                            <span [title]="value">{{value}}</span>
+                            <!-- <span title="Double click to edit" (dblclick)="editing[rowIndex + '-{{column.name}}'] = true"
+                              *ngIf="!editing[rowIndex + '-{{column.name}}']">
+                              {{value}}
+                            </span>
+                            <input autofocus (blur)="updateValue($event, '{{column.name}}', rowIndex)"
+                              *ngIf="editing[rowIndex+ '-{{column.name}}']" type="text" [value]="value" /> -->
+                          </ng-template>
+                        </ngx-datatable-column>
+                      </ngx-datatable>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+  
+  <!-- ////////////////////////////////////////////////////////////////////////////-->
+  

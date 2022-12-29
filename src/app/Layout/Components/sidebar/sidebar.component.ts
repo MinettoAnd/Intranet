@@ -51,7 +51,7 @@ menuI;
   }
 
   ngOnInit() {
-    this.getMenu();
+    // this.getMenu();
     // this.setDefaultTabSelected();
     setTimeout(() => {
       this.innerWidth = window.innerWidth;
@@ -493,6 +493,7 @@ menuI;
   }
   getModelsAdmin() {
     this.apiService.getMenuSidebarAdminService().then((response: any) => {
+      console.log(496, response)
        this.menuItems = response.data.length > 0 ? response.data : [];
     });
 
