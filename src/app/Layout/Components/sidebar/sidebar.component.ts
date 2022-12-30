@@ -5,7 +5,8 @@ import { Observable, Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SharedService } from '../../shared.service';
 import Swal from 'sweetalert2';
-
+import { environment } from 'src/environments/environment';
+import { map } from 'rxjs/operators';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -29,6 +30,7 @@ tabChild = [];
 laptop;
 menuI;
   subscription: Subscription;
+  srcImagen;
   constructor(public globals: ThemeOptions, private activatedRoute: ActivatedRoute, private apiService: SharedService, private router: Router) {
 
   }
@@ -69,6 +71,11 @@ menuI;
     } else if (localStorage.getItem('access') === '0') {
       this.getModelsUsers();
     }
+  }    
+  iniDatos(res) {
+    if(res.data.url){
+      this.srcImagen = `${environment.apiImage}${res.data.icon}`;
+    };
   }
   getMenu(){
     this.menuItems = [
@@ -495,6 +502,16 @@ menuI;
     this.apiService.getMenuSidebarAdminService().then((response: any) => {
       console.log(496, response)
        this.menuItems = response.data.length > 0 ? response.data : [];
+       this.menuItems.map(item =>{
+          if(item.icon){
+            item.icon = `${environment.apiImage}${item.icon}`;
+            
+          }else{
+            item.icon = `${environment.apiImage}resources/images/menu/default.svg`;
+          }
+          return item;
+       })
+       console.log(512, this.menuItems);
     });
 
   }

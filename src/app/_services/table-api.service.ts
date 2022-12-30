@@ -76,21 +76,21 @@ export class TableApiService {
     this.loadTableApiDataURL = `${environment.api_url}getMorososDetalle`;
     return this.http.post(this.loadTableApiDataURL, data);
   }
-  getVigentesDetalle(data): Observable<any> {
+  getVigentesDetalle(): Observable<any> {
     this.loadTableApiDataURL = `${environment.api_url}getVigentesDetalle`;
-    return this.http.post(this.loadTableApiDataURL, data);
+    return this.http.get(this.loadTableApiDataURL);
   }
   getAfiliadosVigentesDetalle(data): Observable<any> {
     this.loadTableApiDataURL = `${environment.api_url}getAfiliadosVigentesDetalle`;
     return this.http.post(this.loadTableApiDataURL, data);
   }
-  getMadreNinoDetalle(data): Observable<any> {
+  getMadreNinoDetalle(): Observable<any> {
     this.loadTableApiDataURL = `${environment.api_url}getMadreNinoDetalle`;
-    return this.http.post(this.loadTableApiDataURL, data);
+    return this.http.get(this.loadTableApiDataURL);
   }
-  getMadreNinoMorososDetalle(data): Observable<any> {
+  getMadreNinoMorososDetalle(): Observable<any> {
     this.loadTableApiDataURL = `${environment.api_url}getMadreNinoMorososDetalle`;
-    return this.http.post(this.loadTableApiDataURL, data);
+    return this.http.get(this.loadTableApiDataURL);
   }
 }
 

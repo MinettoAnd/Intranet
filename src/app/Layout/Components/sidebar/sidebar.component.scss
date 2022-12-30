@@ -60,6 +60,14 @@
     width:24px!important;
     height:24px!important;
   }
+  img.svg-icon-xs-small{
+    width:20px!important;
+    height:20px!important;
+    filter: invert(100%);
+    // filter:grayscale(0%);
+    // filter: invert(100%) sepia(21%) saturate(935%) hue-rotate(123deg) brightness(85%) contrast(100%);
+
+  }
   .languagepicker li:hover {
   // background-color: #afafaf;
  

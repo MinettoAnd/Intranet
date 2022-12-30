@@ -59,7 +59,7 @@
                       </select>
                     </div>
                   </div>
-                  <div class="form-group col-sm-12 col-md-4 col-lg-3">
+                  <!-- <div class="form-group col-sm-12 col-md-4 col-lg-3">
                     <div class="input-group input-group-sm">
                       <div class="input-group-append">
                         <span class="input-group-text">Tipos de Paciente</span>
@@ -97,8 +97,8 @@
   
                       </select>
                     </div>
-                  </div>
-                  <div class="col-md-2">
+                  </div> -->
+                  <div class="form-group col-sm-12 col-md-4 col-lg-2">
                     <div class="input-group">
                       <div class="input-group-btn">
                         <button (click)="filter()" class="btn btn-sm btn-primary">
@@ -176,7 +176,7 @@
                         [rows]="rows"
                         [columnMode]="initialSize > 1250 ? ColumnMode.flex : ColumnMode.force"
                         [headerHeight]="$any('auto')"
-                        [footerHeight]="50"
+                        [footerHeight]="65"
                         [rowHeight]="$any('auto')"
                         [scrollbarH]="true"
                         [limit]="page.size"

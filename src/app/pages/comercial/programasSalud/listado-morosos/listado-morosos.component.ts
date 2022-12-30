@@ -137,7 +137,7 @@ export class ListadoMorososComponent implements OnInit {
   }
 
   private changePageLimit(limit: any): void {
-    
+    this.loading();
     if (limit === '0'){
       
       this.page.size = this.page.totalElements;
@@ -145,6 +145,9 @@ export class ListadoMorososComponent implements OnInit {
       return
     }
     this.page.size = parseInt(limit, 10);
+    setTimeout(() => {
+      Swal.close();
+    }, 1000)
   }
   setPage(pageInfo) {
     console.log(pageInfo);
