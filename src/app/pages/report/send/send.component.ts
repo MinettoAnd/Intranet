@@ -152,7 +152,7 @@ export class SendComponent implements OnInit {
       this.subject = "Producción Medica Asistencial - Sede Chorrillos"
     }
     if (fromValue.sede === "0004") {
-      this.correo_director = "jinfante@clubdelasalud.pe";
+      this.correo_director = "msuarez@clubdelasalud.pe";
       this.name_sede = "SURCO";
       this.id_sede = "0004";
       this.subject = "Producción Medica Asistencial - Sede Surco"
