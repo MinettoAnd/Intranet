@@ -7,9 +7,14 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { CuotasProgramasSaludComponent } from './ventas/cuotas-programas-salud/cuotas-programas-salud.component';
+import { ListadoMorososComponent } from './programasSalud/listado-morosos/listado-morosos.component';
+import { ListadoContratosVigentesComponent } from './programasSalud/listado-contratos-vigentes/listado-contratos-vigentes.component';
+import { ListadoMadreNinoComponent } from './programasSalud/listado-madre-nino/listado-madre-nino.component';
+import { ListadoMadreNinoMorososComponent } from './programasSalud/listado-madre-nino-morosos/listado-madre-nino-morosos.component';
+import { ListadoAfiliadosComponent } from './programasSalud/listado-afiliados/listado-afiliados.component';
 
 @NgModule({
-  declarations: [CuotasProgramasSaludComponent],
+  declarations: [CuotasProgramasSaludComponent, ListadoMorososComponent, ListadoContratosVigentesComponent, ListadoMadreNinoComponent, ListadoMadreNinoMorososComponent, ListadoAfiliadosComponent],
   imports: [
     CommonModule,
     NgxDatatableModule,
@@ -20,6 +25,26 @@ import { CuotasProgramasSaludComponent } from './ventas/cuotas-programas-salud/c
       {
         path: 'cuotasProgramasSalud',
         component: CuotasProgramasSaludComponent
+      },
+      {
+        path: 'listadoMorosos',
+        component: ListadoMorososComponent
+      },
+      {
+        path: 'listadoContratosVigentes',
+        component: ListadoContratosVigentesComponent
+      },
+      {
+        path: 'listadoMadreNino',
+        component: ListadoMadreNinoComponent
+      },
+      {
+        path: 'listadoMadreNinoMorosos',
+        component: ListadoMadreNinoMorososComponent
+      },
+      {
+        path: 'listadoAfiliados',
+        component: ListadoAfiliadosComponent
       }
     ])
   ],

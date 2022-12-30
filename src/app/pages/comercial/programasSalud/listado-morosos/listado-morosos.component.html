@@ -17,13 +17,13 @@
                       </div>
                       <input
                         type="date"
-                        formControlName="f_inicio"
+                        formControlName="fecha"
                         class="form-control"
                       />
                     </div>
                   </div>
       
-                  <div class="form-group col-sm-12 col-md-4 col-lg-3">
+                  <!-- <div class="form-group col-sm-12 col-md-4 col-lg-3">
                     <div class="input-group input-group-sm">
                       <div class="input-group-prepend">
                         <span class="input-group-text">Fecha Fin</span>
@@ -34,32 +34,39 @@
                         class="form-control"
                       />
                     </div>
-                  </div>
+                  </div> -->
                   <div class="form-group col-sm-12 col-md-4 col-lg-3">
                     <div class="input-group input-group-sm">
                       <div class="input-group-append">
-                        <span class="input-group-text">Sedes</span>
+                        <span class="input-group-text">
+                            Meses de Morosidad</span>
                       </div>
                       <select
                         class="form-control form-select"
-                        formControlName="id_sede"
+                        formControlName="meses"
                         id="inputGroupSelect04"
-                      >
-                        <option value="0000">Todos</option>
-                        <option value="0001">Lima</option>
-                        <option value="0002">Chorrillos</option>
-                        <option value="0004">Surco</option>
+                      >	
+                        <option value="00" selected="">Todos</option>
+                        <option value="1">01 Mes</option>
+                        <option value="2">02 Meses</option>
+                        <option value="3">03 Meses</option>
+                        <option value="4">04 Meses</option>
+                        <option value="5">05 Meses</option>
+                        <option value="2M">02 Meses a mas</option>
+                        <option value="3M">03 Meses a mas</option>
+                        <option value="4M">04 Meses a mas</option>
+                        <option value="5M">05 Meses a mas</option>	
                       </select>
                     </div>
                   </div>
-                  <div class="form-group col-sm-12 col-md-4 col-lg-3">
+                  <!-- <div class="form-group col-sm-12 col-md-4 col-lg-3">
                     <div class="input-group input-group-sm">
                       <div class="input-group-append">
                         <span class="input-group-text">Tipos de Paciente</span>
                       </div>
                       <select
                         class="form-control form-select"
-                        formControlName="id_tipo_paciente"
+                        formControlName="tipo_paciente"
                         id="inputGroupSelect05"
                       >
                       <optgroup>
@@ -90,66 +97,7 @@
   
                       </select>
                     </div>
-                  </div>
-                  
-                </div>
-                <div class="row pt-2">
-                  <div class="col-md-2">
-                    <div class="form-group">
-                      <div class="input-group input-group-sm">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">Empresa</span>
-                        </div>
-                        <input
-                            type="text"
-                            formControlName="like_empresa"
-                            class="form-control"
-                          />
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-2">
-                    <div class="form-group">
-                      <div class="input-group input-group-sm">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">Especialidad</span>
-                        </div>
-                        <input
-                          type="text"
-                          formControlName="like_especialidad"
-                          class="form-control"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-2">
-                    <div class="form-group">
-                      <div class="input-group input-group-sm">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">Médico</span>
-                        </div>
-                        <input
-                          type="text"
-                          formControlName="like_medico"
-                          class="form-control"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-2">
-                    <div class="form-group">
-                      <div class="input-group input-group-sm">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">Paciente</span>
-                        </div>
-                        <input
-                          type="text"
-                          formControlName="like_paciente"
-                          class="form-control"
-                        />
-                      </div>
-                    </div>
-                  </div>
+                  </div> -->
                   <div class="form-group col-sm-12 col-md-4 col-lg-2">
                     <div class="input-group">
                       <div class="input-group-btn">
@@ -172,7 +120,7 @@
                     <a class="btn btn-primary" id="downloadLink" (click)="copyTableToClipboard()">Copiar tabla</a> -->
                     
                     <div class="table table-striped table-bordered selection-deletion-row">
-                      <div class="row" style='margin-left:0px;'>
+                      <!-- <div class="row" style='margin-left:0px;'>
                         <div class="col-xs-6">
                           <select class="form-control form-select" (change)="onLimitChange($event.target.value)">
                             <option
@@ -185,16 +133,27 @@
                             <option value="0" *ngIf="this.page.totalElements">Todos los Registros</option>
                           </select>
                         </div>
-                      </div>
+                      </div> -->
                         <div class="row" style="align-items: center;justify-content: space-between;">
                           <ul class="list-group list-group-horizontal list-group-flush">
+                            <li class="list-group-item border-0 pl-0">
+                              <select class="form-control form-select" (change)="onLimitChange($event.target.value)">
+                                <option
+                                  *ngFor="let option of pageLimitOptions"
+                                  [value]="option.value"
+          
+                                >
+                                  {{ option.value }} Registros
+                                </option>
+                                <option value="0" *ngIf="this.page.totalElements">Todos los Registros</option>
+                              </select>
+                            </li>
                             <li class="list-group-item border-0 pl-0">
                               <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard()">
                                 <i class="fa fa-external-link"></i>
                                 Copiar tabla
                               </button>
                             </li>
-
                             <li class="list-group-item border-0 pl-0">
                               <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel()">
                                 <i class="fa fa-external-link"></i>
@@ -209,23 +168,20 @@
                         
                       </div>
                       
+                      
                       <ngx-datatable #myTable
                       class="bootstrap table table-striped"
                       id="datatablele"
                         [columns]="columns"
                         [rows]="rows"
                         [columnMode]="initialSize > 1250 ? ColumnMode.flex : ColumnMode.force"
-                        [headerHeight]="50"
+                        [headerHeight]="$any('auto')"
                         [footerHeight]="65"
                         [rowHeight]="$any('auto')"
                         [scrollbarH]="true"
-                        [externalPaging]="true"
-                        [count]="page.totalElements"
-                        [offset]="page.pageNumber"
                         [limit]="page.size"
-                        (page)="setPage($event)"
                         >
-                        <ngx-datatable-column [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                        <ngx-datatable-column  [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                           <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                             let-row="row">
                             <span [title]="value">{{value}}</span>

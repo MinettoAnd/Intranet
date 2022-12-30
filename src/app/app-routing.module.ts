@@ -146,6 +146,11 @@ const routes: Routes = [
                 loadChildren: () => import('../app/pages/comercial/comercial.module').then(m => m.ComercialModule),
                 data: { extraParameter: "comercialMenu" },
             },
+            {
+                path: "comercial/programasSalud",
+                loadChildren: () => import('../app/pages/comercial/comercial.module').then(m => m.ComercialModule),
+                data: { extraParameter: "comercialMenu" },
+            },
         ],
     },
 
