@@ -137,7 +137,7 @@ const routes: Routes = [
                 data: { extraParameter: "hospitalizacionMenu" },
             },
             {
-                path: "consultoriosExternos/consulta-de-atenciones",
+                path: "consultoriosExternos",
                 loadChildren: () => import('../app/pages/external-consultation/external-consultation.module').then(m => m.ExternalConsultationModule),
                 data: { extraParameter: "hospitalizacionMenu" },
             },

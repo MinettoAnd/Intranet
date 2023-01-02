@@ -7,9 +7,13 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ExternalAttentionConsultationComponent } from './attention-consultation/external-attention-consultation.component';
+import { OcupabilidadMedicoComponent } from './ocupabilidad-medico/ocupabilidad-medico.component';
+import { OcupabilidadConsultorioComponent } from './ocupabilidad-consultorio/ocupabilidad-consultorio.component';
 @NgModule({
   declarations: [
-    ExternalAttentionConsultationComponent
+    ExternalAttentionConsultationComponent,
+    OcupabilidadMedicoComponent,
+    OcupabilidadConsultorioComponent
   ],
   imports: [
     CommonModule,
@@ -19,8 +23,16 @@ import { ExternalAttentionConsultationComponent } from './attention-consultation
     ReactiveFormsModule,
     RouterModule.forChild([
       {
-        path: '',
+        path: 'consulta-de-atenciones',
         component: ExternalAttentionConsultationComponent
+      },
+      {
+        path: 'ocupabilidad-del-consultorio',
+        component: OcupabilidadConsultorioComponent
+      },
+      {
+        path: 'ocupabilidad-del-medico',
+        component: OcupabilidadMedicoComponent
       }
     ])
   ],
