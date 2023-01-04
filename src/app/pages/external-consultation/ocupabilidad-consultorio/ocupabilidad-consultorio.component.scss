@@ -65,3 +65,25 @@ margin: 1rem 0;
 //         padding-top: 0px!important;
 //     }
 // }
+.question {
+    background: RGB(255,170,0);
+    color: RGB(16,0,76);
+}
+
+.badge {
+    display: inline-block;
+    min-width: 10px;
+    padding: 3px 7px;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    // background-color: #777;
+    border-radius: 10px;
+}
+// canvas {
+//     background-color: #D6D7D9
+//   }
