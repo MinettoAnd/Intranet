@@ -208,7 +208,7 @@
     // width: auto!important;
 }
 @media screen and (min-width: 1024px) {
-    #div_panel_01_cabecera1, .info-box{
+    #div_panel_01_cabecera1,.div_panel_cabecera, .info-box{
         display: flex;
     }
     .closed-sidebar .app-main__outer {
