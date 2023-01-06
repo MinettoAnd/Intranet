@@ -134,6 +134,30 @@ export class OcupabilidadConsultorioComponent implements OnInit {
     promTurnosxDia: '',
     tiempoxTurno: '',
   };
+  detalleAnual = {
+    nro_consultorios: '',
+    nro_atendidos: '',
+    pacientes_unicos_atendidos: '',
+    prom_atencion_paciente: '',
+    tiempoxTurno: '',
+    nro_atendidos_x60m: '',
+    usoEfectivoTurno: '',
+    diasPeriodo: '',
+    turnos: '',
+    atenc_promMesUso: '',
+    atenc_promMeses: '',
+    prog_promMesUso: '',
+    prog_promMeses: '',
+    prom_TurnoDiasEfectivos: '',
+    prom_TurnoDiasTotales: ''
+  };
+nCons;
+sum_ocup_co_ma;
+sum_ocup_co_mt;
+sum_ocup_ct_ma;
+sum_ocup_ct_mt;
+sum_ocup_ca_ma;
+sum_ocup_ca_mt;
   progressBarLabels;
   progressBar1;
   progressBar2;
@@ -424,10 +448,10 @@ formatPipe(rows) {
         // console.log(item);
         // if (item.per1) {
           // console.log(item.per1);
-      item.porcUsoConsultorioTotal = typeof item.porcUsoConsultorioTotal === 'number' ? item.porcUsoConsultorioTotal.toFixed(2) : Number(item.porcUsoConsultorioTotal).toFixed(2)
-      item.porcUsoConsultorioProgTotal = typeof item.porcUsoConsultorioProgTotal === 'number' ? item.porcUsoConsultorioProgTotal.toFixed(2) : Number(item.porcUsoConsultorioProgTotal).toFixed(2)
+      item.porcUsoConsultorioTotal = typeof item.porcUsoConsultorioTotal === 'number' ? item.porcUsoConsultorioTotal.toFixed(2) : Number(item.porcUsoConsultorioTotal).toFixed(2) + ' %';
+      item.porcUsoConsultorioProgTotal = typeof item.porcUsoConsultorioProgTotal === 'number' ? item.porcUsoConsultorioProgTotal.toFixed(2) : Number(item.porcUsoConsultorioProgTotal).toFixed(2) + ' %';
       item.promTurnosxDia = typeof item.promTurnosxDia === 'number' ? item.promTurnosxDia.toFixed(2) : Number(item.promTurnosxDia).toFixed(2)
-      item.porcUsoCita = typeof item.porcUsoCita === 'number' ? item.porcUsoCita.toFixed(2) : Number(item.porcUsoCita).toFixed(2)
+      item.porcUsoCita = typeof item.porcUsoCita === 'number' ? item.porcUsoCita.toFixed(2) : Number(item.porcUsoCita).toFixed(2) + ' %';
     return item.porcUsoConsultorioTotal, item.porcUsoConsultorioProgTotal, item.promTurnosxDia, item.porcUsoCita;
         // } else {
         //   return item;
@@ -494,7 +518,7 @@ setPage(pageInfo) {
       archivo_especialidades_mes: 'aaammTmpAEmesaaTmp_133621r9RaQ',
       archivo_medico_mes: 'aaammTmpAMedEmesaaTmp_133621r9RaQ',
     };
-
+    this.loading();
 this.tableApiservice.eliminarTablasConsultorio(this.tablas).subscribe(
   (response) => {
     if(response.success){
@@ -564,21 +588,39 @@ this.tableApiservice.eliminarTablasConsultorio(this.tablas).subscribe(
                   this.columns2 = response.data.cabeceras;
                   this.rows2 = response.data.data
                   this.rows2.map(item =>{
-                    item.per1 = typeof item.per1 === 'number' ? item.per1.toFixed(2) : Number(item.per1).toFixed(2);
-                    item.per2 = typeof item.per2 === 'number' ? item.per2.toFixed(2) : Number(item.per2).toFixed(2);
-                    item.per3 = typeof item.per3 === 'number' ? item.per3.toFixed(2) : Number(item.per3).toFixed(2);
-                    item.per4 = typeof item.per4 === 'number' ? item.per4.toFixed(2) : Number(item.per4).toFixed(2);
+                    console.log(591, item)
+                    if(item.item === 'Ocupabilidad de Atenciones' || item.item === 'Ocupabilidad del Consultorio' || item.item === 'Ocupabilidad del Turno' ){
+                      console.log(593, item)
+                      item.per1 = typeof item.per1 === 'number' ? item.per1.toFixed(2) + ' %' : Number(item.per1).toFixed(2) + ' %';
+                      item.per2 = typeof item.per2 === 'number' ? item.per2.toFixed(2) + ' %' : Number(item.per2).toFixed(2) + ' %';
+                      item.per3 = typeof item.per3 === 'number' ? item.per3.toFixed(2) + ' %' : Number(item.per3).toFixed(2) + ' %';
+                      item.per4 = typeof item.per4 === 'number' ? item.per4.toFixed(2) + ' %' : Number(item.per4).toFixed(2) + ' %';
 
-                    item.per5 = typeof item.per5 === 'number' ? item.per5.toFixed(2) : Number(item.per5).toFixed(2);
-                    item.per6 = typeof item.per6 === 'number' ? item.per6.toFixed(2) : Number(item.per6).toFixed(2);
-                    item.per7 = typeof item.per7 === 'number' ? item.per7.toFixed(2) : Number(item.per7).toFixed(2);
-                    item.per8 = typeof item.per8 === 'number' ? item.per8.toFixed(2) : Number(item.per8).toFixed(2);
-                    item.per9 = typeof item.per9 === 'number' ? item.per9.toFixed(2) : Number(item.per9).toFixed(2);
-                    item.per10 = typeof item.per10 === 'number' ? item.per10.toFixed(2) : Number(item.per10).toFixed(2);
-                    item.per11 = typeof item.per11 === 'number' ? item.per11.toFixed(2) : Number(item.per11).toFixed(2);
-                    item.per12 = typeof item.per12 === 'number' ? item.per12.toFixed(2) : Number(item.per12).toFixed(2);
-                    item.TOTAL = typeof item.TOTAL === 'number' ? item.TOTAL.toFixed(2) : Number(item.TOTAL).toFixed(2);
+                      item.per5 = typeof item.per5 === 'number' ? item.per5.toFixed(2) + ' %' : Number(item.per5).toFixed(2) + ' %';
+                      item.per6 = typeof item.per6 === 'number' ? item.per6.toFixed(2) + ' %' : Number(item.per6).toFixed(2) + ' %';
+                      item.per7 = typeof item.per7 === 'number' ? item.per7.toFixed(2) + ' %' : Number(item.per7).toFixed(2) + ' %';
+                      item.per8 = typeof item.per8 === 'number' ? item.per8.toFixed(2) + ' %' : Number(item.per8).toFixed(2) + ' %';
+                      item.per9 = typeof item.per9 === 'number' ? item.per9.toFixed(2) + ' %' : Number(item.per9).toFixed(2) + ' %';
+                      item.per10 = typeof item.per10 === 'number' ? item.per10.toFixed(2) + ' %' : Number(item.per10).toFixed(2) + ' %';
+                      item.per11 = typeof item.per11 === 'number' ? item.per11.toFixed(2) + ' %' : Number(item.per11).toFixed(2) + ' %';
+                      item.per12 = typeof item.per12 === 'number' ? item.per12.toFixed(2) + ' %' : Number(item.per12).toFixed(2) + ' %';
+                      item.TOTAL = typeof item.TOTAL === 'number' ? item.TOTAL.toFixed(2) + ' %' : Number(item.TOTAL).toFixed(2) + ' %';
+                    }else{
+                      item.per1 = typeof item.per1 === 'number' ? this.separadorDeMiles(item.per1) : this.separadorDeMiles(Number(item.per1));
+                      item.per2 = typeof item.per2 === 'number' ? this.separadorDeMiles(item.per2) : this.separadorDeMiles(Number(item.per2));
+                      item.per3 = typeof item.per3 === 'number' ? this.separadorDeMiles(item.per3) : this.separadorDeMiles(Number(item.per3));
+                      item.per4 = typeof item.per4 === 'number' ? this.separadorDeMiles(item.per4) : this.separadorDeMiles(Number(item.per4));
 
+                      item.per5 = typeof item.per5 === 'number' ? this.separadorDeMiles(item.per5) : this.separadorDeMiles(Number(item.per5));
+                      item.per6 = typeof item.per6 === 'number' ? this.separadorDeMiles(item.per6) : this.separadorDeMiles(Number(item.per6));
+                      item.per7 = typeof item.per7 === 'number' ? this.separadorDeMiles(item.per7) : this.separadorDeMiles(Number(item.per7));
+                      item.per8 = typeof item.per8 === 'number' ? this.separadorDeMiles(item.per8) : this.separadorDeMiles(Number(item.per8));
+                      item.per9 = typeof item.per9 === 'number' ? this.separadorDeMiles(item.per9) : this.separadorDeMiles(Number(item.per9));
+                      item.per10 = typeof item.per10 === 'number' ? this.separadorDeMiles(item.per10): this.separadorDeMiles(Number(item.per10));
+                      item.per11 = typeof item.per11 === 'number' ? this.separadorDeMiles(item.per11): this.separadorDeMiles(Number(item.per11));
+                      item.per12 = typeof item.per12 === 'number' ? this.separadorDeMiles(item.per12): this.separadorDeMiles(Number(item.per12));
+                      item.TOTAL = typeof item.TOTAL === 'number' ? this.separadorDeMiles(item.TOTAL): this.separadorDeMiles(Number(item.TOTAL));
+                    }
                     return item.per1, item.per2, item.per3, item.per4, item.per5, item.per6, item.per7, item.per8, item.per9, item.per10, item.per11,item.per12, item.TOTAL;
                   });
                 }
@@ -589,11 +631,12 @@ this.tableApiservice.eliminarTablasConsultorio(this.tablas).subscribe(
               }
             );
             this.tableApiservice.getResumenCabecera(this.parameters).subscribe(
-              (response) => {console.log(577, response);
+              (response) => {
                 if(response.success){
+                  this.detalleAnual = response;
                   
                 }
-                
+                console.log(577, this.detalleAnual);
               },
               (error) => {
                   Swal.close();
@@ -603,65 +646,72 @@ this.tableApiservice.eliminarTablasConsultorio(this.tablas).subscribe(
               (response) => {
                 if(response.success){
                     this.columns3 = response.data.cabeceras
-                    this.rows3 = response.data.tabla_mes
+                    this.rows3 = response.data.tabla_total
                     this.rows3.map(item =>{
-                      item.Per1 = typeof item.Per1 === 'number' ? item.Per1.toFixed(2) : Number(item.Per1).toFixed(2);
-                      item.Per2 = typeof item.Per2 === 'number' ? item.Per2.toFixed(2) : Number(item.Per2).toFixed(2);
-                      item.Per3 = typeof item.Per3 === 'number' ? item.Per3.toFixed(2) : Number(item.Per3).toFixed(2);
-                      item.Per4 = typeof item.Per4 === 'number' ? item.Per4.toFixed(2) : Number(item.Per4).toFixed(2);
+                      item.Per1 = typeof item.Per1 === 'number' ? item.Per1.toFixed(2) + ' %' : Number(item.Per1).toFixed(2) + ' %';
+                      item.Per2 = typeof item.Per2 === 'number' ? item.Per2.toFixed(2) + ' %' : Number(item.Per2).toFixed(2) + ' %';
+                      item.Per3 = typeof item.Per3 === 'number' ? item.Per3.toFixed(2) + ' %' : Number(item.Per3).toFixed(2) + ' %';
+                      item.Per4 = typeof item.Per4 === 'number' ? item.Per4.toFixed(2) + ' %' : Number(item.Per4).toFixed(2) + ' %';
   
-                      item.Per5 = typeof item.Per5 === 'number' ? item.Per5.toFixed(2) : Number(item.Per5).toFixed(2);
-                      item.Per6 = typeof item.Per6 === 'number' ? item.Per6.toFixed(2) : Number(item.Per6).toFixed(2);
-                      item.Per7 = typeof item.Per7 === 'number' ? item.Per7.toFixed(2) : Number(item.Per7).toFixed(2);
-                      item.Per8 = typeof item.Per8 === 'number' ? item.Per8.toFixed(2) : Number(item.Per8).toFixed(2);
-                      item.Per9 = typeof item.Per9 === 'number' ? item.Per9.toFixed(2) : Number(item.Per9).toFixed(2);
-                      item.Per10 = typeof item.Per10 === 'number' ? item.Per10.toFixed(2) : Number(item.Per10).toFixed(2);
-                      item.Per11 = typeof item.Per11 === 'number' ? item.Per11.toFixed(2) : Number(item.Per11).toFixed(2);
-                      item.Per12 = typeof item.Per12 === 'number' ? item.Per12.toFixed(2) : Number(item.Per12).toFixed(2);
-                      item.promMesUso = typeof item.promMesUso === 'number' ? item.promMesUso.toFixed(2) : Number(item.promMesUso).toFixed(2);
-                      item.promMeses = typeof item.promMeses === 'number' ? item.promMeses.toFixed(2) : Number(item.promMeses).toFixed(2);
+                      item.Per5 = typeof item.Per5 === 'number' ? item.Per5.toFixed(2) + ' %' : Number(item.Per5).toFixed(2) + ' %';
+                      item.Per6 = typeof item.Per6 === 'number' ? item.Per6.toFixed(2) + ' %' : Number(item.Per6).toFixed(2) + ' %';
+                      item.Per7 = typeof item.Per7 === 'number' ? item.Per7.toFixed(2) + ' %' : Number(item.Per7).toFixed(2) + ' %';
+                      item.Per8 = typeof item.Per8 === 'number' ? item.Per8.toFixed(2) + ' %' : Number(item.Per8).toFixed(2) + ' %';
+                      item.Per9 = typeof item.Per9 === 'number' ? item.Per9.toFixed(2) + ' %' : Number(item.Per9).toFixed(2) + ' %';
+                      item.Per10 = typeof item.Per10 === 'number' ? item.Per10.toFixed(2) + ' %' : Number(item.Per10).toFixed(2) + ' %';
+                      item.Per11 = typeof item.Per11 === 'number' ? item.Per11.toFixed(2) + ' %' : Number(item.Per11).toFixed(2) + ' %';
+                      item.Per12 = typeof item.Per12 === 'number' ? item.Per12.toFixed(2) + ' %' : Number(item.Per12).toFixed(2) + ' %';
+                      item.promMesUso = typeof item.promMesUso === 'number' ? item.promMesUso.toFixed(2) : Number(item.promMesUso).toFixed(2) + ' %';
+                      item.promMeses = typeof item.promMeses === 'number' ? item.promMeses.toFixed(2) : Number(item.promMeses).toFixed(2) + ' %';
                       return item.Per1, item.Per2, item.Per3, item.Per4, item.Per5, item.Per6, item.Per7, item.Per8, item.Per9, item.Per10, item.Per11,item.Per12,item.promMesUso,item.promMeses;
                     });
-                    this.rows4 = response.data.tabla_total
+                    this.rows4 = response.data.tabla_mes
                     this.rows4.map(item =>{
-                      item.Per1 = typeof item.Per1 === 'number' ? item.Per1.toFixed(2) : Number(item.Per1).toFixed(2);
-                      item.Per2 = typeof item.Per2 === 'number' ? item.Per2.toFixed(2) : Number(item.Per2).toFixed(2);
-                      item.Per3 = typeof item.Per3 === 'number' ? item.Per3.toFixed(2) : Number(item.Per3).toFixed(2);
-                      item.Per4 = typeof item.Per4 === 'number' ? item.Per4.toFixed(2) : Number(item.Per4).toFixed(2);
+                      item.Per1 = typeof item.Per1 === 'number' ? item.Per1.toFixed(2) + ' %' : Number(item.Per1).toFixed(2) + ' %';
+                      item.Per2 = typeof item.Per2 === 'number' ? item.Per2.toFixed(2) + ' %' : Number(item.Per2).toFixed(2) + ' %';
+                      item.Per3 = typeof item.Per3 === 'number' ? item.Per3.toFixed(2) + ' %' : Number(item.Per3).toFixed(2) + ' %';
+                      item.Per4 = typeof item.Per4 === 'number' ? item.Per4.toFixed(2) + ' %' : Number(item.Per4).toFixed(2) + ' %';
   
-                      item.Per5 = typeof item.Per5 === 'number' ? item.Per5.toFixed(2) : Number(item.Per5).toFixed(2);
-                      item.Per6 = typeof item.Per6 === 'number' ? item.Per6.toFixed(2) : Number(item.Per6).toFixed(2);
-                      item.Per7 = typeof item.Per7 === 'number' ? item.Per7.toFixed(2) : Number(item.Per7).toFixed(2);
-                      item.Per8 = typeof item.Per8 === 'number' ? item.Per8.toFixed(2) : Number(item.Per8).toFixed(2);
-                      item.Per9 = typeof item.Per9 === 'number' ? item.Per9.toFixed(2) : Number(item.Per9).toFixed(2);
-                      item.Per10 = typeof item.Per10 === 'number' ? item.Per10.toFixed(2) : Number(item.Per10).toFixed(2);
-                      item.Per11 = typeof item.Per11 === 'number' ? item.Per11.toFixed(2) : Number(item.Per11).toFixed(2);
-                      item.Per12 = typeof item.Per12 === 'number' ? item.Per12.toFixed(2) : Number(item.Per12).toFixed(2);
-                      item.promMesUso = typeof item.promMesUso === 'number' ? item.promMesUso.toFixed(2) : Number(item.promMesUso).toFixed(2);
-                      item.promMeses = typeof item.promMeses === 'number' ? item.promMeses.toFixed(2) : Number(item.promMeses).toFixed(2);
+                      item.Per5 = typeof item.Per5 === 'number' ? item.Per5.toFixed(2) + ' %' : Number(item.Per5).toFixed(2) + ' %';
+                      item.Per6 = typeof item.Per6 === 'number' ? item.Per6.toFixed(2) + ' %' : Number(item.Per6).toFixed(2) + ' %';
+                      item.Per7 = typeof item.Per7 === 'number' ? item.Per7.toFixed(2) + ' %' : Number(item.Per7).toFixed(2) + ' %';
+                      item.Per8 = typeof item.Per8 === 'number' ? item.Per8.toFixed(2) + ' %' : Number(item.Per8).toFixed(2) + ' %';
+                      item.Per9 = typeof item.Per9 === 'number' ? item.Per9.toFixed(2) + ' %' : Number(item.Per9).toFixed(2) + ' %';
+                      item.Per10 = typeof item.Per10 === 'number' ? item.Per10.toFixed(2) + ' %' : Number(item.Per10).toFixed(2) + ' %';
+                      item.Per11 = typeof item.Per11 === 'number' ? item.Per11.toFixed(2) + ' %' : Number(item.Per11).toFixed(2) + ' %';
+                      item.Per12 = typeof item.Per12 === 'number' ? item.Per12.toFixed(2) + ' %' : Number(item.Per12).toFixed(2) + ' %';
+                      item.promMesUso = typeof item.promMesUso === 'number' ? item.promMesUso.toFixed(2) + ' %' : Number(item.promMesUso).toFixed(2) + ' %';
+                      item.promMeses = typeof item.promMeses === 'number' ? item.promMeses.toFixed(2) + ' %' : Number(item.promMeses).toFixed(2) + ' %';
                       return item.Per1, item.Per2, item.Per3, item.Per4, item.Per5, item.Per6, item.Per7, item.Per8, item.Per9, item.Per10, item.Per11,item.Per12,item.promMesUso,item.promMeses;
                     });
                     this.rows5 = response.data.tabla_turno
                     this.rows5.map(item =>{
-                      item.Per1 = typeof item.Per1 === 'number' ? item.Per1.toFixed(2) : Number(item.Per1).toFixed(2);
-                      item.Per2 = typeof item.Per2 === 'number' ? item.Per2.toFixed(2) : Number(item.Per2).toFixed(2);
-                      item.Per3 = typeof item.Per3 === 'number' ? item.Per3.toFixed(2) : Number(item.Per3).toFixed(2);
-                      item.Per4 = typeof item.Per4 === 'number' ? item.Per4.toFixed(2) : Number(item.Per4).toFixed(2);
+                      item.Per1 = typeof item.Per1 === 'number' ? item.Per1.toFixed(2) + ' %' : Number(item.Per1).toFixed(2) + ' %';
+                      item.Per2 = typeof item.Per2 === 'number' ? item.Per2.toFixed(2) + ' %' : Number(item.Per2).toFixed(2) + ' %';
+                      item.Per3 = typeof item.Per3 === 'number' ? item.Per3.toFixed(2) + ' %' : Number(item.Per3).toFixed(2) + ' %';
+                      item.Per4 = typeof item.Per4 === 'number' ? item.Per4.toFixed(2) + ' %' : Number(item.Per4).toFixed(2) + ' %';
   
-                      item.Per5 = typeof item.Per5 === 'number' ? item.Per5.toFixed(2) : Number(item.Per5).toFixed(2);
-                      item.Per6 = typeof item.Per6 === 'number' ? item.Per6.toFixed(2) : Number(item.Per6).toFixed(2);
-                      item.Per7 = typeof item.Per7 === 'number' ? item.Per7.toFixed(2) : Number(item.Per7).toFixed(2);
-                      item.Per8 = typeof item.Per8 === 'number' ? item.Per8.toFixed(2) : Number(item.Per8).toFixed(2);
-                      item.Per9 = typeof item.Per9 === 'number' ? item.Per9.toFixed(2) : Number(item.Per9).toFixed(2);
-                      item.Per10 = typeof item.Per10 === 'number' ? item.Per10.toFixed(2) : Number(item.Per10).toFixed(2);
-                      item.Per11 = typeof item.Per11 === 'number' ? item.Per11.toFixed(2) : Number(item.Per11).toFixed(2);
-                      item.Per12 = typeof item.Per12 === 'number' ? item.Per12.toFixed(2) : Number(item.Per12).toFixed(2);
-                      item.promMesUso = typeof item.promMesUso === 'number' ? item.promMesUso.toFixed(2) : Number(item.promMesUso).toFixed(2);
-                      item.promMeses = typeof item.promMeses === 'number' ? item.promMeses.toFixed(2) : Number(item.promMeses).toFixed(2);
+                      item.Per5 = typeof item.Per5 === 'number' ? item.Per5.toFixed(2) + ' %' : Number(item.Per5).toFixed(2) + ' %';
+                      item.Per6 = typeof item.Per6 === 'number' ? item.Per6.toFixed(2) + ' %' : Number(item.Per6).toFixed(2) + ' %';
+                      item.Per7 = typeof item.Per7 === 'number' ? item.Per7.toFixed(2) + ' %' : Number(item.Per7).toFixed(2) + ' %';
+                      item.Per8 = typeof item.Per8 === 'number' ? item.Per8.toFixed(2) + ' %' : Number(item.Per8).toFixed(2) + ' %';
+                      item.Per9 = typeof item.Per9 === 'number' ? item.Per9.toFixed(2) + ' %' : Number(item.Per9).toFixed(2) + ' %';
+                      item.Per10 = typeof item.Per10 === 'number' ? item.Per10.toFixed(2) + ' %' : Number(item.Per10).toFixed(2) + ' %';
+                      item.Per11 = typeof item.Per11 === 'number' ? item.Per11.toFixed(2) + ' %' : Number(item.Per11).toFixed(2) + ' %';
+                      item.Per12 = typeof item.Per12 === 'number' ? item.Per12.toFixed(2) + ' %' : Number(item.Per12).toFixed(2) + ' %';
+                      item.promMesUso = typeof item.promMesUso === 'number' ? item.promMesUso.toFixed(2) + ' %' : Number(item.promMesUso).toFixed(2) + ' %';
+                      item.promMeses = typeof item.promMeses === 'number' ? item.promMeses.toFixed(2) + ' %' : Number(item.promMeses).toFixed(2) + ' %';
                       return item.Per1, item.Per2, item.Per3, item.Per4, item.Per5, item.Per6, item.Per7, item.Per8, item.Per9, item.Per10, item.Per11,item.Per12,item.promMesUso,item.promMeses;
                     });
+                    this.nCons =  response.data.nCons;
+                    this.sum_ocup_co_ma = typeof response.data.sum_ocup_co_ma === 'number' ? response.data.sum_ocup_co_ma.toFixed(2) : Number(response.data.sum_ocup_co_ma).toFixed(2);
+                    this.sum_ocup_co_mt = typeof response.data.sum_ocup_co_mt === 'number' ? response.data.sum_ocup_co_mt.toFixed(2) : Number(response.data.sum_ocup_co_mt).toFixed(2);
+                    this.sum_ocup_ct_ma = typeof response.data.sum_ocup_ct_ma === 'number' ? response.data.sum_ocup_ct_ma.toFixed(2) : Number(response.data.sum_ocup_ct_ma).toFixed(2);
+                    this.sum_ocup_ct_mt = typeof response.data.sum_ocup_ct_mt === 'number' ? response.data.sum_ocup_ct_mt.toFixed(2) : Number(response.data.sum_ocup_ct_mt).toFixed(2);
+                    this.sum_ocup_ca_ma = typeof response.data.sum_ocup_ca_ma === 'number' ? response.data.sum_ocup_ca_ma.toFixed(2) : Number(response.data.sum_ocup_ca_ma).toFixed(2);
+                    this.sum_ocup_ca_mt = typeof response.data.sum_ocup_ca_mt === 'number' ? response.data.sum_ocup_ca_mt.toFixed(2) : Number(response.data.sum_ocup_ca_mt).toFixed(2);
                 }
-                console.log(588, this.rows5);
+                Swal.close();
               },
               (error) => {
                   Swal.close();
@@ -681,6 +731,13 @@ this.tableApiservice.eliminarTablasConsultorio(this.tablas).subscribe(
   }
 );
 
+}
+separadorDeMiles(numero) {
+  let partesNumero = numero.toString().split('.');
+
+  partesNumero[0] = partesNumero[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+  return partesNumero.join('.');
 }
 
   copyTableToClipboard(numberTabla){
