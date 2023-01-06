@@ -500,7 +500,7 @@ menuI;
   }
   getModelsAdmin() {
     this.apiService.getMenuSidebarAdminService().then((response: any) => {
-      console.log(496, response)
+      // console.log(496, response)
        this.menuItems = response.data.length > 0 ? response.data : [];
        this.menuItems.map(item =>{
           if(item.icon){
@@ -511,7 +511,7 @@ menuI;
           }
           return item;
        })
-       console.log(512, this.menuItems);
+      //  console.log(512, this.menuItems);
     });
 
   }

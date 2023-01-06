@@ -83,9 +83,13 @@ export class PreviewComponent implements OnInit {
     }
     this.apiService.postPrintService(data).then((response: any) => {
       this.dataprints = response.data.length > 0 ? response.data : [];
-      var splitted = this.dataprints[0]?.v_acciones_tomadas.split("/", 2);
-      this.acrion_realizada = splitted[0];
-      console.log(splitted)
+      if(this.dataprints[0]?.v_acciones_tomadas === null){
+        this.dataprints[0].v_acciones_tomadas = '';
+        // console.log(90, this.dataprints[0]?.v_acciones_tomadas)
+      }
+    var splitted = this.dataprints[0]?.v_acciones_tomadas.split("/", 2);
+    this.acrion_realizada = splitted[0];
+
       this.sede(this.dataprints[0]?.id_sede)
       if (this.dato.empresa === 'IAFAS') {
         this.correlativo_correcto = ("000000" + this.dataprints[0]?.v_correlativo_reclamo).slice(-6);

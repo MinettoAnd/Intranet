@@ -10,6 +10,7 @@
 }
 .box-title{
     font-size: 1rem!important;
+    font-weight: 500;
 }
 
 
@@ -87,3 +88,32 @@ margin: 1rem 0;
 // canvas {
 //     background-color: #D6D7D9
 //   }
+
+.widget-user-header, .description-block{
+text-align: center;
+}
+.box.box-widget{
+    margin: 10px 0;
+}
+.widget-user-header{
+    padding: 10px 50px;
+    border-top-left-radius: 14px;
+	border-top-right-radius: 14px;
+	border-bottom-left-radius: 0px;
+	border-bottom-right-radius: 0px;
+}
+
+.callout.callout-info, .widget-user-desc{
+    font-size: 14px;
+}
+.box-footer{
+background-color: #EBEEF3;
+padding: 10px 20px;
+border-top-left-radius: 0px;
+	border-top-right-radius: 0px;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+}
+.description-header{
+    font-weight: 500;
+}

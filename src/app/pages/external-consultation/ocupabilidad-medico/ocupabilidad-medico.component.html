@@ -11,7 +11,23 @@
             <div class="col-12">
               <form [formGroup]="filtroForm">
                 <div class="row" style="margin-bottom: -0.5rem;">
-                    
+                  <div class="form-group col-sm-12 col-md-4 col-lg-3">
+                    <div class="input-group input-group-sm">
+                      <div class="input-group-append">
+                        <span class="input-group-text">Sedes</span>
+                      </div>
+                      <select
+                        class="form-control form-select"
+                        formControlName="id_sede"
+                        id="inputGroupSelect04"
+                      >
+                        <option value="0000">Todos</option>
+                        <option value="0001">Lima</option>
+                        <option value="0002">Chorrillos</option>
+                        <option value="0004">Surco</option>
+                      </select>
+                    </div>
+                  </div>  
                   <div class="form-group col-sm-12 col-md-4 col-lg-3">
                     <div class="input-group input-group-sm">
                       <div class="input-group-prepend">
@@ -22,7 +38,7 @@
                         formControlName="mes"
                         class="form-control"
                       /> -->
-                      <select formControlName="anio" class="form-control form-select" (change)="onAnioChange($event.target.value)">
+                      <select formControlName="anio" class="form-control form-select" >
                         <option
                           *ngFor="let option of optionsAnio"
                           [value]="option.value"
@@ -43,7 +59,7 @@
                         formControlName="anio"
                         class="form-control"
                       /> -->
-                      <select formControlName="mes" class="form-control form-select" (change)="onMesChange($event.target.value)">
+                      <select formControlName="mes" class="form-control form-select">
                         <option
                           *ngFor="let option of optionsMes"
                           [value]="option.value"
@@ -53,6 +69,7 @@
                     </select>
                     </div>
                   </div>
+                  
                   <div class="form-group col-sm-12 col-md-4 col-lg-2">
                     <div class="input-group">
                       <div class="input-group-btn">
@@ -72,40 +89,94 @@
                     <div class="card">
                      
                       <div class="card-header">
-                        <h4 class="card-title" style="bottom:13px;">INGRESOS POR CUOTAS E INSCRIPCIONES DE PLAN SALUD FAMILIAR</h4>
+                        <h4 class="card-title" style="bottom:13px;">OCUPABILIDAD DE CONSULTORIOS POR CITAS AMBULATORIAS (No Incluyen Procedimientos)</h4>
                         <p>{{message}}</p>
-                        <div class="col-md-12" id="div_panel_01_cabecera1">
-                          <div class="col-md-3 col-sm-6 col-xs-12" id="div_panel_01_cabecera1_0">
+                        <div class="col-md-12 div_panel_cabecera">
+                          <div class="col-md-3 col-sm-6 col-xs-12">
                              <div class="info-box">
-                                <span style="background: #57AA50 !important; color:#fff !important;" class="info-box-icon">
-                                  <i class="fa fa-money" aria-hidden="true"></i>
+                                <span style="background: #10004C !important; color:#fff !important;" class="info-box-icon">
+                                  <i class="fa fa-stethoscope" aria-hidden="true"></i>
                                 </span>		
                                 <div class="info-box-content">
-                                  <span style="font-family:arial; font-size:15px; " class="info-box-text" id="box_titulo_01">TOTAL RECAUDADO</span>
-                                    <span class="info-box-number" id="imp_total_01">{{ingresoTotal | currency }}</span>
-                                      <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success" id="porc_imp_total_01">En {{ingresoTotalNumComtratos | json}} Contratos Pagados</label>
+                                  <span style="font-family:arial; font-size:15px; " class="info-box-text">OCUPABILIDAD DEL MÉDICO</span>
+                                    <span *ngIf="resumenMes.promMesUso" class="info-box-number">{{resumenMes.promMesUso | number : '1.2-2' }} % ( {{resumenMes.minutosAtendidos_xDia}} )</span>
+                                    <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">Tiempo programado / 12 horas x dia
+                                    </label>
                                 </div>
                              </div>
                           </div>
-                          <div class="col-md-3 col-sm-6 col-xs-12" id="div_panel_01_cabecera1_1">
+                          <div class="col-md-3 col-sm-6 col-xs-12">
                              <div class="info-box">
-                                <span style="background: #10004C !important; color:#fff !important;" class="info-box-icon">			<i class="fa fa-users" aria-hidden="true"></i>		</span>		
-                                <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text" id="box_titulo_02">CUOTAS POR FAMILIAR</span>			<span class="info-box-number" id="imp_total_02">{{ingresoFamil | currency}}</span>			<label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success" id="porc_imp_total_02">En {{ingresoFamilNumComtratos}} Contratos Pagados</label>		</div>
+                                <span style="background: #57AA50 !important; color:#fff !important;" class="info-box-icon">			
+                                  <i class="fa fa-plus-circle" aria-hidden="true"></i>		</span>		
+                                <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">OCUPABILIDAD DE ATENCIONES</span>			<span *ngIf="resumenMes.ocupabilidad" class="info-box-number">{{resumenMes.ocupabilidad | number : '1.2-2' }} % ( {{resumenMes.minutosProgramados_xDia}} )</span>			
+                                  <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">Tiempo de atención / 12 horas x dia
+                                    </label>		</div>
                              </div>
                           </div>
-                          <div class="col-md-3 col-sm-6 col-xs-12" id="div_panel_01_cabecera1_2">
+                          <div class="col-md-3 col-sm-6 col-xs-12">
                              <div class="info-box">
-                                <span style="background: #2F50F1 !important; color:#fff !important;" class="info-box-icon">			<i class="fa fa-building-o" aria-hidden="true"></i>		</span>		
-                                <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text" id="box_titulo_03">CUOTAS POR COLECTIVA</span>			<span class="info-box-number" id="imp_total_03">{{ingresoColec | currency}}</span>			<label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success" id="porc_imp_total_03">En {{ingresoColecNumComtratos}} Contratos Pagados</label>		</div>
+                                <span style="background: #FF3636 !important; color:#fff !important;" class="info-box-icon">			
+                                  <i class="fa fa-medkit" aria-hidden="true"></i>		</span>		
+                                <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">OCUPABILIDAD DEL TURNO</span>			
+                                <span *ngIf="resumenMes.usoEfectivoTurno" class="info-box-number">{{resumenMes.usoEfectivoTurno | number : '1.2-2' }} % ( {{resumenMes.promMinutosAtendidos}} )</span>			<label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success" >Tiempo de atención / tiempo programado
+                                  </label>		</div>
                              </div>
                           </div>
-                          <div class="col-md-3 col-sm-6 col-xs-12" id="div_panel_01_cabecera1_3">
+                          <div class="col-md-3 col-sm-6 col-xs-12">
                              <div class="info-box">
-                                <span style="background: #FA86C3 !important; color:#fff !important;" class="info-box-icon">			<i class="fa fa-child" aria-hidden="true"></i>		</span>		
-                                <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text" id="box_titulo_04">INSCRIPCIONES</span>			<span class="info-box-number" id="imp_total_04">{{ingresoInscr | currency}}</span>			<label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success" id="porc_imp_total_04">En {{ingresoInscrNumComtratos}} Contratos Pagados</label>		</div>
+                                <span style="background: #FFAA00 !important; color:#fff !important;" class="info-box-icon">			
+                                  <i class="fa fa-institution" aria-hidden="true"></i>		</span>		
+                                <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">NRO CONSULTORIOS</span>			
+                                  <span *ngIf="resumenMes.nro_consultorios" class="info-box-number">{{resumenMes.nro_consultorios}} en {{resumenMes.diasPeriodo}} días</span>			
+                                  <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">En {{resumenMes.nro_consultorios_maestro}} físicos Existentes</label>		</div>
                              </div>
                           </div>
-                       </div>
+                        </div>
+                        <div class="col-md-12 div_panel_cabecera">
+                          <div class="col-md-3 col-sm-6 col-xs-12">
+                             <div class="info-box">
+                                <span style="background: #10004C !important; color:#fff !important;" class="info-box-icon">
+                                  <i class="fa fa-users" aria-hidden="true"></i>
+                                </span>		
+                                <div class="info-box-content">
+                                  <span style="font-family:arial; font-size:15px; " class="info-box-text">ATENCIONES</span>
+                                    <span *ngIf="resumenMes.nro_atendidos" class="info-box-number" >{{resumenMes.nro_atendidos}} Pacientes</span>
+                                      <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success" >En {{(resumenMes.nro_atendidos / resumenMes.pacientes_unicos_atendidos) | number : '1.2-2' }} turnos</label>
+                                </div>
+                             </div>
+                          </div>
+                          <div class="col-md-3 col-sm-6 col-xs-12">
+                             <div class="info-box">
+                                <span style="background: #63B6DE !important; color:#fff !important;" class="info-box-icon">			
+                                  <i class="fa fa-hourglass-2" aria-hidden="true"></i>		</span>		
+                                <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">PROMEDIO DE ATENCIÓN</span>			
+                                  <span *ngIf="resumenMes.nro_atendidos_xdia" class="info-box-number">{{resumenMes.nro_atendidos_xdia | number : '1.2-2'}} pacientes por día</span>			
+                                  <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">{{resumenMes.nro_atendidos_xturno | number : '1.2-2'}} pacientes por turno</label>		</div>
+                             </div>
+                          </div>
+                          <div class="col-md-3 col-sm-6 col-xs-12">
+                             <div class="info-box">
+                                <span style="background: #2F50F1 !important; color:#fff !important;" class="info-box-icon">			
+                                  <i class="fa fa-clock-o" aria-hidden="true"></i>		</span>		
+                                <div class="info-box-content">			
+                                  <span style="font-family:arial; font-size:15px; " class="info-box-text" >TURNOS PROGRAMADOS</span>			
+                                  <span *ngIf="resumenMes.promTurnosxDia" class="info-box-number">{{resumenMes.promTurnosxDia | number : '1.2-2'}} turnos</span>			
+                                  <label style="position:relative; top:13px; font-size:12px; display: flex;
+                                  justify-content: space-around;" class="label label-pill label-success" >Con {{resumenMes.tiempoxTurno}} cupos promedio
+                                  </label>		</div>
+                             </div>
+                          </div>
+                          <div class="col-md-3 col-sm-6 col-xs-12">
+                            <div class="info-box">
+                               <span style="background: #57AA50 !important; color:#fff !important;" class="info-box-icon">			
+                                 <i class="fa fa-user-md" aria-hidden="true"></i>		</span>		
+                               <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">MÉDICOS</span>			<span *ngIf="resumenMes.ocupabilidad" class="info-box-number">{{resumenMes.ocupabilidad | number : '1.2-2' }} Médicos )</span>			
+                                 <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">En {{ resumenMes.ocupabilidad }} especialidades
+                                   </label>		</div>
+                            </div>
+                         </div>
+                        </div>
                       </div>
                       <div class="card-content collapse show">
                         <div class="card-body">
@@ -138,7 +209,7 @@
                                       
                                       <div class="toggle-table">
                                         <div class="callout callout-info">
-                                          <h3 class="box-title" id="Title_div_tabla_01">INGRESO SIN IGV</h3>
+                                          <h3 class="box-title" id="Title_div_tabla_01">OCUPABILIDAD DEL CONSULTORIO EN EL PERIODO SELECCIONADO</h3>
                                         </div>
                                         <button type="button" class="btn btn-outline-primary" (click)="collapse.toggle()" [attr.aria-expanded]="!isCollapsed"
                                         aria-controls="collapseExample">
@@ -150,8 +221,8 @@
                                   </div>
                               
                                   <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
-                                    <div class="row" style="align-items: center;justify-content: space-between;">
-                                      <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
+                                    <!-- <div class="row" style="align-items: center;justify-content: space-between;"> -->
+                                      <!-- <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
                                         <li class="list-group-item border-0 pl-0">
                                           <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(1)">
                                             <i class="fa fa-external-link"></i>
@@ -174,16 +245,9 @@
                                             <i class="pe-7s-graph3"></i>
                                           </button>
                                         </li>
-                                        
-                                      </ul>                                  
-                                    </div>
-                                    <div class="card-body" *ngIf="isGrafico1">
-                                      <loading *ngIf="isLoading">{{ isLoading }}</loading>
-                                      <div class="d-block" *ngIf="!isLoading">
-                                        <canvas #baseChart id="chart-1">
-                                        </canvas>
-                                      </div>
-                                    </div>
+                                      </ul>                                   -->
+                                    <!-- </div> -->
+                                    
                                     <ngx-datatable #myTable
                                     class="bootstrap table table-striped"
                                     id="datatablele"
@@ -194,15 +258,14 @@
                                       [rowHeight]="40"
                                       [scrollbarH]="true"
                                       (page)="setPage($event)"
-                                      [rowClass]="getRowClass"
                                       
                                       *ngIf="isTable1"
                                       >
-                                      <ngx-datatable-column [sortable]="false" [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                      <ngx-datatable-column [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                           let-row="row">
-                                          <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
-                                            <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
+                                          <div>
+                                            <span  [title]="value">{{value}}</span>
                                           </div>
                                           <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
                                             <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
@@ -216,186 +279,49 @@
                                         </ngx-datatable-column> -->
                                       </ngx-datatable-column>
                                     </ngx-datatable>
-                                    
-                                      <!-- <div class="card-body" *ngIf="isTable1">
-                                        <loading *ngIf="isLoading">{{ isLoading }}</loading>
-                                        <div class="d-block" *ngIf="!isLoading">
-                                          <canvas #baseChart id="chart-1">
-                                          </canvas>
+                                    <div style="display:flex">
+                                      <div class="card-body">
+                                        <div class="d-block" *ngFor="let percentageCompleted of progressBar1; let i = index;">
+                                          <span style="display:flex; justify-content: space-between;"><i><b>{{progressBarLabels[i]}}</b></i><i>{{percentageCompleted}} %</i></span>
+                                            <ngb-progressbar
+                                                [type]="color[i]"
+                                                [value]="percentageCompleted"
+                                                [striped]="true"
+                                                [animated]="true">
+                                            </ngb-progressbar>
+                                            <p></p>
                                         </div>
-                                      </div> -->
+                                      </div>
+                                      <div class="card-body">
+                                        <div class="d-block" *ngFor="let percentageCompleted of progressBar2; let i = index;">
+                                          <span style="display:flex; justify-content: space-between;"><i><b>{{progressBarLabels[i]}}</b></i><i>{{percentageCompleted}} %</i></span>
+                                          <ngb-progressbar
+                                              [type]="color[i]"
+                                              [value]="percentageCompleted"
+                                              [striped]="true"
+                                              [animated]="true">
+                                          </ngb-progressbar>
+                                          <p></p>
+                                      </div>
+                                      </div>
+                                      <div class="card-body">
+                                        <div class="d-block" *ngFor="let percentageCompleted of progressBar3; let i = index;">
+                                          <span style="display:flex; justify-content: space-between;"><i><b>{{progressBarLabels[i]}}</b></i><i>{{percentageCompleted}} %</i></span>
+                                          <ngb-progressbar
+                                            [type]="color[i]"
+                                            [value]="percentageCompleted"
+                                            [striped]="true"
+                                            [animated]="true">
+                                          </ngb-progressbar>
+                                          <p></p>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    
                                   </div>
                                 </div>
                                 
-                                <div class="card">
-                                  <div class="card-header" >
-                                    <div class="box-header">
-                                      
-                                      <div class="toggle-table">
-                                        <div class="callout callout-info">
-                                          <h3 class="box-title" id="Title_div_tabla_02">INGRESO CON IGV</h3>
-                                        </div>
-                                        <button type="button" class="btn btn-outline-primary" (click)="collapse2.toggle()" [attr.aria-expanded]="!isCollapsed2"
-                                          aria-controls="collapseExample">
-                                          <i class="fa fa-minus" *ngIf="!isCollapsed2"> </i>
-                                          <i class="fa fa-plus" *ngIf="isCollapsed2"> </i> 
-                                        </button>
-                                      </div>
-                                    </div>
-                                  </div>
-                              
-                                  <div #collapse2="ngbCollapse" [(ngbCollapse)]="isCollapsed2">
-                                    <div class="row" style="align-items: center;justify-content: space-between;">
-                                      <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
-                                        <li class="list-group-item border-0 pl-0">
-                                          <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(2)">
-                                            <i class="fa fa-external-link"></i>
-                                            Copiar tabla
-                                          </button>
-                                        </li>
-                                        <li class="list-group-item border-0 pl-0">
-                                          <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(2)">
-                                            <i class="fa fa-external-link"></i>
-                                            Exportar tabla a Excel
-                                          </button>
-                                        </li>
-                                        <li class="list-group-item border-0 pl-0">
-                                          <button type="button" (click)="showTableDasboard(2, 1)"
-                                            class="btn-shadow mr-3 btn btn-info">
-                                            <i class="pe-7s-credit"></i>
-                                          </button>
-                                          <button type="button" (click)="showTableDasboard(2, 2)" class="btn-shadow btn btn-info float-right">
-                                            <i class="pe-7s-graph3"></i>
-                                          </button>
-                                        </li>
-                                      </ul>
-                                      <!-- <div class="" style="display:flex;margin:15px;align-items: center;">
-                                        <span>Buscar</span>&nbsp;&nbsp;
-                                          <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter($event)'>
-                                      </div> -->
-                                    
-                                    </div>
-                                    <div class="card-body" *ngIf="isGrafico2">
-                                      <loading *ngIf="isLoading2">{{ isLoading2 }}</loading>
-                                      <div class="d-block" *ngIf="!isLoading2">
-                                        <canvas #baseChart id="chart-2">
-                                        </canvas>
-                                      </div>
-                                    </div>
-                                    <ngx-datatable #myTable2
-                                    class="bootstrap table table-striped"
-                                      [columns]="columns"
-                                      [rows]="rows2"
-                                      [columnMode]="ColumnMode.force"
-                                      [headerHeight]="50"
-                                      [rowHeight]="40"
-                                      [scrollbarH]="true"
-                                      (page)="setPage($event)"
-                                      [rowClass]="getRowClass"
-                                      *ngIf="isTable2"
-                                      >
-                                      <ngx-datatable-column [sortable]="false" [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
-                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
-                                          let-row="row">
-                                          <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
-                                            <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
-                                          </div>
-                                          <!-- <span title="Double click to edit" (dblclick)="editing[rowIndex + '-{{column.name}}'] = true"
-                                            *ngIf="!editing[rowIndex + '-{{column.name}}']">
-                                            {{value}}
-                                          </span>
-                                          <input autofocus (blur)="updateValue($event, '{{column.name}}', rowIndex)"
-                                            *ngIf="editing[rowIndex+ '-{{column.name}}']" type="text" [value]="value" /> -->
-                                        </ng-template>
-                                      </ngx-datatable-column>
-                                    </ngx-datatable>
-                                  </div>
-                                </div>
-                                <div class="card">
-                                  
-                                  <div class="card-header" >
-                                    <div class="box-header">
-                                      
-                                      <div class="toggle-table">
-                                        <div class="callout callout-info">
-                                          <h3 class="box-title" id="Title_div_tabla_03">NÚMERO DE CONTRATOS PAGADOS</h3>
-                                        </div>
-                                        <button type="button" class="btn btn-outline-primary" (click)="collapse3.toggle()" [attr.aria-expanded]="!isCollapsed3"
-                                          aria-controls="collapseExample">
-                                          <i class="fa fa-minus" *ngIf="!isCollapsed3"> </i>
-                                          <i class="fa fa-plus" *ngIf="isCollapsed3"> </i> 
-                                        </button>
-                                      </div>
-                                      
-                                    </div>
-                                  </div>
-                                  <div #collapse3="ngbCollapse" [(ngbCollapse)]="isCollapsed3">
-                                    <div class="row" style="align-items: center;justify-content: space-between;">
-                                      <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
-                                        <li class="list-group-item border-0 pl-0">
-                                          <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(3)">
-                                            <i class="fa fa-external-link"></i>
-                                            Copiar tabla
-                                          </button>
-                                        </li>
-                                        <li class="list-group-item border-0 pl-0">
-                                          <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(3)">
-                                            <i class="fa fa-external-link"></i>
-                                            Exportar tabla a Excel
-                                          </button>
-                                        </li>
-                                        <li class="list-group-item border-0 pl-0">
-                                          <button type="button" (click)="showTableDasboard(3, 1)"
-                                            class="btn-shadow mr-3 btn btn-info">
-                                            <i class="pe-7s-credit"></i>
-                                          </button>
-                                          <button type="button" (click)="showTableDasboard(3, 2)" class="btn-shadow btn btn-info float-right">
-                                            <i class="pe-7s-graph3"></i>
-                                          </button>
-                                        </li>
-                                      </ul>
-                                      <!-- <div class="" style="display:flex;margin:15px;align-items: center;">
-                                        <span>Buscar</span>&nbsp;&nbsp;
-                                          <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter($event)'>
-                                      </div> -->
-                                    
-                                    </div>
-                                    <div class="card-body" *ngIf="isGrafico3">
-                                      <loading *ngIf="isLoading3">{{ isLoading3 }}</loading>
-                                      <div class="d-block" *ngIf="!isLoading3">
-                                        <canvas #baseChart id="chart-3">
-                                        </canvas>
-                                      </div>
-                                    </div>
-                                    <ngx-datatable #myTable3
-                                    class="bootstrap table table-striped"
-                                      [columns]="columns"
-                                      [rows]="rows3"
-                                      [columnMode]="ColumnMode.force"
-                                      [headerHeight]="50"
-                                      [rowHeight]="40"
-                                      [scrollbarH]="true"
-                                      (page)="setPage($event)"
-                                      [rowClass]="getRowClass"
-                                      *ngIf="isTable3"
-                                      >
-                                      <ngx-datatable-column [sortable]="false" [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
-                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
-                                          let-row="row">
-                                          <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
-                                            <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
-                                          </div>
-                                          <!-- <span title="Double click to edit" (dblclick)="editing[rowIndex + '-{{column.name}}'] = true"
-                                            *ngIf="!editing[rowIndex + '-{{column.name}}']">
-                                            {{value}}
-                                          </span>
-                                          <input autofocus (blur)="updateValue($event, '{{column.name}}', rowIndex)"
-                                            *ngIf="editing[rowIndex+ '-{{column.name}}']" type="text" [value]="value" /> -->
-                                        </ng-template>
-                                      </ngx-datatable-column>
-                                    </ngx-datatable>
-                                  </div>
-                                </div>
+                                
                               </div>                       
                             </div>
                           </div>
@@ -409,7 +335,7 @@
                   <ng-template ngbNavContent>
                     <div class="card">
                       <div class="card-header">
-                        <h4 class="card-title" style="bottom:13px;">INGRESOS POR CUOTAS E INSCRIPCIONES DE PLAN SALUD FAMILIAR</h4>
+                        <h4 class="card-title" style="bottom:13px;">OCUPABILIDAD DE CONSULTORIOS POR CITAS AMBULATORIAS (No Incluyen Procedimientos)</h4>
                         <p>{{message}}</p>
                       </div>
                       <div class="card-content collapse show">
@@ -442,7 +368,7 @@
                                       
                                       <div class="toggle-table">
                                         <div class="callout callout-info">
-                                          <h3 class="box-title" id="Title_div_tabla_04">INGRESO SIN IGV</h3>
+                                          <h5 class="box-title" id="Title_div_tabla_04">INDICADORES DE OCUPABILIDAD DEL CONSULTORIO</h5>
                                         </div>
                                         <button type="button" class="btn btn-outline-primary" (click)="collapse4.toggle()" [attr.aria-expanded]="!isCollapsed4"
                                         aria-controls="collapseExample">
@@ -454,7 +380,7 @@
                                   </div>
                               
                                   <div #collapse4="ngbCollapse" [(ngbCollapse)]="isCollapsed4">
-                                    <div class="row" style="align-items: center;justify-content: space-between;">
+                                    <!-- <div class="row" style="align-items: center;justify-content: space-between;">
                                       <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
                                         <li class="list-group-item border-0 pl-0">
                                           <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(4)">
@@ -468,33 +394,17 @@
                                             Exportar tabla a Excel
                                           </button>
                                         </li>
-                                        <li class="list-group-item border-0 pl-0">
-                                          <button type="button" (click)="showTableDasboard(4, 1)"
-                                            class="btn-shadow mr-3 btn btn-info">
-                                            <i class="pe-7s-credit"></i>
-                                          </button>
-                                          <button type="button" (click)="showTableDasboard(4, 2)" class="btn-shadow btn btn-info float-right">
-                                            <i class="pe-7s-graph3"></i>
-                                          </button>
-                                        </li>
                                       </ul>
-                                      <!-- <div class="" style="display:flex;margin:15px;align-items: center;">
+                                      <div class="" style="display:flex;margin:15px;align-items: center;">
                                         <span>Buscar</span>&nbsp;&nbsp;
                                           <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter($event)'>
-                                      </div> -->
-                                    
-                                    </div>
-                                    <div class="card-body" *ngIf="isGrafico4">
-                                      <loading *ngIf="isLoading4">{{ isLoading4 }}</loading>
-                                      <div class="d-block" *ngIf="!isLoading4">
-                                        <canvas #baseChart id="chart-4">
-                                        </canvas>
                                       </div>
-                                    </div>
+                                    </div> -->
+                                    
                                     <ngx-datatable #myTable4
                                     class="bootstrap table table-striped"
-                                      [columns]="columns3"
-                                      [rows]="rows4"
+                                      [columns]="columns2"
+                                      [rows]="rows2"
                                       [columnMode]="ColumnMode.flex"
                                       [headerHeight]="50"
                                       [scrollbarH]="true"
@@ -503,7 +413,7 @@
                                       [rowHeight]="$any('auto')"
                                       *ngIf="isTable4"
                                       >
-                                      <ngx-datatable-column [sortable]="false" [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns3; let i = index;" name="{{column.name}}" prop="{{column.prop}}" >
+                                      <ngx-datatable-column [sortable]="false" [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns2; let i = index;" name="{{column.name}}" prop="{{column.prop}}" >
                                         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                           let-row="row">
                                           <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM'}">
@@ -527,7 +437,7 @@
                                       
                                       <div class="toggle-table">
                                         <div class="callout callout-info">
-                                          <h3 class="box-title" id="Title_div_tabla_05">INGRESO CON IGV</h3>
+                                          <h5 class="box-title" id="Title_div_tabla_05">Porcentaje de Ocupabiblidad</h5>
                                         </div>
                                         <button type="button" class="btn btn-outline-primary" (click)="collapse5.toggle()" [attr.aria-expanded]="!isCollapsed5"
                                           aria-controls="collapseExample">
@@ -542,26 +452,20 @@
                                     <div class="row" style="align-items: center;justify-content: space-between;">
                                       <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
                                         <li class="list-group-item border-0 pl-0">
-                                          <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(5)">
+                                          <a  id="downloadlink" href="#" 
+                                            class="btn btn-sm font-weight-bold btn-link" (click)="guardarImagen()" download>
                                             <i class="fa fa-external-link"></i>
-                                            Copiar tabla
-                                          </button>
+                                            Guardar Imagen
+                                          </a>
                                         </li>
-                                        <li class="list-group-item border-0 pl-0">
+                                       
+	
+                                        <!-- <li class="list-group-item border-0 pl-0">
                                           <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(5)">
                                             <i class="fa fa-external-link"></i>
                                             Exportar tabla a Excel
                                           </button>
-                                        </li>
-                                        <li class="list-group-item border-0 pl-0">
-                                          <button type="button" (click)="showTableDasboard(5, 1)"
-                                            class="btn-shadow mr-3 btn btn-info">
-                                            <i class="pe-7s-credit"></i>
-                                          </button>
-                                          <button type="button" (click)="showTableDasboard(5, 2)" class="btn-shadow btn btn-info float-right">
-                                            <i class="pe-7s-graph3"></i>
-                                          </button>
-                                        </li>
+                                        </li> -->
                                       </ul>
                                       <!-- <div class="" style="display:flex;margin:15px;align-items: center;">
                                         <span>Buscar</span>&nbsp;&nbsp;
@@ -569,127 +473,15 @@
                                       </div> -->
                                     
                                     </div>
-                                    <div class="card-body" *ngIf="isGrafico5">
-                                      <loading *ngIf="isLoading5">{{ isLoading5 }}</loading>
-                                      <div class="d-block" *ngIf="!isLoading5">
-                                        <canvas #baseChart id="chart-5">
+                                    <div class="card-body">
+                                      <div class="d-block" >
+                                        <canvas #baseChart id="chart-1">
                                         </canvas>
                                       </div>
                                     </div>
-                                    <ngx-datatable #myTable5
-                                    class="bootstrap table table-striped"
-                                      [columns]="columns3"
-                                      [rows]="rows5"
-                                      [columnMode]="ColumnMode.flex"
-                                      [headerHeight]="50"
-                                      [scrollbarH]="true"
-                                      (page)="setPage($event)"
-                                      [rowClass]="getRowClass"
-                                      [rowHeight]="$any('auto')"
-                                      *ngIf="isTable5"
-                                      >
-                                      <ngx-datatable-column [sortable]="false" [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns3; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
-                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
-                                          let-row="row">
-                                          <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM'}">
-                                            <span  [ngClass]="{'row-paddin': row.item.includes('-') || row.item.includes('TRABAJADORES') || row.item.includes('SOCIOS') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
-                                          </div>
-                                          <!-- <span title="Double click to edit" (dblclick)="editing[rowIndex + '-{{column.name}}'] = true"
-                                            *ngIf="!editing[rowIndex + '-{{column.name}}']">
-                                            {{value}}
-                                          </span>
-                                          <input autofocus (blur)="updateValue($event, '{{column.name}}', rowIndex)"
-                                            *ngIf="editing[rowIndex+ '-{{column.name}}']" type="text" [value]="value" /> -->
-                                        </ng-template>
-                                      </ngx-datatable-column>
-                                    </ngx-datatable>
                                   </div>
                                 </div>
-                                <div class="card">
-                                  
-                                  <div class="card-header" >
-                                    <div class="box-header">
-                                      
-                                      <div class="toggle-table">
-                                        <div class="callout callout-info">
-                                          <h3 class="box-title" id="Title_div_tabla_06">NÚMERO DE CONTRATOS PAGADOS</h3>
-                                        </div>
-                                        <button type="button" class="btn btn-outline-primary" (click)="collapse6.toggle()" [attr.aria-expanded]="!isCollapsed6"
-                                          aria-controls="collapseExample">
-                                          <i class="fa fa-minus" *ngIf="!isCollapsed6"> </i>
-                                          <i class="fa fa-plus" *ngIf="isCollapsed6"> </i> 
-                                        </button>
-                                      </div>
-                                      
-                                    </div>
-                                  </div>
-                                  <div #collapse6="ngbCollapse" [(ngbCollapse)]="isCollapsed6">
-                                    <div class="row" style="align-items: center;justify-content: space-between;">
-                                      <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
-                                        <li class="list-group-item border-0 pl-0">
-                                          <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(6)">
-                                            <i class="fa fa-external-link"></i>
-                                            Copiar tabla
-                                          </button>
-                                        </li>
-                                        <li class="list-group-item border-0 pl-0">
-                                          <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(6)">
-                                            <i class="fa fa-external-link"></i>
-                                            Exportar tabla a Excel
-                                          </button>
-                                        </li>
-                                        <li class="list-group-item border-0 pl-0">
-                                          <button type="button" (click)="showTableDasboard(6, 1)"
-                                            class="btn-shadow mr-3 btn btn-info">
-                                            <i class="pe-7s-credit"></i>
-                                          </button>
-                                          <button type="button" (click)="showTableDasboard(6, 2)" class="btn-shadow btn btn-info float-right">
-                                            <i class="pe-7s-graph3"></i>
-                                          </button>
-                                        </li>
-                                      </ul>
-                                      <!-- <div class="" style="display:flex;margin:15px;align-items: center;">
-                                        <span>Buscar</span>&nbsp;&nbsp;
-                                          <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter($event)'>
-                                      </div> -->
-                                    
-                                    </div>
-                                    <div class="card-body" *ngIf="isGrafico6">
-                                      <loading *ngIf="isLoading6">{{ isLoading6 }}</loading>
-                                      <div class="d-block" *ngIf="!isLoading6">
-                                        <canvas #baseChart id="chart-6">
-                                        </canvas>
-                                      </div>
-                                    </div>
-                                    <ngx-datatable #myTable6
-                                    class="bootstrap table table-striped"
-                                      [columns]="columns4"
-                                      [rows]="rows6"
-                                      [columnMode]="ColumnMode.flex"
-                                      [headerHeight]="50"
-                                      [scrollbarH]="true"
-                                      (page)="setPage($event)"
-                                      [rowClass]="getRowClass"
-                                      [rowHeight]="$any('auto')"
-                                      *ngIf="isTable6"
-                                      >
-                                      <ngx-datatable-column [sortable]="false" [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns4; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
-                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
-                                          let-row="row">
-                                          <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM'}">
-                                            <span  [ngClass]="{'row-paddin': row.item.includes('-') || row.item.includes('TRABAJADORES') || row.item.includes('SOCIOS') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
-                                          </div>
-                                          <!-- <span title="Double click to edit" (dblclick)="editing[rowIndex + '-{{column.name}}'] = true"
-                                            *ngIf="!editing[rowIndex + '-{{column.name}}']">
-                                            {{value}}
-                                          </span>
-                                          <input autofocus (blur)="updateValue($event, '{{column.name}}', rowIndex)"
-                                            *ngIf="editing[rowIndex+ '-{{column.name}}']" type="text" [value]="value" /> -->
-                                        </ng-template>
-                                      </ngx-datatable-column>
-                                    </ngx-datatable>
-                                  </div>
-                                </div>
+                                
                               </div>                       
                             </div>
                           </div>
@@ -703,8 +495,94 @@
                     <ng-template ngbNavContent>
                       <div class="card">
                         <div class="card-header">
-                          <h4 class="card-title" style="bottom:13px;">INGRESOS POR CUOTAS E INSCRIPCIONES DE PLAN SALUD FAMILIAR</h4>
+                          <h4 class="card-title" style="bottom:13px;">OCUPABILIDAD DE CONSULTORIOS POR CITAS AMBULATORIAS (No Incluyen Procedimientos)</h4>
                           <p>{{message}}</p>
+                          <div class="col-md-12 div_panel_cabecera">
+                            <div class="col-md-3 col-sm-6 col-xs-12">
+                               <div class="info-box">
+                                  <span style="background: #10004C !important; color:#fff !important;" class="info-box-icon">
+                                    <i class="fa fa-stethoscope" aria-hidden="true"></i>
+                                  </span>		
+                                  <div class="info-box-content">
+                                    <span style="font-family:arial; font-size:15px; " class="info-box-text">OCUPABILIDAD DEL MÉDICO</span>
+                                      <span *ngIf="resumenMes.promMesUso" class="info-box-number">{{resumenMes.promMesUso | number : '1.2-2' }} % ( {{resumenMes.minutosAtendidos_xDia}} )</span>
+                                      <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">Tiempo programado / 12 horas x dia
+                                      </label>
+                                  </div>
+                               </div>
+                            </div>
+                            <div class="col-md-3 col-sm-6 col-xs-12">
+                               <div class="info-box">
+                                  <span style="background: #57AA50 !important; color:#fff !important;" class="info-box-icon">			
+                                    <i class="fa fa-plus-circle" aria-hidden="true"></i>		</span>		
+                                  <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">OCUPABILIDAD DE ATENCIONES</span>			<span *ngIf="resumenMes.ocupabilidad" class="info-box-number">{{resumenMes.ocupabilidad | number : '1.2-2' }} % ( {{resumenMes.minutosProgramados_xDia}} )</span>			
+                                    <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">Tiempo de atención / 12 horas x dia
+                                      </label>		</div>
+                               </div>
+                            </div>
+                            <div class="col-md-3 col-sm-6 col-xs-12">
+                               <div class="info-box">
+                                  <span style="background: #FF3636 !important; color:#fff !important;" class="info-box-icon">			
+                                    <i class="fa fa-medkit" aria-hidden="true"></i>		</span>		
+                                  <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">OCUPABILIDAD DEL TURNO</span>			
+                                  <span *ngIf="resumenMes.usoEfectivoTurno" class="info-box-number">{{resumenMes.usoEfectivoTurno | number : '1.2-2' }} % ( {{resumenMes.promMinutosAtendidos}} )</span>			<label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success" >Tiempo de atención / tiempo programado
+                                    </label>		</div>
+                               </div>
+                            </div>
+                            <div class="col-md-3 col-sm-6 col-xs-12">
+                               <div class="info-box">
+                                  <span style="background: #FFAA00 !important; color:#fff !important;" class="info-box-icon">			
+                                    <i class="fa fa-institution" aria-hidden="true"></i>		</span>		
+                                  <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">NRO CONSULTORIOS</span>			
+                                    <span *ngIf="resumenMes.nro_consultorios" class="info-box-number">{{resumenMes.nro_consultorios}} en {{resumenMes.diasPeriodo}} días</span>			
+                                    <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">En {{resumenMes.nro_consultorios_maestro}} físicos Existentes</label>		</div>
+                               </div>
+                            </div>
+                          </div>
+                          <div class="col-md-12 div_panel_cabecera">
+                            <div class="col-md-3 col-sm-6 col-xs-12">
+                               <div class="info-box">
+                                  <span style="background: #10004C !important; color:#fff !important;" class="info-box-icon">
+                                    <i class="fa fa-users" aria-hidden="true"></i>
+                                  </span>		
+                                  <div class="info-box-content">
+                                    <span style="font-family:arial; font-size:15px; " class="info-box-text">ATENCIONES</span>
+                                      <span *ngIf="resumenMes.nro_atendidos" class="info-box-number" >{{resumenMes.nro_atendidos}} Pacientes</span>
+                                        <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success" >En {{(resumenMes.nro_atendidos / resumenMes.pacientes_unicos_atendidos) | number : '1.2-2' }} turnos</label>
+                                  </div>
+                               </div>
+                            </div>
+                            <div class="col-md-3 col-sm-6 col-xs-12">
+                               <div class="info-box">
+                                  <span style="background: #63B6DE !important; color:#fff !important;" class="info-box-icon">			
+                                    <i class="fa fa-hourglass-2" aria-hidden="true"></i>		</span>		
+                                  <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">PROMEDIO DE ATENCIÓN</span>			
+                                    <span *ngIf="resumenMes.nro_atendidos_xdia" class="info-box-number">{{resumenMes.nro_atendidos_xdia | number : '1.2-2'}} pacientes por día</span>			
+                                    <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">{{resumenMes.nro_atendidos_xturno | number : '1.2-2'}} pacientes por turno</label>		</div>
+                               </div>
+                            </div>
+                            <div class="col-md-3 col-sm-6 col-xs-12">
+                               <div class="info-box">
+                                  <span style="background: #2F50F1 !important; color:#fff !important;" class="info-box-icon">			
+                                    <i class="fa fa-clock-o" aria-hidden="true"></i>		</span>		
+                                  <div class="info-box-content">			
+                                    <span style="font-family:arial; font-size:15px; " class="info-box-text" >TURNOS PROGRAMADOS</span>			
+                                    <span *ngIf="resumenMes.promTurnosxDia" class="info-box-number">{{resumenMes.promTurnosxDia | number : '1.2-2'}} turnos</span>			
+                                    <label style="position:relative; top:13px; font-size:12px; display: flex;
+                                    justify-content: space-around;" class="label label-pill label-success" >Con {{resumenMes.tiempoxTurno}} cupos promedio
+                                    </label>		</div>
+                               </div>
+                            </div>
+                            <div class="col-md-3 col-sm-6 col-xs-12">
+                              <div class="info-box">
+                                 <span style="background: #57AA50 !important; color:#fff !important;" class="info-box-icon">			
+                                   <i class="fa fa-user-md" aria-hidden="true"></i>		</span>		
+                                 <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">MÉDICOS</span>			<span *ngIf="resumenMes.ocupabilidad" class="info-box-number">{{resumenMes.ocupabilidad | number : '1.2-2' }} Médicos )</span>			
+                                   <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">En {{ resumenMes.ocupabilidad }} especialidades
+                                     </label>		</div>
+                              </div>
+                           </div>
+                          </div>
                         </div>
                         <div class="card-content collapse show">
                           <div class="card-body">
@@ -729,14 +607,14 @@
                               </div> -->
                               <div class="box box-solid">
                                 
-                                <div id="accordion2">
+                                <div id="accordion3">
                                   <div class="card">
                                     <div class="card-header" >
                                       <div class="box-header">
-                                        
+                                        <h5 class="box-title" id="Title_div_tabla_04"><b>OCUPABILIDAD DEL CONSULTORIO - TIEMPO PROGRAMADO EN CONSULTORIO RESPECTO A LAS HORAS DEL DIA DE ATENCIÓN EN EL MES</b></h5>
                                         <div class="toggle-table">
                                           <div class="callout callout-info">
-                                            <h3 class="box-title" id="Title_div_tabla_04">INGRESO SIN IGV</h3>
+                                            <span>Fórmula : Tiempo programado al consultorio / 12 horas x día de atención</span>
                                           </div>
                                           <button type="button" class="btn btn-outline-primary" (click)="collapse4.toggle()" [attr.aria-expanded]="!isCollapsed4"
                                           aria-controls="collapseExample">
@@ -748,8 +626,8 @@
                                     </div>
                                 
                                     <div #collapse4="ngbCollapse" [(ngbCollapse)]="isCollapsed4">
-                                      <div class="row" style="align-items: center;justify-content: space-between;">
-                                        <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
+                                      <!-- <div class="row" style="align-items: center;justify-content: space-between;"> -->
+                                        <!-- <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
                                           <li class="list-group-item border-0 pl-0">
                                             <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(4)">
                                               <i class="fa fa-external-link"></i>
@@ -771,37 +649,35 @@
                                               <i class="pe-7s-graph3"></i>
                                             </button>
                                           </li>
-                                        </ul>
+                                        </ul> -->
                                         <!-- <div class="" style="display:flex;margin:15px;align-items: center;">
                                           <span>Buscar</span>&nbsp;&nbsp;
                                             <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter($event)'>
                                         </div> -->
                                       
-                                      </div>
-                                      <div class="card-body" *ngIf="isGrafico4">
+                                      <!-- </div> -->
+                                      <!-- <div class="card-body" *ngIf="isGrafico4">
                                         <loading *ngIf="isLoading4">{{ isLoading4 }}</loading>
                                         <div class="d-block" *ngIf="!isLoading4">
                                           <canvas #baseChart id="chart-4">
                                           </canvas>
                                         </div>
-                                      </div>
+                                      </div> -->
                                       <ngx-datatable #myTable4
                                       class="bootstrap table table-striped"
                                         [columns]="columns3"
-                                        [rows]="rows4"
+                                        [rows]="rows3"
                                         [columnMode]="ColumnMode.flex"
                                         [headerHeight]="50"
                                         [scrollbarH]="true"
                                         (page)="setPage($event)"
-                                        [rowClass]="getRowClass"
                                         [rowHeight]="$any('auto')"
-                                        *ngIf="isTable4"
                                         >
-                                        <ngx-datatable-column [sortable]="false" [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns3; let i = index;" name="{{column.name}}" prop="{{column.prop}}" >
+                                        <ngx-datatable-column [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns3; let i = index;" name="{{column.name}}" prop="{{column.prop}}" >
                                           <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                             let-row="row">
-                                            <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM'}">
-                                              <span  [ngClass]="{'row-paddin': row.item.includes('-') || row.item.includes('TRABAJADORES') || row.item.includes('SOCIOS') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
+                                            <div>
+                                              <span [title]="value">{{value}}</span>
                                             </div>
                                             
                                             <!-- <span title="Double click to edit" (dblclick)="editing[rowIndex + '-{{column.name}}'] = true"
@@ -818,10 +694,10 @@
                                   <div class="card">
                                     <div class="card-header" >
                                       <div class="box-header">
-                                        
+                                        <h5 class="box-title" id="Title_div_tabla_04"><b>OCUPABILIDAD DE ATENCIONES - TIEMPO DE ATENCION DEL PACIENTE RESPECTO A LAS HORAS DEL DIA DE ATENCIÓN EN EL MES</b></h5>
                                         <div class="toggle-table">
                                           <div class="callout callout-info">
-                                            <h3 class="box-title" id="Title_div_tabla_05">INGRESO CON IGV</h3>
+                                            <span>Fórmula : Tiempo de atención del paciente / 12 horas x día de atención</span>
                                           </div>
                                           <button type="button" class="btn btn-outline-primary" (click)="collapse5.toggle()" [attr.aria-expanded]="!isCollapsed5"
                                             aria-controls="collapseExample">
@@ -833,8 +709,8 @@
                                     </div>
                                 
                                     <div #collapse5="ngbCollapse" [(ngbCollapse)]="isCollapsed5">
-                                      <div class="row" style="align-items: center;justify-content: space-between;">
-                                        <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
+                                      <!-- <div class="row" style="align-items: center;justify-content: space-between;"> -->
+                                        <!-- <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
                                           <li class="list-group-item border-0 pl-0">
                                             <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(5)">
                                               <i class="fa fa-external-link"></i>
@@ -856,37 +732,35 @@
                                               <i class="pe-7s-graph3"></i>
                                             </button>
                                           </li>
-                                        </ul>
+                                        </ul> -->
                                         <!-- <div class="" style="display:flex;margin:15px;align-items: center;">
                                           <span>Buscar</span>&nbsp;&nbsp;
                                             <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter($event)'>
                                         </div> -->
                                       
-                                      </div>
-                                      <div class="card-body" *ngIf="isGrafico5">
+                                      <!-- </div> -->
+                                      <!-- <div class="card-body" *ngIf="isGrafico5">
                                         <loading *ngIf="isLoading5">{{ isLoading5 }}</loading>
                                         <div class="d-block" *ngIf="!isLoading5">
                                           <canvas #baseChart id="chart-5">
                                           </canvas>
                                         </div>
-                                      </div>
+                                      </div> -->
                                       <ngx-datatable #myTable5
                                       class="bootstrap table table-striped"
                                         [columns]="columns3"
-                                        [rows]="rows5"
+                                        [rows]="rows4"
                                         [columnMode]="ColumnMode.flex"
                                         [headerHeight]="50"
                                         [scrollbarH]="true"
                                         (page)="setPage($event)"
-                                        [rowClass]="getRowClass"
                                         [rowHeight]="$any('auto')"
-                                        *ngIf="isTable5"
                                         >
-                                        <ngx-datatable-column [sortable]="false" [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns3; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                        <ngx-datatable-column [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns3; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                           <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                             let-row="row">
-                                            <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM'}">
-                                              <span  [ngClass]="{'row-paddin': row.item.includes('-') || row.item.includes('TRABAJADORES') || row.item.includes('SOCIOS') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
+                                            <div>
+                                              <span [title]="value">{{value}}</span>
                                             </div>
                                             <!-- <span title="Double click to edit" (dblclick)="editing[rowIndex + '-{{column.name}}'] = true"
                                               *ngIf="!editing[rowIndex + '-{{column.name}}']">
@@ -903,10 +777,11 @@
                                     
                                     <div class="card-header" >
                                       <div class="box-header">
-                                        
+                                        <h5 class="box-title" id="Title_div_tabla_04"><b>OCUPABILIDAD DEL TURNO - TIEMPO DE ATENCION DEL PACIENTE RESPECTO AL TIEMPO PROGRAMADO POR TURNO</b></h5>
                                         <div class="toggle-table">
                                           <div class="callout callout-info">
-                                            <h3 class="box-title" id="Title_div_tabla_06">NÚMERO DE CONTRATOS PAGADOS</h3>
+                                            <span>Fórmula : Minutos de atención del paciente en el mes / Minutos programados del consultorio en el mes
+                                            </span>
                                           </div>
                                           <button type="button" class="btn btn-outline-primary" (click)="collapse6.toggle()" [attr.aria-expanded]="!isCollapsed6"
                                             aria-controls="collapseExample">
@@ -918,8 +793,8 @@
                                       </div>
                                     </div>
                                     <div #collapse6="ngbCollapse" [(ngbCollapse)]="isCollapsed6">
-                                      <div class="row" style="align-items: center;justify-content: space-between;">
-                                        <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
+                                      <!-- <div class="row" style="align-items: center;justify-content: space-between;"> -->
+                                        <!-- <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
                                           <li class="list-group-item border-0 pl-0">
                                             <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(6)">
                                               <i class="fa fa-external-link"></i>
@@ -932,46 +807,37 @@
                                               Exportar tabla a Excel
                                             </button>
                                           </li>
-                                          <li class="list-group-item border-0 pl-0">
-                                            <button type="button" (click)="showTableDasboard(6, 1)"
-                                              class="btn-shadow mr-3 btn btn-info">
-                                              <i class="pe-7s-credit"></i>
-                                            </button>
-                                            <button type="button" (click)="showTableDasboard(6, 2)" class="btn-shadow btn btn-info float-right">
-                                              <i class="pe-7s-graph3"></i>
-                                            </button>
-                                          </li>
-                                        </ul>
+                                          
+                                        </ul> -->
                                         <!-- <div class="" style="display:flex;margin:15px;align-items: center;">
                                           <span>Buscar</span>&nbsp;&nbsp;
                                             <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter($event)'>
                                         </div> -->
                                       
-                                      </div>
-                                      <div class="card-body" *ngIf="isGrafico6">
+                                      <!-- </div> -->
+                                      <!-- <div class="card-body" *ngIf="isGrafico6">
                                         <loading *ngIf="isLoading6">{{ isLoading6 }}</loading>
                                         <div class="d-block" *ngIf="!isLoading6">
                                           <canvas #baseChart id="chart-6">
                                           </canvas>
                                         </div>
-                                      </div>
+                                      </div> -->
+                                      
                                       <ngx-datatable #myTable6
                                       class="bootstrap table table-striped"
-                                        [columns]="columns4"
-                                        [rows]="rows6"
+                                        [columns]="columns3"
+                                        [rows]="rows5"
                                         [columnMode]="ColumnMode.flex"
                                         [headerHeight]="50"
                                         [scrollbarH]="true"
                                         (page)="setPage($event)"
-                                        [rowClass]="getRowClass"
                                         [rowHeight]="$any('auto')"
-                                        *ngIf="isTable6"
                                         >
-                                        <ngx-datatable-column [sortable]="false" [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns4; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                        <ngx-datatable-column [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns3; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                           <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                             let-row="row">
-                                            <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM'}">
-                                              <span  [ngClass]="{'row-paddin': row.item.includes('-') || row.item.includes('TRABAJADORES') || row.item.includes('SOCIOS') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
+                                            <div>
+                                              <span [title]="value">{{value}}</span>
                                             </div>
                                             <!-- <span title="Double click to edit" (dblclick)="editing[rowIndex + '-{{column.name}}'] = true"
                                               *ngIf="!editing[rowIndex + '-{{column.name}}']">

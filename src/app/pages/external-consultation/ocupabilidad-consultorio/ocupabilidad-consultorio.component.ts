@@ -64,7 +64,7 @@ export class OcupabilidadConsultorioComponent implements OnInit {
       
       // initially setter gets called with undefined
       this.baseChart = content;
-      this.getBarChart(this.barChartLabels, this.barChartData, this.barChartData2, 'chart-1', 'MENSUAL-INGRESO SIN IGV - TOTAL CUOTAS', 'MENSUAL-INGRESO SIN IGV - TOTAL RECAUDADO', 'horizontalBar');
+      this.getBarChart(this.barChartLabels, this.barChartData, this.barChartData2, this.barChartData3, 'chart-1', 'Ocupabilidad Atenciones', 'Ocupabilidad  Consultorio', 'Ocupabilidad Turno', 'line');
       // this.getBarChart(this.barChartLabels, this.barChartData3, this.barChartData4, 'chart-2', 'MENSUAL-INGRESO CON IGV - TOTAL CUOTAS', 'MENSUAL-INGRESO CON IGV - TOTAL RECAUDADO', 'bar');
       // this.getBarChart(this.barChartLabels2, this.barChartData5, this.barChartData6, 'chart-3', 'MENSUAL-NÚMERO DE CONTRATOS PAGADOS-TOTAL CUOTAS', 'MENSUAL-NÚMERO DE CONTRATOS PAGADOS-TOTAL RECAUDADO', 'bar');
       // this.getBarChart(this.barChartLabels3, this.barChartData7, this.barChartData8, 'chart-4', 'ANUAL-INGRESO SIN IGV - TOTAL CUOTAS', 'ANUAL-INGRESO SIN IGV - TOTAL RECAUDADO', 'bar');
@@ -84,7 +84,7 @@ export class OcupabilidadConsultorioComponent implements OnInit {
     reload: true
   };
   temp = [];
-  color = ['success', 'info', 'warning', 'danger','success', 'info', 'warning', 'danger', 'success', 'info', 'warning', 'danger'];
+  color = ['secondary','success','primary', 'warning', 'info', 'secondary','secondary', 'secondary', 'secondary', 'secondary', 'secondary'];
   selected = [];
   id: number;
   loadingIndicator: true;
@@ -134,12 +134,34 @@ export class OcupabilidadConsultorioComponent implements OnInit {
     promTurnosxDia: '',
     tiempoxTurno: '',
   };
-  // id_sede = '0001';
-  // id_tipo_paciente = '0';
-  // like_empresa = '';
-  // like_especialidad = '';
-  // like_medico = '';
-  // like_paciente = '';
+  detalleAnual = {
+    nro_consultorios: '',
+    nro_atendidos: '',
+    pacientes_unicos_atendidos: '',
+    prom_atencion_paciente: '',
+    tiempoxTurno: '',
+    nro_atendidos_x60m: '',
+    usoEfectivoTurno: '',
+    diasPeriodo: '',
+    turnos: '',
+    atenc_promMesUso: '',
+    atenc_promMeses: '',
+    prog_promMesUso: '',
+    prog_promMeses: '',
+    prom_TurnoDiasEfectivos: '',
+    prom_TurnoDiasTotales: ''
+  };
+nCons;
+sum_ocup_co_ma;
+sum_ocup_co_mt;
+sum_ocup_ct_ma;
+sum_ocup_ct_mt;
+sum_ocup_ca_ma;
+sum_ocup_ca_mt;
+  progressBarLabels;
+  progressBar1;
+  progressBar2;
+  progressBar3;
   page = new Page()
   ColumnMode = ColumnMode;
   filtered;
@@ -239,9 +261,8 @@ console.log(this.anio);
     this.periodo_consulta = this.anio + this.mes;
     this.setPage({ offset: 0 });
   }
-  getBarChart(barChartLabels, barChartData, barChartData2, chartNum, title, title2, typeChart) {
-console.log(222,barChartData);
-console.log(223,barChartData2);
+  getBarChart(barChartLabels, barChartData, barChartData2, barChartData3, chartNum, title, title2, title3, typeChart) {
+
     const data = {
       labels: barChartLabels,
       datasets: [
@@ -252,7 +273,7 @@ console.log(223,barChartData2);
           // borderColor: 'rgba(99, 255, 132, 1)',
           borderWidth: 1,
           data: barChartData,
-          backgroundColor: '#2266d3'
+          backgroundColor: 'rgb(166, 17, 32, 0.5)'
           // backgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#adb5bd','#ffc107', '#28a745', '#6610f2','#20c997'],
           // hoverBackgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14','#adb5bd', '#ffc107', '#28a745', '#6610f2', '#20c997']
         },
@@ -261,7 +282,16 @@ console.log(223,barChartData2);
           // borderColor: 'rgba(99, 255, 132, 1)',
           borderWidth: 1,
           data: barChartData2,
-          backgroundColor: '#ffa408'
+          backgroundColor: 'rgb(255, 164, 8, 0.5)'
+          // backgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#adb5bd','#ffc107', '#28a745', '#6610f2','#20c997'],
+          // hoverBackgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14','#adb5bd', '#ffc107', '#28a745', '#6610f2', '#20c997']
+        },
+        {
+          label: title3,
+          // borderColor: 'rgba(99, 255, 132, 1)',
+          borderWidth: 1,
+          data: barChartData3,
+          backgroundColor: 'rgb(34, 102, 211, 0.5)'
           // backgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#adb5bd','#ffc107', '#28a745', '#6610f2','#20c997'],
           // hoverBackgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14','#adb5bd', '#ffc107', '#28a745', '#6610f2', '#20c997']
         }
@@ -277,93 +307,93 @@ console.log(223,barChartData2);
       // },
       responsive: true,
       // We use these empty structures as placeholders for dynamic theming.
-      // scales: {
-      //   yAxes: [{
-      //     ticks: {
-      //       beginAtZero: true,
-      //       callback: function (value, index, values) {
-      //         console.log(444,Number.isInteger(value), value,index,values);
-      //         if (chartNum = 'chart-3'){
-      //           return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-      //         }else{
-      //           if (parseInt(value) >= 1000) {
-      //                           return 'S/.' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-      //           } else { return 'S/.' + value; }
-      //         }
-              
-      //       }
-      //     }
-      //   }]
-      // },
-      legend: {
-        display: false
-      },
       scales: {
-        xAxes: [{
-          display: false,
-          ticks: {
-            max: 100,
-            min: 0
-          }
-        }],
         yAxes: [{
-          display: false
+          ticks: {
+            beginAtZero: true,
+            callback: function (value, index, values) {
+              // console.log(444,Number.isInteger(value), value,index,values);
+              if (chartNum = 'chart-3'){
+                return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+              }else{
+                if (parseInt(value) >= 1000) {
+                                return 'S/.' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                } else { return 'S/.' + value; }
+              }
+              
+            }
+          }
         }]
       },
+      // legend: {
+      //   display: false
+      // },
+      // scales: {
+      //   xAxes: [{
+      //     display: false,
+      //     ticks: {
+      //       max: 100,
+      //       min: 0
+      //     }
+      //   }],
+      //   yAxes: [{
+      //     display: false
+      //   }]
+      // },
       plugins: {
-        // datalabels: {
+        datalabels: {
           
-        //   /* anchor puede ser "start", "center" o "end" */
-        //   anchor: 'center',
-        //   backgroundColor: function(context) {
-        //     return context.dataset.backgroundColor;
-        //   },
-        //   borderRadius: 4,
-        //   clip: true,
-        //   color: 'white',
-        //   font: {
-        //     weight: 'bold'
-        //   },
-        //   formatter: function(value, context) {
-        //     let sum = 0;
+          /* anchor puede ser "start", "center" o "end" */
+          anchor: 'center',
+          backgroundColor: function(context) {
+            return context.dataset.backgroundColor;
+          },
+          borderRadius: 4,
+          clip: true,
+          color: 'white',
+          font: {
+            weight: 'bold'
+          },
+          formatter: function(value, context) {
+            let sum = 0;
             
-        //     let dataArr = context.chart.data.datasets[context.datasetIndex].data;
+            let dataArr = context.chart.data.datasets[context.datasetIndex].data;
               
-        //     dataArr.map((data) => {
-        //       return sum += parseFloat(data);
-        //     });
-        //     console.log(292,value , sum );
-        //     if (sum > 0 ){
-        //       return ((value * 100) / sum).toFixed(2) + '%';
-        //     }else{
-        //       return (0 + '%');
-        //     }
+            dataArr.map((data) => {
+              return sum += parseFloat(data);
+            });
+            // console.log(292,value , sum );
+            if (sum > 0 ){
+              return ((value * 100) / sum).toFixed(2) + '%';
+            }else{
+              return (0 + '%');
+            }
             
-        //   },
-        //   /* Podemos modificar el texto a mostrar */
-        //   // formatter: function (dato, ctx) {
-        //   //   return ((dato * 100) / total).toFixed(2) + '%'; 
-        //   // },
-        //   // formatter: (dato) => ((dato * 100) / total).toFixed(2) + '%',
-        //   // formatter: function (value, ctx) {
-        //   //   return ((value * 100) / this.total(ctx)).toFixed(2) + '%';
-        //   // },
-        //   // formatter: (dato) => Math.floor((dato / totales) * 100) + '%',
-        //   /* Color del texto */
-        //   // color: '#ffffff',
-        //   // /* Formato de la fuente */
-        //   // font: {
-        //   //   // family: '"Times New Roman", Times, serif',
-        //   //   size: '11',
-        //   //   weight: 'bold',
-        //   // },
-        //   /* Formato de la caja contenedora */
-        //   // padding: '4',
-        //   // borderWidth: 2,
-        //   // borderColor: 'darkblue',
-        //   // borderRadius: 8,
-        //   // backgroundColor: 'lightblue'
-        // }
+          },
+          /* Podemos modificar el texto a mostrar */
+          // formatter: function (dato, ctx) {
+          //   return ((dato * 100) / total).toFixed(2) + '%'; 
+          // },
+          // formatter: (dato) => ((dato * 100) / total).toFixed(2) + '%',
+          // formatter: function (value, ctx) {
+          //   return ((value * 100) / this.total(ctx)).toFixed(2) + '%';
+          // },
+          // formatter: (dato) => Math.floor((dato / totales) * 100) + '%',
+          /* Color del texto */
+          // color: '#ffffff',
+          // /* Formato de la fuente */
+          // font: {
+          //   // family: '"Times New Roman", Times, serif',
+          //   size: '11',
+          //   weight: 'bold',
+          // },
+          /* Formato de la caja contenedora */
+          // padding: '4',
+          // borderWidth: 2,
+          // borderColor: 'darkblue',
+          // borderRadius: 8,
+          // backgroundColor: 'lightblue'
+        }
       }
     };
     return this.getChart(chartNum, typeChart, data, options);
@@ -374,12 +404,27 @@ console.log(223,barChartData2);
   //   window.myChart = new Chart(ctx, config);
   // };
   getChart(context, chartType, data, options?) {
-    return new Chart(context, {
+    const graph = new Chart(context, {
       data,
       options,
       type: chartType,
       plugins: [ChartDataLabels]
     });
+    return graph;
+  }
+  guardarImagen(){
+    var canvas = document.getElementById("chart-1") as HTMLCanvasElement;
+    var downloadlink = document.getElementById("downloadlink") as HTMLAnchorElement;
+    
+    // var ctx = canvas.getContext("2d");
+    // ctx.strokeStyle = "yellow";
+    // ctx.lineWidth = 4;
+    // ctx.beginPath();
+    // ctx.arc(100,75,50,0,Math.PI*2);
+    // ctx.stroke();
+    var imagedata = canvas.toDataURL("image/png");
+    console.log(imagedata)
+    downloadlink.href = imagedata;
   }
   getRowClass(row) {
     
@@ -403,10 +448,10 @@ formatPipe(rows) {
         // console.log(item);
         // if (item.per1) {
           // console.log(item.per1);
-      item.porcUsoConsultorioTotal = typeof item.porcUsoConsultorioTotal === 'number' ? item.porcUsoConsultorioTotal.toFixed(2) : Number(item.porcUsoConsultorioTotal).toFixed(2)
-      item.porcUsoConsultorioProgTotal = typeof item.porcUsoConsultorioProgTotal === 'number' ? item.porcUsoConsultorioProgTotal.toFixed(2) : Number(item.porcUsoConsultorioProgTotal).toFixed(2)
+      item.porcUsoConsultorioTotal = typeof item.porcUsoConsultorioTotal === 'number' ? item.porcUsoConsultorioTotal.toFixed(2) : Number(item.porcUsoConsultorioTotal).toFixed(2) + ' %';
+      item.porcUsoConsultorioProgTotal = typeof item.porcUsoConsultorioProgTotal === 'number' ? item.porcUsoConsultorioProgTotal.toFixed(2) : Number(item.porcUsoConsultorioProgTotal).toFixed(2) + ' %';
       item.promTurnosxDia = typeof item.promTurnosxDia === 'number' ? item.promTurnosxDia.toFixed(2) : Number(item.promTurnosxDia).toFixed(2)
-      item.porcUsoCita = typeof item.porcUsoCita === 'number' ? item.porcUsoCita.toFixed(2) : Number(item.porcUsoCita).toFixed(2)
+      item.porcUsoCita = typeof item.porcUsoCita === 'number' ? item.porcUsoCita.toFixed(2) : Number(item.porcUsoCita).toFixed(2) + ' %';
     return item.porcUsoConsultorioTotal, item.porcUsoConsultorioProgTotal, item.promTurnosxDia, item.porcUsoCita;
         // } else {
         //   return item;
@@ -473,7 +518,7 @@ setPage(pageInfo) {
       archivo_especialidades_mes: 'aaammTmpAEmesaaTmp_133621r9RaQ',
       archivo_medico_mes: 'aaammTmpAMedEmesaaTmp_133621r9RaQ',
     };
-
+    this.loading();
 this.tableApiservice.eliminarTablasConsultorio(this.tablas).subscribe(
   (response) => {
     if(response.success){
@@ -503,12 +548,12 @@ this.tableApiservice.eliminarTablasConsultorio(this.tablas).subscribe(
               }
             );
             this.tableApiservice.getGraficoProgressBars_0(this.parameters).subscribe(
-              (response) => {console.log(468, response);
+              (response) => {
                 if(response.success){
-                  this.barChartLabels = response.resumen_cons;
-                  this.barChartData = response.resumen_oc_apor;
-                  this.barChartData2 = response.resumen_oc_cpor;
-                  this.barChartData3 = response.resumen_oc_tpor;
+                  this.progressBarLabels = response.resumen_cons;
+                  this.progressBar1 = response.resumen_oc_apor;
+                  this.progressBar2 = response.resumen_oc_cpor;
+                  this.progressBar3 = response.resumen_oc_tpor;
                 }
                 
               },
@@ -516,50 +561,162 @@ this.tableApiservice.eliminarTablasConsultorio(this.tablas).subscribe(
                   Swal.close();
               }
             );
-            // this.tableApiservice.getResumenGrafica1(this.parameters).subscribe(
-            //   (response) => {console.log(479, response);
-            //     if(response.success){
-                  
-            //     }
+            this.tableApiservice.getResumenGrafica1(this.parameters).subscribe(
+              (response) => {
+                this.barChartLabels = [];
+                this.barChartData = [];
+                this.barChartData2 = [];
+                this.barChartData3 = [];
+                if(response.success){
+                  // this.barChartLabels = response;
+                  response.grafica1.map(item => {
+                        this.barChartLabels.push(item.name);
+                        this.barChartData.push(item.item_1);
+                        this.barChartData2.push(item.item_2);
+                        this.barChartData3.push(item.item_3);
+                    } 
+                  );
+                }
+              },
+              (error) => {
+                  Swal.close();
+              }
+            );
+            this.tableApiservice.getResumenConsultorios_1(this.parameters).subscribe(
+              (response) => {
+                if(response.success){
+                  this.columns2 = response.data.cabeceras;
+                  this.rows2 = response.data.data
+                  this.rows2.map(item =>{
+                    console.log(591, item)
+                    if(item.item === 'Ocupabilidad de Atenciones' || item.item === 'Ocupabilidad del Consultorio' || item.item === 'Ocupabilidad del Turno' ){
+                      console.log(593, item)
+                      item.per1 = typeof item.per1 === 'number' ? item.per1.toFixed(2) + ' %' : Number(item.per1).toFixed(2) + ' %';
+                      item.per2 = typeof item.per2 === 'number' ? item.per2.toFixed(2) + ' %' : Number(item.per2).toFixed(2) + ' %';
+                      item.per3 = typeof item.per3 === 'number' ? item.per3.toFixed(2) + ' %' : Number(item.per3).toFixed(2) + ' %';
+                      item.per4 = typeof item.per4 === 'number' ? item.per4.toFixed(2) + ' %' : Number(item.per4).toFixed(2) + ' %';
+
+                      item.per5 = typeof item.per5 === 'number' ? item.per5.toFixed(2) + ' %' : Number(item.per5).toFixed(2) + ' %';
+                      item.per6 = typeof item.per6 === 'number' ? item.per6.toFixed(2) + ' %' : Number(item.per6).toFixed(2) + ' %';
+                      item.per7 = typeof item.per7 === 'number' ? item.per7.toFixed(2) + ' %' : Number(item.per7).toFixed(2) + ' %';
+                      item.per8 = typeof item.per8 === 'number' ? item.per8.toFixed(2) + ' %' : Number(item.per8).toFixed(2) + ' %';
+                      item.per9 = typeof item.per9 === 'number' ? item.per9.toFixed(2) + ' %' : Number(item.per9).toFixed(2) + ' %';
+                      item.per10 = typeof item.per10 === 'number' ? item.per10.toFixed(2) + ' %' : Number(item.per10).toFixed(2) + ' %';
+                      item.per11 = typeof item.per11 === 'number' ? item.per11.toFixed(2) + ' %' : Number(item.per11).toFixed(2) + ' %';
+                      item.per12 = typeof item.per12 === 'number' ? item.per12.toFixed(2) + ' %' : Number(item.per12).toFixed(2) + ' %';
+                      item.TOTAL = typeof item.TOTAL === 'number' ? item.TOTAL.toFixed(2) + ' %' : Number(item.TOTAL).toFixed(2) + ' %';
+                    }else{
+                      item.per1 = typeof item.per1 === 'number' ? this.separadorDeMiles(item.per1) : this.separadorDeMiles(Number(item.per1));
+                      item.per2 = typeof item.per2 === 'number' ? this.separadorDeMiles(item.per2) : this.separadorDeMiles(Number(item.per2));
+                      item.per3 = typeof item.per3 === 'number' ? this.separadorDeMiles(item.per3) : this.separadorDeMiles(Number(item.per3));
+                      item.per4 = typeof item.per4 === 'number' ? this.separadorDeMiles(item.per4) : this.separadorDeMiles(Number(item.per4));
+
+                      item.per5 = typeof item.per5 === 'number' ? this.separadorDeMiles(item.per5) : this.separadorDeMiles(Number(item.per5));
+                      item.per6 = typeof item.per6 === 'number' ? this.separadorDeMiles(item.per6) : this.separadorDeMiles(Number(item.per6));
+                      item.per7 = typeof item.per7 === 'number' ? this.separadorDeMiles(item.per7) : this.separadorDeMiles(Number(item.per7));
+                      item.per8 = typeof item.per8 === 'number' ? this.separadorDeMiles(item.per8) : this.separadorDeMiles(Number(item.per8));
+                      item.per9 = typeof item.per9 === 'number' ? this.separadorDeMiles(item.per9) : this.separadorDeMiles(Number(item.per9));
+                      item.per10 = typeof item.per10 === 'number' ? this.separadorDeMiles(item.per10): this.separadorDeMiles(Number(item.per10));
+                      item.per11 = typeof item.per11 === 'number' ? this.separadorDeMiles(item.per11): this.separadorDeMiles(Number(item.per11));
+                      item.per12 = typeof item.per12 === 'number' ? this.separadorDeMiles(item.per12): this.separadorDeMiles(Number(item.per12));
+                      item.TOTAL = typeof item.TOTAL === 'number' ? this.separadorDeMiles(item.TOTAL): this.separadorDeMiles(Number(item.TOTAL));
+                    }
+                    return item.per1, item.per2, item.per3, item.per4, item.per5, item.per6, item.per7, item.per8, item.per9, item.per10, item.per11,item.per12, item.TOTAL;
+                  });
+                }
                 
-            //   },
-            //   (error) => {
-            //       Swal.close();
-            //   }
-            // );
-            // this.tableApiservice.getResumenConsultorios_1(this.parameters).subscribe(
-            //   (response) => {console.log(490, response);
-            //     if(response.success){
+              },
+              (error) => {
+                  Swal.close();
+              }
+            );
+            this.tableApiservice.getResumenCabecera(this.parameters).subscribe(
+              (response) => {
+                if(response.success){
+                  this.detalleAnual = response;
                   
-            //     }
-                
-            //   },
-            //   (error) => {
-            //       Swal.close();
-            //   }
-            // );
-            // this.tableApiservice.getResumenCabecera(this.parameters).subscribe(
-            //   (response) => {console.log(501, response);
-            //     if(response.success){
-                  
-            //     }
-                
-            //   },
-            //   (error) => {
-            //       Swal.close();
-            //   }
-            // );
-            // this.tableApiservice.getUsoConsultorioAnual(this.parameters).subscribe(
-            //   (response) => {console.log(512, response);
-            //     if(response.success){
-                  
-            //     }
-                
-            //   },
-            //   (error) => {
-            //       Swal.close();
-            //   }
-            // );
+                }
+                console.log(577, this.detalleAnual);
+              },
+              (error) => {
+                  Swal.close();
+              }
+            );
+            this.tableApiservice.getUsoConsultorioAnual(this.parameters).subscribe(
+              (response) => {
+                if(response.success){
+                    this.columns3 = response.data.cabeceras
+                    this.rows3 = response.data.tabla_total
+                    this.rows3.map(item =>{
+                      item.Per1 = typeof item.Per1 === 'number' ? item.Per1.toFixed(2) + ' %' : Number(item.Per1).toFixed(2) + ' %';
+                      item.Per2 = typeof item.Per2 === 'number' ? item.Per2.toFixed(2) + ' %' : Number(item.Per2).toFixed(2) + ' %';
+                      item.Per3 = typeof item.Per3 === 'number' ? item.Per3.toFixed(2) + ' %' : Number(item.Per3).toFixed(2) + ' %';
+                      item.Per4 = typeof item.Per4 === 'number' ? item.Per4.toFixed(2) + ' %' : Number(item.Per4).toFixed(2) + ' %';
+  
+                      item.Per5 = typeof item.Per5 === 'number' ? item.Per5.toFixed(2) + ' %' : Number(item.Per5).toFixed(2) + ' %';
+                      item.Per6 = typeof item.Per6 === 'number' ? item.Per6.toFixed(2) + ' %' : Number(item.Per6).toFixed(2) + ' %';
+                      item.Per7 = typeof item.Per7 === 'number' ? item.Per7.toFixed(2) + ' %' : Number(item.Per7).toFixed(2) + ' %';
+                      item.Per8 = typeof item.Per8 === 'number' ? item.Per8.toFixed(2) + ' %' : Number(item.Per8).toFixed(2) + ' %';
+                      item.Per9 = typeof item.Per9 === 'number' ? item.Per9.toFixed(2) + ' %' : Number(item.Per9).toFixed(2) + ' %';
+                      item.Per10 = typeof item.Per10 === 'number' ? item.Per10.toFixed(2) + ' %' : Number(item.Per10).toFixed(2) + ' %';
+                      item.Per11 = typeof item.Per11 === 'number' ? item.Per11.toFixed(2) + ' %' : Number(item.Per11).toFixed(2) + ' %';
+                      item.Per12 = typeof item.Per12 === 'number' ? item.Per12.toFixed(2) + ' %' : Number(item.Per12).toFixed(2) + ' %';
+                      item.promMesUso = typeof item.promMesUso === 'number' ? item.promMesUso.toFixed(2) : Number(item.promMesUso).toFixed(2) + ' %';
+                      item.promMeses = typeof item.promMeses === 'number' ? item.promMeses.toFixed(2) : Number(item.promMeses).toFixed(2) + ' %';
+                      return item.Per1, item.Per2, item.Per3, item.Per4, item.Per5, item.Per6, item.Per7, item.Per8, item.Per9, item.Per10, item.Per11,item.Per12,item.promMesUso,item.promMeses;
+                    });
+                    this.rows4 = response.data.tabla_mes
+                    this.rows4.map(item =>{
+                      item.Per1 = typeof item.Per1 === 'number' ? item.Per1.toFixed(2) + ' %' : Number(item.Per1).toFixed(2) + ' %';
+                      item.Per2 = typeof item.Per2 === 'number' ? item.Per2.toFixed(2) + ' %' : Number(item.Per2).toFixed(2) + ' %';
+                      item.Per3 = typeof item.Per3 === 'number' ? item.Per3.toFixed(2) + ' %' : Number(item.Per3).toFixed(2) + ' %';
+                      item.Per4 = typeof item.Per4 === 'number' ? item.Per4.toFixed(2) + ' %' : Number(item.Per4).toFixed(2) + ' %';
+  
+                      item.Per5 = typeof item.Per5 === 'number' ? item.Per5.toFixed(2) + ' %' : Number(item.Per5).toFixed(2) + ' %';
+                      item.Per6 = typeof item.Per6 === 'number' ? item.Per6.toFixed(2) + ' %' : Number(item.Per6).toFixed(2) + ' %';
+                      item.Per7 = typeof item.Per7 === 'number' ? item.Per7.toFixed(2) + ' %' : Number(item.Per7).toFixed(2) + ' %';
+                      item.Per8 = typeof item.Per8 === 'number' ? item.Per8.toFixed(2) + ' %' : Number(item.Per8).toFixed(2) + ' %';
+                      item.Per9 = typeof item.Per9 === 'number' ? item.Per9.toFixed(2) + ' %' : Number(item.Per9).toFixed(2) + ' %';
+                      item.Per10 = typeof item.Per10 === 'number' ? item.Per10.toFixed(2) + ' %' : Number(item.Per10).toFixed(2) + ' %';
+                      item.Per11 = typeof item.Per11 === 'number' ? item.Per11.toFixed(2) + ' %' : Number(item.Per11).toFixed(2) + ' %';
+                      item.Per12 = typeof item.Per12 === 'number' ? item.Per12.toFixed(2) + ' %' : Number(item.Per12).toFixed(2) + ' %';
+                      item.promMesUso = typeof item.promMesUso === 'number' ? item.promMesUso.toFixed(2) + ' %' : Number(item.promMesUso).toFixed(2) + ' %';
+                      item.promMeses = typeof item.promMeses === 'number' ? item.promMeses.toFixed(2) + ' %' : Number(item.promMeses).toFixed(2) + ' %';
+                      return item.Per1, item.Per2, item.Per3, item.Per4, item.Per5, item.Per6, item.Per7, item.Per8, item.Per9, item.Per10, item.Per11,item.Per12,item.promMesUso,item.promMeses;
+                    });
+                    this.rows5 = response.data.tabla_turno
+                    this.rows5.map(item =>{
+                      item.Per1 = typeof item.Per1 === 'number' ? item.Per1.toFixed(2) + ' %' : Number(item.Per1).toFixed(2) + ' %';
+                      item.Per2 = typeof item.Per2 === 'number' ? item.Per2.toFixed(2) + ' %' : Number(item.Per2).toFixed(2) + ' %';
+                      item.Per3 = typeof item.Per3 === 'number' ? item.Per3.toFixed(2) + ' %' : Number(item.Per3).toFixed(2) + ' %';
+                      item.Per4 = typeof item.Per4 === 'number' ? item.Per4.toFixed(2) + ' %' : Number(item.Per4).toFixed(2) + ' %';
+  
+                      item.Per5 = typeof item.Per5 === 'number' ? item.Per5.toFixed(2) + ' %' : Number(item.Per5).toFixed(2) + ' %';
+                      item.Per6 = typeof item.Per6 === 'number' ? item.Per6.toFixed(2) + ' %' : Number(item.Per6).toFixed(2) + ' %';
+                      item.Per7 = typeof item.Per7 === 'number' ? item.Per7.toFixed(2) + ' %' : Number(item.Per7).toFixed(2) + ' %';
+                      item.Per8 = typeof item.Per8 === 'number' ? item.Per8.toFixed(2) + ' %' : Number(item.Per8).toFixed(2) + ' %';
+                      item.Per9 = typeof item.Per9 === 'number' ? item.Per9.toFixed(2) + ' %' : Number(item.Per9).toFixed(2) + ' %';
+                      item.Per10 = typeof item.Per10 === 'number' ? item.Per10.toFixed(2) + ' %' : Number(item.Per10).toFixed(2) + ' %';
+                      item.Per11 = typeof item.Per11 === 'number' ? item.Per11.toFixed(2) + ' %' : Number(item.Per11).toFixed(2) + ' %';
+                      item.Per12 = typeof item.Per12 === 'number' ? item.Per12.toFixed(2) + ' %' : Number(item.Per12).toFixed(2) + ' %';
+                      item.promMesUso = typeof item.promMesUso === 'number' ? item.promMesUso.toFixed(2) + ' %' : Number(item.promMesUso).toFixed(2) + ' %';
+                      item.promMeses = typeof item.promMeses === 'number' ? item.promMeses.toFixed(2) + ' %' : Number(item.promMeses).toFixed(2) + ' %';
+                      return item.Per1, item.Per2, item.Per3, item.Per4, item.Per5, item.Per6, item.Per7, item.Per8, item.Per9, item.Per10, item.Per11,item.Per12,item.promMesUso,item.promMeses;
+                    });
+                    this.nCons =  response.data.nCons;
+                    this.sum_ocup_co_ma = typeof response.data.sum_ocup_co_ma === 'number' ? response.data.sum_ocup_co_ma.toFixed(2) : Number(response.data.sum_ocup_co_ma).toFixed(2);
+                    this.sum_ocup_co_mt = typeof response.data.sum_ocup_co_mt === 'number' ? response.data.sum_ocup_co_mt.toFixed(2) : Number(response.data.sum_ocup_co_mt).toFixed(2);
+                    this.sum_ocup_ct_ma = typeof response.data.sum_ocup_ct_ma === 'number' ? response.data.sum_ocup_ct_ma.toFixed(2) : Number(response.data.sum_ocup_ct_ma).toFixed(2);
+                    this.sum_ocup_ct_mt = typeof response.data.sum_ocup_ct_mt === 'number' ? response.data.sum_ocup_ct_mt.toFixed(2) : Number(response.data.sum_ocup_ct_mt).toFixed(2);
+                    this.sum_ocup_ca_ma = typeof response.data.sum_ocup_ca_ma === 'number' ? response.data.sum_ocup_ca_ma.toFixed(2) : Number(response.data.sum_ocup_ca_ma).toFixed(2);
+                    this.sum_ocup_ca_mt = typeof response.data.sum_ocup_ca_mt === 'number' ? response.data.sum_ocup_ca_mt.toFixed(2) : Number(response.data.sum_ocup_ca_mt).toFixed(2);
+                }
+                Swal.close();
+              },
+              (error) => {
+                  Swal.close();
+              }
+            );
           }
         },
         (error) => {
@@ -574,6 +731,13 @@ this.tableApiservice.eliminarTablasConsultorio(this.tablas).subscribe(
   }
 );
 
+}
+separadorDeMiles(numero) {
+  let partesNumero = numero.toString().split('.');
+
+  partesNumero[0] = partesNumero[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+  return partesNumero.join('.');
 }
 
   copyTableToClipboard(numberTabla){
