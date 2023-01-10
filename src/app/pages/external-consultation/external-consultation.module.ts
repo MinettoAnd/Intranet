@@ -9,11 +9,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ExternalAttentionConsultationComponent } from './attention-consultation/external-attention-consultation.component';
 import { OcupabilidadMedicoComponent } from './ocupabilidad-medico/ocupabilidad-medico.component';
 import { OcupabilidadConsultorioComponent } from './ocupabilidad-consultorio/ocupabilidad-consultorio.component';
+import { EstadisticasComponent } from './estadisticas/estadisticas.component';
 @NgModule({
   declarations: [
     ExternalAttentionConsultationComponent,
     OcupabilidadMedicoComponent,
-    OcupabilidadConsultorioComponent
+    OcupabilidadConsultorioComponent,
+    EstadisticasComponent
   ],
   imports: [
     CommonModule,
@@ -22,6 +24,10 @@ import { OcupabilidadConsultorioComponent } from './ocupabilidad-consultorio/ocu
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forChild([
+      {
+        path: 'estadisticas',
+        component: EstadisticasComponent
+      },
       {
         path: 'consulta-de-atenciones',
         component: ExternalAttentionConsultationComponent
