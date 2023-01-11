@@ -25,6 +25,8 @@ import ResizeObserver from 'resize-observer-polyfill';
   styleUrls: ['./ocupabilidad-medico.component.scss']
 })
 export class OcupabilidadMedicoComponent implements OnInit {
+  initialSize = 0;
+  columnSize  = [ 20, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10];
   private baseChart: ElementRef;
   // private baseChart2: ElementRef;
   
@@ -84,7 +86,9 @@ export class OcupabilidadMedicoComponent implements OnInit {
     reload: true
   };
   temp = [];
+  temp2 = [];
   color = ['secondary','success','primary', 'warning', 'info', 'secondary','secondary', 'secondary', 'secondary', 'secondary', 'secondary'];
+  selectedOption='CARDIOLOGIA';
   selected = [];
   id: number;
   loadingIndicator: true;
@@ -123,16 +127,31 @@ export class OcupabilidadMedicoComponent implements OnInit {
     ocupabilidad: '',
     minutosProgramados_xDia: '',
     usoEfectivoTurno: '',
-    promMinutosAtendidos: '',
     nro_consultorios: '',
-    diasPeriodo: '',
+    nro_turnos: '',
     nro_consultorios_maestro: '',
     nro_atendidos: '',
-    pacientes_unicos_atendidos: '',
+    nro_cupos: '',
     nro_atendidos_xdia: '',
     nro_atendidos_xturno: '',
-    promTurnosxDia: '',
-    tiempoxTurno: '',
+    nro_medicos: '',
+    nro_especialidad: '',
+  };
+  resumenAnual = {
+    promMesUso: '',
+    minutosAtendidos_xDia: '',
+    ocupabilidad: '',
+    minutosProgramados_xDia: '',
+    usoEfectivoTurno: '',
+    nro_consultorios: '',
+    nro_turnos: '',
+    nro_consultorios_maestro: '',
+    nro_atendidos: '',
+    nro_cupos: '',
+    nro_atendidos_xdia: '',
+    nro_atendidos_xturno: '',
+    nro_medicos: '',
+    nro_especialidad: '',
   };
   detalleAnual = {
     nro_consultorios: '',
@@ -151,6 +170,10 @@ export class OcupabilidadMedicoComponent implements OnInit {
     prom_TurnoDiasEfectivos: '',
     prom_TurnoDiasTotales: ''
   };
+especialidades = [];
+especialidad;
+rowsFilter = [];
+rowsFilter2 = [];
 nCons;
 sum_ocup_co_ma;
 sum_ocup_co_mt;
@@ -244,8 +267,11 @@ console.log(this.anio);
    }
 
   ngOnInit() {
+
     this.setPage({ offset: 0 });
   }
+
+
   public onSedeChange(sede: any): void {
     this.id_sede = sede;
     // this.periodo_consulta = this.anio + this.mes;
@@ -448,11 +474,13 @@ formatPipe(rows) {
         // console.log(item);
         // if (item.per1) {
           // console.log(item.per1);
-      item.porcUsoConsultorioTotal = typeof item.porcUsoConsultorioTotal === 'number' ? item.porcUsoConsultorioTotal.toFixed(2) : Number(item.porcUsoConsultorioTotal).toFixed(2) + ' %';
-      item.porcUsoConsultorioProgTotal = typeof item.porcUsoConsultorioProgTotal === 'number' ? item.porcUsoConsultorioProgTotal.toFixed(2) : Number(item.porcUsoConsultorioProgTotal).toFixed(2) + ' %';
+      
+      item.cupos = typeof item.cupos === 'number' ? Math.round(item.cupos) : Math.round(Number(item.cupos));
+      item.minutosAtencionProg = typeof item.minutosAtencionProg === 'number' ? item.minutosAtencionProg.toFixed(2) : Number(item.minutosAtencionProg).toFixed(2);
       item.promTurnosxDia = typeof item.promTurnosxDia === 'number' ? item.promTurnosxDia.toFixed(2) : Number(item.promTurnosxDia).toFixed(2)
       item.porcUsoCita = typeof item.porcUsoCita === 'number' ? item.porcUsoCita.toFixed(2) : Number(item.porcUsoCita).toFixed(2) + ' %';
-    return item.porcUsoConsultorioTotal, item.porcUsoConsultorioProgTotal, item.promTurnosxDia, item.porcUsoCita;
+
+    return item.cupos, item.minutosAtencionProg, item.promTurnosxDia, item.porcUsoCita;
         // } else {
         //   return item;
         // }
@@ -495,51 +523,53 @@ setPage(pageInfo) {
     console.log(pageInfo);
     // this.page.pageNumber = pageInfo.offset;
     this.parameters = {
-      archivo_temporal: 'aaammTmpA',
+      archivo_temporal: 'aaaTmpEsp',
+      archivo_matriz: 'aaaTmpMatriz',
+      periodo_consulta:this.periodo_consulta,
       mes: this.mes,
+      tipo: 'mes', //mes, meses
 	    sede: this.id_sede,
       meses: this.mes,
       // anio: this.anio,
-      periodo_consulta:this.periodo_consulta,
       // pageNumber: this.page.pageNumber,
       // size: this.page.size
     };
     this.tablas = {
-      archivo_atenciones_matriz: 'aaaTmpmmAMaaaTmp_133621r9RaQ',
-      archivo_atenciones: 'aaammTmpA',
-      archivo_especialidades_mes: 'aaammTmpAEmesaaTmp_133621r9RaQ',
-      archivo_medico_mes: 'aaammTmpAMedEmesaaTmp_133621r9RaQ',
+      archivo_atenciones_matriz: 'aaaTmpMatriz',
+      archivo_atenciones: 'aaaTmpAtenc',
+      archivo_especialidades_mes: 'aaaTmpEsp',
+      archivo_medico_mes: 'aaaTmpMedi',
     };
     this.tablasParms = {
       periodo_consulta: this.periodo_consulta,
 	    sede: this.id_sede,
-      archivo_atenciones_matriz: 'aaaTmpmmAMaaaTmp_133621r9RaQ',
-      archivo_atenciones: 'aaammTmpA',
-      archivo_especialidades_mes: 'aaammTmpAEmesaaTmp_133621r9RaQ',
-      archivo_medico_mes: 'aaammTmpAMedEmesaaTmp_133621r9RaQ',
+      archivo_atenciones_matriz: 'aaaTmpMatriz',
+      archivo_atenciones: 'aaaTmpAtenc',
+      archivo_especialidades_mes: 'aaaTmpEsp',
+      archivo_medico_mes: 'aaaTmpMedi',
     };
-    this.loading();
-this.tableApiservice.eliminarTablasConsultorio(this.tablas).subscribe(
+    // this.loading();
+this.tableApiservice.eliminarTablasMedico(this.tablas).subscribe(
   (response) => {
     if(response.success){
-      this.tableApiservice.creaTablaConsultorioAnual(this.tablasParms).subscribe(
+      this.tableApiservice.creaTablaMedicoAnual(this.tablasParms).subscribe(
         (response) => {
           if(response.success){
-            this.tableApiservice.getResumenCabeceraMes(this.parameters).subscribe(
+            this.tableApiservice.getResumenCabeceraEspecialidadMes(this.parameters).subscribe(
               (response) => {
                 if(response.success){
-                  this.resumenMes = response;
+                  this.resumenMes = response.data;
                 }
               },
               (error) => {
                   Swal.close();
               }
             );
-            this.tableApiservice.getUsoConsultorioMes(this.parameters).subscribe(
+            this.tableApiservice.getUsoResumenEspecialidadMes(this.parameters).subscribe(
               (response) => {
                 if(response.success){
                   this.columns = response.data.cabeceras;
-                  this.rows = response.data.data;
+                  this.rows = response.data.tabla_mes_especialidad;
                   this.formatPipe(this.rows);
                 }
               },
@@ -547,13 +577,23 @@ this.tableApiservice.eliminarTablasConsultorio(this.tablas).subscribe(
                   Swal.close();
               }
             );
-            this.tableApiservice.getGraficoProgressBars_0(this.parameters).subscribe(
-              (response) => {
+            this.parameters.archivo_temporal='aaaTmpMedi';
+            this.tableApiservice.getUsoResumenMedicoMes(this.parameters).subscribe(
+              (response) => { 
+                this.columns2 = [];
+                this.rows2 = [];
                 if(response.success){
-                  this.progressBarLabels = response.resumen_cons;
-                  this.progressBar1 = response.resumen_oc_apor;
-                  this.progressBar2 = response.resumen_oc_cpor;
-                  this.progressBar3 = response.resumen_oc_tpor;
+                  this.columns2 = response.data.cabeceras;
+                  this.rows2 = response.data.tabla_mes_medico;
+                  this.formatPipe(this.rows2);
+                  this.rows2.map( item => {
+                    
+                    if (!this.especialidades.includes(item.especialidadNombre)){
+                      this.especialidades.push(item.especialidadNombre);
+                    }
+                  });
+                  this.temp = this.rows2;
+                  this.rowsFilter = this.rows2.filter(medico => medico.especialidadNombre === 'CARDIOLOGIA');
                 }
                 
               },
@@ -561,7 +601,8 @@ this.tableApiservice.eliminarTablasConsultorio(this.tablas).subscribe(
                   Swal.close();
               }
             );
-            this.tableApiservice.getResumenGrafica1(this.parameters).subscribe(
+            this.parameters.archivo_temporal='aaaTmpEsp';
+            this.tableApiservice.getResumenMedicoGrafica1(this.parameters).subscribe(
               (response) => {
                 this.barChartLabels = [];
                 this.barChartData = [];
@@ -582,14 +623,18 @@ this.tableApiservice.eliminarTablasConsultorio(this.tablas).subscribe(
                   Swal.close();
               }
             );
-            this.tableApiservice.getResumenConsultorios_1(this.parameters).subscribe(
+            this.parameters.archivo_temporal='aaaTmpMedi';
+            this.tableApiservice.getResumenMedico_1(this.parameters).subscribe(
               (response) => {
+                this.columns3 = [];
+                this.rows3 = [];
                 if(response.success){
-                  this.columns2 = response.data.cabeceras;
-                  this.rows2 = response.data.data
-                  this.rows2.map(item =>{
-                    console.log(591, item)
-                    if(item.item === 'Ocupabilidad de Atenciones' || item.item === 'Ocupabilidad del Consultorio' || item.item === 'Ocupabilidad del Turno' ){
+                  this.columns3 = response.data.cabeceras;
+                  this.rows3 = response.data.tabla_resumen_medico_1
+;
+                  this.rows3.map(item =>{
+                    
+                    if(item.item === 'Ocupabilidad del Medico' || item.item === 'Ocupabilidad de Atenciones' || item.item === 'Ocupabilidad del Turno' ){
                       console.log(593, item)
                       item.per1 = typeof item.per1 === 'number' ? item.per1.toFixed(2) + ' %' : Number(item.per1).toFixed(2) + ' %';
                       item.per2 = typeof item.per2 === 'number' ? item.per2.toFixed(2) + ' %' : Number(item.per2).toFixed(2) + ' %';
@@ -630,10 +675,12 @@ this.tableApiservice.eliminarTablasConsultorio(this.tablas).subscribe(
                   Swal.close();
               }
             );
-            this.tableApiservice.getResumenCabecera(this.parameters).subscribe(
-              (response) => {
+            this.parameters.archivo_temporal='aaaTmpEsp';
+            this.parameters.tipo = 'meses';
+            this.tableApiservice.getResumenCabeceraEspecialidadMes(this.parameters).subscribe(
+              (response) => {                 
                 if(response.success){
-                  this.detalleAnual = response;
+                  this.resumenAnual = response.data;
                   
                 }
                 console.log(577, this.detalleAnual);
@@ -642,74 +689,45 @@ this.tableApiservice.eliminarTablasConsultorio(this.tablas).subscribe(
                   Swal.close();
               }
             );
-            this.tableApiservice.getUsoConsultorioAnual(this.parameters).subscribe(
-              (response) => {
+            this.parameters.archivo_temporal='aaaTmpMedi';
+            this.tableApiservice.getUsoMedicoAnual(this.parameters).subscribe(
+              (response) => { console.log(686, response)
                 if(response.success){
-                    this.columns3 = response.data.cabeceras
-                    this.rows3 = response.data.tabla_total
-                    this.rows3.map(item =>{
-                      item.Per1 = typeof item.Per1 === 'number' ? item.Per1.toFixed(2) + ' %' : Number(item.Per1).toFixed(2) + ' %';
-                      item.Per2 = typeof item.Per2 === 'number' ? item.Per2.toFixed(2) + ' %' : Number(item.Per2).toFixed(2) + ' %';
-                      item.Per3 = typeof item.Per3 === 'number' ? item.Per3.toFixed(2) + ' %' : Number(item.Per3).toFixed(2) + ' %';
-                      item.Per4 = typeof item.Per4 === 'number' ? item.Per4.toFixed(2) + ' %' : Number(item.Per4).toFixed(2) + ' %';
-  
-                      item.Per5 = typeof item.Per5 === 'number' ? item.Per5.toFixed(2) + ' %' : Number(item.Per5).toFixed(2) + ' %';
-                      item.Per6 = typeof item.Per6 === 'number' ? item.Per6.toFixed(2) + ' %' : Number(item.Per6).toFixed(2) + ' %';
-                      item.Per7 = typeof item.Per7 === 'number' ? item.Per7.toFixed(2) + ' %' : Number(item.Per7).toFixed(2) + ' %';
-                      item.Per8 = typeof item.Per8 === 'number' ? item.Per8.toFixed(2) + ' %' : Number(item.Per8).toFixed(2) + ' %';
-                      item.Per9 = typeof item.Per9 === 'number' ? item.Per9.toFixed(2) + ' %' : Number(item.Per9).toFixed(2) + ' %';
-                      item.Per10 = typeof item.Per10 === 'number' ? item.Per10.toFixed(2) + ' %' : Number(item.Per10).toFixed(2) + ' %';
-                      item.Per11 = typeof item.Per11 === 'number' ? item.Per11.toFixed(2) + ' %' : Number(item.Per11).toFixed(2) + ' %';
-                      item.Per12 = typeof item.Per12 === 'number' ? item.Per12.toFixed(2) + ' %' : Number(item.Per12).toFixed(2) + ' %';
-                      item.promMesUso = typeof item.promMesUso === 'number' ? item.promMesUso.toFixed(2) : Number(item.promMesUso).toFixed(2) + ' %';
-                      item.promMeses = typeof item.promMeses === 'number' ? item.promMeses.toFixed(2) : Number(item.promMeses).toFixed(2) + ' %';
-                      return item.Per1, item.Per2, item.Per3, item.Per4, item.Per5, item.Per6, item.Per7, item.Per8, item.Per9, item.Per10, item.Per11,item.Per12,item.promMesUso,item.promMeses;
-                    });
-                    this.rows4 = response.data.tabla_mes
-                    this.rows4.map(item =>{
-                      item.Per1 = typeof item.Per1 === 'number' ? item.Per1.toFixed(2) + ' %' : Number(item.Per1).toFixed(2) + ' %';
-                      item.Per2 = typeof item.Per2 === 'number' ? item.Per2.toFixed(2) + ' %' : Number(item.Per2).toFixed(2) + ' %';
-                      item.Per3 = typeof item.Per3 === 'number' ? item.Per3.toFixed(2) + ' %' : Number(item.Per3).toFixed(2) + ' %';
-                      item.Per4 = typeof item.Per4 === 'number' ? item.Per4.toFixed(2) + ' %' : Number(item.Per4).toFixed(2) + ' %';
-  
-                      item.Per5 = typeof item.Per5 === 'number' ? item.Per5.toFixed(2) + ' %' : Number(item.Per5).toFixed(2) + ' %';
-                      item.Per6 = typeof item.Per6 === 'number' ? item.Per6.toFixed(2) + ' %' : Number(item.Per6).toFixed(2) + ' %';
-                      item.Per7 = typeof item.Per7 === 'number' ? item.Per7.toFixed(2) + ' %' : Number(item.Per7).toFixed(2) + ' %';
-                      item.Per8 = typeof item.Per8 === 'number' ? item.Per8.toFixed(2) + ' %' : Number(item.Per8).toFixed(2) + ' %';
-                      item.Per9 = typeof item.Per9 === 'number' ? item.Per9.toFixed(2) + ' %' : Number(item.Per9).toFixed(2) + ' %';
-                      item.Per10 = typeof item.Per10 === 'number' ? item.Per10.toFixed(2) + ' %' : Number(item.Per10).toFixed(2) + ' %';
-                      item.Per11 = typeof item.Per11 === 'number' ? item.Per11.toFixed(2) + ' %' : Number(item.Per11).toFixed(2) + ' %';
-                      item.Per12 = typeof item.Per12 === 'number' ? item.Per12.toFixed(2) + ' %' : Number(item.Per12).toFixed(2) + ' %';
-                      item.promMesUso = typeof item.promMesUso === 'number' ? item.promMesUso.toFixed(2) + ' %' : Number(item.promMesUso).toFixed(2) + ' %';
-                      item.promMeses = typeof item.promMeses === 'number' ? item.promMeses.toFixed(2) + ' %' : Number(item.promMeses).toFixed(2) + ' %';
-                      return item.Per1, item.Per2, item.Per3, item.Per4, item.Per5, item.Per6, item.Per7, item.Per8, item.Per9, item.Per10, item.Per11,item.Per12,item.promMesUso,item.promMeses;
-                    });
-                    this.rows5 = response.data.tabla_turno
-                    this.rows5.map(item =>{
-                      item.Per1 = typeof item.Per1 === 'number' ? item.Per1.toFixed(2) + ' %' : Number(item.Per1).toFixed(2) + ' %';
-                      item.Per2 = typeof item.Per2 === 'number' ? item.Per2.toFixed(2) + ' %' : Number(item.Per2).toFixed(2) + ' %';
-                      item.Per3 = typeof item.Per3 === 'number' ? item.Per3.toFixed(2) + ' %' : Number(item.Per3).toFixed(2) + ' %';
-                      item.Per4 = typeof item.Per4 === 'number' ? item.Per4.toFixed(2) + ' %' : Number(item.Per4).toFixed(2) + ' %';
-  
-                      item.Per5 = typeof item.Per5 === 'number' ? item.Per5.toFixed(2) + ' %' : Number(item.Per5).toFixed(2) + ' %';
-                      item.Per6 = typeof item.Per6 === 'number' ? item.Per6.toFixed(2) + ' %' : Number(item.Per6).toFixed(2) + ' %';
-                      item.Per7 = typeof item.Per7 === 'number' ? item.Per7.toFixed(2) + ' %' : Number(item.Per7).toFixed(2) + ' %';
-                      item.Per8 = typeof item.Per8 === 'number' ? item.Per8.toFixed(2) + ' %' : Number(item.Per8).toFixed(2) + ' %';
-                      item.Per9 = typeof item.Per9 === 'number' ? item.Per9.toFixed(2) + ' %' : Number(item.Per9).toFixed(2) + ' %';
-                      item.Per10 = typeof item.Per10 === 'number' ? item.Per10.toFixed(2) + ' %' : Number(item.Per10).toFixed(2) + ' %';
-                      item.Per11 = typeof item.Per11 === 'number' ? item.Per11.toFixed(2) + ' %' : Number(item.Per11).toFixed(2) + ' %';
-                      item.Per12 = typeof item.Per12 === 'number' ? item.Per12.toFixed(2) + ' %' : Number(item.Per12).toFixed(2) + ' %';
-                      item.promMesUso = typeof item.promMesUso === 'number' ? item.promMesUso.toFixed(2) + ' %' : Number(item.promMesUso).toFixed(2) + ' %';
-                      item.promMeses = typeof item.promMeses === 'number' ? item.promMeses.toFixed(2) + ' %' : Number(item.promMeses).toFixed(2) + ' %';
-                      return item.Per1, item.Per2, item.Per3, item.Per4, item.Per5, item.Per6, item.Per7, item.Per8, item.Per9, item.Per10, item.Per11,item.Per12,item.promMesUso,item.promMeses;
-                    });
-                    this.nCons =  response.data.nCons;
-                    this.sum_ocup_co_ma = typeof response.data.sum_ocup_co_ma === 'number' ? response.data.sum_ocup_co_ma.toFixed(2) : Number(response.data.sum_ocup_co_ma).toFixed(2);
-                    this.sum_ocup_co_mt = typeof response.data.sum_ocup_co_mt === 'number' ? response.data.sum_ocup_co_mt.toFixed(2) : Number(response.data.sum_ocup_co_mt).toFixed(2);
-                    this.sum_ocup_ct_ma = typeof response.data.sum_ocup_ct_ma === 'number' ? response.data.sum_ocup_ct_ma.toFixed(2) : Number(response.data.sum_ocup_ct_ma).toFixed(2);
-                    this.sum_ocup_ct_mt = typeof response.data.sum_ocup_ct_mt === 'number' ? response.data.sum_ocup_ct_mt.toFixed(2) : Number(response.data.sum_ocup_ct_mt).toFixed(2);
-                    this.sum_ocup_ca_ma = typeof response.data.sum_ocup_ca_ma === 'number' ? response.data.sum_ocup_ca_ma.toFixed(2) : Number(response.data.sum_ocup_ca_ma).toFixed(2);
-                    this.sum_ocup_ca_mt = typeof response.data.sum_ocup_ca_mt === 'number' ? response.data.sum_ocup_ca_mt.toFixed(2) : Number(response.data.sum_ocup_ca_mt).toFixed(2);
+
+                  this.columns4 = response.data.cabeceras;
+                  this.rows4 = response.data.tabla_medicoUsoCita;
+                  this.formatPipe(this.rows4);
+                  this.rows4.map( item => {
+                    
+                    if (!this.especialidades.includes(item.especialidadNombre)){
+                      this.especialidades.push(item.especialidadNombre);
+                    }
+                  });
+                  this.rows4.map(item =>{
+                    item.Per1 = typeof item.Per1 === 'number' ? item.Per1.toFixed(2) + ' %' : Number(item.Per1).toFixed(2) + ' %';
+                    item.Per2 = typeof item.Per2 === 'number' ? item.Per2.toFixed(2) + ' %' : Number(item.Per2).toFixed(2) + ' %';
+                    item.Per3 = typeof item.Per3 === 'number' ? item.Per3.toFixed(2) + ' %' : Number(item.Per3).toFixed(2) + ' %';
+                    item.Per4 = typeof item.Per4 === 'number' ? item.Per4.toFixed(2) + ' %' : Number(item.Per4).toFixed(2) + ' %';
+
+                    item.Per5 = typeof item.Per5 === 'number' ? item.Per5.toFixed(2) + ' %' : Number(item.Per5).toFixed(2) + ' %';
+                    item.Per6 = typeof item.Per6 === 'number' ? item.Per6.toFixed(2) + ' %' : Number(item.Per6).toFixed(2) + ' %';
+                    item.Per7 = typeof item.Per7 === 'number' ? item.Per7.toFixed(2) + ' %' : Number(item.Per7).toFixed(2) + ' %';
+                    item.Per8 = typeof item.Per8 === 'number' ? item.Per8.toFixed(2) + ' %' : Number(item.Per8).toFixed(2) + ' %';
+                    item.Per9 = typeof item.Per9 === 'number' ? item.Per9.toFixed(2) + ' %' : Number(item.Per9).toFixed(2) + ' %';
+                    item.Per10 = typeof item.Per10 === 'number' ? item.Per10.toFixed(2) + ' %' : Number(item.Per10).toFixed(2) + ' %';
+                    item.Per11 = typeof item.Per11 === 'number' ? item.Per11.toFixed(2) + ' %' : Number(item.Per11).toFixed(2) + ' %';
+                    item.Per12 = typeof item.Per12 === 'number' ? item.Per12.toFixed(2) + ' %' : Number(item.Per12).toFixed(2) + ' %';
+                    item.promMesUso = typeof item.promMesUso === 'number' ? item.promMesUso.toFixed(2) : Number(item.promMesUso).toFixed(2) + ' %';
+                    item.promMeses = typeof item.promMeses === 'number' ? item.promMeses.toFixed(2) : Number(item.promMeses).toFixed(2) + ' %';
+                    return item.Per1, item.Per2, item.Per3, item.Per4, item.Per5, item.Per6, item.Per7, item.Per8, item.Per9, item.Per10, item.Per11,item.Per12,item.promMesUso,item.promMeses;
+                  });
+                  this.temp2 = this.rows4;
+                  this.rowsFilter2 = this.rows4.filter(medico => medico.especialidadNombre === 'CARDIOLOGIA');
+
+                    // this.columns4 = response.data.cabeceras
+                    // this.rows4 = response.data.tabla_medicoUsoCita
+                    
+                    
                 }
                 Swal.close();
               },
@@ -797,57 +815,75 @@ separadorDeMiles(numero) {
           },
       });
   }
-showTableDasboard(id: number, position: number) {
-    
-    if (id == 1) {
-      if (position == 1) {
-        this.isTable1 = true;
-        this.isGrafico1 = false;
-      } else {
-        this.isGrafico1 = true;
-        this.isTable1 = false;
-      }
-    } else if (id == 2) {
-      if (position == 1) {
-        this.isTable2 = true;
-        this.isGrafico2 = false;
-      } else {
-        this.isGrafico2 = true;
-        this.isTable2 = false;
-      }
-    } else if (id == 3) {
-      if (position == 1) {
-        this.isTable3 = true;
-        this.isGrafico3 = false;
-      } else {
-        this.isGrafico3 = true;
-        this.isTable3 = false;
-      }
-    } else if (id == 4) {
-      if (position == 1) {
-        this.isTable4 = true;
-        this.isGrafico4 = false;
-      } else {
-        this.isGrafico4 = true;
-        this.isTable4 = false;
-      }
-    } else if (id == 5) {
-      if (position == 1) {
-        this.isTable5 = true;
-        this.isGrafico5 = false;
-      } else {
-        this.isGrafico5 = true;
-        this.isTable5 = false;
-      }
-    } else if (id == 6) {
-      if (position == 1) {
-        this.isTable6 = true;
-        this.isGrafico6 = false;
-      } else {
-        this.isGrafico6 = true;
-        this.isTable6 = false;
-      }
+  especialityChange(event){
+    console.log(834, event);
+    const input = event;
+    this.especialidad = input;
+    if (input.length > 0) {
+      const filtered = this.rowsFilter = this.rows2.filter(medico => medico.especialidadNombre === input);
+        // console.log(filtered);
+      this.rowsFilter = [...filtered]
+      
+     } //else {
+    //   console.log(this.filtered);
+    //   this.rowsFilter = [...this.temp]
+    // }
+  }
+  especialityChange2(event){
+    console.log(834, event);
+    const input = event;
+    this.especialidad = input;
+    if (input.length > 0) {
+      const filtered = this.rowsFilter2 = this.rows4.filter(medico => medico.especialidadNombre === input);
+        // console.log(filtered);
+      this.rowsFilter2 = [...filtered]
+      
+     } //else {
+    //   console.log(this.filtered);
+    //   this.rowsFilter = [...this.temp]
+    // }
+  }
+  updateFilter(event) {
+    const input = event.target.value.toLowerCase();
+    // console.log(838, input);
+    // filter our data
+    if (input.length > 0) {
+      const filtered = this.rowsFilter
+        .filter(el =>
+          Object.values(el).find( val => val?.toString().toLowerCase().indexOf(input) !== -1 ) != undefined
+        );
+        // console.log(filtered);
+      this.rowsFilter = [...filtered]
+      
+    } else {
+      console.log(this.filtered);
+      this.rowsFilter = [...this.temp.filter(medico => medico.especialidadNombre === this.especialidad)]
     }
+
+    // update the rows
+    // Whenever the filter changes, always go back to the first page
+    // this.table.offset = 0;
+  }
+  updateFilter2(event) {
+    const input = event.target.value.toLowerCase();
+    // console.log(838, input);
+    // filter our data
+    if (input.length > 0) {
+      const filtered = this.rowsFilter2
+        .filter(el =>
+          Object.values(el).find( val => val?.toString().toLowerCase().indexOf(input) !== -1 ) != undefined
+        );
+        // console.log(filtered);
+      this.rowsFilter2 = [...filtered]
+      
+    } else {
+      console.log(this.filtered);
+      this.rowsFilter2 = [...this.temp2.filter(medico => medico.especialidadNombre === this.especialidad)]
+    }
+
+    // update the rows
+    // Whenever the filter changes, always go back to the first page
+    // this.table.offset = 0;
   }
 }
 

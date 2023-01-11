@@ -133,5 +133,40 @@ export class TableApiService {
     this.loadTableApiDataURL = `${environment.api_url}getUsoConsultorioAnual`;
     return this.http.post(this.loadTableApiDataURL, data);
   }
+
+    // Ocupabilidad de Médico
+    // Operaciones con tablas
+    eliminarTablasMedico(data): Observable<any> {
+      this.loadTableApiDataURL = `${environment.api_url}eliminarTablasMedico`;
+      return this.http.post(this.loadTableApiDataURL, data);
+    }
+    creaTablaMedicoAnual(data): Observable<any> {
+      this.loadTableApiDataURL = `${environment.api_url}creaTablaMedicoAnual`;
+      return this.http.post(this.loadTableApiDataURL, data);
+    }
+    getResumenCabeceraEspecialidadMes(data): Observable<any> {
+      this.loadTableApiDataURL = `${environment.api_url}getResumenCabeceraEspecialidadMes`;
+      return this.http.post(this.loadTableApiDataURL, data);
+    }
+    getUsoResumenEspecialidadMes(data): Observable<any> {
+      this.loadTableApiDataURL = `${environment.api_url}getUsoResumenEspecialidadMes`;
+      return this.http.post(this.loadTableApiDataURL, data);
+    }
+    getUsoResumenMedicoMes(data): Observable<any> {
+      this.loadTableApiDataURL = `${environment.api_url}getUsoResumenMedicoMes`;
+      return this.http.post(this.loadTableApiDataURL, data);
+    }
+    getResumenMedicoGrafica1(data): Observable<any> {
+      this.loadTableApiDataURL = `${environment.api_url}getResumenMedicoGrafica1`;
+      return this.http.post(this.loadTableApiDataURL, data);
+    }
+    getResumenMedico_1(data): Observable<any> {
+      this.loadTableApiDataURL = `${environment.api_url}getResumenMedico_1`;
+      return this.http.post(this.loadTableApiDataURL, data);
+    }
+    getUsoMedicoAnual(data): Observable<any> {
+      this.loadTableApiDataURL = `${environment.api_url}getUsoMedicoAnual`;
+      return this.http.post(this.loadTableApiDataURL, data);
+    }
 }
 
