@@ -5,7 +5,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { NgBlockUI, BlockUI } from 'ng-block-ui';
 import { PerfectScrollbarDirective, PerfectScrollbarComponent, PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import Swal from 'sweetalert2';
-import { TableApiService } from '../../../_services/table-api.service';
+import { ExternalConsultationService } from '../../../_services/external-consultation.service';
 import {AttentionConsultation} from '../../../interfaces/attentionConsultation';
 import {ApiResponse} from '../../../interfaces/response';
 import * as moment from 'moment';
@@ -228,7 +228,7 @@ sum_ocup_ca_mt;
   isLoading4 = false;
   isLoading5 = false;
   isLoading6 = false;
-  constructor(private tableApiservice: TableApiService, private exportService: ExportService,
+  constructor(private tableApiservice: ExternalConsultationService, private exportService: ExportService,
     private _cp: CurrencyPipe
      ) {
     this.page.pageNumber = 0;
