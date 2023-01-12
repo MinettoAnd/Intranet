@@ -3,7 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { NgBlockUI, BlockUI } from 'ng-block-ui';
 import { PerfectScrollbarDirective, PerfectScrollbarComponent, PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import Swal from 'sweetalert2';
-import { TableApiService } from '../../../_services/table-api.service';
+import { ExternalConsultationService } from '../../../_services/external-consultation.service';
 import {AttentionConsultation} from '../../../interfaces/attentionConsultation';
 import {ApiResponse} from '../../../interfaces/response';
 import * as moment from 'moment';
@@ -68,7 +68,7 @@ export class ExternalAttentionConsultationComponent implements OnInit {
     {value: 50},
     {value: 100},
   ];
-  constructor(private tableApiservice: TableApiService, private exportService: ExportService) {
+  constructor(private tableApiservice: ExternalConsultationService, private exportService: ExportService) {
     this.page.pageNumber = 0;
     this.page.size = 10;
 

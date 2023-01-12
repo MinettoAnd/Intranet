@@ -5,7 +5,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { NgBlockUI, BlockUI } from 'ng-block-ui';
 import { PerfectScrollbarDirective, PerfectScrollbarComponent, PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import Swal from 'sweetalert2';
-import { TableApiService } from '../../../../_services/table-api.service';
+import { ComercialService } from 'src/app/_services/comercial.service';
 import {AttentionConsultation} from '../../../../interfaces/attentionConsultation';
 import {ApiResponse} from '../../../../interfaces/response';
 import * as moment from 'moment';
@@ -18,6 +18,7 @@ import { CurrencyPipe } from '@angular/common';
 import * as Chart from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import ResizeObserver from 'resize-observer-polyfill';
+
 @Component({
   selector: 'app-cuotas-programas-salud',
   templateUrl: './cuotas-programas-salud.component.html',
@@ -182,7 +183,7 @@ export class CuotasProgramasSaludComponent implements OnInit {
   isLoading4 = false;
   isLoading5 = false;
   isLoading6 = false;
-  constructor(private tableApiservice: TableApiService, private exportService: ExportService,
+  constructor(private tableApiservice: ComercialService, private exportService: ExportService,
     private _cp: CurrencyPipe
      ) {
     this.page.pageNumber = 0;
