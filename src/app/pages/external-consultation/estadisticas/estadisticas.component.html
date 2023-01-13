@@ -148,16 +148,48 @@
                                         </div>
                                       </div>
                                     </div>
+                                    <div class="box-header with-border" style="margin:1rem; ">
+                                      <h5 class="box-title">Comparativo del mes anterior</h5>
+                                    </div> 
                                     <div class="col-md-12 div_panel_cabecera">
+                                          <div class="col-md-3 col-sm-6 col-xs-12">
+                                            <div class="description-block border-right">
+                                                <span class="description-percentage text-green"><i class="fa fa-caret-up"></i><div id="por_ma_realizadas_vw">5.85%</div></span>
+                                                <h5 class="description-header" >{{resumenMesAnterior.total}}</h5>
+                                                <span class="description-text">REALIZADAS</span>
+                                            </div><!-- /.description-block -->
+                                          </div><!-- /.col -->
+                                          <div class="col-md-3 col-sm-6 col-xs-12">
+                                            <div class="description-block border-right">
+                                              <span id="por_ma_ausentismo" class="description-percentage text-green"><i class="fa fa-caret-up"></i><div id="por_ma_ausentismo_vw">37.07%</div></span>
+                                                <h5 class="description-header" >{{resumenMesAnterior.ausentismo}}</h5>
+                                                <span class="description-text">AUSENTISMO</span>
+                                            </div><!-- /.description-block -->
+                                          </div><!-- /.col -->
+                                          <div class="col-md-3 col-sm-6 col-xs-12">
+                                            <div class="description-block border-right">
+                                              <span id="por_ma_reserada" class="description-percentage text-green"><i class="fa fa-caret-up"></i><div id="por_ma_reserada_vw">15.77%</div></span>
+                                               <h5 class="description-header" >{{resumenMesAnterior.reservadas}}</h5>
+                                               <span class="description-text">RESERVADAS</span>
+                                            </div><!-- /.description-block -->
+                                          </div><!-- /.col -->
+                                      
+                                    </div>
+                                    <div class="box-header with-border" style="margin:1rem; ">
+                                      <h5 class="box-title">Costo por atenciones realizadas: <b> S/ {{resumenMontos.montoTotal }}</b>
+                                      </h5>
+                                    </div>
+                                    <div class="col-md-12 div_panel_cabecera">
+                                      
                                         <div class="col-md-3 col-sm-6 col-xs-12">
                                            <div class="info-box">
                                               <span style="background: #63B6DE !important; color:#fff !important;" class="info-box-icon">
                                                 <i class="fa fa-credit-card" aria-hidden="true"></i>
                                               </span>		
                                               <div class="info-box-content">
-                                                <span style="font-family:arial; font-size:15px; " class="info-box-text">ATENCIONES</span>
-                                                  <span *ngIf="resumenMes.nro_atendidos" class="info-box-number" >{{resumenMes.nro_atendidos}} Pacientes</span>
-                                                    <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success" >En {{resumenMes.nro_turnos}} turnos</label>
+                                                <span style="font-family:arial; font-size:15px; " class="info-box-text">PROGRAMAS DE SALUD</span>
+                                                  <span *ngIf="resumenMontos.tarjeta" class="info-box-number" ><b _ngcontent-xkc-c219=""> S/ </b>{{resumenMontos.tarjeta  }}</span>
+                                                  
                                               </div>
                                            </div>
                                         </div>
@@ -165,9 +197,9 @@
                                            <div class="info-box">
                                               <span style="background: #DD4B39!important; color:#fff !important;" class="info-box-icon">			
                                                 <i class="fa fa-hospital-o" aria-hidden="true"></i>		</span>		
-                                              <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">PROMEDIO DE ATENCIÓN</span>			
-                                                <span *ngIf="resumenMes.nro_atendidos_xdia" class="info-box-number">{{resumenMes.nro_atendidos_xdia | number : '1.2-2'}} pacientes por día</span>			
-                                                <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">{{resumenMes.nro_atendidos_xturno | number : '1.2-2'}} pacientes por turno</label>		</div>
+                                              <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">PROGRAMAS DE SALUD</span>			
+                                                <span *ngIf="resumenMontos.instipriva" class="info-box-number"><b _ngcontent-xkc-c219=""> S/ </b>{{resumenMontos.instipriva  }}</span>			
+                                                	</div>
                                            </div>
                                         </div>
                                         <div class="col-md-3 col-sm-6 col-xs-12">
@@ -175,20 +207,18 @@
                                               <span style="background: #57AA50 !important; color:#fff !important;" class="info-box-icon">			
                                                 <i class="fa fa-hospital-o" aria-hidden="true"></i>		</span>		
                                               <div class="info-box-content">			
-                                                <span style="font-family:arial; font-size:15px; " class="info-box-text" >TURNOS PROGRAMADOS</span>			
-                                                <span *ngIf="resumenMes.promTurnosxDia" class="info-box-number">{{resumenMes.nro_turnos | number : '1.2-2'}} turnos</span>			
-                                                <label style="position:relative; top:13px; font-size:12px; display: flex;
-                                                justify-content: space-around;" class="label label-pill label-success" >Con {{resumenMes.nro_cupos | number : '1.2-2' }} cupos promedio
-                                                </label>		</div>
+                                                <span style="font-family:arial; font-size:15px; " class="info-box-text" >CONVENIOS Y
+                                                  CIA. DE SEGUROS</span>			
+                                                <span *ngIf="resumenMontos.ciasegcon" class="info-box-number"> S/ {{resumenMontos.ciasegcon }}</span>			
+                                                </div>
                                            </div>
                                         </div>
                                         <div class="col-md-3 col-sm-6 col-xs-12">
                                           <div class="info-box">
                                              <span style="background: #F39C12!important; color:#fff !important;" class="info-box-icon">			
                                                <i class="fa fa-wheelchair" aria-hidden="true"></i>		</span>		
-                                             <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">MÉDICOS</span>			<span *ngIf="resumenMes.ocupabilidad" class="info-box-number">{{resumenMes.nro_medicos}} Médicos</span>			
-                                               <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">En {{ resumenMes.nro_especialidad }} especialidades
-                                                 </label>		</div>
+                                             <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">OTROS</span>			<span *ngIf="resumenMontos.otros" class="info-box-number"> S/ {{resumenMontos.otros | number : '1.2-2' }}</span>			
+                                              </div>
                                           </div>
                                        </div>
                                     </div>
@@ -229,7 +259,7 @@
                                                   <div class="box-header">
                                                     <div class="toggle-table">
                                                       <div class="callout callout-info">
-                                                        <h3 class="box-title">OCUPABILIDAD POR ESPECIALIDAD</h3>
+                                                        <h3 class="box-title">TIPO DE PACIENTE</h3>
                                                       </div>
                                                       <button type="button" class="btn btn-outline-primary" (click)="collapse1.toggle()" [attr.aria-expanded]="!isCollapsed1"
                                                       aria-controls="collapseExample">
@@ -315,7 +345,7 @@
                                                   <div class="box-header">
                                                     <div class="toggle-table">
                                                       <div class="callout callout-info">
-                                                        <h3 class="box-title">OCUPABILIDAD POR ESPECIALIDAD</h3>
+                                                        <h3 class="box-title">RANGO ETAREO</h3>
                                                       </div>
                                                       <button type="button" class="btn btn-outline-primary" (click)="collapse2.toggle()" [attr.aria-expanded]="!isCollapsed2"
                                                       aria-controls="collapseExample">
@@ -394,7 +424,7 @@
                                                   <div class="box-header">
                                                     <div class="toggle-table">
                                                       <div class="callout callout-info">
-                                                        <h3 class="box-title">OCUPABILIDAD POR ESPECIALIDAD</h3>
+                                                        <h3 class="box-title">EMPRESAS</h3>
                                                       </div>
                                                       <button type="button" class="btn btn-outline-primary" (click)="collapse3.toggle()" [attr.aria-expanded]="!isCollapsed3"
                                                       aria-controls="collapseExample">
@@ -490,7 +520,8 @@
                                                   <div class="box-header">
                                                     <div class="toggle-table">
                                                       <div class="callout callout-info">
-                                                        <h3 class="box-title">OCUPABILIDAD POR ESPECIALIDAD</h3>
+                                                        <h3 class="box-title">DIAGNOSTICO DE ALTA (Un paciente puede tener mas de un diagnostico)
+                                                        </h3>
                                                       </div>
                                                       <button type="button" class="btn btn-outline-primary" (click)="collapse4.toggle()" [attr.aria-expanded]="!isCollapsed4"
                                                       aria-controls="collapseExample">
@@ -580,7 +611,7 @@
                                                   <div class="box-header">
                                                     <div class="toggle-table">
                                                       <div class="callout callout-info">
-                                                        <h3 class="box-title">OCUPABILIDAD POR ESPECIALIDAD</h3>
+                                                        <h3 class="box-title">ESPECIALIDADES         *Seleccione la Especialidad para ver a los Medicos</h3>
                                                       </div>
                                                       <button type="button" class="btn btn-outline-primary" (click)="collapse5.toggle()" [attr.aria-expanded]="!isCollapsed5"
                                                       aria-controls="collapseExample">
@@ -665,6 +696,99 @@
                                                   
                                                 </div>
                                               </div>
+                                              <div class="card">
+                                                <div class="card-header" *ngIf="medicos">
+                                                  <div class="box-header">
+                                                    <div class="toggle-table">
+                                                      <div class="callout callout-info">
+                                                        <h3 class="box-title">MEDICOS</h3>
+                                                      </div>
+                                                      <button type="button" class="btn btn-outline-primary" (click)="collapse11.toggle()" [attr.aria-expanded]="!isCollapsed11"
+                                                      aria-controls="collapseExample">
+                                                      <i class="fa fa-minus" *ngIf="!isCollapsed11"> </i>
+                                                      <i class="fa fa-plus" *ngIf="isCollapsed11"> </i> 
+                                                      </button>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                                <div #collapse11="ngbCollapse" [(ngbCollapse)]="isCollapsed11">
+                                                  <div class="row" style="align-items: center;justify-content: space-between;">
+                                                    <div style='margin-left:15px;'>
+                                                        <select class="form-control form-select" (change)="onLimitChange($event.target.value)">
+                                                        <option
+                                                            *ngFor="let option of pageLimitOptions"
+                                                            [value]="option.value"
+                                                        >
+                                                            {{ option.value }} Registros
+                                                        </option>
+                                                        <option value="0" *ngIf="this.page.totalElements">Todos los Registros</option>
+                                                        </select>
+                                                    </div>
+                                                    <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
+                                                      <li class="list-group-item border-0 pl-0">
+                                                        <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(11)">
+                                                          <i class="fa fa-external-link"></i>
+                                                          Copiar tabla
+                                                        </button>
+                                                      </li>
+                                                      <li class="list-group-item border-0 pl-0">
+                                                        <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(11)">
+                                                          <i class="fa fa-external-link"></i>
+                                                          Exportar tabla a Excel
+                                                        </button>
+                                                      </li>
+                                                    </ul>
+                                                    <div style="display:flex;align-items: center; justify-content:flex-end">
+                                                        <!-- <select formControlName="especialidadNombre" class="form-control form-select" (change)="especialityChange($event.target.value)" style="width:auto!important;" [(ngModel)]="selectedOption" >
+                                                          <option [value]="selectedOption" selected>{{selectedOption}}</option>
+                                                        <option 
+                                                          *ngFor="let especialidad of especialidades; let i=index"
+                                                          [value]="especialidad.value"
+                                                        >{{especialidad.value}}
+                                                        </option>
+                                                      </select> -->
+                                                        <div class="" style="display:flex;margin:15px;align-items: center;">
+                                                          <span>Buscar</span>&nbsp;&nbsp;
+                                                            <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter($event)'>
+                                                        </div>
+                                                      </div>                              
+                                                  </div>
+                                                  
+                                                  <ngx-datatable #myTable5
+                                                  class="bootstrap table table-striped"
+                                                  id="datatablele"
+                                                    [columns]="columnsMedicos"
+                                                    [rows]="rowsMedicos"
+                                                    [columnMode]="ColumnMode.flex"
+                                                    [headerHeight]="50"
+                                                    [rowHeight]="$any('auto')"
+                                                    [scrollbarH]="true"
+                                                    [selected]="selected"
+                                                    [selectionType]="SelectionType.single"
+                                                    (activate)="onActivate($event)"
+                                                    (select)="onSelect($event)"
+                                                    >
+                                                    <ngx-datatable-column [flexGrow]="1" [minWidth]="90" *ngFor="let column of columnsMedicos; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                                      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                                                        let-row="row">
+                                                        <div>
+                                                          <span  [title]="value">{{value}}</span>
+                                                        </div>
+                                                        <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
+                                                          <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
+                                                        </div> -->
+              
+                                                      </ng-template>
+                                                      <!-- <ngx-datatable-column prop="per1">
+                                                        <ng-template let-row="row" ngx-datatable-cell-template>
+                                                          {{row.per1 | currency:'S/.  ':'code'}}
+                                                        </ng-template>
+                                                      </ngx-datatable-column> -->
+                                                    </ngx-datatable-column>
+                                                  </ngx-datatable>
+                                                  
+                                                </div>
+                                              </div>
                                             </div>                       
                                           </div>
                                         </div>
@@ -707,7 +831,7 @@
                                                   <div class="box-header">
                                                     <div class="toggle-table">
                                                       <div class="callout callout-info">
-                                                        <h3 class="box-title">OCUPABILIDAD POR ESPECIALIDAD</h3>
+                                                        <h3 class="box-title">RESUMEN DE INASISTENCIA DE MEDICOS DEL MES</h3>
                                                       </div>
                                                       <button type="button" class="btn btn-outline-primary" (click)="collapse6.toggle()" [attr.aria-expanded]="!isCollapsed6"
                                                       aria-controls="collapseExample">
@@ -824,7 +948,7 @@
                                                   <div class="box-header">
                                                     <div class="toggle-table">
                                                       <div class="callout callout-info">
-                                                        <h3 class="box-title">OCUPABILIDAD POR ESPECIALIDAD</h3>
+                                                        <h3 class="box-title">INDICADORES</h3>
                                                       </div>
                                                       <button type="button" class="btn btn-outline-primary" (click)="collapse7.toggle()" [attr.aria-expanded]="!isCollapsed7"
                                                       aria-controls="collapseExample">
@@ -926,7 +1050,7 @@
                                                   <div class="box-header">
                                                     <div class="toggle-table">
                                                       <div class="callout callout-info">
-                                                        <h3 class="box-title">OCUPABILIDAD POR ESPECIALIDAD</h3>
+                                                        <h3 class="box-title">UTILIDAD POR SEDE</h3>
                                                       </div>
                                                       <button type="button" class="btn btn-outline-primary" (click)="collapse8.toggle()" [attr.aria-expanded]="!isCollapsed8"
                                                       aria-controls="collapseExample">
@@ -983,7 +1107,11 @@
                                                       </ngx-datatable-column> -->
                                                     </ngx-datatable-column>
                                                   </ngx-datatable>
-                                                  
+                                                  <div class="notas">
+                                                    <p> &nbsp; &nbsp; Planilla : Cierre de planilla del periodo seleccionado</p>
+                                                    <p> &nbsp; &nbsp; Suministros : Suministros despachados por logística y registrados en el periodo seleccionado</p>
+                                                    <p> &nbsp; &nbsp; Honorarios : Registro realizado por el área de Honorarios Médicos al pago de honorarios</p>
+                                                  </div>
                                                 </div>
                                               </div>
                                               <div class="card">
@@ -991,7 +1119,7 @@
                                                   <div class="box-header">
                                                     <div class="toggle-table">
                                                       <div class="callout callout-info">
-                                                        <h3 class="box-title">OCUPABILIDAD POR ESPECIALIDAD</h3>
+                                                        <h3 class="box-title">UTILIDAD POR TIPO DE PACIENTE</h3>
                                                       </div>
                                                       <button type="button" class="btn btn-outline-primary" (click)="collapse9.toggle()" [attr.aria-expanded]="!isCollapsed9"
                                                       aria-controls="collapseExample">
@@ -1048,7 +1176,12 @@
                                                       </ngx-datatable-column> -->
                                                     </ngx-datatable-column>
                                                   </ngx-datatable>
-                                                  
+                                                  <div class="notas">
+                                                    <p> &nbsp; &nbsp; Planilla : Cierre de planilla del periodo seleccionado</p>
+                                                    <p> &nbsp; &nbsp; Suministros : Suministros despachados por logística y registrados en el periodo seleccionado</p>
+                                                    <p> &nbsp; &nbsp; Honorarios : Registro realizado por el área de Honorarios Médicos al pago de honorarios</p>
+                                                    <p> &nbsp; &nbsp; Planilla, Suministros y Honorarios estan prorrateados según cantidad de pacientes atendidos por Tipo de Paciente</p>
+                                                  </div>
                                                 </div>
                                               </div>
                                               <div class="card">
@@ -1056,7 +1189,7 @@
                                                   <div class="box-header">
                                                     <div class="toggle-table">
                                                       <div class="callout callout-info">
-                                                        <h3 class="box-title">OCUPABILIDAD POR ESPECIALIDAD</h3>
+                                                        <h3 class="box-title">UTILIDAD POR EMPRESA</h3>
                                                       </div>
                                                       <button type="button" class="btn btn-outline-primary" (click)="collapse10.toggle()" [attr.aria-expanded]="!isCollapsed10"
                                                       aria-controls="collapseExample">
@@ -1112,7 +1245,12 @@
                                                       </ngx-datatable-column> -->
                                                     </ngx-datatable-column>
                                                   </ngx-datatable>
-                                                  
+                                                  <div class="notas">
+                                                    <p> &nbsp; &nbsp; Planilla : Cierre de planilla del periodo seleccionado</p>
+                                                    <p> &nbsp; &nbsp; Suministros : Suministros despachados por logística y registrados en el periodo seleccionado</p>
+                                                    <p> &nbsp; &nbsp; Honorarios : Registro realizado por el área de Honorarios Médicos al pago de honorarios</p>
+                                                    <p> &nbsp; &nbsp; Planilla, Suministros y Honorarios estan prorrateados según cantidad de pacientes atendidos por Empresa</p>
+                                                  </div>
                                                 </div>
                                               </div>
                                             </div>                       
