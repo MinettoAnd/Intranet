@@ -1,0 +1,67 @@
+
+// .row-background{
+//     background:red;
+// }
+.toggle-table{
+    display: flex;
+    /* position: relative; */
+    flex-direction: row;
+    justify-content: space-between;
+}
+.box-title{
+    font-size: 1rem!important;
+}
+
+
+.info-box-content{
+    display: flex;
+    flex-direction: column;
+    padding:5px 10px;
+}
+
+.info-box-icon{
+    // border-top-left-radius:2px;
+    // border-top-right-radius:0;
+    // border-bottom-right-radius:0;
+    // border-bottom-left-radius:2px;
+    display:block;float:left;
+    height:80px;width:90px;
+    text-align:center;
+    font-size:45px;
+    line-height:80px;
+    background:rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+}
+.info-box-number{
+    display:block;
+    font-weight:bold;
+    font-size:18px;
+    height:10px;
+}
+.info-box-text{
+    display:block;
+    font-size:14px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    text-transform:uppercase;
+}
+.label-success{
+    color:#fff!important;
+    position: relative; top: 13px; font-size: 12px;
+    background-color:#00a65a!important;
+    padding: 5px;
+    border-radius: 5px;
+}
+.info-box{
+clear: both;
+margin: 1rem 0;
+}
+// @media screen and (min-width: 1024px) {
+//     #div_panel_01_cabecera1, .info-box{
+//         display: flex;
+//     }
+//     .closed-sidebar .app-main__outer {
+//         padding-top: 0px!important;
+//     }
+// }

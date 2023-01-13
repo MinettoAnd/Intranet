@@ -3,7 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { NgBlockUI, BlockUI } from 'ng-block-ui';
 import { PerfectScrollbarDirective, PerfectScrollbarComponent, PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import Swal from 'sweetalert2';
-import { TableApiService } from '../../../_services/table-api.service';
+import { EmergenciesService } from 'src/app/_services/emergencies.service';
 import {AttentionConsultation} from '../../../interfaces/attentionConsultation';
 import {ApiResponse} from '../../../interfaces/response';
 import * as moment from 'moment';
@@ -13,6 +13,7 @@ import * as XLSX from 'xlsx';
 import { ExcelJson } from '../../../interfaces/excel-json.interface';
 import { ExportService } from '../../../_services/export.service';
 import ResizeObserver from 'resize-observer-polyfill';
+
 @Component({
   selector: 'app-attention-consultation',
   templateUrl: './attention-consultation.component.html',
@@ -71,7 +72,7 @@ export class AttentionConsultationComponent implements OnInit {
     {value: 50},
     {value: 100},
   ];
-  constructor(private tableApiservice: TableApiService, private exportService: ExportService) {
+  constructor(private tableApiservice: EmergenciesService, private exportService: ExportService) {
     this.page.pageNumber = 0;
     this.page.size = 10;
 
