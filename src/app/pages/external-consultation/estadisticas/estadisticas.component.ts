@@ -91,20 +91,13 @@ export class EstadisticasComponent implements OnInit {
   public breadcrumb: any;
   parameters;
   resumenMes = {
-    promMesUso: '',
-    minutosAtendidos_xDia: '',
-    ocupabilidad: '',
-    minutosProgramados_xDia: '',
-    usoEfectivoTurno: '',
-    nro_consultorios: '',
-    nro_turnos: '',
-    nro_consultorios_maestro: '',
-    nro_atendidos: '',
-    nro_cupos: '',
-    nro_atendidos_xdia: '',
-    nro_atendidos_xturno: '',
-    nro_medicos: '',
-    nro_especialidad: '',
+    success: '',
+    total: '',
+    ausentismo: '',
+    medico: '',
+    paciente: '',
+    anuladas: '',
+    reservadas: ''
   };
   resumenAnual = {
     promMesUso: '',
@@ -388,7 +381,7 @@ export class EstadisticasComponent implements OnInit {
       // this.loading();
               this.tableApiservice.getResumenGeneralProcesar(this.parameters).subscribe(
                 (response) => {
-                  console.log(391, response)
+                  
                   if(response.success){
                     this.resumenMes = response.data;
                   }
@@ -397,18 +390,18 @@ export class EstadisticasComponent implements OnInit {
                     Swal.close();
                 }
               );
-              // this.tableApiservice.getAtencionesResumenAnual(this.parameters).subscribe(
-              //   (response) => {
-              //     if(response.success){
-              //       this.columns1 = response.data.cabeceras;
-              //       this.rows1 = response.data.tabla_mes_especialidad;
-              //       this.formatPipe(this.rows1);
-              //     }
-              //   },
-              //   (error) => {
-              //       Swal.close();
-              //   }
-              // );
+              this.tableApiservice.getAtencionesResumenAnual(this.parameters).subscribe(
+                (response) => {console.log(394, response)
+                  if(response.success){
+                    this.columns1 = response.data.cabeceras;
+                    this.rows1 = response.data.tabla_mes_especialidad;
+                    this.formatPipe(this.rows1);
+                  }
+                },
+                (error) => {
+                    Swal.close();
+                }
+              );
 
               // this.tableApiservice.tiposPacientes(this.parameters).subscribe(
               //   (response) => { 

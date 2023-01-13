@@ -105,44 +105,39 @@
                                     <div class="col-md-12 div_panel_cabecera">
                                     <div class="col-md-3 col-sm-6 col-xs-12">
                                         <div class="info-box">
-                                            <span style="background: #10004C !important; color:#fff !important;" class="info-box-icon">
-                                            <i class="fa fa-stethoscope" aria-hidden="true"></i>
+                                            <span style="background:#57AA50 !important; color:#fff !important;" class="info-box-icon">
+                                            <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
                                             </span>		
                                             <div class="info-box-content">
-                                            <span style="font-family:arial; font-size:15px; " class="info-box-text">OCUPABILIDAD DEL MÉDICO</span>
-                                                <span *ngIf="resumenMes.promMesUso" class="info-box-number">{{resumenMes.ocupabilidad | number : '1.2-2' }} % ( {{resumenMes.minutosProgramados_xDia}} )</span>
-                                                <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">Tiempo programado / 12 horas x dia
-                                                </label>
+                                            <span style="font-family:arial; font-size:15px; " class="info-box-text">REALIZADAS</span>
+                                                <span *ngIf="resumenMes.total" class="info-box-number">{{resumenMes.total}} </span>
+                                                <!-- <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">Tiempo programado / 12 horas x dia
+                                                </label> -->
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-3 col-sm-6 col-xs-12">
                                         <div class="info-box">
-                                            <span style="background: #57AA50 !important; color:#fff !important;" class="info-box-icon">			
-                                            <i class="fa fa-plus-circle" aria-hidden="true"></i>		</span>		
-                                            <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">OCUPABILIDAD DE ATENCIONES</span>			<span *ngIf="resumenMes.ocupabilidad" class="info-box-number">{{resumenMes.promMesUso | number : '1.2-2' }} % ( {{resumenMes.minutosAtendidos_xDia}} )</span>			
-                                            <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">Tiempo de atención / 12 horas x dia
-                                                </label>		</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-sm-6 col-xs-12">
-                                        <div class="info-box">
                                             <span style="background: #FF3636 !important; color:#fff !important;" class="info-box-icon">			
-                                            <i class="fa fa-medkit" aria-hidden="true"></i>		</span>		
-                                            <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">OCUPABILIDAD DEL TURNO</span>			
-                                            <span *ngIf="resumenMes.usoEfectivoTurno" class="info-box-number">{{resumenMes.usoEfectivoTurno | number : '1.2-2' }}</span>			<label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success" >Tiempo de atención / tiempo programado
-                                            </label>		</div>
+                                            <i class="fa fa-user-times" aria-hidden="true"></i>		</span>		
+                                            <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">AUSENTISMO</span>			<span *ngIf="resumenMes.ausentismo" class="info-box-number">{{resumenMes.ausentismo}} </span>			
+                                            <!-- <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">Tiempo de atención / 12 horas x dia
+                                                </label>		 -->
+                                              </div>
                                         </div>
                                     </div>
                                     <div class="col-md-3 col-sm-6 col-xs-12">
                                         <div class="info-box">
-                                            <span style="background: #FFAA00 !important; color:#fff !important;" class="info-box-icon">			
-                                            <i class="fa fa-institution" aria-hidden="true"></i>		</span>		
-                                            <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">NRO CONSULTORIOS</span>			
-                                            <span *ngIf="resumenMes.nro_consultorios" class="info-box-number">{{resumenMes.nro_consultorios}} Ocupados en {{resumenMes.diasPeriodo}} días</span>			
-                                            <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">{{resumenMes.nro_consultorios_maestro}} Físicos Existentes</label>		</div>
+                                            <span style="background: #63B6DE !important; color:#fff !important;" class="info-box-icon">			
+                                            <i class="fa fa-users" aria-hidden="true"></i>		</span>		
+                                            <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">RESERVADAS</span>			
+                                            <span *ngIf="resumenMes.reservadas" class="info-box-number">{{resumenMes.reservadas}}</span>			
+                                            <!-- <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success" >Tiempo de atención / tiempo programado
+                                            </label>		 -->
+                                          </div>
                                         </div>
                                     </div>
+                                    
                                     </div>
                                     <div class="card-content collapse show">
                                       <div class="card-body">
@@ -156,8 +151,8 @@
                                     <div class="col-md-12 div_panel_cabecera">
                                         <div class="col-md-3 col-sm-6 col-xs-12">
                                            <div class="info-box">
-                                              <span style="background: #10004C !important; color:#fff !important;" class="info-box-icon">
-                                                <i class="fa fa-users" aria-hidden="true"></i>
+                                              <span style="background: #63B6DE !important; color:#fff !important;" class="info-box-icon">
+                                                <i class="fa fa-credit-card" aria-hidden="true"></i>
                                               </span>		
                                               <div class="info-box-content">
                                                 <span style="font-family:arial; font-size:15px; " class="info-box-text">ATENCIONES</span>
@@ -168,8 +163,8 @@
                                         </div>
                                         <div class="col-md-3 col-sm-6 col-xs-12">
                                            <div class="info-box">
-                                              <span style="background: #63B6DE !important; color:#fff !important;" class="info-box-icon">			
-                                                <i class="fa fa-hourglass-2" aria-hidden="true"></i>		</span>		
+                                              <span style="background: #DD4B39!important; color:#fff !important;" class="info-box-icon">			
+                                                <i class="fa fa-hospital-o" aria-hidden="true"></i>		</span>		
                                               <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">PROMEDIO DE ATENCIÓN</span>			
                                                 <span *ngIf="resumenMes.nro_atendidos_xdia" class="info-box-number">{{resumenMes.nro_atendidos_xdia | number : '1.2-2'}} pacientes por día</span>			
                                                 <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">{{resumenMes.nro_atendidos_xturno | number : '1.2-2'}} pacientes por turno</label>		</div>
@@ -177,8 +172,8 @@
                                         </div>
                                         <div class="col-md-3 col-sm-6 col-xs-12">
                                            <div class="info-box">
-                                              <span style="background: #2F50F1 !important; color:#fff !important;" class="info-box-icon">			
-                                                <i class="fa fa-clock-o" aria-hidden="true"></i>		</span>		
+                                              <span style="background: #57AA50 !important; color:#fff !important;" class="info-box-icon">			
+                                                <i class="fa fa-hospital-o" aria-hidden="true"></i>		</span>		
                                               <div class="info-box-content">			
                                                 <span style="font-family:arial; font-size:15px; " class="info-box-text" >TURNOS PROGRAMADOS</span>			
                                                 <span *ngIf="resumenMes.promTurnosxDia" class="info-box-number">{{resumenMes.nro_turnos | number : '1.2-2'}} turnos</span>			
@@ -189,8 +184,8 @@
                                         </div>
                                         <div class="col-md-3 col-sm-6 col-xs-12">
                                           <div class="info-box">
-                                             <span style="background: #57AA50 !important; color:#fff !important;" class="info-box-icon">			
-                                               <i class="fa fa-user-md" aria-hidden="true"></i>		</span>		
+                                             <span style="background: #F39C12!important; color:#fff !important;" class="info-box-icon">			
+                                               <i class="fa fa-wheelchair" aria-hidden="true"></i>		</span>		
                                              <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">MÉDICOS</span>			<span *ngIf="resumenMes.ocupabilidad" class="info-box-number">{{resumenMes.nro_medicos}} Médicos</span>			
                                                <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">En {{ resumenMes.nro_especialidad }} especialidades
                                                  </label>		</div>
