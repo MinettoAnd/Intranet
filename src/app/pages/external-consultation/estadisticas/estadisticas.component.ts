@@ -24,7 +24,20 @@ import ResizeObserver from 'resize-observer-polyfill';
 })
 export class EstadisticasComponent implements OnInit {
   active = 1;
-
+  @ViewChild("baseChart", { static: false }) set content(
+    content: ElementRef
+  ) {
+    if (content) {
+      // initially setter gets called with undefined
+      this.baseChart = content;
+      // this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del mes seleccionado', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
+      // this.getBarChart(this.chartLabels, this.chartData3, this.chartData4, 'chart-2', 'MENSUAL-INGRESO CON IGV - TOTAL CUOTAS', 'MENSUAL-INGRESO CON IGV - TOTAL RECAUDADO', 'bar');
+      // this.getBarChart(this.chartLabels2, this.chartData5, this.chartData6, 'chart-3', 'MENSUAL-NÚMERO DE CONTRATOS PAGADOS-TOTAL CUOTAS', 'MENSUAL-NÚMERO DE CONTRATOS PAGADOS-TOTAL RECAUDADO', 'bar');
+      // this.getBarChart(this.chartLabels3, this.chartData7, this.chartData8, 'chart-4', 'ANUAL-INGRESO SIN IGV - TOTAL CUOTAS', 'ANUAL-INGRESO SIN IGV - TOTAL RECAUDADO', 'bar');
+      // this.getBarChart(this.chartLabels3, this.chartData9, this.chartData10, 'chart-5', 'ANUAL-INGRESO CON IGV - TOTAL CUOTAS', 'ANUAL-INGRESO CON IGV - TOTAL RECAUDADO', 'bar');
+      // this.getBarChart(this.chartLabels4, this.chartData11, this.chartData12, 'chart-6', 'ANUAL-NÚMERO DE CONTRATOS PAGADOS - TOTAL CUOTAS', 'ANUAL-NÚMERO DE CONTRATOS PAGADOS - TOTAL RECAUDADO', 'bar');
+    }
+  }
   optionsMes = [
     { value: '01', label: 'Enero' },
     { value: '02', label: 'Febrero' },
@@ -55,7 +68,7 @@ export class EstadisticasComponent implements OnInit {
   ];
   private baseChart: ElementRef;
   // private baseChart2: ElementRef;
-  
+  color = [ 'graph-primary', 'primary','graph-tertiary', 'graph-quaternary '];
   public isCollapsed1 = false;
   public isCollapsed2 = false;
   public isCollapsed3 = false;
@@ -67,22 +80,20 @@ export class EstadisticasComponent implements OnInit {
   public isCollapsed9 = false;
   public isCollapsed10 = false;
   public isCollapsed11 = false;
-  public barChartLabels1 = [];
-  public barChartLabels2 = [];
-  public barChartLabels3 = [];
-  public barChartLabels4 = [];
-  public barChartData1 = [];
-  public barChartData2 = [];
-  public barChartData3 = [];
-  public barChartData4 = [];
-  public barChartData5 = [];
-  public barChartData6 = [];
-  public barChartData7 = [];
-  public barChartData8 = [];
-  public barChartData9 = [];
-  public barChartData10 = [];
-  public barChartData11 = [];
-  public barChartData12 = [];
+  public chartLabels1 = [];
+  public chartLabels2 = [];
+
+  public chartData1 = [];
+  public chartData2 = [];
+  public chartData3 = [];
+
+  progressBarLabels;
+  progressBar1;
+  progressBarTabla1;
+  progressBarTabla2;
+  progressBarTabla3;
+  progressBarTabla4;
+  progressBarTabla5;
   totales;
   id_sede = '0001';
   filtroForm: FormGroup;
@@ -170,7 +181,7 @@ export class EstadisticasComponent implements OnInit {
   }
 
   ngOnInit(){
-    console.log('hola')
+
     this.setPage({ offset: 0 });
   }
   filter() {
@@ -194,40 +205,42 @@ export class EstadisticasComponent implements OnInit {
         },
     });
   }
-  getBarChart(barChartLabels1, barChartData1, barChartData2, barChartData3, chartNum, title, title2, title3, typeChart) {
-
+  getBarChart(chartLabels1, chartData1, chartData2,scaleLabel1,scaleLabel2, chartNum, title, title2, typeChart) {
     const data = {
-      labels: barChartLabels1,
+      labels: chartLabels1,
       datasets: [
         {
-          barPercentage: 1,
+          barPercentage: 0.8,
           categoryPercentage: 1,
           label: title,
           // borderColor: 'rgba(99, 255, 132, 1)',
           borderWidth: 1,
-          data: barChartData1,
-          backgroundColor: 'rgb(166, 17, 32, 0.5)'
+          data: chartData1,
+          backgroundColor: '#28a74559'
           // backgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#adb5bd','#ffc107', '#28a745', '#6610f2','#20c997'],
           // hoverBackgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14','#adb5bd', '#ffc107', '#28a745', '#6610f2', '#20c997']
         },
         {
           label: title2,
           // borderColor: 'rgba(99, 255, 132, 1)',
-          borderWidth: 1,
-          data: barChartData2,
-          backgroundColor: 'rgb(255, 164, 8, 0.5)'
+          borderWidth: 4,
+          data: chartData2,
+          backgroundColor     : '#a6bcdf',
+          borderColor         : 'rgba(33,104,163,1)',
+          // backgroundColor: 'rgb(255, 164, 8, 0.7)',
           // backgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#adb5bd','#ffc107', '#28a745', '#6610f2','#20c997'],
           // hoverBackgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14','#adb5bd', '#ffc107', '#28a745', '#6610f2', '#20c997']
+          type                : 'line',
         },
-        {
-          label: title3,
-          // borderColor: 'rgba(99, 255, 132, 1)',
-          borderWidth: 1,
-          data: barChartData3,
-          backgroundColor: 'rgb(34, 102, 211, 0.5)'
-          // backgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#adb5bd','#ffc107', '#28a745', '#6610f2','#20c997'],
-          // hoverBackgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14','#adb5bd', '#ffc107', '#28a745', '#6610f2', '#20c997']
-        }
+        // {
+        //   label: title3,
+        //   // borderColor: 'rgba(99, 255, 132, 1)',
+        //   borderWidth: 1,
+        //   data: chartData3,
+        //   backgroundColor: 'rgb(34, 102, 211, 0.5)'
+        //   // backgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#adb5bd','#ffc107', '#28a745', '#6610f2','#20c997'],
+        //   // hoverBackgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14','#adb5bd', '#ffc107', '#28a745', '#6610f2', '#20c997']
+        // }
       ]
     };
     const options = {
@@ -240,37 +253,189 @@ export class EstadisticasComponent implements OnInit {
       // },
       responsive: true,
       // We use these empty structures as placeholders for dynamic theming.
-      scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero: true,
-            callback: function (value, index, values) {
-              // console.log(444,Number.isInteger(value), value,index,values);
-              if (chartNum = 'chart-3'){
-                return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-              }else{
-                if (parseInt(value) >= 1000) {
-                                return 'S/.' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                } else { return 'S/.' + value; }
-              }
+      // scales: {
+      //   yAxes: [{
+      //     ticks: {
+      //       beginAtZero: true,
+      //       callback: function (value, index, values) {
+      //         // console.log(444,Number.isInteger(value), value,index,values);
+      //         if (chartNum = 'chart-3'){
+      //           return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      //         }else{
+      //           if (parseInt(value) >= 1000) {
+      //                           return 'S/.' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      //           } else { return 'S/.' + value; }
+      //         }
               
-            }
+      //       }
+      //     }
+      //   }]
+      // },
+      // legend: {
+      //   display: false
+      // },
+      scales: {
+        xAxes: [{
+          scaleLabel: {
+            display: true,
+            labelString: scaleLabel1,
+            fontSize: 18,
+            fontColor: '#000',
+          }
+        }],
+        yAxes: [{
+          scaleLabel: {
+            display: true,
+            labelString: scaleLabel2,
+            fontSize: 18,
+            fontColor: '#000',
           }
         }]
       },
+      plugins: {
+        datalabels: {
+          
+          /* anchor puede ser "start", "center" o "end" */
+          anchor: 'center',
+          backgroundColor: function(context) {
+            return context.dataset.backgroundColor;
+          },
+          borderRadius: 4,
+          clip: true,
+          color: 'white',
+          font: {
+            weight: 'bold'
+          },
+          formatter: function(value, context) {
+            let sum = 0;
+            
+            let dataArr = context.chart.data.datasets[context.datasetIndex].data;
+              
+            dataArr.map((data) => {
+              return sum += parseFloat(data);
+            });
+            // console.log(292,value , sum );
+            if (sum > 0 ){
+              return ((value * 100) / sum).toFixed(2) + '%';
+            }else{
+              return (0 + '%');
+            }
+            
+          },
+          /* Podemos modificar el texto a mostrar */
+          // formatter: function (dato, ctx) {
+          //   return ((dato * 100) / total).toFixed(2) + '%'; 
+          // },
+          // formatter: (dato) => ((dato * 100) / total).toFixed(2) + '%',
+          // formatter: function (value, ctx) {
+          //   return ((value * 100) / this.total(ctx)).toFixed(2) + '%';
+          // },
+          // formatter: (dato) => Math.floor((dato / totales) * 100) + '%',
+          /* Color del texto */
+          // color: '#ffffff',
+          // /* Formato de la fuente */
+          // font: {
+          //   // family: '"Times New Roman", Times, serif',
+          //   size: '11',
+          //   weight: 'bold',
+          // },
+          /* Formato de la caja contenedora */
+          // padding: '4',
+          // borderWidth: 2,
+          // borderColor: 'darkblue',
+          // borderRadius: 8,
+          // backgroundColor: 'lightblue'
+        }
+      }
+    };
+    return this.getChart(chartNum, typeChart, data, options);
+    
+  }
+  getPieChart(chartLabels1, chartData1, chartNum, typeChart) {
+    const data = {
+      labels: chartLabels1,
+      datasets: [
+        {
+          barPercentage: 0.7,
+          categoryPercentage: 1,
+          // label: title,
+          // borderColor: 'rgba(99, 255, 132, 1)',
+          borderWidth: 1,
+          data: chartData1,
+          // backgroundColor: '#ffa40840'
+          backgroundColor: ['#2266d3', '#ffa408', '#fd7e14', '#17a2b8', '#eb445a', '#adb5bd','#ffc107', '#28a745', '#6610f2','#20c997'],
+          // hoverBackgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14','#adb5bd', '#ffc107', '#28a745', '#6610f2', '#20c997']
+        },
+        // {
+        //   label: title2,
+        //   // borderColor: 'rgba(99, 255, 132, 1)',
+        //   borderWidth: 3,
+        //   data: chartData2,
+        //   backgroundColor     : '#a6bcdf',
+        //   borderColor         : 'rgba(33,104,163,1)',
+        //   // backgroundColor: 'rgb(255, 164, 8, 0.7)',
+        //   // backgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#adb5bd','#ffc107', '#28a745', '#6610f2','#20c997'],
+        //   // hoverBackgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14','#adb5bd', '#ffc107', '#28a745', '#6610f2', '#20c997']
+        //   type                : 'line',
+        // },
+        // {
+        //   label: title3,
+        //   // borderColor: 'rgba(99, 255, 132, 1)',
+        //   borderWidth: 1,
+        //   data: chartData3,
+        //   backgroundColor: 'rgb(34, 102, 211, 0.5)'
+        //   // backgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#adb5bd','#ffc107', '#28a745', '#6610f2','#20c997'],
+        //   // hoverBackgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14','#adb5bd', '#ffc107', '#28a745', '#6610f2', '#20c997']
+        // }
+      ]
+    };
+    const options = {
+      // callbacks: {
+      //   label: function (t, d) {
+      //     var xLabel = d.datasets[t.datasetIndex].label;
+      //     var yLabel = t.yLabel >= 1000 ? 'S/.' + t.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : '$' + t.yLabel;
+      //     return xLabel + ': ' + yLabel;
+      //   }
+      // },
+      responsive: true,
+      // We use these empty structures as placeholders for dynamic theming.
+      // scales: {
+      //   yAxes: [{
+      //     ticks: {
+      //       beginAtZero: true,
+      //       callback: function (value, index, values) {
+      //         // console.log(444,Number.isInteger(value), value,index,values);
+      //         if (chartNum = 'chart-3'){
+      //           return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      //         }else{
+      //           if (parseInt(value) >= 1000) {
+      //                           return 'S/.' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      //           } else { return 'S/.' + value; }
+      //         }
+              
+      //       }
+      //     }
+      //   }]
+      // },
       // legend: {
       //   display: false
       // },
       // scales: {
       //   xAxes: [{
-      //     display: false,
-      //     ticks: {
-      //       max: 100,
-      //       min: 0
+      //     scaleLabel: {
+      //       display: true,
+      //       // labelString: scaleLabel1,
+      //       fontSize: 18,
+      //       fontColor: '#000',
       //     }
       //   }],
       //   yAxes: [{
-      //     display: false
+      //     scaleLabel: {
+      //       display: true,
+      //       // labelString: scaleLabel2,
+      //       fontSize: 18,
+      //       fontColor: '#000',
+      //     }
       //   }]
       // },
       plugins: {
@@ -345,9 +510,9 @@ export class EstadisticasComponent implements OnInit {
     });
     return graph;
   }
-  guardarImagen(){
-    var canvas = document.getElementById("chart-1") as HTMLCanvasElement;
-    var downloadlink = document.getElementById("downloadlink") as HTMLAnchorElement;
+  guardarImagen(chart, idDownload){
+    var canvas = document.getElementById(chart) as HTMLCanvasElement;
+    var downloadlink = document.getElementById(idDownload) as HTMLAnchorElement;
     
     // var ctx = canvas.getContext("2d");
     // ctx.strokeStyle = "yellow";
@@ -356,7 +521,7 @@ export class EstadisticasComponent implements OnInit {
     // ctx.arc(100,75,50,0,Math.PI*2);
     // ctx.stroke();
     var imagedata = canvas.toDataURL("image/png");
-    console.log(imagedata)
+    // console.log(imagedata)
     downloadlink.href = imagedata;
   }
   formatPipe(rows1) {
@@ -411,9 +576,9 @@ export class EstadisticasComponent implements OnInit {
               this.tableApiservice.getAtencionesResumenAnual(this.parameters).subscribe(
                 (response) => {
                   if(response.success){
-                    this.columns1 = response.data.cabeceras;
-                    this.rows1 = response.data.tabla_mes_especialidad;
-                    this.formatPipe(this.rows1);
+                    // this.columns1 = response.data.cabeceras;
+                    // this.rows1 = response.data.tabla_mes_especialidad;
+                    // this.formatPipe(this.rows1);
                   }
                 },
                 (error) => {
@@ -423,22 +588,95 @@ export class EstadisticasComponent implements OnInit {
 
               this.tableApiservice.tiposPacientes(this.parameters).subscribe(
                 (response) => { 
-                  this.columns2 = [];
-                  this.rows2 = [];
+                  console.log(592, response)
+                  this.progressBarLabels = [];
+                  this.progressBar1 = [];
+                  let total = response.data.total_prog;
                   if(response.success){
-                    // this.columns1 = response.data.cabeceras;
-                    // this.rows2 = response.data.tabla_mes_medico;
-                    // this.formatPipe(this.rows2);
-                    // this.rows2.map( item => {
+                    for (let value of Object.values(response.data.tipo_prog)) {
+                      let porcentaje:any = Object.values(value);
                       
-                    //   if (!this.especialidades.includes(item.especialidadNombre)){
-                    //     this.especialidades.push(item.especialidadNombre);
-                    //   }
-                    // });
-                    // this.temp = this.rows2;
-                    // this.rowsFilter = this.rows2.filter(medico => medico.especialidadNombre === 'CARDIOLOGIA');
+                      // this.progressBar1.push(datos);
+                      
+                      let label = Object.keys(value)[0];
+                      if ( label == 'seguros_conv'){
+                        this.progressBarLabels.push('CIA. Seguros / Convenios')
+                        // this.progressBarTabla1 = response.data.tipo_prog_d.seguros_conv.map(item=>{
+                        //     let porcentaje = item.cantidad 
+                        // });
+                        const datos = {
+                          porcentaje : ((porcentaje/total)*100).toFixed(2),
+                          value: porcentaje[0],
+                          table:response.data.tipo_prog_d.seguros_conv
+                        }
+                        this.progressBar1.push(datos);
+                      }else if (label === 'insti_priva'){
+                        this.progressBarLabels.push('Institucional / Privados')
+                        this.progressBarTabla2 = response.data.tipo_prog_d.insti_priva;
+                        const datos = {
+                          porcentaje : ((porcentaje/total)*100).toFixed(2),
+                          value: porcentaje[0],
+                          table:response.data.tipo_prog_d.insti_priva
+                        }
+                        this.progressBar1.push(datos);
+                      }else if (label === 'madre_nino'){
+                        this.progressBarLabels.push('Madre Niño')
+                        this.progressBarTabla3 = response.data.tipo_prog_d.madre_nino;
+                        const datos = {
+                          porcentaje : ((porcentaje/total)*100).toFixed(2),
+                          value: porcentaje[0],
+                          table:response.data.tipo_prog_d.madre_nino
+                        }
+                        this.progressBar1.push(datos);
+                      }else if (label === 'tarjeta_salud'){
+                        this.progressBarLabels.push('Programas de Salud')
+                        this.progressBarTabla4 = response.data.tipo_prog_d.tarjeta_salud;
+                        const datos = {
+                          porcentaje : ((porcentaje/total)*100).toFixed(2),
+                          value: porcentaje[0],
+                          table:response.data.tipo_prog_d.tarjeta_salud
+                        }
+                        this.progressBar1.push(datos);
+                      }else{
+                        this.progressBarLabels.push('Otros')
+                        this.progressBarTabla5 = response.data.tipo_prog_d.Otros;
+                        const datos = {
+                          porcentaje : ((porcentaje/total)*100).toFixed(2),
+                          value: porcentaje[0],
+                          table:response.data.tipo_prog_d.Otros
+                        }
+                        this.progressBar1.push(datos);
+                      }
+                      console.log(621,this.progressBar1);
+                    }
+                    // this.progressBarTabla1 = response.data.tipo_prog_d.tarjeta_salud;
+                    // this.progressBarTabla2 = response.data.tipo_prog_d.insti_priva;
+                    // this.progressBarTabla3 = response.data.tipo_prog_d.madre_nino;
+                    // this.progressBarTabla4 = response.data.tipo_prog_d.seguros_conv;
+                    // this.progressBarTabla5 = response.data.tipo_prog_d.Otros;
+                    // console.log(596,this.progressBarTabla1);
+                    // for (let value of Object.values(response.data.tipo_prog_d.tarjeta_salud)) {
+                    //   // console.log(616, value)
+                    //   // let porcentaje:any = Object.values(value);
+                    //   // const datosTabla = {
+                    //   //   porcentaje : ((porcentaje/total)*100).toFixed(2),
+                    //   //   value: porcentaje[0]
+                    //   // }
+                    //   // this.progressBarTabla1.push(datosTabla);
+                    //   // let label = Object.keys(value)[0];
+                    //   // if ( label == 'seguros_conv'){
+                    //   //   this.progressBarLabels.push('CIA. Seguros / Convenios')
+                    //   // }else if (label === 'insti_priva'){
+                    //   //   this.progressBarLabels.push('Institucional / Privados')
+                    //   // }else if (label === 'madre_nino'){
+                    //   //   this.progressBarLabels.push('Madre Niño')
+                    //   // }else if (label === 'tarjeta_salud'){
+                    //   //   this.progressBarLabels.push('Programas de Salud')
+                    //   // }
+                      
+                    // }
                   }
-                  
+                
                 },
                 (error) => {
                     Swal.close();
@@ -455,7 +693,7 @@ export class EstadisticasComponent implements OnInit {
                     this.resumenMontos.tarjeta = typeof this.resumenMontos.tarjeta === 'number' ? this.separadorDeMiles(this.resumenMontos.tarjeta) : this.separadorDeMiles(Number(this.resumenMontos.tarjeta));
                     this.resumenMontos.montoTotal = typeof this.resumenMontos.montoTotal === 'number' ? this.separadorDeMiles(this.resumenMontos.montoTotal) : this.separadorDeMiles(Number(this.resumenMontos.montoTotal));
 
-                  console.log(442, this.resumenMontos);
+                  // console.log(442, this.resumenMontos);
                 },
                 (error) => {
                     Swal.close();
@@ -477,21 +715,44 @@ export class EstadisticasComponent implements OnInit {
               );
 // chart y pie
               this.tableApiservice.chartIndex(this.parameters).subscribe(
-                (response) => {                 
+                (response) => {  
+                   this.chartLabels1 = [];
+                   this.chartData1 = [];   
+                   this.chartData2 = [];
+                   this.chartData3 = [];    
                   if(response.success){
+                    
+                    response.data.data.map(item =>{
+                      this.chartLabels1.push(item.dia);
+                      this.chartData1.push(item.cantidad);
+                      this.chartData2.push(item.procedencia);
+                    });
                     // this.resumenMontos = response.data;
                     
                   }
-                  // console.log(577, this.detalleAnual);
+                  this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del mes seleccionado', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
+                  // console.log(577, this.chartData1);
                 },
                 (error) => {
                     Swal.close();
                 }
               );
               this.tableApiservice.pieIndex(this.parameters).subscribe(
-                (response) => {                 
+                (response) => {        
                   if(response.success){
+                   this.chartLabels2 = [];
+                   this.chartData3 = [];    
+                  if(response.success){
+                    
+                    response.data.data.map(item =>{
+                      this.chartLabels2.push(item.grupo);
+                      this.chartData3.push(item.cantidad);
+                    });
                     // this.resumenMontos = response.data;
+                    
+                  }
+                  this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'pie');
+                  // console.log(577, this.chartData1);
                     
                   }
                   // console.log(577, this.detalleAnual);
@@ -513,7 +774,7 @@ export class EstadisticasComponent implements OnInit {
     if (limit === '0'){
       
       this.page.size = this.page.totalElements;
-      console.log(this.page.totalElements);
+      // console.log(this.page.totalElements);
       return
     }
     this.page.size = parseInt(limit, 10);
@@ -593,7 +854,7 @@ export class EstadisticasComponent implements OnInit {
         this.rowsFilter = [...filtered]
         
       } else {
-        console.log(this.filtered);
+        // console.log(this.filtered);
         this.rowsFilter = [...this.temp.filter(medico => medico.especialidadNombre === this.especialidad)]
       }
   

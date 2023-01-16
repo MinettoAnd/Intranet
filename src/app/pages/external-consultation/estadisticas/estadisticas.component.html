@@ -140,11 +140,70 @@
                                     
                                     </div>
                                     <div class="card-content collapse show">
-                                      <div class="card-body">
-                                        <!-- <a class="btn btn-primary" id="downloadLink" (click)="exportexcel()">Exportar tabla a Excel</a>
-                                        <a class="btn btn-primary" id="downloadLink" (click)="copyTableToClipboard()">Copiar tabla</a> -->
-                                        <div class="table table-striped table-bordered selection-deletion-row">
-                                          
+                                      <div class="row" style="align-items: center;justify-content: space-between;">
+                                        <div class="col-md-8">
+                                          <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
+                                            <li class="list-group-item border-0 pl-0">
+                                              <a  id="downloadlink1" href="#" 
+                                                class="btn btn-sm font-weight-bold btn-link" (click)="guardarImagen('chart-1', 'downloadlink1')" download>
+                                                <i class="fa fa-external-link"></i>
+                                                Guardar Imagen
+                                              </a>
+                                            </li>
+                                          </ul>
+                                          <div class="card-body">
+                                            <div class="d-block" >
+                                              <canvas #baseChart id="chart-1">
+                                              </canvas>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                          <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
+                                            <li class="list-group-item border-0 pl-0">
+                                              <a  id="downloadlink2" href="#" 
+                                                class="btn btn-sm font-weight-bold btn-link" (click)="guardarImagen('chart-2', 'downloadlink2')" download>
+                                                <i class="fa fa-external-link"></i>
+                                                Guardar Imagen
+                                              </a>
+                                            </li>
+                                          </ul>
+                                          <div class="card-body">
+                                            <div class="d-block" >
+                                              <canvas #baseChart id="chart-2">
+                                              </canvas>
+                                            </div>
+                                          </div>
+                                          <div class="card-body">
+                                            <div class="d-block" *ngFor="let percentageCompleted of progressBar1; let i = index;">
+                                              <span style="display:flex; justify-content: space-between;"><i><b>{{progressBarLabels[i]}}</b></i><i>{{percentageCompleted.value}} - [{{percentageCompleted.porcentaje}}] %</i></span>
+                                                <ngb-progressbar
+                                                    [type]="color[i]"
+                                                    [value]="percentageCompleted.porcentaje"
+                                                    [striped]="false"
+                                                    [animated]="false">
+                                                </ngb-progressbar>
+                                                <p></p>
+                                                <div id="div_ocultar_tarjetas" style="margin-bottom: 15px; display: block;">
+                                                  <table class="table table-bordered">
+                                                     <thead>
+                                                        <tr>
+                                                           <th></th>
+                                                           <th>Cantidad</th>
+                                                           <th>Porcentaje</th>
+                                                        </tr>
+                                                     </thead>
+                                                       <tbody *ngFor="let rowTable of percentageCompleted.table; let i = index;">
+                                                        <tr style="font-size:16px;">
+                                                           <td>{{rowTable.programa }}</td>
+                                                           <td><strong><span>{{rowTable.cantidad}}</span></strong></td>
+                                                           <td><strong><span>{{rowTable.cantidad}}</span></strong></td>
+                                                        </tr>
+                                                      </tbody>
+                                                  </table>
+                                               </div>
+                                            </div>
+                                          </div>
                                         </div>
                                       </div>
                                     </div>
@@ -180,7 +239,6 @@
                                       </h5>
                                     </div>
                                     <div class="col-md-12 div_panel_cabecera">
-                                      
                                         <div class="col-md-3 col-sm-6 col-xs-12">
                                            <div class="info-box">
                                               <span style="background: #63B6DE !important; color:#fff !important;" class="info-box-icon">
@@ -221,6 +279,13 @@
                                               </div>
                                           </div>
                                        </div>
+                                       
+                                    </div>
+                                    <div class="box-header with-border" style="margin:1rem; ">
+                                      <div class="box-footer">
+                                        <p>* Información existente desde Enero 2019</p>
+                                        <p>* Costo por atenciones realizadas NO incluye IGV - (Pago de pacientes + Facturado a Empresas)</p>
+                                      </div>
                                     </div>
                                 </div>
                             </ng-template>
