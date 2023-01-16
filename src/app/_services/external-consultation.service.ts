@@ -144,5 +144,8 @@ private extractData(res: Response) {
     this.loadTableApiDataURL = `${environment.api_url}pieIndex`;
     return this.http.post(this.loadTableApiDataURL, data);
   }
-
+  getMedicosStatistics(data): Observable<any> {
+    this.loadTableApiDataURL = `${environment.api_url}getMedicosStatistics`;
+    return this.http.post(this.loadTableApiDataURL, data);
+  }
 }

@@ -9,7 +9,7 @@ import {AttentionConsultation} from '../../../interfaces/attentionConsultation';
 import {ApiResponse} from '../../../interfaces/response';
 import * as moment from 'moment';
 import { Page } from '../../../models/forms-data/page';
-import { ColumnMode, NgxDatatableModule, DatatableComponent  } from '@swimlane/ngx-datatable';
+import { ColumnMode, SelectionType, NgxDatatableModule, DatatableComponent  } from '@swimlane/ngx-datatable';
 import * as XLSX from 'xlsx';
 import { ExcelJson } from '../../../interfaces/excel-json.interface';
 import { ExportService } from '../../../_services/export.service';
@@ -66,6 +66,7 @@ export class EstadisticasComponent implements OnInit {
   public isCollapsed8 = false;
   public isCollapsed9 = false;
   public isCollapsed10 = false;
+  public isCollapsed11 = false;
   public barChartLabels1 = [];
   public barChartLabels2 = [];
   public barChartLabels3 = [];
@@ -99,21 +100,22 @@ export class EstadisticasComponent implements OnInit {
     anuladas: '',
     reservadas: ''
   };
-  resumenAnual = {
-    promMesUso: '',
-    minutosAtendidos_xDia: '',
-    ocupabilidad: '',
-    minutosProgramados_xDia: '',
-    usoEfectivoTurno: '',
-    nro_consultorios: '',
-    nro_turnos: '',
-    nro_consultorios_maestro: '',
-    nro_atendidos: '',
-    nro_cupos: '',
-    nro_atendidos_xdia: '',
-    nro_atendidos_xturno: '',
-    nro_medicos: '',
-    nro_especialidad: '',
+  resumenMesAnterior = {
+    success: '',
+    total: '',
+    ausentismo: '',
+    medico: '',
+    paciente: '',
+    anuladas: '',
+    reservadas: ''
+  };
+  resumenMontos = {
+    ciasegcon: '',
+    instipriva: '',
+    mani: '',
+    otros: '',
+    tarjeta: '',
+    montoTotal: '',
   };
   columns1: any;
   rows1: any;
@@ -129,8 +131,21 @@ export class EstadisticasComponent implements OnInit {
   rows4: any;
   temp2: any;
   rowsFilter2: any;
-  rows5: object[];
-  rows6: object[];
+  columns5: any;
+  rows5: any[];
+  columns6: any;
+  rows6: any[];
+  columns7: any;
+  rows7: any[];
+  columns8: any;
+  rows8: any[];
+  columns9: any;
+  rows9: any[];
+  columns10: any;
+  rows10: any[];
+  medicos = false;
+  columnsMedicos: any[];
+  rowsMedicos: any[];
   filtered: any;
   detalleAnual: any;
   especialidad: any;
@@ -140,7 +155,9 @@ export class EstadisticasComponent implements OnInit {
     {value: 50},
     {value: 100},
   ];
-  page = new Page()
+  page = new Page();
+  selected = [];
+  SelectionType = SelectionType;
   constructor(private tableApiservice: ExternalConsultationService, private exportService: ExportService,
     private _cp: CurrencyPipe) { 
       this.page.pageNumber = 0;
@@ -373,7 +390,8 @@ export class EstadisticasComponent implements OnInit {
         // meses: this.mes,
         anio: this.anio,
         chkena: 'on',
-        typepie: 'IN'
+        typepie: 'IN',
+        tipo: 'RERE'
         // pageNumber: this.page.pageNumber,
         // size: this.page.size
       };
@@ -391,7 +409,7 @@ export class EstadisticasComponent implements OnInit {
                 }
               );
               this.tableApiservice.getAtencionesResumenAnual(this.parameters).subscribe(
-                (response) => {console.log(394, response)
+                (response) => {
                   if(response.success){
                     this.columns1 = response.data.cabeceras;
                     this.rows1 = response.data.tabla_mes_especialidad;
@@ -403,161 +421,85 @@ export class EstadisticasComponent implements OnInit {
                 }
               );
 
-              // this.tableApiservice.tiposPacientes(this.parameters).subscribe(
-              //   (response) => { 
-              //     this.columns2 = [];
-              //     this.rows2 = [];
-              //     if(response.success){
-              //       this.columns1 = response.data.cabeceras;
-              //       this.rows2 = response.data.tabla_mes_medico;
-              //       this.formatPipe(this.rows2);
-              //       this.rows2.map( item => {
+              this.tableApiservice.tiposPacientes(this.parameters).subscribe(
+                (response) => { 
+                  this.columns2 = [];
+                  this.rows2 = [];
+                  if(response.success){
+                    // this.columns1 = response.data.cabeceras;
+                    // this.rows2 = response.data.tabla_mes_medico;
+                    // this.formatPipe(this.rows2);
+                    // this.rows2.map( item => {
                       
-              //         if (!this.especialidades.includes(item.especialidadNombre)){
-              //           this.especialidades.push(item.especialidadNombre);
-              //         }
-              //       });
-              //       this.temp = this.rows2;
-              //       this.rowsFilter = this.rows2.filter(medico => medico.especialidadNombre === 'CARDIOLOGIA');
-              //     }
+                    //   if (!this.especialidades.includes(item.especialidadNombre)){
+                    //     this.especialidades.push(item.especialidadNombre);
+                    //   }
+                    // });
+                    // this.temp = this.rows2;
+                    // this.rowsFilter = this.rows2.filter(medico => medico.especialidadNombre === 'CARDIOLOGIA');
+                  }
                   
-              //   },
-              //   (error) => {
-              //       Swal.close();
-              //   }
-              // );
+                },
+                (error) => {
+                    Swal.close();
+                }
+              );
 
-              // this.tableApiservice.calcularMontos(this.parameters).subscribe(
-              //   (response) => {
-              //     this.barChartLabels1 = [];
-              //     this.barChartData1 = [];
-              //     this.barChartData2 = [];
-              //     this.barChartData3 = [];
-              //     if(response.success){
-              //       // this.barChartLabels1 = response;
-              //       response.grafica1.map(item => {
-              //             this.barChartLabels1.push(item.name);
-              //             this.barChartData1.push(item.item_1);
-              //             this.barChartData2.push(item.item_2);
-              //             this.barChartData3.push(item.item_3);
-              //         } 
-              //       );
-              //     }
-              //   },
-              //   (error) => {
-              //       Swal.close();
-              //   }
-              // );
-
-              // this.tableApiservice.procesarAnterior(this.parameters).subscribe(
-              //   (response) => {
-              //     this.columns3 = [];
-              //     this.rows3 = [];
-              //     if(response.success){
-              //       this.columns3 = response.data.cabeceras;
-              //       this.rows3 = response.data.tabla_resumen_medico_1;
-              //       this.rows3.map(item =>{
-                      
-              //         if(item.item === 'Ocupabilidad del Medico' || item.item === 'Ocupabilidad de Atenciones' || item.item === 'Ocupabilidad del Turno' ){
-              //           console.log(593, item)
-              //           item.per1 = typeof item.per1 === 'number' ? item.per1.toFixed(2) + ' %' : Number(item.per1).toFixed(2) + ' %';
-              //           item.per2 = typeof item.per2 === 'number' ? item.per2.toFixed(2) + ' %' : Number(item.per2).toFixed(2) + ' %';
-              //           item.per3 = typeof item.per3 === 'number' ? item.per3.toFixed(2) + ' %' : Number(item.per3).toFixed(2) + ' %';
-              //           item.per4 = typeof item.per4 === 'number' ? item.per4.toFixed(2) + ' %' : Number(item.per4).toFixed(2) + ' %';
-  
-              //           item.per5 = typeof item.per5 === 'number' ? item.per5.toFixed(2) + ' %' : Number(item.per5).toFixed(2) + ' %';
-              //           item.per6 = typeof item.per6 === 'number' ? item.per6.toFixed(2) + ' %' : Number(item.per6).toFixed(2) + ' %';
-              //           item.per7 = typeof item.per7 === 'number' ? item.per7.toFixed(2) + ' %' : Number(item.per7).toFixed(2) + ' %';
-              //           item.per8 = typeof item.per8 === 'number' ? item.per8.toFixed(2) + ' %' : Number(item.per8).toFixed(2) + ' %';
-              //           item.per9 = typeof item.per9 === 'number' ? item.per9.toFixed(2) + ' %' : Number(item.per9).toFixed(2) + ' %';
-              //           item.per10 = typeof item.per10 === 'number' ? item.per10.toFixed(2) + ' %' : Number(item.per10).toFixed(2) + ' %';
-              //           item.per11 = typeof item.per11 === 'number' ? item.per11.toFixed(2) + ' %' : Number(item.per11).toFixed(2) + ' %';
-              //           item.per12 = typeof item.per12 === 'number' ? item.per12.toFixed(2) + ' %' : Number(item.per12).toFixed(2) + ' %';
-              //           item.TOTAL = typeof item.TOTAL === 'number' ? item.TOTAL.toFixed(2) + ' %' : Number(item.TOTAL).toFixed(2) + ' %';
-              //         }else{
-              //           item.per1 = typeof item.per1 === 'number' ? this.separadorDeMiles(item.per1) : this.separadorDeMiles(Number(item.per1));
-              //           item.per2 = typeof item.per2 === 'number' ? this.separadorDeMiles(item.per2) : this.separadorDeMiles(Number(item.per2));
-              //           item.per3 = typeof item.per3 === 'number' ? this.separadorDeMiles(item.per3) : this.separadorDeMiles(Number(item.per3));
-              //           item.per4 = typeof item.per4 === 'number' ? this.separadorDeMiles(item.per4) : this.separadorDeMiles(Number(item.per4));
-  
-              //           item.per5 = typeof item.per5 === 'number' ? this.separadorDeMiles(item.per5) : this.separadorDeMiles(Number(item.per5));
-              //           item.per6 = typeof item.per6 === 'number' ? this.separadorDeMiles(item.per6) : this.separadorDeMiles(Number(item.per6));
-              //           item.per7 = typeof item.per7 === 'number' ? this.separadorDeMiles(item.per7) : this.separadorDeMiles(Number(item.per7));
-              //           item.per8 = typeof item.per8 === 'number' ? this.separadorDeMiles(item.per8) : this.separadorDeMiles(Number(item.per8));
-              //           item.per9 = typeof item.per9 === 'number' ? this.separadorDeMiles(item.per9) : this.separadorDeMiles(Number(item.per9));
-              //           item.per10 = typeof item.per10 === 'number' ? this.separadorDeMiles(item.per10): this.separadorDeMiles(Number(item.per10));
-              //           item.per11 = typeof item.per11 === 'number' ? this.separadorDeMiles(item.per11): this.separadorDeMiles(Number(item.per11));
-              //           item.per12 = typeof item.per12 === 'number' ? this.separadorDeMiles(item.per12): this.separadorDeMiles(Number(item.per12));
-              //           item.TOTAL = typeof item.TOTAL === 'number' ? this.separadorDeMiles(item.TOTAL): this.separadorDeMiles(Number(item.TOTAL));
-              //         }
-              //         return item.per1, item.per2, item.per3, item.per4, item.per5, item.per6, item.per7, item.per8, item.per9, item.per10, item.per11,item.per12, item.TOTAL;
-              //       });
-              //     }
+              this.tableApiservice.calcularMontos(this.parameters).subscribe(
+                (response) => { 
+                  this.resumenMontos = response.data.total;
                   
-              //   },
-              //   (error) => {
-              //       Swal.close();
-              //   }
-              // );
+                    this.resumenMontos.ciasegcon =  typeof this.resumenMontos.ciasegcon === 'number' ? this.separadorDeMiles(this.resumenMontos.ciasegcon) : this.separadorDeMiles(Number(this.resumenMontos.ciasegcon));
+                    this.resumenMontos.instipriva = typeof this.resumenMontos.instipriva === 'number' ? this.separadorDeMiles(this.resumenMontos.instipriva) : this.separadorDeMiles(Number(this.resumenMontos.instipriva));
+                    this.resumenMontos.otros = typeof this.resumenMontos.otros === 'number' ? this.separadorDeMiles(this.resumenMontos.otros) : this.separadorDeMiles(Number(this.resumenMontos.otros));
+                    this.resumenMontos.tarjeta = typeof this.resumenMontos.tarjeta === 'number' ? this.separadorDeMiles(this.resumenMontos.tarjeta) : this.separadorDeMiles(Number(this.resumenMontos.tarjeta));
+                    this.resumenMontos.montoTotal = typeof this.resumenMontos.montoTotal === 'number' ? this.separadorDeMiles(this.resumenMontos.montoTotal) : this.separadorDeMiles(Number(this.resumenMontos.montoTotal));
+
+                  console.log(442, this.resumenMontos);
+                },
+                (error) => {
+                    Swal.close();
+                }
+              );
+
+              this.tableApiservice.procesarAnterior(this.parameters).subscribe(
+                (response) => {
+                  this.columns3 = [];
+                  this.rows3 = [];
+                  if(response.success){ 
+                      this.resumenMesAnterior = response.data;
+                  }
+                  console.log(472, this.resumenMesAnterior)
+                },
+                (error) => {
+                    Swal.close();
+                }
+              );
 // chart y pie
-              // this.tableApiservice.getResumenCabeceraEspecialidadMes(this.parameters).subscribe(
-              //   (response) => {                 
-              //     if(response.success){
-              //       this.resumenAnual = response.data;
+              this.tableApiservice.chartIndex(this.parameters).subscribe(
+                (response) => {                 
+                  if(response.success){
+                    // this.resumenMontos = response.data;
                     
-              //     }
-              //     console.log(577, this.detalleAnual);
-              //   },
-              //   (error) => {
-              //       Swal.close();
-              //   }
-              // );
-              // this.tableApiservice.getUsoMedicoAnual(this.parameters).subscribe(
-              //   (response) => { console.log(686, response)
-              //     if(response.success){
-  
-              //       this.columns4 = response.data.cabeceras;
-              //       this.rows4 = response.data.tabla_medicoUsoCita;
-              //       this.formatPipe(this.rows4);
-              //       this.rows4.map( item => {
-                      
-              //         if (!this.especialidades.includes(item.especialidadNombre)){
-              //           this.especialidades.push(item.especialidadNombre);
-              //         }
-              //       });
-              //       this.rows4.map(item =>{
-              //         item.Per1 = typeof item.Per1 === 'number' ? item.Per1.toFixed(2) + ' %' : Number(item.Per1).toFixed(2) + ' %';
-              //         item.Per2 = typeof item.Per2 === 'number' ? item.Per2.toFixed(2) + ' %' : Number(item.Per2).toFixed(2) + ' %';
-              //         item.Per3 = typeof item.Per3 === 'number' ? item.Per3.toFixed(2) + ' %' : Number(item.Per3).toFixed(2) + ' %';
-              //         item.Per4 = typeof item.Per4 === 'number' ? item.Per4.toFixed(2) + ' %' : Number(item.Per4).toFixed(2) + ' %';
-  
-              //         item.Per5 = typeof item.Per5 === 'number' ? item.Per5.toFixed(2) + ' %' : Number(item.Per5).toFixed(2) + ' %';
-              //         item.Per6 = typeof item.Per6 === 'number' ? item.Per6.toFixed(2) + ' %' : Number(item.Per6).toFixed(2) + ' %';
-              //         item.Per7 = typeof item.Per7 === 'number' ? item.Per7.toFixed(2) + ' %' : Number(item.Per7).toFixed(2) + ' %';
-              //         item.Per8 = typeof item.Per8 === 'number' ? item.Per8.toFixed(2) + ' %' : Number(item.Per8).toFixed(2) + ' %';
-              //         item.Per9 = typeof item.Per9 === 'number' ? item.Per9.toFixed(2) + ' %' : Number(item.Per9).toFixed(2) + ' %';
-              //         item.Per10 = typeof item.Per10 === 'number' ? item.Per10.toFixed(2) + ' %' : Number(item.Per10).toFixed(2) + ' %';
-              //         item.Per11 = typeof item.Per11 === 'number' ? item.Per11.toFixed(2) + ' %' : Number(item.Per11).toFixed(2) + ' %';
-              //         item.Per12 = typeof item.Per12 === 'number' ? item.Per12.toFixed(2) + ' %' : Number(item.Per12).toFixed(2) + ' %';
-              //         item.promMesUso = typeof item.promMesUso === 'number' ? item.promMesUso.toFixed(2) : Number(item.promMesUso).toFixed(2) + ' %';
-              //         item.promMeses = typeof item.promMeses === 'number' ? item.promMeses.toFixed(2) : Number(item.promMeses).toFixed(2) + ' %';
-              //         return item.Per1, item.Per2, item.Per3, item.Per4, item.Per5, item.Per6, item.Per7, item.Per8, item.Per9, item.Per10, item.Per11,item.Per12,item.promMesUso,item.promMeses;
-              //       });
-              //       this.temp2 = this.rows4;
-              //       this.rowsFilter2 = this.rows4.filter(medico => medico.especialidadNombre === 'CARDIOLOGIA');
-  
-              //         // this.columns4 = response.data.cabeceras
-              //         // this.rows4 = response.data.tabla_medicoUsoCita
-                      
-                      
-              //     }
-              //     Swal.close();
-              //   },
-              //   (error) => {
-              //       Swal.close();
-              //   }
-              // );
-
+                  }
+                  // console.log(577, this.detalleAnual);
+                },
+                (error) => {
+                    Swal.close();
+                }
+              );
+              this.tableApiservice.pieIndex(this.parameters).subscribe(
+                (response) => {                 
+                  if(response.success){
+                    // this.resumenMontos = response.data;
+                    
+                  }
+                  // console.log(577, this.detalleAnual);
+                },
+                (error) => {
+                    Swal.close();
+                }
+              );
   
   }
   public onLimitChange(limit: any): void {
@@ -588,16 +530,27 @@ export class EstadisticasComponent implements OnInit {
       if(numberTabla === 1){
         this.exportService.exportToClipboard(this.rows1, this.columns1);
       }else if (numberTabla === 2){
-        this.exportService.exportToClipboard(this.rows2, this.columns1);
+        this.exportService.exportToClipboard(this.rows2, this.columns2);
       }else if (numberTabla === 3){
-        this.exportService.exportToClipboard(this.rows3, this.columns1);
+        this.exportService.exportToClipboard(this.rows3, this.columns3);
       }else if (numberTabla === 4){
-        this.exportService.exportToClipboard(this.rows4, this.columns2);
+        this.exportService.exportToClipboard(this.rows4, this.columns4);
       }else if (numberTabla === 5){
-        this.exportService.exportToClipboard(this.rows5, this.columns2);
+        this.exportService.exportToClipboard(this.rows5, this.columns5);
       }else if (numberTabla === 6){
-        this.exportService.exportToClipboard(this.rows6, this.columns2);
+        this.exportService.exportToClipboard(this.rows6, this.columns6);
+      }else if (numberTabla === 7){
+        this.exportService.exportToClipboard(this.rows7, this.columns6);
+      }else if (numberTabla === 8){
+        this.exportService.exportToClipboard(this.rows8, this.columns6);
+      }else if (numberTabla === 9){
+        this.exportService.exportToClipboard(this.rows9, this.columns6);
+      }else if (numberTabla === 10){
+        this.exportService.exportToClipboard(this.rows10, this.columns6);
+      }else if (numberTabla === 11){
+        this.exportService.exportToClipboard(this.rowsMedicos, this.columnsMedicos);
       }
+      
     }
   
     exportToExcel(numberTabla): void {
@@ -613,7 +566,18 @@ export class EstadisticasComponent implements OnInit {
         this.exportService.exportTableElmToExcel(this.rows5, 'ANUAL - INGRESOS POR CUOTAS-INGRESO SIN IGV');
       }else if (numberTabla === 6){
         this.exportService.exportTableElmToExcel(this.rows6, 'ANUAL - INGRESOS POR CUOTAS-NÚMERO DE CONTRATOS PAGADOS');
+      }else if (numberTabla === 7){
+        this.exportService.exportTableElmToExcel(this.rows7, 'ANUAL - INGRESOS POR CUOTAS-NÚMERO DE CONTRATOS PAGADOS');
+      }else if (numberTabla === 8){
+        this.exportService.exportTableElmToExcel(this.rows8, 'ANUAL - INGRESOS POR CUOTAS-NÚMERO DE CONTRATOS PAGADOS');
+      }else if (numberTabla === 9){
+        this.exportService.exportTableElmToExcel(this.rows9, 'ANUAL - INGRESOS POR CUOTAS-NÚMERO DE CONTRATOS PAGADOS');
+      }else if (numberTabla === 10){
+        this.exportService.exportTableElmToExcel(this.rows10, 'ANUAL - INGRESOS POR CUOTAS-NÚMERO DE CONTRATOS PAGADOS');
+      }else if (numberTabla === 11){
+        this.exportService.exportTableElmToExcel(this.rowsMedicos, 'ANUAL - INGRESOS POR CUOTAS-NÚMERO DE CONTRATOS PAGADOS');
       }
+      
     }
 
     updateFilter(event) {
@@ -636,5 +600,13 @@ export class EstadisticasComponent implements OnInit {
       // update the rows1
       // Whenever the filter changes, always go back to the first page
       // this.table.offset = 0;
+    }
+
+    onSelect({ selected }) {
+      console.log('Select Event', selected, this.selected);
+    }
+  
+    onActivate(event) {
+      console.log('Activate Event', event);
     }
 }
