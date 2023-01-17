@@ -76,3 +76,32 @@ margin: 1rem 0;
 .text-green{
     color: #00a65a !important;
 }
+.text-red{
+    color: red !important;
+}
+::ng-deep .accordion {
+    .card {
+    //   margin-bottom: 0 !important;
+    //   border-bottom: 1px solid rgba(0, 0, 0, .04) !important;
+  
+      .card-header {
+        // padding-top: 0;
+        // padding: 0;
+  
+        button {
+          padding: 1.2rem;
+          width: 100%;
+  
+          span {
+            color:#000;
+            // float: left;
+            // font-size: 1.2rem;
+          }
+        }
+      }
+  
+    //   .card-body {
+    //     padding: 1rem;
+    //   }
+    }
+  }

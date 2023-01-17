@@ -175,7 +175,38 @@
                                             </div>
                                           </div>
                                           <div class="card-body">
-                                            <div class="d-block" *ngFor="let percentageCompleted of progressBar1; let i = index;">
+                                            <ngb-accordion [destroyOnHide]="false" [closeOthers]="true" #acc="ngbAccordion" activeIds="ngb-panel-0">
+                                              <ngb-panel *ngFor="let percentageCompleted of progressBar1; let i = index;">
+                                                <ng-template ngbPanelTitle style="width:100%!important;">
+                                                  <span style="display:flex; justify-content: space-between;"><i><b>{{progressBarLabels[i]}}</b></i><i>{{percentageCompleted.value}} - [{{percentageCompleted.porcentaje}}] %</i></span>
+                                                  <ngb-progressbar
+                                                      [type]="color[i]"
+                                                      [value]="percentageCompleted.porcentaje"
+                                                      [striped]="false"
+                                                      [animated]="false">
+                                                  </ngb-progressbar>
+                                                </ng-template>
+                                                <ng-template ngbPanelContent>
+                                                  <table class="table table-bordered">
+                                                    <thead>
+                                                      <tr>
+                                                          <th></th>
+                                                          <th>Cantidad</th>
+                                                          <th>Porcentaje</th>
+                                                      </tr>
+                                                    </thead>
+                                                      <tbody *ngFor="let rowTable of percentageCompleted.table; let i = index;">
+                                                      <tr style="font-size:16px;">
+                                                          <td>{{rowTable.programa }}</td>
+                                                          <td><strong><span>{{rowTable.cantidad}}</span></strong></td>
+                                                          <td><strong><span>{{rowTable.porcentaje}}</span></strong></td>
+                                                      </tr>
+                                                    </tbody>
+                                                </table>
+                                                </ng-template>
+                                              </ngb-panel>
+                                            </ngb-accordion>
+                                            <!-- <div class="d-block" *ngFor="let percentageCompleted of progressBar1; let i = index;">
                                               <span style="display:flex; justify-content: space-between;"><i><b>{{progressBarLabels[i]}}</b></i><i>{{percentageCompleted.value}} - [{{percentageCompleted.porcentaje}}] %</i></span>
                                                 <ngb-progressbar
                                                     [type]="color[i]"
@@ -197,12 +228,12 @@
                                                         <tr style="font-size:16px;">
                                                            <td>{{rowTable.programa }}</td>
                                                            <td><strong><span>{{rowTable.cantidad}}</span></strong></td>
-                                                           <td><strong><span>{{rowTable.cantidad}}</span></strong></td>
+                                                           <td><strong><span>{{rowTable.porcentaje}}</span></strong></td>
                                                         </tr>
                                                       </tbody>
                                                   </table>
                                                </div>
-                                            </div>
+                                            </div> -->
                                           </div>
                                         </div>
                                       </div>
@@ -213,21 +244,33 @@
                                     <div class="col-md-12 div_panel_cabecera">
                                           <div class="col-md-3 col-sm-6 col-xs-12">
                                             <div class="description-block border-right">
-                                                <span class="description-percentage text-green"><i class="fa fa-caret-up"></i><div id="por_ma_realizadas_vw">5.85%</div></span>
+                                                <span class="description-percentage text-green" [ngClass]="{'text-red': porcCompaMesAntRealizas < 0 }">
+                                                  <i class="fa fa-caret-up" *ngIf="porcCompaMesAntRealizas > 0"></i>
+                                                  <i class="fa fa-caret-down" *ngIf="porcCompaMesAntRealizas < 0"></i>
+                                                  <div>{{porcCompaMesAntRealizas}} %</div>
+                                                </span>
                                                 <h5 class="description-header" >{{resumenMesAnterior.total}}</h5>
                                                 <span class="description-text">REALIZADAS</span>
                                             </div><!-- /.description-block -->
                                           </div><!-- /.col -->
                                           <div class="col-md-3 col-sm-6 col-xs-12">
                                             <div class="description-block border-right">
-                                              <span id="por_ma_ausentismo" class="description-percentage text-green"><i class="fa fa-caret-up"></i><div id="por_ma_ausentismo_vw">37.07%</div></span>
+                                              <span class="description-percentage text-green" [ngClass]="{'text-red': porcCompaMesAntAusentismo < 0 }">
+                                                <i class="fa fa-caret-up" *ngIf="porcCompaMesAntAusentismo > 0"></i>
+                                                <i class="fa fa-caret-down" *ngIf="porcCompaMesAntAusentismo < 0"></i>
+                                                <div>{{porcCompaMesAntAusentismo}} %</div>
+                                              </span>
                                                 <h5 class="description-header" >{{resumenMesAnterior.ausentismo}}</h5>
                                                 <span class="description-text">AUSENTISMO</span>
                                             </div><!-- /.description-block -->
                                           </div><!-- /.col -->
                                           <div class="col-md-3 col-sm-6 col-xs-12">
                                             <div class="description-block border-right">
-                                              <span id="por_ma_reserada" class="description-percentage text-green"><i class="fa fa-caret-up"></i><div id="por_ma_reserada_vw">15.77%</div></span>
+                                              <span class="description-percentage text-green" [ngClass]="{'text-red': porcCompaMesAntReservadas < 0 }">
+                                                <i class="fa fa-caret-up" *ngIf="porcCompaMesAntReservadas > 0"></i>
+                                                <i class="fa fa-caret-down" *ngIf="porcCompaMesAntReservadas < 0"></i>
+                                                <div>{{porcCompaMesAntReservadas}} %</div>
+                                              </span>
                                                <h5 class="description-header" >{{resumenMesAnterior.reservadas}}</h5>
                                                <span class="description-text">RESERVADAS</span>
                                             </div><!-- /.description-block -->
@@ -351,12 +394,9 @@
                                                       </li>
                                                     </ul>
                                                     <div style="display:flex;align-items: center; justify-content:flex-end">
-                                                        <select formcontrolname="especialidadNombre" class="form-control form-select" style="width: auto!important;" (change)="especialityChange($event.target.value)" [(ngModel)]="selectedOption">
-                                                          <option 
-                                                          *ngFor="let especialidad of especialidades; let i=index"
-                                                          [value]="especialidad"
-                                                        >{{especialidad}}
-                                                        </option>
+                                                        <select class="form-control form-select" style="width: auto!important;" (change)="tipoChange($event.target.value, 'pacientes')" [(ngModel)]="selectedOptionTipo">
+                                                          <option value="cantidad">Cantidad</option>
+                                                          <option value="soles">Soles</option>
                                                         </select>
                                                         <!-- <select formControlName="especialidadNombre" class="form-control form-select" (change)="especialityChange($event.target.value)" style="width:auto!important;" [(ngModel)]="selectedOption" >
                                                           <option [value]="selectedOption" selected>{{selectedOption}}</option>
@@ -377,12 +417,13 @@
                                                   class="bootstrap table table-striped"
                                                   id="datatablele"
                                                     [columns]="columns1"
-                                                    [rows]="rows1"
+                                                    [rows]="rows1filtered"
                                                     [columnMode]="ColumnMode.flex"
                                                     [headerHeight]="50"
                                                     [rowHeight]="$any('auto')"
                                                     [scrollbarH]="true"
                                                     (page)="setPage($event)"
+                                                    [rowClass]="getRowClass"
                                                     >
                                                     <ngx-datatable-column [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns1; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
@@ -527,13 +568,10 @@
                                                       </li>
                                                     </ul>
                                                     <div style="display:flex;align-items: center; justify-content:flex-end">
-                                                        <select formcontrolname="especialidadNombre" class="form-control form-select" style="width: auto!important;" (change)="especialityChange($event.target.value)" [(ngModel)]="selectedOption">
-                                                          <option 
-                                                          *ngFor="let especialidad of especialidades; let i=index"
-                                                          [value]="especialidad"
-                                                        >{{especialidad}}
-                                                        </option>
-                                                        </select>
+                                                      <select class="form-control form-select" style="width: auto!important;" (change)="tipoChange($event.target.value, 'empresas')" [(ngModel)]="selectedOptionTipo">
+                                                        <option value="cantidad">Cantidad</option>
+                                                        <option value="soles">Soles</option>
+                                                      </select>
                                                         <!-- <select formControlName="especialidadNombre" class="form-control form-select" (change)="especialityChange($event.target.value)" style="width:auto!important;" [(ngModel)]="selectedOption" >
                                                           <option [value]="selectedOption" selected>{{selectedOption}}</option>
                                                         <option 
@@ -552,7 +590,7 @@
                                                   class="bootstrap table table-striped"
                                                   id="datatablele"
                                                     [columns]="columns3"
-                                                    [rows]="rows3"
+                                                    [rows]="rows3filtered"
                                                     [columnMode]="ColumnMode.flex"
                                                     [headerHeight]="50"
                                                     [rowHeight]="$any('auto')"

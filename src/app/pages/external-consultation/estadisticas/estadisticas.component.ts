@@ -80,20 +80,19 @@ export class EstadisticasComponent implements OnInit {
   public isCollapsed9 = false;
   public isCollapsed10 = false;
   public isCollapsed11 = false;
+
   public chartLabels1 = [];
   public chartLabels2 = [];
 
   public chartData1 = [];
   public chartData2 = [];
   public chartData3 = [];
-
+  selectedOptionTipo='cantidad';
   progressBarLabels;
   progressBar1;
-  progressBarTabla1;
-  progressBarTabla2;
-  progressBarTabla3;
-  progressBarTabla4;
-  progressBarTabla5;
+  porcCompaMesAntRealizas;
+  porcCompaMesAntAusentismo;
+  porcCompaMesAntReservadas;
   totales;
   id_sede = '0001';
   filtroForm: FormGroup;
@@ -102,7 +101,7 @@ export class EstadisticasComponent implements OnInit {
   periodo_consulta = this.anio + this.mes;
   public breadcrumb: any;
   parameters;
-  resumenMes = {
+  resumenMes:any = {
     success: '',
     total: '',
     ausentismo: '',
@@ -111,7 +110,7 @@ export class EstadisticasComponent implements OnInit {
     anuladas: '',
     reservadas: ''
   };
-  resumenMesAnterior = {
+  resumenMesAnterior:any = {
     success: '',
     total: '',
     ausentismo: '',
@@ -130,6 +129,8 @@ export class EstadisticasComponent implements OnInit {
   };
   columns1: any;
   rows1: any;
+  rows1filtered: any;
+  rows3filtered: any;
   columns2: any[];
   rows2: any[];
   especialidades: any;
@@ -501,6 +502,35 @@ export class EstadisticasComponent implements OnInit {
   //   var ctx = document.getElementById('myChart').getContext('2d');
   //   window.myChart = new Chart(ctx, config);
   // };
+  getRowClass(row) {
+    
+    // if (row.item.includes('COLECTIVA')){
+    //   return {'totals': row.item.includes('TOTAL') || row.item.includes('COLECTIVA') }
+    // }
+    return {
+      'totals': row.GRUPO2.includes('TOTAL'), 'sub-totals': row.GRUPO2 === 'PROGRAMA DE SALUD' || row.GRUPO2 === 'CONVENIOS' || row.GRUPO2 ==='SEGUROS' || row.GRUPO2 ==='OTROS'
+    };
+  }
+  tipoChange(event, tabla){
+    
+    const input = event;
+    // this.especialidad = input;
+    // this.temp = this.rows1;rows2filtered
+    if (tabla === 'pacientes'){
+      if (input === 'cantidad') {
+        this.rows1filtered = this.rows1.filter(item => item.GRUPO3 === 'CANTIDAD');
+       } else if (input === 'soles'){
+        this.rows1filtered = this.rows1.filter(item =>item.GRUPO3 === 'SOLES');
+       }
+    } else if (tabla === 'empresas'){
+      if (input === 'cantidad') {
+        this.rows3filtered = this.rows3.filter(item => item.GRUPOEM === 'CANTIDAD');
+       } else if (input === 'soles'){
+        this.rows3filtered = this.rows3.filter(item =>item.GRUPOEM === 'SOLES');
+       }
+    }
+    
+  }
   getChart(context, chartType, data, options?) {
     const graph = new Chart(context, {
       data,
@@ -529,18 +559,39 @@ export class EstadisticasComponent implements OnInit {
     // const editRowslPipe = ((rows1) =>{
   rows1.map(item => {
         // console.log(item);
-        // if (item.per1) {
+        if (item.GRUPO3 === 'CANTIDAD' || item.GRUPOEM === 'CANTIDAD' ) {
           // console.log(item.per1);
-      
-      item.cupos = typeof item.cupos === 'number' ? Math.round(item.cupos) : Math.round(Number(item.cupos));
-      item.minutosAtencionProg = typeof item.minutosAtencionProg === 'number' ? item.minutosAtencionProg.toFixed(2) : Number(item.minutosAtencionProg).toFixed(2);
-      item.promTurnosxDia = typeof item.promTurnosxDia === 'number' ? item.promTurnosxDia.toFixed(2) : Number(item.promTurnosxDia).toFixed(2)
-      item.porcUsoCita = typeof item.porcUsoCita === 'number' ? item.porcUsoCita.toFixed(2) : Number(item.porcUsoCita).toFixed(2) + ' %';
+          item.MES1 = typeof item.MES1 === 'number' ? this.separadorDeMiles(Math.round(item.MES1)) : this.separadorDeMiles(Math.round(Number(item.MES1)));
+          item.MES2 = typeof item.MES2 === 'number' ? this.separadorDeMiles(Math.round(item.MES2)) : this.separadorDeMiles(Math.round(Number(item.MES2)));
+          item.MES3 = typeof item.MES3 === 'number' ? this.separadorDeMiles(Math.round(item.MES3)) : this.separadorDeMiles(Math.round(Number(item.MES3)));
+          item.MES4 = typeof item.MES4 === 'number' ? this.separadorDeMiles(Math.round(item.MES4)) : this.separadorDeMiles(Math.round(Number(item.MES4)));
+          item.MES5 = typeof item.MES5 === 'number' ? this.separadorDeMiles(Math.round(item.MES5)) : this.separadorDeMiles(Math.round(Number(item.MES5)));
+          item.MES6 = typeof item.MES6 === 'number' ? this.separadorDeMiles(Math.round(item.MES6)) : this.separadorDeMiles(Math.round(Number(item.MES6)));
+          item.MES7 = typeof item.MES7 === 'number' ? this.separadorDeMiles(Math.round(item.MES7)) : this.separadorDeMiles(Math.round(Number(item.MES7)));
+          item.MES8 = typeof item.MES8 === 'number' ? this.separadorDeMiles(Math.round(item.MES8)) : this.separadorDeMiles(Math.round(Number(item.MES8)));
+          item.MES9 = typeof item.MES9 === 'number' ? this.separadorDeMiles(Math.round(item.MES9)) : this.separadorDeMiles(Math.round(Number(item.MES9)));
+          item.MES10 = typeof item.MES10 === 'number' ? this.separadorDeMiles(Math.round(item.MES10)) : this.separadorDeMiles(Math.round(Number(item.MES10)));
+          item.MES11 = typeof item.MES11 === 'number' ? this.separadorDeMiles(Math.round(item.MES11)) : this.separadorDeMiles(Math.round(Number(item.MES11)));
+          item.MES12 = typeof item.MES12 === 'number' ? this.separadorDeMiles(Math.round(item.MES12)) : this.separadorDeMiles(Math.round(Number(item.MES12)));
+          item.TOTAL = typeof item.TOTAL === 'number' ?  this.separadorDeMiles(Math.round(item.TOTAL)) : this.separadorDeMiles(Math.round(Number(item.TOTAL)));
 
-    return item.cupos, item.minutosAtencionProg, item.promTurnosxDia, item.porcUsoCita;
-        // } else {
-        //   return item;
-        // }
+         
+        } else {
+          item.MES2 = typeof item.MES2 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES2.tofixed(2) ):  'S/. ' + this.separadorDeMiles(Number(item.MES2).toFixed(2));
+          item.MES1 = typeof item.MES1 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES1.tofixed(2) ):  'S/. ' + this.separadorDeMiles(Number(item.MES1).toFixed(2));
+          item.MES3 = typeof item.MES3 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES3.tofixed(2) ):  'S/. ' + this.separadorDeMiles(Number(item.MES3).toFixed(2));
+          item.MES4 = typeof item.MES4 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES4.tofixed(2) ):  'S/. ' + this.separadorDeMiles(Number(item.MES4).toFixed(2));
+          item.MES5 = typeof item.MES5 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES5.tofixed(2) ):  'S/. ' + this.separadorDeMiles(Number(item.MES5).toFixed(2));
+          item.MES6 = typeof item.MES6 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES6.tofixed(2) ):  'S/. ' + this.separadorDeMiles(Number(item.MES6).toFixed(2));
+          item.MES7 = typeof item.MES7 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES7.tofixed(2) ):  'S/. ' + this.separadorDeMiles(Number(item.MES7).toFixed(2));
+          item.MES8 = typeof item.MES8 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES8.tofixed(2) ):  'S/. ' + this.separadorDeMiles(Number(item.MES8).toFixed(2));
+          item.MES9 = typeof item.MES9 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES9.tofixed(2) ):  'S/. ' + this.separadorDeMiles(Number(item.MES9).toFixed(2));
+          item.MES10 = typeof item.MES10 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES10.tofixed(2))  :'S/. ' + this.separadorDeMiles(Number(item.MES10).toFixed(2));
+          item.MES11 = typeof item.MES11 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES11.tofixed(2))  :'S/. ' + this.separadorDeMiles(Number(item.MES11).toFixed(2));
+          item.MES12 = typeof item.MES12 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES12.tofixed(2))  :'S/. ' + this.separadorDeMiles(Number(item.MES12).toFixed(2));
+          item.TOTAL = typeof item.TOTAL === 'number' ? 'S/. ' + this.separadorDeMiles(item.TOTAL.tofixed(2))  :'S/. ' + this.separadorDeMiles(Number(item.TOTAL).toFixed(2));
+        }
+        return item.MES1,item.MES2,item.MES3,item.MES4,item.MES5,item.MES6,item.MES7,item.MES8,item.MES9,item.MES10,item.MES11,item.MES12, item.TOTAL;
       });
     // console.log(rows1);
   // });
@@ -574,11 +625,18 @@ export class EstadisticasComponent implements OnInit {
                 }
               );
               this.tableApiservice.getAtencionesResumenAnual(this.parameters).subscribe(
-                (response) => {
+                (response) => { 
                   if(response.success){
-                    // this.columns1 = response.data.cabeceras;
-                    // this.rows1 = response.data.tabla_mes_especialidad;
-                    // this.formatPipe(this.rows1);
+                    this.columns1 = response.data.cabeceras_tpacientes;
+                    this.rows1 = response.data.tabla_tpacientes;
+                    this.formatPipe(this.rows1);
+                    this.rows1filtered = this.rows1.filter(item => item.GRUPO3 === 'CANTIDAD');
+                    this.columns2 = response.data.cabeceras_rangoetareo;
+                    this.rows2 = response.data.tabla_rangoetareo;
+                    this.columns3 = response.data.cabeceras_empresas;
+                    this.rows3 = response.data.tabla_empresas;
+                    this.formatPipe(this.rows3);
+                    this.rows3filtered = this.rows3.filter(item => item.GRUPOEM === 'CANTIDAD');
                   }
                 },
                 (error) => {
@@ -588,10 +646,10 @@ export class EstadisticasComponent implements OnInit {
 
               this.tableApiservice.tiposPacientes(this.parameters).subscribe(
                 (response) => { 
-                  console.log(592, response)
                   this.progressBarLabels = [];
                   this.progressBar1 = [];
                   let total = response.data.total_prog;
+                  
                   if(response.success){
                     for (let value of Object.values(response.data.tipo_prog)) {
                       let porcentaje:any = Object.values(value);
@@ -601,9 +659,13 @@ export class EstadisticasComponent implements OnInit {
                       let label = Object.keys(value)[0];
                       if ( label == 'seguros_conv'){
                         this.progressBarLabels.push('CIA. Seguros / Convenios')
-                        // this.progressBarTabla1 = response.data.tipo_prog_d.seguros_conv.map(item=>{
-                        //     let porcentaje = item.cantidad 
-                        // });
+                        response.data.tipo_prog_d.seguros_conv.map(item=>{
+                          if (item.cantidad){
+                           let subPorcentaje = ((item.cantidad/porcentaje)*100).toFixed(2)
+                           item.porcentaje = subPorcentaje;
+                          }
+                          return item.porcentaje;
+                        });
                         const datos = {
                           porcentaje : ((porcentaje/total)*100).toFixed(2),
                           value: porcentaje[0],
@@ -612,7 +674,13 @@ export class EstadisticasComponent implements OnInit {
                         this.progressBar1.push(datos);
                       }else if (label === 'insti_priva'){
                         this.progressBarLabels.push('Institucional / Privados')
-                        this.progressBarTabla2 = response.data.tipo_prog_d.insti_priva;
+                        response.data.tipo_prog_d.insti_priva.map(item=>{
+                          if (item.cantidad){
+                           let subPorcentaje = ((item.cantidad/porcentaje)*100).toFixed(2)
+                           item.porcentaje = subPorcentaje;
+                          }
+                          return item.porcentaje;
+                        });
                         const datos = {
                           porcentaje : ((porcentaje/total)*100).toFixed(2),
                           value: porcentaje[0],
@@ -621,7 +689,13 @@ export class EstadisticasComponent implements OnInit {
                         this.progressBar1.push(datos);
                       }else if (label === 'madre_nino'){
                         this.progressBarLabels.push('Madre Niño')
-                        this.progressBarTabla3 = response.data.tipo_prog_d.madre_nino;
+                        response.data.tipo_prog_d.madre_nino.map(item=>{
+                          if (item.cantidad){
+                           let subPorcentaje = ((item.cantidad/porcentaje)*100).toFixed(2)
+                           item.porcentaje = subPorcentaje;
+                          }
+                          return item.porcentaje;
+                        });
                         const datos = {
                           porcentaje : ((porcentaje/total)*100).toFixed(2),
                           value: porcentaje[0],
@@ -630,7 +704,13 @@ export class EstadisticasComponent implements OnInit {
                         this.progressBar1.push(datos);
                       }else if (label === 'tarjeta_salud'){
                         this.progressBarLabels.push('Programas de Salud')
-                        this.progressBarTabla4 = response.data.tipo_prog_d.tarjeta_salud;
+                        response.data.tipo_prog_d.tarjeta_salud.map(item=>{
+                          if (item.cantidad){
+                           let subPorcentaje = ((item.cantidad/porcentaje)*100).toFixed(2)
+                           item.porcentaje = subPorcentaje;
+                          }
+                          return item.porcentaje;
+                        });
                         const datos = {
                           porcentaje : ((porcentaje/total)*100).toFixed(2),
                           value: porcentaje[0],
@@ -639,7 +719,13 @@ export class EstadisticasComponent implements OnInit {
                         this.progressBar1.push(datos);
                       }else{
                         this.progressBarLabels.push('Otros')
-                        this.progressBarTabla5 = response.data.tipo_prog_d.Otros;
+                        response.data.tipo_prog_d.Otros.map(item=>{
+                          if (item.cantidad){
+                           let subPorcentaje = ((item.cantidad/porcentaje)*100).toFixed(2)
+                           item.porcentaje = subPorcentaje;
+                          }
+                          return item.porcentaje;
+                        });
                         const datos = {
                           porcentaje : ((porcentaje/total)*100).toFixed(2),
                           value: porcentaje[0],
@@ -647,7 +733,6 @@ export class EstadisticasComponent implements OnInit {
                         }
                         this.progressBar1.push(datos);
                       }
-                      console.log(621,this.progressBar1);
                     }
                     // this.progressBarTabla1 = response.data.tipo_prog_d.tarjeta_salud;
                     // this.progressBarTabla2 = response.data.tipo_prog_d.insti_priva;
@@ -702,12 +787,13 @@ export class EstadisticasComponent implements OnInit {
 
               this.tableApiservice.procesarAnterior(this.parameters).subscribe(
                 (response) => {
-                  this.columns3 = [];
-                  this.rows3 = [];
                   if(response.success){ 
                       this.resumenMesAnterior = response.data;
+                      this.porcCompaMesAntRealizas =  (((this.resumenMes.total - this.resumenMesAnterior.total) / this.resumenMesAnterior.total) * 100).toFixed(2)
+                      this.porcCompaMesAntAusentismo = (((this.resumenMes.ausentismo - this.resumenMesAnterior.ausentismo) / this.resumenMesAnterior.ausentismo) * 100).toFixed(2)
+                      this.porcCompaMesAntReservadas = (((this.resumenMes.reservadas - this.resumenMesAnterior.reservadas) / this.resumenMesAnterior.reservadas) * 100).toFixed(2)
                   }
-                  console.log(472, this.resumenMesAnterior)
+                  
                 },
                 (error) => {
                     Swal.close();
