@@ -66,6 +66,7 @@ export class EstadisticasComponent implements OnInit {
     { value: '2026', label: '2026' },
     { value: '2027', label: '2027' },
   ];
+  // loading = true;
   private baseChart: ElementRef;
   // private baseChart2: ElementRef;
   color = [ 'graph-primary', 'primary','graph-tertiary', 'graph-quaternary '];
@@ -88,6 +89,7 @@ export class EstadisticasComponent implements OnInit {
   public chartData2 = [];
   public chartData3 = [];
   selectedOptionTipo='cantidad';
+  selectedOptionTipo2='cantidad';
   progressBarLabels;
   progressBar1;
   porcCompaMesAntRealizas;
@@ -167,13 +169,22 @@ export class EstadisticasComponent implements OnInit {
     {value: 50},
     {value: 100},
   ];
-  page = new Page();
+  page1 = new Page();
+  page2 = new Page();
+  page3 = new Page();
+  page4 = new Page();
   selected = [];
   SelectionType = SelectionType;
   constructor(private tableApiservice: ExternalConsultationService, private exportService: ExportService,
     private _cp: CurrencyPipe) { 
-      this.page.pageNumber = 0;
-      this.page.size = 10;
+      this.page1.pageNumber = 0;
+      this.page1.size = 10;
+      this.page2.pageNumber = 0;
+      this.page2.size = 10;
+      this.page3.pageNumber = 0;
+      this.page3.size = 10;
+      this.page4.pageNumber = 0;
+      this.page4.size = 10;
     this.filtroForm = new FormGroup({
       id_sede: new FormControl("0001"),
       mes: new FormControl(this.mes),
@@ -511,6 +522,15 @@ export class EstadisticasComponent implements OnInit {
       'totals': row.GRUPO2.includes('TOTAL'), 'sub-totals': row.GRUPO2 === 'PROGRAMA DE SALUD' || row.GRUPO2 === 'CONVENIOS' || row.GRUPO2 ==='SEGUROS' || row.GRUPO2 ==='OTROS'
     };
   }
+  getRowClass1(row) {
+    
+    // if (row.item.includes('COLECTIVA')){
+    //   return {'totals': row.item.includes('TOTAL') || row.item.includes('COLECTIVA') }
+    // }
+    return {
+      'sub-totals': row.condicion.includes('AUSENTISMO') || row.condicion.includes('REPROGRAMACIONES') || row.condicion === 'TURNOS POR INASISTENCIA MEDICA'
+    };
+  }
   tipoChange(event, tabla){
     
     const input = event;
@@ -559,24 +579,25 @@ export class EstadisticasComponent implements OnInit {
     // const editRowslPipe = ((rows1) =>{
   rows1.map(item => {
         // console.log(item);
-        if (item.GRUPO3 === 'CANTIDAD' || item.GRUPOEM === 'CANTIDAD' ) {
-          // console.log(item.per1);
-          item.MES1 = typeof item.MES1 === 'number' ? this.separadorDeMiles(Math.round(item.MES1)) : this.separadorDeMiles(Math.round(Number(item.MES1)));
-          item.MES2 = typeof item.MES2 === 'number' ? this.separadorDeMiles(Math.round(item.MES2)) : this.separadorDeMiles(Math.round(Number(item.MES2)));
-          item.MES3 = typeof item.MES3 === 'number' ? this.separadorDeMiles(Math.round(item.MES3)) : this.separadorDeMiles(Math.round(Number(item.MES3)));
-          item.MES4 = typeof item.MES4 === 'number' ? this.separadorDeMiles(Math.round(item.MES4)) : this.separadorDeMiles(Math.round(Number(item.MES4)));
-          item.MES5 = typeof item.MES5 === 'number' ? this.separadorDeMiles(Math.round(item.MES5)) : this.separadorDeMiles(Math.round(Number(item.MES5)));
-          item.MES6 = typeof item.MES6 === 'number' ? this.separadorDeMiles(Math.round(item.MES6)) : this.separadorDeMiles(Math.round(Number(item.MES6)));
-          item.MES7 = typeof item.MES7 === 'number' ? this.separadorDeMiles(Math.round(item.MES7)) : this.separadorDeMiles(Math.round(Number(item.MES7)));
-          item.MES8 = typeof item.MES8 === 'number' ? this.separadorDeMiles(Math.round(item.MES8)) : this.separadorDeMiles(Math.round(Number(item.MES8)));
-          item.MES9 = typeof item.MES9 === 'number' ? this.separadorDeMiles(Math.round(item.MES9)) : this.separadorDeMiles(Math.round(Number(item.MES9)));
-          item.MES10 = typeof item.MES10 === 'number' ? this.separadorDeMiles(Math.round(item.MES10)) : this.separadorDeMiles(Math.round(Number(item.MES10)));
-          item.MES11 = typeof item.MES11 === 'number' ? this.separadorDeMiles(Math.round(item.MES11)) : this.separadorDeMiles(Math.round(Number(item.MES11)));
-          item.MES12 = typeof item.MES12 === 'number' ? this.separadorDeMiles(Math.round(item.MES12)) : this.separadorDeMiles(Math.round(Number(item.MES12)));
-          item.TOTAL = typeof item.TOTAL === 'number' ?  this.separadorDeMiles(Math.round(item.TOTAL)) : this.separadorDeMiles(Math.round(Number(item.TOTAL)));
+        // if (item.GRUPO3 === 'CANTIDAD' || item.GRUPOEM === 'CANTIDAD' ) {
+        //   // console.log(item.per1);
+        //   item.MES1 = typeof item.MES1 === 'number' ? this.separadorDeMiles(Math.round(item.MES1)) : this.separadorDeMiles(Math.round(Number(item.MES1)));
+        //   item.MES2 = typeof item.MES2 === 'number' ? this.separadorDeMiles(Math.round(item.MES2)) : this.separadorDeMiles(Math.round(Number(item.MES2)));
+        //   item.MES3 = typeof item.MES3 === 'number' ? this.separadorDeMiles(Math.round(item.MES3)) : this.separadorDeMiles(Math.round(Number(item.MES3)));
+        //   item.MES4 = typeof item.MES4 === 'number' ? this.separadorDeMiles(Math.round(item.MES4)) : this.separadorDeMiles(Math.round(Number(item.MES4)));
+        //   item.MES5 = typeof item.MES5 === 'number' ? this.separadorDeMiles(Math.round(item.MES5)) : this.separadorDeMiles(Math.round(Number(item.MES5)));
+        //   item.MES6 = typeof item.MES6 === 'number' ? this.separadorDeMiles(Math.round(item.MES6)) : this.separadorDeMiles(Math.round(Number(item.MES6)));
+        //   item.MES7 = typeof item.MES7 === 'number' ? this.separadorDeMiles(Math.round(item.MES7)) : this.separadorDeMiles(Math.round(Number(item.MES7)));
+        //   item.MES8 = typeof item.MES8 === 'number' ? this.separadorDeMiles(Math.round(item.MES8)) : this.separadorDeMiles(Math.round(Number(item.MES8)));
+        //   item.MES9 = typeof item.MES9 === 'number' ? this.separadorDeMiles(Math.round(item.MES9)) : this.separadorDeMiles(Math.round(Number(item.MES9)));
+        //   item.MES10 = typeof item.MES10 === 'number' ? this.separadorDeMiles(Math.round(item.MES10)) : this.separadorDeMiles(Math.round(Number(item.MES10)));
+        //   item.MES11 = typeof item.MES11 === 'number' ? this.separadorDeMiles(Math.round(item.MES11)) : this.separadorDeMiles(Math.round(Number(item.MES11)));
+        //   item.MES12 = typeof item.MES12 === 'number' ? this.separadorDeMiles(Math.round(item.MES12)) : this.separadorDeMiles(Math.round(Number(item.MES12)));
+        //   item.TOTAL = typeof item.TOTAL === 'number' ?  this.separadorDeMiles(Math.round(item.TOTAL)) : this.separadorDeMiles(Math.round(Number(item.TOTAL)));
 
          
-        } else {
+        // } else 
+        if (item.GRUPO3 === 'SOLES' || item.GRUPOEM === 'SOLES' ){
           item.MES2 = typeof item.MES2 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES2.tofixed(2) ):  'S/. ' + this.separadorDeMiles(Number(item.MES2).toFixed(2));
           item.MES1 = typeof item.MES1 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES1.tofixed(2) ):  'S/. ' + this.separadorDeMiles(Number(item.MES1).toFixed(2));
           item.MES3 = typeof item.MES3 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES3.tofixed(2) ):  'S/. ' + this.separadorDeMiles(Number(item.MES3).toFixed(2));
@@ -590,6 +611,20 @@ export class EstadisticasComponent implements OnInit {
           item.MES11 = typeof item.MES11 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES11.tofixed(2))  :'S/. ' + this.separadorDeMiles(Number(item.MES11).toFixed(2));
           item.MES12 = typeof item.MES12 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES12.tofixed(2))  :'S/. ' + this.separadorDeMiles(Number(item.MES12).toFixed(2));
           item.TOTAL = typeof item.TOTAL === 'number' ? 'S/. ' + this.separadorDeMiles(item.TOTAL.tofixed(2))  :'S/. ' + this.separadorDeMiles(Number(item.TOTAL).toFixed(2));
+        }else{
+          item.MES1 = typeof item.MES1 === 'number' ? this.separadorDeMiles(Math.round(item.MES1)) : this.separadorDeMiles(Math.round(Number(item.MES1)));
+          item.MES2 = typeof item.MES2 === 'number' ? this.separadorDeMiles(Math.round(item.MES2)) : this.separadorDeMiles(Math.round(Number(item.MES2)));
+          item.MES3 = typeof item.MES3 === 'number' ? this.separadorDeMiles(Math.round(item.MES3)) : this.separadorDeMiles(Math.round(Number(item.MES3)));
+          item.MES4 = typeof item.MES4 === 'number' ? this.separadorDeMiles(Math.round(item.MES4)) : this.separadorDeMiles(Math.round(Number(item.MES4)));
+          item.MES5 = typeof item.MES5 === 'number' ? this.separadorDeMiles(Math.round(item.MES5)) : this.separadorDeMiles(Math.round(Number(item.MES5)));
+          item.MES6 = typeof item.MES6 === 'number' ? this.separadorDeMiles(Math.round(item.MES6)) : this.separadorDeMiles(Math.round(Number(item.MES6)));
+          item.MES7 = typeof item.MES7 === 'number' ? this.separadorDeMiles(Math.round(item.MES7)) : this.separadorDeMiles(Math.round(Number(item.MES7)));
+          item.MES8 = typeof item.MES8 === 'number' ? this.separadorDeMiles(Math.round(item.MES8)) : this.separadorDeMiles(Math.round(Number(item.MES8)));
+          item.MES9 = typeof item.MES9 === 'number' ? this.separadorDeMiles(Math.round(item.MES9)) : this.separadorDeMiles(Math.round(Number(item.MES9)));
+          item.MES10 = typeof item.MES10 === 'number' ? this.separadorDeMiles(Math.round(item.MES10)) : this.separadorDeMiles(Math.round(Number(item.MES10)));
+          item.MES11 = typeof item.MES11 === 'number' ? this.separadorDeMiles(Math.round(item.MES11)) : this.separadorDeMiles(Math.round(Number(item.MES11)));
+          item.MES12 = typeof item.MES12 === 'number' ? this.separadorDeMiles(Math.round(item.MES12)) : this.separadorDeMiles(Math.round(Number(item.MES12)));
+          item.TOTAL = typeof item.TOTAL === 'number' ?  this.separadorDeMiles(Math.round(item.TOTAL)) : this.separadorDeMiles(Math.round(Number(item.TOTAL)));
         }
         return item.MES1,item.MES2,item.MES3,item.MES4,item.MES5,item.MES6,item.MES7,item.MES8,item.MES9,item.MES10,item.MES11,item.MES12, item.TOTAL;
       });
@@ -637,6 +672,23 @@ export class EstadisticasComponent implements OnInit {
                     this.rows3 = response.data.tabla_empresas;
                     this.formatPipe(this.rows3);
                     this.rows3filtered = this.rows3.filter(item => item.GRUPOEM === 'CANTIDAD');
+                    this.columns4 = response.data.cabeceras_diagnostico;
+                    this.rows4 = response.data.tabla_diagnostico;
+                    this.columns5 = response.data.cabeceras_especialidades;
+                    this.rows5 = response.data.tabla_especialidades;
+                    this.columns6 = response.data.cabeceras_inasistencia;
+                    this.rows6 = response.data.tabla_inasistencia;
+                    this.columns7 = response.data.cabeceras_resumen;
+                    this.rows7 = response.data.tabla_resumen;
+                    this.formatPipe(this.rows7);
+                    this.columns8 = response.data.cabeceras_utilidad;
+                    this.rows8 = response.data.tabla_utilidad;
+                    this.columns9 = response.data.cabeceras_utilidad_TPac;
+                    this.rows9 = response.data.tabla_utilidad_TPac;
+                    this.columns10 = response.data.cabeceras_utilidad_Emp;
+                    this.rows10 = response.data.tabla_utilidad_Emp;
+                   
+                    console.log(656, this.columns7);
                   }
                 },
                 (error) => {
@@ -849,22 +901,47 @@ export class EstadisticasComponent implements OnInit {
               );
   
   }
-  public onLimitChange(limit: any): void {
-    this.changePageLimit(limit);
+  public onLimitChange(limit: any, numberT): void {
+    this.changePageLimit(limit, numberT);
     this.setPage({ offset: 0 });
 
   }
 
-  private changePageLimit(limit: any): void {
+  private changePageLimit(limit: any, numberT): void {
     
-    if (limit === '0'){
-      
-      this.page.size = this.page.totalElements;
-      // console.log(this.page.totalElements);
-      return
+    if(numberT === '1'){console.log(numberT);
+      if (limit === '0'){
+        this.page1.size = this.page1.totalElements;
+        // console.log(this.page.totalElements);
+        return
+      }
+      this.page1.size = parseInt(limit, 10);
+    }else if(numberT === '2'){
+      if (limit === '0'){
+        this.page2.size = this.page2.totalElements;
+        // console.log(this.page.totalElements);
+        return
+      }
+      this.page2.size = parseInt(limit, 10);
+    }if(numberT === '3'){
+      if (limit === '0'){
+        this.page3.size = this.page3.totalElements;
+        // console.log(this.page.totalElements);
+        return
+      }
+      this.page3.size = parseInt(limit, 10);
+    }if(numberT === '4'){
+      if (limit === '0'){
+        this.page4.size = this.page4.totalElements;
+        // console.log(this.page.totalElements);
+        return
+      }
+      this.page4.size = parseInt(limit, 10);
     }
-    this.page.size = parseInt(limit, 10);
+    
+
   }
+
   separadorDeMiles(numero) {
     let partesNumero = numero.toString().split('.');
   
@@ -887,13 +964,13 @@ export class EstadisticasComponent implements OnInit {
       }else if (numberTabla === 6){
         this.exportService.exportToClipboard(this.rows6, this.columns6);
       }else if (numberTabla === 7){
-        this.exportService.exportToClipboard(this.rows7, this.columns6);
+        this.exportService.exportToClipboard(this.rows7, this.columns7);
       }else if (numberTabla === 8){
-        this.exportService.exportToClipboard(this.rows8, this.columns6);
+        this.exportService.exportToClipboard(this.rows8, this.columns8);
       }else if (numberTabla === 9){
-        this.exportService.exportToClipboard(this.rows9, this.columns6);
+        this.exportService.exportToClipboard(this.rows9, this.columns9);
       }else if (numberTabla === 10){
-        this.exportService.exportToClipboard(this.rows10, this.columns6);
+        this.exportService.exportToClipboard(this.rows10, this.columns10);
       }else if (numberTabla === 11){
         this.exportService.exportToClipboard(this.rowsMedicos, this.columnsMedicos);
       }
@@ -950,10 +1027,24 @@ export class EstadisticasComponent implements OnInit {
     }
 
     onSelect({ selected }) {
-      console.log('Select Event', selected, this.selected);
+      this.medicos = true;
+      const parameters = {
+        idEspecialidad: selected[0].id_esp,
+        AnioF: this.anio,
+        MesF: this.mes,
+        SedeF: this.id_sede,
+        CheckF: 1
+      }
+
+      this.tableApiservice.getMedicosStatistics(parameters).subscribe(
+        (response) =>{
+          this.columnsMedicos = response.data.cabeceras;
+          this.rowsMedicos = response.data.tabla_medicos_anual;
+      });
+      
+
     }
-  
     onActivate(event) {
-      console.log('Activate Event', event);
+      // console.log('Activate Event', event);
     }
 }
