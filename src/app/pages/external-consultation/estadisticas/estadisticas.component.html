@@ -420,6 +420,7 @@
                                                     [rows]="rows1filtered"
                                                     [columnMode]="ColumnMode.flex"
                                                     [headerHeight]="50"
+                                                    [footerHeight]="65"
                                                     [rowHeight]="$any('auto')"
                                                     [scrollbarH]="true"
                                                     (page)="setPage($event)"
@@ -500,6 +501,7 @@
                                                     [rows]="rows2"
                                                     [columnMode]="ColumnMode.flex"
                                                     [headerHeight]="50"
+                                                    [footerHeight]="65"
                                                     [rowHeight]="$any('auto')"
                                                     [scrollbarH]="true"
                                                     (page)="setPage($event)"
@@ -543,14 +545,14 @@
                                                 <div #collapse3="ngbCollapse" [(ngbCollapse)]="isCollapsed3">
                                                   <div class="row" style="align-items: center;justify-content: space-between;">
                                                     <div style='margin-left:15px;'>
-                                                        <select class="form-control form-select" (change)="onLimitChange($event.target.value)">
+                                                        <select class="form-control form-select" (change)="onLimitChange($event.target.value, '1')">
                                                         <option
                                                             *ngFor="let option of pageLimitOptions"
                                                             [value]="option.value"
                                                         >
                                                             {{ option.value }} Registros
                                                         </option>
-                                                        <option value="0" *ngIf="this.page.totalElements">Todos los Registros</option>
+                                                        <option value="0" *ngIf="this.page1.totalElements">Todos los Registros</option>
                                                         </select>
                                                     </div>
                                                     <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
@@ -568,7 +570,7 @@
                                                       </li>
                                                     </ul>
                                                     <div style="display:flex;align-items: center; justify-content:flex-end">
-                                                      <select class="form-control form-select" style="width: auto!important;" (change)="tipoChange($event.target.value, 'empresas')" [(ngModel)]="selectedOptionTipo">
+                                                      <select class="form-control form-select" style="width: auto!important;" (change)="tipoChange($event.target.value, 'empresas')" [(ngModel)]="selectedOptionTipo1">
                                                         <option value="cantidad">Cantidad</option>
                                                         <option value="soles">Soles</option>
                                                       </select>
@@ -593,9 +595,10 @@
                                                     [rows]="rows3filtered"
                                                     [columnMode]="ColumnMode.flex"
                                                     [headerHeight]="50"
+                                                    [footerHeight]="65"
                                                     [rowHeight]="$any('auto')"
                                                     [scrollbarH]="true"
-                                                    (page)="setPage($event)"
+                                                    [limit]="page1.size"
                                                     >
                                                     <ngx-datatable-column [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns3; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
@@ -637,14 +640,14 @@
                                                 <div #collapse4="ngbCollapse" [(ngbCollapse)]="isCollapsed4">
                                                   <div class="row" style="align-items: center;justify-content: space-between;">
                                                     <div style='margin-left:15px;'>
-                                                        <select class="form-control form-select" (change)="onLimitChange($event.target.value)">
+                                                        <select class="form-control form-select" (change)="onLimitChange($event.target.value, '2')">
                                                         <option
                                                             *ngFor="let option of pageLimitOptions"
                                                             [value]="option.value"
                                                         >
                                                             {{ option.value }} Registros
                                                         </option>
-                                                        <option value="0" *ngIf="this.page.totalElements">Todos los Registros</option>
+                                                        <option value="0" *ngIf="this.page2.totalElements">Todos los Registros</option>
                                                         </select>
                                                     </div>
                                                     <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
@@ -683,10 +686,11 @@
                                                     [columns]="columns4"
                                                     [rows]="rows4"
                                                     [columnMode]="ColumnMode.flex"
-                                                    [headerHeight]="50"
+                                                    [headerHeight]="40"
+                                                    [footerHeight]="65"
                                                     [rowHeight]="$any('auto')"
                                                     [scrollbarH]="true"
-                                                    (page)="setPage($event)"
+                                                    [limit]="page2.size"
                                                     >
                                                     <ngx-datatable-column [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns4; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
@@ -727,14 +731,14 @@
                                                 <div #collapse5="ngbCollapse" [(ngbCollapse)]="isCollapsed5">
                                                   <div class="row" style="align-items: center;justify-content: space-between;">
                                                     <div style='margin-left:15px;'>
-                                                        <select class="form-control form-select" (change)="onLimitChange($event.target.value)">
+                                                        <select class="form-control form-select" (change)="onLimitChange($event.target.value, '3')">
                                                         <option
                                                             *ngFor="let option of pageLimitOptions"
                                                             [value]="option.value"
                                                         >
                                                             {{ option.value }} Registros
                                                         </option>
-                                                        <option value="0" *ngIf="this.page.totalElements">Todos los Registros</option>
+                                                        <option value="0" *ngIf="this.page3.totalElements">Todos los Registros</option>
                                                         </select>
                                                     </div>
                                                     <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
@@ -774,9 +778,14 @@
                                                     [rows]="rows5"
                                                     [columnMode]="ColumnMode.flex"
                                                     [headerHeight]="50"
+                                                    [footerHeight]="65"
                                                     [rowHeight]="$any('auto')"
                                                     [scrollbarH]="true"
-                                                    (page)="setPage($event)"
+                                                    [limit]="page3.size"
+                                                    [selected]="selected"
+                                                    [selectionType]="SelectionType.single"
+                                                    (activate)="onActivate($event)"
+                                                    (select)='onSelect($event)'
                                                     >
                                                     <ngx-datatable-column [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns5; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
@@ -799,7 +808,7 @@
                                                   
                                                 </div>
                                               </div>
-                                              <div class="card">
+                                              <div class="card" *ngIf="medicos">
                                                 <div class="card-header" *ngIf="medicos">
                                                   <div class="box-header">
                                                     <div class="toggle-table">
@@ -817,14 +826,14 @@
                                                 <div #collapse11="ngbCollapse" [(ngbCollapse)]="isCollapsed11">
                                                   <div class="row" style="align-items: center;justify-content: space-between;">
                                                     <div style='margin-left:15px;'>
-                                                        <select class="form-control form-select" (change)="onLimitChange($event.target.value)">
+                                                        <select class="form-control form-select" (change)="onLimitChange($event.target.value, '4')">
                                                         <option
                                                             *ngFor="let option of pageLimitOptions"
                                                             [value]="option.value"
                                                         >
                                                             {{ option.value }} Registros
                                                         </option>
-                                                        <option value="0" *ngIf="this.page.totalElements">Todos los Registros</option>
+                                                        <option value="0" *ngIf="this.page4.totalElements">Todos los Registros</option>
                                                         </select>
                                                     </div>
                                                     <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
@@ -861,15 +870,14 @@
                                                   class="bootstrap table table-striped"
                                                   id="datatablele"
                                                     [columns]="columnsMedicos"
+                                                    [loadingIndicator]="loading"
                                                     [rows]="rowsMedicos"
                                                     [columnMode]="ColumnMode.flex"
                                                     [headerHeight]="50"
+                                                    [footerHeight]="65"
                                                     [rowHeight]="$any('auto')"
                                                     [scrollbarH]="true"
-                                                    [selected]="selected"
-                                                    [selectionType]="SelectionType.single"
-                                                    (activate)="onActivate($event)"
-                                                    (select)="onSelect($event)"
+                                                    [limit]="page4.size"
                                                     >
                                                     <ngx-datatable-column [flexGrow]="1" [minWidth]="90" *ngFor="let column of columnsMedicos; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
@@ -1089,6 +1097,7 @@
                                                     [rowHeight]="$any('auto')"
                                                     [scrollbarH]="true"
                                                     (page)="setPage($event)"
+                                                    [rowClass]="getRowClass1"
                                                     >
                                                     <ngx-datatable-column [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns7; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
@@ -1193,6 +1202,28 @@
                                                     (page)="setPage($event)"
                                                     >
                                                     <ngx-datatable-column [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns8; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                                      
+                                                     <!-- <ng-template let-column="column" ngx-datatable-header-template> -->
+                                                      <!-- <table *ngIf="i == 0 || i == 1 || i == 4 || i == 8 || i == 10"> -->
+                                                        <!-- <thead> -->
+                                                          <!-- <tr *ngIf="i == 0 || i == 1 || i == 4 || i == 8 || i == 10">
+                                                            <th colspan="4">Parent Heading</th>
+                                                          </tr> -->
+                                                          <!-- <tr *ngIf="i !== 0 || i !== 1 || i !== 4 || i !== 8 || i !== 10">
+                                                            <th colspan="4">Parent Heading</th>
+                                                          </tr>
+                                                          <tr>
+                                                            <th>{{column.name}}</th>
+                                                          </tr> -->
+                                                            <!-- <tr *ngIf="i == 0 || i == 1 || i == 4 || i == 8 || i == 10">
+                                                                <th colspan="4">Parent Heading</th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th >{{column.name}}</th>
+                                                            </tr> -->
+                                                        <!-- </thead> -->
+                                                      <!-- </table> -->
+                                                   <!-- </ng-template> -->
                                                       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                                         let-row="row">
                                                         <div>
