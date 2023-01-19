@@ -17,6 +17,9 @@ import { CurrencyPipe } from '@angular/common';
 import * as Chart from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import ResizeObserver from 'resize-observer-polyfill';
+
+import { AgGridAngular } from "ag-grid-angular";
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-estadisticas',
   templateUrl: './estadisticas.component.html',
@@ -24,6 +27,8 @@ import ResizeObserver from 'resize-observer-polyfill';
 })
 export class EstadisticasComponent implements OnInit {
   active = 1;
+  closeResult = '';
+  @ViewChild("agGrid") agGrid: AgGridAngular;
   @ViewChild("baseChart", { static: false }) set content(
     content: ElementRef
   ) {
@@ -97,6 +102,8 @@ export class EstadisticasComponent implements OnInit {
   porcCompaMesAntReservadas;
   totales;
   id_sede = '0001';
+  CMP;
+  Medico;
   filtroForm: FormGroup;
   mes = moment(new Date()).format('MM');
   anio = moment(new Date()).format('YYYY');
@@ -160,6 +167,8 @@ export class EstadisticasComponent implements OnInit {
   medicos = false;
   columnsMedicos: any[];
   rowsMedicos: any[];
+  columnsMedicoRecord: any[];
+  rowsMedicoRecord: any[];
   filtered: any;
   detalleAnual: any;
   especialidad: any;
@@ -175,8 +184,94 @@ export class EstadisticasComponent implements OnInit {
   page4 = new Page();
   selected = [];
   SelectionType = SelectionType;
+  columnDefs = [
+    {
+      headerName: 'Athlete Details',
+      children: [
+        {
+          field: 'athlete',
+          width: 180,
+          filter: 'agTextColumnFilter',
+        },
+        {
+          field: 'age',
+          width: 90,
+          filter: 'agNumberColumnFilter',
+        },
+        { headerName: 'Country', field: 'country', width: 140 },
+      ],
+    },
+    {
+      headerName: 'Sports Results',
+      children: [
+        { field: 'sport', width: 140 },
+        {
+          columnGroupShow: 'closed',
+          field: 'total',
+          width: 100,
+          filter: 'agNumberColumnFilter',
+        },
+        {
+          columnGroupShow: 'open',
+          field: 'gold',
+          width: 100,
+          filter: 'agNumberColumnFilter',
+        },
+        {
+          columnGroupShow: 'open',
+          field: 'silver',
+          width: 100,
+          filter: 'agNumberColumnFilter',
+        },
+        {
+          columnGroupShow: 'open',
+          field: 'bronze',
+          width: 100,
+          filter: 'agNumberColumnFilter',
+        },
+      ],
+    },
+];
+rowData = [
+  {
+  "athlete": "Michael Phelps",
+  "age": 23,
+  "country": "United States",
+  "year": 2008,
+  "date": "24/08/2008",
+  "sport": "Swimming",
+  "gold": 8,
+  "silver": 0,
+  "bronze": 0,
+  "total": 8
+  },
+  {
+  "athlete": "Michael Phelps",
+  "age": 19,
+  "country": "United States",
+  "year": 2004,
+  "date": "29/08/2004",
+  "sport": "Swimming",
+  "gold": 6,
+  "silver": 0,
+  "bronze": 2,
+  "total": 8
+  },
+  {
+  "athlete": "Michael Phelps",
+  "age": 27,
+  "country": "United States",
+  "year": 2012,
+  "date": "12/08/2012",
+  "sport": "Swimming",
+  "gold": 4,
+  "silver": 2,
+  "bronze": 0,
+  "total": 6
+  },
+]
   constructor(private tableApiservice: ExternalConsultationService, private exportService: ExportService,
-    private _cp: CurrencyPipe) { 
+    private _cp: CurrencyPipe, private modalService: NgbModal) { 
       this.page1.pageNumber = 0;
       this.page1.size = 10;
       this.page2.pageNumber = 0;
@@ -513,6 +608,18 @@ export class EstadisticasComponent implements OnInit {
   //   var ctx = document.getElementById('myChart').getContext('2d');
   //   window.myChart = new Chart(ctx, config);
   // };
+  getCellClass({ row, column, value }): any {
+    // const myArray = value.split(" ");
+    if( value !== undefined){
+      value = value.replace(',','');
+      value = value.replace('S/.','');
+      value = value.replace('%','');
+
+    }
+    return {
+      'cell-red': Number(value) < 0
+    };
+  }
   getRowClass(row) {
     
     // if (row.item.includes('COLECTIVA')){
@@ -530,6 +637,22 @@ export class EstadisticasComponent implements OnInit {
     return {
       'sub-totals': row.condicion.includes('AUSENTISMO') || row.condicion.includes('REPROGRAMACIONES') || row.condicion === 'TURNOS POR INASISTENCIA MEDICA'
     };
+  }
+  getRowClass3(row) {
+    
+    // if (row.item.includes('COLECTIVA')){
+    //   return {'totals': row.item.includes('TOTAL') || row.item.includes('COLECTIVA') }
+    // }
+
+    if (row.sucursal !== undefined){
+      return {
+        'totals': row.sucursal.includes('TOTAL')
+      };
+    }else if (row.grupo !== undefined ){
+      return {
+        'totals': row.grupo.includes('TOTAL')
+      };
+    } 
   }
   tipoChange(event, tabla){
     
@@ -573,6 +696,25 @@ export class EstadisticasComponent implements OnInit {
     var imagedata = canvas.toDataURL("image/png");
     // console.log(imagedata)
     downloadlink.href = imagedata;
+  }
+  formatPipe2(rows1){
+    rows1.map(item => {
+      // console.log(item);
+          item.mEsp = item.mEsp + ' %';
+          item.mGas = item.mGas + ' %';
+          item.mUti = item.mUti + ' %';
+          item.porcUtilidad = typeof item.porcUtilidad === 'number' ? item.porcUtilidad.toFixed(2) + ' %' : Number(item.porcUtilidad).toFixed(2) + ' %';
+          item.cantidad = typeof item.cantidad === 'number' ? 'S/. ' + this.separadorDeMiles(item.cantidad.toFixed(2)) : 'S/. ' + this.separadorDeMiles(Number(item.cantidad).toFixed(2));
+          item.montoPaciente = typeof item.montoPaciente === 'number' ? 'S/. ' + this.separadorDeMiles(item.montoPaciente.toFixed(2)) : 'S/. ' + this.separadorDeMiles(Number(item.montoPaciente).toFixed(2));
+          item.montoSeguro = typeof item.montoSeguro === 'number' ? 'S/. ' + this.separadorDeMiles(item.montoSeguro.toFixed(2)) : 'S/. ' + this.separadorDeMiles(Number(item.montoSeguro).toFixed(2));
+          item.montoEsperado = typeof item.montoEsperado === 'number' ? 'S/. ' + this.separadorDeMiles(item.montoEsperado.toFixed(2)) : 'S/. ' + this.separadorDeMiles(Number(item.montoEsperado).toFixed(2));
+          item.montoPlanilla = typeof item.montoPlanilla === 'number' ? 'S/. ' + this.separadorDeMiles(item.montoPlanilla.toFixed(2)) : 'S/. ' + this.separadorDeMiles(Number(item.montoPlanilla).toFixed(2));
+          item.montoSuministro = typeof item.montoSuministro === 'number' ? 'S/. ' + this.separadorDeMiles(item.montoSuministro.toFixed(2)) : 'S/. ' + this.separadorDeMiles(Number(item.montoSuministro).toFixed(2));
+          item.montoHonorarios = typeof item.montoHonorarios === 'number' ? 'S/. ' + this.separadorDeMiles(item.montoHonorarios.toFixed(2)) : 'S/. ' + this.separadorDeMiles(Number(item.montoHonorarios).toFixed(2));
+          item.montoGastos = typeof item.montoGastos === 'number' ? 'S/. ' + this.separadorDeMiles(item.montoGastos.toFixed(2)) : 'S/. ' + this.separadorDeMiles(Number(item.montoGastos).toFixed(2));
+          item.montoUtilidad = typeof item.montoUtilidad === 'number' ? 'S/. ' + this.separadorDeMiles(item.montoUtilidad.toFixed(2)) : 'S/. ' + this.separadorDeMiles(Number(item.montoUtilidad).toFixed(2));
+          return item.mEsp, item.mGas, item.mUti, item.porcUtilidad, item.cantidad, item.montoPaciente, item.montoSeguro, item.montoEsperado, item.montoPlanilla, item.montoSuministro, item.montoHonorarios, item.montoGastos, item.montoUtilidad
+    });
   }
   formatPipe(rows1) {
     // console.log(rows1);
@@ -683,12 +825,13 @@ export class EstadisticasComponent implements OnInit {
                     this.formatPipe(this.rows7);
                     this.columns8 = response.data.cabeceras_utilidad;
                     this.rows8 = response.data.tabla_utilidad;
+                    this.formatPipe2(this.rows8);
                     this.columns9 = response.data.cabeceras_utilidad_TPac;
                     this.rows9 = response.data.tabla_utilidad_TPac;
+                    this.formatPipe2(this.rows9);
                     this.columns10 = response.data.cabeceras_utilidad_Emp;
                     this.rows10 = response.data.tabla_utilidad_Emp;
-                   
-                    console.log(656, this.columns7);
+                    this.formatPipe2(this.rows10);
                   }
                 },
                 (error) => {
@@ -828,7 +971,7 @@ export class EstadisticasComponent implements OnInit {
                     this.resumenMontos.instipriva = typeof this.resumenMontos.instipriva === 'number' ? this.separadorDeMiles(this.resumenMontos.instipriva) : this.separadorDeMiles(Number(this.resumenMontos.instipriva));
                     this.resumenMontos.otros = typeof this.resumenMontos.otros === 'number' ? this.separadorDeMiles(this.resumenMontos.otros) : this.separadorDeMiles(Number(this.resumenMontos.otros));
                     this.resumenMontos.tarjeta = typeof this.resumenMontos.tarjeta === 'number' ? this.separadorDeMiles(this.resumenMontos.tarjeta) : this.separadorDeMiles(Number(this.resumenMontos.tarjeta));
-                    this.resumenMontos.montoTotal = typeof this.resumenMontos.montoTotal === 'number' ? this.separadorDeMiles(this.resumenMontos.montoTotal) : this.separadorDeMiles(Number(this.resumenMontos.montoTotal));
+                    // this.resumenMontos.montoTotal = typeof this.resumenMontos.montoTotal === 'number' ? this.resumenMontos.montoTotal.toFixed(2) : this.separadorDeMiles(Number(this.resumenMontos.montoTotal));
 
                   // console.log(442, this.resumenMontos);
                 },
@@ -1046,5 +1189,47 @@ export class EstadisticasComponent implements OnInit {
     }
     onActivate(event) {
       // console.log('Activate Event', event);
+    }
+    open({ selected }, content?: any){
+      
+      if (selected !== undefined){
+        this.CMP = selected[0].CMP;
+        this.Medico = selected[0].MEDICO;
+         console.log(1141, selected);
+         const parameters = {
+          Id: selected[0].Empleado,
+          CMP: selected[0].CMP,
+          Especialidad: selected[0].ESPECIALIDAD,
+          Medico: selected[0].MEDICO,
+          AnioF: this.anio,
+          MesF: this.mes,
+          SedeF: this.id_sede,
+        }
+         this.tableApiservice.getMedicosRecord(parameters).subscribe(
+          (response) =>{ console.log(1155, response);
+            this.columnsMedicoRecord = response.data.cabeceras;
+            this.rowsMedicoRecord = response.data.tabla_medico_record;
+            this.rowsMedicoRecord.map(item=>{
+              console.log(item);
+            })
+        });
+        
+      }else{
+        this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+          console.log(content);
+          this.closeResult = `Closed with: ${result}`;
+        }, (reason) => {
+          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        });
+      }
+    }
+    private getDismissReason(reason: any): string {
+      if (reason === ModalDismissReasons.ESC) {
+        return 'by pressing ESC';
+      } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+        return 'by clicking on a backdrop';
+      } else {
+        return `with: ${reason}`;
+      }
     }
 }

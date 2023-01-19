@@ -148,4 +148,8 @@ private extractData(res: Response) {
     this.loadTableApiDataURL = `${environment.api_url}getMedicosStatistics`;
     return this.http.post(this.loadTableApiDataURL, data);
   }
+  getMedicosRecord(data): Observable<any> {
+    this.loadTableApiDataURL = `${environment.api_url}getMedicosRecord`;
+    return this.http.post(this.loadTableApiDataURL, data);
+  }
 }
