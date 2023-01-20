@@ -91,7 +91,7 @@ export class ExternalAttentionConsultationComponent implements OnInit {
     new ResizeObserver((event: any) => {
       this.escucharResizeDiv(event);
     }).observe(item);
-    this.setPage({ offset: 0 });
+    // this.setPage({ offset: 0 });
   }
   escucharResizeDiv(event) {
     const item = document.getElementById('datatablele');

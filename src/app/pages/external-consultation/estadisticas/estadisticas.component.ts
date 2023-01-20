@@ -381,7 +381,7 @@ rowData = [
 
   ngOnInit(){
 
-    this.setPage({ offset: 0 });
+    // this.setPage({ offset: 0 });
   }
   filter() {
   
@@ -748,7 +748,7 @@ rowData = [
   }
 
   tipoChange(event, tabla){
-    
+    console.log(751, event);
     const input = event;
     // this.especialidad = input;
     // this.temp = this.rows1;rows2filtered
@@ -882,7 +882,7 @@ rowData = [
         // size: this.page.size
       };
 
-      // this.loading();
+      this.loading();
               this.tableApiservice.getResumenGeneralProcesar(this.parameters).subscribe(
                 (response) => {
                   
@@ -964,6 +964,7 @@ rowData = [
                     this.formatPipe2(this.rows10);
 
                   }
+                  Swal.close();
                 },
                 (error) => {
                     Swal.close();
@@ -1087,7 +1088,7 @@ rowData = [
                       
                     // }
                   }
-                
+                  Swal.close();
                 },
                 (error) => {
                     Swal.close();
@@ -1104,7 +1105,7 @@ rowData = [
                     this.resumenMontos.tarjeta = typeof this.resumenMontos.tarjeta === 'number' ? this.separadorDeMiles(this.resumenMontos.tarjeta) : this.separadorDeMiles(Number(this.resumenMontos.tarjeta));
                     // this.resumenMontos.montoTotal = typeof this.resumenMontos.montoTotal === 'number' ? this.resumenMontos.montoTotal.toFixed(2) : this.separadorDeMiles(Number(this.resumenMontos.montoTotal));
 
-                  // console.log(442, this.resumenMontos);
+                    Swal.close();
                 },
                 (error) => {
                     Swal.close();
@@ -1119,7 +1120,7 @@ rowData = [
                       this.porcCompaMesAntAusentismo = (((this.resumenMes.ausentismo - this.resumenMesAnterior.ausentismo) / this.resumenMesAnterior.ausentismo) * 100).toFixed(2)
                       this.porcCompaMesAntReservadas = (((this.resumenMes.reservadas - this.resumenMesAnterior.reservadas) / this.resumenMesAnterior.reservadas) * 100).toFixed(2)
                   }
-                  
+                  Swal.close(); 
                 },
                 (error) => {
                     Swal.close();
@@ -1143,7 +1144,7 @@ rowData = [
                     
                   }
                   this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del mes seleccionado', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
-                  // console.log(577, this.chartData1);
+                  Swal.close();
                 },
                 (error) => {
                     Swal.close();
@@ -1167,7 +1168,7 @@ rowData = [
                   // console.log(577, this.chartData1);
                     
                   }
-                  // console.log(577, this.detalleAnual);
+                  Swal.close();
                 },
                 (error) => {
                     Swal.close();
@@ -1278,26 +1279,49 @@ rowData = [
       
     }
 
-    updateFilter(event) {
+    updateFilter(event, selectedOption) {
       const input = event.target.value.toLowerCase();
       // console.log(838, input);
       // filter our data
       if (input.length > 0) {
-        const filtered = this.rowsFilter
+        const filtered = this.rows1filtered
           .filter(el =>
             Object.values(el).find( val => val?.toString().toLowerCase().indexOf(input) !== -1 ) != undefined
           );
           // console.log(filtered);
-        this.rowsFilter = [...filtered]
+        this.rows1filtered = [...filtered]
         
       } else {
+        if(selectedOption === 'cantidad'){
+          this.rows1filtered = [...this.rows1.filter(item => item.GRUPO3 === 'CANTIDAD')]
+        }else if (selectedOption === 'soles'){
+          this.rows1filtered = [...this.rows1.filter(item => item.GRUPO3 === 'SOLES')]
+        }
         // console.log(this.filtered);
-        this.rowsFilter = [...this.temp.filter(medico => medico.especialidadNombre === this.especialidad)]
+       
       }
-  
-      // update the rows1
-      // Whenever the filter changes, always go back to the first page
-      // this.table.offset = 0;
+    }
+    updateFilter3(event, selectedOption) {
+      const input = event.target.value.toLowerCase();
+      // console.log(838, input);
+      // filter our data
+      if (input.length > 0) {
+        const filtered = this.rows3filtered
+          .filter(el =>
+            Object.values(el).find( val => val?.toString().toLowerCase().indexOf(input) !== -1 ) != undefined
+          );
+          // console.log(filtered);
+        this.rows3filtered = [...filtered]
+        
+      } else {
+        if(selectedOption === 'cantidad'){
+          this.rows3filtered = [...this.rows3.filter(item => item.GRUPOEM === 'CANTIDAD')]
+        }else if (selectedOption === 'soles'){
+          this.rows3filtered = [...this.rows3.filter(item => item.GRUPOEM === 'SOLES')]
+        }
+        // console.log(this.filtered);
+       
+      }
     }
 
     onSelect({ selected }) {

@@ -408,7 +408,7 @@
                                                       </select> -->
                                                         <div class="" style="display:flex;margin:15px;align-items: center;">
                                                           <span>Buscar</span>&nbsp;&nbsp;
-                                                            <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter($event)'>
+                                                            <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter($event, selectedOptionTipo)'>
                                                         </div>
                                                       </div>                                 
                                                   </div>
@@ -570,7 +570,7 @@
                                                       </li>
                                                     </ul>
                                                     <div style="display:flex;align-items: center; justify-content:flex-end">
-                                                      <select class="form-control form-select" style="width: auto!important;" (change)="tipoChange($event.target.value, 'empresas')" [(ngModel)]="selectedOptionTipo1">
+                                                      <select class="form-control form-select" style="width: auto!important;" (change)="tipoChange($event.target.value, 'empresas')" [(ngModel)]="selectedOptionTipo2">
                                                         <option value="cantidad">Cantidad</option>
                                                         <option value="soles">Soles</option>
                                                       </select>
@@ -584,7 +584,7 @@
                                                       </select> -->
                                                         <div class="" style="display:flex;margin:15px;align-items: center;">
                                                           <span>Buscar</span>&nbsp;&nbsp;
-                                                            <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter($event)'>
+                                                            <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter3($event)'>
                                                         </div>
                                                       </div>                               
                                                   </div>
