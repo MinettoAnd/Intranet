@@ -31,6 +31,7 @@ export class RrhhService {
     return this.http.post(`${this.baseURL}/collaborators`, data).toPromise();
   }
   updateColaboradorEmailService(data) {
+    console.log(34, data);
     return this.http.put(`${this.baseURL}/collaborators`, data).toPromise();
   }
 

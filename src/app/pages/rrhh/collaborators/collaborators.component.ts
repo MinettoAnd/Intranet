@@ -275,6 +275,7 @@ export class CollaboratorsComponent implements OnInit {
         alert(`Selected nodes: ${selectedDataStringPresentation}`);
     }
     onCellValueChanged(params) {
+        console.log(278, params.data.DES_EMAIL, params.data.COD_PERSONAL);
         var colId = params.column.getId();
         if (colId === "DES_EMAIL") {
             const data = {
@@ -308,7 +309,7 @@ export class CollaboratorsComponent implements OnInit {
                     if(!data.email.includes('@')){
                         
                         if(data.email.match('clubdelasalud.pe') != null){
-                            console.log(data.email.match('clubdelasalud.pe'));
+                            // console.log(312, data.email.match('clubdelasalud.pe'));
                             data.email = data.email.replace("clubdelasalud.pe", "@clubdelasalud.pe"); 
                         }else if (data.email.match('clubdelasalud') != null) {
                             data.email = data.email.replace("clubdelasalud", "@clubdelasalud.pe"); 
@@ -318,6 +319,7 @@ export class CollaboratorsComponent implements OnInit {
                         
                     }
                     // return
+                    // console.log(322, data);
                     this.apiService.updateColaboradorEmailService(data).then(
                         (response: any) => {
                             console.log(response);

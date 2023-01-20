@@ -1231,14 +1231,22 @@
                                                       </li>
                                                     </ul>                                  
                                                   </div>
-                                                  <!-- <ag-grid-angular
-                                                    style="width: 100%; height: 100%;"
-                                                    class="ag-theme-alpine"
+                                                  <ag-grid-angular
+                                                    #agGrid
+                                                    style="width: 100%; height: 200px;"
+                                                    id="myGrid"
+                                                    ag-grid="gridOptions"
+                                                    class="ag-theme-balham"
                                                     [columnDefs]="columns8"
+                                                    [groupSelectsChildren]="true"
+                                                    [groupDefaultExpanded]="groupDefaultExpanded"
+                                                    [autoGroupColumnDef]="autoGroupColumnDef"
                                                     [defaultColDef]="defaultColDef"
                                                     [rowData]="rows8"
-                                                    (gridReady)="onGridReady($event)"
-                                                  ></ag-grid-angular> -->
+                                                    [rowSelection]="rowSelection"
+                                                    [rowClassRules]="rowClassRules"
+ 
+                                                    ></ag-grid-angular>
                                                   <!-- <ag-grid-angular
                                                   #agGrid
                                                   style="width: 100%; height: 600px"
@@ -1250,7 +1258,7 @@
                                                   [defaultColDef]="defaultColDef"
                                                   rowSelection="multiple"
                                                   ></ag-grid-angular> -->
-                                                  <ngx-datatable #myTable8
+                                                  <!-- <ngx-datatable #myTable8
                                                   class="bootstrap table table-striped"
                                                   id="datatablele"
                                                     [columns]="columns8"
@@ -1267,12 +1275,10 @@
                                                         let-row="row">
                                                         <div>
                                                           <span  [title]="value" >{{value}}</span>
-                                                          <!-- <span  [title]="value" [ngClass]="{'cell-red': row.cell.includes('-')}"}>{{value}}</span> -->
-
                                                         </div>
                                                       </ng-template>
                                                     </ngx-datatable-column>
-                                                  </ngx-datatable>
+                                                  </ngx-datatable> -->
                                                   <div class="notas">
                                                     <p> &nbsp; &nbsp; Planilla : Cierre de planilla del periodo seleccionado</p>
                                                     <p> &nbsp; &nbsp; Suministros : Suministros despachados por logística y registrados en el periodo seleccionado</p>
@@ -1312,8 +1318,23 @@
                                                       </li>
                                                     </ul>                                  
                                                   </div>
-                                                  
-                                                  <ngx-datatable #myTable9
+                                                  <ag-grid-angular
+                                                    #agGrid
+                                                    style="width: 100%; height: 235px;"
+                                                    id="myGrid"
+                                                    ag-grid="gridOptions"
+                                                    class="ag-theme-balham"
+                                                    [columnDefs]="columns9"
+                                                    [groupSelectsChildren]="true"
+                                                    [groupDefaultExpanded]="groupDefaultExpanded"
+                                                    [autoGroupColumnDef]="autoGroupColumnDef"
+                                                    [defaultColDef]="defaultColDef"
+                                                    [rowData]="rows9"
+                                                    [rowSelection]="rowSelection"
+                                                    [rowClassRules]="rowClassRules"
+ 
+                                                    ></ag-grid-angular>
+                                                  <!-- <ngx-datatable #myTable9
                                                   class="bootstrap table table-striped"
                                                   id="datatablele"
                                                     [columns]="columns9"
@@ -1330,19 +1351,10 @@
                                                         let-row="row">
                                                         <div>
                                                           <span  [title]="value">{{value}}</span>
-                                                        </div>
-                                                        <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
-                                                          <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
-                                                        </div> -->
-              
+                                                        </div>              
                                                       </ng-template>
-                                                      <!-- <ngx-datatable-column prop="per1">
-                                                        <ng-template let-row="row" ngx-datatable-cell-template>
-                                                          {{row.per1 | currency:'S/.  ':'code'}}
-                                                        </ng-template>
-                                                      </ngx-datatable-column> -->
                                                     </ngx-datatable-column>
-                                                  </ngx-datatable>
+                                                  </ngx-datatable> -->
                                                   <div class="notas">
                                                     <p> &nbsp; &nbsp; Planilla : Cierre de planilla del periodo seleccionado</p>
                                                     <p> &nbsp; &nbsp; Suministros : Suministros despachados por logística y registrados en el periodo seleccionado</p>
@@ -1383,7 +1395,23 @@
                                                       </li>
                                                     </ul>                                  
                                                   </div>
-                                                  <ngx-datatable #myTable10
+                                                  <ag-grid-angular
+                                                    #agGrid
+                                                    style="width: 100%; height: 420px;"
+                                                    id="myGrid"
+                                                    ag-grid="gridOptions"
+                                                    class="ag-theme-balham"
+                                                    [columnDefs]="columns10"
+                                                    [groupSelectsChildren]="true"
+                                                    [groupDefaultExpanded]="groupDefaultExpanded"
+                                                    [autoGroupColumnDef]="autoGroupColumnDef"
+                                                    [defaultColDef]="defaultColDef"
+                                                    [rowData]="rows10"
+                                                    [rowSelection]="rowSelection"
+                                                    [rowClassRules]="rowClassRules"
+ 
+                                                    ></ag-grid-angular>
+                                                  <!-- <ngx-datatable #myTable10
                                                   class="bootstrap table table-striped"
                                                   id="datatablele"
                                                     [columns]="columns10"
@@ -1400,19 +1428,10 @@
                                                         let-row="row">
                                                         <div>
                                                           <span  [title]="value">{{value}}</span>
-                                                        </div>
-                                                        <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
-                                                          <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
-                                                        </div> -->
-              
+                                                        </div>             
                                                       </ng-template>
-                                                      <!-- <ngx-datatable-column prop="per1">
-                                                        <ng-template let-row="row" ngx-datatable-cell-template>
-                                                          {{row.per1 | currency:'S/.  ':'code'}}
-                                                        </ng-template>
-                                                      </ngx-datatable-column> -->
                                                     </ngx-datatable-column>
-                                                  </ngx-datatable>
+                                                  </ngx-datatable> -->
                                                   <div class="notas">
                                                     <p> &nbsp; &nbsp; Planilla : Cierre de planilla del periodo seleccionado</p>
                                                     <p> &nbsp; &nbsp; Suministros : Suministros despachados por logística y registrados en el periodo seleccionado</p>

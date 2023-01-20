@@ -7,7 +7,7 @@
 @import '~@swimlane/ngx-datatable/themes/material.scss';
 @import '~@swimlane/ngx-datatable/themes/dark.scss';
 @import '~@swimlane/ngx-datatable/assets/icons.css';
-
+@import '~ag-grid-community/src/styles/ag-theme-bootstrap/sass/ag-theme-bootstrap.scss';
 .app-theme-white .app-sidebar .app-sidebar-content {
     background: RGB(16,0,76);
 }
@@ -226,4 +226,32 @@
 }
 .cell-red{
     color: red!important;
+}
+.ag-header-row.ag-header-row-column-group{
+    background-color: #FEAD25 !important;
+
+}
+
+.ag-header-group-cell-label{
+    justify-content: center!important;
+    font-weight: 700!important;
+    color: #190075 !important;
+
+}
+.ag-header-row.ag-header-row-column{
+    background-color: #FEAD25!important;
+    color: #190075 !important;
+    font-weight: 600!important;
+    border-bottom-color: #190075 !important;
+}
+
+.ag-theme-balham .ag-header-cell::after, .ag-theme-balham .ag-header-group-cell::after{
+    background-color: #190075 !important;
+}
+.ag-theme-balham .ag-header{
+    border-bottom-color: #190075 !important;
+}
+.ag-theme-balham .ag-header-row:not(:first-child) .ag-header-cell, .ag-theme-balham .ag-header-row:not(:first-child) .ag-header-group-cell.ag-header-group-cell-with-group {
+
+    border-top-color: #190075!important;
 }

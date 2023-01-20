@@ -17,7 +17,7 @@ import { CurrencyPipe } from '@angular/common';
 import * as Chart from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import ResizeObserver from 'resize-observer-polyfill';
-
+import {GridOptions} from "ag-grid-community";
 import { AgGridAngular } from "ag-grid-angular";
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 @Component({
@@ -35,7 +35,8 @@ export class EstadisticasComponent implements OnInit {
     if (content) {
       // initially setter gets called with undefined
       this.baseChart = content;
-      // this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del mes seleccionado', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
+      this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del mes seleccionado', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
+      this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'pie');
       // this.getBarChart(this.chartLabels, this.chartData3, this.chartData4, 'chart-2', 'MENSUAL-INGRESO CON IGV - TOTAL CUOTAS', 'MENSUAL-INGRESO CON IGV - TOTAL RECAUDADO', 'bar');
       // this.getBarChart(this.chartLabels2, this.chartData5, this.chartData6, 'chart-3', 'MENSUAL-NÚMERO DE CONTRATOS PAGADOS-TOTAL CUOTAS', 'MENSUAL-NÚMERO DE CONTRATOS PAGADOS-TOTAL RECAUDADO', 'bar');
       // this.getBarChart(this.chartLabels3, this.chartData7, this.chartData8, 'chart-4', 'ANUAL-INGRESO SIN IGV - TOTAL CUOTAS', 'ANUAL-INGRESO SIN IGV - TOTAL RECAUDADO', 'bar');
@@ -136,6 +137,7 @@ export class EstadisticasComponent implements OnInit {
     tarjeta: '',
     montoTotal: '',
   };
+  private rowClassRules;
   columns1: any;
   rows1: any;
   rows1filtered: any;
@@ -184,53 +186,130 @@ export class EstadisticasComponent implements OnInit {
   page4 = new Page();
   selected = [];
   SelectionType = SelectionType;
-  columnDefs = [
-    {
-      headerName: 'Athlete Details',
-      children: [
-        {
-          field: 'athlete',
-          width: 180,
-          filter: 'agTextColumnFilter',
-        },
-        {
-          field: 'age',
-          width: 90,
-          filter: 'agNumberColumnFilter',
-        },
-        { headerName: 'Country', field: 'country', width: 140 },
-      ],
+
+  frameworkComponents;
+  tooltipShowDelay;
+  defaultColDef;
+  style = {
+      width: "100%",
+      height: "100%",
+      flex: "1 1 auto",
+  };
+
+columnDefs = [
+  {
+    headerName: "Athlete",
+    field: "athlete",
+    width: 150
+  },
+  {
+    headerName: "Age",
+    field: "age",
+    width: 90,
+    cellClassRules: {
+      "rag-green": "x < 20",
+      "rag-amber": "x >= 20 && x < 25",
+      "rag-red": "x >= 25"
+    }
+  },
+  {
+    headerName: "Country",
+    field: "country",
+    width: 120
+  },
+  {
+    headerName: "Year",
+    field: "year",
+    cellClassRules: {
+      "cell-red": function(params) {
+        return params.value === 2008;
+      },
+      "rag-amber-outer": function(params) {
+        return params.value === 2004;
+      },
+      "cell-red1": function(params) {
+        return params.value === 2000;
+      }
     },
-    {
-      headerName: 'Sports Results',
-      children: [
-        { field: 'sport', width: 140 },
-        {
-          columnGroupShow: 'closed',
-          field: 'total',
-          width: 100,
-          filter: 'agNumberColumnFilter',
-        },
-        {
-          columnGroupShow: 'open',
-          field: 'gold',
-          width: 100,
-          filter: 'agNumberColumnFilter',
-        },
-        {
-          columnGroupShow: 'open',
-          field: 'silver',
-          width: 100,
-          filter: 'agNumberColumnFilter',
-        },
-        {
-          columnGroupShow: 'open',
-          field: 'bronze',
-          width: 100,
-          filter: 'agNumberColumnFilter',
-        },
-      ],
-    },
+    cellRenderer: function(params) {
+      return '<span class="rag-element">' + params.value + "</span>";
+    }
+  },
+  {
+    headerName: "Date",
+    field: "date",
+    cellClass: "rag-amber"
+  },
+  {
+    headerName: "Sport",
+    field: "sport",
+    cellClass: function(params) {
+      return params.value === "Swimming" ? "rag-green" : "rag-amber";
+    }
+  },
+  {
+    headerName: "Gold",
+    field: "gold",
+    cellStyle: { backgroundColor: "#aaffaa" }
+  },
+  {
+    headerName: "Silver",
+    field: "silver",
+  },
+  {
+    headerName: "Bronze",
+    field: "bronze",
+  },
+  {
+    headerName: "Total",
+    field: "total"
+  }
+    // {
+    //   headerName: 'Athlete Details',
+    //   children: [
+    //     {
+    //       field: 'athlete',
+    //       width: 180,
+    //       filter: 'agTextColumnFilter',
+    //     },
+    //     {
+    //       field: 'age',
+    //       width: 90,
+    //       filter: 'agNumberColumnFilter',
+    //     },
+    //     { headerName: 'Country', field: 'country', width: 140 },
+    //   ],
+    // },
+    // {
+    //   headerName: 'Sports Results',
+    //   children: [
+    //     { field: 'sport', width: 140 },
+    //     {
+    //       columnGroupShow: 'closed',
+    //       field: 'total',
+    //       width: 100,
+    //       filter: 'agNumberColumnFilter',
+    //     },
+    //     {
+    //       columnGroupShow: 'open',
+    //       field: 'gold',
+    //       width: 100,
+    //       filter: 'agNumberColumnFilter',
+    //     },
+    //     {
+    //       columnGroupShow: 'open',
+    //       field: 'silver',
+    //       width: 100,
+    //       filter: 'agNumberColumnFilter',
+    //     },
+    //     {
+    //       columnGroupShow: 'open',
+    //       field: 'bronze',
+    //       width: 100,
+    //       filter: 'agNumberColumnFilter',
+    //     },
+    //   ],
+    // },
 ];
 rowData = [
   {
@@ -285,6 +364,19 @@ rowData = [
       mes: new FormControl(this.mes),
       anio: new FormControl(this.anio),
     });
+    this.rowClassRules = {
+      "totals": function(params) {
+        //  console.log(301, params); 
+        var totales;
+        if(params.data.sucursal !== undefined){
+          totales = params.data.sucursal;
+        }else if(params.data.grupo !== undefined){
+          totales = params.data.grupo;
+        }
+        return totales === 'TOTAL';
+      },
+      "sick-days-breach": "data.sickDays > 8"
+    };
   }
 
   ngOnInit(){
@@ -654,6 +746,7 @@ rowData = [
       };
     } 
   }
+
   tipoChange(event, tabla){
     
     const input = event;
@@ -824,14 +917,52 @@ rowData = [
                     this.rows7 = response.data.tabla_resumen;
                     this.formatPipe(this.rows7);
                     this.columns8 = response.data.cabeceras_utilidad;
+                    this.columns8.map(item => {
+                      if (item.children){
+                        item.children.map(subitem =>{
+                          subitem.cellClassRules = {
+                            "cell-red": function(params) {
+                              return params.value.includes('-');
+                            }
+                          }
+                          return subitem.cellClassRules
+                       })
+                      }
+                    });
+                    // console.log(942, this.columns8);
                     this.rows8 = response.data.tabla_utilidad;
                     this.formatPipe2(this.rows8);
                     this.columns9 = response.data.cabeceras_utilidad_TPac;
+                    this.columns9.map(item => {
+                      if (item.children){
+                          item.children.map(subitem =>{
+                            subitem.cellClassRules = {
+                              "cell-red": function(params) {
+                                return params.value.includes('-');
+                              }
+                            }
+                            return subitem.cellClassRules
+                        })
+                      }
+                    });
                     this.rows9 = response.data.tabla_utilidad_TPac;
                     this.formatPipe2(this.rows9);
                     this.columns10 = response.data.cabeceras_utilidad_Emp;
+                    this.columns10.map(item => {
+                      if (item.children){
+                        item.children.map(subitem =>{
+                          subitem.cellClassRules = {
+                            "cell-red": function(params) {
+                              return params.value.includes('-');
+                            }
+                          }
+                          return subitem.cellClassRules
+                        })
+                      }
+                    });
                     this.rows10 = response.data.tabla_utilidad_Emp;
                     this.formatPipe2(this.rows10);
+
                   }
                 },
                 (error) => {
