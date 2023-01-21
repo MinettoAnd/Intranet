@@ -244,7 +244,7 @@ console.log(this.anio);
    }
 
   ngOnInit() {
-    this.setPage({ offset: 0 });
+    // this.setPage({ offset: 0 });
   }
   public onSedeChange(sede: any): void {
     this.id_sede = sede;

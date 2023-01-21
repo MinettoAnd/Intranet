@@ -269,7 +269,7 @@ console.log(this.anio);
 
   ngOnInit() {
 
-    this.setPage({ offset: 0 });
+    // this.setPage({ offset: 0 });
   }
 
 

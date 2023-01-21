@@ -42,9 +42,9 @@ menuI;
   activeId = 'dashboardsMenu';
 
   toggleSidebar() {
-    // this.globals.toggleSidebar = !this.globals.toggleSidebar;
-    console.log(44,this.globals.toggleSidebar)
-    this.globals.toggleSidebar = true;
+    this.globals.toggleSidebar = !this.globals.toggleSidebar;
+    // console.log(44,this.globals.toggleSidebar)
+    // this.globals.toggleSidebar = true;
   }
 
   sidebarHover() {

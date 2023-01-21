@@ -34,9 +34,10 @@
                   (click)="goRutePagesHeaderTitle(item.header)"
                   routerLinkActive="active-item"
                   *ngIf="!item.isChecked"
+                  style="display: flex; flex-direction:column;"
                   >
                   <span style="display: none;" [ngClass]="{'vsm-title-n':globals.sidebarHover || !globals.toggleSidebar}">&nbsp;{{ item.name_model }}</span>
-                  <i class="vsm-arrow" [ngClass]="{'vsm-arrow-n':globals.sidebarHover || !globals.toggleSidebar}"></i>  
+                    
                   <div *ngIf="!item.icon">
                     <svg  [ngClass]="globals.sidebarHover || !globals.toggleSidebar ? 'svg-icon' : 'svg-icon-small'" viewBox="0 0 28 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path
@@ -54,6 +55,7 @@
                     <img [ngClass]="globals.sidebarHover || !globals.toggleSidebar ? 'svg-icon' : 'svg-icon-small'" 
                     [src]="item.icon" >
                   </div>
+                  <i class="vsm-arrow" [ngClass]="{'vsm-arrow-n':globals.sidebarHover || !globals.toggleSidebar}"></i>
                 </a>
                 <a 
                 (click)="goRutePagesHeaderTitle(item.header)"

@@ -198,7 +198,7 @@ console.log(this.anio);
    }
 
   ngOnInit() {
-    this.setPage({ offset: 0 });
+    // this.setPage({ offset: 0 });
   }
   public onAnioChange(anio: any): void {
     this.anio = anio;
