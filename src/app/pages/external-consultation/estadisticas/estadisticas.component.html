@@ -97,7 +97,7 @@
                         <li [ngbNavItem]="1">
                             <a ngbNavLink>Gráfico</a>
                             <ng-template ngbNavContent>
-                                <div class="card">
+                                <div class="card atencionesConsultaExterna">
                                     <div class="card-header">
                                       <h4 class="card-title" style="bottom:13px;">Atenciones por Consulta Externa</h4>
                                       <p>{{message}}</p> 
@@ -116,7 +116,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                    <div class="col-md-3 col-sm-6 col-xs-12" id="ausentismo">
                                         <div class="info-box">
                                             <span style="background: #FF3636 !important; color:#fff !important;" class="info-box-icon">			
                                             <i class="fa fa-user-times" aria-hidden="true"></i>		</span>		
@@ -125,6 +125,29 @@
                                                 </label>		 -->
                                               </div>
                                         </div>
+                                      <div class="col-md-3 col-sm-6 col-xs-12 div_ocultar_ptable_a" style="display: none;">
+                                        <div class="info-box">
+                                          <table class="table table-bordered">
+                                              <tbody>
+                                                <tr>
+                                                    <th style="padding: 2px 4px!important; line-height: inherit; font-size: 14px!important;">Inasistencia de Paciente</th>
+                                                    <th style="padding: 2px 8px!important; line-height: inherit;"><span id="ptable_anul">{{resumenMes.paciente}}</span></th>
+                                                    <th style="width: 40px; padding: 2px 8px!important; line-height: inherit;"><span class="badge bg-blue" id="ptable_anul_por">{{porcPaciente  | number : '1.2-2' }} %</span></th>
+                                                </tr>
+                                                <tr>
+                                                    <th style="padding: 2px 4px!important; line-height: inherit; font-size: 14px!important;">Por Inasistencia Medico</th>
+                                                    <th style="padding: 2px 8px!important; line-height: inherit;"><span id="ptable_inas">{{resumenMes.medico}}</span></th>
+                                                    <th style="width: 40px; padding: 2px 8px!important; line-height: inherit;"><span class="badge bg-green" id="ptable_inas_por">{{porcMedico  | number : '1.2-2' }} %</span></th>
+                                                </tr>
+                                                <tr>
+                                                    <th style="padding: 2px 4px!important; line-height: inherit; font-size: 14px!important;">Anulacion de Cita Por Paciente</th>
+                                                    <th style="padding: 2px 8px!important; line-height: inherit;"><span id="ptable_anul_paci">{{resumenMes.anuladas}}</span></th>
+                                                    <th style="width: 40px; padding: 2px 8px!important; line-height: inherit;"><span class="badge bg-red" id="ptable_anul_paci_por">{{porcAnuladas  | number : '1.2-2' }} %</span></th>
+                                                </tr>
+                                              </tbody>
+                                          </table>
+                                        </div>
+                                      </div>
                                     </div>
                                     <div class="col-md-3 col-sm-6 col-xs-12">
                                         <div class="info-box">
@@ -489,7 +512,7 @@
                                                       </select> -->
                                                         <div class="" style="display:flex;margin:15px;align-items: center;">
                                                           <span>Buscar</span>&nbsp;&nbsp;
-                                                            <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter($event)'>
+                                                            <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter2($event)'>
                                                         </div>
                                                       </div>                                 
                                                   </div>
@@ -675,7 +698,7 @@
                                                       </select> -->
                                                         <div class="" style="display:flex;margin:15px;align-items: center;">
                                                           <span>Buscar</span>&nbsp;&nbsp;
-                                                            <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter($event)'>
+                                                            <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter4($event)'>
                                                         </div>
                                                       </div>                             
                                                   </div>
@@ -766,7 +789,7 @@
                                                       </select> -->
                                                         <div class="" style="display:flex;margin:15px;align-items: center;">
                                                           <span>Buscar</span>&nbsp;&nbsp;
-                                                            <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter($event)'>
+                                                            <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter5($event)'>
                                                         </div>
                                                       </div>                              
                                                   </div>
@@ -861,7 +884,7 @@
                                                       </select> -->
                                                         <div class="" style="display:flex;margin:15px;align-items: center;">
                                                           <span>Buscar</span>&nbsp;&nbsp;
-                                                            <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter($event)'>
+                                                            <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter6($event)'>
                                                         </div>
                                                       </div>                              
                                                   </div>
@@ -980,7 +1003,7 @@
                                                       </select> -->
                                                         <div class="" style="display:flex;margin:15px;align-items: center;">
                                                           <span>Buscar</span>&nbsp;&nbsp;
-                                                            <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter($event)'>
+                                                            <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter7($event)'>
                                                         </div>
                                                     </div>                               
                                                   </div>

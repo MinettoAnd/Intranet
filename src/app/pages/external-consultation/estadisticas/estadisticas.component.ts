@@ -145,14 +145,18 @@ export class EstadisticasComponent implements OnInit {
   columns2: any[];
   rows2: any[];
   especialidades: any;
-  temp: any[];
+  temp2: any[];
+  temp4: any[];
+  temp5: any[];
+  temp6: any[];
+  tempRowsMedicos: any[];
   rowsFilter: any[];
   columns3: any[];
   rows3: any[];
   ColumnMode = ColumnMode;
   columns4: any;
   rows4: any;
-  temp2: any;
+  // temp2: any;
   rowsFilter2: any;
   columns5: any;
   rows5: any[];
@@ -186,7 +190,9 @@ export class EstadisticasComponent implements OnInit {
   page4 = new Page();
   selected = [];
   SelectionType = SelectionType;
-
+  porcMedico;
+  porcPaciente;
+  porcAnuladas;
   frameworkComponents;
   tooltipShowDelay;
   defaultColDef;
@@ -866,7 +872,7 @@ rowData = [
     // console.log(rows1);
   // });
 }
-  setPage(pageInfo) {
+ setPage(pageInfo) {
       console.log(pageInfo);
       // this.page.pageNumber = pageInfo.offset;
       this.parameters = {
@@ -883,11 +889,18 @@ rowData = [
       };
 
       this.loading();
-              this.tableApiservice.getResumenGeneralProcesar(this.parameters).subscribe(
+            this.tableApiservice.getResumenGeneralProcesar(this.parameters).subscribe(
                 (response) => {
                   
                   if(response.success){
                     this.resumenMes = response.data;
+                    
+                     this.porcMedico =  ( this.resumenMes.medico / this.resumenMes.ausentismo) * 100;
+                      this.porcPaciente = (this.resumenMes.paciente / this.resumenMes.ausentismo) * 100;
+                      this.porcAnuladas = (this.resumenMes.anuladas / this.resumenMes.ausentismo) * 100;
+                    
+
+                     
                   }
                 },
                 (error) => {
@@ -903,16 +916,20 @@ rowData = [
                     this.rows1filtered = this.rows1.filter(item => item.GRUPO3 === 'CANTIDAD');
                     this.columns2 = response.data.cabeceras_rangoetareo;
                     this.rows2 = response.data.tabla_rangoetareo;
+                    this.temp2 = this.rows2;
                     this.columns3 = response.data.cabeceras_empresas;
                     this.rows3 = response.data.tabla_empresas;
                     this.formatPipe(this.rows3);
                     this.rows3filtered = this.rows3.filter(item => item.GRUPOEM === 'CANTIDAD');
                     this.columns4 = response.data.cabeceras_diagnostico;
                     this.rows4 = response.data.tabla_diagnostico;
+                    this.temp4 = this.rows4;
                     this.columns5 = response.data.cabeceras_especialidades;
                     this.rows5 = response.data.tabla_especialidades;
+                    this.temp5 = this.rows5;
                     this.columns6 = response.data.cabeceras_inasistencia;
                     this.rows6 = response.data.tabla_inasistencia;
+                    this.temp6 = this.rows6;
                     this.columns7 = response.data.cabeceras_resumen;
                     this.rows7 = response.data.tabla_resumen;
                     this.formatPipe(this.rows7);
@@ -1119,7 +1136,14 @@ rowData = [
                       this.porcCompaMesAntRealizas =  (((this.resumenMes.total - this.resumenMesAnterior.total) / this.resumenMesAnterior.total) * 100).toFixed(2)
                       this.porcCompaMesAntAusentismo = (((this.resumenMes.ausentismo - this.resumenMesAnterior.ausentismo) / this.resumenMesAnterior.ausentismo) * 100).toFixed(2)
                       this.porcCompaMesAntReservadas = (((this.resumenMes.reservadas - this.resumenMesAnterior.reservadas) / this.resumenMesAnterior.reservadas) * 100).toFixed(2)
-                  }
+                  
+                  this.resumenMes.total = this.separadorDeMiles(this.resumenMes.total);
+                    this.resumenMes.ausentismo = this.separadorDeMiles(this.resumenMes.ausentismo);
+                    this.resumenMes.medico = this.separadorDeMiles(this.resumenMes.medico);
+                    this.resumenMes.paciente = this.separadorDeMiles(this.resumenMes.paciente);
+                    this.resumenMes.anuladas = this.separadorDeMiles(this.resumenMes.anuladas);
+                    this.resumenMes.reservadas = this.separadorDeMiles(this.resumenMes.reservadas);
+                    }
                   Swal.close(); 
                 },
                 (error) => {
@@ -1174,7 +1198,6 @@ rowData = [
                     Swal.close();
                 }
               );
-  
   }
   public onLimitChange(limit: any, numberT): void {
     this.changePageLimit(limit, numberT);
@@ -1323,7 +1346,96 @@ rowData = [
        
       }
     }
-
+    updateFilter2(event) {
+      const input = event.target.value.toLowerCase();
+      // console.log(838, input);
+      // filter our data
+      if (input.length > 0) {
+        const filtered = this.rows2
+          .filter(el =>
+            Object.values(el).find( val => val?.toString().toLowerCase().indexOf(input) !== -1 ) != undefined
+          );
+          // console.log(filtered);
+        this.rows2 = [...filtered]
+        
+      } else {
+        console.log(this.filtered);
+        this.rows2 = [...this.temp2]
+       
+      }
+    }
+    updateFilter4(event) {
+      const input = event.target.value.toLowerCase();
+      // console.log(838, input);
+      // filter our data
+      if (input.length > 0) {
+        const filtered = this.rows4
+          .filter(el =>
+            Object.values(el).find( val => val?.toString().toLowerCase().indexOf(input) !== -1 ) != undefined
+          );
+          // console.log(filtered);
+        this.rows4 = [...filtered]
+        
+      } else {
+        console.log(this.filtered);
+        this.rows4 = [...this.temp4]
+       
+      }
+    }
+    updateFilter5(event) {
+      const input = event.target.value.toLowerCase();
+      // console.log(838, input);
+      // filter our data
+      if (input.length > 0) {
+        const filtered = this.rows5
+          .filter(el =>
+            Object.values(el).find( val => val?.toString().toLowerCase().indexOf(input) !== -1 ) != undefined
+          );
+          // console.log(filtered);
+        this.rows5 = [...filtered]
+        
+      } else {
+        console.log(this.filtered);
+        this.rows5 = [...this.temp5]
+       
+      }
+    }
+    updateFilter6(event) {
+      const input = event.target.value.toLowerCase();
+      // console.log(838, input);
+      // filter our data
+      if (input.length > 0) {
+        const filtered = this.rowsMedicos
+          .filter(el =>
+            Object.values(el).find( val => val?.toString().toLowerCase().indexOf(input) !== -1 ) != undefined
+          );
+          // console.log(filtered);
+        this.rowsMedicos = [...filtered]
+        
+      } else {
+        console.log(this.filtered);
+        this.rowsMedicos = [...this.tempRowsMedicos]
+       
+      }
+    }
+    updateFilter7(event) {
+      const input = event.target.value.toLowerCase();
+      // console.log(838, input);
+      // filter our data
+      if (input.length > 0) {
+        const filtered = this.rows6
+          .filter(el =>
+            Object.values(el).find( val => val?.toString().toLowerCase().indexOf(input) !== -1 ) != undefined
+          );
+          // console.log(filtered);
+        this.rows6 = [...filtered]
+        
+      } else {
+        console.log(this.filtered);
+        this.rows6 = [...this.temp6]
+       
+      }
+    }
     onSelect({ selected }) {
       this.medicos = true;
       const parameters = {
@@ -1338,6 +1450,7 @@ rowData = [
         (response) =>{
           this.columnsMedicos = response.data.cabeceras;
           this.rowsMedicos = response.data.tabla_medicos_anual;
+          this.tempRowsMedicos = this.rowsMedicos
       });
       
 

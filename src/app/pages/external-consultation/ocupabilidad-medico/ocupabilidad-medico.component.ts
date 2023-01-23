@@ -749,7 +749,11 @@ this.tableApiservice.eliminarTablasMedico(this.tablas).subscribe(
       Swal.close();
   }
 );
-
+this.tableApiservice.eliminarTablasConsultorio(this.tablas).subscribe(
+  (response)=>{
+    console.log(754, response);
+  }
+)
 }
 separadorDeMiles(numero) {
   let partesNumero = numero.toString().split('.');

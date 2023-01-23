@@ -25,6 +25,7 @@ import ResizeObserver from 'resize-observer-polyfill';
   styleUrls: ['./ocupabilidad-consultorio.component.scss']
 })
 export class OcupabilidadConsultorioComponent implements OnInit {
+  
   private baseChart: ElementRef;
   // private baseChart2: ElementRef;
   
@@ -538,7 +539,9 @@ this.tableApiservice.eliminarTablasConsultorio(this.tablas).subscribe(
             this.tableApiservice.getUsoConsultorioMes(this.parameters).subscribe(
               (response) => {
                 if(response.success){
+                  
                   this.columns = response.data.cabeceras;
+                  console.log(541,this.columns);
                   this.rows = response.data.data;
                   this.formatPipe(this.rows);
                 }
@@ -730,7 +733,11 @@ this.tableApiservice.eliminarTablasConsultorio(this.tablas).subscribe(
       Swal.close();
   }
 );
-
+this.tableApiservice.eliminarTablasConsultorio(this.tablas).subscribe(
+  (response)=>{
+    console.log(735, response);
+  }
+)
 }
 separadorDeMiles(numero) {
   let partesNumero = numero.toString().split('.');

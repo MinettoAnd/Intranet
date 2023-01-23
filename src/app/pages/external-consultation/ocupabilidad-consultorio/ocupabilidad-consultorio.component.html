@@ -98,7 +98,7 @@
                                   <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
                                 </span>		
                                 <div class="info-box-content">
-                                  <span style="font-family:arial; font-size:15px; " class="info-box-text">OCUPABILIDAD DE ATENCIONES</span>
+                                  <span  class="info-box-text">OCUPABILIDAD DE ATENCIONES</span>
                                     <span *ngIf="resumenMes.promMesUso" class="info-box-number">{{resumenMes.promMesUso | number : '1.2-2' }} % ( {{resumenMes.minutosAtendidos_xDia}} )</span>
                                     <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">Tiempo de atención / 12 horas x dia
                                     <span role="button" class="badge question" title="Tiempo de atención por turno en el mes / 12 horas x dia ">?</span></label>
@@ -109,7 +109,7 @@
                              <div class="info-box">
                                 <span style="background: #57AA50 !important; color:#fff !important;" class="info-box-icon">			
                                   <i class="fa fa-plus-circle" aria-hidden="true"></i>		</span>		
-                                <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">OCUPABILIDAD DEL CONSULTORIO</span>			<span *ngIf="resumenMes.ocupabilidad" class="info-box-number">{{resumenMes.ocupabilidad | number : '1.2-2' }} % ( {{resumenMes.minutosProgramados_xDia}} )</span>			
+                                <div class="info-box-content">			<span  class="info-box-text">OCUPABILIDAD DEL CONSULTORIO</span>			<span *ngIf="resumenMes.ocupabilidad" class="info-box-number">{{resumenMes.ocupabilidad | number : '1.2-2' }} % ( {{resumenMes.minutosProgramados_xDia}} )</span>			
                                   <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">Tiempo de atención / 12 horas x dia
                                     <span role="button" class="badge question" title="Tiempo programado por turno en el mes / 12 horas x dia">?</span></label>		</div>
                              </div>
@@ -118,7 +118,7 @@
                              <div class="info-box">
                                 <span style="background: #FF3636 !important; color:#fff !important;" class="info-box-icon">			
                                   <i class="fa fa-medkit" aria-hidden="true"></i>		</span>		
-                                <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">OCUPABILIDAD DEL TURNO</span>			
+                                <div class="info-box-content">			<span  class="info-box-text">OCUPABILIDAD DEL TURNO</span>			
                                 <span *ngIf="resumenMes.usoEfectivoTurno" class="info-box-number">{{resumenMes.usoEfectivoTurno | number : '1.2-2' }} % ( {{resumenMes.promMinutosAtendidos}} )</span>			<label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success" >Tiempo de atención / 12 horas x dia
                                   <span role="button" class="badge question" title="Tiempo de atención por turno en el mes / Tiempo Programado por turno en el mes">?</span></label>		</div>
                              </div>
@@ -127,7 +127,7 @@
                              <div class="info-box">
                                 <span style="background: #FFAA00 !important; color:#fff !important;" class="info-box-icon">			
                                   <i class="fa fa-institution" aria-hidden="true"></i>		</span>		
-                                <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">NRO CONSULTORIOS</span>			
+                                <div class="info-box-content">			<span  class="info-box-text">NRO CONSULTORIOS</span>			
                                   <span *ngIf="resumenMes.nro_consultorios" class="info-box-number">{{resumenMes.nro_consultorios}} en {{resumenMes.diasPeriodo}} del mes</span>			
                                   <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">En {{resumenMes.nro_consultorios_maestro}} físicos Existentes</label>		</div>
                              </div>
@@ -140,7 +140,7 @@
                                   <i class="fa fa-money" aria-hidden="true"></i>
                                 </span>		
                                 <div class="info-box-content">
-                                  <span style="font-family:arial; font-size:15px; " class="info-box-text">ATENCIONES</span>
+                                  <span  class="info-box-text">ATENCIONES</span>
                                     <span *ngIf="resumenMes.nro_atendidos" class="info-box-number" >{{resumenMes.nro_atendidos}} (Con {{resumenMes.pacientes_unicos_atendidos}} atendidos)</span>
                                       <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success" >En {{(resumenMes.nro_atendidos / resumenMes.pacientes_unicos_atendidos) | number : '1.2-2' }} Atención por pacientes</label>
                                 </div>
@@ -149,7 +149,7 @@
                           <div class="col-md-3 col-sm-6 col-xs-12">
                              <div class="info-box">
                                 <span style="background: #63B6DE !important; color:#fff !important;" class="info-box-icon">			<i class="fa fa-users" aria-hidden="true"></i>		</span>		
-                                <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">PROMEDIO DE ATENCIÓN</span>			
+                                <div class="info-box-content">			<span  class="info-box-text">PROMEDIO DE ATENCIÓN</span>			
                                   <span *ngIf="resumenMes.nro_atendidos_xdia" class="info-box-number">{{resumenMes.nro_atendidos_xdia | number : '1.2-2'}} pacientes por día</span>			
                                   <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">{{resumenMes.nro_atendidos_xturno | number : '1.2-2'}} pacientes por turno</label>		</div>
                              </div>
@@ -158,7 +158,7 @@
                              <div class="info-box">
                                 <span style="background: #2F50F1 !important; color:#fff !important;" class="info-box-icon">			<i class="fa fa-building-o" aria-hidden="true"></i>		</span>		
                                 <div class="info-box-content">			
-                                  <span style="font-family:arial; font-size:15px; " class="info-box-text" >PROMEDIO DE TURNOS</span>			
+                                  <span  class="info-box-text" >PROMEDIO DE TURNOS</span>			
                                   <span *ngIf="resumenMes.promTurnosxDia" class="info-box-number">{{resumenMes.promTurnosxDia | number : '1.2-2'}} por consultorio al día</span>			
                                   <label style="position:relative; top:13px; font-size:12px; display: flex;
                                   justify-content: space-around;" class="label label-pill label-success" >{{resumenMes.tiempoxTurno}} por turno
@@ -242,13 +242,11 @@
                                     id="datatablele"
                                       [columns]="columns"
                                       [rows]="rows"
-                                      [columnMode]="ColumnMode.force"
+                                      [columnMode]="initialSize > 1250 ? ColumnMode.flex : ColumnMode.force"
                                       [headerHeight]="50"
                                       [rowHeight]="40"
                                       [scrollbarH]="true"
                                       (page)="setPage($event)"
-                                      
-                                      *ngIf="isTable1"
                                       >
                                       <ngx-datatable-column [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
@@ -491,7 +489,7 @@
                             <div class="col-md-3" id="div_panel_0302"> 	
                                 <div class="box box-widget widget-user">    	
                                     <div class="widget-user-header bg-p1-active" style="background: #10004C!important; color:#fff !important;">      		
-                                        <h3 class="widget-user-username" style="font-size: 18px;">OCUPABILIDAD DE ATENCIONES</h3> 
+                                        <h3 class="widget-user-username">OCUPABILIDAD DE ATENCIONES</h3> 
                                         <h5 class="widget-user-desc"> &nbsp; Tiempo de atención / 12 horas x día</h5> 
                                     </div>    	
                                         	
@@ -516,7 +514,7 @@
                             <div class="col-md-3" id="div_panel_0301"> 	
                                 <div class="box box-widget widget-user">    	
                                     <div class="widget-user-header bg-s3-active" style="background: #57AA50!important; color:#fff !important;">      		
-                                        <h3 class="widget-user-username" style="font-size: 18px;">OCUPABILIDAD DEL CONSULTORIO</h3>      		
+                                        <h3 class="widget-user-username">OCUPABILIDAD DEL CONSULTORIO</h3>      		
                                         <h5 class="widget-user-desc"> &nbsp; Tiempo programado / 12 horas x día</h5>    	
                                     </div>    	
                                         	
@@ -541,7 +539,7 @@
                             <div class="col-md-3" id="div_panel_0303"> 	
                                 <div class="box box-widget widget-user">    	
                                     <div class="widget-user-header bg-p1-active" style="background: #10004C!important; color:#fff !important;">      		
-                                        <h3 class="widget-user-username" style="font-size: 18px;">OCUPABILIDAD DEL TURNO</h3>      		
+                                        <h3 class="widget-user-username">OCUPABILIDAD DEL TURNO</h3>      		
                                         <h5 class="widget-user-desc"> &nbsp; Tiempo de atención / Tiempo programado</h5>    	
                                     </div>    	
                                        	
@@ -566,7 +564,7 @@
                             <div class="col-md-3" id="div_panel_0304"> 	
                                 <div class="box box-widget widget-user">    	
                                     <div class="widget-user-header bg-p2-active" style="background: #FFAA00!important; color:#fff !important;">      		
-                                        <h3 class="widget-user-username" style="font-size: 18px;">NRO CONSULTORIOS</h3>      		
+                                        <h3 class="widget-user-username">NRO CONSULTORIOS</h3>      		
                                         <h5 class="widget-user-desc"> &nbsp; </h5>    	
                                     </div>    	
                                       	
@@ -597,7 +595,7 @@
                                     <i class="fa fa-users" aria-hidden="true"></i>
                                   </span>		
                                   <div class="info-box-content">
-                                    <span style="font-family:arial; font-size:15px; " class="info-box-text">ATENCIONES</span>
+                                    <span  class="info-box-text">ATENCIONES</span>
                                       <span *ngIf="detalleAnual.nro_atendidos" class="info-box-number" >{{detalleAnual.nro_atendidos}} (Con {{detalleAnual.pacientes_unicos_atendidos}} atendidos)</span>
                                         <label style="position:relative; top:13px; font-size:12px; display: flex;justify-content: space-around;" class="label label-pill label-success" >{{detalleAnual.prom_atencion_paciente | number : '1.2-2' }} Atención por pacientes</label>
                                   </div>
@@ -607,7 +605,7 @@
                                <div class="info-box">
                                   <span style="background: #2F50F1!important; color:#fff !important;" class="info-box-icon">			<i class="fa fa-plus-circle" aria-hidden="true"></i>		</span>		
                                   <div class="info-box-content">			
-                                    <span style="font-family:arial; font-size:15px; " class="info-box-text">PROMEDIO POR TURNO</span>			
+                                    <span  class="info-box-text">PROMEDIO POR TURNO</span>			
                                     <span *ngIf="detalleAnual.tiempoxTurno" class="info-box-number">{{detalleAnual.tiempoxTurno}}</span>			
                                     <label style="position:relative; top:13px; font-size:12px; display: flex;
                                     justify-content: space-around;" class="label label-pill label-success">Programado al consultorio</label>		</div>
@@ -617,7 +615,7 @@
                                <div class="info-box">
                                   <span style="background: #FFAA00!important; color:#fff !important;" class="info-box-icon">			<i class="fa fa-medkit" aria-hidden="true"></i>		</span>		
                                   <div class="info-box-content">			
-                                    <span style="font-family:arial; font-size:15px; " class="info-box-text" >USO EFECTIVO POR TURNO</span>			
+                                    <span  class="info-box-text" >USO EFECTIVO POR TURNO</span>			
                                     <span *ngIf="detalleAnual.nro_atendidos_x60m" class="info-box-number">{{detalleAnual.nro_atendidos_x60m | number : '1.2-2'}} pacientes</span>			
                                     <label style="position:relative; top:13px; font-size:12px; display: flex;
                                     justify-content: space-around;" class="label label-pill label-success" >Por hora del turno programado
