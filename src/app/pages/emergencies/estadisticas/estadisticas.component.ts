@@ -20,6 +20,7 @@ import ResizeObserver from 'resize-observer-polyfill';
 import {GridOptions} from "ag-grid-community";
 import { AgGridAngular } from "ag-grid-angular";
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+
 @Component({
   selector: 'app-estadisticas',
   templateUrl: './estadisticas.component.html',
@@ -819,25 +820,7 @@ rowData = [
     // console.log(rows1);
     // const editRowslPipe = ((rows1) =>{
   rows1.map(item => {
-        // console.log(item);
-        // if (item.GRUPO3 === 'CANTIDAD' || item.GRUPOEM === 'CANTIDAD' ) {
-        //   // console.log(item.per1);
-        //   item.MES1 = typeof item.MES1 === 'number' ? this.separadorDeMiles(Math.round(item.MES1)) : this.separadorDeMiles(Math.round(Number(item.MES1)));
-        //   item.MES2 = typeof item.MES2 === 'number' ? this.separadorDeMiles(Math.round(item.MES2)) : this.separadorDeMiles(Math.round(Number(item.MES2)));
-        //   item.MES3 = typeof item.MES3 === 'number' ? this.separadorDeMiles(Math.round(item.MES3)) : this.separadorDeMiles(Math.round(Number(item.MES3)));
-        //   item.MES4 = typeof item.MES4 === 'number' ? this.separadorDeMiles(Math.round(item.MES4)) : this.separadorDeMiles(Math.round(Number(item.MES4)));
-        //   item.MES5 = typeof item.MES5 === 'number' ? this.separadorDeMiles(Math.round(item.MES5)) : this.separadorDeMiles(Math.round(Number(item.MES5)));
-        //   item.MES6 = typeof item.MES6 === 'number' ? this.separadorDeMiles(Math.round(item.MES6)) : this.separadorDeMiles(Math.round(Number(item.MES6)));
-        //   item.MES7 = typeof item.MES7 === 'number' ? this.separadorDeMiles(Math.round(item.MES7)) : this.separadorDeMiles(Math.round(Number(item.MES7)));
-        //   item.MES8 = typeof item.MES8 === 'number' ? this.separadorDeMiles(Math.round(item.MES8)) : this.separadorDeMiles(Math.round(Number(item.MES8)));
-        //   item.MES9 = typeof item.MES9 === 'number' ? this.separadorDeMiles(Math.round(item.MES9)) : this.separadorDeMiles(Math.round(Number(item.MES9)));
-        //   item.MES10 = typeof item.MES10 === 'number' ? this.separadorDeMiles(Math.round(item.MES10)) : this.separadorDeMiles(Math.round(Number(item.MES10)));
-        //   item.MES11 = typeof item.MES11 === 'number' ? this.separadorDeMiles(Math.round(item.MES11)) : this.separadorDeMiles(Math.round(Number(item.MES11)));
-        //   item.MES12 = typeof item.MES12 === 'number' ? this.separadorDeMiles(Math.round(item.MES12)) : this.separadorDeMiles(Math.round(Number(item.MES12)));
-        //   item.TOTAL = typeof item.TOTAL === 'number' ?  this.separadorDeMiles(Math.round(item.TOTAL)) : this.separadorDeMiles(Math.round(Number(item.TOTAL)));
-
-         
-        // } else 
+        
         if (item.GRUPO3 === 'SOLES' || item.GRUPOEM === 'SOLES' ){
           item.MES2 = typeof item.MES2 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES2.tofixed(2) ):  'S/. ' + this.separadorDeMiles(Number(item.MES2).toFixed(2));
           item.MES1 = typeof item.MES1 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES1.tofixed(2) ):  'S/. ' + this.separadorDeMiles(Number(item.MES1).toFixed(2));
@@ -883,7 +866,10 @@ rowData = [
         anio: this.anio,
         chkena: 'on',
         typepie: 'IN',
-        tipo: 'RERE'
+        tipo: 'INGR',
+        // page: 1,
+        // start: 0,
+        // limit: 50
         // pageNumber: this.page.pageNumber,
         // size: this.page.size
       };
@@ -1078,32 +1064,6 @@ rowData = [
                         this.progressBar1.push(datos);
                       }
                     }
-                    // this.progressBarTabla1 = response.data.tipo_prog_d.tarjeta_salud;
-                    // this.progressBarTabla2 = response.data.tipo_prog_d.insti_priva;
-                    // this.progressBarTabla3 = response.data.tipo_prog_d.madre_nino;
-                    // this.progressBarTabla4 = response.data.tipo_prog_d.seguros_conv;
-                    // this.progressBarTabla5 = response.data.tipo_prog_d.Otros;
-                    // console.log(596,this.progressBarTabla1);
-                    // for (let value of Object.values(response.data.tipo_prog_d.tarjeta_salud)) {
-                    //   // console.log(616, value)
-                    //   // let porcentaje:any = Object.values(value);
-                    //   // const datosTabla = {
-                    //   //   porcentaje : ((porcentaje/total)*100).toFixed(2),
-                    //   //   value: porcentaje[0]
-                    //   // }
-                    //   // this.progressBarTabla1.push(datosTabla);
-                    //   // let label = Object.keys(value)[0];
-                    //   // if ( label == 'seguros_conv'){
-                    //   //   this.progressBarLabels.push('CIA. Seguros / Convenios')
-                    //   // }else if (label === 'insti_priva'){
-                    //   //   this.progressBarLabels.push('Institucional / Privados')
-                    //   // }else if (label === 'madre_nino'){
-                    //   //   this.progressBarLabels.push('Madre Niño')
-                    //   // }else if (label === 'tarjeta_salud'){
-                    //   //   this.progressBarLabels.push('Programas de Salud')
-                    //   // }
-                      
-                    // }
                   }
                   Swal.close();
                 },

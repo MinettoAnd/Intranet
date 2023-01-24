@@ -116,40 +116,40 @@ private extractData(res: Response) {
     return this.http.post(this.loadTableApiDataURL, data);
   }
   // Estadisticas 
-  getResumenGeneralProcesar(data): Observable<any> {
-    this.loadTableApiDataURL = `${environment.api_url}getResumenGeneralProcesar`;
+  getCeResumenGeneralProcesar(data): Observable<any> {
+    this.loadTableApiDataURL = `${environment.api_url}getCeResumenGeneralProcesar`;
     return this.http.post(this.loadTableApiDataURL, data);
   }
-  getAtencionesResumenAnual(data): Observable<any> {
-    this.loadTableApiDataURL = `${environment.api_url}getAtencionesResumenAnual`;
+  getCeAtencionesResumenAnual(data): Observable<any> {
+    this.loadTableApiDataURL = `${environment.api_url}getCeAtencionesResumenAnual`;
     return this.http.post(this.loadTableApiDataURL, data);
   }
-  tiposPacientes(data): Observable<any> {
-    this.loadTableApiDataURL = `${environment.api_url}tiposPacientes`;
+  getCeTiposPacientes(data): Observable<any> {
+    this.loadTableApiDataURL = `${environment.api_url}getCeTiposPacientes`;
     return this.http.post(this.loadTableApiDataURL, data);
   }
-  calcularMontos(data): Observable<any> {
-    this.loadTableApiDataURL = `${environment.api_url}calcularMontos`;
+  getCeCalcularMontos(data): Observable<any> {
+    this.loadTableApiDataURL = `${environment.api_url}getCeCalcularMontos`;
     return this.http.post(this.loadTableApiDataURL, data);
   }
-  procesarAnterior(data): Observable<any> {
-    this.loadTableApiDataURL = `${environment.api_url}procesarAnterior`;
+  getCeProcesarAnterior(data): Observable<any> {
+    this.loadTableApiDataURL = `${environment.api_url}getCeProcesarAnterior`;
     return this.http.post(this.loadTableApiDataURL, data);
   }
-  chartIndex(data): Observable<any> {
-    this.loadTableApiDataURL = `${environment.api_url}chartIndex`;
+  getCeChartIndex(data): Observable<any> {
+    this.loadTableApiDataURL = `${environment.api_url}getCeChartIndex`;
     return this.http.post(this.loadTableApiDataURL, data);
   }
-  pieIndex(data): Observable<any> {
-    this.loadTableApiDataURL = `${environment.api_url}pieIndex`;
+  getCePieIndex(data): Observable<any> {
+    this.loadTableApiDataURL = `${environment.api_url}getCePieIndex`;
     return this.http.post(this.loadTableApiDataURL, data);
   }
-  getMedicosStatistics(data): Observable<any> {
-    this.loadTableApiDataURL = `${environment.api_url}getMedicosStatistics`;
+  getCeMedicosStatistics(data): Observable<any> {
+    this.loadTableApiDataURL = `${environment.api_url}getCeMedicosStatistics`;
     return this.http.post(this.loadTableApiDataURL, data);
   }
-  getMedicosRecord(data): Observable<any> {
-    this.loadTableApiDataURL = `${environment.api_url}getMedicosRecord`;
+  getCeMedicosRecord(data): Observable<any> {
+    this.loadTableApiDataURL = `${environment.api_url}getCeMedicosRecord`;
     return this.http.post(this.loadTableApiDataURL, data);
   }
 }

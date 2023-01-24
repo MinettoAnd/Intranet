@@ -127,7 +127,7 @@ const routes: Routes = [
                 data: { extraParameter: "encuestaMenu" },
             },
             {
-                path: "emergencies/attention-consultation",
+                path: "emergencies",
                 loadChildren: () => import('../app/pages/emergencies/emergencies.module').then(m => m.EmergenciesModule),
                 data: { extraParameter: "emergenciaMenu" },
             },

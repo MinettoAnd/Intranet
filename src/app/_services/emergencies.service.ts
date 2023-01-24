@@ -39,4 +39,33 @@ export class EmergenciesService {
   this.loadTableApiDataURL = `${environment.api_url}emergenciasConsultaAtenciones`;
   return this.http.post(this.loadTableApiDataURL, data);
   }
+    // Estadisticas 
+    getEmResumenGeneralProcesar(data): Observable<any> {
+      this.loadTableApiDataURL = `${environment.api_url}getEmResumenGeneralProcesar`;
+      return this.http.post(this.loadTableApiDataURL, data);
+    }
+    getEmAtencionesResumenMensual(data): Observable<any> {
+      this.loadTableApiDataURL = `${environment.api_url}getEmAtencionesResumenMensual`;
+      return this.http.post(this.loadTableApiDataURL, data);
+    }
+    getEmAtencionesResumenAnual(data): Observable<any> {
+      this.loadTableApiDataURL = `${environment.api_url}getEmAtencionesResumenAnual`;
+      return this.http.post(this.loadTableApiDataURL, data);
+    }
+    getEmTiposPacientes(data): Observable<any> {
+      this.loadTableApiDataURL = `${environment.api_url}getEmTiposPacientes`;
+      return this.http.post(this.loadTableApiDataURL, data);
+    }
+    getEmCalcularMontos(data): Observable<any> {
+      this.loadTableApiDataURL = `${environment.api_url}getEmCalcularMontos`;
+      return this.http.post(this.loadTableApiDataURL, data);
+    }
+    getEmChartIndex(data): Observable<any> {
+      this.loadTableApiDataURL = `${environment.api_url}getEmChartIndex`;
+      return this.http.post(this.loadTableApiDataURL, data);
+    }
+    getEmPieIndex(data): Observable<any> {
+      this.loadTableApiDataURL = `${environment.api_url}getEmPieIndex`;
+      return this.http.post(this.loadTableApiDataURL, data);
+    }
 }
