@@ -42,9 +42,9 @@ height: 12vh!important;
   display: flex;
   z-index: 20;
   // overflow: hidden;
-  height: 28vh;  //$app-sidebar-width;
+  //height: 28vh;  //$app-sidebar-width;
 
-  // height: 20vh;
+  height: 25%;
   box-shadow: $sidebar-box-shadow;
   flex-direction: column;
   transition: all 0.3s ease;
@@ -61,7 +61,7 @@ height: 12vh!important;
   }
 
   .app-sidebar-content {
-    flex-grow: 1;
+    flex-grow: 0;
     display: flex;
     width: 100%;
 

@@ -98,7 +98,7 @@
                                   <i class="fa fa-stethoscope" aria-hidden="true"></i>
                                 </span>		
                                 <div class="info-box-content">
-                                  <span style="font-family:arial; font-size:15px; " class="info-box-text">OCUPABILIDAD DEL MÉDICO</span>
+                                  <span class="info-box-text">OCUPABILIDAD DEL MÉDICO</span>
                                     <span *ngIf="resumenMes.promMesUso" class="info-box-number">{{resumenMes.ocupabilidad | number : '1.2-2' }} % ( {{resumenMes.minutosProgramados_xDia}} )</span>
                                     <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">Tiempo programado / 12 horas x dia
                                     </label>
@@ -109,7 +109,7 @@
                              <div class="info-box">
                                 <span style="background: #57AA50 !important; color:#fff !important;" class="info-box-icon">			
                                   <i class="fa fa-plus-circle" aria-hidden="true"></i>		</span>		
-                                <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">OCUPABILIDAD DE ATENCIONES</span>			<span *ngIf="resumenMes.ocupabilidad" class="info-box-number">{{resumenMes.promMesUso | number : '1.2-2' }} % ( {{resumenMes.minutosAtendidos_xDia}} )</span>			
+                                <div class="info-box-content">			<span class="info-box-text">OCUPABILIDAD DE ATENCIONES</span>			<span *ngIf="resumenMes.ocupabilidad" class="info-box-number">{{resumenMes.promMesUso | number : '1.2-2' }} % ( {{resumenMes.minutosAtendidos_xDia}} )</span>			
                                   <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">Tiempo de atención / 12 horas x dia
                                     </label>		</div>
                              </div>
@@ -118,7 +118,7 @@
                              <div class="info-box">
                                 <span style="background: #FF3636 !important; color:#fff !important;" class="info-box-icon">			
                                   <i class="fa fa-medkit" aria-hidden="true"></i>		</span>		
-                                <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">OCUPABILIDAD DEL TURNO</span>			
+                                <div class="info-box-content">			<span class="info-box-text">OCUPABILIDAD DEL TURNO</span>			
                                 <span *ngIf="resumenMes.usoEfectivoTurno" class="info-box-number">{{resumenMes.usoEfectivoTurno | number : '1.2-2' }}</span>			<label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success" >Tiempo de atención / tiempo programado
                                   </label>		</div>
                              </div>
@@ -127,7 +127,7 @@
                              <div class="info-box">
                                 <span style="background: #FFAA00 !important; color:#fff !important;" class="info-box-icon">			
                                   <i class="fa fa-institution" aria-hidden="true"></i>		</span>		
-                                <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">NRO CONSULTORIOS</span>			
+                                <div class="info-box-content">			<span  class="info-box-text">NRO CONSULTORIOS</span>			
                                   <span *ngIf="resumenMes.nro_consultorios" class="info-box-number">{{resumenMes.nro_consultorios}} Ocupados en {{resumenMes.diasPeriodo}} días</span>			
                                   <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">{{resumenMes.nro_consultorios_maestro}} Físicos Existentes</label>		</div>
                              </div>
@@ -140,7 +140,7 @@
                                   <i class="fa fa-users" aria-hidden="true"></i>
                                 </span>		
                                 <div class="info-box-content">
-                                  <span style="font-family:arial; font-size:15px; " class="info-box-text">ATENCIONES</span>
+                                  <span class="info-box-text">ATENCIONES</span>
                                     <span *ngIf="resumenMes.nro_atendidos" class="info-box-number" >{{resumenMes.nro_atendidos}} Pacientes</span>
                                       <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success" >En {{resumenMes.nro_turnos}} turnos</label>
                                 </div>
@@ -150,7 +150,7 @@
                              <div class="info-box">
                                 <span style="background: #63B6DE !important; color:#fff !important;" class="info-box-icon">			
                                   <i class="fa fa-hourglass-2" aria-hidden="true"></i>		</span>		
-                                <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">PROMEDIO DE ATENCIÓN</span>			
+                                <div class="info-box-content">			<span class="info-box-text">PROMEDIO DE ATENCIÓN</span>			
                                   <span *ngIf="resumenMes.nro_atendidos_xdia" class="info-box-number">{{resumenMes.nro_atendidos_xdia | number : '1.2-2'}} pacientes por día</span>			
                                   <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">{{resumenMes.nro_atendidos_xturno | number : '1.2-2'}} pacientes por turno</label>		</div>
                              </div>
@@ -160,7 +160,7 @@
                                 <span style="background: #2F50F1 !important; color:#fff !important;" class="info-box-icon">			
                                   <i class="fa fa-clock-o" aria-hidden="true"></i>		</span>		
                                 <div class="info-box-content">			
-                                  <span style="font-family:arial; font-size:15px; " class="info-box-text" >TURNOS PROGRAMADOS</span>			
+                                  <span class="info-box-text" >TURNOS PROGRAMADOS</span>			
                                   <span *ngIf="resumenMes.promTurnosxDia" class="info-box-number">{{resumenMes.nro_turnos | number : '1.2-2'}} turnos</span>			
                                   <label style="position:relative; top:13px; font-size:12px; display: flex;
                                   justify-content: space-around;" class="label label-pill label-success" >Con {{resumenMes.nro_cupos | number : '1.2-2' }} cupos promedio
@@ -171,7 +171,7 @@
                             <div class="info-box">
                                <span style="background: #57AA50 !important; color:#fff !important;" class="info-box-icon">			
                                  <i class="fa fa-user-md" aria-hidden="true"></i>		</span>		
-                               <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">MÉDICOS</span>			<span *ngIf="resumenMes.ocupabilidad" class="info-box-number">{{resumenMes.nro_medicos}} Médicos</span>			
+                               <div class="info-box-content">			<span class="info-box-text">MÉDICOS</span>			<span *ngIf="resumenMes.ocupabilidad" class="info-box-number">{{resumenMes.nro_medicos}} Médicos</span>			
                                  <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">En {{ resumenMes.nro_especialidad }} especialidades
                                    </label>		</div>
                             </div>
@@ -560,7 +560,7 @@
                                     <i class="fa fa-stethoscope" aria-hidden="true"></i>
                                   </span>		
                                   <div class="info-box-content">
-                                    <span style="font-family:arial; font-size:15px; " class="info-box-text">OCUPABILIDAD DEL MÉDICO</span>
+                                    <span class="info-box-text">OCUPABILIDAD DEL MÉDICO</span>
                                       <span *ngIf="resumenAnual.promMesUso" class="info-box-number">{{resumenAnual.ocupabilidad | number : '1.2-2' }} % ( {{resumenAnual.minutosProgramados_xDia}} ) (*)</span>
                                       <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">Tiempo programado / 12 horas x dia
                                       </label>
@@ -571,7 +571,7 @@
                                <div class="info-box">
                                   <span style="background: #57AA50 !important; color:#fff !important;" class="info-box-icon">			
                                     <i class="fa fa-plus-circle" aria-hidden="true"></i>		</span>		
-                                  <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">OCUPABILIDAD DE ATENCIONES</span>			<span *ngIf="resumenAnual.ocupabilidad" class="info-box-number">{{resumenAnual.promMesUso | number : '1.2-2' }} % ( {{resumenAnual.minutosAtendidos_xDia}} ) (*)</span>			
+                                  <div class="info-box-content">			<span class="info-box-text">OCUPABILIDAD DE ATENCIONES</span>			<span *ngIf="resumenAnual.ocupabilidad" class="info-box-number">{{resumenAnual.promMesUso | number : '1.2-2' }} % ( {{resumenAnual.minutosAtendidos_xDia}} ) (*)</span>			
                                     <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">Tiempo de atención / 12 horas x dia
                                       </label>		</div>
                                </div>
@@ -580,7 +580,7 @@
                                <div class="info-box">
                                   <span style="background: #FF3636 !important; color:#fff !important;" class="info-box-icon">			
                                     <i class="fa fa-medkit" aria-hidden="true"></i>		</span>		
-                                  <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">OCUPABILIDAD DEL TURNO</span>			
+                                  <div class="info-box-content">			<span class="info-box-text">OCUPABILIDAD DEL TURNO</span>			
                                   <span *ngIf="resumenAnual.usoEfectivoTurno" class="info-box-number">{{resumenAnual.usoEfectivoTurno | number : '1.2-2' }} (*)</span>			<label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success" >Tiempo de atención / tiempo programado
                                     </label>		</div>
                                </div>
@@ -589,7 +589,7 @@
                                <div class="info-box">
                                   <span style="background: #FFAA00 !important; color:#fff !important;" class="info-box-icon">			
                                     <i class="fa fa-institution" aria-hidden="true"></i>		</span>		
-                                  <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">NRO CONSULTORIOS</span>			
+                                  <div class="info-box-content">			<span class="info-box-text">NRO CONSULTORIOS</span>			
                                     <span *ngIf="resumenAnual.nro_consultorios" class="info-box-number">{{resumenAnual.nro_consultorios}} Ocupados en {{resumenAnual.diasPeriodo}} días (*)</span>			
                                     <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">{{resumenAnual.nro_consultorios_maestro}} Físicos Existentes</label>		</div>
                                </div>
@@ -602,7 +602,7 @@
                                     <i class="fa fa-users" aria-hidden="true"></i>
                                   </span>		
                                   <div class="info-box-content">
-                                    <span style="font-family:arial; font-size:15px; " class="info-box-text">ATENCIONES</span>
+                                    <span  class="info-box-text">ATENCIONES</span>
                                       <span *ngIf="resumenAnual.nro_atendidos" class="info-box-number" >{{resumenAnual.nro_atendidos}} Pacientes (*)</span>
                                         <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success" >En {{resumenAnual.nro_turnos}} turnos</label>
                                   </div>
@@ -612,7 +612,7 @@
                                <div class="info-box">
                                   <span style="background: #63B6DE !important; color:#fff !important;" class="info-box-icon">			
                                     <i class="fa fa-hourglass-2" aria-hidden="true"></i>		</span>		
-                                  <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">PROMEDIO DE ATENCIÓN</span>			
+                                  <div class="info-box-content">			<span  class="info-box-text">PROMEDIO DE ATENCIÓN</span>			
                                     <span *ngIf="resumenAnual.nro_atendidos_xdia" class="info-box-number">{{resumenAnual.nro_atendidos_xdia | number : '1.2-2'}} pacientes por día</span>			
                                     <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">{{resumenAnual.nro_atendidos_xturno | number : '1.2-2'}} pacientes por turno</label>		</div>
                                </div>
@@ -622,7 +622,7 @@
                                   <span style="background: #2F50F1 !important; color:#fff !important;" class="info-box-icon">			
                                     <i class="fa fa-clock-o" aria-hidden="true"></i>		</span>		
                                   <div class="info-box-content">			
-                                    <span style="font-family:arial; font-size:15px; " class="info-box-text" >TURNOS PROGRAMADOS</span>			
+                                    <span class="info-box-text" >TURNOS PROGRAMADOS</span>			
                                     <span *ngIf="resumenAnual.promTurnosxDia" class="info-box-number">{{resumenAnual.nro_turnos | number : '1.2-2'}} turnos</span>			
                                     <label style="position:relative; top:13px; font-size:12px; display: flex;
                                     justify-content: space-around;" class="label label-pill label-success" >Con {{resumenAnual.nro_cupos | number : '1.2-2' }} cupos promedio
@@ -633,7 +633,7 @@
                               <div class="info-box">
                                  <span style="background: #57AA50 !important; color:#fff !important;" class="info-box-icon">			
                                    <i class="fa fa-user-md" aria-hidden="true"></i>		</span>		
-                                 <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">MÉDICOS</span>			<span *ngIf="resumenAnual.ocupabilidad" class="info-box-number">{{resumenAnual.nro_medicos}} Médicos</span>			
+                                 <div class="info-box-content">			<span class="info-box-text">MÉDICOS</span>			<span *ngIf="resumenAnual.ocupabilidad" class="info-box-number">{{resumenAnual.nro_medicos}} Médicos</span>			
                                    <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">En {{ resumenAnual.nro_especialidad }} especialidades
                                      </label>		</div>
                               </div>

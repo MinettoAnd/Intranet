@@ -112,3 +112,14 @@ margin: 1rem 0;
         color: red!important;
     }
     // .ag-header-row ag-header-row-column-group
+#ausentismo:hover .div_ocultar_ptable_a{
+    display: block!important;
+}
+#ausentismo{
+    display: flex;
+}
+@media (min-width: 1024px) {
+    #ausentismo{
+        max-width: 50%!important;
+    }
+}
