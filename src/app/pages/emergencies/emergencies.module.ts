@@ -7,9 +7,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AttentionConsultationComponent } from './attention-consultation/attention-consultation.component';
+import { EstadisticasComponent } from './estadisticas/estadisticas.component';
 
 @NgModule({
-  declarations: [AttentionConsultationComponent],
+  declarations: [AttentionConsultationComponent, EstadisticasComponent],
   imports: [
     CommonModule,
     NgxDatatableModule,
@@ -18,8 +19,12 @@ import { AttentionConsultationComponent } from './attention-consultation/attenti
     ReactiveFormsModule,
     RouterModule.forChild([
       {
-        path: '',
+        path: 'attention-consultation',
         component: AttentionConsultationComponent
+      },
+      {
+        path: 'estadisticas',
+        component: EstadisticasComponent
       }
     ])
   ],
