@@ -103,7 +103,7 @@
                                       <p>{{message}}</p> 
                                     </div>
                                     <div class="col-md-12 div_panel_cabecera">
-                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                    <div class="col-md-3 col-sm-6 col-xs-12" style="display: flex;">
                                         <div class="info-box">
                                             <span style="background:#57AA50 !important; color:#fff !important;" class="info-box-icon">
                                             <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
@@ -149,7 +149,7 @@
                                         </div>
                                       </div>
                                     </div>
-                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                    <div class="col-md-3 col-sm-6 col-xs-12" style="display: flex;">
                                         <div class="info-box">
                                             <span style="background: #63B6DE !important; color:#fff !important;" class="info-box-icon">			
                                             <i class="fa fa-users" aria-hidden="true"></i>		</span>		
@@ -201,7 +201,7 @@
                                             <ngb-accordion [destroyOnHide]="false" [closeOthers]="true" #acc="ngbAccordion" activeIds="ngb-panel-0">
                                               <ngb-panel *ngFor="let percentageCompleted of progressBar1; let i = index;">
                                                 <ng-template ngbPanelTitle style="width:100%!important;">
-                                                  <span style="display:flex; justify-content: space-between;"><i><b>{{progressBarLabels[i]}}</b></i><i>{{percentageCompleted.value}} - [{{percentageCompleted.porcentaje}}] %</i></span>
+                                                  <span style="display:flex;color:#000; justify-content: space-between;"><i><b>{{progressBarLabels[i]}}</b></i><i>{{percentageCompleted.value}} - [{{percentageCompleted.porcentaje}}] %</i></span>
                                                   <ngb-progressbar
                                                       [type]="color[i]"
                                                       [value]="percentageCompleted.porcentaje"
@@ -305,7 +305,7 @@
                                       </h5>
                                     </div>
                                     <div class="col-md-12 div_panel_cabecera">
-                                        <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <div class="col-md-3 col-sm-6 col-xs-12" style="display: flex;">
                                            <div class="info-box">
                                               <span style="background: #63B6DE !important; color:#fff !important;" class="info-box-icon">
                                                 <i class="fa fa-credit-card" aria-hidden="true"></i>
@@ -317,16 +317,16 @@
                                               </div>
                                            </div>
                                         </div>
-                                        <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <div class="col-md-3 col-sm-6 col-xs-12" style="display: flex;">
                                            <div class="info-box">
                                               <span style="background: #DD4B39!important; color:#fff !important;" class="info-box-icon">			
                                                 <i class="fa fa-hospital-o" aria-hidden="true"></i>		</span>		
-                                              <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">PROGRAMAS DE SALUD</span>			
+                                              <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">INSTITUCIONAL Y PRIVADO</span>			
                                                 <span *ngIf="resumenMontos.instipriva" class="info-box-number"><b _ngcontent-xkc-c219=""> S/ </b>{{resumenMontos.instipriva  }}</span>			
                                                 	</div>
                                            </div>
                                         </div>
-                                        <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <div class="col-md-3 col-sm-6 col-xs-12" style="display: flex;">
                                            <div class="info-box">
                                               <span style="background: #57AA50 !important; color:#fff !important;" class="info-box-icon">			
                                                 <i class="fa fa-hospital-o" aria-hidden="true"></i>		</span>		
@@ -337,7 +337,7 @@
                                                 </div>
                                            </div>
                                         </div>
-                                        <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <div class="col-md-3 col-sm-6 col-xs-12" style="display: flex;">
                                           <div class="info-box">
                                              <span style="background: #F39C12!important; color:#fff !important;" class="info-box-icon">			
                                                <i class="fa fa-wheelchair" aria-hidden="true"></i>		</span>		

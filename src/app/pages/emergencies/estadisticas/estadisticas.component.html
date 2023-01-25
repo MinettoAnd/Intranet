@@ -99,64 +99,58 @@
                             <ng-template ngbNavContent>
                                 <div class="card atencionesConsultaExterna">
                                     <div class="card-header">
-                                      <h4 class="card-title" style="bottom:13px;">Atenciones por Consulta Externa</h4>
+                                      <h4 class="card-title" style="bottom:13px;">Atenciones por Emergencia</h4>
                                       <p>{{message}}</p> 
                                     </div>
                                     <div class="col-md-12 div_panel_cabecera">
-                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                    <div class="col-md-3 col-sm-6 col-xs-12" style="display: flex;">
                                         <div class="info-box">
-                                            <span style="background:#57AA50 !important; color:#fff !important;" class="info-box-icon">
-                                            <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+                                            <span style="background:#3c8dbc !important; color:#fff !important;" class="info-box-icon">
+                                            <i class="fa fa-users" aria-hidden="true"></i>
                                             </span>		
                                             <div class="info-box-content">
-                                            <span style="font-family:arial; font-size:15px; " class="info-box-text">REALIZADAS</span>
-                                                <span *ngIf="resumenMes.total" class="info-box-number">{{resumenMes.total}} </span>
+                                            <span style="font-family:arial; font-size:15px; " class="info-box-text">ATENCIONES</span>
+                                                <span *ngIf="resumenMes.emergencia" class="info-box-number">{{resumenMes.emergencia}} </span>
                                                 <!-- <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">Tiempo programado / 12 horas x dia
                                                 </label> -->
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-3 col-sm-6 col-xs-12" id="ausentismo">
+                                    <div class="col-md-3 col-sm-6 col-xs-12" style="display: flex;">
                                         <div class="info-box">
-                                            <span style="background: #FF3636 !important; color:#fff !important;" class="info-box-icon">			
-                                            <i class="fa fa-user-times" aria-hidden="true"></i>		</span>		
-                                            <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">AUSENTISMO</span>			<span *ngIf="resumenMes.ausentismo" class="info-box-number">{{resumenMes.ausentismo}} </span>			
-                                            <!-- <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">Tiempo de atención / 12 horas x dia
-                                                </label>		 -->
+                                            <span style="background: #f56954 !important; color:#fff !important;" class="info-box-icon">			
+                                            <i class="fa fa-street-view" aria-hidden="true"></i>		</span>		
+                                            <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">HOSPITALIZADOS</span>			<span *ngIf="resumenMes.hospitalizados" class="info-box-number">{{resumenMes.hospitalizados}} </span>			
+                                            <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">...%
+                                                </label>		
                                               </div>
                                         </div>
-                                      <div class="col-md-3 col-sm-6 col-xs-12 div_ocultar_ptable_a" style="display: none;">
-                                        <div class="info-box">
-                                          <table class="table table-bordered">
-                                              <tbody>
-                                                <tr>
-                                                    <th style="padding: 2px 4px!important; line-height: inherit; font-size: 14px!important;">Inasistencia de Paciente</th>
-                                                    <th style="padding: 2px 8px!important; line-height: inherit;"><span id="ptable_anul">{{resumenMes.paciente}}</span></th>
-                                                    <th style="width: 40px; padding: 2px 8px!important; line-height: inherit;"><span class="badge bg-blue" id="ptable_anul_por">{{porcPaciente  | number : '1.2-2' }} %</span></th>
-                                                </tr>
-                                                <tr>
-                                                    <th style="padding: 2px 4px!important; line-height: inherit; font-size: 14px!important;">Por Inasistencia Medico</th>
-                                                    <th style="padding: 2px 8px!important; line-height: inherit;"><span id="ptable_inas">{{resumenMes.medico}}</span></th>
-                                                    <th style="width: 40px; padding: 2px 8px!important; line-height: inherit;"><span class="badge bg-green" id="ptable_inas_por">{{porcMedico  | number : '1.2-2' }} %</span></th>
-                                                </tr>
-                                                <tr>
-                                                    <th style="padding: 2px 4px!important; line-height: inherit; font-size: 14px!important;">Anulacion de Cita Por Paciente</th>
-                                                    <th style="padding: 2px 8px!important; line-height: inherit;"><span id="ptable_anul_paci">{{resumenMes.anuladas}}</span></th>
-                                                    <th style="width: 40px; padding: 2px 8px!important; line-height: inherit;"><span class="badge bg-red" id="ptable_anul_paci_por">{{porcAnuladas  | number : '1.2-2' }} %</span></th>
-                                                </tr>
-                                              </tbody>
-                                          </table>
-                                        </div>
-                                      </div>
+                                      
                                     </div>
-                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                    <div class="col-md-3 col-sm-6 col-xs-12" id="estancia">
                                         <div class="info-box">
-                                            <span style="background: #63B6DE !important; color:#fff !important;" class="info-box-icon">			
-                                            <i class="fa fa-users" aria-hidden="true"></i>		</span>		
-                                            <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">RESERVADAS</span>			
-                                            <span *ngIf="resumenMes.reservadas" class="info-box-number">{{resumenMes.reservadas}}</span>			
+                                            <span style="background: #00c0ef !important; color:#fff !important;" class="info-box-icon">			
+                                            <i class="fa fa-clock-o" aria-hidden="true"></i>		</span>		
+                                            <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">ESTANCIA PROMEDIO</span>			
+                                            <span *ngIf="resumenMes.reservadas" class="info-box-number">...</span>			
                                             <!-- <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success" >Tiempo de atención / tiempo programado
                                             </label>		 -->
+                                          </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6 col-xs-12 div_ocultar_ptable_a" style="display: none;">
+                                          <div class="info-box">
+                                            <table class="table table-bordered">
+                                                <tbody>
+                                                  <tr>
+                                                      <th style="padding: 2px 4px!important; line-height: inherit; font-size: 14px!important;">Estancia Mínima</th>
+                                                      <th style="padding: 2px 8px!important; line-height: inherit;"><span id="ptable_anul">...</span></th>
+                                                  </tr>
+                                                  <tr>
+                                                      <th style="padding: 2px 4px!important; line-height: inherit; font-size: 14px!important;">Estancia Máxima</th>
+                                                      <th style="padding: 2px 8px!important; line-height: inherit;"><span id="ptable_inas">...</span></th>
+                                                  </tr>
+                                                </tbody>
+                                            </table>
                                           </div>
                                         </div>
                                     </div>
@@ -201,7 +195,7 @@
                                             <ngb-accordion [destroyOnHide]="false" [closeOthers]="true" #acc="ngbAccordion" activeIds="ngb-panel-0">
                                               <ngb-panel *ngFor="let percentageCompleted of progressBar1; let i = index;">
                                                 <ng-template ngbPanelTitle style="width:100%!important;">
-                                                  <span style="display:flex; justify-content: space-between;"><i><b>{{progressBarLabels[i]}}</b></i><i>{{percentageCompleted.value}} - [{{percentageCompleted.porcentaje}}] %</i></span>
+                                                  <span style="display:flex; color:#000; justify-content: space-between;"><i><b>{{progressBarLabels[i]}}</b></i><i>{{percentageCompleted.value}} - [{{percentageCompleted.porcentaje}}] %</i></span>
                                                   <ngb-progressbar
                                                       [type]="color[i]"
                                                       [value]="percentageCompleted.porcentaje"
@@ -261,7 +255,7 @@
                                         </div>
                                       </div>
                                     </div>
-                                    <div class="box-header with-border" style="margin:1rem; ">
+                                    <!-- <div class="box-header with-border" style="margin:1rem; ">
                                       <h5 class="box-title">Comparativo del mes anterior</h5>
                                     </div> 
                                     <div class="col-md-12 div_panel_cabecera">
@@ -274,8 +268,8 @@
                                                 </span>
                                                 <h5 class="description-header" >{{resumenMesAnterior.total}}</h5>
                                                 <span class="description-text">REALIZADAS</span>
-                                            </div><!-- /.description-block -->
-                                          </div><!-- /.col -->
+                                            </div>
+                                          </div>
                                           <div class="col-md-3 col-sm-6 col-xs-12">
                                             <div class="description-block border-right">
                                               <span class="description-percentage text-green" [ngClass]="{'text-red': porcCompaMesAntAusentismo < 0 }">
@@ -285,8 +279,8 @@
                                               </span>
                                                 <h5 class="description-header" >{{resumenMesAnterior.ausentismo}}</h5>
                                                 <span class="description-text">AUSENTISMO</span>
-                                            </div><!-- /.description-block -->
-                                          </div><!-- /.col -->
+                                            </div>
+                                          </div>
                                           <div class="col-md-3 col-sm-6 col-xs-12">
                                             <div class="description-block border-right">
                                               <span class="description-percentage text-green" [ngClass]="{'text-red': porcCompaMesAntReservadas < 0 }">
@@ -296,16 +290,16 @@
                                               </span>
                                                <h5 class="description-header" >{{resumenMesAnterior.reservadas}}</h5>
                                                <span class="description-text">RESERVADAS</span>
-                                            </div><!-- /.description-block -->
-                                          </div><!-- /.col -->
+                                            </div>
+                                          </div>
                                       
-                                    </div>
+                                    </div> -->
                                     <div class="box-header with-border" style="margin:1rem; ">
-                                      <h5 class="box-title">Costo por atenciones realizadas: <b> S/ {{resumenMontos.montoTotal | number : '1.2-2' }}</b>
+                                      <h5 class="box-title">Ingreso de Efectivo por Caja: <b> S/ {{resumenMontos.montoTotal | number : '1.2-2' }}</b>
                                       </h5>
                                     </div>
                                     <div class="col-md-12 div_panel_cabecera">
-                                        <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <div class="col-md-3 col-sm-6 col-xs-12" style="display: flex;">
                                            <div class="info-box">
                                               <span style="background: #63B6DE !important; color:#fff !important;" class="info-box-icon">
                                                 <i class="fa fa-credit-card" aria-hidden="true"></i>
@@ -317,16 +311,16 @@
                                               </div>
                                            </div>
                                         </div>
-                                        <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <div class="col-md-3 col-sm-6 col-xs-12" style="display: flex;">
                                            <div class="info-box">
                                               <span style="background: #DD4B39!important; color:#fff !important;" class="info-box-icon">			
                                                 <i class="fa fa-hospital-o" aria-hidden="true"></i>		</span>		
-                                              <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">PROGRAMAS DE SALUD</span>			
+                                              <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">INSTITUCIONAL Y PRIVADO</span>			
                                                 <span *ngIf="resumenMontos.instipriva" class="info-box-number"><b _ngcontent-xkc-c219=""> S/ </b>{{resumenMontos.instipriva  }}</span>			
                                                 	</div>
                                            </div>
                                         </div>
-                                        <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <div class="col-md-3 col-sm-6 col-xs-12" style="display: flex;">
                                            <div class="info-box">
                                               <span style="background: #57AA50 !important; color:#fff !important;" class="info-box-icon">			
                                                 <i class="fa fa-hospital-o" aria-hidden="true"></i>		</span>		
@@ -337,11 +331,11 @@
                                                 </div>
                                            </div>
                                         </div>
-                                        <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <div class="col-md-3 col-sm-6 col-xs-12" style="display: flex;">
                                           <div class="info-box">
                                              <span style="background: #F39C12!important; color:#fff !important;" class="info-box-icon">			
                                                <i class="fa fa-wheelchair" aria-hidden="true"></i>		</span>		
-                                             <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">OTROS</span>			<span *ngIf="resumenMontos.otros" class="info-box-number"> S/ {{resumenMontos.otros | number : '1.2-2' }}</span>			
+                                             <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">OTROS</span>			<span *ngIf="resumenMontos.Otros" class="info-box-number"> S/ {{resumenMontos.Otros | number : '1.2-2' }}</span>			
                                               </div>
                                           </div>
                                        </div>
@@ -350,18 +344,20 @@
                                     <div class="box-header with-border" style="margin:1rem; ">
                                       <div class="box-footer">
                                         <p>* Información existente desde Enero 2019</p>
-                                        <p>* Costo por atenciones realizadas NO incluye IGV - (Pago de pacientes + Facturado a Empresas)</p>
+                                        <p>* Estancia promedio NO considera pacientes que se hospitalizaron</p>
+                                        <p>* Ingreso Total por Caja incluye IGV - No Incluye Cobro Facturado a Empresas</p>
+                                        <p>*  Fuente ERP SPRING Salud</p>
                                       </div>
                                     </div>
                                 </div>
                             </ng-template>
                         </li>
                         <li [ngbNavItem]="2">
-                            <a ngbNavLink>Anual</a>
+                            <a ngbNavLink>Mensual</a>
                             <ng-template ngbNavContent>
                                 <div class="card">
                                     <div class="card-header">
-                                      <h4 class="card-title" style="bottom:13px;">Atenciones por Consulta Externa</h4>
+                                      <h4 class="card-title" style="bottom:13px;">Atenciones por Emergencia</h4>
                                       <p>{{message}}</p>
                                     </div>
                                     <div class="card-content collapse show">
@@ -443,7 +439,6 @@
                                                     [rows]="rows1filtered"
                                                     [columnMode]="ColumnMode.flex"
                                                     [headerHeight]="50"
-                                                    [footerHeight]="65"
                                                     [rowHeight]="$any('auto')"
                                                     [scrollbarH]="true"
                                                     (page)="setPage($event)"
@@ -524,7 +519,6 @@
                                                     [rows]="rows2"
                                                     [columnMode]="ColumnMode.flex"
                                                     [headerHeight]="50"
-                                                    [footerHeight]="65"
                                                     [rowHeight]="$any('auto')"
                                                     [scrollbarH]="true"
                                                     (page)="setPage($event)"
@@ -932,11 +926,11 @@
                             </ng-template>
                         </li>
                         <li [ngbNavItem]="3">
-                            <a ngbNavLink>Inasistencia Médica</a>
+                            <a ngbNavLink>Anual</a>
                             <ng-template ngbNavContent>
                                 <div class="card">
                                     <div class="card-header">
-                                      <h4 class="card-title" style="bottom:13px;">Atenciones por Consulta Externa</h4>
+                                      <h4 class="card-title" style="bottom:13px;">Atenciones por Emergencia</h4>
                                       <p>{{message}}</p>
                                     </div>
                                     <div class="card-content collapse show">

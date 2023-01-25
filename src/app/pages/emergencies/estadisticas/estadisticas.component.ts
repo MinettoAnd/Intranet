@@ -4,7 +4,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { NgBlockUI, BlockUI } from 'ng-block-ui';
 import { PerfectScrollbarDirective, PerfectScrollbarComponent, PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import Swal from 'sweetalert2';
-import { ExternalConsultationService } from '../../../_services/external-consultation.service';
+import { EmergenciesService } from '../../../_services/emergencies.service';
 import {AttentionConsultation} from '../../../interfaces/attentionConsultation';
 import {ApiResponse} from '../../../interfaces/response';
 import * as moment from 'moment';
@@ -106,6 +106,7 @@ export class EstadisticasComponent implements OnInit {
   id_sede = '0001';
   CMP;
   Medico;
+  itemSoles;
   filtroForm: FormGroup;
   mes = moment(new Date()).format('MM');
   anio = moment(new Date()).format('YYYY');
@@ -113,13 +114,17 @@ export class EstadisticasComponent implements OnInit {
   public breadcrumb: any;
   parameters;
   resumenMes:any = {
+    admision: '',
+    altas: '',
+    emergencia: '',
+    estancia: '',
+    estanciaMax: '',
+    estanciaMin: '',
+    fallecidos: '',
+    hospitalizados: '',
     success: '',
     total: '',
-    ausentismo: '',
-    medico: '',
-    paciente: '',
-    anuladas: '',
-    reservadas: ''
+    vivos: ''
   };
   resumenMesAnterior:any = {
     success: '',
@@ -134,7 +139,7 @@ export class EstadisticasComponent implements OnInit {
     ciasegcon: '',
     instipriva: '',
     mani: '',
-    otros: '',
+    Otros: '',
     tarjeta: '',
     montoTotal: '',
   };
@@ -143,6 +148,7 @@ export class EstadisticasComponent implements OnInit {
   rows1: any;
   rows1filtered: any;
   rows3filtered: any;
+  rows6filtered: any;
   columns2: any[];
   rows2: any[];
   especialidades: any;
@@ -150,6 +156,7 @@ export class EstadisticasComponent implements OnInit {
   temp4: any[];
   temp5: any[];
   temp6: any[];
+  temp7: any[];
   tempRowsMedicos: any[];
   rowsFilter: any[];
   columns3: any[];
@@ -356,7 +363,7 @@ rowData = [
   "total": 6
   },
 ]
-  constructor(private tableApiservice: ExternalConsultationService, private exportService: ExportService,
+  constructor(private tableApiservice: EmergenciesService, private exportService: ExportService,
     private _cp: CurrencyPipe, private modalService: NgbModal) { 
       this.page1.pageNumber = 0;
       this.page1.size = 10;
@@ -875,15 +882,15 @@ rowData = [
       };
 
       this.loading();
-            this.tableApiservice.getCeResumenGeneralProcesar(this.parameters).subscribe(
+            this.tableApiservice.getEmResumenGeneralProcesar(this.parameters).subscribe(
                 (response) => {
-                  
+                  console.log(response);
                   if(response.success){
                     this.resumenMes = response.data;
                     
-                     this.porcMedico =  ( this.resumenMes.medico / this.resumenMes.ausentismo) * 100;
-                      this.porcPaciente = (this.resumenMes.paciente / this.resumenMes.ausentismo) * 100;
-                      this.porcAnuladas = (this.resumenMes.anuladas / this.resumenMes.ausentismo) * 100;
+                    //  this.porcMedico =  ( this.resumenMes.medico / this.resumenMes.ausentismo) * 100;
+                    //   this.porcPaciente = (this.resumenMes.paciente / this.resumenMes.ausentismo) * 100;
+                    //   this.porcAnuladas = (this.resumenMes.anuladas / this.resumenMes.ausentismo) * 100;
                     
 
                      
@@ -893,271 +900,419 @@ rowData = [
                     Swal.close();
                 }
               );
-              this.tableApiservice.getCeAtencionesResumenAnual(this.parameters).subscribe(
-                (response) => { 
-                  if(response.success){
-                    this.columns1 = response.data.cabeceras_tpacientes;
-                    this.rows1 = response.data.tabla_tpacientes;
-                    this.formatPipe(this.rows1);
-                    this.rows1filtered = this.rows1.filter(item => item.GRUPO3 === 'CANTIDAD');
-                    this.columns2 = response.data.cabeceras_rangoetareo;
-                    this.rows2 = response.data.tabla_rangoetareo;
-                    this.temp2 = this.rows2;
-                    this.columns3 = response.data.cabeceras_empresas;
-                    this.rows3 = response.data.tabla_empresas;
-                    this.formatPipe(this.rows3);
-                    this.rows3filtered = this.rows3.filter(item => item.GRUPOEM === 'CANTIDAD');
-                    this.columns4 = response.data.cabeceras_diagnostico;
-                    this.rows4 = response.data.tabla_diagnostico;
-                    this.temp4 = this.rows4;
-                    this.columns5 = response.data.cabeceras_especialidades;
-                    this.rows5 = response.data.tabla_especialidades;
-                    this.temp5 = this.rows5;
-                    this.columns6 = response.data.cabeceras_inasistencia;
-                    this.rows6 = response.data.tabla_inasistencia;
-                    this.temp6 = this.rows6;
-                    this.columns7 = response.data.cabeceras_resumen;
-                    this.rows7 = response.data.tabla_resumen;
-                    this.formatPipe(this.rows7);
-                    this.columns8 = response.data.cabeceras_utilidad;
-                    this.columns8.map(item => {
-                      if (item.children){
-                        item.children.map(subitem =>{
-                          subitem.cellClassRules = {
-                            "cell-red": function(params) {
-                              return params.value.includes('-');
-                            }
-                          }
-                          return subitem.cellClassRules
-                       })
-                      }
-                    });
-                    // console.log(942, this.columns8);
-                    this.rows8 = response.data.tabla_utilidad;
-                    this.formatPipe2(this.rows8);
-                    this.columns9 = response.data.cabeceras_utilidad_TPac;
-                    this.columns9.map(item => {
-                      if (item.children){
-                          item.children.map(subitem =>{
-                            subitem.cellClassRules = {
-                              "cell-red": function(params) {
-                                return params.value.includes('-');
-                              }
-                            }
-                            return subitem.cellClassRules
-                        })
-                      }
-                    });
-                    this.rows9 = response.data.tabla_utilidad_TPac;
-                    this.formatPipe2(this.rows9);
-                    this.columns10 = response.data.cabeceras_utilidad_Emp;
-                    this.columns10.map(item => {
-                      if (item.children){
-                        item.children.map(subitem =>{
-                          subitem.cellClassRules = {
-                            "cell-red": function(params) {
-                              return params.value.includes('-');
-                            }
-                          }
-                          return subitem.cellClassRules
-                        })
-                      }
-                    });
-                    this.rows10 = response.data.tabla_utilidad_Emp;
-                    this.formatPipe2(this.rows10);
-
-                  }
-                  Swal.close();
-                },
-                (error) => {
-                    Swal.close();
-                }
-              );
-
-              this.tableApiservice.getCeTiposPacientes(this.parameters).subscribe(
-                (response) => { 
-                  this.progressBarLabels = [];
-                  this.progressBar1 = [];
-                  let total = response.data.total_prog;
-                  
-                  if(response.success){
-                    for (let value of Object.values(response.data.tipo_prog)) {
-                      let porcentaje:any = Object.values(value);
+            this.tableApiservice.getEmAtencionesResumenMensual(this.parameters).subscribe(
+              (response) => { 
+                
+                if(response.success){
+                  this.columns1 = response.data.cabeceras_tpacientes;
+                  this.rows1 = response.data.tabla_tpacientes;
+                      let MES1=0;
+                      let MES2=0;
+                      let MES3=0;
+                      let MES4=0;
+                      let MES5=0; 
+                      let MES6=0;
+                      let MES7=0;  
+                      let MES8=0; 
+                      let MES9=0; 
+                      let MES10=0; 
+                      let MES11=0; 
+                      let MES12=0;
+                      let TOTAL=0; 
+                      this.itemSoles = [];
+                  this.rows1.map(item=>{
+                    
+                    // console.log(909, item);
+                    if(item.GRUPO3 === 'CANTIDAD'){
                       
-                      // this.progressBar1.push(datos);
+                      MES1 += Number(item.MES1);
+                      console.log(MES1);
+                      MES2 += Number(item.MES2);
+                      MES3 += Number(item.MES3);
+                      MES4 += Number(item.MES4);
+                      MES5 += Number(item.MES5);
+                      MES6 += Number(item.MES6);
+                      MES7 += Number(item.MES7); 
+                      MES8 += Number(item.MES8);
+                      MES9 += Number(item.MES9);
+                      MES10 += Number(item.MES10);
+                      MES11 += Number(item.MES19);
+                      MES12 += Number(item.MES12);
+                      TOTAL += Number(item.TOTAL);
                       
-                      let label = Object.keys(value)[0];
-                      if ( label == 'seguros_conv'){
-                        this.progressBarLabels.push('CIA. Seguros / Convenios')
-                        response.data.tipo_prog_d.seguros_conv.map(item=>{
-                          if (item.cantidad){
-                           let subPorcentaje = ((item.cantidad/porcentaje)*100).toFixed(2)
-                           item.porcentaje = subPorcentaje;
-                          }
-                          return item.porcentaje;
-                        });
-                        const datos = {
-                          porcentaje : ((porcentaje/total)*100).toFixed(2),
-                          value: porcentaje[0],
-                          table:response.data.tipo_prog_d.seguros_conv
-                        }
-                        this.progressBar1.push(datos);
-                      }else if (label === 'insti_priva'){
-                        this.progressBarLabels.push('Institucional / Privados')
-                        response.data.tipo_prog_d.insti_priva.map(item=>{
-                          if (item.cantidad){
-                           let subPorcentaje = ((item.cantidad/porcentaje)*100).toFixed(2)
-                           item.porcentaje = subPorcentaje;
-                          }
-                          return item.porcentaje;
-                        });
-                        const datos = {
-                          porcentaje : ((porcentaje/total)*100).toFixed(2),
-                          value: porcentaje[0],
-                          table:response.data.tipo_prog_d.insti_priva
-                        }
-                        this.progressBar1.push(datos);
-                      }else if (label === 'madre_nino'){
-                        this.progressBarLabels.push('Madre Niño')
-                        response.data.tipo_prog_d.madre_nino.map(item=>{
-                          if (item.cantidad){
-                           let subPorcentaje = ((item.cantidad/porcentaje)*100).toFixed(2)
-                           item.porcentaje = subPorcentaje;
-                          }
-                          return item.porcentaje;
-                        });
-                        const datos = {
-                          porcentaje : ((porcentaje/total)*100).toFixed(2),
-                          value: porcentaje[0],
-                          table:response.data.tipo_prog_d.madre_nino
-                        }
-                        this.progressBar1.push(datos);
-                      }else if (label === 'tarjeta_salud'){
-                        this.progressBarLabels.push('Programas de Salud')
-                        response.data.tipo_prog_d.tarjeta_salud.map(item=>{
-                          if (item.cantidad){
-                           let subPorcentaje = ((item.cantidad/porcentaje)*100).toFixed(2)
-                           item.porcentaje = subPorcentaje;
-                          }
-                          return item.porcentaje;
-                        });
-                        const datos = {
-                          porcentaje : ((porcentaje/total)*100).toFixed(2),
-                          value: porcentaje[0],
-                          table:response.data.tipo_prog_d.tarjeta_salud
-                        }
-                        this.progressBar1.push(datos);
-                      }else{
-                        this.progressBarLabels.push('Otros')
-                        response.data.tipo_prog_d.Otros.map(item=>{
-                          if (item.cantidad){
-                           let subPorcentaje = ((item.cantidad/porcentaje)*100).toFixed(2)
-                           item.porcentaje = subPorcentaje;
-                          }
-                          return item.porcentaje;
-                        });
-                        const datos = {
-                          porcentaje : ((porcentaje/total)*100).toFixed(2),
-                          value: porcentaje[0],
-                          table:response.data.tipo_prog_d.Otros
-                        }
-                        this.progressBar1.push(datos);
-                      }
                     }
-                  }
+                    
+                    if(item.GRUPO2 === ''){
+                      // this.itemSoles = item;
+                      item.GRUPO2 = 'Total';
+                      //  console.log(904, this.itemSoles);
+                      this.itemSoles.GRUPO1 ="";
+                      this.itemSoles.GRUPO2 = 'Total';
+                      this.itemSoles.GRUPO3 = 'CANTIDAD';
+                      this.itemSoles.MES1 = MES1;
+                      this.itemSoles.MES2 = MES2;
+                      this.itemSoles.MES3 = MES3;
+                      this.itemSoles.MES4 = MES4;
+                      this.itemSoles.MES5 = MES5;
+                      this.itemSoles.MES6 = MES6;
+                      this.itemSoles.MES7 = MES7;
+                      this.itemSoles.MES8 = MES8;
+                      this.itemSoles.MES9 = MES9;
+                      this.itemSoles.MES10 = MES10;
+                      this.itemSoles.MES11 = MES11;
+                      this.itemSoles.MES12 = MES12;
+                      this.itemSoles.TOTAL = TOTAL;
+                      
+                      // console.log(909, item);
+                    }
+                    // return item.GRUPO1, item.GRUPO2, item.GRUPO3, item.MES1, item.MES2, item.MES3, item.MES4, item.MES5, item.MES6, item.MES7, item.MES8, item.MES9, item.MES10, item.MES11, item.MES12, item.TOTAL;
+                  })
+                  this.rows1.push(this.itemSoles);
+                 console.log(970, this.rows1);
+                  this.formatPipe(this.rows1);
+                  this.rows1filtered = this.rows1.filter(item => item.GRUPO3 === 'CANTIDAD');
+                  this.columns2 = response.data.cabeceras_rangoetareo;
+                  this.rows2 = response.data.tabla_rangoetareo;
+                  this.temp2 = this.rows2;
+                  this.columns3 = response.data.cabeceras_empresas;
+                  this.rows3 = response.data.tabla_empresas;
+                  this.formatPipe(this.rows3);
+                  this.rows3filtered = this.rows3.filter(item => item.GRUPOEM === 'CANTIDAD');
+                  this.columns4 = response.data.cabeceras_diagnostico;
+                  this.rows4 = response.data.tabla_diagnostico;
+                  this.temp4 = this.rows4;
+                  this.columns5 = response.data.cabeceras_especialidades;
+                  this.rows5 = response.data.tabla_especialidades;
+                  this.temp5 = this.rows5;
+                  // this.columns6 = response.data.cabeceras_inasistencia;
+                  // this.rows6 = response.data.tabla_inasistencia;
+                  // this.temp6 = this.rows6;
+                  // this.columns7 = response.data.cabeceras_resumen;
+                  // this.rows7 = response.data.tabla_resumen;
+                  // this.formatPipe(this.rows7);
+                  // this.columns8 = response.data.cabeceras_utilidad;
+                  // this.columns8.map(item => {
+                  //   if (item.children){
+                  //     item.children.map(subitem =>{
+                  //       subitem.cellClassRules = {
+                  //         "cell-red": function(params) {
+                  //           return params.value.includes('-');
+                  //         }
+                  //       }
+                  //       return subitem.cellClassRules
+                  //     })
+                  //   }
+                  // });
+                  // this.rows8 = response.data.tabla_utilidad;
+                  // this.formatPipe2(this.rows8);
+                  // this.columns9 = response.data.cabeceras_utilidad_TPac;
+                  // this.columns9.map(item => {
+                  //   if (item.children){
+                  //       item.children.map(subitem =>{
+                  //         subitem.cellClassRules = {
+                  //           "cell-red": function(params) {
+                  //             return params.value.includes('-');
+                  //           }
+                  //         }
+                  //         return subitem.cellClassRules
+                  //     })
+                  //   }
+                  // });
+                  // this.rows9 = response.data.tabla_utilidad_TPac;
+                  // this.formatPipe2(this.rows9);
+                  // this.columns10 = response.data.cabeceras_utilidad_Emp;
+                  // this.columns10.map(item => {
+                  //   if (item.children){
+                  //     item.children.map(subitem =>{
+                  //       subitem.cellClassRules = {
+                  //         "cell-red": function(params) {
+                  //           return params.value.includes('-');
+                  //         }
+                  //       }
+                  //       return subitem.cellClassRules
+                  //     })
+                  //   }
+                  // });
+                  // this.rows10 = response.data.tabla_utilidad_Emp;
+                  // this.formatPipe2(this.rows10);
+
+                }
+                Swal.close();
+              },
+              (error) => {
                   Swal.close();
-                },
-                (error) => {
-                    Swal.close();
-                }
-              );
+              }
+            );
+            this.tableApiservice.getEmAtencionesResumenAnual(this.parameters).subscribe(
+              (response) => { 
+                console.log(982, response);
+                if(response.success){
+                  this.columns6 = response.data.cabeceras_tpacientes_anual;
+                  this.rows6 = response.data.tabla_tpacientes_anual;
+                  this.formatPipe(this.rows6);
+                  this.rows6filtered = this.rows6.filter(item => item.GRUPO3 === 'CANTIDAD');
+                  this.columns7 = response.data.cabeceras_rangoetareo_anual;
+                  this.rows7 = response.data.tabla_rangoetareo_anual;
+                  this.temp7 = this.rows7;
+                  // this.columns3 = response.data.cabeceras_empresas;
+                  // this.rows3 = response.data.tabla_empresas;
+                  // this.formatPipe(this.rows3);
+                  // this.rows3filtered = this.rows3.filter(item => item.GRUPOEM === 'CANTIDAD');
+                  // this.columns4 = response.data.cabeceras_diagnostico;
+                  // this.rows4 = response.data.tabla_diagnostico;
+                  // this.temp4 = this.rows4;
+                  // this.columns5 = response.data.cabeceras_especialidades;
+                  // this.rows5 = response.data.tabla_especialidades;
+                  // this.temp5 = this.rows5;
+                  // this.columns6 = response.data.cabeceras_inasistencia;
+                  // this.rows6 = response.data.tabla_inasistencia;
+                  // this.temp6 = this.rows6;
+                  // this.columns7 = response.data.cabeceras_resumen;
+                  // this.rows7 = response.data.tabla_resumen;
+                  // this.formatPipe(this.rows7);
+                  // this.columns8 = response.data.cabeceras_utilidad;
+                  // this.columns8.map(item => {
+                  //   if (item.children){
+                  //     item.children.map(subitem =>{
+                  //       subitem.cellClassRules = {
+                  //         "cell-red": function(params) {
+                  //           return params.value.includes('-');
+                  //         }
+                  //       }
+                  //       return subitem.cellClassRules
+                  //     })
+                  //   }
+                  // });
+                  // // console.log(942, this.columns8);
+                  // this.rows8 = response.data.tabla_utilidad;
+                  // this.formatPipe2(this.rows8);
+                  // this.columns9 = response.data.cabeceras_utilidad_TPac;
+                  // this.columns9.map(item => {
+                  //   if (item.children){
+                  //       item.children.map(subitem =>{
+                  //         subitem.cellClassRules = {
+                  //           "cell-red": function(params) {
+                  //             return params.value.includes('-');
+                  //           }
+                  //         }
+                  //         return subitem.cellClassRules
+                  //     })
+                  //   }
+                  // });
+                  // this.rows9 = response.data.tabla_utilidad_TPac;
+                  // this.formatPipe2(this.rows9);
+                  // this.columns10 = response.data.cabeceras_utilidad_Emp;
+                  // this.columns10.map(item => {
+                  //   if (item.children){
+                  //     item.children.map(subitem =>{
+                  //       subitem.cellClassRules = {
+                  //         "cell-red": function(params) {
+                  //           return params.value.includes('-');
+                  //         }
+                  //       }
+                  //       return subitem.cellClassRules
+                  //     })
+                  //   }
+                  // });
+                  // this.rows10 = response.data.tabla_utilidad_Emp;
+                  // this.formatPipe2(this.rows10);
 
-              this.tableApiservice.getCeCalcularMontos(this.parameters).subscribe(
-                (response) => { 
-                  this.resumenMontos = response.data.total;
+                }
+                Swal.close();
+              },
+              (error) => {
+                  Swal.close();
+              }
+            );
+
+            // this.tableApiservice.getEmTiposPacientes(this.parameters).subscribe(
+            //   (response) => { 
+                
+            //     this.progressBarLabels = [];
+            //     this.progressBar1 = [];
+            //     let total = response.data.total_prog;
+                
+            //     if(response.success){
+            //       for (let value of Object.values(response.data.tipo_prog)) {
+            //         let porcentaje:any = Object.values(value);
+                    
+            //         // this.progressBar1.push(datos);
+                    
+            //         let label = Object.keys(value)[0];
+            //         if ( label == 'seguros_conv'){
+            //           this.progressBarLabels.push('CIA. Seguros / Convenios')
+            //           response.data.tipo_prog_d.seguros_conv.map(item=>{
+            //             if (item.cantidad){
+            //               let subPorcentaje = ((item.cantidad/porcentaje)*100).toFixed(2)
+            //               item.porcentaje = subPorcentaje;
+            //             }
+            //             return item.porcentaje;
+            //           });
+            //           const datos = {
+            //             porcentaje : ((porcentaje/total)*100).toFixed(2),
+            //             value: porcentaje[0],
+            //             table:response.data.tipo_prog_d.seguros_conv
+            //           }
+            //           this.progressBar1.push(datos);
+            //         }else if (label === 'insti_priva'){
+            //           this.progressBarLabels.push('Institucional / Privados')
+            //           response.data.tipo_prog_d.insti_priva.map(item=>{
+            //             if (item.cantidad){
+            //               let subPorcentaje = ((item.cantidad/porcentaje)*100).toFixed(2)
+            //               item.porcentaje = subPorcentaje;
+            //             }
+            //             return item.porcentaje;
+            //           });
+            //           const datos = {
+            //             porcentaje : ((porcentaje/total)*100).toFixed(2),
+            //             value: porcentaje[0],
+            //             table:response.data.tipo_prog_d.insti_priva
+            //           }
+            //           this.progressBar1.push(datos);
+            //         }else if (label === 'madre_nino'){
+            //           this.progressBarLabels.push('Madre Niño')
+            //           response.data.tipo_prog_d.madre_nino.map(item=>{
+            //             if (item.cantidad){
+            //               let subPorcentaje = ((item.cantidad/porcentaje)*100).toFixed(2)
+            //               item.porcentaje = subPorcentaje;
+            //             }
+            //             return item.porcentaje;
+            //           });
+            //           const datos = {
+            //             porcentaje : ((porcentaje/total)*100).toFixed(2),
+            //             value: porcentaje[0],
+            //             table:response.data.tipo_prog_d.madre_nino
+            //           }
+            //           this.progressBar1.push(datos);
+            //         }else if (label === 'tarjeta_salud'){
+            //           this.progressBarLabels.push('Programas de Salud')
+            //           response.data.tipo_prog_d.tarjeta_salud.map(item=>{
+            //             if (item.cantidad){
+            //               let subPorcentaje = ((item.cantidad/porcentaje)*100).toFixed(2)
+            //               item.porcentaje = subPorcentaje;
+            //             }
+            //             return item.porcentaje;
+            //           });
+            //           const datos = {
+            //             porcentaje : ((porcentaje/total)*100).toFixed(2),
+            //             value: porcentaje[0],
+            //             table:response.data.tipo_prog_d.tarjeta_salud
+            //           }
+            //           this.progressBar1.push(datos);
+            //         }else{
+            //           this.progressBarLabels.push('Otros')
+            //           response.data.tipo_prog_d.Otros.map(item=>{
+            //             if (item.cantidad){
+            //               let subPorcentaje = ((item.cantidad/porcentaje)*100).toFixed(2)
+            //               item.porcentaje = subPorcentaje;
+            //             }
+            //             return item.porcentaje;
+            //           });
+            //           const datos = {
+            //             porcentaje : ((porcentaje/total)*100).toFixed(2),
+            //             value: porcentaje[0],
+            //             table:response.data.tipo_prog_d.Otros
+            //           }
+            //           this.progressBar1.push(datos);
+            //         }
+            //       }
+            //     }
+            //     Swal.close();
+            //   },
+            //   (error) => {
+            //       Swal.close();
+            //   }
+            // );
+
+            this.tableApiservice.getEmCalcularMontos(this.parameters).subscribe(
+              (response) => { 
+                
+                this.resumenMontos = response.data.total;
+                
+                  this.resumenMontos.ciasegcon =  typeof this.resumenMontos.ciasegcon === 'number' ? this.separadorDeMiles(this.resumenMontos.ciasegcon) : this.separadorDeMiles(Number(this.resumenMontos.ciasegcon));
+                  this.resumenMontos.instipriva = typeof this.resumenMontos.instipriva === 'number' ? this.separadorDeMiles(this.resumenMontos.instipriva) : this.separadorDeMiles(Number(this.resumenMontos.instipriva));
+                  this.resumenMontos.Otros = typeof this.resumenMontos.Otros === 'number' ? this.separadorDeMiles(this.resumenMontos.Otros) : this.separadorDeMiles(Number(this.resumenMontos.Otros));
+                  this.resumenMontos.tarjeta = typeof this.resumenMontos.tarjeta === 'number' ? this.separadorDeMiles(this.resumenMontos.tarjeta) : this.separadorDeMiles(Number(this.resumenMontos.tarjeta));
+                  // this.resumenMontos.montoTotal = typeof this.resumenMontos.montoTotal === 'number' ? this.resumenMontos.montoTotal.toFixed(2) : this.separadorDeMiles(Number(this.resumenMontos.montoTotal));
+
+                  Swal.close();
+              },
+              (error) => {
+                  Swal.close();
+              }
+            );
+
+              // this.tableApiservice.getEmProcesarAnterior(this.parameters).subscribe(
+              //   (response) => {
+              //     if(response.success){ 
+              //         this.resumenMesAnterior = response.data;
+              //         this.porcCompaMesAntRealizas =  (((this.resumenMes.total - this.resumenMesAnterior.total) / this.resumenMesAnterior.total) * 100).toFixed(2)
+              //         this.porcCompaMesAntAusentismo = (((this.resumenMes.ausentismo - this.resumenMesAnterior.ausentismo) / this.resumenMesAnterior.ausentismo) * 100).toFixed(2)
+              //         this.porcCompaMesAntReservadas = (((this.resumenMes.reservadas - this.resumenMesAnterior.reservadas) / this.resumenMesAnterior.reservadas) * 100).toFixed(2)
                   
-                    this.resumenMontos.ciasegcon =  typeof this.resumenMontos.ciasegcon === 'number' ? this.separadorDeMiles(this.resumenMontos.ciasegcon) : this.separadorDeMiles(Number(this.resumenMontos.ciasegcon));
-                    this.resumenMontos.instipriva = typeof this.resumenMontos.instipriva === 'number' ? this.separadorDeMiles(this.resumenMontos.instipriva) : this.separadorDeMiles(Number(this.resumenMontos.instipriva));
-                    this.resumenMontos.otros = typeof this.resumenMontos.otros === 'number' ? this.separadorDeMiles(this.resumenMontos.otros) : this.separadorDeMiles(Number(this.resumenMontos.otros));
-                    this.resumenMontos.tarjeta = typeof this.resumenMontos.tarjeta === 'number' ? this.separadorDeMiles(this.resumenMontos.tarjeta) : this.separadorDeMiles(Number(this.resumenMontos.tarjeta));
-                    // this.resumenMontos.montoTotal = typeof this.resumenMontos.montoTotal === 'number' ? this.resumenMontos.montoTotal.toFixed(2) : this.separadorDeMiles(Number(this.resumenMontos.montoTotal));
-
-                    Swal.close();
-                },
-                (error) => {
-                    Swal.close();
-                }
-              );
-
-              this.tableApiservice.getCeProcesarAnterior(this.parameters).subscribe(
-                (response) => {
-                  if(response.success){ 
-                      this.resumenMesAnterior = response.data;
-                      this.porcCompaMesAntRealizas =  (((this.resumenMes.total - this.resumenMesAnterior.total) / this.resumenMesAnterior.total) * 100).toFixed(2)
-                      this.porcCompaMesAntAusentismo = (((this.resumenMes.ausentismo - this.resumenMesAnterior.ausentismo) / this.resumenMesAnterior.ausentismo) * 100).toFixed(2)
-                      this.porcCompaMesAntReservadas = (((this.resumenMes.reservadas - this.resumenMesAnterior.reservadas) / this.resumenMesAnterior.reservadas) * 100).toFixed(2)
-                  
-                  this.resumenMes.total = this.separadorDeMiles(this.resumenMes.total);
-                    this.resumenMes.ausentismo = this.separadorDeMiles(this.resumenMes.ausentismo);
-                    this.resumenMes.medico = this.separadorDeMiles(this.resumenMes.medico);
-                    this.resumenMes.paciente = this.separadorDeMiles(this.resumenMes.paciente);
-                    this.resumenMes.anuladas = this.separadorDeMiles(this.resumenMes.anuladas);
-                    this.resumenMes.reservadas = this.separadorDeMiles(this.resumenMes.reservadas);
-                    }
-                  Swal.close(); 
-                },
-                (error) => {
-                    Swal.close();
-                }
-              );
+              //     this.resumenMes.total = this.separadorDeMiles(this.resumenMes.total);
+              //       this.resumenMes.ausentismo = this.separadorDeMiles(this.resumenMes.ausentismo);
+              //       this.resumenMes.medico = this.separadorDeMiles(this.resumenMes.medico);
+              //       this.resumenMes.paciente = this.separadorDeMiles(this.resumenMes.paciente);
+              //       this.resumenMes.anuladas = this.separadorDeMiles(this.resumenMes.anuladas);
+              //       this.resumenMes.reservadas = this.separadorDeMiles(this.resumenMes.reservadas);
+              //       }
+              //     Swal.close(); 
+              //   },
+              //   (error) => {
+              //       Swal.close();
+              //   }
+              // );
 // chart y pie
-              this.tableApiservice.getCeChartIndex(this.parameters).subscribe(
-                (response) => {  
-                   this.chartLabels1 = [];
-                   this.chartData1 = [];   
-                   this.chartData2 = [];
-                   this.chartData3 = [];    
-                  if(response.success){
-                    
-                    response.data.data.map(item =>{
-                      this.chartLabels1.push(item.dia);
-                      this.chartData1.push(item.cantidad);
-                      this.chartData2.push(item.procedencia);
-                    });
-                    // this.resumenMontos = response.data;
-                    
-                  }
-                  this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del mes seleccionado', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
-                  Swal.close();
-                },
-                (error) => {
-                    Swal.close();
+            this.tableApiservice.getEmChartIndex(this.parameters).subscribe(
+              (response) => {  
+
+                  this.chartLabels1 = [];
+                  this.chartData1 = [];   
+                  this.chartData2 = [];
+                  this.chartData3 = [];    
+                if(response.success){
+                  
+                  response.data.data.map(item =>{
+                    this.chartLabels1.push(item.dia);
+                    this.chartData1.push(item.cantidad);
+                    this.chartData2.push(item.procedencia);
+                  });
+                  // this.resumenMontos = response.data;
+                  
                 }
-              );
-              this.tableApiservice.getCePieIndex(this.parameters).subscribe(
-                (response) => {        
-                  if(response.success){
-                   this.chartLabels2 = [];
-                   this.chartData3 = [];    
-                  if(response.success){
-                    
-                    response.data.data.map(item =>{
-                      this.chartLabels2.push(item.grupo);
-                      this.chartData3.push(item.cantidad);
-                    });
-                    // this.resumenMontos = response.data;
-                    
-                  }
-                  this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'pie');
-                  // console.log(577, this.chartData1);
-                    
-                  }
+                this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del mes seleccionado', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
+                Swal.close();
+              },
+              (error) => {
                   Swal.close();
-                },
-                (error) => {
-                    Swal.close();
+              }
+            );
+            this.tableApiservice.getEmPieIndex(this.parameters).subscribe(
+              (response) => { 
+    
+                if(response.success){
+                  this.chartLabels2 = [];
+                  this.chartData3 = [];    
+                if(response.success){
+                  
+                  response.data.data.map(item =>{
+                    this.chartLabels2.push(item.grupo);
+                    this.chartData3.push(item.cantidad);
+                  });
+                  // this.resumenMontos = response.data;
+                  
                 }
-              );
+                this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'pie');
+                // console.log(577, this.chartData1);
+                  
+                }
+                Swal.close();
+              },
+              (error) => {
+                  Swal.close();
+              }
+            );
   }
   public onLimitChange(limit: any, numberT): void {
     this.changePageLimit(limit, numberT);
@@ -1406,12 +1561,12 @@ rowData = [
         CheckF: 1
       }
 
-      this.tableApiservice.getCeMedicosStatistics(parameters).subscribe(
-        (response) =>{
-          this.columnsMedicos = response.data.cabeceras;
-          this.rowsMedicos = response.data.tabla_medicos_anual;
-          this.tempRowsMedicos = this.rowsMedicos
-      });
+      // this.tableApiservice.getCeMedicosStatistics(parameters).subscribe(
+      //   (response) =>{
+      //     this.columnsMedicos = response.data.cabeceras;
+      //     this.rowsMedicos = response.data.tabla_medicos_anual;
+      //     this.tempRowsMedicos = this.rowsMedicos
+      // });
       
 
     }
@@ -1433,14 +1588,14 @@ rowData = [
           MesF: this.mes,
           SedeF: this.id_sede,
         }
-         this.tableApiservice.getCeMedicosRecord(parameters).subscribe(
-          (response) =>{ console.log(1155, response);
-            this.columnsMedicoRecord = response.data.cabeceras;
-            this.rowsMedicoRecord = response.data.tabla_medico_record;
-            this.rowsMedicoRecord.map(item=>{
-              console.log(item);
-            })
-        });
+        // this.tableApiservice.getCeMedicosRecord(parameters).subscribe(
+        //   (response) =>{ console.log(1155, response);
+        //     this.columnsMedicoRecord = response.data.cabeceras;
+        //     this.rowsMedicoRecord = response.data.tabla_medico_record;
+        //     this.rowsMedicoRecord.map(item=>{
+        //       console.log(item);
+        //     })
+        // });
         
       }else{
         this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
