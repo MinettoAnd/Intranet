@@ -1445,14 +1445,18 @@ rowData = [
         SedeF: this.id_sede,
         CheckF: 1
       }
-
+      this.loading();
       this.tableApiservice.getCeMedicosStatistics(parameters).subscribe(
         (response) =>{
           this.columnsMedicos = response.data.cabeceras;
           this.rowsMedicos = response.data.tabla_medicos_anual;
           this.tempRowsMedicos = this.rowsMedicos
-      });
-      
+          Swal.close();
+        },
+        (error) => {
+            Swal.close();
+        }
+      );
 
     }
     onActivate(event) {
