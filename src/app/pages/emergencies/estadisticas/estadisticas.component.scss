@@ -55,7 +55,7 @@
 }
 .info-box{
 clear: both;
-margin: 1rem 0;
+margin: 0.5rem 0;
 }
 // @media screen and (min-width: 1024px) {
 //     #div_panel_01_cabecera1, .info-box{
@@ -93,7 +93,7 @@ margin: 1rem 0;
           width: 100%;
   
           span {
-            color:#000;
+            // color:#000;
             // float: left;
             // font-size: 1.2rem;
           }
@@ -112,14 +112,14 @@ margin: 1rem 0;
         color: red!important;
     }
     // .ag-header-row ag-header-row-column-group
-#ausentismo:hover .div_ocultar_ptable_a{
+#estancia:hover .div_ocultar_ptable_a{
     display: block!important;
 }
-#ausentismo{
+#estancia{
     display: flex;
 }
 @media (min-width: 1024px) {
-    #ausentismo{
+    #estancia{
         max-width: 50%!important;
     }
 }

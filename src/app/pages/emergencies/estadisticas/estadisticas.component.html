@@ -99,64 +99,58 @@
                             <ng-template ngbNavContent>
                                 <div class="card atencionesConsultaExterna">
                                     <div class="card-header">
-                                      <h4 class="card-title" style="bottom:13px;">Atenciones por Consulta Externa</h4>
+                                      <h4 class="card-title" style="bottom:13px;">Atenciones por Emergencia</h4>
                                       <p>{{message}}</p> 
                                     </div>
                                     <div class="col-md-12 div_panel_cabecera">
-                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                    <div class="col-md-3 col-sm-6 col-xs-12" style="display: flex;">
                                         <div class="info-box">
-                                            <span style="background:#57AA50 !important; color:#fff !important;" class="info-box-icon">
-                                            <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+                                            <span style="background:#3c8dbc !important; color:#fff !important;" class="info-box-icon">
+                                            <i class="fa fa-users" aria-hidden="true"></i>
                                             </span>		
                                             <div class="info-box-content">
-                                            <span style="font-family:arial; font-size:15px; " class="info-box-text">REALIZADAS</span>
-                                                <span *ngIf="resumenMes.total" class="info-box-number">{{resumenMes.total}} </span>
+                                            <span style="font-family:arial; font-size:15px; " class="info-box-text">ATENCIONES</span>
+                                                <span *ngIf="resumenMes.emergencia" class="info-box-number">{{resumenMes.emergencia}} </span>
                                                 <!-- <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">Tiempo programado / 12 horas x dia
                                                 </label> -->
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-3 col-sm-6 col-xs-12" id="ausentismo">
+                                    <div class="col-md-3 col-sm-6 col-xs-12" style="display: flex;">
                                         <div class="info-box">
-                                            <span style="background: #FF3636 !important; color:#fff !important;" class="info-box-icon">			
-                                            <i class="fa fa-user-times" aria-hidden="true"></i>		</span>		
-                                            <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">AUSENTISMO</span>			<span *ngIf="resumenMes.ausentismo" class="info-box-number">{{resumenMes.ausentismo}} </span>			
-                                            <!-- <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">Tiempo de atención / 12 horas x dia
-                                                </label>		 -->
+                                            <span style="background: #f56954 !important; color:#fff !important;" class="info-box-icon">			
+                                            <i class="fa fa-street-view" aria-hidden="true"></i>		</span>		
+                                            <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">HOSPITALIZADOS</span>			<span *ngIf="resumenMes.hospitalizados" class="info-box-number">{{resumenMes.hospitalizados}} </span>			
+                                            <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">...%
+                                                </label>		
                                               </div>
                                         </div>
-                                      <div class="col-md-3 col-sm-6 col-xs-12 div_ocultar_ptable_a" style="display: none;">
-                                        <div class="info-box">
-                                          <table class="table table-bordered">
-                                              <tbody>
-                                                <tr>
-                                                    <th style="padding: 2px 4px!important; line-height: inherit; font-size: 14px!important;">Inasistencia de Paciente</th>
-                                                    <th style="padding: 2px 8px!important; line-height: inherit;"><span id="ptable_anul">{{resumenMes.paciente}}</span></th>
-                                                    <th style="width: 40px; padding: 2px 8px!important; line-height: inherit;"><span class="badge bg-blue" id="ptable_anul_por">{{porcPaciente  | number : '1.2-2' }} %</span></th>
-                                                </tr>
-                                                <tr>
-                                                    <th style="padding: 2px 4px!important; line-height: inherit; font-size: 14px!important;">Por Inasistencia Medico</th>
-                                                    <th style="padding: 2px 8px!important; line-height: inherit;"><span id="ptable_inas">{{resumenMes.medico}}</span></th>
-                                                    <th style="width: 40px; padding: 2px 8px!important; line-height: inherit;"><span class="badge bg-green" id="ptable_inas_por">{{porcMedico  | number : '1.2-2' }} %</span></th>
-                                                </tr>
-                                                <tr>
-                                                    <th style="padding: 2px 4px!important; line-height: inherit; font-size: 14px!important;">Anulacion de Cita Por Paciente</th>
-                                                    <th style="padding: 2px 8px!important; line-height: inherit;"><span id="ptable_anul_paci">{{resumenMes.anuladas}}</span></th>
-                                                    <th style="width: 40px; padding: 2px 8px!important; line-height: inherit;"><span class="badge bg-red" id="ptable_anul_paci_por">{{porcAnuladas  | number : '1.2-2' }} %</span></th>
-                                                </tr>
-                                              </tbody>
-                                          </table>
-                                        </div>
-                                      </div>
+                                      
                                     </div>
-                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                    <div class="col-md-3 col-sm-6 col-xs-12" id="estancia">
                                         <div class="info-box">
-                                            <span style="background: #63B6DE !important; color:#fff !important;" class="info-box-icon">			
-                                            <i class="fa fa-users" aria-hidden="true"></i>		</span>		
-                                            <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">RESERVADAS</span>			
-                                            <span *ngIf="resumenMes.reservadas" class="info-box-number">{{resumenMes.reservadas}}</span>			
+                                            <span style="background: #00c0ef !important; color:#fff !important;" class="info-box-icon">			
+                                            <i class="fa fa-clock-o" aria-hidden="true"></i>		</span>		
+                                            <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">ESTANCIA PROMEDIO</span>			
+                                            <span *ngIf="resumenMes.reservadas" class="info-box-number">...</span>			
                                             <!-- <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success" >Tiempo de atención / tiempo programado
                                             </label>		 -->
+                                          </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6 col-xs-12 div_ocultar_ptable_a" style="display: none;">
+                                          <div class="info-box">
+                                            <table class="table table-bordered">
+                                                <tbody>
+                                                  <tr>
+                                                      <th style="padding: 2px 4px!important; line-height: inherit; font-size: 14px!important;">Estancia Mínima</th>
+                                                      <th style="padding: 2px 8px!important; line-height: inherit;"><span id="ptable_anul">...</span></th>
+                                                  </tr>
+                                                  <tr>
+                                                      <th style="padding: 2px 4px!important; line-height: inherit; font-size: 14px!important;">Estancia Máxima</th>
+                                                      <th style="padding: 2px 8px!important; line-height: inherit;"><span id="ptable_inas">...</span></th>
+                                                  </tr>
+                                                </tbody>
+                                            </table>
                                           </div>
                                         </div>
                                     </div>
@@ -168,40 +162,71 @@
                                           <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
                                             <li class="list-group-item border-0 pl-0">
                                               <a  id="downloadlink1" href="#" 
-                                                class="btn btn-sm font-weight-bold btn-link" (click)="guardarImagen('chart-1', 'downloadlink1')" download>
+                                                class="btn btn-sm font-weight-bold btn-link" (click)="guardarImagen('chart-1', 'downloadlink1')" download *ngIf="selectedOptionGraph1 == 'ingresos_emergencia'">
+                                                <i class="fa fa-external-link"></i>
+                                                Guardar Imagen
+                                              </a>
+                                              <a  id="downloadlink1" href="#" 
+                                                class="btn btn-sm font-weight-bold btn-link" (click)="guardarImagen('chart-3', 'downloadlink1')" download *ngIf="selectedOptionGraph1 !== 'ingresos_emergencia'">
                                                 <i class="fa fa-external-link"></i>
                                                 Guardar Imagen
                                               </a>
                                             </li>
+                                            <li class="list-group-item border-0 pl-0">
+                                              <select class="form-control" style="width: auto!important; height: 2.2rem;" (change)="tipoChangeGraph($event.target.value, 'bar')" [(ngModel)]="selectedOptionGraph1">
+                                                <option value="ingresos_emergencia">Nro de Ingresos por emergencia</option>
+                                                <option value="altas_emergencia">Altas por emergencia</option>
+                                              </select>
+                                            </li>
                                           </ul>
                                           <div class="card-body">
                                             <div class="d-block" >
-                                              <canvas #baseChart id="chart-1">
+                                              <canvas #baseChart id="chart-1" *ngIf="selectedOptionGraph1 == 'ingresos_emergencia'">
+                                              </canvas>
+                                              <canvas #baseChart id="chart-3" *ngIf="selectedOptionGraph1 !== 'ingresos_emergencia'">
                                               </canvas>
                                             </div>
                                           </div>
+                                          <!-- <div class="card-body" *ngIf="selectedOptionGraph1 !== 'ingresos_emergencia'">
+                                            <div class="d-block" >
+                                              
+                                            </div>
+                                          </div> -->
                                         </div>
                                         <div class="col-md-4">
                                           <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
                                             <li class="list-group-item border-0 pl-0">
                                               <a  id="downloadlink2" href="#" 
-                                                class="btn btn-sm font-weight-bold btn-link" (click)="guardarImagen('chart-2', 'downloadlink2')" download>
+                                                class="btn btn-sm font-weight-bold btn-link" (click)="guardarImagen('chart-2', 'downloadlink2')" download *ngIf="selectedOptionGraph2 == 'ingresos_emergencia'">
+                                                <i class="fa fa-external-link"></i>
+                                                Guardar Imagen
+                                              </a>
+                                              <a  id="downloadlink2" href="#" 
+                                                class="btn btn-sm font-weight-bold btn-link" (click)="guardarImagen('chart-4', 'downloadlink2')" download *ngIf="selectedOptionGraph2 !== 'ingresos_emergencia'">
                                                 <i class="fa fa-external-link"></i>
                                                 Guardar Imagen
                                               </a>
                                             </li>
+                                            <li class="list-group-item border-0 pl-0">
+                                              <select class="form-control" style="width: auto!important;height: 2.2rem;" (change)="tipoChangeGraph($event.target.value, 'pie')" [(ngModel)]="selectedOptionGraph2">
+                                                <option value="ingresos_emergencia">Nro de Ingresos por emergencia</option>
+                                                <option value="altas_emergencia">Altas por emergencia</option>
+                                              </select>
+                                            </li>
                                           </ul>
                                           <div class="card-body">
                                             <div class="d-block" >
-                                              <canvas #baseChart id="chart-2">
+                                              <canvas #baseChart id="chart-2" *ngIf="selectedOptionGraph2 == 'ingresos_emergencia'">
+                                              </canvas>
+                                              <canvas #baseChart id="chart-4" *ngIf="selectedOptionGraph2 !== 'ingresos_emergencia'">
                                               </canvas>
                                             </div>
                                           </div>
-                                          <div class="card-body">
+                                          <div class="card-body" *ngIf="selectedOptionGraph2 == 'ingresos_emergencia'">
                                             <ngb-accordion [destroyOnHide]="false" [closeOthers]="true" #acc="ngbAccordion" activeIds="ngb-panel-0">
                                               <ngb-panel *ngFor="let percentageCompleted of progressBar1; let i = index;">
                                                 <ng-template ngbPanelTitle style="width:100%!important;">
-                                                  <span style="display:flex; justify-content: space-between;"><i><b>{{progressBarLabels[i]}}</b></i><i>{{percentageCompleted.value}} - [{{percentageCompleted.porcentaje}}] %</i></span>
+                                                  <span style="display:flex; color:#000; justify-content: space-between;"><i><b>{{progressBarLabels[i]}}</b></i><i>{{percentageCompleted.value}} - [{{percentageCompleted.porcentaje}}] %</i></span>
                                                   <ngb-progressbar
                                                       [type]="color[i]"
                                                       [value]="percentageCompleted.porcentaje"
@@ -261,7 +286,7 @@
                                         </div>
                                       </div>
                                     </div>
-                                    <div class="box-header with-border" style="margin:1rem; ">
+                                    <!-- <div class="box-header with-border" style="margin:1rem; ">
                                       <h5 class="box-title">Comparativo del mes anterior</h5>
                                     </div> 
                                     <div class="col-md-12 div_panel_cabecera">
@@ -274,8 +299,8 @@
                                                 </span>
                                                 <h5 class="description-header" >{{resumenMesAnterior.total}}</h5>
                                                 <span class="description-text">REALIZADAS</span>
-                                            </div><!-- /.description-block -->
-                                          </div><!-- /.col -->
+                                            </div>
+                                          </div>
                                           <div class="col-md-3 col-sm-6 col-xs-12">
                                             <div class="description-block border-right">
                                               <span class="description-percentage text-green" [ngClass]="{'text-red': porcCompaMesAntAusentismo < 0 }">
@@ -285,8 +310,8 @@
                                               </span>
                                                 <h5 class="description-header" >{{resumenMesAnterior.ausentismo}}</h5>
                                                 <span class="description-text">AUSENTISMO</span>
-                                            </div><!-- /.description-block -->
-                                          </div><!-- /.col -->
+                                            </div>
+                                          </div>
                                           <div class="col-md-3 col-sm-6 col-xs-12">
                                             <div class="description-block border-right">
                                               <span class="description-percentage text-green" [ngClass]="{'text-red': porcCompaMesAntReservadas < 0 }">
@@ -296,16 +321,16 @@
                                               </span>
                                                <h5 class="description-header" >{{resumenMesAnterior.reservadas}}</h5>
                                                <span class="description-text">RESERVADAS</span>
-                                            </div><!-- /.description-block -->
-                                          </div><!-- /.col -->
+                                            </div>
+                                          </div>
                                       
-                                    </div>
+                                    </div> -->
                                     <div class="box-header with-border" style="margin:1rem; ">
-                                      <h5 class="box-title">Costo por atenciones realizadas: <b> S/ {{resumenMontos.montoTotal | number : '1.2-2' }}</b>
+                                      <h5 class="box-title">Ingreso de Efectivo por Caja: <b> S/ {{resumenMontos.montoTotal | number : '1.2-2' }}</b>
                                       </h5>
                                     </div>
                                     <div class="col-md-12 div_panel_cabecera">
-                                        <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <div class="col-md-3 col-sm-6 col-xs-12" style="display: flex;">
                                            <div class="info-box">
                                               <span style="background: #63B6DE !important; color:#fff !important;" class="info-box-icon">
                                                 <i class="fa fa-credit-card" aria-hidden="true"></i>
@@ -317,16 +342,16 @@
                                               </div>
                                            </div>
                                         </div>
-                                        <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <div class="col-md-3 col-sm-6 col-xs-12" style="display: flex;">
                                            <div class="info-box">
                                               <span style="background: #DD4B39!important; color:#fff !important;" class="info-box-icon">			
                                                 <i class="fa fa-hospital-o" aria-hidden="true"></i>		</span>		
-                                              <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">PROGRAMAS DE SALUD</span>			
+                                              <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">INSTITUCIONAL Y PRIVADO</span>			
                                                 <span *ngIf="resumenMontos.instipriva" class="info-box-number"><b _ngcontent-xkc-c219=""> S/ </b>{{resumenMontos.instipriva  }}</span>			
                                                 	</div>
                                            </div>
                                         </div>
-                                        <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <div class="col-md-3 col-sm-6 col-xs-12" style="display: flex;">
                                            <div class="info-box">
                                               <span style="background: #57AA50 !important; color:#fff !important;" class="info-box-icon">			
                                                 <i class="fa fa-hospital-o" aria-hidden="true"></i>		</span>		
@@ -337,11 +362,11 @@
                                                 </div>
                                            </div>
                                         </div>
-                                        <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <div class="col-md-3 col-sm-6 col-xs-12" style="display: flex;">
                                           <div class="info-box">
                                              <span style="background: #F39C12!important; color:#fff !important;" class="info-box-icon">			
                                                <i class="fa fa-wheelchair" aria-hidden="true"></i>		</span>		
-                                             <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">OTROS</span>			<span *ngIf="resumenMontos.otros" class="info-box-number"> S/ {{resumenMontos.otros | number : '1.2-2' }}</span>			
+                                             <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">OTROS</span>			<span *ngIf="resumenMontos.Otros" class="info-box-number"> S/ {{resumenMontos.Otros | number : '1.2-2' }}</span>			
                                               </div>
                                           </div>
                                        </div>
@@ -350,18 +375,20 @@
                                     <div class="box-header with-border" style="margin:1rem; ">
                                       <div class="box-footer">
                                         <p>* Información existente desde Enero 2019</p>
-                                        <p>* Costo por atenciones realizadas NO incluye IGV - (Pago de pacientes + Facturado a Empresas)</p>
+                                        <p>* Estancia promedio NO considera pacientes que se hospitalizaron</p>
+                                        <p>* Ingreso Total por Caja incluye IGV - No Incluye Cobro Facturado a Empresas</p>
+                                        <p>*  Fuente ERP SPRING Salud</p>
                                       </div>
                                     </div>
                                 </div>
                             </ng-template>
                         </li>
                         <li [ngbNavItem]="2">
-                            <a ngbNavLink>Anual</a>
+                            <a ngbNavLink>Mensual</a>
                             <ng-template ngbNavContent>
                                 <div class="card">
                                     <div class="card-header">
-                                      <h4 class="card-title" style="bottom:13px;">Atenciones por Consulta Externa</h4>
+                                      <h4 class="card-title" style="bottom:13px;">Atenciones por Emergencia</h4>
                                       <p>{{message}}</p>
                                     </div>
                                     <div class="card-content collapse show">
@@ -443,11 +470,10 @@
                                                     [rows]="rows1filtered"
                                                     [columnMode]="ColumnMode.flex"
                                                     [headerHeight]="50"
-                                                    [footerHeight]="65"
                                                     [rowHeight]="$any('auto')"
                                                     [scrollbarH]="true"
                                                     (page)="setPage($event)"
-                                                    [rowClass]="getRowClass"
+                                                    [rowClass]="getRowClass1"
                                                     >
                                                     <ngx-datatable-column [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns1; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
@@ -524,10 +550,10 @@
                                                     [rows]="rows2"
                                                     [columnMode]="ColumnMode.flex"
                                                     [headerHeight]="50"
-                                                    [footerHeight]="65"
                                                     [rowHeight]="$any('auto')"
                                                     [scrollbarH]="true"
                                                     (page)="setPage($event)"
+                                                    [rowClass] = "getRowClass2"
                                                     >
                                                     <ngx-datatable-column [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns2; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
@@ -615,15 +641,24 @@
                                                   class="bootstrap table table-striped"
                                                   id="datatablele"
                                                     [columns]="columns3"
-                                                    [rows]="rows3filtered"
+                                                    [rows]="rowsT1"
                                                     [columnMode]="ColumnMode.flex"
                                                     [headerHeight]="50"
                                                     [footerHeight]="65"
                                                     [rowHeight]="$any('auto')"
                                                     [scrollbarH]="true"
-                                                    [limit]="page1.size"
+                                                    [summaryRow]="enableSummary"
+                                                    [summaryPosition]="summaryPosition"
+                                                    [summaryHeight]="55"
+                                                    [externalPaging]="true"
+                                                    [externalSorting]="true"
+                                                    [count]="totalElements1"
+                                                    [offset]="pageNumber1"
+                                                    (page)="setPage1($event)"
                                                     >
-                                                    <ngx-datatable-column [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns3; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                                    <ngx-datatable-column [flexGrow]="1"
+                                                    [summaryFunc]="column.prop == 'EmpresaAseguradoraNombre' || column.prop == 'GRUPOEM' || column.prop == 'TipoPacienteNombre' || column.prop == 'idEmpresa' ? summaryNull:summaryForAmount"
+                                                    [minWidth]="90" *ngFor="let column of columns3; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                                         let-row="row">
                                                         <div>
@@ -707,15 +742,24 @@
                                                   class="bootstrap table table-striped"
                                                   id="datatablele"
                                                     [columns]="columns4"
-                                                    [rows]="rows4"
+                                                    [rows]="rowsT2"
                                                     [columnMode]="ColumnMode.flex"
                                                     [headerHeight]="40"
                                                     [footerHeight]="65"
                                                     [rowHeight]="$any('auto')"
                                                     [scrollbarH]="true"
-                                                    [limit]="page2.size"
+                                                    [summaryRow]="enableSummary"
+                                                    [summaryPosition]="summaryPosition"
+                                                    [summaryHeight]="55"
+                                                    [externalPaging]="true"
+                                                    [externalSorting]="true"
+                                                    [count]="totalElements2"
+                                                    [offset]="pageNumber2"
+                                                    (page)="setPage2($event)"
                                                     >
-                                                    <ngx-datatable-column [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns4; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                                    <ngx-datatable-column [flexGrow]="1" 
+                                                    [summaryFunc]="column.prop == 'EmpresaAseguradoraNombre' || column.prop == 'GRUPOEM' || column.prop == 'TipoPacienteNombre' || column.prop == 'idEmpresa' ? summaryNull:summaryForAmount"
+                                                    [minWidth]="90" *ngFor="let column of columns4; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                                         let-row="row">
                                                         <div>
@@ -798,19 +842,28 @@
                                                   class="bootstrap table table-striped"
                                                   id="datatablele"
                                                     [columns]="columns5"
-                                                    [rows]="rows5"
+                                                    [rows]="rowsT3"
                                                     [columnMode]="ColumnMode.flex"
                                                     [headerHeight]="50"
                                                     [footerHeight]="65"
                                                     [rowHeight]="$any('auto')"
                                                     [scrollbarH]="true"
-                                                    [limit]="page3.size"
+                                                    [summaryRow]="enableSummary"
+                                                    [summaryPosition]="summaryPosition"
+                                                    [summaryHeight]="55"
+                                                    [externalPaging]="true"
+                                                    [externalSorting]="true"
+                                                    [count]="totalElements3"
+                                                    [offset]="pageNumber3"
+                                                    (page)="setPage3($event)"
                                                     [selected]="selected"
                                                     [selectionType]="SelectionType.single"
                                                     (activate)="onActivate($event)"
                                                     (select)='onSelect($event)'
                                                     >
-                                                    <ngx-datatable-column [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns5; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                                    <ngx-datatable-column [flexGrow]="1" 
+                                                    [summaryFunc]="column.prop == 'EmpresaAseguradoraNombre' || column.prop == 'GRUPOEM' || column.prop == 'TipoPacienteNombre' || column.prop == 'idEmpresa' ? summaryNull:summaryForAmount"
+                                                    [minWidth]="90" *ngFor="let column of columns5; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                                         let-row="row">
                                                         <div>
@@ -932,11 +985,11 @@
                             </ng-template>
                         </li>
                         <li [ngbNavItem]="3">
-                            <a ngbNavLink>Inasistencia Médica</a>
+                            <a ngbNavLink>Anual</a>
                             <ng-template ngbNavContent>
                                 <div class="card">
                                     <div class="card-header">
-                                      <h4 class="card-title" style="bottom:13px;">Atenciones por Consulta Externa</h4>
+                                      <h4 class="card-title" style="bottom:13px;">Atenciones por Emergencia</h4>
                                       <p>{{message}}</p>
                                     </div>
                                     <div class="card-content collapse show">
@@ -965,7 +1018,7 @@
                                                   <div class="box-header">
                                                     <div class="toggle-table">
                                                       <div class="callout callout-info">
-                                                        <h3 class="box-title">RESUMEN DE INASISTENCIA DE MEDICOS DEL MES</h3>
+                                                        <h3 class="box-title"></h3>
                                                       </div>
                                                       <button type="button" class="btn btn-outline-primary" (click)="collapse6.toggle()" [attr.aria-expanded]="!isCollapsed6"
                                                       aria-controls="collapseExample">
@@ -993,6 +1046,10 @@
                                                       </li>
                                                     </ul>
                                                     <div style="display:flex;align-items: center; justify-content:flex-end">
+                                                      <select class="form-control form-select" style="width: auto!important;" (change)="tipoChange($event.target.value, 'pacientesAnual')" [(ngModel)]="selectedOptionTipo3">
+                                                        <option value="cantidad">Cantidad</option>
+                                                        <option value="soles">Soles</option>
+                                                      </select>
                                                         <!-- <select formControlName="especialidadNombre" class="form-control form-select" (change)="especialityChange($event.target.value)" style="width:auto!important;" [(ngModel)]="selectedOption" >
                                                           <option [value]="selectedOption" selected>{{selectedOption}}</option>
                                                         <option 
@@ -1012,7 +1069,7 @@
                                                   class="bootstrap table table-striped"
                                                   id="datatablele"
                                                     [columns]="columns6"
-                                                    [rows]="rows6"
+                                                    [rows]="rows6filtered"
                                                     [columnMode]="ColumnMode.flex"
                                                     [headerHeight]="50"
                                                     [rowHeight]="$any('auto')"
@@ -1021,6 +1078,7 @@
                                                     [selected]="selected"
                                                     [selectionType]="SelectionType.single"
                                                     (select)='open($event)'
+                                                    [rowClass] = "getRowClass1"
                                                     >
                                                     <ngx-datatable-column [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns6; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
@@ -1082,35 +1140,12 @@
                                                   </ng-template>
                                                 </div>
                                               </div>
-                                            </div>                       
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                </div>
-                            </ng-template>
-                        </li>
-                        <!-- <li [ngbNavItem]="4">
-                            <a ngbNavLink>Indicadores</a>
-                            <ng-template ngbNavContent>
-                                <div class="card">
-                                    <div class="card-header">
-                                      <h4 class="card-title" style="bottom:13px;">Atenciones por Consulta Externa</h4>
-                                      <p>{{message}}</p>
-                                    </div>
-                                    <div class="card-content collapse show">
-                                      <div class="card-body">
-                                      
-                                        <div class="table table-striped table-bordered selection-deletion-row">
-                                          
-                                          <div class="box box-solid">
-                                            <div id="accordion3">
                                               <div class="card">
                                                 <div class="card-header" >
                                                   <div class="box-header">
                                                     <div class="toggle-table">
                                                       <div class="callout callout-info">
-                                                        <h3 class="box-title">INDICADORES</h3>
+                                                        <h3 class="box-title"></h3>
                                                       </div>
                                                       <button type="button" class="btn btn-outline-primary" (click)="collapse7.toggle()" [attr.aria-expanded]="!isCollapsed7"
                                                       aria-controls="collapseExample">
@@ -1148,7 +1183,7 @@
                                                     [rowHeight]="$any('auto')"
                                                     [scrollbarH]="true"
                                                     (page)="setPage($event)"
-                                                    [rowClass]="getRowClass1"
+                                                    [rowClass] = "getRowClass2"
                                                     >
                                                     <ngx-datatable-column [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns7; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
@@ -1168,8 +1203,9 @@
                                       </div>
                                     </div>
                                 </div>
+                                
                             </ng-template>
-                        </li> -->
+                        </li>
                     </ul>
                     <div [ngbNavOutlet]="nav" class="mt-2"></div>
                 </div>
