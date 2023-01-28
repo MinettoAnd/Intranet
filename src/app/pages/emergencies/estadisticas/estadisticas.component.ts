@@ -1,4 +1,4 @@
-import { map } from 'rxjs/operators';
+import { delay, map } from 'rxjs/operators';
 import { Component, ElementRef, OnInit, PipeTransform, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { NgBlockUI, BlockUI } from 'ng-block-ui';
@@ -20,6 +20,9 @@ import ResizeObserver from 'resize-observer-polyfill';
 import {GridOptions} from "ag-grid-community";
 import { AgGridAngular } from "ag-grid-angular";
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { PagedData } from '../../../models/forms-data/paged-data';
 interface PageInfo {
   offset: number;
   pageSize: number;
@@ -40,15 +43,16 @@ export class EstadisticasComponent implements OnInit {
     content: ElementRef
   ) {
     if (content) {
+      
       // initially setter gets called with undefined
       this.baseChart = content;
-      this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del mes seleccionado', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
-      this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'pie');
-      // this.getBarChart(this.chartLabels, this.chartData3, this.chartData4, 'chart-2', 'MENSUAL-INGRESO CON IGV - TOTAL CUOTAS', 'MENSUAL-INGRESO CON IGV - TOTAL RECAUDADO', 'bar');
-      // this.getBarChart(this.chartLabels2, this.chartData5, this.chartData6, 'chart-3', 'MENSUAL-NÚMERO DE CONTRATOS PAGADOS-TOTAL CUOTAS', 'MENSUAL-NÚMERO DE CONTRATOS PAGADOS-TOTAL RECAUDADO', 'bar');
-      // this.getBarChart(this.chartLabels3, this.chartData7, this.chartData8, 'chart-4', 'ANUAL-INGRESO SIN IGV - TOTAL CUOTAS', 'ANUAL-INGRESO SIN IGV - TOTAL RECAUDADO', 'bar');
-      // this.getBarChart(this.chartLabels3, this.chartData9, this.chartData10, 'chart-5', 'ANUAL-INGRESO CON IGV - TOTAL CUOTAS', 'ANUAL-INGRESO CON IGV - TOTAL RECAUDADO', 'bar');
-      // this.getBarChart(this.chartLabels4, this.chartData11, this.chartData12, 'chart-6', 'ANUAL-NÚMERO DE CONTRATOS PAGADOS - TOTAL CUOTAS', 'ANUAL-NÚMERO DE CONTRATOS PAGADOS - TOTAL RECAUDADO', 'bar');
+      if (this.baseChart.nativeElement.id === 'chart-1'){
+        this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del mes seleccionado', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
+         this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'pie');
+      }else if (this.baseChart.nativeElement.id === 'chart-3'){
+        this.getBarChart(this.chartLabels3, this.chartData4, this.chartData5,'Día del mes seleccionado', 'N° Pacientes','chart-3', 'C.E Reservada', 'C.E Realizada', 'bar');
+        this.getPieChart(this.chartLabels4, this.chartData6,'chart-4', 'pie');
+      }
     }
   }
   enableSummary = true;
@@ -99,10 +103,14 @@ export class EstadisticasComponent implements OnInit {
 
   public chartLabels1 = [];
   public chartLabels2 = [];
-
+  public chartLabels3 = [];
+  public chartLabels4 = [];
   public chartData1 = [];
   public chartData2 = [];
   public chartData3 = [];
+  public chartData4 = [];
+  public chartData5 = [];
+  public chartData6 = [];
   selectedOptionTipo='cantidad';
   selectedOptionTipo2='cantidad';
   selectedOptionTipo3='cantidad';
@@ -153,10 +161,14 @@ export class EstadisticasComponent implements OnInit {
     montoTotal: '',
   };
   private rowClassRules;
+  rowsT1: any[];
+  rowsT2: any[];
+  rowsT3: any[];
   columns1: any;
   rows1: any;
   rows1filtered: any;
-  rows3filtered: any;
+  rows3filtered1: any;
+  rows3filtered2: any;
   rows6filtered: any;
   columns2: any[];
   rows2: any[];
@@ -372,13 +384,23 @@ rowData = [
   "total": 6
   },
 ]
-totalElements: number;
-pageNumber: number;
+totalElements1: number;
+pageNumber1: number;
+totalElements2: number;
+pageNumber2: number;
+totalElements3: number;
+pageNumber3: number;
 cache: any = {};
 isLoad = 0;
+isLoading = 0;
+selectedOptionGraph1 = 'ingresos_emergencia';
+selectedOptionGraph2 = 'ingresos_emergencia';
   constructor(private tableApiservice: EmergenciesService, private exportService: ExportService,
     private _cp: CurrencyPipe, private modalService: NgbModal) { 
-      this.pageNumber = 0;
+      this.pageNumber1 = 0;
+      this.pageNumber2 = 0;
+      this.pageNumber3 = 0;
+
       this.page1.pageNumber = 0;
       this.page1.size = 10;
       this.page2.pageNumber = 0;
@@ -420,6 +442,7 @@ isLoad = 0;
       this.periodo_consulta = form.anio + form.mes,
 
     this.setPage({ offset: 0 });
+    
 }
   async loading() {
     Swal.fire({
@@ -740,25 +763,23 @@ isLoad = 0;
       'cell-red': Number(value) < 0
     };
   }
-  getRowClass(row) {
-    
-    // if (row.item.includes('COLECTIVA')){
-    //   return {'totals': row.item.includes('TOTAL') || row.item.includes('COLECTIVA') }
-    // }
-    return {
-      'totals': row.GRUPO2.includes('TOTAL'), 'sub-totals': row.GRUPO2 === 'PROGRAMA DE SALUD' || row.GRUPO2 === 'CONVENIOS' || row.GRUPO2 ==='SEGUROS' || row.GRUPO2 ==='OTROS'
-    };
-  }
   getRowClass1(row) {
+    // console.log(751, row);
+   
+    return {
+      'totals': row.GRUPO2.includes('Total')
+    };
+  }
+  getRowClass2(row) {
     
     // if (row.item.includes('COLECTIVA')){
     //   return {'totals': row.item.includes('TOTAL') || row.item.includes('COLECTIVA') }
     // }
     return {
-      'sub-totals': row.condicion.includes('AUSENTISMO') || row.condicion.includes('REPROGRAMACIONES') || row.condicion === 'TURNOS POR INASISTENCIA MEDICA'
+      'totals': row.RANGO.includes('Total')
     };
   }
-  getRowClass3(row) {
+  getRowClass7(row) {
     
     // if (row.item.includes('COLECTIVA')){
     //   return {'totals': row.item.includes('TOTAL') || row.item.includes('COLECTIVA') }
@@ -774,7 +795,22 @@ isLoad = 0;
       };
     } 
   }
+  getRowClass8(row) {
+    
+    // if (row.item.includes('COLECTIVA')){
+    //   return {'totals': row.item.includes('TOTAL') || row.item.includes('COLECTIVA') }
+    // }
 
+    if (row.sucursal !== undefined){
+      return {
+        'totals': row.sucursal.includes('TOTAL')
+      };
+    }else if (row.grupo !== undefined ){
+      return {
+        'totals': row.grupo.includes('TOTAL')
+      };
+    } 
+  }
   tipoChange(event, tabla){
     console.log(751, event);
     const input = event;
@@ -798,10 +834,30 @@ isLoad = 0;
         this.rows1filtered = this.rows1.filter(item =>item.GRUPO3 === 'SOLES');
        }
     } else if (tabla === 'empresas'){
+      // console.log(836, input);
+      // this.setPage1({
+      //   offset: 0,
+      //   pageSize: 0,
+      //   limit: 0,
+      //   count: 0
+      // }, input);
+
       if (input === 'cantidad') {
-        this.rows3filtered = this.rows3.filter(item => item.GRUPOEM === 'CANTIDAD');
+        this.rows3filtered1 = this.rows3.filter(item =>item.GRUPOEM === 'CANTIDAD');
+        this.setPage1({
+          offset: 0,
+          pageSize: 0,
+          limit: 10,
+          count: 0
+        }, this.selectedOptionTipo2);
        } else if (input === 'soles'){
-        this.rows3filtered = this.rows3.filter(item =>item.GRUPOEM === 'SOLES');
+        this.rows3filtered2 = this.rows3.filter(item =>item.GRUPOEM === 'SOLES');
+        this.setPage1({
+          offset: 0,
+          pageSize: 0,
+          limit: 10,
+          count: 0
+        }, this.selectedOptionTipo2);
        }
     }else{
       // const lenght2 = this.rows6.length;
@@ -820,6 +876,126 @@ isLoad = 0;
        }
     }
     
+  }
+  tipoChangeGraph(event, graph){
+console.log(827, this.selectedOptionGraph1);
+this.loading();
+    this.parameters = {
+      // periodo_consulta:this.periodo_consulta,
+      sede: this.id_sede,
+      mes: this.mes,
+      // meses: this.mes,
+      anio: this.anio,
+      chkena: 'on',
+      typepie: 'IN',
+      tipo: 'INGR',
+      // page: 1,
+      // start: 0,
+      // limit: 50
+      // pageNumber: this.page.pageNumber,
+      // size: this.page.size
+    };
+    const input = event;
+    if (graph === 'bar'){
+      // const lenght1 = this.rows1.length;
+      if (input === 'ingresos_emergencia') {
+          this.tableApiservice.getEmChartIndex(this.parameters).subscribe(
+            (response) => {  
+      
+                this.chartLabels1 = [];
+                this.chartData1 = [];   
+                this.chartData2 = [];
+
+                // this.chartData4 = [];   
+                // this.chartData5 = [];   
+              if(response.success){
+                
+                response.data.data.map(item =>{
+                  this.chartLabels1.push(item.dia);
+                  this.chartData1.push(item.cantidad);
+                  this.chartData2.push(item.procedencia);
+                });
+                // this.resumenMontos = response.data;
+                
+              }
+              this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del mes seleccionado', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
+              Swal.close();
+            },
+            (error) => {
+                Swal.close();
+            }
+          );
+       } else if (input === 'altas_emergencia'){
+          this.parameters.tipo= 'ALTA';
+          this.tableApiservice.getEmChartIndex(this.parameters).subscribe(
+            (response) => {  
+      
+                this.chartLabels3 = [];   
+                this.chartData4 = [];
+                this.chartData5 = [];    
+              if(response.success){
+                
+                response.data.data.map(item =>{
+                  this.chartLabels3.push(item.dia);
+                  this.chartData4.push(item.cantidad);
+                  this.chartData5.push(item.procedencia);
+                });
+                // this.resumenMontos = response.data;
+                
+              }
+              this.getBarChart(this.chartLabels3, this.chartData4, this.chartData5,'Día del mes seleccionado', 'N° Pacientes','chart-3', 'C.E Reservada', 'C.E Realizada', 'bar');
+              Swal.close();
+            },
+            (error) => {
+                Swal.close();
+            }
+          );
+       }
+    } else if (graph === 'pie'){
+      if (input === 'ingresos_emergencia') {
+        this.tableApiservice.getEmPieIndex(this.parameters).subscribe(
+          (response) => { 
+            if(response.success){
+              this.chartLabels2 = [];
+              this.chartData3 = [];    
+            if(response.success){
+              response.data.data.map(item =>{
+                this.chartLabels2.push(item.grupo);
+                this.chartData3.push(item.cantidad);
+              });
+            }
+            this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'pie');
+            }
+            Swal.close();
+          },
+          (error) => {
+              Swal.close();
+          }
+        );
+      } else if (input === 'altas_emergencia'){
+        this.parameters.tipo= 'ALTA';
+        this.tableApiservice.getEmPieIndex(this.parameters).subscribe(
+          (response) => { 
+            if(response.success){
+              this.chartLabels4 = [];
+              this.chartData6 = [];    
+            if(response.success){
+              
+              response.data.data.map(item =>{
+                this.chartLabels4.push(item.grupo);
+                this.chartData6.push(item.cantidad);
+              });
+            }
+            this.getPieChart(this.chartLabels4, this.chartData6,'chart-4', 'pie');
+            }
+            Swal.close();
+          },
+          (error) => {
+              Swal.close();
+          }
+        );
+      }
+    }
   }
   getChart(context, chartType, data, options?) {
     const graph = new Chart(context, {
@@ -863,25 +1039,25 @@ isLoad = 0;
           return item.mEsp, item.mGas, item.mUti, item.porcUtilidad, item.cantidad, item.montoPaciente, item.montoSeguro, item.montoEsperado, item.montoPlanilla, item.montoSuministro, item.montoHonorarios, item.montoGastos, item.montoUtilidad
     });
   }
-  formatPipe(rows1) {
+formatPipe(rows1) {
     // console.log(rows1);
     // const editRowslPipe = ((rows1) =>{
   rows1.map(item => {
         
         if (item.GRUPO3 === 'SOLES' || item.GRUPOEM === 'SOLES' ){
-          item.MES2 = typeof item.MES2 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES2.tofixed(2) ):  'S/. ' + this.separadorDeMiles(Number(item.MES2).toFixed(2));
-          item.MES1 = typeof item.MES1 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES1.tofixed(2) ):  'S/. ' + this.separadorDeMiles(Number(item.MES1).toFixed(2));
-          item.MES3 = typeof item.MES3 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES3.tofixed(2) ):  'S/. ' + this.separadorDeMiles(Number(item.MES3).toFixed(2));
-          item.MES4 = typeof item.MES4 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES4.tofixed(2) ):  'S/. ' + this.separadorDeMiles(Number(item.MES4).toFixed(2));
-          item.MES5 = typeof item.MES5 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES5.tofixed(2) ):  'S/. ' + this.separadorDeMiles(Number(item.MES5).toFixed(2));
-          item.MES6 = typeof item.MES6 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES6.tofixed(2) ):  'S/. ' + this.separadorDeMiles(Number(item.MES6).toFixed(2));
-          item.MES7 = typeof item.MES7 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES7.tofixed(2) ):  'S/. ' + this.separadorDeMiles(Number(item.MES7).toFixed(2));
-          item.MES8 = typeof item.MES8 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES8.tofixed(2) ):  'S/. ' + this.separadorDeMiles(Number(item.MES8).toFixed(2));
-          item.MES9 = typeof item.MES9 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES9.tofixed(2) ):  'S/. ' + this.separadorDeMiles(Number(item.MES9).toFixed(2));
-          item.MES10 = typeof item.MES10 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES10.tofixed(2))  :'S/. ' + this.separadorDeMiles(Number(item.MES10).toFixed(2));
-          item.MES11 = typeof item.MES11 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES11.tofixed(2))  :'S/. ' + this.separadorDeMiles(Number(item.MES11).toFixed(2));
-          item.MES12 = typeof item.MES12 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES12.tofixed(2))  :'S/. ' + this.separadorDeMiles(Number(item.MES12).toFixed(2));
-          item.TOTAL = typeof item.TOTAL === 'number' ? 'S/. ' + this.separadorDeMiles(item.TOTAL.tofixed(2))  :'S/. ' + this.separadorDeMiles(Number(item.TOTAL).toFixed(2));
+          item.MES1 = typeof item.MES1 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES1.toFixed(2) ):  'S/. ' + this.separadorDeMiles(Number(item.MES1).toFixed(2));
+          item.MES2 = typeof item.MES2 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES2.toFixed(2) ):  'S/. ' + this.separadorDeMiles(Number(item.MES2).toFixed(2));
+          item.MES3 = typeof item.MES3 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES3.toFixed(2) ):  'S/. ' + this.separadorDeMiles(Number(item.MES3).toFixed(2));
+          item.MES4 = typeof item.MES4 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES4.toFixed(2) ):  'S/. ' + this.separadorDeMiles(Number(item.MES4).toFixed(2));
+          item.MES5 = typeof item.MES5 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES5.toFixed(2) ):  'S/. ' + this.separadorDeMiles(Number(item.MES5).toFixed(2));
+          item.MES6 = typeof item.MES6 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES6.toFixed(2) ):  'S/. ' + this.separadorDeMiles(Number(item.MES6).toFixed(2));
+          item.MES7 = typeof item.MES7 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES7.toFixed(2) ):  'S/. ' + this.separadorDeMiles(Number(item.MES7).toFixed(2));
+          item.MES8 = typeof item.MES8 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES8.toFixed(2) ):  'S/. ' + this.separadorDeMiles(Number(item.MES8).toFixed(2));
+          item.MES9 = typeof item.MES9 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES9.toFixed(2) ):  'S/. ' + this.separadorDeMiles(Number(item.MES9).toFixed(2));
+          item.MES10 = typeof item.MES10 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES10.toFixed(2))  :'S/. ' + this.separadorDeMiles(Number(item.MES10).toFixed(2));
+          item.MES11 = typeof item.MES11 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES11.toFixed(2))  :'S/. ' + this.separadorDeMiles(Number(item.MES11).toFixed(2));
+          item.MES12 = typeof item.MES12 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES12.toFixed(2))  :'S/. ' + this.separadorDeMiles(Number(item.MES12).toFixed(2));
+          item.TOTAL = typeof item.TOTAL === 'number' ? 'S/. ' + this.separadorDeMiles(item.TOTAL.toFixed(2))  :'S/. ' + this.separadorDeMiles(Number(item.TOTAL).toFixed(2));
         }else{
           item.MES1 = typeof item.MES1 === 'number' ? this.separadorDeMiles(Math.round(item.MES1)) : this.separadorDeMiles(Math.round(Number(item.MES1)));
           item.MES2 = typeof item.MES2 === 'number' ? this.separadorDeMiles(Math.round(item.MES2)) : this.separadorDeMiles(Math.round(Number(item.MES2)));
@@ -902,18 +1078,159 @@ isLoad = 0;
     // console.log(rows1);
   // });
 }
+formatPipe3(rows1) {
+  // console.log(rows1);
+  // const editRowslPipe = ((rows1) =>{
+rows1.map(item => {
+      
+      if (item.GRUPO3 === 'SOLES' || item.GRUPOEM === 'SOLES' ){
+        item.PER1 = typeof item.PER1 === 'number' ? 'S/. ' + this.separadorDeMiles(item.PER1.toFixed(2) ) :  'S/. ' + this.separadorDeMiles(Number(item.PER1).toFixed(2));
+        item.PER2 = typeof item.PER2 === 'number' ? 'S/. ' + this.separadorDeMiles(item.PER2.toFixed(2) ) :  'S/. ' + this.separadorDeMiles(Number(item.PER2).toFixed(2));
+        item.PER3 = typeof item.PER3 === 'number' ? 'S/. ' + this.separadorDeMiles(item.PER3.toFixed(2) ) :  'S/. ' + this.separadorDeMiles(Number(item.PER3).toFixed(2));
+        item.PER4 = typeof item.PER4 === 'number' ? 'S/. ' + this.separadorDeMiles(item.PER4.toFixed(2) ) :  'S/. ' + this.separadorDeMiles(Number(item.PER4).toFixed(2));
+        item.PER5 = typeof item.PER5 === 'number' ? 'S/. ' + this.separadorDeMiles(item.PER5.toFixed(2) ) :  'S/. ' + this.separadorDeMiles(Number(item.PER5).toFixed(2));
+        item.PER6 = typeof item.PER6 === 'number' ? 'S/. ' + this.separadorDeMiles(item.PER6.toFixed(2) ) :  'S/. ' + this.separadorDeMiles(Number(item.MES6).toFixed(2));
+        item.PER7 = typeof item.PER7 === 'number' ? 'S/. ' + this.separadorDeMiles(item.PER7.toFixed(2) ) :  'S/. ' + this.separadorDeMiles(Number(item.PER7).toFixed(2));
+        item.PER8 = typeof item.PER8 === 'number' ? 'S/. ' + this.separadorDeMiles(item.PER8.toFixed(2) ) :  'S/. ' + this.separadorDeMiles(Number(item.PER8).toFixed(2));
+        item.PER9 = typeof item.PER9 === 'number' ? 'S/. ' + this.separadorDeMiles(item.PER9.toFixed(2) ) :  'S/. ' + this.separadorDeMiles(Number(item.PER9).toFixed(2));
+        item.PER10 = typeof item.PER10 === 'number' ? 'S/. ' + this.separadorDeMiles(item.PER10.toFixed(2))  :'S/. ' + this.separadorDeMiles(Number(item.PER10).toFixed(2));
+        item.PER11 = typeof item.PER11 === 'number' ? 'S/. ' + this.separadorDeMiles(item.PER11.toFixed(2))  :'S/. ' + this.separadorDeMiles(Number(item.PER11).toFixed(2));
+        item.PER12 = typeof item.PER12 === 'number' ? 'S/. ' + this.separadorDeMiles(item.PER12.toFixed(2))  :'S/. ' + this.separadorDeMiles(Number(item.PER12).toFixed(2));
+        item.TOTAL = typeof item.TOTAL === 'number' ? 'S/. ' + (item.TOTAL.toFixed(2))  :'S/. ' + this.separadorDeMiles(Number(item.TOTAL).toFixed(2));
+      }else{
+        item.PER1 = typeof item.PER1 === 'number' ? this.separadorDeMiles(Math.round(item.PER1)) : this.separadorDeMiles(Math.round(Number(item.PER1)));
+        item.PER2 = typeof item.PER2 === 'number' ? this.separadorDeMiles(Math.round(item.PER2)) : this.separadorDeMiles(Math.round(Number(item.PER2)));
+        item.PER3 = typeof item.PER3 === 'number' ? this.separadorDeMiles(Math.round(item.PER3)) : this.separadorDeMiles(Math.round(Number(item.PER3)));
+        item.PER4 = typeof item.PER4 === 'number' ? this.separadorDeMiles(Math.round(item.PER4)) : this.separadorDeMiles(Math.round(Number(item.PER4)));
+        item.PER5 = typeof item.PER5 === 'number' ? this.separadorDeMiles(Math.round(item.PER5)) : this.separadorDeMiles(Math.round(Number(item.PER5)));
+        item.PER6 = typeof item.PER6 === 'number' ? this.separadorDeMiles(Math.round(item.PER6)) : this.separadorDeMiles(Math.round(Number(item.PER6)));
+        item.PER7 = typeof item.PER7 === 'number' ? this.separadorDeMiles(Math.round(item.PER7)) : this.separadorDeMiles(Math.round(Number(item.PER7)));
+        item.PER8 = typeof item.PER8 === 'number' ? this.separadorDeMiles(Math.round(item.PER8)) : this.separadorDeMiles(Math.round(Number(item.PER8)));
+        item.PER9 = typeof item.PER9 === 'number' ? this.separadorDeMiles(Math.round(item.PER9)) : this.separadorDeMiles(Math.round(Number(item.PER9)));
+        item.PER10 = typeof item.PER10 === 'number' ? this.separadorDeMiles(Math.round(item.PER10)) : this.separadorDeMiles(Math.round(Number(item.PER10)));
+        item.PER11 = typeof item.PER11 === 'number' ? this.separadorDeMiles(Math.round(item.PER11)) : this.separadorDeMiles(Math.round(Number(item.PER11)));
+        item.PER12 = typeof item.PER12 === 'number' ? this.separadorDeMiles(Math.round(item.PER12)) : this.separadorDeMiles(Math.round(Number(item.PER12)));
+        item.TOTAL = typeof item.TOTAL === 'number' ?  this.separadorDeMiles(Math.round(item.TOTAL)) : this.separadorDeMiles(Math.round(Number(item.TOTAL)));
+      }
+      return item.PER1,item.PER2,item.PER3,item.PER4,item.PER5,item.PER6,item.PER7,item.PER8,item.PER9,item.PER10,item.PER11,item.PER12, item.TOTAL;
+    });
+  // console.log(rows1);
+// });
+}
+setPage1(pageInfo: PageInfo, dataN='cantidad') {
+this.pageNumber1 = pageInfo.offset;
+const rowOffset = pageInfo.offset * pageInfo.pageSize;
+this.page1.pageNumber = Math.floor(rowOffset / this.page1.size);
+      if (this.selectedOptionTipo2 === 'cantidad'){
+        // this.isLoading++;
+        this.getResults(this.page1, this.rows3filtered1).subscribe(pagedData => {
+              this.totalElements1 = pagedData.page.totalElements;
+              this.rowsT1 = pagedData.data;
+              // this.isLoading--;
+            });
+      }else if(this.selectedOptionTipo2 === 'soles'){
+        const rowOffset = pageInfo.offset * pageInfo.pageSize;
+        this.page1.pageNumber = Math.floor(rowOffset / this.page1.size);
+
+        this.getResults(this.page1, this.rows3filtered2).subscribe(pagedData => {
+          this.totalElements1 = pagedData.page.totalElements;
+          this.rowsT1 = pagedData.data;
+          // this.isLoad--;
+        });
+      }
+}
+// setPage1(pageInfo: PageInfo, dataN='cantidad') {
+//   this.pageNumber1 = pageInfo.offset;
+//   var rowOffset = pageInfo.offset * pageInfo.pageSize;
+
+//   this.page1.pageNumber = Math.floor(rowOffset / this.page1.size);
+  
+//   if (this.cache[this.page1.pageNumber-1]) {
+//     console.log(1153, this.cache, this.page1.pageNumber);
+//     rowOffset = 0;
+//     // return;
+//   }
+ 
+//   this.isLoading++;
+//   this.getResults1(this.page1, this.rows3filtered1).subscribe(pagedData => {
+//     this.totalElements1 = pagedData.page.totalElements;
+//     this.rowsT1 = pagedData.data;
+//     this.isLoading--;
+//     this.cache[this.page1.pageNumber] = true;
+//   });
+// }
+setPage2(pageInfo: PageInfo) {
+  this.pageNumber2 = pageInfo.offset;
+  const rowOffset = pageInfo.offset * pageInfo.pageSize;
+  // this.cache = {};
+  // console.log(1170, this.cache);
+  // if (this.cache[this.page2.pageNumber]) return;
+  // this.cache[this.page2.pageNumber] = true;
+  this.page2.pageNumber = Math.floor(rowOffset / this.page2.size);
+  this.isLoading++;
+  this.getResults(this.page2, this.rows4).subscribe(pagedData => {
+    this.totalElements2 = pagedData.page.totalElements;
+    this.rowsT2 = pagedData.data;
+    this.isLoading--;
+  });
+}
+setPage3(pageInfo: PageInfo) {
+  this.pageNumber3 = pageInfo.offset;
+  const rowOffset = pageInfo.offset * pageInfo.pageSize;
+
+  this.page3.pageNumber = Math.floor(rowOffset / this.page3.size);
+  this.isLoad++;
+  this.getResults(this.page3, this.rows5).subscribe(pagedData => {
+    this.totalElements3 = pagedData.page.totalElements;
+    this.rowsT3 = pagedData.data;
+    this.isLoad--;
+  });
+}
+public getResults1(page: Page, data: any[]) {
+  return of(this.rows3filtered1)
+    .pipe(map(d => this.getPagedData1(page, this.rows3filtered1)))
+    .pipe(delay(1000 * Math.random()));
+}
+private getPagedData1(page: Page, data: any[]) {
+  // console.log(1151, page, data);
+  const pagedData = new PagedData();
+  page.totalElements = this.rows3filtered1.length;
+  page.totalPages = page.totalElements / page.size;
+  const start = page.pageNumber * page.size;
+  const end = Math.min(start + page.size, page.totalElements);
+  // console.log(1157, start, end);
+  for (let i = start; i < end; i++) {
+    const jsonObj = this.rows3filtered1[i];
+    pagedData.data.push(jsonObj);
+  }
+  pagedData.page = page;
+  console.log(1163, pagedData);
+  return pagedData;
+}
+public getResults(page: Page, data: any[]) {
+  return of(data)
+    .pipe(map(d => this.getPagedData(page, data)))
+    .pipe(delay(1000 * Math.random()));
+}
+private getPagedData(page: Page, data: any[]) {
+  // console.log(1151, page, data);
+  const pagedData = new PagedData();
+  page.totalElements = data.length;
+  page.totalPages = page.totalElements / page.size;
+  const start = page.pageNumber * page.size;
+  const end = Math.min(start + page.size, page.totalElements);
+  // console.log(1157, start, end);
+  for (let i = start; i < end; i++) {
+    const jsonObj = data[i];
+    pagedData.data.push(jsonObj);
+  }
+  pagedData.page = page;
+  console.log(1163, pagedData);
+  return pagedData;
+}
  setPage(pageInfo) {
-      console.log(pageInfo);
-      this.pageNumber = pageInfo.offset;
-      const rowOffset = pageInfo.offset * pageInfo.pageSize;
+      // console.log(pageInfo);
 
-      const page = new Page();
-      page.size = 20;
-      page.pageNumber = Math.floor(rowOffset / page.size);
-
-      if (this.cache[page.pageNumber]) return;
-      this.cache[page.pageNumber] = true;
-      this.isLoad++;
       this.parameters = {
         // periodo_consulta:this.periodo_consulta,
         sede: this.id_sede,
@@ -934,9 +1251,11 @@ isLoad = 0;
         this.selectedOptionTipo='cantidad';
         this.selectedOptionTipo2='cantidad';
         this.selectedOptionTipo3='cantidad';
+        this.selectedOptionGraph1 = 'ingresos_emergencia';
+        this.selectedOptionGraph2 = 'ingresos_emergencia';
             this.tableApiservice.getEmResumenGeneralProcesar(this.parameters).subscribe(
                 (response) => {
-                  console.log(response);
+                  // console.log(response);
                   if(response.success){
                     this.resumenMes = response.data;
                     
@@ -1035,12 +1354,10 @@ isLoad = 0;
                       totalSoles1.GRUPO3 = 'SOLES';
 
                       this.rows1.push(totalSoles1);
-                      console.log(909, totalSoles1);
+                      // console.log(909, totalSoles1);
                     }
                   })
-                  
-                
-                  // this.formatPipe(this.rows1);
+                  this.formatPipe(this.rows1);
                   this.rows1filtered = this.rows1.filter(item => item.GRUPO3 === 'CANTIDAD');
                   this.columns2 = response.data.cabeceras_rangoetareo;
                   this.rows2 = response.data.tabla_rangoetareo;
@@ -1080,63 +1397,44 @@ isLoad = 0;
                       }
                     }
                   );
-
+                  this.formatPipe(this.rows2);
                   this.temp2 = this.rows2;
                   this.columns3 = response.data.cabeceras_empresas;
-                  this.columns3.map((item, index) => {
-                      if (item.prop === 'MES1') {
-                        item.summaryFunc = cells => {
-                          console.log(1069, cells);
-                          // const filteredCells = cells.filter(cell => !!cell);
-                          //   return filteredCells.reduce((sum, cell) => (sum += cell), 0);
-                        }
-                      }else if (item.prop === 'MES2') {
-                        item.summaryFunc = cells => this.summaryMes2(cells)
-                      }else if (item.prop === 'MES3') {
-                        item.summaryFunc = cells => this.summaryMes3(cells)
-                      }else if (item.prop === 'MES4') {
-                        item.summaryFunc = cells => this.summaryMes4(cells)
-                      }else if (item.prop === 'MES5') {
-                        item.summaryFunc = cells => this.summaryMes5(cells)
-                      }else if (item.prop === 'MES6') {
-                        item.summaryFunc = cells => this.summaryMes6(cells)
-                      }else if (item.prop === 'MES7') {
-                        item.summaryFunc = cells => this.summaryMes7(cells)
-                      }else if (item.prop === 'MES8') {
-                        item.summaryFunc = cells => this.summaryMes8(cells)
-                      }else if (item.prop === 'MES9') {
-                        item.summaryFunc = cells => this.summaryMes9(cells)
-                      }else if (item.prop === 'MES10') {
-                        item.summaryFunc = cells => this.summaryMes10(cells)
-                      }else if (item.prop === 'MES11') {
-                        item.summaryFunc = cells => this.summaryMes11(cells)
-                      }else if (item.prop === 'MES12') {
-                        item.summaryFunc = cells => this.summaryMes12(cells)
-                      }else if (item.prop === 'TOTAL') {
-                        item.summaryFunc = cells => this.summaryTotal(cells)
-                      }else{
-                        item.summaryFunc = null
-                      }
-                  });
-                  console.log(1097, this.columns3);
-                  this.rows3 = response.data.tabla_empresas;
+    this.rows3 = response.data.tabla_empresas;
 
 
-                  // this.totalElements = this.rows3.length;
-                  // const start = pagedData.page.pageNumber * pagedData.page.size;
-                  // const rows = [...this.rows3];
-                  // rows.splice(start, pagedData.page.size, ...response.data.tabla_empresas);
-                  // this.rows3 = rows;
-                  // this.isLoad--;
 
 
-                  this.formatPipe(this.rows3);
-                  this.rows3filtered = this.rows3.filter(item => item.GRUPOEM === 'CANTIDAD');
+    this.formatPipe(this.rows3);
+    
+    // this.rowsT1 = this.rows3;
+    this.rows3filtered1 = this.rows3.filter(item => item.GRUPOEM === 'CANTIDAD');
+    this.setPage1({
+      offset: 0,
+      pageSize: 0,
+      limit: 10,
+      count: 0
+    }, this.selectedOptionTipo2);
+    // console.log(this.rows3filtered1);
                   this.columns4 = response.data.cabeceras_diagnostico;
                   this.rows4 = response.data.tabla_diagnostico;
+                  this.setPage2({
+                    offset: 0,
+                    pageSize: 0,
+                    limit: 10,
+                    count: 0
+                  });
+                  this.rowsT2 = this.rows4;
                   this.temp4 = this.rows4;
                   this.columns5 = response.data.cabeceras_especialidades;
                   this.rows5 = response.data.tabla_especialidades;
+                  this.setPage3({
+                    offset: 0,
+                    pageSize: 0,
+                    limit: 10,
+                    count: 0
+                  });
+                  this.rowsT2 = this.rows5;
                   this.temp5 = this.rows5;
 
 
@@ -1149,7 +1447,7 @@ isLoad = 0;
             );
             this.tableApiservice.getEmAtencionesResumenAnual(this.parameters).subscribe(
               (response) => { 
-                console.log(982, response);
+                // console.log(982, response);
                 if(response.success){
                   this.columns6 = response.data.cabeceras_tpacientes_anual;
                   this.rows6 = response.data.tabla_tpacientes_anual; 
@@ -1198,12 +1496,12 @@ isLoad = 0;
                       this.rows6.push(totalSoles6);
                     }
                   });
-                  // console.log(1087, this.rows6);
-                  // this.formatPipe(this.rows6);
+
+                  this.formatPipe3(this.rows6);
                   this.rows6filtered = this.rows6.filter(item => item.GRUPO3 === 'CANTIDAD');
                   this.columns7 = response.data.cabeceras_rangoetareo_anual;
                   this.rows7 = response.data.tabla_rangoetareo_anual;
-                  console.log(1153, this.rows7);
+                  // console.log(1153, this.rows7);
                   const totalRango7 = {
                     RANGO: '',
                     PER1: 0,
@@ -1224,6 +1522,7 @@ isLoad = 0;
                       this.rows7.push(totalRango7);
                     }
                   });
+                  this.formatPipe3(this.rows7);
                   this.temp7 = this.rows7;
                 }
                 Swal.close();
@@ -1235,7 +1534,7 @@ isLoad = 0;
 
             this.tableApiservice.getEmTiposPacientes(this.parameters).subscribe(
               (response) => { 
-                console.log(1138,response);
+                // console.log(1138,response);
                 this.progressBarLabels = [];
                 this.progressBar1 = [];
                 let total = response.data.total_prog;
@@ -1356,8 +1655,7 @@ isLoad = 0;
 
                   this.chartLabels1 = [];
                   this.chartData1 = [];   
-                  this.chartData2 = [];
-                  this.chartData3 = [];    
+                  this.chartData2 = [];  
                 if(response.success){
                   
                   response.data.data.map(item =>{
@@ -1403,8 +1701,49 @@ isLoad = 0;
   }
   public onLimitChange(limit: any, numberT): void {
     this.changePageLimit(limit, numberT);
-    this.setPage({ offset: 0 });
-
+    if(numberT === '1'){
+      console.log(1598, numberT);
+      this.setPage1({
+        offset: 0,
+        pageSize: 0,
+        limit: 0,
+        count: 0
+      }, this.selectedOptionTipo2);
+      // if (this.selectedOptionTipo2 === 'cantidad'){
+      //   this.setPage1({
+      //     offset: 0,
+      //     pageSize: 0,
+      //     limit: 0,
+      //     count: 0
+      //   }, this.selectedOptionTipo2);
+      // }else if (this.selectedOptionTipo2 === 'soles'){
+      //   this.setPage1({
+      //     offset: 0,
+      //     pageSize: 0,
+      //     limit: 0,
+      //     count: 0
+      //   }, this.selectedOptionTipo2);
+      // }
+      
+    }if(numberT === '2'){
+      console.log(1598, numberT);
+      this.setPage2({
+        offset: 0,
+        pageSize: 0,
+        limit: 0,
+        count: 0
+      });
+    }if(numberT === '3'){
+      console.log(1598, numberT);
+      this.setPage3({
+        offset: 0,
+        pageSize: 0,
+        limit: 0,
+        count: 0
+      });
+    }else{
+      this.setPage({ offset: 0 });
+    }
   }
 
   private changePageLimit(limit: any, numberT): void {
@@ -1531,18 +1870,18 @@ isLoad = 0;
       // console.log(838, input);
       // filter our data
       if (input.length > 0) {
-        const filtered = this.rows3filtered
+        const filtered = this.rows3filtered1
           .filter(el =>
             Object.values(el).find( val => val?.toString().toLowerCase().indexOf(input) !== -1 ) != undefined
           );
           // console.log(filtered);
-        this.rows3filtered = [...filtered]
+        this.rows3filtered1 = [...filtered]
         
       } else {
         if(selectedOption === 'cantidad'){
-          this.rows3filtered = [...this.rows3.filter(item => item.GRUPOEM === 'CANTIDAD')]
+          this.rows3filtered1 = [...this.rows3.filter(item => item.GRUPOEM === 'CANTIDAD')]
         }else if (selectedOption === 'soles'){
-          this.rows3filtered = [...this.rows3.filter(item => item.GRUPOEM === 'SOLES')]
+          this.rows3filtered1 = [...this.rows3.filter(item => item.GRUPOEM === 'SOLES')]
         }
         // console.log(this.filtered);
        
@@ -1708,7 +2047,7 @@ isLoad = 0;
       }
     }
     summaryForAmount(cells: any): string {
-      console.log(1681, cells);
+      // console.log(1681, cells);
       let count: number = 0;
       let re = /\,/gi;
           
@@ -1729,54 +2068,9 @@ isLoad = 0;
           });
   
           return count.toString().indexOf('-') > -1 ? count.toLocaleString('en').replace('-', '(').concat(')') : count.toLocaleString("en");
-      }
-  
+    }
     private summaryNull(cells: any): null {
           return null;
-    }
-    summaryMes1(column){
-      console.log(1677, column);
-      // const filteredCells = cells.filter(cell => !!cell);
-      // return filteredCells.reduce((sum, cell) => (sum += cell), 0);
-      // return (cells) => {
-      //   return column.allowSum ? cells.reduce((sum, cell) => sum += cell, 0) : null;
-      // }
-    }
-    summaryMes2(cells: number[]){
-      
-    }
-    summaryMes3(cells: number[]){
-      
-    }
-    summaryMes4(cells: number[]){
-      
-    }
-    summaryMes5(cells: number[]){
-      
-    }
-    summaryMes6(cells: number[]){
-      
-    }
-    summaryMes7(cells: number[]){
-      
-    }
-    summaryMes8(cells: number[]){
-      
-    }
-    summaryMes9(cells: number[]){
-      
-    }
-    summaryMes10(cells: number[]){
-      
-    }
-    summaryMes11(cells: number[]){
-      
-    }
-    summaryMes12(cells: number[]){
-      
-    }
-    summaryTotal(cells: number[]){
-      
     }
 
 }
