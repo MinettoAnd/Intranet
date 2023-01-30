@@ -121,7 +121,7 @@
                                             <span style="background: #f56954 !important; color:#fff !important;" class="info-box-icon">			
                                             <i class="fa fa-street-view" aria-hidden="true"></i>		</span>		
                                             <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">HOSPITALIZADOS</span>			<span *ngIf="resumenMes.hospitalizados" class="info-box-number">{{resumenMes.hospitalizados}} </span>			
-                                            <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">...%
+                                            <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">{{(resumenMes.hospitalizados/resumenMes.emergencia) * 100 | number : '1.2-2' }} %
                                                 </label>		
                                               </div>
                                         </div>
@@ -159,6 +159,7 @@
                                     <div class="card-content collapse show">
                                       <div class="row" style="align-items: center;justify-content: space-between;">
                                         <div class="col-md-8">
+                                          
                                           <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
                                             <li class="list-group-item border-0 pl-0">
                                               <a  id="downloadlink1" href="#" 
@@ -179,10 +180,16 @@
                                               </select>
                                             </li>
                                           </ul>
+                                          <p class="text-center">
+                                            <i class="fa fa-line-chart"></i>
+                                            <strong *ngIf="selectedOptionGraph1 == 'ingresos_emergencia'">Nro. de Atenciones Realizadas en Emergencia</strong>
+                                            <strong *ngIf="selectedOptionGraph1 !== 'ingresos_emergencia'">Nro. de Altas por Emergencia</strong>
+                                          </p>
                                           <div class="card-body">
                                             <div class="d-block" >
                                               <canvas #baseChart id="chart-1" *ngIf="selectedOptionGraph1 == 'ingresos_emergencia'">
                                               </canvas>
+                                              
                                               <canvas #baseChart id="chart-3" *ngIf="selectedOptionGraph1 !== 'ingresos_emergencia'">
                                               </canvas>
                                             </div>
@@ -194,6 +201,10 @@
                                           </div> -->
                                         </div>
                                         <div class="col-md-4">
+                                          <p class="text-center">
+                                            <i class="fa fa-pie-chart" aria-hidden="true"></i>
+                                            <strong>Tipos de Pacientes TOTAL: [<label id="TOTAL_RE">{{totalProgs}}</label>]-[100%]</strong>
+                                          </p>
                                           <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
                                             <li class="list-group-item border-0 pl-0">
                                               <a  id="downloadlink2" href="#" 
@@ -647,17 +658,18 @@
                                                     [footerHeight]="65"
                                                     [rowHeight]="$any('auto')"
                                                     [scrollbarH]="true"
-                                                    [summaryRow]="enableSummary"
-                                                    [summaryPosition]="summaryPosition"
-                                                    [summaryHeight]="55"
+                                                    [loadingIndicator]="isLoading > 0"
                                                     [externalPaging]="true"
                                                     [externalSorting]="true"
                                                     [count]="totalElements1"
                                                     [offset]="pageNumber1"
                                                     (page)="setPage1($event)"
+                                                    [summaryRow]="enableSummary"
+                                                    [summaryPosition]="summaryPosition"
+                                                    [summaryHeight]="55"
                                                     >
                                                     <ngx-datatable-column [flexGrow]="1"
-                                                    [summaryFunc]="column.prop == 'EmpresaAseguradoraNombre' || column.prop == 'GRUPOEM' || column.prop == 'TipoPacienteNombre' || column.prop == 'idEmpresa' ? summaryNull:summaryForAmount"
+                                                    [summaryFunc]="column.prop == 'GRUPOEM' || column.prop == 'TipoPacienteNombre' || column.prop == 'idEmpresa' ? summaryNull:summaryForAmount"
                                                     [minWidth]="90" *ngFor="let column of columns3; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                                         let-row="row">
@@ -748,17 +760,18 @@
                                                     [footerHeight]="65"
                                                     [rowHeight]="$any('auto')"
                                                     [scrollbarH]="true"
-                                                    [summaryRow]="enableSummary"
-                                                    [summaryPosition]="summaryPosition"
-                                                    [summaryHeight]="55"
+                                                    [loadingIndicator]="isLoading > 0"
                                                     [externalPaging]="true"
                                                     [externalSorting]="true"
                                                     [count]="totalElements2"
                                                     [offset]="pageNumber2"
                                                     (page)="setPage2($event)"
+                                                    [summaryRow]="enableSummary"
+                                                    [summaryPosition]="summaryPosition"
+                                                    [summaryHeight]="55"
                                                     >
                                                     <ngx-datatable-column [flexGrow]="1" 
-                                                    [summaryFunc]="column.prop == 'EmpresaAseguradoraNombre' || column.prop == 'GRUPOEM' || column.prop == 'TipoPacienteNombre' || column.prop == 'idEmpresa' ? summaryNull:summaryForAmount"
+                                                    [summaryFunc]="column.prop == 'CIE10' ? summaryNull:summaryForAmount"
                                                     [minWidth]="90" *ngFor="let column of columns4; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                                         let-row="row">
@@ -862,7 +875,7 @@
                                                     (select)='onSelect($event)'
                                                     >
                                                     <ngx-datatable-column [flexGrow]="1" 
-                                                    [summaryFunc]="column.prop == 'EmpresaAseguradoraNombre' || column.prop == 'GRUPOEM' || column.prop == 'TipoPacienteNombre' || column.prop == 'idEmpresa' ? summaryNull:summaryForAmount"
+                                                    [summaryFunc]="summaryForAmount"
                                                     [minWidth]="90" *ngFor="let column of columns5; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                                         let-row="row">
@@ -942,7 +955,7 @@
                                                       </div>                              
                                                   </div>
                                                   
-                                                  <ngx-datatable #myTable5
+                                                  <ngx-datatable #myTable6
                                                   class="bootstrap table table-striped"
                                                   id="datatablele"
                                                     [columns]="columnsMedicos"
@@ -1065,7 +1078,7 @@
                                                     </div>                               
                                                   </div>
                                                   
-                                                  <ngx-datatable #myTable6
+                                                  <ngx-datatable #myTable7
                                                   class="bootstrap table table-striped"
                                                   id="datatablele"
                                                     [columns]="columns6"
@@ -1173,7 +1186,7 @@
                                                     </ul>                                  
                                                   </div>
                                                   
-                                                  <ngx-datatable #myTable7
+                                                  <ngx-datatable #myTable8
                                                   class="bootstrap table table-striped"
                                                   id="datatablele"
                                                     [columns]="columns7"

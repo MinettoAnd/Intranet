@@ -39,6 +39,7 @@ export class EstadisticasComponent implements OnInit {
   active = 1;
   closeResult = '';
   @ViewChild("agGrid") agGrid: AgGridAngular;
+  totalProgs: any;
   @ViewChild("baseChart", { static: false }) set content(
     content: ElementRef
   ) {
@@ -779,15 +780,14 @@ selectedOptionGraph2 = 'ingresos_emergencia';
       'totals': row.RANGO.includes('Total')
     };
   }
-  getRowClass7(row) {
+  getRowClass3(row) {
     
     // if (row.item.includes('COLECTIVA')){
     //   return {'totals': row.item.includes('TOTAL') || row.item.includes('COLECTIVA') }
     // }
-
-    if (row.sucursal !== undefined){
+    if (row.EmpresaAseguradoraNombre !== undefined){
       return {
-        'totals': row.sucursal.includes('TOTAL')
+        'totals': row.EmpresaAseguradoraNombre.includes('Total')
       };
     }else if (row.grupo !== undefined ){
       return {
@@ -1118,59 +1118,63 @@ rows1.map(item => {
 // });
 }
 setPage1(pageInfo: PageInfo, dataN='cantidad') {
+
+  console.log(1122, pageInfo);
+  
 this.pageNumber1 = pageInfo.offset;
 const rowOffset = pageInfo.offset * pageInfo.pageSize;
 this.page1.pageNumber = Math.floor(rowOffset / this.page1.size);
       if (this.selectedOptionTipo2 === 'cantidad'){
-        // this.isLoading++;
+        this.isLoading++;
+
         this.getResults(this.page1, this.rows3filtered1).subscribe(pagedData => {
               this.totalElements1 = pagedData.page.totalElements;
-              this.rowsT1 = pagedData.data;
-              // this.isLoading--;
+              if (pagedData.data.length < pagedData.page.size){
+                this.rowsT1 = pagedData.data
+                for (let index = pagedData.data.length; index < pagedData.page.size; index++) {
+                  this.rowsT1[(index)] = { TipoPacienteNombre: '', idEmpresa: '', EmpresaAseguradoraNombre: '' , GRUPOEM: '' };
+                }
+              }else{
+                this.rowsT1 = pagedData.data;
+              }
+              this.isLoading--;
             });
       }else if(this.selectedOptionTipo2 === 'soles'){
         const rowOffset = pageInfo.offset * pageInfo.pageSize;
         this.page1.pageNumber = Math.floor(rowOffset / this.page1.size);
-
         this.getResults(this.page1, this.rows3filtered2).subscribe(pagedData => {
           this.totalElements1 = pagedData.page.totalElements;
-          this.rowsT1 = pagedData.data;
-          // this.isLoad--;
+          if (pagedData.data.length < pagedData.page.size){
+            this.rowsT1 = pagedData.data
+            for (let index = pagedData.data.length; index < pagedData.page.size; index++) {
+              this.rowsT1[(index)] = { TipoPacienteNombre: '', idEmpresa: '', EmpresaAseguradoraNombre: '' , GRUPOEM: '' };
+            }
+           
+          }else{
+            this.rowsT1 = pagedData.data;
+            
+          }
+          this.isLoading--;
         });
       }
 }
-// setPage1(pageInfo: PageInfo, dataN='cantidad') {
-//   this.pageNumber1 = pageInfo.offset;
-//   var rowOffset = pageInfo.offset * pageInfo.pageSize;
 
-//   this.page1.pageNumber = Math.floor(rowOffset / this.page1.size);
-  
-//   if (this.cache[this.page1.pageNumber-1]) {
-//     console.log(1153, this.cache, this.page1.pageNumber);
-//     rowOffset = 0;
-//     // return;
-//   }
- 
-//   this.isLoading++;
-//   this.getResults1(this.page1, this.rows3filtered1).subscribe(pagedData => {
-//     this.totalElements1 = pagedData.page.totalElements;
-//     this.rowsT1 = pagedData.data;
-//     this.isLoading--;
-//     this.cache[this.page1.pageNumber] = true;
-//   });
-// }
 setPage2(pageInfo: PageInfo) {
   this.pageNumber2 = pageInfo.offset;
   const rowOffset = pageInfo.offset * pageInfo.pageSize;
-  // this.cache = {};
-  // console.log(1170, this.cache);
-  // if (this.cache[this.page2.pageNumber]) return;
-  // this.cache[this.page2.pageNumber] = true;
   this.page2.pageNumber = Math.floor(rowOffset / this.page2.size);
   this.isLoading++;
   this.getResults(this.page2, this.rows4).subscribe(pagedData => {
+    console.log(1167, pagedData);
     this.totalElements2 = pagedData.page.totalElements;
-    this.rowsT2 = pagedData.data;
+    if (pagedData.data.length < pagedData.page.size){
+      this.rowsT2 = pagedData.data
+      for (let index = pagedData.data.length; index < pagedData.page.size; index++) {
+        this.rowsT2[(index)] = { CIE10: '', Diagnostico: '' };
+      }
+    }else{
+      this.rowsT2 = pagedData.data;
+    }
     this.isLoading--;
   });
 }
@@ -1179,34 +1183,22 @@ setPage3(pageInfo: PageInfo) {
   const rowOffset = pageInfo.offset * pageInfo.pageSize;
 
   this.page3.pageNumber = Math.floor(rowOffset / this.page3.size);
-  this.isLoad++;
+  this.isLoading++;
   this.getResults(this.page3, this.rows5).subscribe(pagedData => {
+    console.log(1187, pagedData);
     this.totalElements3 = pagedData.page.totalElements;
-    this.rowsT3 = pagedData.data;
-    this.isLoad--;
+    if (pagedData.data.length < pagedData.page.size){
+      this.rowsT3 = pagedData.data
+      for (let index = pagedData.data.length; index < pagedData.page.size; index++) {
+        this.rowsT3[(index)] = { id_esp: '', especialidad: ''};
+      }
+    }else{
+      this.rowsT3 = pagedData.data;
+    }
+    this.isLoading--;
   });
 }
-public getResults1(page: Page, data: any[]) {
-  return of(this.rows3filtered1)
-    .pipe(map(d => this.getPagedData1(page, this.rows3filtered1)))
-    .pipe(delay(1000 * Math.random()));
-}
-private getPagedData1(page: Page, data: any[]) {
-  // console.log(1151, page, data);
-  const pagedData = new PagedData();
-  page.totalElements = this.rows3filtered1.length;
-  page.totalPages = page.totalElements / page.size;
-  const start = page.pageNumber * page.size;
-  const end = Math.min(start + page.size, page.totalElements);
-  // console.log(1157, start, end);
-  for (let i = start; i < end; i++) {
-    const jsonObj = this.rows3filtered1[i];
-    pagedData.data.push(jsonObj);
-  }
-  pagedData.page = page;
-  console.log(1163, pagedData);
-  return pagedData;
-}
+
 public getResults(page: Page, data: any[]) {
   return of(data)
     .pipe(map(d => this.getPagedData(page, data)))
@@ -1415,6 +1407,7 @@ private getPagedData(page: Page, data: any[]) {
       limit: 10,
       count: 0
     }, this.selectedOptionTipo2);
+    this.rows3filtered2 = this.rows3.filter(item => item.GRUPOEM === 'SOLES');
     // console.log(this.rows3filtered1);
                   this.columns4 = response.data.cabeceras_diagnostico;
                   this.rows4 = response.data.tabla_diagnostico;
@@ -1434,7 +1427,7 @@ private getPagedData(page: Page, data: any[]) {
                     limit: 10,
                     count: 0
                   });
-                  this.rowsT2 = this.rows5;
+                  this.rowsT3 = this.rows5;
                   this.temp5 = this.rows5;
 
 
@@ -1538,8 +1531,9 @@ private getPagedData(page: Page, data: any[]) {
                 this.progressBarLabels = [];
                 this.progressBar1 = [];
                 let total = response.data.total_prog;
-                
+                console.log(1533, response);
                 if(response.success){
+                  this.totalProgs =  response.data.total_prog;
                   for (let value of Object.values(response.data.tipo_prog)) {
                     let porcentaje:any = Object.values(value);
                     
@@ -1865,28 +1859,7 @@ private getPagedData(page: Page, data: any[]) {
        
       }
     }
-    updateFilter3(event, selectedOption) {
-      const input = event.target.value.toLowerCase();
-      // console.log(838, input);
-      // filter our data
-      if (input.length > 0) {
-        const filtered = this.rows3filtered1
-          .filter(el =>
-            Object.values(el).find( val => val?.toString().toLowerCase().indexOf(input) !== -1 ) != undefined
-          );
-          // console.log(filtered);
-        this.rows3filtered1 = [...filtered]
-        
-      } else {
-        if(selectedOption === 'cantidad'){
-          this.rows3filtered1 = [...this.rows3.filter(item => item.GRUPOEM === 'CANTIDAD')]
-        }else if (selectedOption === 'soles'){
-          this.rows3filtered1 = [...this.rows3.filter(item => item.GRUPOEM === 'SOLES')]
-        }
-        // console.log(this.filtered);
-       
-      }
-    }
+    
     updateFilter2(event) {
       const input = event.target.value.toLowerCase();
       // console.log(838, input);
@@ -1905,6 +1878,40 @@ private getPagedData(page: Page, data: any[]) {
        
       }
     }
+    updateFilter3(event) {
+      const input = event.target.value.toLowerCase();
+
+      // filter our data
+      if (input.length > 0) {
+        if(this.selectedOptionTipo2 === 'cantidad'){ 
+          const filtered = this.rows3filtered1
+          .filter(el =>
+            Object.values(el).find( val => val?.toString().toLowerCase().indexOf(input) !== -1 ) != undefined
+          );
+          // console.log(filtered);
+          this.rowsT1 = [...filtered]
+          this.totalElements1 = this.rowsT1.length;
+        }else if (this.selectedOptionTipo2 === 'soles'){
+          const filtered = this.rows3filtered2
+          .filter(el =>
+            Object.values(el).find( val => val?.toString().toLowerCase().indexOf(input) !== -1 ) != undefined
+          );
+          // console.log(filtered);
+          this.rowsT1 = [...filtered]
+          this.totalElements1 = this.rowsT1.length;
+        }
+        
+        
+      } else {
+        this.setPage1({
+          offset: this.page1.pageNumber,
+          pageSize: this.page1.size,
+          limit: this.page1.size,
+          count: this.page1.totalElements
+        }, this.selectedOptionTipo2);
+       
+      }
+    }
     updateFilter4(event) {
       const input = event.target.value.toLowerCase();
       // console.log(838, input);
@@ -1915,12 +1922,16 @@ private getPagedData(page: Page, data: any[]) {
             Object.values(el).find( val => val?.toString().toLowerCase().indexOf(input) !== -1 ) != undefined
           );
           // console.log(filtered);
-        this.rows4 = [...filtered]
-        
+        this.rowsT2 = [...filtered]
+        this.totalElements2 = this.rowsT2.length;
+
       } else {
-        console.log(this.filtered);
-        this.rows4 = [...this.temp4]
-       
+        this.setPage2({
+          offset: this.page2.pageNumber,
+          pageSize: this.page2.size,
+          limit: this.page2.size,
+          count: this.page2.totalElements
+        });
       }
     }
     updateFilter5(event) {
@@ -1933,11 +1944,15 @@ private getPagedData(page: Page, data: any[]) {
             Object.values(el).find( val => val?.toString().toLowerCase().indexOf(input) !== -1 ) != undefined
           );
           // console.log(filtered);
-        this.rows5 = [...filtered]
-        
+        this.rowsT3 = [...filtered]
+        this.totalElements3 = this.rowsT3.length;
       } else {
-        console.log(this.filtered);
-        this.rows5 = [...this.temp5]
+        this.setPage3({
+          offset: this.page3.pageNumber,
+          pageSize: this.page3.size,
+          limit: this.page3.size,
+          count: this.page3.totalElements
+        });
        
       }
     }
@@ -1964,17 +1979,19 @@ private getPagedData(page: Page, data: any[]) {
       // console.log(838, input);
       // filter our data
       if (input.length > 0) {
-        const filtered = this.rows6
+        const filtered = this.rows6filtered
           .filter(el =>
             Object.values(el).find( val => val?.toString().toLowerCase().indexOf(input) !== -1 ) != undefined
           );
           // console.log(filtered);
-        this.rows6 = [...filtered]
+        this.rows6filtered = [...filtered]
         
       } else {
-        console.log(this.filtered);
-        this.rows6 = [...this.temp6]
-       
+        if(this.selectedOptionTipo3 === 'cantidad'){
+          this.rows6filtered = [...this.rows6.filter(item => item.GRUPO3 === 'CANTIDAD')]
+        }else if (this.selectedOptionTipo3 === 'soles'){
+          this.rows6filtered = [...this.rows6.filter(item => item.GRUPO3 === 'SOLES')]
+        }
       }
     }
     onSelect({ selected }) {
@@ -2046,28 +2063,35 @@ private getPagedData(page: Page, data: any[]) {
         return `with: ${reason}`;
       }
     }
+
     summaryForAmount(cells: any): string {
-      // console.log(1681, cells);
+     
       let count: number = 0;
       let re = /\,/gi;
+      let re1 = /\S\/./gi;
           
           cells.filter((cell) => { 
               if (cell != null && cell != undefined) {
   
-                  if (!(cell.indexOf('-') > -1 || cell.indexOf('(') > -1)) {
-            count = count + +cell.replace(re, '');
-                  }
-                  else if (cell.indexOf('-') > -1) {
+                if (cell.indexOf('S/.') > -1){
+                  count = count + +cell.replace(re1, '').replace(',', '');
+                }else if (!(cell.indexOf('-') > -1 || cell.indexOf('(') > -1)) {
+                      count = count + +cell.replace(re, '');
+                }else if (cell.indexOf('-') > -1) {
                       count = count + 0;
-                  }
-                  else if (cell.indexOf('(') > -1) {
-                      let number = cell.replace('(', '').replace(')', '');
-            count = count - +number.replace(re, '');
-                  }
+                }else if (cell.indexOf('(') > -1) {
+                  let number = cell.replace('(', '').replace(')', '');
+                  count = count - +number.replace(re, '');
+                }
               }
           });
-  
-          return count.toString().indexOf('-') > -1 ? count.toLocaleString('en').replace('-', '(').concat(')') : count.toLocaleString("en");
+          if(!count){
+            return count.toString().replace('NaN', 'Total');
+          }else if (count.toString().indexOf('.') > -1){
+            return count.toString().indexOf('-') > -1 ? 'S/. ' + count.toLocaleString().replace('-', '(').concat(')') : 'S/. ' + count.toLocaleString();
+          }else{
+            return count.toString().indexOf('-') > -1 ? count.toLocaleString().replace('-', '(').concat(')') :  count.toLocaleString();
+          }
     }
     private summaryNull(cells: any): null {
           return null;
