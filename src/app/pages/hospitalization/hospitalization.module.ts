@@ -6,9 +6,10 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HospitalDischargeConsultationComponent } from './hospital-discharge-consultation/hospital-discharge-consultation.component';
+import { EstadisticasComponent } from './estadisticas/estadisticas.component';
 
 @NgModule({
-  declarations: [HospitalDischargeConsultationComponent],
+  declarations: [HospitalDischargeConsultationComponent, EstadisticasComponent],
   imports: [
     CommonModule,
     NgxDatatableModule,
@@ -17,8 +18,12 @@ import { HospitalDischargeConsultationComponent } from './hospital-discharge-con
     ReactiveFormsModule,
     RouterModule.forChild([
       {
-        path: '',
+        path: 'consulta-altas-hospitalarias',
         component: HospitalDischargeConsultationComponent
+      },
+      {
+        path: 'estadisticas',
+        component: EstadisticasComponent
       }
     ])
   ],
