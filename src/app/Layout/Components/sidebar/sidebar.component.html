@@ -92,7 +92,7 @@
                       routerLink="{{ subMenuItem.url }}"
                       
                       
-                    >{{subMenuItem.name}}</a>
+                    >{{subMenuItem.header}}</a>
                     <ul>
                       <li *ngFor="let subSubMenuItem of subMenuItem.Children">
                         <a
@@ -101,7 +101,7 @@
                           routerLink="{{ subSubMenuItem.url }}"
                           *ngIf="subSubMenuItem.isChecked"
                           
-                        >{{subSubMenuItem.name}}</a>
+                        >{{subSubMenuItem.header}}</a>
                       </li>
                     </ul>
                   </li>
@@ -165,7 +165,7 @@
                     >
                       <ngb-panel [id]="subItem.menu" *ngFor="let subItem of item.rides">
                           <ng-template ngbPanelHeader>
-                              <div class="vsm-header">{{ subItem.title }}</div>
+                              <div class="vsm-header">{{ subItem.header }}</div>
                               <a
                                 (click)="goRutePagesHeaderTitle(subMenuItem.header)"
                                 routerLinkActive="active-item"
@@ -174,11 +174,11 @@
                                 class="vsm-link"
                                 >
                                   <span class="vsm-title">{{
-                                    subItem.name
+                                    subItem.header
                                       }}</span></a>
                               <button *ngIf="!subItem.isChecked" style="display: flex; align-items: baseline;"  ngbPanelToggle class="vsm-link">
                                   <i [class]="subItem.icon"></i>
-                                  <span class="vsm">&nbsp;{{ subItem.name }}</span>
+                                  <span class="vsm">&nbsp;{{ subItem.header }}</span>
                                   <i class="vsm-arrow"></i>
                               </button>
                           </ng-template>
@@ -197,7 +197,7 @@
                                             class="vsm-link"
                                             >
                                               <span class="vsm-title">{{
-                                                  subMenuItem.name
+                                                  subMenuItem.header
                                                   }}</span></a
                                               >
                                       </div>

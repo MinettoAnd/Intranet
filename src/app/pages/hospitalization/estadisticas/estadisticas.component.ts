@@ -49,11 +49,13 @@ export class EstadisticasComponent implements OnInit {
       // initially setter gets called with undefined
       this.baseChart = content;
       if (this.baseChart.nativeElement.id === 'chart-1'){
-        this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del mes seleccionado', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
-         this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'pie');
+        this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del mes seleccionado', 'N° Pacientes','chart-1', 'Internados', 'Internados Ingresados x Emer.', 'bar');
+        this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'pie');
       }else if (this.baseChart.nativeElement.id === 'chart-3'){
-        this.getBarChart(this.chartLabels3, this.chartData4, this.chartData5,'Día del mes seleccionado', 'N° Pacientes','chart-3', 'C.E Reservada', 'C.E Realizada', 'bar');
+        this.getBarChart(this.chartLabels3, this.chartData4, this.chartData5,'Día del mes seleccionado', 'N° Pacientes','chart-3', 'Ingresos x Hosp.', 'Ingresos x Emergencia.', 'bar');
         this.getPieChart(this.chartLabels4, this.chartData6,'chart-4', 'pie');
+      }else if (this.baseChart.nativeElement.id === 'chart-5'){
+        this.getBarChart(this.chartLabels5, this.chartData7, this.chartData8,'Día del mes seleccionado', 'N° Pacientes','chart-5', 'Altas x Hosp.', 'Ingresos x Hosp.', 'bar');
       }
     }
   }
@@ -73,20 +75,7 @@ export class EstadisticasComponent implements OnInit {
     { value: '11', label: 'Noviembre' },
     { value: '12', label: 'Diciembre' },
   ];
-  optionsAnio = [
-    { value: '2016', label: '2016' },
-    { value: '2017', label: '2017' },
-    { value: '2018', label: '2018' },
-    { value: '2019', label: '2019' },
-    { value: '2020', label: '2020' },
-    { value: '2021', label: '2021' },
-    { value: '2022', label: '2022' },
-    { value: '2023', label: '2023' },
-    { value: '2024', label: '2024' },
-    { value: '2025', label: '2025' },
-    { value: '2026', label: '2026' },
-    { value: '2027', label: '2027' },
-  ];
+  optionsAnio = [];
   // loading = true;
   private baseChart: ElementRef;
   // private baseChart2: ElementRef;
@@ -107,12 +96,15 @@ export class EstadisticasComponent implements OnInit {
   public chartLabels2 = [];
   public chartLabels3 = [];
   public chartLabels4 = [];
+  public chartLabels5 = [];
   public chartData1 = [];
   public chartData2 = [];
   public chartData3 = [];
   public chartData4 = [];
   public chartData5 = [];
   public chartData6 = [];
+  public chartData7 = [];
+  public chartData8 = [];
   selectedOptionTipo='cantidad';
   selectedOptionTipo2='cantidad';
   selectedOptionTipo3='cantidad';
@@ -232,159 +224,8 @@ export class EstadisticasComponent implements OnInit {
       flex: "1 1 auto",
   };
 
-columnDefs = [
-  {
-    headerName: "Athlete",
-    field: "athlete",
-    width: 150
-  },
-  {
-    headerName: "Age",
-    field: "age",
-    width: 90,
-    cellClassRules: {
-      "rag-green": "x < 20",
-      "rag-amber": "x >= 20 && x < 25",
-      "rag-red": "x >= 25"
-    }
-  },
-  {
-    headerName: "Country",
-    field: "country",
-    width: 120
-  },
-  {
-    headerName: "Year",
-    field: "year",
-    cellClassRules: {
-      "cell-red": function(params) {
-        return params.value === 2008;
-      },
-      "rag-amber-outer": function(params) {
-        return params.value === 2004;
-      },
-      "cell-red1": function(params) {
-        return params.value === 2000;
-      }
-    },
-    cellRenderer: function(params) {
-      return '<span class="rag-element">' + params.value + "</span>";
-    }
-  },
-  {
-    headerName: "Date",
-    field: "date",
-    cellClass: "rag-amber"
-  },
-  {
-    headerName: "Sport",
-    field: "sport",
-    cellClass: function(params) {
-      return params.value === "Swimming" ? "rag-green" : "rag-amber";
-    }
-  },
-  {
-    headerName: "Gold",
-    field: "gold",
-    cellStyle: { backgroundColor: "#aaffaa" }
-  },
-  {
-    headerName: "Silver",
-    field: "silver",
-  },
-  {
-    headerName: "Bronze",
-    field: "bronze",
-  },
-  {
-    headerName: "Total",
-    field: "total"
-  }
-    // {
-    //   headerName: 'Athlete Details',
-    //   children: [
-    //     {
-    //       field: 'athlete',
-    //       width: 180,
-    //       filter: 'agTextColumnFilter',
-    //     },
-    //     {
-    //       field: 'age',
-    //       width: 90,
-    //       filter: 'agNumberColumnFilter',
-    //     },
-    //     { headerName: 'Country', field: 'country', width: 140 },
-    //   ],
-    // },
-    // {
-    //   headerName: 'Sports Results',
-    //   children: [
-    //     { field: 'sport', width: 140 },
-    //     {
-    //       columnGroupShow: 'closed',
-    //       field: 'total',
-    //       width: 100,
-    //       filter: 'agNumberColumnFilter',
-    //     },
-    //     {
-    //       columnGroupShow: 'open',
-    //       field: 'gold',
-    //       width: 100,
-    //       filter: 'agNumberColumnFilter',
-    //     },
-    //     {
-    //       columnGroupShow: 'open',
-    //       field: 'silver',
-    //       width: 100,
-    //       filter: 'agNumberColumnFilter',
-    //     },
-    //     {
-    //       columnGroupShow: 'open',
-    //       field: 'bronze',
-    //       width: 100,
-    //       filter: 'agNumberColumnFilter',
-    //     },
-    //   ],
-    // },
-];
-rowData = [
-  {
-  "athlete": "Michael Phelps",
-  "age": 23,
-  "country": "United States",
-  "year": 2008,
-  "date": "24/08/2008",
-  "sport": "Swimming",
-  "gold": 8,
-  "silver": 0,
-  "bronze": 0,
-  "total": 8
-  },
-  {
-  "athlete": "Michael Phelps",
-  "age": 19,
-  "country": "United States",
-  "year": 2004,
-  "date": "29/08/2004",
-  "sport": "Swimming",
-  "gold": 6,
-  "silver": 0,
-  "bronze": 2,
-  "total": 8
-  },
-  {
-  "athlete": "Michael Phelps",
-  "age": 27,
-  "country": "United States",
-  "year": 2012,
-  "date": "12/08/2012",
-  "sport": "Swimming",
-  "gold": 4,
-  "silver": 2,
-  "bronze": 0,
-  "total": 6
-  },
-]
+
+
 totalElements1: number;
 pageNumber1: number;
 totalElements2: number;
@@ -415,6 +256,17 @@ selectedOptionGraph2 = 'ingresos_hospitalizacion';
       mes: new FormControl(this.mes),
       anio: new FormControl(this.anio),
     });
+
+    var anioOp = Number(this.anio);
+    while ( Number(anioOp) > 2015 ) {
+      console.log(275, anioOp);
+      
+      const anioNew = {
+         value: anioOp.toString(), label: anioOp.toString() 
+      }
+      this.optionsAnio.push(anioNew);
+      anioOp--;
+    }
     this.rowClassRules = {
       "totals": function(params) {
         //  console.log(301, params); 
@@ -878,8 +730,8 @@ selectedOptionGraph2 = 'ingresos_hospitalizacion';
     
   }
   tipoChangeGraph(event, graph){
-console.log(827, this.selectedOptionGraph1);
-this.loading();
+
+    this.loading();
     this.parameters = {
       // periodo_consulta:this.periodo_consulta,
       sede: this.id_sede,
@@ -902,13 +754,16 @@ this.loading();
         this.parameters.tipo= 'INTE';
           this.tableApiservice.getHsChartIndex(this.parameters).subscribe(
             (response) => {  
-      
+                this.chartData4 = [];   
+                this.chartData5 = [];   
+                this.chartData7 = [];   
+                this.chartData8 = [];   
+
                 this.chartLabels1 = [];
                 this.chartData1 = [];   
                 this.chartData2 = [];
 
-                // this.chartData4 = [];   
-                // this.chartData5 = [];   
+                
               if(response.success){
                 
                 response.data.data.map(item =>{
@@ -919,7 +774,7 @@ this.loading();
                 // this.resumenMontos = response.data;
                 
               }
-              this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del mes seleccionado', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
+              this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del mes seleccionado', 'N° Pacientes','chart-1', 'Internados', 'Internados Ingresados x Emer.', 'bar');
               Swal.close();
             },
             (error) => {
@@ -930,7 +785,11 @@ this.loading();
           this.parameters.tipo= 'INGR';
           this.tableApiservice.getHsChartIndex(this.parameters).subscribe(
             (response) => {  
-      
+                this.chartData1 = [];   
+                this.chartData2 = [];   
+                this.chartData7 = [];   
+                this.chartData8 = [];   
+
                 this.chartLabels3 = [];   
                 this.chartData4 = [];
                 this.chartData5 = [];    
@@ -944,39 +803,43 @@ this.loading();
                 // this.resumenMontos = response.data;
                 
               }
-              this.getBarChart(this.chartLabels3, this.chartData4, this.chartData5,'Día del mes seleccionado', 'N° Pacientes','chart-3', 'C.E Reservada', 'C.E Realizada', 'bar');
+              this.getBarChart(this.chartLabels3, this.chartData4, this.chartData5,'Día del mes seleccionado', 'N° Pacientes','chart-3', 'Ingresos x Hosp.', 'Ingresos x Emergencia.', 'bar');
               Swal.close();
             },
             (error) => {
                 Swal.close();
             }
           );
-       } else if (input === 'altas_hospitalizacion'){
+      } else if (input === 'altas_hospitalizacion'){
         this.parameters.tipo= 'ALTA';
         this.tableApiservice.getHsChartIndex(this.parameters).subscribe(
           (response) => {  
-    
-              this.chartLabels3 = [];   
-              this.chartData4 = [];
-              this.chartData5 = [];    
+              this.chartData1 = [];   
+              this.chartData2 = [];   
+              this.chartData4 = [];   
+              this.chartData5 = [];
+
+              this.chartLabels5 = [];   
+              this.chartData7 = [];
+              this.chartData8 = [];    
             if(response.success){
               
               response.data.data.map(item =>{
-                this.chartLabels3.push(item.dia);
-                this.chartData4.push(item.cantidad);
-                this.chartData5.push(item.procedencia);
+                this.chartLabels5.push(item.dia);
+                this.chartData7.push(item.cantidad);
+                this.chartData8.push(item.procedencia);
               });
               // this.resumenMontos = response.data;
               
             }
-            this.getBarChart(this.chartLabels3, this.chartData4, this.chartData5,'Día del mes seleccionado', 'N° Pacientes','chart-3', 'C.E Reservada', 'C.E Realizada', 'bar');
+            this.getBarChart(this.chartLabels5, this.chartData7, this.chartData8,'Día del mes seleccionado', 'N° Pacientes','chart-5', 'Altas x Hosp.', 'Ingresos x Hosp.', 'bar');
             Swal.close();
           },
           (error) => {
               Swal.close();
           }
         );
-     }
+      }
     } else if (graph === 'pie'){
       if (input === 'ingresos_hospitalizacion') {
         this.parameters.tipo= 'INGR';
@@ -1907,7 +1770,7 @@ private getPagedData(page: Page, data: any[]) {
                   // this.resumenMontos = response.data;
                   
                 }
-                this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del mes seleccionado', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
+                this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del mes seleccionado', 'N° Pacientes','chart-1', 'Internados', 'Internados Ingresados x Emer.', 'bar');
                 Swal.close();
               },
               (error) => {

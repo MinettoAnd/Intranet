@@ -58,20 +58,7 @@ export class EstadisticasComponent implements OnInit {
     { value: '11', label: 'Noviembre' },
     { value: '12', label: 'Diciembre' },
   ];
-  optionsAnio = [
-    { value: '2016', label: '2016' },
-    { value: '2017', label: '2017' },
-    { value: '2018', label: '2018' },
-    { value: '2019', label: '2019' },
-    { value: '2020', label: '2020' },
-    { value: '2021', label: '2021' },
-    { value: '2022', label: '2022' },
-    { value: '2023', label: '2023' },
-    { value: '2024', label: '2024' },
-    { value: '2025', label: '2025' },
-    { value: '2026', label: '2026' },
-    { value: '2027', label: '2027' },
-  ];
+  optionsAnio = [];
   // loading = true;
   private baseChart: ElementRef;
   // private baseChart2: ElementRef;
@@ -202,159 +189,7 @@ export class EstadisticasComponent implements OnInit {
       flex: "1 1 auto",
   };
 
-columnDefs = [
-  {
-    headerName: "Athlete",
-    field: "athlete",
-    width: 150
-  },
-  {
-    headerName: "Age",
-    field: "age",
-    width: 90,
-    cellClassRules: {
-      "rag-green": "x < 20",
-      "rag-amber": "x >= 20 && x < 25",
-      "rag-red": "x >= 25"
-    }
-  },
-  {
-    headerName: "Country",
-    field: "country",
-    width: 120
-  },
-  {
-    headerName: "Year",
-    field: "year",
-    cellClassRules: {
-      "cell-red": function(params) {
-        return params.value === 2008;
-      },
-      "rag-amber-outer": function(params) {
-        return params.value === 2004;
-      },
-      "cell-red1": function(params) {
-        return params.value === 2000;
-      }
-    },
-    cellRenderer: function(params) {
-      return '<span class="rag-element">' + params.value + "</span>";
-    }
-  },
-  {
-    headerName: "Date",
-    field: "date",
-    cellClass: "rag-amber"
-  },
-  {
-    headerName: "Sport",
-    field: "sport",
-    cellClass: function(params) {
-      return params.value === "Swimming" ? "rag-green" : "rag-amber";
-    }
-  },
-  {
-    headerName: "Gold",
-    field: "gold",
-    cellStyle: { backgroundColor: "#aaffaa" }
-  },
-  {
-    headerName: "Silver",
-    field: "silver",
-  },
-  {
-    headerName: "Bronze",
-    field: "bronze",
-  },
-  {
-    headerName: "Total",
-    field: "total"
-  }
-    // {
-    //   headerName: 'Athlete Details',
-    //   children: [
-    //     {
-    //       field: 'athlete',
-    //       width: 180,
-    //       filter: 'agTextColumnFilter',
-    //     },
-    //     {
-    //       field: 'age',
-    //       width: 90,
-    //       filter: 'agNumberColumnFilter',
-    //     },
-    //     { headerName: 'Country', field: 'country', width: 140 },
-    //   ],
-    // },
-    // {
-    //   headerName: 'Sports Results',
-    //   children: [
-    //     { field: 'sport', width: 140 },
-    //     {
-    //       columnGroupShow: 'closed',
-    //       field: 'total',
-    //       width: 100,
-    //       filter: 'agNumberColumnFilter',
-    //     },
-    //     {
-    //       columnGroupShow: 'open',
-    //       field: 'gold',
-    //       width: 100,
-    //       filter: 'agNumberColumnFilter',
-    //     },
-    //     {
-    //       columnGroupShow: 'open',
-    //       field: 'silver',
-    //       width: 100,
-    //       filter: 'agNumberColumnFilter',
-    //     },
-    //     {
-    //       columnGroupShow: 'open',
-    //       field: 'bronze',
-    //       width: 100,
-    //       filter: 'agNumberColumnFilter',
-    //     },
-    //   ],
-    // },
-];
-rowData = [
-  {
-  "athlete": "Michael Phelps",
-  "age": 23,
-  "country": "United States",
-  "year": 2008,
-  "date": "24/08/2008",
-  "sport": "Swimming",
-  "gold": 8,
-  "silver": 0,
-  "bronze": 0,
-  "total": 8
-  },
-  {
-  "athlete": "Michael Phelps",
-  "age": 19,
-  "country": "United States",
-  "year": 2004,
-  "date": "29/08/2004",
-  "sport": "Swimming",
-  "gold": 6,
-  "silver": 0,
-  "bronze": 2,
-  "total": 8
-  },
-  {
-  "athlete": "Michael Phelps",
-  "age": 27,
-  "country": "United States",
-  "year": 2012,
-  "date": "12/08/2012",
-  "sport": "Swimming",
-  "gold": 4,
-  "silver": 2,
-  "bronze": 0,
-  "total": 6
-  },
-]
+
   constructor(private tableApiservice: ExternalConsultationService, private exportService: ExportService,
     private _cp: CurrencyPipe, private modalService: NgbModal) { 
       this.page1.pageNumber = 0;
@@ -370,6 +205,16 @@ rowData = [
       mes: new FormControl(this.mes),
       anio: new FormControl(this.anio),
     });
+    var anioOp = Number(this.anio);
+    while ( Number(anioOp) > 2015 ) {
+      console.log(275, anioOp);
+      
+      const anioNew = {
+         value: anioOp.toString(), label: anioOp.toString() 
+      }
+      this.optionsAnio.push(anioNew);
+      anioOp--;
+    }
     this.rowClassRules = {
       "totals": function(params) {
         //  console.log(301, params); 

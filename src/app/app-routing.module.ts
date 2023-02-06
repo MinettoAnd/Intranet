@@ -151,6 +151,11 @@ const routes: Routes = [
                 loadChildren: () => import('../app/pages/comercial/comercial.module').then(m => m.ComercialModule),
                 data: { extraParameter: "comercialMenu" },
             },
+            {
+                path: "suSaludIpress",
+                loadChildren: () => import('../app/pages/su-salud-ipress/su-salud-ipress.module').then(m => m.SuSaludIpressModule),
+                data: { extraParameter: "suSaludIpressMenu" },
+            },
         ],
     },
 
