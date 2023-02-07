@@ -156,6 +156,21 @@ const routes: Routes = [
                 loadChildren: () => import('../app/pages/su-salud-ipress/su-salud-ipress.module').then(m => m.SuSaludIpressModule),
                 data: { extraParameter: "suSaludIpressMenu" },
             },
+            {
+                path: "facturacion",
+                loadChildren: () => import('../app/pages/facturacion/facturacion.module').then(m => m.FacturacionModule),
+                data: { extraParameter: "facturacionMenu" },
+            },
+            {
+                path: "centroQuirurgico",
+                loadChildren: () => import('../app/pages/centro-quirurgico/centro-quirurgico.module').then(m => m.CentroQuirurgicoModule),
+                data: { extraParameter: "centroQuirurgicoMenu" },
+            },
+            {
+                path: "laboratorio",
+                loadChildren: () => import('../app/pages/laboratorio/laboratorio.module').then(m => m.LaboratorioModule),
+                data: { extraParameter: "laboratorioMenu" },
+            },
         ],
     },
 

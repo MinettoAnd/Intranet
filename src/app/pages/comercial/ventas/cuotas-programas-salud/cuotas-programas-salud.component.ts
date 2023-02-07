@@ -183,7 +183,7 @@ console.log(this.anio);
   });
   // this.pipe_$ = {transform: (_cp.transform, '_', 'USD', true)};
   var anioOp = Number(this.anio);
-    while ( Number(anioOp) > 2015 ) {
+    while ( Number(anioOp) > 2017 ) {
       console.log(275, anioOp);
       
       const anioNew = {
