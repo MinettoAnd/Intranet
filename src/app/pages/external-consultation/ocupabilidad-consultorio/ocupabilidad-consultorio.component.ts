@@ -196,20 +196,7 @@ sum_ocup_ca_mt;
     { value: '11', label: 'Noviembre' },
     { value: '12', label: 'Diciembre' },
   ];
-  optionsAnio = [
-    { value: '2016', label: '2016' },
-    { value: '2017', label: '2017' },
-    { value: '2018', label: '2018' },
-    { value: '2019', label: '2019' },
-    { value: '2020', label: '2020' },
-    { value: '2021', label: '2021' },
-    { value: '2022', label: '2022' },
-    { value: '2023', label: '2023' },
-    { value: '2024', label: '2024' },
-    { value: '2025', label: '2025' },
-    { value: '2026', label: '2026' },
-    { value: '2027', label: '2027' },
-  ];
+  optionsAnio = [];
   pipe_$: { transform: boolean; };
   isTable1 = true;
   isTable2 = true;
@@ -241,6 +228,16 @@ console.log(this.anio);
       mes: new FormControl(this.mes),
       anio: new FormControl(this.anio),
   });
+  var anioOp = Number(this.anio);
+  while ( Number(anioOp) > 2015 ) {
+    console.log(275, anioOp);
+    
+    const anioNew = {
+       value: anioOp.toString(), label: anioOp.toString() 
+    }
+    this.optionsAnio.push(anioNew);
+    anioOp--;
+  }
   // this.pipe_$ = {transform: (_cp.transform, '_', 'USD', true)};
    }
 

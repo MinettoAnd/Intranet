@@ -511,7 +511,7 @@ menuI;
           }
           return item;
        })
-      //  console.log(512, this.menuItems);
+       console.log(512, this.menuItems);
     });
 
   }

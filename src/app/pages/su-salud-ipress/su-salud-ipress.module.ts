@@ -5,11 +5,14 @@ import { RouterModule } from '@angular/router';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HospitalDischargeConsultationComponent } from './hospital-discharge-consultation/hospital-discharge-consultation.component';
-import { EstadisticasComponent } from './estadisticas/estadisticas.component';
+import { SetiIpressComponent } from './seti-ipress/seti-ipress.component';
+
+
 
 @NgModule({
-  declarations: [HospitalDischargeConsultationComponent, EstadisticasComponent],
+  declarations: [
+    SetiIpressComponent
+  ],
   imports: [
     CommonModule,
     NgxDatatableModule,
@@ -18,16 +21,12 @@ import { EstadisticasComponent } from './estadisticas/estadisticas.component';
     ReactiveFormsModule,
     RouterModule.forChild([
       {
-        path: 'consulta-altas-hospitalarias',
-        component: HospitalDischargeConsultationComponent
+        path: 'seti-ipress',
+        component: SetiIpressComponent
       },
-      {
-        path: 'estadisticas',
-        component: EstadisticasComponent
-      }
     ])
   ],
+  exports: [RouterModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  exports: [RouterModule]
 })
-export class HospitalizationModule { }
+export class SuSaludIpressModule { }

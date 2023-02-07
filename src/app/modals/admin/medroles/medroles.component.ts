@@ -48,6 +48,7 @@ export class MedrolesComponent implements OnInit {
 
   getListModuleAssign() {
     this.apiService.getListModuleAssign().then((response: any) => {
+      console.log(51, response);
       this.listassign = response.data.length > 0 ? response.data : [];
     });
   }
