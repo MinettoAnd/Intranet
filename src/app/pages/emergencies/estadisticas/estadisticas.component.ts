@@ -251,7 +251,7 @@ selectedOptionGraph2 = 'ingresos_emergencia';
       anio: new FormControl(this.anio),
     });
     var anioOp = Number(this.anio);
-    while ( Number(anioOp) > 2015 ) {
+    while ( Number(anioOp) > 2017 ) {
       console.log(275, anioOp);
       
       const anioNew = {
