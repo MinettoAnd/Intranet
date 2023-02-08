@@ -7,10 +7,13 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AttentionConsultationComponent } from './attention-consultation/attention-consultation.component';
+import { ListadoPacientesEmergenciaComponent } from './listado-pacientes-emergencia/listado-pacientes-emergencia.component';
 import { EstadisticasComponent } from './estadisticas/estadisticas.component';
 
+
+
 @NgModule({
-  declarations: [AttentionConsultationComponent, EstadisticasComponent],
+  declarations: [AttentionConsultationComponent, ListadoPacientesEmergenciaComponent, EstadisticasComponent],
   imports: [
     CommonModule,
     NgxDatatableModule,
@@ -23,9 +26,13 @@ import { EstadisticasComponent } from './estadisticas/estadisticas.component';
         component: AttentionConsultationComponent
       },
       {
-        path: 'estadisticas',
-        component: EstadisticasComponent
-      }
+        path: 'listado-pacientes-emergencia',
+        component: ListadoPacientesEmergenciaComponent
+      },
+      {
+          path: 'estadisticas',
+          component: EstadisticasComponent
+        }
     ])
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
