@@ -181,9 +181,17 @@ export class HospitalDischargeConsultationComponent implements OnInit {
           this.rows = this.data.data.data;
           console.log(response.data.page);
           this.page = (response as any).data.page;
+          let cControl = (this.page.pageNumber + 1) * this.page.size;
           this.temp = this.rows;
-          
             Swal.close();
+            if (cControl > 800){
+              Swal.fire({
+                title: "Problema",
+                text: this.message,
+                icon: "error"
+              })
+              return;
+            }
         }else{
           Swal.close();
         }
@@ -207,18 +215,26 @@ export class HospitalDischargeConsultationComponent implements OnInit {
 
 
   filter() {
-  
         const form = this.filtroForm.value;
-          this.f_inicio = moment(form.f_inicio).format('YYYY-MM-DD'),
-          this.f_fin = moment(form.f_fin).format('YYYY-MM-DD'),
-          this.id_sede = form.id_sede,
-          this.id_tipo_paciente = form.id_tipo_paciente,
-          this.like_empresa = form.like_empresa,
-          this.like_especialidad = form.like_especialidad,
-          this.like_medico = form.like_medico,
-          this.like_paciente = form.like_paciente,
-
-        this.setPage({ offset: 0 });
+          this.f_inicio = moment(form.f_inicio).format('YYYY-MM-DD');
+          this.f_fin = moment(form.f_fin).format('YYYY-MM-DD');
+          this.id_sede = form.id_sede;
+          this.id_tipo_paciente = form.id_tipo_paciente;
+          this.like_empresa = form.like_empresa;
+          this.like_especialidad = form.like_especialidad;
+          this.like_medico = form.like_medico;
+          this.like_paciente = form.like_paciente;
+          var diff = moment(this.f_fin).diff(moment(this.f_inicio));
+          if((diff/(1000*60*60*24)) < 31){
+            this.setPage({ offset: 0 });
+          }else{
+            Swal.fire({
+              title: "Problema",
+              text: "El sistema puede presentar datos de 31 DÍAS como máximo. Agradeceríamos modificar sus filtros de FECHA!",
+              icon: "error"
+            })
+            return;
+          }
     }
   async loading() {
       Swal.fire({
