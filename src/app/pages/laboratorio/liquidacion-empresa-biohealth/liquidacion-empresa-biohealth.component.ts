@@ -426,10 +426,28 @@ datePipe(value: any, ...args: any[]) {
                     this.rows2 = response.data.tabla_SucTAtencion;
                   //   this.temp2 = this.rows2;
                     this.columns3 = response.data.cabeceras_GTPac;
+                    this.columns3.map(item =>{
+                      if(item.pipe === 'currency'){
+                        item.pipe = this._cp;
+                      }else if(item.pipe === 'porcentaje'){
+                        item.pipe = this._pp;
+                      }else if(item.pipe === 'cantidad'){
+                        item.pipe = this._cnp;
+                      }
+                    }); 
                     this.rows3 = response.data.tabla_GTPac;
                   //   this.formatPipe(this.rows3);
                   //   this.rows3filtered = this.rows3.filter(item => item.GRUPOEM === 'CANTIDAD');
                     this.columns4 = response.data.cabeceras_GExamen;
+                    this.columns4.map(item =>{
+                      if(item.pipe === 'currency'){
+                        item.pipe = this._cp;
+                      }else if(item.pipe === 'porcentaje'){
+                        item.pipe = this._pp;
+                      }else if(item.pipe === 'cantidad'){
+                        item.pipe = this._cnp;
+                      }
+                    }); 
                     this.rows4 = response.data.tabla_GExamen;
                     // this.temp4 = this.rows4;
                     this.columns5 = response.data.cabeceras_pago_empresa;
