@@ -9,7 +9,7 @@ import { ConfigActions } from './ThemeOptions/store/config.actions';
 import { AppRoutingModule } from './app-routing.module';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 
-import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
+import { CommonModule, CurrencyPipe, DatePipe, DecimalPipe } from '@angular/common';
 import { HttpClientModule, HttpClient  } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { AgGridModule } from 'ag-grid-angular';
@@ -98,9 +98,13 @@ import { AnswerComponent } from './pages/encuesta/answer/answer.component';
 import { ResponseformComponent } from './pages/encuesta/responseform/responseform.component';
 import { ReporteComponent } from './pages/encuesta/reporte/reporte.component';
 import { CustomFilterPipe } from './pipes/custom-filter.pipe';
+import { PorcentajePipe } from './pipes/porcentaje.pipe';
 import { ExportService } from './_services/export.service';
 
-
+import { registerLocaleData } from '@angular/common';
+import localePe from '@angular/common/locales/es-PE';
+import { CustomNumberPipe } from './pipes/customNumber.pipe';
+registerLocaleData(localePe);
 // import { CuotasProgramasSaludComponent } from './pages/comercial/ventas/cuotas-programas-salud/cuotas-programas-salud.component';
 // import { BsDatepickerModule, BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -169,6 +173,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ResponseformComponent,
     ReporteComponent,
     CustomFilterPipe,
+
     // CuotasProgramasSaludComponent,
 
         
@@ -213,12 +218,15 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         DEFAULT_PERFECT_SCROLLBAR_CONFIG,
       // DEFAULT_DROPZONE_CONFIG,
     },
-    { provide: DEFAULT_CURRENCY_CODE, useValue: 'S/. ' },
-    // { provide: LOCALE_ID, useValue: 'es-PE'  },
+    { provide: DEFAULT_CURRENCY_CODE, useValue: 'PEN' },
+    { provide: LOCALE_ID, useValue: 'es-PE'  },
     ConfigActions,
     DatePipe,
     ExportService,
-    CurrencyPipe
+    CurrencyPipe,
+    DecimalPipe,
+    PorcentajePipe,
+    CustomNumberPipe
   ],
   bootstrap: [AppComponent],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],

@@ -13,14 +13,16 @@ import { ColumnMode, SelectionType, NgxDatatableModule, DatatableComponent  } fr
 import * as XLSX from 'xlsx';
 import { ExcelJson } from '../../../interfaces/excel-json.interface';
 import { ExportService } from '../../../_services/export.service';
-import { CurrencyPipe } from '@angular/common';
+import { CurrencyPipe, DecimalPipe } from '@angular/common';
 import * as Chart from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import ResizeObserver from 'resize-observer-polyfill';
 import {GridOptions} from "ag-grid-community";
 import { AgGridAngular } from "ag-grid-angular";
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-
+import { Router } from '@angular/router';
+import { PorcentajePipe } from '../../../pipes/porcentaje.pipe';
+import { CustomNumberPipe } from '../../../pipes/customNumber.pipe';
 @Component({
   selector: 'app-liquidacion-empresa-biohealth',
   templateUrl: './liquidacion-empresa-biohealth.component.html',
@@ -30,21 +32,7 @@ export class LiquidacionEmpresaBiohealthComponent implements OnInit {
   active = 1;
   closeResult = '';
   @ViewChild("agGrid") agGrid: AgGridAngular;
-  @ViewChild("baseChart", { static: false }) set content(
-    content: ElementRef
-  ) {
-    if (content) {
-      // initially setter gets called with undefined
-      this.baseChart = content;
-      this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del mes seleccionado', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
-      this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'pie');
-      // this.getBarChart(this.chartLabels, this.chartData3, this.chartData4, 'chart-2', 'MENSUAL-INGRESO CON IGV - TOTAL CUOTAS', 'MENSUAL-INGRESO CON IGV - TOTAL RECAUDADO', 'bar');
-      // this.getBarChart(this.chartLabels2, this.chartData5, this.chartData6, 'chart-3', 'MENSUAL-NÚMERO DE CONTRATOS PAGADOS-TOTAL CUOTAS', 'MENSUAL-NÚMERO DE CONTRATOS PAGADOS-TOTAL RECAUDADO', 'bar');
-      // this.getBarChart(this.chartLabels3, this.chartData7, this.chartData8, 'chart-4', 'ANUAL-INGRESO SIN IGV - TOTAL CUOTAS', 'ANUAL-INGRESO SIN IGV - TOTAL RECAUDADO', 'bar');
-      // this.getBarChart(this.chartLabels3, this.chartData9, this.chartData10, 'chart-5', 'ANUAL-INGRESO CON IGV - TOTAL CUOTAS', 'ANUAL-INGRESO CON IGV - TOTAL RECAUDADO', 'bar');
-      // this.getBarChart(this.chartLabels4, this.chartData11, this.chartData12, 'chart-6', 'ANUAL-NÚMERO DE CONTRATOS PAGADOS - TOTAL CUOTAS', 'ANUAL-NÚMERO DE CONTRATOS PAGADOS - TOTAL RECAUDADO', 'bar');
-    }
-  }
+
   optionsMes = [
     { value: '01', label: 'Enero' },
     { value: '02', label: 'Febrero' },
@@ -84,8 +72,10 @@ export class LiquidacionEmpresaBiohealthComponent implements OnInit {
   public chartData3 = [];
   selectedOptionTipo='cantidad';
   selectedOptionTipo2='cantidad';
-  progressBarLabels;
+  progressBarLabels1;
   progressBar1;
+  progressBarLabels2;
+  progressBar2;
   porcCompaMesAntRealizas;
   porcCompaMesAntAusentismo;
   porcCompaMesAntReservadas;
@@ -93,39 +83,14 @@ export class LiquidacionEmpresaBiohealthComponent implements OnInit {
   sede = '0000';
   f_inicio = moment(new Date()).format('YYYY-MM-DD');
   f_fin = moment(new Date()).format('YYYY-MM-DD');
-  area;
+  area = 'Laboratorio';
   origen = '0';
   tipo_proceso;
   filtroForm: FormGroup;
   anio = moment(new Date()).format('YYYY');
   public breadcrumb: any;
   parameters;
-  resumenMes:any = {
-    success: '',
-    total: '',
-    ausentismo: '',
-    medico: '',
-    paciente: '',
-    anuladas: '',
-    reservadas: ''
-  };
-  resumenMesAnterior:any = {
-    success: '',
-    total: '',
-    ausentismo: '',
-    medico: '',
-    paciente: '',
-    anuladas: '',
-    reservadas: ''
-  };
-  resumenMontos = {
-    ciasegcon: '',
-    instipriva: '',
-    mani: '',
-    otros: '',
-    tarjeta: '',
-    montoTotal: '',
-  };
+
   private rowClassRules;
   columns1: any;
   rows1: any;
@@ -138,7 +103,7 @@ export class LiquidacionEmpresaBiohealthComponent implements OnInit {
   temp4: any[];
   temp5: any[];
   temp6: any[];
-  tempRowsMedicos: any[];
+
   rowsFilter: any[];
   columns3: any[];
   rows3: any[];
@@ -193,7 +158,7 @@ export class LiquidacionEmpresaBiohealthComponent implements OnInit {
 
 
   constructor(private tableApiservice: LaboratorioService, private exportService: ExportService,
-    private _cp: CurrencyPipe, private modalService: NgbModal) { 
+    private _cp: CurrencyPipe, private _dp: DecimalPipe, private _pp:PorcentajePipe, private _cnp:CustomNumberPipe, private modalService: NgbModal) { 
       this.page1.pageNumber = 0;
       this.page1.size = 10;
       this.page2.pageNumber = 0;
@@ -202,6 +167,7 @@ export class LiquidacionEmpresaBiohealthComponent implements OnInit {
       this.page3.size = 10;
       this.page4.pageNumber = 0;
       this.page4.size = 10;
+
     this.filtroForm = new FormGroup({
       f_inicio: new FormControl(this.f_inicio),
       f_fin: new FormControl(this.f_fin),
@@ -248,6 +214,18 @@ export class LiquidacionEmpresaBiohealthComponent implements OnInit {
 
     this.setPage({ offset: 0 });
 }
+public myPipe(n: string): string {
+  console.log(217,n.substring(0, 10) );
+  return n.substring(0, 10);
+}
+
+datePipe(value: any, ...args: any[]) {
+  return new Date(value).toLocaleString('en-US').split(',')[0];
+}
+// public numToString(n: number): string {
+//   //alert(n);
+//   return this.fruitName[n];
+// }
   async loading() {
     Swal.fire({
         html: "<div>Filtrando ...</div>",
@@ -259,298 +237,7 @@ export class LiquidacionEmpresaBiohealthComponent implements OnInit {
         },
     });
   }
-  getBarChart(chartLabels1, chartData1, chartData2,scaleLabel1,scaleLabel2, chartNum, title, title2, typeChart) {
-    const data = {
-      labels: chartLabels1,
-      datasets: [
-        {
-          barPercentage: 0.8,
-          categoryPercentage: 1,
-          label: title,
-          // borderColor: 'rgba(99, 255, 132, 1)',
-          borderWidth: 1,
-          data: chartData1,
-          backgroundColor: '#28a74559'
-          // backgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#adb5bd','#ffc107', '#28a745', '#6610f2','#20c997'],
-          // hoverBackgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14','#adb5bd', '#ffc107', '#28a745', '#6610f2', '#20c997']
-        },
-        {
-          label: title2,
-          // borderColor: 'rgba(99, 255, 132, 1)',
-          borderWidth: 4,
-          data: chartData2,
-          backgroundColor     : '#a6bcdf',
-          borderColor         : 'rgba(33,104,163,1)',
-          // backgroundColor: 'rgb(255, 164, 8, 0.7)',
-          // backgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#adb5bd','#ffc107', '#28a745', '#6610f2','#20c997'],
-          // hoverBackgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14','#adb5bd', '#ffc107', '#28a745', '#6610f2', '#20c997']
-          type                : 'line',
-        },
-        // {
-        //   label: title3,
-        //   // borderColor: 'rgba(99, 255, 132, 1)',
-        //   borderWidth: 1,
-        //   data: chartData3,
-        //   backgroundColor: 'rgb(34, 102, 211, 0.5)'
-        //   // backgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#adb5bd','#ffc107', '#28a745', '#6610f2','#20c997'],
-        //   // hoverBackgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14','#adb5bd', '#ffc107', '#28a745', '#6610f2', '#20c997']
-        // }
-      ]
-    };
-    const options = {
-      // callbacks: {
-      //   label: function (t, d) {
-      //     var xLabel = d.datasets[t.datasetIndex].label;
-      //     var yLabel = t.yLabel >= 1000 ? 'S/.' + t.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : '$' + t.yLabel;
-      //     return xLabel + ': ' + yLabel;
-      //   }
-      // },
-      responsive: true,
-      // We use these empty structures as placeholders for dynamic theming.
-      // scales: {
-      //   yAxes: [{
-      //     ticks: {
-      //       beginAtZero: true,
-      //       callback: function (value, index, values) {
-      //         // console.log(444,Number.isInteger(value), value,index,values);
-      //         if (chartNum = 'chart-3'){
-      //           return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-      //         }else{
-      //           if (parseInt(value) >= 1000) {
-      //                           return 'S/.' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-      //           } else { return 'S/.' + value; }
-      //         }
-              
-      //       }
-      //     }
-      //   }]
-      // },
-      // legend: {
-      //   display: false
-      // },
-      scales: {
-        xAxes: [{
-          scaleLabel: {
-            display: true,
-            labelString: scaleLabel1,
-            fontSize: 18,
-            fontColor: '#000',
-          }
-        }],
-        yAxes: [{
-          scaleLabel: {
-            display: true,
-            labelString: scaleLabel2,
-            fontSize: 18,
-            fontColor: '#000',
-          }
-        }]
-      },
-      plugins: {
-        datalabels: {
-          
-          /* anchor puede ser "start", "center" o "end" */
-          anchor: 'center',
-          backgroundColor: function(context) {
-            return context.dataset.backgroundColor;
-          },
-          borderRadius: 4,
-          clip: true,
-          color: 'white',
-          font: {
-            weight: 'bold'
-          },
-          formatter: function(value, context) {
-            let sum = 0;
-            
-            let dataArr = context.chart.data.datasets[context.datasetIndex].data;
-              
-            dataArr.map((data) => {
-              return sum += parseFloat(data);
-            });
-            // console.log(292,value , sum );
-            if (sum > 0 ){
-              return ((value * 100) / sum).toFixed(2) + '%';
-            }else{
-              return (0 + '%');
-            }
-            
-          },
-          /* Podemos modificar el texto a mostrar */
-          // formatter: function (dato, ctx) {
-          //   return ((dato * 100) / total).toFixed(2) + '%'; 
-          // },
-          // formatter: (dato) => ((dato * 100) / total).toFixed(2) + '%',
-          // formatter: function (value, ctx) {
-          //   return ((value * 100) / this.total(ctx)).toFixed(2) + '%';
-          // },
-          // formatter: (dato) => Math.floor((dato / totales) * 100) + '%',
-          /* Color del texto */
-          // color: '#ffffff',
-          // /* Formato de la fuente */
-          // font: {
-          //   // family: '"Times New Roman", Times, serif',
-          //   size: '11',
-          //   weight: 'bold',
-          // },
-          /* Formato de la caja contenedora */
-          // padding: '4',
-          // borderWidth: 2,
-          // borderColor: 'darkblue',
-          // borderRadius: 8,
-          // backgroundColor: 'lightblue'
-        }
-      }
-    };
-    return this.getChart(chartNum, typeChart, data, options);
-    
-  }
-  getPieChart(chartLabels1, chartData1, chartNum, typeChart) {
-    const data = {
-      labels: chartLabels1,
-      datasets: [
-        {
-          barPercentage: 0.7,
-          categoryPercentage: 1,
-          // label: title,
-          // borderColor: 'rgba(99, 255, 132, 1)',
-          borderWidth: 1,
-          data: chartData1,
-          // backgroundColor: '#ffa40840'
-          backgroundColor: ['#2266d3', '#ffa408', '#fd7e14', '#17a2b8', '#eb445a', '#adb5bd','#ffc107', '#28a745', '#6610f2','#20c997'],
-          // hoverBackgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14','#adb5bd', '#ffc107', '#28a745', '#6610f2', '#20c997']
-        },
-        // {
-        //   label: title2,
-        //   // borderColor: 'rgba(99, 255, 132, 1)',
-        //   borderWidth: 3,
-        //   data: chartData2,
-        //   backgroundColor     : '#a6bcdf',
-        //   borderColor         : 'rgba(33,104,163,1)',
-        //   // backgroundColor: 'rgb(255, 164, 8, 0.7)',
-        //   // backgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#adb5bd','#ffc107', '#28a745', '#6610f2','#20c997'],
-        //   // hoverBackgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14','#adb5bd', '#ffc107', '#28a745', '#6610f2', '#20c997']
-        //   type                : 'line',
-        // },
-        // {
-        //   label: title3,
-        //   // borderColor: 'rgba(99, 255, 132, 1)',
-        //   borderWidth: 1,
-        //   data: chartData3,
-        //   backgroundColor: 'rgb(34, 102, 211, 0.5)'
-        //   // backgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#adb5bd','#ffc107', '#28a745', '#6610f2','#20c997'],
-        //   // hoverBackgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14','#adb5bd', '#ffc107', '#28a745', '#6610f2', '#20c997']
-        // }
-      ]
-    };
-    const options = {
-      // callbacks: {
-      //   label: function (t, d) {
-      //     var xLabel = d.datasets[t.datasetIndex].label;
-      //     var yLabel = t.yLabel >= 1000 ? 'S/.' + t.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : '$' + t.yLabel;
-      //     return xLabel + ': ' + yLabel;
-      //   }
-      // },
-      responsive: true,
-      // We use these empty structures as placeholders for dynamic theming.
-      // scales: {
-      //   yAxes: [{
-      //     ticks: {
-      //       beginAtZero: true,
-      //       callback: function (value, index, values) {
-      //         // console.log(444,Number.isInteger(value), value,index,values);
-      //         if (chartNum = 'chart-3'){
-      //           return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-      //         }else{
-      //           if (parseInt(value) >= 1000) {
-      //                           return 'S/.' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-      //           } else { return 'S/.' + value; }
-      //         }
-              
-      //       }
-      //     }
-      //   }]
-      // },
-      // legend: {
-      //   display: false
-      // },
-      // scales: {
-      //   xAxes: [{
-      //     scaleLabel: {
-      //       display: true,
-      //       // labelString: scaleLabel1,
-      //       fontSize: 18,
-      //       fontColor: '#000',
-      //     }
-      //   }],
-      //   yAxes: [{
-      //     scaleLabel: {
-      //       display: true,
-      //       // labelString: scaleLabel2,
-      //       fontSize: 18,
-      //       fontColor: '#000',
-      //     }
-      //   }]
-      // },
-      plugins: {
-        datalabels: {
-          
-          /* anchor puede ser "start", "center" o "end" */
-          anchor: 'center',
-          backgroundColor: function(context) {
-            return context.dataset.backgroundColor;
-          },
-          borderRadius: 4,
-          clip: true,
-          color: 'white',
-          font: {
-            weight: 'bold'
-          },
-          formatter: function(value, context) {
-            let sum = 0;
-            
-            let dataArr = context.chart.data.datasets[context.datasetIndex].data;
-              
-            dataArr.map((data) => {
-              return sum += parseFloat(data);
-            });
-            // console.log(292,value , sum );
-            if (sum > 0 ){
-              return ((value * 100) / sum).toFixed(2) + '%';
-            }else{
-              return (0 + '%');
-            }
-            
-          },
-          /* Podemos modificar el texto a mostrar */
-          // formatter: function (dato, ctx) {
-          //   return ((dato * 100) / total).toFixed(2) + '%'; 
-          // },
-          // formatter: (dato) => ((dato * 100) / total).toFixed(2) + '%',
-          // formatter: function (value, ctx) {
-          //   return ((value * 100) / this.total(ctx)).toFixed(2) + '%';
-          // },
-          // formatter: (dato) => Math.floor((dato / totales) * 100) + '%',
-          /* Color del texto */
-          // color: '#ffffff',
-          // /* Formato de la fuente */
-          // font: {
-          //   // family: '"Times New Roman", Times, serif',
-          //   size: '11',
-          //   weight: 'bold',
-          // },
-          /* Formato de la caja contenedora */
-          // padding: '4',
-          // borderWidth: 2,
-          // borderColor: 'darkblue',
-          // borderRadius: 8,
-          // backgroundColor: 'lightblue'
-        }
-      }
-    };
-    return this.getChart(chartNum, typeChart, data, options);
-    
-  }
+
   // window.onload = function() {
   //   var ctx = document.getElementById('myChart').getContext('2d');
   //   window.myChart = new Chart(ctx, config);
@@ -602,35 +289,8 @@ export class LiquidacionEmpresaBiohealthComponent implements OnInit {
     } 
   }
 
-  tipoChange(event, tabla){
-    console.log(751, event);
-    const input = event;
-    // this.especialidad = input;
-    // this.temp = this.rows1;rows2filtered
-    if (tabla === 'pacientes'){
-      if (input === 'cantidad') {
-        this.rows1filtered = this.rows1.filter(item => item.GRUPO3 === 'CANTIDAD');
-       } else if (input === 'soles'){
-        this.rows1filtered = this.rows1.filter(item =>item.GRUPO3 === 'SOLES');
-       }
-    } else if (tabla === 'empresas'){
-      if (input === 'cantidad') {
-        this.rows3filtered = this.rows3.filter(item => item.GRUPOEM === 'CANTIDAD');
-       } else if (input === 'soles'){
-        this.rows3filtered = this.rows3.filter(item =>item.GRUPOEM === 'SOLES');
-       }
-    }
-    
-  }
-  getChart(context, chartType, data, options?) {
-    const graph = new Chart(context, {
-      data,
-      options,
-      type: chartType,
-      plugins: [ChartDataLabels]
-    });
-    return graph;
-  }
+
+
   guardarImagen(chart, idDownload){
     var canvas = document.getElementById(chart) as HTMLCanvasElement;
     var downloadlink = document.getElementById(idDownload) as HTMLAnchorElement;
@@ -728,7 +388,7 @@ export class LiquidacionEmpresaBiohealthComponent implements OnInit {
         f_inicio: this.f_inicio,
         f_fin: this.f_fin,
         sede: this.sede,
-        area: 'Laboratorio',
+        area: this.area,
         origen: this.origen,
         tipo_proceso: 'pagoEmpresa'
       };
@@ -736,27 +396,59 @@ export class LiquidacionEmpresaBiohealthComponent implements OnInit {
       this.loading();
               this.tableApiservice.getPagoEntreEmpresa(this.parameters).subscribe(
                 (response) => { 
-                  console.log(739, response);
-                  // if(response.success){
-                  //   this.columns1 = response.data.cabeceras_tpacientes;
-                  //   this.rows1 = response.data.tabla_tpacientes;
-                  //   this.formatPipe(this.rows1);
+                 
+                  if(response.success){
+                    this.columns1 = response.data.cabeceras_Sucursal;
+                    this.columns1.map(item =>{
+                      if(item.pipe === 'currency'){
+                        item.pipe = this._cp;
+                      }else if(item.pipe === 'porcentaje'){
+                        item.pipe = this._pp;
+                      }else if(item.pipe === 'cantidad'){
+                        item.pipe = this._cnp;
+                      }
+                    }); 
+                    
+                    this.rows1 = response.data.tabla_Sucursal;
+                    this.formatPipe(this.rows1);
                   //   this.rows1filtered = this.rows1.filter(item => item.GRUPO3 === 'CANTIDAD');
-                  //   this.columns2 = response.data.cabeceras_rangoetareo;
-                  //   this.rows2 = response.data.tabla_rangoetareo;
+                    this.columns2 = response.data.cabeceras_SucTAtencion;
+                    this.columns2.map(item =>{
+                      if(item.pipe === 'currency'){
+                        item.pipe = this._cp;
+                      }else if(item.pipe === 'porcentaje'){
+                        item.pipe = this._pp;
+                      }else if(item.pipe === 'cantidad'){
+                        item.pipe = this._cnp;
+                      }
+                    }); 
+                    console.log(425, this.columns2);
+                    this.rows2 = response.data.tabla_SucTAtencion;
                   //   this.temp2 = this.rows2;
-                  //   this.columns3 = response.data.cabeceras_empresas;
-                  //   this.rows3 = response.data.tabla_empresas;
+                    this.columns3 = response.data.cabeceras_GTPac;
+                    this.rows3 = response.data.tabla_GTPac;
                   //   this.formatPipe(this.rows3);
                   //   this.rows3filtered = this.rows3.filter(item => item.GRUPOEM === 'CANTIDAD');
-                  //   this.columns4 = response.data.cabeceras_diagnostico;
-                  //   this.rows4 = response.data.tabla_diagnostico;
-                  //   this.temp4 = this.rows4;
-                  //   this.columns5 = response.data.cabeceras_especialidades;
-                  //   this.rows5 = response.data.tabla_especialidades;
+                    this.columns4 = response.data.cabeceras_GExamen;
+                    this.rows4 = response.data.tabla_GExamen;
+                    // this.temp4 = this.rows4;
+                    this.columns5 = response.data.cabeceras_pago_empresa;
+                    this.columns5.map(item =>{
+                      if(item.pipe === 'currency'){
+                        item.pipe = this._cp;
+                      }
+                    });
+                    console.log(401, this.columns5);
+                    this.rows5 = response.data.tabla_pago_empresa;
                   //   this.temp5 = this.rows5;
-                  //   this.columns6 = response.data.cabeceras_inasistencia;
-                  //   this.rows6 = response.data.tabla_inasistencia;
+                    this.columns6 = response.data.cabeceras_resumenPago;
+                    this.columns6.map(item =>{
+                      if(item.pipe === 'currency'){
+                        item.pipe = this._cp;
+                      }
+                    });
+                    this.rows6 = response.data.tabla_resumenPago;
+                    // this.formatPipe(this.rows6);
                   //   this.temp6 = this.rows6;
                   //   this.columns7 = response.data.cabeceras_resumen;
                   //   this.rows7 = response.data.tabla_resumen;
@@ -808,7 +500,7 @@ export class LiquidacionEmpresaBiohealthComponent implements OnInit {
                   //   this.rows10 = response.data.tabla_utilidad_Emp;
                   //   this.formatPipe2(this.rows10);
 
-                  // }
+                  }
                   Swal.close();
                 },
                 (error) => {
@@ -1033,7 +725,7 @@ export class LiquidacionEmpresaBiohealthComponent implements OnInit {
         
       } else {
         console.log(this.filtered);
-        this.rowsMedicos = [...this.tempRowsMedicos]
+        // this.rowsMedicos = [...this.tempRowsMedicos]
        
       }
     }
