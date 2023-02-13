@@ -22,6 +22,7 @@ import ResizeObserver from 'resize-observer-polyfill';
 })
 export class ListadoMorososComponent implements OnInit {
   initialSize = 0;
+  active = 1;
   // columnSize  = [ 12,12,12,20,22,8,8,28,28,10,21,10,10,10,21,10,10];
   columnSize  = [12,10,10,10,10,10,10,15,14,10,10,10,10,10,10,10,10];
   filtroForm: FormGroup;
