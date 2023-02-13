@@ -85,7 +85,8 @@
                             <ng-template ngbNavContent>
                                 <div class="card atencionesConsultaExterna">
                                     <div class="card-header">
-                                      <h4 class="card-title" style="bottom:13px;">Atenciones por Consulta Externa</h4>
+                                      <h4 class="card-title" style="bottom:13px;">Examenes Realizados ( NO incluye IGV )   -   Periodo del {{f_inicio}} al {{f_fin}}
+                                        Empresa BIOHEALTH</h4>
                                       <p>{{message}}</p> 
                                     </div>
                                     <div class="card-content collapse show">
@@ -109,7 +110,7 @@
                                           </div> -->
                                           <div class="box box-solid">
                                             <div id="accordion1">
-                                              <div class="card col-md-7">
+                                              <div class="card">
                                                 <div class="card-header" >
                                                   <div class="box-header">
                                                     <div class="toggle-table">
@@ -140,40 +141,40 @@
                                                         </button>
                                                       </li>
                                                     </ul>
-                                                    <div style="display:flex;align-items: center; justify-content:flex-end">
+                                                    <!-- <div style="display:flex;align-items: center; justify-content:flex-end">
                                                         <select class="form-control form-select" style="width: auto!important;" (change)="tipoChange($event.target.value, 'pacientes')" [(ngModel)]="selectedOptionTipo">
                                                           <option value="cantidad">Cantidad</option>
                                                           <option value="soles">Soles</option>
                                                         </select>
-                                                        <!-- <select formControlName="especialidadNombre" class="form-control form-select" (change)="especialityChange($event.target.value)" style="width:auto!important;" [(ngModel)]="selectedOption" >
+                                                        <select formControlName="especialidadNombre" class="form-control form-select" (change)="especialityChange($event.target.value)" style="width:auto!important;" [(ngModel)]="selectedOption" >
                                                           <option [value]="selectedOption" selected>{{selectedOption}}</option>
                                                         <option 
                                                           *ngFor="let especialidad of especialidades; let i=index"
                                                           [value]="especialidad.value"
                                                         >{{especialidad.value}}
                                                         </option>
-                                                      </select> -->
+                                                      </select>
                                                         <div class="" style="display:flex;margin:15px;align-items: center;">
                                                           <span>Buscar</span>&nbsp;&nbsp;
                                                             <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter($event, selectedOptionTipo)'>
                                                         </div>
-                                                      </div>                                 
+                                                    </div>                                  -->
                                                   </div>
-                                                  
+                                                <div style="display:flex">
                                                   <ngx-datatable #myTable1
-                                                  class="bootstrap table table-striped"
+                                                  class="bootstrap table table-striped  col-md-7"
                                                   id="datatablele"
                                                     [columns]="columns1"
                                                     [rows]="rows1"
                                                     [columnMode]="ColumnMode.flex"
                                                     [headerHeight]="50"
-                                                    [footerHeight]="65"
                                                     [rowHeight]="$any('auto')"
                                                     [scrollbarH]="true"
                                                     (page)="setPage($event)"
-                                                    
+                                                    [rowClass] = "getRowClass"
                                                     >
-                                                    <ngx-datatable-column [flexGrow]="1" [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns1; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                                    <ngx-datatable-column [flexGrow]="1" 
+                                                    [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns1; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                                         let-row="row">
                                                         <div>
@@ -191,40 +192,26 @@
                                                       </ngx-datatable-column> -->
                                                     </ngx-datatable-column>
                                                   </ngx-datatable>
-                                                  
+                                                  <div class="col-md-5">
+                                                    <div class="callout callout-info text-center p-3">
+                                                      <h4 class="box-title">PRECIO DE VENTA POR SUCURSAL</h4>
+                                                    </div>
+                                                    <div class="pl-3 pr-3" *ngFor="let percentageCompleted of progressBar1; let i = index;">
+                                                      <span style="display:flex; justify-content: space-between;"><i><b>{{progressBarLabels1[i]}}</b></i><i>{{percentageCompleted.value}} - {{percentageCompleted.porcentaje}} %</i></span>
+                                                        <ngb-progressbar
+                                                            [type]="color[i]"
+                                                            [value]="percentageCompleted.porcentaje"
+                                                            [striped]="false"
+                                                            [animated]="false">
+                                                        </ngb-progressbar>
+                                                        <p></p>
+                                                    </div>
+                                                  </div>
+                                                </div>
                                                 </div>
                                               </div>
-                                              <div class="card col-md-5">
-                                                <div class="d-block" *ngFor="let percentageCompleted of progressBar1; let i = index;">
-                                                  <span style="display:flex; justify-content: space-between;"><i><b>{{progressBarLabels1[i]}}</b></i><i>{{percentageCompleted.value}} - [{{percentageCompleted.porcentaje}}] %</i></span>
-                                                    <ngb-progressbar
-                                                        [type]="color[i]"
-                                                        [value]="percentageCompleted.porcentaje"
-                                                        [striped]="false"
-                                                        [animated]="false">
-                                                    </ngb-progressbar>
-                                                    <p></p>
-                                                    <!-- <div id="div_ocultar_tarjetas" style="margin-bottom: 15px; display: block;">
-                                                      <table class="table table-bordered">
-                                                        <thead>
-                                                            <tr>
-                                                              <th></th>
-                                                              <th>Cantidad</th>
-                                                              <th>Porcentaje</th>
-                                                            </tr>
-                                                        </thead>
-                                                          <tbody *ngFor="let rowTable of percentageCompleted.table; let i = index;">
-                                                            <tr style="font-size:16px;">
-                                                              <td>{{rowTable.programa }}</td>
-                                                              <td><strong><span>{{rowTable.cantidad}}</span></strong></td>
-                                                              <td><strong><span>{{rowTable.porcentaje}}</span></strong></td>
-                                                            </tr>
-                                                          </tbody>
-                                                      </table>
-                                                    </div> -->
-                                                </div>
-                                              </div>
-                                              <div class="card col-md-7">
+                                              
+                                              <div class="card">
                                                 <div class="card-header" >
                                                   <div class="box-header">
                                                     <div class="toggle-table">
@@ -255,7 +242,7 @@
                                                         </button>
                                                       </li>
                                                     </ul>
-                                                    <div style="display:flex;align-items: center; justify-content:flex-end">
+                                                    <!-- <div style="display:flex;align-items: center; justify-content:flex-end"> -->
                                                         <!-- <select formControlName="especialidadNombre" class="form-control form-select" (change)="especialityChange($event.target.value)" style="width:auto!important;" [(ngModel)]="selectedOption" >
                                                           <option [value]="selectedOption" selected>{{selectedOption}}</option>
                                                         <option 
@@ -264,76 +251,63 @@
                                                         >{{especialidad.value}}
                                                         </option>
                                                       </select> -->
-                                                        <div class="" style="display:flex;margin:15px;align-items: center;">
+                                                        <!-- <div class="" style="display:flex;margin:15px;align-items: center;">
                                                           <span>Buscar</span>&nbsp;&nbsp;
                                                             <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter2($event)'>
-                                                        </div>
-                                                      </div>                                 
+                                                        </div> -->
+                                                      <!-- </div>                                  -->
+                                                  </div>
+                                                  <div style="display:flex">
+                                                    <ngx-datatable #myTable2
+                                                    class="bootstrap table table-striped col-md-7"
+                                                    id="datatablele"
+                                                      [columns]="columns2"
+                                                      [rows]="rows2"
+                                                      [columnMode]="ColumnMode.flex"
+                                                      [headerHeight]="50"
+                                                      [rowHeight]="$any('auto')"
+                                                      [scrollbarH]="true"
+                                                      (page)="setPage($event)"
+                                                      [rowClass] = "getRowClass2"
+                                                      >
+                                                      <ngx-datatable-column [flexGrow]="1" [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns2; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                                                          let-row="row">
+                                                          <div>
+                                                            <span  [title]="value">{{value}}</span>
+                                                          </div>
+                                                          <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
+                                                            <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
+                                                          </div> -->
+                
+                                                        </ng-template>
+                                                        <!-- <ngx-datatable-column prop="per1">
+                                                          <ng-template let-row="row" ngx-datatable-cell-template>
+                                                            {{row.per1 | currency:'S/.  ':'code'}}
+                                                          </ng-template>
+                                                        </ngx-datatable-column> -->
+                                                      </ngx-datatable-column>
+                                                    </ngx-datatable>
+                                                    <div class="col-md-5">
+                                                      <div class="callout callout-info text-center p-3">
+                                                        <h4 class="box-title">PRECIO DE VENTA POR TIPO DE ATENCION</h4>
+                                                      </div>
+                                                      <div class="pl-3 pr-3" *ngFor="let percentageCompleted of progressBar2; let i = index;">
+                                                        <span style="display:flex; justify-content: space-between;"><i><b>{{progressBarLabels2[i]}}</b></i><i>{{percentageCompleted.value}} - {{percentageCompleted.porcentaje}} %</i></span>
+                                                          <ngb-progressbar
+                                                              [type]="color[i]"
+                                                              [value]="percentageCompleted.porcentaje"
+                                                              [striped]="false"
+                                                              [animated]="false">
+                                                          </ngb-progressbar>
+                                                          <p></p>
+                                                      </div>
+                                                    </div>
                                                   </div>
                                                   
-                                                  <ngx-datatable #myTable2
-                                                  class="bootstrap table table-striped"
-                                                  id="datatablele"
-                                                    [columns]="columns2"
-                                                    [rows]="rows2"
-                                                    [columnMode]="ColumnMode.flex"
-                                                    [headerHeight]="50"
-                                                    [footerHeight]="65"
-                                                    [rowHeight]="$any('auto')"
-                                                    [scrollbarH]="true"
-                                                    (page)="setPage($event)"
-                                                    >
-                                                    <ngx-datatable-column [flexGrow]="1" [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns2; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
-                                                      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
-                                                        let-row="row">
-                                                        <div>
-                                                          <span  [title]="value">{{value}}</span>
-                                                        </div>
-                                                        <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
-                                                          <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
-                                                        </div> -->
-              
-                                                      </ng-template>
-                                                      <!-- <ngx-datatable-column prop="per1">
-                                                        <ng-template let-row="row" ngx-datatable-cell-template>
-                                                          {{row.per1 | currency:'S/.  ':'code'}}
-                                                        </ng-template>
-                                                      </ngx-datatable-column> -->
-                                                    </ngx-datatable-column>
-                                                  </ngx-datatable>
-                                                  
                                                 </div>
                                               </div>
-                                              <div class="card col-md-5">
-                                                <div class="d-block" *ngFor="let percentageCompleted of progressBar2; let i = index;">
-                                                  <span style="display:flex; justify-content: space-between;"><i><b>{{progressBarLabels2[i]}}</b></i><i>{{percentageCompleted.value}} - [{{percentageCompleted.porcentaje}}] %</i></span>
-                                                    <ngb-progressbar
-                                                        [type]="color[i]"
-                                                        [value]="percentageCompleted.porcentaje"
-                                                        [striped]="false"
-                                                        [animated]="false">
-                                                    </ngb-progressbar>
-                                                    <p></p>
-                                                    <!-- <div id="div_ocultar_tarjetas" style="margin-bottom: 15px; display: block;">
-                                                      <table class="table table-bordered">
-                                                        <thead>
-                                                            <tr>
-                                                              <th></th>
-                                                              <th>Cantidad</th>
-                                                              <th>Porcentaje</th>
-                                                            </tr>
-                                                        </thead>
-                                                          <tbody *ngFor="let rowTable of percentageCompleted.table; let i = index;">
-                                                            <tr style="font-size:16px;">
-                                                              <td>{{rowTable.programa }}</td>
-                                                              <td><strong><span>{{rowTable.cantidad}}</span></strong></td>
-                                                              <td><strong><span>{{rowTable.porcentaje}}</span></strong></td>
-                                                            </tr>
-                                                          </tbody>
-                                                      </table>
-                                                    </div> -->
-                                                </div>
-                                              </div>
+                                              
                                               <div class="card">
                                                 <div class="card-header" >
                                                   <div class="box-header">
@@ -351,7 +325,7 @@
                                                 </div>
                                                 <div #collapse3="ngbCollapse" [(ngbCollapse)]="isCollapsed3">
                                                   <div class="row" style="align-items: center;justify-content: space-between;">
-                                                    <div style='margin-left:15px;'>
+                                                    <!-- <div style='margin-left:15px;'>
                                                         <select class="form-control form-select" (change)="onLimitChange($event.target.value, '1')">
                                                         <option
                                                             *ngFor="let option of pageLimitOptions"
@@ -361,7 +335,7 @@
                                                         </option>
                                                         <option value="0" *ngIf="this.page1.totalElements">Todos los Registros</option>
                                                         </select>
-                                                    </div>
+                                                    </div> -->
                                                     <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
                                                       <li class="list-group-item border-0 pl-0">
                                                         <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(3)">
@@ -376,24 +350,24 @@
                                                         </button>
                                                       </li>
                                                     </ul>
-                                                    <div style="display:flex;align-items: center; justify-content:flex-end">
+                                                    <!-- <div style="display:flex;align-items: center; justify-content:flex-end">
                                                       <select class="form-control form-select" style="width: auto!important;" (change)="tipoChange($event.target.value, 'empresas')" [(ngModel)]="selectedOptionTipo2">
                                                         <option value="cantidad">Cantidad</option>
                                                         <option value="soles">Soles</option>
                                                       </select>
-                                                        <!-- <select formControlName="especialidadNombre" class="form-control form-select" (change)="especialityChange($event.target.value)" style="width:auto!important;" [(ngModel)]="selectedOption" >
+                                                        <select formControlName="especialidadNombre" class="form-control form-select" (change)="especialityChange($event.target.value)" style="width:auto!important;" [(ngModel)]="selectedOption" >
                                                           <option [value]="selectedOption" selected>{{selectedOption}}</option>
                                                         <option 
                                                           *ngFor="let especialidad of especialidades; let i=index"
                                                           [value]="especialidad.value"
                                                         >{{especialidad.value}}
                                                         </option>
-                                                      </select> -->
+                                                      </select>
                                                         <div class="" style="display:flex;margin:15px;align-items: center;">
                                                           <span>Buscar</span>&nbsp;&nbsp;
                                                             <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter3($event)'>
                                                         </div>
-                                                      </div>                               
+                                                    </div>                                -->
                                                   </div>
                                                   <ngx-datatable #myTable3
                                                   class="bootstrap table table-striped"
@@ -402,10 +376,10 @@
                                                     [rows]="rows3"
                                                     [columnMode]="ColumnMode.flex"
                                                     [headerHeight]="50"
-                                                    [footerHeight]="65"
                                                     [rowHeight]="$any('auto')"
                                                     [scrollbarH]="true"
-                                                    [limit]="page1.size"
+                                                    [limit]="20"
+                                                    [rowClass] = "getRowClass1"
                                                     >
                                                     <ngx-datatable-column [flexGrow]="1" [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns3; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
@@ -446,7 +420,7 @@
                                                 </div>
                                                 <div #collapse4="ngbCollapse" [(ngbCollapse)]="isCollapsed4">
                                                   <div class="row" style="align-items: center;justify-content: space-between;">
-                                                    <div style='margin-left:15px;'>
+                                                    <!-- <div style='margin-left:15px;'>
                                                         <select class="form-control form-select" (change)="onLimitChange($event.target.value, '2')">
                                                         <option
                                                             *ngFor="let option of pageLimitOptions"
@@ -456,7 +430,7 @@
                                                         </option>
                                                         <option value="0" *ngIf="this.page2.totalElements">Todos los Registros</option>
                                                         </select>
-                                                    </div>
+                                                    </div> -->
                                                     <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
                                                       <li class="list-group-item border-0 pl-0">
                                                         <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(4)">
@@ -471,20 +445,20 @@
                                                         </button>
                                                       </li>
                                                     </ul>
-                                                    <div style="display:flex;align-items: center; justify-content:flex-end">
-                                                        <!-- <select formControlName="especialidadNombre" class="form-control form-select" (change)="especialityChange($event.target.value)" style="width:auto!important;" [(ngModel)]="selectedOption" >
+                                                    <!-- <div style="display:flex;align-items: center; justify-content:flex-end">
+                                                        <select formControlName="especialidadNombre" class="form-control form-select" (change)="especialityChange($event.target.value)" style="width:auto!important;" [(ngModel)]="selectedOption" >
                                                           <option [value]="selectedOption" selected>{{selectedOption}}</option>
                                                         <option 
                                                           *ngFor="let especialidad of especialidades; let i=index"
                                                           [value]="especialidad.value"
                                                         >{{especialidad.value}}
                                                         </option>
-                                                      </select> -->
+                                                      </select>
                                                         <div class="" style="display:flex;margin:15px;align-items: center;">
                                                           <span>Buscar</span>&nbsp;&nbsp;
                                                             <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter4($event)'>
                                                         </div>
-                                                      </div>                             
+                                                    </div>                              -->
                                                   </div>
                                                   
                                                   <ngx-datatable #myTable4
@@ -494,10 +468,10 @@
                                                     [rows]="rows4"
                                                     [columnMode]="ColumnMode.flex"
                                                     [headerHeight]="40"
-                                                    [footerHeight]="65"
                                                     [rowHeight]="$any('auto')"
                                                     [scrollbarH]="true"
-                                                    [limit]="page2.size"
+                                                    [rowClass] = "getRowClass"
+                                                    [limit]="20"
                                                     >
                                                     <ngx-datatable-column [flexGrow]="1" [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns4; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
@@ -533,7 +507,8 @@
                             <ng-template ngbNavContent>
                                 <div class="card">
                                     <div class="card-header">
-                                      <h4 class="card-title" style="bottom:13px;">Atenciones por Consulta Externa</h4>
+                                      <h4 class="card-title" style="bottom:13px;">Examenes Realizados ( NO incluye IGV )   -   Periodo del {{f_inicio}} al {{f_fin}}
+                                        Empresa BIOHEALTH</h4>
                                       <p>{{message}}</p>
                                     </div>
                                     <div class="card-content collapse show">
@@ -667,7 +642,8 @@
                             <ng-template ngbNavContent>
                                 <div class="card">
                                     <div class="card-header">
-                                      <h4 class="card-title" style="bottom:13px;">Atenciones por Consulta Externa</h4>
+                                      <h4 class="card-title" style="bottom:13px;">Examenes Realizados ( NO incluye IGV )   -   Periodo del {{f_inicio}} al {{f_fin}}
+                                        Empresa BIOHEALTH</h4>
                                       <p>{{message}}</p>
                                     </div>
                                     <div class="card-content collapse show">
@@ -826,7 +802,8 @@
                             <ng-template ngbNavContent>
                                 <div class="card">
                                     <div class="card-header">
-                                      <h4 class="card-title" style="bottom:13px;">Atenciones por Consulta Externa</h4>
+                                      <h4 class="card-title" style="bottom:13px;">Examenes Realizados ( NO incluye IGV )   -   Periodo del {{f_inicio}} al {{f_fin}}
+                                        Empresa BIOHEALTH</h4>
                                       <p>{{message}}</p>
                                     </div>
                                     <div class="card-content collapse show">

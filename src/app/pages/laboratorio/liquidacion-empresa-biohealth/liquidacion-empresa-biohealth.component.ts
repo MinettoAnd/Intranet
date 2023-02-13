@@ -32,7 +32,8 @@ export class LiquidacionEmpresaBiohealthComponent implements OnInit {
   active = 1;
   closeResult = '';
   @ViewChild("agGrid") agGrid: AgGridAngular;
-
+  enableSummary = true;
+  summaryPosition = 'bottom';
   optionsMes = [
     { value: '01', label: 'Enero' },
     { value: '02', label: 'Febrero' },
@@ -63,25 +64,23 @@ export class LiquidacionEmpresaBiohealthComponent implements OnInit {
   public isCollapsed9 = false;
   public isCollapsed10 = false;
   public isCollapsed11 = false;
-
   public chartLabels1 = [];
   public chartLabels2 = [];
-
   public chartData1 = [];
   public chartData2 = [];
   public chartData3 = [];
   selectedOptionTipo='cantidad';
   selectedOptionTipo2='cantidad';
-  progressBarLabels1;
-  progressBar1;
-  progressBarLabels2;
-  progressBar2;
+  progressBarLabels1 = [];
+  progressBar1 = [];
+  progressBarLabels2 = [];
+  progressBar2 = [];
   porcCompaMesAntRealizas;
   porcCompaMesAntAusentismo;
   porcCompaMesAntReservadas;
   totales;
   sede = '0000';
-  f_inicio = moment(new Date()).format('YYYY-MM-DD');
+  f_inicio = moment(new Date()).subtract(7, 'days').format('YYYY-MM-DD');
   f_fin = moment(new Date()).format('YYYY-MM-DD');
   area = 'Laboratorio';
   origen = '0';
@@ -90,7 +89,6 @@ export class LiquidacionEmpresaBiohealthComponent implements OnInit {
   anio = moment(new Date()).format('YYYY');
   public breadcrumb: any;
   parameters;
-
   private rowClassRules;
   columns1: any;
   rows1: any;
@@ -103,7 +101,6 @@ export class LiquidacionEmpresaBiohealthComponent implements OnInit {
   temp4: any[];
   temp5: any[];
   temp6: any[];
-
   rowsFilter: any[];
   columns3: any[];
   rows3: any[];
@@ -156,7 +153,6 @@ export class LiquidacionEmpresaBiohealthComponent implements OnInit {
       flex: "1 1 auto",
   };
 
-
   constructor(private tableApiservice: LaboratorioService, private exportService: ExportService,
     private _cp: CurrencyPipe, private _dp: DecimalPipe, private _pp:PorcentajePipe, private _cnp:CustomNumberPipe, private modalService: NgbModal) { 
       this.page1.pageNumber = 0;
@@ -176,7 +172,6 @@ export class LiquidacionEmpresaBiohealthComponent implements OnInit {
     });
     var anioOp = Number(this.anio);
     while ( Number(anioOp) > 2017 ) {
-      console.log(275, anioOp);
       
       const anioNew = {
          value: anioOp.toString(), label: anioOp.toString() 
@@ -206,26 +201,25 @@ export class LiquidacionEmpresaBiohealthComponent implements OnInit {
   filter() {
   
     const form = this.filtroForm.value;
-      this.sede = form.sede,
-      this.f_inicio = form.f_inicio,
-      this.f_fin = form.f_fin,
-      this.sede = form.sede,
-      this.origen = form.origen,
-
+      this.sede = form.sede;
+      this.f_inicio = form.f_inicio;
+      this.f_fin = form.f_fin;
+      this.sede = form.sede;
+      this.origen = form.origen;
+      var diff = moment(this.f_fin).diff(moment(this.f_inicio));
+      if((diff/(1000*60*60*24)) < 31){
+        this.setPage({ offset: 0 });
+      }else{
+        Swal.fire({
+          title: "Problema",
+          text: "El sistema puede presentar datos de 31 DÍAS como máximo. Agradeceríamos modificar sus filtros de FECHA!",
+          icon: "error"
+        })
+        return;
+      }
     this.setPage({ offset: 0 });
 }
-public myPipe(n: string): string {
-  console.log(217,n.substring(0, 10) );
-  return n.substring(0, 10);
-}
 
-datePipe(value: any, ...args: any[]) {
-  return new Date(value).toLocaleString('en-US').split(',')[0];
-}
-// public numToString(n: number): string {
-//   //alert(n);
-//   return this.fruitName[n];
-// }
   async loading() {
     Swal.fire({
         html: "<div>Filtrando ...</div>",
@@ -260,16 +254,24 @@ datePipe(value: any, ...args: any[]) {
     //   return {'totals': row.item.includes('TOTAL') || row.item.includes('COLECTIVA') }
     // }
     return {
-      'totals': row.GRUPO2.includes('TOTAL'), 'sub-totals': row.GRUPO2 === 'PROGRAMA DE SALUD' || row.GRUPO2 === 'CONVENIOS' || row.GRUPO2 ==='SEGUROS' || row.GRUPO2 ==='OTROS'
+      'totals': row.Grupo.includes('TOTAL')
     };
   }
   getRowClass1(row) {
-    
     // if (row.item.includes('COLECTIVA')){
     //   return {'totals': row.item.includes('TOTAL') || row.item.includes('COLECTIVA') }
     // }
     return {
-      'sub-totals': row.condicion.includes('AUSENTISMO') || row.condicion.includes('REPROGRAMACIONES') || row.condicion === 'TURNOS POR INASISTENCIA MEDICA'
+      'sub-totals': row.Campo === 'CIA. SEGUROS/CONVENIOS' || row.Campo === 'INSTITUCIONAL/PRIVADO' || row.Campo ==='MADRE NIÑO' || row.Campo ==='PROGRAMAS DE SALUD'
+    };
+  }
+  getRowClass2(row) {
+    console.log(251, row)
+    // if (row.item.includes('COLECTIVA')){
+    //   return {'totals': row.item.includes('TOTAL') || row.item.includes('COLECTIVA') }
+    // }
+    return {
+      'totals': row.Campo.includes('TOTAL'), 'sub-totals': row.Campo === 'CHORRILLOS' || row.Campo === 'LIMA' || row.Campo ==='CHORRILLOS'
     };
   }
   getRowClass3(row) {
@@ -305,82 +307,7 @@ datePipe(value: any, ...args: any[]) {
     // console.log(imagedata)
     downloadlink.href = imagedata;
   }
-  formatPipe2(rows1){
-    rows1.map(item => {
-      // console.log(item);
-          item.mEsp = item.mEsp + ' %';
-          item.mGas = item.mGas + ' %';
-          item.mUti = item.mUti + ' %';
-          item.porcUtilidad = typeof item.porcUtilidad === 'number' ? item.porcUtilidad.toFixed(2) + ' %' : Number(item.porcUtilidad).toFixed(2) + ' %';
-          item.cantidad = typeof item.cantidad === 'number' ? 'S/. ' + this.separadorDeMiles(item.cantidad.toFixed(2)) : 'S/. ' + this.separadorDeMiles(Number(item.cantidad).toFixed(2));
-          item.montoPaciente = typeof item.montoPaciente === 'number' ? 'S/. ' + this.separadorDeMiles(item.montoPaciente.toFixed(2)) : 'S/. ' + this.separadorDeMiles(Number(item.montoPaciente).toFixed(2));
-          item.montoSeguro = typeof item.montoSeguro === 'number' ? 'S/. ' + this.separadorDeMiles(item.montoSeguro.toFixed(2)) : 'S/. ' + this.separadorDeMiles(Number(item.montoSeguro).toFixed(2));
-          item.montoEsperado = typeof item.montoEsperado === 'number' ? 'S/. ' + this.separadorDeMiles(item.montoEsperado.toFixed(2)) : 'S/. ' + this.separadorDeMiles(Number(item.montoEsperado).toFixed(2));
-          item.montoPlanilla = typeof item.montoPlanilla === 'number' ? 'S/. ' + this.separadorDeMiles(item.montoPlanilla.toFixed(2)) : 'S/. ' + this.separadorDeMiles(Number(item.montoPlanilla).toFixed(2));
-          item.montoSuministro = typeof item.montoSuministro === 'number' ? 'S/. ' + this.separadorDeMiles(item.montoSuministro.toFixed(2)) : 'S/. ' + this.separadorDeMiles(Number(item.montoSuministro).toFixed(2));
-          item.montoHonorarios = typeof item.montoHonorarios === 'number' ? 'S/. ' + this.separadorDeMiles(item.montoHonorarios.toFixed(2)) : 'S/. ' + this.separadorDeMiles(Number(item.montoHonorarios).toFixed(2));
-          item.montoGastos = typeof item.montoGastos === 'number' ? 'S/. ' + this.separadorDeMiles(item.montoGastos.toFixed(2)) : 'S/. ' + this.separadorDeMiles(Number(item.montoGastos).toFixed(2));
-          item.montoUtilidad = typeof item.montoUtilidad === 'number' ? 'S/. ' + this.separadorDeMiles(item.montoUtilidad.toFixed(2)) : 'S/. ' + this.separadorDeMiles(Number(item.montoUtilidad).toFixed(2));
-          return item.mEsp, item.mGas, item.mUti, item.porcUtilidad, item.cantidad, item.montoPaciente, item.montoSeguro, item.montoEsperado, item.montoPlanilla, item.montoSuministro, item.montoHonorarios, item.montoGastos, item.montoUtilidad
-    });
-  }
-  formatPipe(rows1) {
-    // console.log(rows1);
-    // const editRowslPipe = ((rows1) =>{
-  rows1.map(item => {
-        // console.log(item);
-        // if (item.GRUPO3 === 'CANTIDAD' || item.GRUPOEM === 'CANTIDAD' ) {
-        //   // console.log(item.per1);
-        //   item.MES1 = typeof item.MES1 === 'number' ? this.separadorDeMiles(Math.round(item.MES1)) : this.separadorDeMiles(Math.round(Number(item.MES1)));
-        //   item.MES2 = typeof item.MES2 === 'number' ? this.separadorDeMiles(Math.round(item.MES2)) : this.separadorDeMiles(Math.round(Number(item.MES2)));
-        //   item.MES3 = typeof item.MES3 === 'number' ? this.separadorDeMiles(Math.round(item.MES3)) : this.separadorDeMiles(Math.round(Number(item.MES3)));
-        //   item.MES4 = typeof item.MES4 === 'number' ? this.separadorDeMiles(Math.round(item.MES4)) : this.separadorDeMiles(Math.round(Number(item.MES4)));
-        //   item.MES5 = typeof item.MES5 === 'number' ? this.separadorDeMiles(Math.round(item.MES5)) : this.separadorDeMiles(Math.round(Number(item.MES5)));
-        //   item.MES6 = typeof item.MES6 === 'number' ? this.separadorDeMiles(Math.round(item.MES6)) : this.separadorDeMiles(Math.round(Number(item.MES6)));
-        //   item.MES7 = typeof item.MES7 === 'number' ? this.separadorDeMiles(Math.round(item.MES7)) : this.separadorDeMiles(Math.round(Number(item.MES7)));
-        //   item.MES8 = typeof item.MES8 === 'number' ? this.separadorDeMiles(Math.round(item.MES8)) : this.separadorDeMiles(Math.round(Number(item.MES8)));
-        //   item.MES9 = typeof item.MES9 === 'number' ? this.separadorDeMiles(Math.round(item.MES9)) : this.separadorDeMiles(Math.round(Number(item.MES9)));
-        //   item.MES10 = typeof item.MES10 === 'number' ? this.separadorDeMiles(Math.round(item.MES10)) : this.separadorDeMiles(Math.round(Number(item.MES10)));
-        //   item.MES11 = typeof item.MES11 === 'number' ? this.separadorDeMiles(Math.round(item.MES11)) : this.separadorDeMiles(Math.round(Number(item.MES11)));
-        //   item.MES12 = typeof item.MES12 === 'number' ? this.separadorDeMiles(Math.round(item.MES12)) : this.separadorDeMiles(Math.round(Number(item.MES12)));
-        //   item.TOTAL = typeof item.TOTAL === 'number' ?  this.separadorDeMiles(Math.round(item.TOTAL)) : this.separadorDeMiles(Math.round(Number(item.TOTAL)));
 
-         
-        // } else 
-        if (item.GRUPO3 === 'SOLES' || item.GRUPOEM === 'SOLES' ){
-          item.MES2 = typeof item.MES2 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES2.toFixed(2) ):  'S/. ' + this.separadorDeMiles(Number(item.MES2).toFixed(2));
-          item.MES1 = typeof item.MES1 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES1.toFixed(2) ):  'S/. ' + this.separadorDeMiles(Number(item.MES1).toFixed(2));
-          item.MES3 = typeof item.MES3 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES3.toFixed(2) ):  'S/. ' + this.separadorDeMiles(Number(item.MES3).toFixed(2));
-          item.MES4 = typeof item.MES4 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES4.toFixed(2) ):  'S/. ' + this.separadorDeMiles(Number(item.MES4).toFixed(2));
-          item.MES5 = typeof item.MES5 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES5.toFixed(2) ):  'S/. ' + this.separadorDeMiles(Number(item.MES5).toFixed(2));
-          item.MES6 = typeof item.MES6 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES6.toFixed(2) ):  'S/. ' + this.separadorDeMiles(Number(item.MES6).toFixed(2));
-          item.MES7 = typeof item.MES7 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES7.toFixed(2) ):  'S/. ' + this.separadorDeMiles(Number(item.MES7).toFixed(2));
-          item.MES8 = typeof item.MES8 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES8.toFixed(2) ):  'S/. ' + this.separadorDeMiles(Number(item.MES8).toFixed(2));
-          item.MES9 = typeof item.MES9 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES9.toFixed(2) ):  'S/. ' + this.separadorDeMiles(Number(item.MES9).toFixed(2));
-          item.MES10 = typeof item.MES10 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES10.toFixed(2))  :'S/. ' + this.separadorDeMiles(Number(item.MES10).toFixed(2));
-          item.MES11 = typeof item.MES11 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES11.toFixed(2))  :'S/. ' + this.separadorDeMiles(Number(item.MES11).toFixed(2));
-          item.MES12 = typeof item.MES12 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES12.toFixed(2))  :'S/. ' + this.separadorDeMiles(Number(item.MES12).toFixed(2));
-          item.TOTAL = typeof item.TOTAL === 'number' ? 'S/. ' + this.separadorDeMiles(item.TOTAL.toFixed(2))  :'S/. ' + this.separadorDeMiles(Number(item.TOTAL).toFixed(2));
-        }else{
-          item.MES1 = typeof item.MES1 === 'number' ? this.separadorDeMiles(Math.round(item.MES1)) : this.separadorDeMiles(Math.round(Number(item.MES1)));
-          item.MES2 = typeof item.MES2 === 'number' ? this.separadorDeMiles(Math.round(item.MES2)) : this.separadorDeMiles(Math.round(Number(item.MES2)));
-          item.MES3 = typeof item.MES3 === 'number' ? this.separadorDeMiles(Math.round(item.MES3)) : this.separadorDeMiles(Math.round(Number(item.MES3)));
-          item.MES4 = typeof item.MES4 === 'number' ? this.separadorDeMiles(Math.round(item.MES4)) : this.separadorDeMiles(Math.round(Number(item.MES4)));
-          item.MES5 = typeof item.MES5 === 'number' ? this.separadorDeMiles(Math.round(item.MES5)) : this.separadorDeMiles(Math.round(Number(item.MES5)));
-          item.MES6 = typeof item.MES6 === 'number' ? this.separadorDeMiles(Math.round(item.MES6)) : this.separadorDeMiles(Math.round(Number(item.MES6)));
-          item.MES7 = typeof item.MES7 === 'number' ? this.separadorDeMiles(Math.round(item.MES7)) : this.separadorDeMiles(Math.round(Number(item.MES7)));
-          item.MES8 = typeof item.MES8 === 'number' ? this.separadorDeMiles(Math.round(item.MES8)) : this.separadorDeMiles(Math.round(Number(item.MES8)));
-          item.MES9 = typeof item.MES9 === 'number' ? this.separadorDeMiles(Math.round(item.MES9)) : this.separadorDeMiles(Math.round(Number(item.MES9)));
-          item.MES10 = typeof item.MES10 === 'number' ? this.separadorDeMiles(Math.round(item.MES10)) : this.separadorDeMiles(Math.round(Number(item.MES10)));
-          item.MES11 = typeof item.MES11 === 'number' ? this.separadorDeMiles(Math.round(item.MES11)) : this.separadorDeMiles(Math.round(Number(item.MES11)));
-          item.MES12 = typeof item.MES12 === 'number' ? this.separadorDeMiles(Math.round(item.MES12)) : this.separadorDeMiles(Math.round(Number(item.MES12)));
-          item.TOTAL = typeof item.TOTAL === 'number' ?  this.separadorDeMiles(Math.round(item.TOTAL)) : this.separadorDeMiles(Math.round(Number(item.TOTAL)));
-        }
-        return item.MES1,item.MES2,item.MES3,item.MES4,item.MES5,item.MES6,item.MES7,item.MES8,item.MES9,item.MES10,item.MES11,item.MES12, item.TOTAL;
-      });
-    // console.log(rows1);
-  // });
-}
  setPage(pageInfo) {
       console.log(pageInfo);
       // this.page.pageNumber = pageInfo.offset;
@@ -410,7 +337,33 @@ datePipe(value: any, ...args: any[]) {
                     }); 
                     
                     this.rows1 = response.data.tabla_Sucursal;
-                    this.formatPipe(this.rows1);
+                    const cobraBIOHEALTH = [];
+                    const porcCobraBIOHEALTH = [];
+                    let totalCantidad = 0;
+                    let totalcobraCSALUD = 0;
+                    let totalcobraBIOHEALTH = 0;
+                    let totalporcCobraBIOHEALTH = 0;
+                    this.rows1.map(item=>{
+                        totalCantidad += Number(item.Cantidad);
+                        totalcobraCSALUD += Number(item.cobraCSALUD);
+                        totalcobraBIOHEALTH += Number(item.cobraBIOHEALTH);
+                        totalporcCobraBIOHEALTH += Number(item.porcBIOHEALTH);
+                        this.progressBarLabels1.push(item.Grupo)
+                        const datos = {
+                          porcentaje : Number(item.porcBIOHEALTH).toFixed(2),
+                          value: this._cp.transform(Number(item.cobraBIOHEALTH).toFixed(2),'PEN','S/.'),
+                          }
+                        this.progressBar1.push(datos);
+                    });
+                    const total = {
+                      Grupo: "TOTAL",
+                      Cantidad : totalCantidad,
+                      cobraCSALUD : totalcobraCSALUD,
+                      cobraBIOHEALTH : totalcobraBIOHEALTH,
+                      porcBIOHEALTH : totalporcCobraBIOHEALTH
+                    }
+                    // console.log(344, total)
+                    this.rows1.push(total);
                   //   this.rows1filtered = this.rows1.filter(item => item.GRUPO3 === 'CANTIDAD');
                     this.columns2 = response.data.cabeceras_SucTAtencion;
                     this.columns2.map(item =>{
@@ -422,8 +375,30 @@ datePipe(value: any, ...args: any[]) {
                         item.pipe = this._cnp;
                       }
                     }); 
-                    console.log(425, this.columns2);
+                    // console.log(425, this.columns2);
                     this.rows2 = response.data.tabla_SucTAtencion;
+                    const taCobraBIOHEALTH = [];
+                    const taPorcCobraBIOHEALTH = [];
+                    let totalBIOHEALTH;
+                    this.rows2.map(item=>{
+                      if(item.Campo ==='TOTAL'){
+                        totalBIOHEALTH = item.cobraBIOHEALTH;
+                      }
+                      // console.log(444, totalBIOHEALTH)
+                      if(totalBIOHEALTH !== undefined && (item.Campo.trim() ==='Ambulatoria' || item.Campo.trim() ==='Emergencia' || item.Campo.trim() ==='Hospitalizacion')){
+                        // taCobraBIOHEALTH.push(Number(item.cobraBIOHEALTH).toFixed(2));
+                        // taPorcCobraBIOHEALTH.push((item.cobraBIOHEALTH/totalBIOHEALTH * 100).toFixed(2));
+                        this.progressBarLabels2.push(item.Campo);
+                        const datos = {
+                          porcentaje : (item.cobraBIOHEALTH/totalBIOHEALTH * 100).toFixed(2),
+                          value: this._cp.transform(Number(item.cobraBIOHEALTH).toFixed(2),'PEN','S/.'),
+                          }
+                          this.progressBar2.push(datos);
+                      }
+                      
+                    });
+                    // console.log(448,taCobraBIOHEALTH);
+                    // console.log(449,taPorcCobraBIOHEALTH);
                   //   this.temp2 = this.rows2;
                     this.columns3 = response.data.cabeceras_GTPac;
                     this.columns3.map(item =>{
@@ -448,7 +423,27 @@ datePipe(value: any, ...args: any[]) {
                         item.pipe = this._cnp;
                       }
                     }); 
+                    let totalCantidad1 = 0;
+                    let totalcobraCSALUD1 = 0;
+                    let totalcobraBIOHEALTH1 = 0;
+                    let totalporcCobraBIOHEALTH1 = 0;
                     this.rows4 = response.data.tabla_GExamen;
+                    this.rows4.map(item=>{
+                      totalCantidad1 += Number(item.Cantidad);
+                      totalcobraCSALUD1 += Number(item.cobraCSALUD);
+                      totalcobraBIOHEALTH1 += Number(item.cobraBIOHEALTH);
+                      totalporcCobraBIOHEALTH1 += Number(item.porcBIOHEALTH);
+                      
+                    });
+                    const total1 = {
+                      Grupo: "TOTAL",
+                      Cantidad : totalCantidad1,
+                      cobraCSALUD : totalcobraCSALUD1,
+                      cobraBIOHEALTH : totalcobraBIOHEALTH1,
+                      porcBIOHEALTH : totalporcCobraBIOHEALTH1
+                    }
+                    console.log(344, total1)
+                    this.rows4.push(total1);
                     // this.temp4 = this.rows4;
                     this.columns5 = response.data.cabeceras_pago_empresa;
                     this.columns5.map(item =>{
@@ -456,9 +451,9 @@ datePipe(value: any, ...args: any[]) {
                         item.pipe = this._cp;
                       }
                     });
-                    console.log(401, this.columns5);
+                    // console.log(401, this.columns5);
                     this.rows5 = response.data.tabla_pago_empresa;
-                  //   this.temp5 = this.rows5;
+                    this.temp5 = this.rows5;
                     this.columns6 = response.data.cabeceras_resumenPago;
                     this.columns6.map(item =>{
                       if(item.pipe === 'currency'){
@@ -466,57 +461,7 @@ datePipe(value: any, ...args: any[]) {
                       }
                     });
                     this.rows6 = response.data.tabla_resumenPago;
-                    // this.formatPipe(this.rows6);
-                  //   this.temp6 = this.rows6;
-                  //   this.columns7 = response.data.cabeceras_resumen;
-                  //   this.rows7 = response.data.tabla_resumen;
-                  //   this.formatPipe(this.rows7);
-                  //   this.columns8 = response.data.cabeceras_utilidad;
-                  //   this.columns8.map(item => {
-                  //     if (item.children){
-                  //       item.children.map(subitem =>{
-                  //         subitem.cellClassRules = {
-                  //           "cell-red": function(params) {
-                  //             return params.value.includes('-');
-                  //           }
-                  //         }
-                  //         return subitem.cellClassRules
-                  //      })
-                  //     }
-                  //   });
-                  //   // console.log(942, this.columns8);
-                  //   this.rows8 = response.data.tabla_utilidad;
-                  //   this.formatPipe2(this.rows8);
-                  //   this.columns9 = response.data.cabeceras_utilidad_TPac;
-                  //   this.columns9.map(item => {
-                  //     if (item.children){
-                  //         item.children.map(subitem =>{
-                  //           subitem.cellClassRules = {
-                  //             "cell-red": function(params) {
-                  //               return params.value.includes('-');
-                  //             }
-                  //           }
-                  //           return subitem.cellClassRules
-                  //       })
-                  //     }
-                  //   });
-                  //   this.rows9 = response.data.tabla_utilidad_TPac;
-                  //   this.formatPipe2(this.rows9);
-                  //   this.columns10 = response.data.cabeceras_utilidad_Emp;
-                  //   this.columns10.map(item => {
-                  //     if (item.children){
-                  //       item.children.map(subitem =>{
-                  //         subitem.cellClassRules = {
-                  //           "cell-red": function(params) {
-                  //             return params.value.includes('-');
-                  //           }
-                  //         }
-                  //         return subitem.cellClassRules
-                  //       })
-                  //     }
-                  //   });
-                  //   this.rows10 = response.data.tabla_utilidad_Emp;
-                  //   this.formatPipe2(this.rows10);
+
 
                   }
                   Swal.close();
@@ -810,5 +755,44 @@ datePipe(value: any, ...args: any[]) {
       } else {
         return `with: ${reason}`;
       }
+    }
+    summaryForAmount(cells: any){
+    
+      let count: number = 0;
+      let re = /\,/gi;
+      let re1 = /\S\/./gi;
+          
+          cells.filter((cell) => {
+              cell = cell.toString();
+              if (cell != null && cell != undefined) {
+                // console.log(719, cell, count)
+                if (cell.indexOf('S/.') > -1){  
+                  count = count + +cell.replace(re1, '').replace(',', '');
+                }else if (!(cell.indexOf('-') > -1 || cell.indexOf('(') > -1)) {
+                 
+                      count = count + +cell.replace(re, '');
+                      // console.log(722,cell, count)
+                }else if (cell.indexOf('-') > -1) {
+                      count = count + 0;
+                }else if (cell.indexOf('(') > -1) {
+                  let number = cell.replace('(', '').replace(')', '');
+                  count = count - +number.replace(re, '');
+                }
+              }
+          });
+          
+          if(!count){
+            return count.toString().replace('NaN', 'Total');
+          }else if (count.toString().indexOf('.') > -1){
+            // count = this._cp.transform(count, 'PEN', 'S/. ')
+            console.log(737, count)
+            return count.toString().indexOf('-') > -1 ? count.toLocaleString().replace('-', '(').concat(')') : count;
+          }else{
+            return count.toString().indexOf('-') > -1 ? count.toLocaleString().replace('-', '(').concat(')') :  count.toLocaleString();
+          }
+    }
+    private summaryNull(cells: any): null {
+      // console.log(739, cells)
+          return null;
     }
 }
