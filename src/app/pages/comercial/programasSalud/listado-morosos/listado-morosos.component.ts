@@ -13,18 +13,19 @@ import * as XLSX from 'xlsx';
 import { ExcelJson } from '../../../../interfaces/excel-json.interface';
 import { ExportService } from '../../../../_services/export.service';
 import ResizeObserver from 'resize-observer-polyfill';
+import { CurrencyPipe } from '@angular/common';
+import { CustomNumberPipe } from 'src/app/pipes/customNumber.pipe';
 
 
 @Component({
   selector: 'app-listado-morosos',
   templateUrl: './listado-morosos.component.html',
-  styleUrls: ['./listado-morosos.component.sass']
+  styleUrls: ['./listado-morosos.component.scss'],
 })
 export class ListadoMorososComponent implements OnInit {
   initialSize = 0;
   active = 1;
-  // columnSize  = [ 12,12,12,20,22,8,8,28,28,10,21,10,10,10,21,10,10];
-  columnSize  = [12,10,10,10,10,10,10,15,14,10,10,10,10,10,10,10,10];
+
   filtroForm: FormGroup;
   @BlockUI('addRows') blockUIAddRows: NgBlockUI;
   @BlockUI('rowSelection') blockUIRowSelection: NgBlockUI;
@@ -45,6 +46,8 @@ export class ListadoMorososComponent implements OnInit {
   id: number;
   loadingIndicator: true;
   rows: any;
+  rows1: any;
+  rows2: any;
   editing = {};
   row: any;
   public breadcrumb: any;
@@ -53,6 +56,8 @@ export class ListadoMorososComponent implements OnInit {
   message;
   title;
   columns:any;
+  columns1:any;
+  columns2:any;
   optionsWithCaption = {};
   datePipe: any;
         // f_inicio: '2022-11-01',
@@ -70,7 +75,12 @@ export class ListadoMorososComponent implements OnInit {
     {value: 50},
     {value: 100},
   ];
-  constructor(private tableApiservice: ComercialService, private exportService: ExportService) {
+  totalMorosos:any;
+  totalAfiliados:any;
+  totalPeriodos:any;
+  totalDeuda:any;
+  constructor(private tableApiservice: ComercialService, private exportService: ExportService, private _cnp:CustomNumberPipe,
+    private _cp: CurrencyPipe) {
     this.page.pageNumber = 0;
     this.page.size = 10;
 
@@ -82,55 +92,20 @@ export class ListadoMorososComponent implements OnInit {
    }
 
   ngOnInit() {
-    const item = document.getElementById('datatablele');
-    this.initialSize = item.offsetWidth;
-    console.log(90, this.initialSize);
-    new ResizeObserver((event: any) => {
-      this.escucharResizeDiv(event);
-    }).observe(item);
+  
     // this.setPage({ offset: 0 });
   }
-  escucharResizeDiv(event) {
-    const item = document.getElementById('datatablele');
+  getRowClass(row) {
 
-    if (item.offsetWidth !== this.initialSize) {
-      // HEADER
-      const headerDatatable  = event[0].target.children[0].children[0];
-      headerDatatable.style.width = '100%';
-      headerDatatable.children[0].style.width = '100%';
-      const rowHeader = headerDatatable.children[0].children[1];
-      rowHeader.style.width = '100%';
-      const headerColumns = Array.from( rowHeader.children );
-      // BODY
-      const bodyDatatable  = event[0].target.children[0].children[1].children[0].children[0];
-      bodyDatatable.style.width = '100%';
-      const rowsIterables = Array.from( bodyDatatable.children );
-      // ============ CICLOS ==========================
-      headerColumns.forEach( (column: any, index: number) => {
-        column.style.width = `${this.columnSize[index]}%`;
-      });
+    return {
+      'totals': row.programa.includes('TOTAL')
+    };
+  }
+  getRowClass1(row) {
 
-      // BODY - Recorremos las filas del datatable
-      rowsIterables.forEach((row: any) => {
-        row.children[0].style.width = '100%';
-        const columns = Array.from( row.children[0].children[1].children );
-
-        if ( columns.length ) {
-          // const cantidadSize = diferenciaSize / columns.length;
-          row.children[0].children[1].style.width = '100%';
-          // Recorremos cada columna del datatable
-          columns.forEach( (column: any, index: number) => {
-            column.style.width = `${this.columnSize[index]}%`;
-          });
-        }
-
-      });
-
-      // Obtenemos el nuevo ancho del div
-      this.initialSize = item.offsetWidth;
-      console.log(134, this.initialSize);
-    }
-
+    return {
+      'totals': row.periodo.includes('TOTAL')
+    };
   }
   public onLimitChange(limit: any): void {
     this.changePageLimit(limit);
@@ -173,7 +148,212 @@ export class ListadoMorososComponent implements OnInit {
           this.data = response.data ? response : [];
       console.log(168, this.data);   
           this.columns = this.data.data.cabeceras;
+          this.columns1 = [
+            {prop: 'programa', name: 'Programa'},
+            {prop: 'nuContratos', name: 'Contratos', pipe: this._cnp},
+            {prop: 'nuAfiliados', name: 'Afiliados', pipe: this._cnp},
+            {prop: 'nuCuotasVencidas', name: 'Periodos', pipe: this._cnp},
+            {prop: 'totalImpCuotasVencidas', name: 'Deuda', pipe: this._cp},
+          ]
+          this.columns2 = [
+            {prop: 'periodo', name: 'Periodos'},
+            {prop: 'nuContratos', name: 'Contratos', pipe: this._cnp},
+            {prop: 'nuAfiliados', name: 'Afiliados', pipe: this._cnp},
+            {prop: 'nuCuotasVencidas', name: 'Periodos', pipe: this._cnp},
+            {prop: 'totalImpCuotasVencidas', name: 'Deuda', pipe: this._cp},
+          ]
           this.rows = this.data.data.data;
+          this.rows1 = [];
+          let nuContratosTCP = 0;
+          let nuAfiliadosTCP = 0;
+          let nuCuotasVencidasTCP = 0;
+          let totalImpTCP = 0;
+          let nuContratosTCP1 = 0;
+          let nuAfiliadosTCP1 = 0;
+          let nuCuotasVencidasTCP1 = 0;
+          let totalImpTCP1 = 0;
+          let nuContratosTDP = 0;
+          let nuAfiliadosTDP = 0;
+          let nuCuotasVencidasTDP = 0;
+          let totalImpTDP = 0;
+          this.totalMorosos = this.rows.length;
+          this.totalAfiliados = 0;
+          this.totalPeriodos = 0;
+          this.totalDeuda = 0;
+          this.rows.map(item =>{
+            if(item.Programa === 'TARJETA DORADA PARTICULAR'){
+              nuContratosTDP += 1;
+              nuAfiliadosTDP += Number(item.TotalMiembros);
+              nuCuotasVencidasTDP += Number(item.CuotasVencidas);
+              totalImpTDP += Number(item.ImpCuotasVencidas);
+            }else if(item.Programa === 'TARJETA CLASICA PARTICULAR'){
+              nuContratosTCP += 1;
+              nuAfiliadosTCP += Number(item.TotalMiembros);
+              nuCuotasVencidasTCP += Number(item.CuotasVencidas);
+              totalImpTCP += Number(item.ImpCuotasVencidas);
+            }else if(item.Programa === 'TARJETA CLASICA PARTICULAR 1'){
+              nuContratosTCP1 += 1;
+              nuAfiliadosTCP1 += Number(item.TotalMiembros);
+              nuCuotasVencidasTCP1 += Number(item.CuotasVencidas);
+              totalImpTCP1 += Number(item.ImpCuotasVencidas);
+            }
+            this.totalAfiliados += Number(item.TotalMiembros);
+            this.totalPeriodos += Number(item.CuotasVencidas);
+            this.totalDeuda += Number(item.ImpCuotasVencidas);
+          });
+          
+          const datosPrograma1 = {
+              programa: 'TARJETA CLASICA PARTICULAR',
+              nuContratos: nuContratosTCP,
+              nuAfiliados: nuAfiliadosTCP,
+              nuCuotasVencidas: nuCuotasVencidasTCP,
+              totalImpCuotasVencidas: totalImpTCP
+            };
+          const datosPrograma2 = {
+              programa: 'TARJETA CLASICA PARTICULAR 1',
+              nuContratos: nuContratosTCP1,
+              nuAfiliados: nuAfiliadosTCP1,
+              nuCuotasVencidas: nuCuotasVencidasTCP1,
+              totalImpCuotasVencidas: totalImpTCP1
+          };
+          const datosPrograma3 = {
+            programa: 'TARJETA DORADA PARTICULAR',
+            nuContratos: nuContratosTDP,
+            nuAfiliados: nuAfiliadosTDP,
+            nuCuotasVencidas: nuCuotasVencidasTDP,
+            totalImpCuotasVencidas: totalImpTDP
+          };
+          const datosPrograma4 = {
+            programa: 'TOTAL',
+            nuContratos: nuContratosTDP + nuContratosTCP + nuContratosTCP1,
+            nuAfiliados: nuAfiliadosTDP + nuAfiliadosTCP +nuAfiliadosTCP1,
+            nuCuotasVencidas: nuCuotasVencidasTDP + nuCuotasVencidasTCP + nuCuotasVencidasTCP1,
+            totalImpCuotasVencidas: totalImpTDP + totalImpTCP + totalImpTCP1
+        };
+          this.rows1.push(datosPrograma1);
+          this.rows1.push(datosPrograma2);
+          this.rows1.push(datosPrograma3);
+          this.rows1.push(datosPrograma4);
+          console.log(237, this.columns1)
+          this.rows2 = [];
+          let nuContratosP1= 0;
+          let nuAfiliadosP1 = 0;
+          let nuCuotasVencidasP1 = 0;
+          let totalImpP1 = 0;
+
+          let nuContratosP2 = 0;
+          let nuAfiliadosP2 = 0;
+          let nuCuotasVencidasP2 = 0;
+          let totalImpP2 = 0;
+
+          let nuContratosP3 = 0;
+          let nuAfiliadosP3 = 0;
+          let nuCuotasVencidasP3 = 0;
+          let totalImpP3 = 0;
+
+          let nuContratosP4 = 0;
+          let nuAfiliadosP4 = 0;
+          let nuCuotasVencidasP4 = 0;
+          let totalImpP4 = 0;
+          
+          let nuContratosP5 = 0;
+          let nuAfiliadosP5 = 0;
+          let nuCuotasVencidasP5 = 0;
+          let totalImpP5 = 0;
+
+          let nuContratosP6 = 0;
+          let nuAfiliadosP6 = 0;
+          let nuCuotasVencidasP6 = 0;
+          let totalImpP6 = 0;
+          this.rows.map(item =>{
+            if(item.CuotasVencidas === '1'){
+              nuContratosP1 += 1;
+              nuAfiliadosP1 += Number(item.TotalMiembros);
+              nuCuotasVencidasP1 += Number(item.CuotasVencidas);
+              totalImpP1 += Number(item.ImpCuotasVencidas);
+            }else if(item.CuotasVencidas === '2'){
+              nuContratosP2 += 1;
+              nuAfiliadosP2 += Number(item.TotalMiembros);
+              nuCuotasVencidasP2 += Number(item.CuotasVencidas);
+              totalImpP2 += Number(item.ImpCuotasVencidas);
+            }else if(item.CuotasVencidas === '3'){
+              nuContratosP3 += 1;
+              nuAfiliadosP3 += Number(item.TotalMiembros);
+              nuCuotasVencidasP3 += Number(item.CuotasVencidas);
+              totalImpP3 += Number(item.ImpCuotasVencidas);
+            }else if(item.CuotasVencidas === '4'){
+              nuContratosP4 += 1;
+              nuAfiliadosP4 += Number(item.TotalMiembros);
+              nuCuotasVencidasP4 += Number(item.CuotasVencidas);
+              totalImpP4 += Number(item.ImpCuotasVencidas);
+            }else if(item.CuotasVencidas === '5'){
+              nuContratosP5 += 1;
+              nuAfiliadosP5 += Number(item.TotalMiembros);
+              nuCuotasVencidasP5 += Number(item.CuotasVencidas);
+              totalImpP5 += Number(item.ImpCuotasVencidas);
+            }else if(Number(item.CuotasVencidas) > 5){
+              nuContratosP6 += 1;
+              nuAfiliadosP6 += Number(item.TotalMiembros);
+              nuCuotasVencidasP6 += Number(item.CuotasVencidas);
+              totalImpP6 += Number(item.ImpCuotasVencidas);
+            }
+          });
+          const datosPeriodo1 =  {
+              periodo: '1 PERIODO',
+              nuContratos: nuContratosP1,
+              nuAfiliados: nuAfiliadosP1,
+              nuCuotasVencidas: nuCuotasVencidasP1,
+              totalImpCuotasVencidas: totalImpP1
+            };
+          const datosPeriodo2 =  {
+            periodo: '2 PERIODOS',
+            nuContratos: nuContratosP2,
+            nuAfiliados: nuAfiliadosP1,
+            nuCuotasVencidas: nuCuotasVencidasP2,
+            totalImpCuotasVencidas: totalImpP2
+            };
+          const datosPeriodo3 = {
+            periodo: '3 PERIODOS',
+            nuContratos: nuContratosP3,
+            nuAfiliados: nuAfiliadosP3,
+            nuCuotasVencidas: nuCuotasVencidasP3,
+            totalImpCuotasVencidas: totalImpP3
+            };
+          const datosPeriodo4 = {
+              periodo: '4 PERIODOS',
+              nuContratos: nuContratosP4,
+              nuAfiliados: nuAfiliadosP4,
+              nuCuotasVencidas: nuCuotasVencidasP4,
+              totalImpCuotasVencidas: totalImpP4
+            };
+          const datosPeriodo5 = {
+              periodo: '5 PERIODOS',
+              nuContratos: nuContratosP5,
+              nuAfiliados: nuAfiliadosP5,
+              nuCuotasVencidas: nuCuotasVencidasP5,
+              totalImpCuotasVencidas: totalImpP5
+            };
+          const datosPeriodo6 = {
+              periodo: 'MÁS DE 5 PERIODOS',
+              nuContratos: nuContratosP6,
+              nuAfiliados: nuAfiliadosP6,
+              nuCuotasVencidas: nuCuotasVencidasP6,
+              totalImpCuotasVencidas: totalImpP6
+            };
+          const datosPeriodo7 = {
+              periodo: 'TOTAL',
+              nuContratos: nuContratosP1 + nuContratosP2 + nuContratosP3 + nuContratosP4 + nuContratosP5 + nuContratosP6,
+              nuAfiliados: nuAfiliadosP1 + nuAfiliadosP2 +nuAfiliadosP3 + nuAfiliadosP4 + nuAfiliadosP5 + nuAfiliadosP6,
+              nuCuotasVencidas: nuCuotasVencidasP1 + nuCuotasVencidasP2 + nuCuotasVencidasP3 + nuCuotasVencidasP4 + nuCuotasVencidasP5+ nuCuotasVencidasP6,
+              totalImpCuotasVencidas: totalImpP1 + totalImpP2 + totalImpP3 + totalImpP4 + totalImpP5 + totalImpP6,
+          };
+          this.rows2.push(datosPeriodo1);
+          this.rows2.push(datosPeriodo2);
+          this.rows2.push(datosPeriodo3);
+          this.rows2.push(datosPeriodo4);
+          this.rows2.push(datosPeriodo5);
+          this.rows2.push(datosPeriodo6);
+          this.rows2.push(datosPeriodo7);
           console.log(response.data.page);
           this.page = (response as any).data.page;
           this.temp = this.rows;
@@ -190,16 +370,21 @@ export class ListadoMorososComponent implements OnInit {
     );
   }
 
-  copyTableToClipboard(){
-    this.exportService.exportToClipboard(this.rows, this.columns);
-    
+  copyTableToClipboard(numberTabla){
+    if(numberTabla === 1){
+      this.exportService.exportToClipboard(this.rows1, this.columns1);
+    }else if (numberTabla === 2){
+      this.exportService.exportToClipboard(this.rows2, this.columns2);
+    }
   }
 
-  exportToExcel(): void {
-    this.exportService.exportTableElmToExcel(this.rows, 'Atenciones-Realizadas-por-Emergencia');
+  exportToExcel(numberTabla): void {
+    if(numberTabla === 1){
+      this.exportService.exportTableElmToExcel(this.rows1, 'Listado de Morosos - Distribución por Programa');
+    }else if (numberTabla === 2){
+      this.exportService.exportTableElmToExcel(this.rows2, 'Listado de Morosos - Distribución por Período');
+    }
   }
-
-
 
   filter() {
   

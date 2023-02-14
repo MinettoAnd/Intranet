@@ -173,7 +173,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ResponseformComponent,
     ReporteComponent,
     CustomFilterPipe,
-
+    CustomNumberPipe
     // CuotasProgramasSaludComponent,
 
         
@@ -206,7 +206,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     NgSelectModule,
     AgGridModule.withComponents([]),
     // BsDatepickerModule.forRoot(),
-    // NgxDatatableModule
+    // NgxDatatableModule,
   ],
 
   providers: [
