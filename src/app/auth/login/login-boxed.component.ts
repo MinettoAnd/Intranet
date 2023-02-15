@@ -83,6 +83,7 @@ export class LoginBoxedComponent implements OnInit {
       username: username,
     };
     this.apiService.getProfileUserService(data).then((response: any) => {
+        
       this.profiles = response.length > 0 ? response : [];
       var splitted = this.profiles[0]?.Nombres.split(" ", 2);
       console.log(splitted)
@@ -105,6 +106,7 @@ export class LoginBoxedComponent implements OnInit {
   getUserdata() {
     this.apiService.getUserBrIdService(this.profiles[0]?.Persona).then((response: any) => {
       this.userslist = response.data.length > 0 ? response.data : [];
+
       if (response.success == 1 && this.userslist.length > 0) {
         //console.log(this.userslist)
         Swal.close();
@@ -144,6 +146,7 @@ export class LoginBoxedComponent implements OnInit {
 
 
   getRoles(idrol, persona) {
+    console.log(86, idrol)
     this.apiService.getRolesByService(idrol, persona).then((response: any) => {
       this.listrol = response.data.length > 0 ? response.data : [];
       localStorage.setItem('token', response.token);
@@ -169,7 +172,7 @@ export class LoginBoxedComponent implements OnInit {
             idrol =  idrol + this.listrol[clave].idrol;
           }
             
-          console.log(111, idrol);
+          console.log(111, claves);
         }
         console.log(area_access)
         localStorage.setItem('access', this.acceso.toString());
