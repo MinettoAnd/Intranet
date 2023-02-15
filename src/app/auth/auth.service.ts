@@ -67,6 +67,7 @@ export class AuthService {
   }
   //ROLES //
   getRolesByService(idrol, persona) {
+    console.log(70, idrol, persona)
     return this.http.get(`${this.baseURL}/permisos/rol/${idrol}/${persona}`).toPromise();
   }
 
