@@ -522,7 +522,15 @@ menuI;
   getModelsUsers() {
     this.apiService.getMenuSidebarPermissionRoleService(localStorage.getItem('idrol')).then((response: any) => {
       this.menuItems = response.data.length > 0 ? response.data : [];
-      console.log(this.menuItems);
+      this.menuItems.map(item =>{
+        if(item.icon){
+          item.icon = `${environment.apiImage}${item.icon}`;
+          
+        }else{
+          item.icon = `${environment.apiImage}resources/images/menu/default.svg`;
+        }
+        return item;
+     })
     });
 
   }
