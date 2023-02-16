@@ -65,8 +65,8 @@
               </form>
               <div class="card">
                 <div class="card-header">
-                  <h4 class="card-title">{{title}}</h4>
-                  <p>{{message}}</p>
+                  <h4 class="card-title">CIRUGIAS PROGRAMADAS</h4>
+                  <!-- <p>{{message}}</p> -->
                 </div>
                 <div class="card-content collapse show">
                   <div class="card-body">
@@ -148,7 +148,10 @@
                               *ngIf="editing[rowIndex+ '-{{column.name}}']" type="text" [value]="value" /> -->
                           </ng-template>
                         </ngx-datatable-column>
+                        
                       </ngx-datatable>
+                      <p class="p-3">{{message}}</p>
+                      <p><b>(*) TIPO DE PACIENTE aparece cuando se relaciona la OA a la programación</b></p>
                     </div>
                   </div>
                 </div>

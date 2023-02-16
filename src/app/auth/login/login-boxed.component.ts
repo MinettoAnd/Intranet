@@ -146,8 +146,9 @@ export class LoginBoxedComponent implements OnInit {
 
 
   getRoles(idrol, persona) {
-    console.log(86, idrol)
+    
     this.apiService.getRolesByService(idrol, persona).then((response: any) => {
+      console.log(86, response)
       this.listrol = response.data.length > 0 ? response.data : [];
       localStorage.setItem('token', response.token);
       if (this.listrol[0]?.special_access == 0) {
@@ -174,7 +175,7 @@ export class LoginBoxedComponent implements OnInit {
             
           console.log(111, claves);
         }
-        console.log(area_access)
+        console.log(177, this.acceso.toString())
         localStorage.setItem('access', this.acceso.toString());
         // localStorage.setItem('access_area', area_access);
         localStorage.setItem('idrol', idrol);
