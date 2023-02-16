@@ -27,8 +27,8 @@ export class SharedService {
   }
 
   //list the menu for the navigate in the system
-  getMenuSidebarAdminService() {
-    return this.http.get(`${this.baseURL}/permisos/model`).toPromise();
+  getMenuSidebarAdminService(idrol) {
+    return this.http.get(`${this.baseURL}/permisos/model/${idrol}`).toPromise();
   }
   getMenuSidebarPermissionRoleService(idrol) {
     return this.http.get(`${this.baseURL}/permisos/user/${idrol}`).toPromise();

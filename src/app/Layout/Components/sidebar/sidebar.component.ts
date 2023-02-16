@@ -66,7 +66,7 @@ menuI;
 
     this.extraParameter = this.activatedRoute.snapshot.firstChild.data.extraParameter;
     this.subscription = this.apiService.currentMessage.subscribe(message => this.message = message);
-    if (localStorage.getItem('access') === '1') {
+    if (localStorage.getItem('access') === '1' || localStorage.getItem('access') === '2' ) {
       this.getModelsAdmin();
     } else if (localStorage.getItem('access') === '0') {
       this.getModelsUsers();
@@ -498,9 +498,10 @@ menuI;
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
+
   getModelsAdmin() {
-    this.apiService.getMenuSidebarAdminService().then((response: any) => {
-      // console.log(496, response)
+    this.apiService.getMenuSidebarAdminService(localStorage.getItem('idrol')).then((response: any) => {
+      console.log(496, response)
        this.menuItems = response.data.length > 0 ? response.data : [];
        this.menuItems.map(item =>{
           if(item.icon){
@@ -511,9 +512,8 @@ menuI;
           }
           return item;
        })
-      //  console.log(512, this.menuItems);
+       console.log(514, this.menuItems);
     });
-
   }
   toggleNavbar() {
     this.isCollapsed = !this.isCollapsed;
@@ -522,6 +522,7 @@ menuI;
   getModelsUsers() {
     this.apiService.getMenuSidebarPermissionRoleService(localStorage.getItem('idrol')).then((response: any) => {
       this.menuItems = response.data.length > 0 ? response.data : [];
+      console.log(525, this.menuItems);
       this.menuItems.map(item =>{
         if(item.icon){
           item.icon = `${environment.apiImage}${item.icon}`;
@@ -532,7 +533,6 @@ menuI;
         return item;
      })
     });
-
   }
   goRutePagesHeaderTitle(title) {
     console.log(title)

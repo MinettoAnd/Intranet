@@ -46,7 +46,7 @@ export class ListadoMorososComponent implements OnInit {
   id: number;
   loadingIndicator: true;
   rows: any;
-  rows1: any;
+  rows1 = [];
   rows2: any;
   editing = {};
   row: any;
@@ -98,7 +98,7 @@ export class ListadoMorososComponent implements OnInit {
   getRowClass(row) {
 
     return {
-      'totals': row.programa.includes('TOTAL')
+      'totals': row.Programa.includes('TOTAL')
     };
   }
   getRowClass1(row) {
@@ -149,11 +149,11 @@ export class ListadoMorososComponent implements OnInit {
       console.log(168, this.data);   
           this.columns = this.data.data.cabeceras;
           this.columns1 = [
-            {prop: 'programa', name: 'Programa'},
-            {prop: 'nuContratos', name: 'Contratos', pipe: this._cnp},
-            {prop: 'nuAfiliados', name: 'Afiliados', pipe: this._cnp},
-            {prop: 'nuCuotasVencidas', name: 'Periodos', pipe: this._cnp},
-            {prop: 'totalImpCuotasVencidas', name: 'Deuda', pipe: this._cp},
+            {prop: 'Programa', name: 'Programa'},
+            {prop: 'TotalContratos', name: 'Contratos', pipe: this._cnp},
+            {prop: 'TotalMiembros', name: 'Afiliados', pipe: this._cnp},
+            {prop: 'CuotasVencidas', name: 'Periodos', pipe: this._cnp},
+            {prop: 'ImpCuotasVencidas', name: 'Deuda', pipe: this._cp},
           ]
           this.columns2 = [
             {prop: 'periodo', name: 'Periodos'},
@@ -164,77 +164,50 @@ export class ListadoMorososComponent implements OnInit {
           ]
           this.rows = this.data.data.data;
           this.rows1 = [];
-          let nuContratosTCP = 0;
-          let nuAfiliadosTCP = 0;
-          let nuCuotasVencidasTCP = 0;
-          let totalImpTCP = 0;
-          let nuContratosTCP1 = 0;
-          let nuAfiliadosTCP1 = 0;
-          let nuCuotasVencidasTCP1 = 0;
-          let totalImpTCP1 = 0;
-          let nuContratosTDP = 0;
-          let nuAfiliadosTDP = 0;
-          let nuCuotasVencidasTDP = 0;
-          let totalImpTDP = 0;
-          this.totalMorosos = this.rows.length;
+          this.totalMorosos = this._cnp.transform(this.rows.length);
           this.totalAfiliados = 0;
           this.totalPeriodos = 0;
           this.totalDeuda = 0;
-          this.rows.map(item =>{
-            if(item.Programa === 'TARJETA DORADA PARTICULAR'){
-              nuContratosTDP += 1;
-              nuAfiliadosTDP += Number(item.TotalMiembros);
-              nuCuotasVencidasTDP += Number(item.CuotasVencidas);
-              totalImpTDP += Number(item.ImpCuotasVencidas);
-            }else if(item.Programa === 'TARJETA CLASICA PARTICULAR'){
-              nuContratosTCP += 1;
-              nuAfiliadosTCP += Number(item.TotalMiembros);
-              nuCuotasVencidasTCP += Number(item.CuotasVencidas);
-              totalImpTCP += Number(item.ImpCuotasVencidas);
-            }else if(item.Programa === 'TARJETA CLASICA PARTICULAR 1'){
-              nuContratosTCP1 += 1;
-              nuAfiliadosTCP1 += Number(item.TotalMiembros);
-              nuCuotasVencidasTCP1 += Number(item.CuotasVencidas);
-              totalImpTCP1 += Number(item.ImpCuotasVencidas);
-            }
-            this.totalAfiliados += Number(item.TotalMiembros);
-            this.totalPeriodos += Number(item.CuotasVencidas);
-            this.totalDeuda += Number(item.ImpCuotasVencidas);
-          });
           
-          const datosPrograma1 = {
-              programa: 'TARJETA CLASICA PARTICULAR',
-              nuContratos: nuContratosTCP,
-              nuAfiliados: nuAfiliadosTCP,
-              nuCuotasVencidas: nuCuotasVencidasTCP,
-              totalImpCuotasVencidas: totalImpTCP
-            };
-          const datosPrograma2 = {
-              programa: 'TARJETA CLASICA PARTICULAR 1',
-              nuContratos: nuContratosTCP1,
-              nuAfiliados: nuAfiliadosTCP1,
-              nuCuotasVencidas: nuCuotasVencidasTCP1,
-              totalImpCuotasVencidas: totalImpTCP1
+          let result = [];
+          let totalContratos = 0;
+          let totalAfiliados = 0;
+          let totalPeriodos = 0;
+          let totalDeuda = 0;
+          this.rows.forEach(function (a) {
+              if ( !this[a.Programa]) {
+                  this[a.Programa] =  { Programa: a.Programa, TotalContratos: 0, TotalMiembros: 0, CuotasVencidas: 0, ImpCuotasVencidas: 0 };
+
+                  result.push(this[a.Programa]);
+              }
+              this[a.Programa].TotalContratos += 1;
+              this[a.Programa].TotalMiembros += Number(a.TotalMiembros);
+              this[a.Programa].CuotasVencidas += Number(a.CuotasVencidas);
+              this[a.Programa].ImpCuotasVencidas += Number(a.ImpCuotasVencidas);
+             
+             
+          }, Object.create(null));
+          this.rows1 = result;
+          this.rows1.map(item =>{
+            totalContratos += item.TotalContratos;
+            totalAfiliados += item.TotalMiembros;
+            totalPeriodos += item.CuotasVencidas;
+            totalDeuda += item.ImpCuotasVencidas;
+          });
+          const total = {
+            Programa: 'TOTAL', 
+            TotalContratos: totalContratos, 
+            TotalMiembros: totalAfiliados, 
+            CuotasVencidas: totalPeriodos, 
+            ImpCuotasVencidas: totalDeuda
           };
-          const datosPrograma3 = {
-            programa: 'TARJETA DORADA PARTICULAR',
-            nuContratos: nuContratosTDP,
-            nuAfiliados: nuAfiliadosTDP,
-            nuCuotasVencidas: nuCuotasVencidasTDP,
-            totalImpCuotasVencidas: totalImpTDP
-          };
-          const datosPrograma4 = {
-            programa: 'TOTAL',
-            nuContratos: nuContratosTDP + nuContratosTCP + nuContratosTCP1,
-            nuAfiliados: nuAfiliadosTDP + nuAfiliadosTCP +nuAfiliadosTCP1,
-            nuCuotasVencidas: nuCuotasVencidasTDP + nuCuotasVencidasTCP + nuCuotasVencidasTCP1,
-            totalImpCuotasVencidas: totalImpTDP + totalImpTCP + totalImpTCP1
-        };
-          this.rows1.push(datosPrograma1);
-          this.rows1.push(datosPrograma2);
-          this.rows1.push(datosPrograma3);
-          this.rows1.push(datosPrograma4);
-          console.log(237, this.columns1)
+          
+          this.rows1.push(total);
+          this.totalAfiliados = this._cnp.transform(totalAfiliados);
+          this.totalPeriodos = this._cnp.transform(totalPeriodos);
+          this.totalDeuda = totalDeuda;
+          console.log(198, this.rows1);
+
           this.rows2 = [];
           let nuContratosP1= 0;
           let nuAfiliadosP1 = 0;
@@ -371,15 +344,19 @@ export class ListadoMorososComponent implements OnInit {
   }
 
   copyTableToClipboard(numberTabla){
-    if(numberTabla === 1){
-      this.exportService.exportToClipboard(this.rows1, this.columns1);
+    if(numberTabla === 0){
+      this.exportService.exportToClipboard(this.rows, this.columns);
+    }else if (numberTabla === 1){
+      this.exportService.exportToClipboard(this.rows2, this.columns2);
     }else if (numberTabla === 2){
       this.exportService.exportToClipboard(this.rows2, this.columns2);
     }
   }
 
   exportToExcel(numberTabla): void {
-    if(numberTabla === 1){
+    if(numberTabla === 0){
+      this.exportService.exportTableElmToExcel(this.rows, 'Listado de Morosos');
+    }else if (numberTabla === 1){
       this.exportService.exportTableElmToExcel(this.rows1, 'Listado de Morosos - Distribución por Programa');
     }else if (numberTabla === 2){
       this.exportService.exportTableElmToExcel(this.rows2, 'Listado de Morosos - Distribución por Período');
