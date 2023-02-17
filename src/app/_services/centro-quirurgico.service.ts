@@ -42,6 +42,9 @@ export class CentroQuirurgicoService {
     this.loadTableApiDataURL = `${environment.api_url}getTablaProgramados`;
     return this.http.post(this.loadTableApiDataURL, data);
   }
-
+  getCqConsultaAtenciones(data): Observable<any> {
+    this.loadTableApiDataURL = `${environment.api_url}getCqConsultaAtenciones`;
+    return this.http.post(this.loadTableApiDataURL, data);
+  }
 }
 

@@ -1,0 +1,232 @@
+<div class="app-content content">
+    <div class="content-wrapper">
+      <div class="content-header row mb-1">
+        <app-breadcrumb class="col-12" [breadcrumb]="breadcrumb"></app-breadcrumb>
+      </div>
+      <div class="content-body">
+        <section id="selection-n-deletion">
+          <div class="row">
+  
+            <div class="col-12">
+              <form [formGroup]="filtroForm">
+                <div class="row" style="margin-bottom: -0.5rem;">
+                  <div class="form-group col-sm-12 col-md-4 col-lg-2">
+                    <div class="input-group input-group-sm">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">Fecha Inicio</span>
+                      </div>
+                      <input
+                        type="date"
+                        formControlName="f_inicio"
+                        class="form-control"
+                      />
+                    </div>
+                  </div>
+      
+                  <div class="form-group col-sm-12 col-md-4 col-lg-2">
+                    <div class="input-group input-group-sm">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">Fecha Fin</span>
+                      </div>
+                      <input
+                        type="date"
+                        formControlName="f_fin"
+                        class="form-control"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group col-sm-12 col-md-4 col-lg-2">
+                    <div class="input-group input-group-sm">
+                      <div class="input-group-append">
+                        <span class="input-group-text">Sedes</span>
+                      </div>
+                      <select
+                        class="form-control form-select"
+                        formControlName="id_sede"
+                        id="inputGroupSelect04"
+                      >
+                        <option value="0000">Todos</option>
+                        <option value="0001">Lima</option>
+                        <option value="0002">Chorrillos</option>
+                        <option value="0004">Surco</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group col-sm-12 col-md-4 col-lg-2">
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-append">
+                            <span class="input-group-text">Paciente:</span>
+                        </div>
+                        <input  type="text"
+                        formControlName="paciente"
+                        class="form-control">
+                    </div>
+                  </div>
+                  <div class="form-group col-sm-12 col-md-4 col-lg-2">
+                    <div class="input-group input-group-sm">
+                      <div class="input-group-append">
+                        <span class="input-group-text">Estado:</span>
+                      </div>
+                      <select class="form-control form-select" formControlName="id_estado" id="id_estado" >
+                        <option value="Atendi">Atendidos</option>
+                        <option value="Incons">Inconsistencias</option>
+                        <option value="000000" selected="">TODOS</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group col-sm-12 col-md-4 col-lg-2">
+                    <div class="input-group input-group-sm">
+                      <div class="input-group-append">
+                        <span class="input-group-text">Tipo de Cirugia:</span>
+                      </div>
+                      <select class="form-control form-select" formControlName="tipo_cirugia" id="tipo_cirugia">
+                        <option value="Cirugia Mayor">Mayor</option>
+                        <option value="Cirugia Menor">Menor</option>
+                        <option value="Procedimiento">Procedimiento</option>
+                        <option value="000000" selected="">TODOS</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group col-sm-12 col-md-4 col-lg-2">
+                    <div class="input-group input-group-sm">
+                      <div class="input-group-append">
+                        <span class="input-group-text">CPT:</span>
+                      </div>
+                      <select class="form-control form-select" formControlName="cpt" id="cpt" style="width:140px !important;">
+                        <option value="Reg">Registrado</option>
+                        <option value="NoR">No Registrado</option>
+                        <option value="000000" selected="">TODOS</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group col-sm-12 col-md-4 col-lg-2">
+                    <div class="input-group input-group-sm">
+                      <div class="input-group-append">
+                        <span class="input-group-text">Origen:</span>
+                      </div>
+                      <select class="form-control form-select" formControlName="origen" id="origen" style="width:140px !important;">
+                        <option value="Programado">Programado</option>
+                        <option value="Emergencia">Emergencia</option>
+                        <option value="000000" selected="">TODOS</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group col-sm-12 col-md-4 col-lg-2">
+                    <div class="input-group">
+                      <div class="input-group-btn">
+                        <button (click)="filter()" class="btn btn-sm btn-primary">
+                          <i class="fa fa-search"></i> Filtrar
+                        </button>
+                      </div>
+                    </div>
+                  </div>               
+                </div>
+              </form>
+              <div class="card">
+                <div class="card-header">
+                  <h4 class="card-title">{{title}}</h4>
+                  <!-- <p>{{message}}</p> -->
+                </div>
+                <div class="card-content collapse show">
+                  <div class="card-body">
+                    <!-- <a class="btn btn-primary" id="downloadLink" (click)="exportexcel()">Exportar tabla a Excel</a>
+                    <a class="btn btn-primary" id="downloadLink" (click)="copyTableToClipboard()">Copiar tabla</a> -->
+                    
+                    <div class="table table-striped table-bordered selection-deletion-row">
+                      <!-- <div class="row" style='margin-left:0px;'>
+                        <div class="col-xs-6">
+                          <select class="form-control form-select" (change)="onLimitChange($event.target.value)">
+                            <option
+                              *ngFor="let option of pageLimitOptions"
+                              [value]="option.value"
+      
+                            >
+                              {{ option.value }} Registros
+                            </option>
+                            <option value="0" *ngIf="this.page.totalElements">Todos los Registros</option>
+                          </select>
+                        </div>
+                      </div> -->
+                        <div class="row" style="align-items: center;justify-content: space-between;">
+                          <ul class="list-group list-group-horizontal list-group-flush">
+                            <li class="list-group-item border-0 pl-0">
+                              <select class="form-control form-select" (change)="onLimitChange($event.target.value)">
+                                <option
+                                  *ngFor="let option of pageLimitOptions"
+                                  [value]="option.value"
+          
+                                >
+                                  {{ option.value }} Registros
+                                </option>
+                                <option value="0" *ngIf="this.page.totalElements">Todos los Registros</option>
+                              </select>
+                            </li>
+                            <li class="list-group-item border-0 pl-0">
+                              <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard()">
+                                <i class="fa fa-external-link"></i>
+                                Copiar tabla
+                              </button>
+                            </li>
+                            <li class="list-group-item border-0 pl-0">
+                              <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel()">
+                                <i class="fa fa-external-link"></i>
+                                Exportar tabla a Excel
+                              </button>
+                            </li>
+                          </ul>
+                          <div class="" style="display:flex;margin:15px;align-items: center;">
+                            <span>Buscar</span>&nbsp;&nbsp;
+                              <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter($event)'>
+                          </div>
+                        
+                      </div>
+                      
+                      
+                      <ngx-datatable #myTable
+                      class="bootstrap table table-striped"
+                      id="datatablele"
+                        [columns]="columns"
+                        [rows]="rows"
+                        [columnMode]="ColumnMode.force"
+                        [headerHeight]="$any('auto')"
+                        [footerHeight]="65"
+                        [rowHeight]="$any('auto')"
+                        [scrollbarH]="true"
+                        [offset]="page.pageNumber"
+                        [limit]="page.size"
+                        >
+                        <ngx-datatable-column  [flexGrow]="1" [minWidth]="10" [width]="column.width" *ngFor="let column of columns; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                            let-row="row">
+                            <span [title]="value">{{value}}</span>
+                            <!-- <span title="Double click to edit" (dblclick)="editing[rowIndex + '-{{column.name}}'] = true"
+                              *ngIf="!editing[rowIndex + '-{{column.name}}']">
+                              {{value}}
+                            </span>
+                            <input autofocus (blur)="updateValue($event, '{{column.name}}', rowIndex)"
+                              *ngIf="editing[rowIndex+ '-{{column.name}}']" type="text" [value]="value" /> -->
+                          </ng-template>
+                        </ngx-datatable-column>
+                        
+                      </ngx-datatable>
+                      <!-- <p class="p-3">{{message}}</p> -->
+                      <p><b>* Se considera el registro cuando se registra en la programación de sala y registran fecha de ingreso a sala o intervención al ser realizada</b></p>
+                      <p><b>* Leyenda por Inconsistencias:</b></p>
+                      <p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Inconsistencia 01 - Tiempo de programación mal registrado</p>
+                      <p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Inconsistencia 02 - Estancia en sala mal registrado</p>
+                      <p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Inconsistencia 03 - Tiempo de acto quirúrgico mal registrado</p>
+                      <p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Inconsistencia 04 - Se registro tiempo en sala, pero no acto quirúrgico</p>
+                      <p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Inconsistencia 05 - Se registro tiempo del acto quirúrgico, pero no tiempo en sala</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+  
+  <!-- ////////////////////////////////////////////////////////////////////////////-->
+  
