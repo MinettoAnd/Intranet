@@ -62,6 +62,7 @@ export class MedrolesComponent implements OnInit {
     this.selectedItemsList = this.listassign.filter((value, index) => {
       return value.isChecked
     });
+    console.log(74, this.selectedItemsList);
   }
 
   fetchCheckedIDs() {
@@ -71,6 +72,7 @@ export class MedrolesComponent implements OnInit {
         this.checkedIDs.push(value.id);
       }
     });
+    
   }
 
   updateRol() {
