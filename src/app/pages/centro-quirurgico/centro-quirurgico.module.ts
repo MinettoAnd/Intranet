@@ -6,11 +6,13 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConsultaAtencionesComponent } from './consulta-atenciones/consulta-atenciones.component';
+import { EstadisticasComponent } from './estadisticas/estadisticas.component';
 
 @NgModule({
   declarations: [
     CirugiasProgramadasComponent,
-    ConsultaAtencionesComponent
+    ConsultaAtencionesComponent,
+    EstadisticasComponent
   ],
   imports: [
     CommonModule,NgxDatatableModule,NgbModule, 
@@ -24,6 +26,10 @@ import { ConsultaAtencionesComponent } from './consulta-atenciones/consulta-aten
       {
         path: 'consultaAtenciones',
         component: ConsultaAtencionesComponent
+      },
+      {
+        path: 'estadisticas',
+        component: EstadisticasComponent
       },
     ])
   ],
