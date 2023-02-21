@@ -15,7 +15,7 @@ import { ExportService } from '../../../../_services/export.service';
 import ResizeObserver from 'resize-observer-polyfill';
 import { CurrencyPipe } from '@angular/common';
 import { CustomNumberPipe } from 'src/app/pipes/customNumber.pipe';
-
+import { PhonePipe } from 'src/app/pipes/phone.pipe';
 
 @Component({
   selector: 'app-listado-morosos',
@@ -80,7 +80,7 @@ export class ListadoMorososComponent implements OnInit {
   totalPeriodos:any;
   totalDeuda:any;
   constructor(private tableApiservice: ComercialService, private exportService: ExportService, private _cnp:CustomNumberPipe,
-    private _cp: CurrencyPipe) {
+    private _cp: CurrencyPipe, private _phone: PhonePipe) {
     this.page.pageNumber = 0;
     this.page.size = 10;
 
@@ -203,6 +203,10 @@ export class ListadoMorososComponent implements OnInit {
           };
           
           this.rows1.push(total);
+          this.rows.map(item=>{
+            item.ImpCuotasVencidas = this._cp.transform( item.ImpCuotasVencidas);
+            item.Telefono = this._phone.transform( item.Telefono);
+          });
           this.totalAfiliados = this._cnp.transform(totalAfiliados);
           this.totalPeriodos = this._cnp.transform(totalPeriodos);
           this.totalDeuda = totalDeuda;
@@ -239,6 +243,8 @@ export class ListadoMorososComponent implements OnInit {
           let nuCuotasVencidasP6 = 0;
           let totalImpP6 = 0;
           this.rows.map(item =>{
+            item.Telefono = this._phone.transform( item.Telefono);
+            item.Celular = this._phone.transform( item.Celular);
             if(item.CuotasVencidas === '1'){
               nuContratosP1 += 1;
               nuAfiliadosP1 += Number(item.TotalMiembros);
@@ -327,6 +333,9 @@ export class ListadoMorososComponent implements OnInit {
           this.rows2.push(datosPeriodo5);
           this.rows2.push(datosPeriodo6);
           this.rows2.push(datosPeriodo7);
+          this.rows2.map(item=>{
+            item.ImpCuotasVencidas = this._cp.transform( item.ImpCuotasVencidas);
+          });
           console.log(response.data.page);
           this.page = (response as any).data.page;
           this.temp = this.rows;
@@ -345,20 +354,30 @@ export class ListadoMorososComponent implements OnInit {
 
   copyTableToClipboard(numberTabla){
     if(numberTabla === 0){
+      // this.rows.map(item=>{
+      //   item.ImpCuotasVencidas = this._cp.transform( item.ImpCuotasVencidas);
+      // });
       this.exportService.exportToClipboard(this.rows, this.columns);
     }else if (numberTabla === 1){
+
       this.exportService.exportToClipboard(this.rows2, this.columns2);
     }else if (numberTabla === 2){
+    
       this.exportService.exportToClipboard(this.rows2, this.columns2);
     }
   }
 
   exportToExcel(numberTabla): void {
     if(numberTabla === 0){
+      // this.rows.map(item=>{
+      //   item.ImpCuotasVencidas = this._cp.transform( item.ImpCuotasVencidas);
+      // });
       this.exportService.exportTableElmToExcel(this.rows, 'Listado de Morosos');
     }else if (numberTabla === 1){
+      
       this.exportService.exportTableElmToExcel(this.rows1, 'Listado de Morosos - Distribución por Programa');
     }else if (numberTabla === 2){
+      
       this.exportService.exportTableElmToExcel(this.rows2, 'Listado de Morosos - Distribución por Período');
     }
   }

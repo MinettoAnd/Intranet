@@ -1,0 +1,351 @@
+<div class="app-content content">
+    <div class="content-wrapper">
+      <div class="content-header row mb-1">
+        <app-breadcrumb class="col-12" [breadcrumb]="breadcrumb"></app-breadcrumb>
+      </div>
+      <div class="content-body">
+        <section id="selection-n-deletion">
+            <div class="row">
+                <div class="col-12">
+                    <form [formGroup]="filtroForm">
+                    <div class="row" style="margin-bottom: -0.5rem;">
+                        <div class="form-group col-sm-12 col-md-4 col-lg-2">
+                        <div class="input-group input-group-sm">
+                            <div class="input-group-append">
+                            <span class="input-group-text">Sedes</span>
+                            </div>
+                            <select
+                            class="form-control form-select"
+                            formControlName="id_sede"
+                            id="inputGroupSelect04"
+                            >
+                            <option value="0000">Todos</option>
+                            <option value="0001">Lima</option>
+                            <option value="0002">Chorrillos</option>
+                            <option value="0004">Surco</option>
+                            </select>
+                        </div>
+                        </div>  
+                        <div class="form-group col-sm-12 col-md-4 col-lg-2">
+                        <div class="input-group input-group-sm">
+                            <div class="input-group-prepend">
+                            <span class="input-group-text">Año</span>
+                            </div>
+                            <!-- <input
+                            type="date"
+                            formControlName="mes"
+                            class="form-control"
+                            /> -->
+                            <select formControlName="anio" class="form-control form-select" >
+                            <option
+                                *ngFor="let option of optionsAnio"
+                                [value]="option.value"
+                            >
+                                {{ option.label }}
+                            </option>
+                        </select>
+                        </div>
+                        </div>
+                        <div class="form-group col-sm-12 col-md-4 col-lg-2">
+                            <div class="input-group input-group-sm">
+                                <div class="input-group-prepend">
+                                <span class="input-group-text">Mes</span>
+                                </div>
+                                <!-- <input
+                                type="date"
+                                formControlName="anio"
+                                class="form-control"
+                                /> -->
+                                <select formControlName="mes" class="form-control form-select">
+                                <option
+                                    *ngFor="let option of optionsMes"
+                                    [value]="option.value"
+                                >
+                                    {{ option.label }}
+                                </option>
+                            </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group col-sm-12 col-md-4 col-lg-3">
+                            <div class="input-group">
+                                <div class="input-group-btn">
+                                    <button (click)="filter()" class="btn btn-sm btn-primary">
+                                        <i class="fa fa-search"></i> Filtrar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>           
+                    </div>
+                    </form>
+                    <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs" style="justify-content: end;">
+                        <li [ngbNavItem]="1">
+                            <a ngbNavLink>Resumen Gráfico</a>
+                            <ng-template ngbNavContent>
+                                <div class="card atencionesConsultaExterna">
+                                    <div class="card-header">
+                                      <h4 class="card-title" style="bottom:13px;">Atenciones por Consulta Externa</h4>
+                                      <p>{{message}}</p> 
+                                    </div>
+                                    <div class="col-md-12 div_panel_cabecera">
+                                    <div class="col-md-3 col-sm-6 col-xs-12" style="display: flex;">
+                                        <div class="info-box">
+                                            <span style="background:#57AA50 !important; color:#fff !important;" class="info-box-icon">
+                                            <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+                                            </span>		
+                                            <div class="info-box-content">
+                                            <span style="font-family:arial; font-size:15px; " class="info-box-text">REALIZADAS</span>
+                                                <span *ngIf="resumenMes.total" class="info-box-number">{{resumenMes.total}} </span>
+                                                <!-- <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">Tiempo programado / 12 horas x dia
+                                                </label> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-6 col-xs-12" id="ausentismo">
+                                        <div class="info-box">
+                                            <span style="background: #FF3636 !important; color:#fff !important;" class="info-box-icon">			
+                                            <i class="fa fa-user-times" aria-hidden="true"></i>		</span>		
+                                            <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">AUSENTISMO</span>			<span *ngIf="resumenMes.ausentismo" class="info-box-number">{{resumenMes.ausentismo}} </span>			
+                                            <!-- <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">Tiempo de atención / 12 horas x dia
+                                                </label>		 -->
+                                              </div>
+                                        </div>
+                                      <div class="col-md-3 col-sm-6 col-xs-12 div_ocultar_ptable_a" style="display: none;">
+                                        <div class="info-box">
+                                          <table class="table table-bordered">
+                                              <tbody>
+                                                <tr>
+                                                    <th style="padding: 2px 4px!important; line-height: inherit; font-size: 14px!important;">Inasistencia de Paciente</th>
+                                                    <th style="padding: 2px 8px!important; line-height: inherit;"><span id="ptable_anul">{{resumenMes.paciente}}</span></th>
+                                                    <th style="width: 40px; padding: 2px 8px!important; line-height: inherit;"><span class="badge bg-blue" id="ptable_anul_por">{{porcPaciente  | number : '1.2-2' }} %</span></th>
+                                                </tr>
+                                                <tr>
+                                                    <th style="padding: 2px 4px!important; line-height: inherit; font-size: 14px!important;">Por Inasistencia Medico</th>
+                                                    <th style="padding: 2px 8px!important; line-height: inherit;"><span id="ptable_inas">{{resumenMes.medico}}</span></th>
+                                                    <th style="width: 40px; padding: 2px 8px!important; line-height: inherit;"><span class="badge bg-green" id="ptable_inas_por">{{porcMedico  | number : '1.2-2' }} %</span></th>
+                                                </tr>
+                                                <tr>
+                                                    <th style="padding: 2px 4px!important; line-height: inherit; font-size: 14px!important;">Anulacion de Cita Por Paciente</th>
+                                                    <th style="padding: 2px 8px!important; line-height: inherit;"><span id="ptable_anul_paci">{{resumenMes.anuladas}}</span></th>
+                                                    <th style="width: 40px; padding: 2px 8px!important; line-height: inherit;"><span class="badge bg-red" id="ptable_anul_paci_por">{{porcAnuladas  | number : '1.2-2' }} %</span></th>
+                                                </tr>
+                                              </tbody>
+                                          </table>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-6 col-xs-12" style="display: flex;">
+                                        <div class="info-box">
+                                            <span style="background: #63B6DE !important; color:#fff !important;" class="info-box-icon">			
+                                            <i class="fa fa-users" aria-hidden="true"></i>		</span>		
+                                            <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">RESERVADAS</span>			
+                                            <span *ngIf="resumenMes.reservadas" class="info-box-number">{{resumenMes.reservadas}}</span>			
+                                            <!-- <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success" >Tiempo de atención / tiempo programado
+                                            </label>		 -->
+                                          </div>
+                                        </div>
+                                    </div>
+                                    
+                                    </div>
+                                    <div class="card-content collapse show">
+                                      <div class="row" style="align-items: center;justify-content: space-between;">
+                                        <div class="col-md-8">
+                                          <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
+                                            <li class="list-group-item border-0 pl-0">
+                                              <a  id="downloadlink1" href="#" 
+                                                class="btn btn-sm font-weight-bold btn-link" (click)="guardarImagen('chart-1', 'downloadlink1')" download>
+                                                <i class="fa fa-external-link"></i>
+                                                Guardar Imagen
+                                              </a>
+                                            </li>
+                                          </ul>
+                                          <div class="card-body">
+                                            <div class="d-block" >
+                                              <canvas #baseChart id="chart-1">
+                                              </canvas>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                          <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
+                                            <li class="list-group-item border-0 pl-0">
+                                              <a  id="downloadlink2" href="#" 
+                                                class="btn btn-sm font-weight-bold btn-link" (click)="guardarImagen('chart-2', 'downloadlink2')" download>
+                                                <i class="fa fa-external-link"></i>
+                                                Guardar Imagen
+                                              </a>
+                                            </li>
+                                          </ul>
+                                          <div class="card-body">
+                                            <div class="d-block" >
+                                              <canvas #baseChart id="chart-2">
+                                              </canvas>
+                                            </div>
+                                          </div>
+                                          <div class="card-body">
+                                            <ngb-accordion [destroyOnHide]="false" [closeOthers]="true" #acc="ngbAccordion" activeIds="ngb-panel-0">
+                                              <ngb-panel *ngFor="let percentageCompleted of progressBar1; let i = index;">
+                                                <ng-template ngbPanelTitle style="width:100%!important;">
+                                                  <span style="display:flex;color:#000; justify-content: space-between;"><i><b>{{progressBarLabels[i]}}</b></i><i>{{percentageCompleted.value}} - [{{percentageCompleted.porcentaje}}] %</i></span>
+                                                  <ngb-progressbar
+                                                      [type]="color[i]"
+                                                      [value]="percentageCompleted.porcentaje"
+                                                      [striped]="false"
+                                                      [animated]="false">
+                                                  </ngb-progressbar>
+                                                </ng-template>
+                                                <ng-template ngbPanelContent>
+                                                  <table class="table table-bordered">
+                                                    <thead>
+                                                      <tr>
+                                                          <th></th>
+                                                          <th>Cantidad</th>
+                                                          <th>Porcentaje</th>
+                                                      </tr>
+                                                    </thead>
+                                                      <tbody *ngFor="let rowTable of percentageCompleted.table; let i = index;">
+                                                      <tr style="font-size:16px;">
+                                                          <td>{{rowTable.programa }}</td>
+                                                          <td><strong><span>{{rowTable.cantidad}}</span></strong></td>
+                                                          <td><strong><span>{{rowTable.porcentaje}}</span></strong></td>
+                                                      </tr>
+                                                    </tbody>
+                                                </table>
+                                                </ng-template>
+                                              </ngb-panel>
+                                            </ngb-accordion>
+                                            <!-- <div class="d-block" *ngFor="let percentageCompleted of progressBar1; let i = index;">
+                                              <span style="display:flex; justify-content: space-between;"><i><b>{{progressBarLabels[i]}}</b></i><i>{{percentageCompleted.value}} - [{{percentageCompleted.porcentaje}}] %</i></span>
+                                                <ngb-progressbar
+                                                    [type]="color[i]"
+                                                    [value]="percentageCompleted.porcentaje"
+                                                    [striped]="false"
+                                                    [animated]="false">
+                                                </ngb-progressbar>
+                                                <p></p>
+                                                <div id="div_ocultar_tarjetas" style="margin-bottom: 15px; display: block;">
+                                                  <table class="table table-bordered">
+                                                     <thead>
+                                                        <tr>
+                                                           <th></th>
+                                                           <th>Cantidad</th>
+                                                           <th>Porcentaje</th>
+                                                        </tr>
+                                                     </thead>
+                                                       <tbody *ngFor="let rowTable of percentageCompleted.table; let i = index;">
+                                                        <tr style="font-size:16px;">
+                                                           <td>{{rowTable.programa }}</td>
+                                                           <td><strong><span>{{rowTable.cantidad}}</span></strong></td>
+                                                           <td><strong><span>{{rowTable.porcentaje}}</span></strong></td>
+                                                        </tr>
+                                                      </tbody>
+                                                  </table>
+                                               </div>
+                                            </div> -->
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="box-header with-border" style="margin:1rem; ">
+                                      <h5 class="box-title">Comparativo del mes anterior</h5>
+                                    </div> 
+                                    <div class="col-md-12 div_panel_cabecera">
+                                          <div class="col-md-3 col-sm-6 col-xs-12">
+                                            <div class="description-block border-right">
+                                                <span class="description-percentage text-green" [ngClass]="{'text-red': porcCompaMesAntRealizas < 0 }">
+                                                  <i class="fa fa-caret-up" *ngIf="porcCompaMesAntRealizas > 0"></i>
+                                                  <i class="fa fa-caret-down" *ngIf="porcCompaMesAntRealizas < 0"></i>
+                                                  <div>{{porcCompaMesAntRealizas}} %</div>
+                                                </span>
+                                                <h5 class="description-header" >{{resumenMesAnterior.total}}</h5>
+                                                <span class="description-text">REALIZADAS</span>
+                                            </div><!-- /.description-block -->
+                                          </div><!-- /.col -->
+                                          <div class="col-md-3 col-sm-6 col-xs-12">
+                                            <div class="description-block border-right">
+                                              <span class="description-percentage text-green" [ngClass]="{'text-red': porcCompaMesAntAusentismo < 0 }">
+                                                <i class="fa fa-caret-up" *ngIf="porcCompaMesAntAusentismo > 0"></i>
+                                                <i class="fa fa-caret-down" *ngIf="porcCompaMesAntAusentismo < 0"></i>
+                                                <div>{{porcCompaMesAntAusentismo}} %</div>
+                                              </span>
+                                                <h5 class="description-header" >{{resumenMesAnterior.ausentismo}}</h5>
+                                                <span class="description-text">AUSENTISMO</span>
+                                            </div><!-- /.description-block -->
+                                          </div><!-- /.col -->
+                                          <div class="col-md-3 col-sm-6 col-xs-12">
+                                            <div class="description-block border-right">
+                                              <span class="description-percentage text-green" [ngClass]="{'text-red': porcCompaMesAntReservadas < 0 }">
+                                                <i class="fa fa-caret-up" *ngIf="porcCompaMesAntReservadas > 0"></i>
+                                                <i class="fa fa-caret-down" *ngIf="porcCompaMesAntReservadas < 0"></i>
+                                                <div>{{porcCompaMesAntReservadas}} %</div>
+                                              </span>
+                                               <h5 class="description-header" >{{resumenMesAnterior.reservadas}}</h5>
+                                               <span class="description-text">RESERVADAS</span>
+                                            </div><!-- /.description-block -->
+                                          </div><!-- /.col -->
+                                      
+                                    </div>
+                                    <div class="box-header with-border" style="margin:1rem; ">
+                                      <h5 class="box-title">Costo por atenciones realizadas: <b> S/ {{resumenMontos.montoTotal | number : '1.2-2' }}</b>
+                                      </h5>
+                                    </div>
+                                    <div class="col-md-12 div_panel_cabecera">
+                                        <div class="col-md-3 col-sm-6 col-xs-12" style="display: flex;">
+                                           <div class="info-box">
+                                              <span style="background: #63B6DE !important; color:#fff !important;" class="info-box-icon">
+                                                <i class="fa fa-credit-card" aria-hidden="true"></i>
+                                              </span>		
+                                              <div class="info-box-content">
+                                                <span style="font-family:arial; font-size:15px; " class="info-box-text">PROGRAMAS DE SALUD</span>
+                                                  <span *ngIf="resumenMontos.tarjeta" class="info-box-number" ><b _ngcontent-xkc-c219=""> S/ </b>{{resumenMontos.tarjeta  }}</span>
+                                                  
+                                              </div>
+                                           </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6 col-xs-12" style="display: flex;">
+                                           <div class="info-box">
+                                              <span style="background: #DD4B39!important; color:#fff !important;" class="info-box-icon">			
+                                                <i class="fa fa-hospital-o" aria-hidden="true"></i>		</span>		
+                                              <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">INSTITUCIONAL Y PRIVADO</span>			
+                                                <span *ngIf="resumenMontos.instipriva" class="info-box-number"><b _ngcontent-xkc-c219=""> S/ </b>{{resumenMontos.instipriva  }}</span>			
+                                                	</div>
+                                           </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6 col-xs-12" style="display: flex;">
+                                           <div class="info-box">
+                                              <span style="background: #57AA50 !important; color:#fff !important;" class="info-box-icon">			
+                                                <i class="fa fa-hospital-o" aria-hidden="true"></i>		</span>		
+                                              <div class="info-box-content">			
+                                                <span style="font-family:arial; font-size:15px; " class="info-box-text" >CONVENIOS Y
+                                                  CIA. DE SEGUROS</span>			
+                                                <span *ngIf="resumenMontos.ciasegcon" class="info-box-number"> S/ {{resumenMontos.ciasegcon }}</span>			
+                                                </div>
+                                           </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6 col-xs-12" style="display: flex;">
+                                          <div class="info-box">
+                                             <span style="background: #F39C12!important; color:#fff !important;" class="info-box-icon">			
+                                               <i class="fa fa-wheelchair" aria-hidden="true"></i>		</span>		
+                                             <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">OTROS</span>			<span *ngIf="resumenMontos.otros" class="info-box-number"> S/ {{resumenMontos.otros | number : '1.2-2' }}</span>			
+                                              </div>
+                                          </div>
+                                       </div>
+                                       
+                                    </div>
+                                    <div class="box-header with-border" style="margin:1rem; ">
+                                      <div class="box-footer">
+                                        <p>* Información existente desde Enero 2019</p>
+                                        <p>* Costo por atenciones realizadas NO incluye IGV - (Pago de pacientes + Facturado a Empresas)</p>
+                                      </div>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </li>
+                    </ul>
+                    <div [ngbNavOutlet]="nav" class="mt-2"></div>
+                </div>
+            </div>
+        </section>
+      </div>
+    </div>
+</div>

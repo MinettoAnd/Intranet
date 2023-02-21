@@ -40,6 +40,7 @@
     "chartjs-plugin-datalabels": "^1.0.0",
     "file-saver": "^2.0.5",
     "font-awesome": "^4.7.0",
+    "libphonenumber-js": "^1.10.20",
     "lodash-es": "^4.17.11",
     "ng-block-ui": "^3.0.2",
     "ng2-charts": "^2.2.2",

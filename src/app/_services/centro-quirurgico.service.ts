@@ -46,5 +46,30 @@ export class CentroQuirurgicoService {
     this.loadTableApiDataURL = `${environment.api_url}getCqConsultaAtenciones`;
     return this.http.post(this.loadTableApiDataURL, data);
   }
+  // Estadisticas
+  getCqrGeneraArchivos(data): Observable<any> {
+    this.loadTableApiDataURL = `${environment.api_url}getCqrGeneraArchivos`;
+    return this.http.post(this.loadTableApiDataURL, data);
+  }
+  getCqrResumenCabecera(data): Observable<any> {
+    this.loadTableApiDataURL = `${environment.api_url}getCqrResumenCabecera`;
+    return this.http.post(this.loadTableApiDataURL, data);
+  }
+  getCqrResumenTipoPaciente(data): Observable<any> {
+    this.loadTableApiDataURL = `${environment.api_url}getCqrResumenTipoPaciente`;
+    return this.http.post(this.loadTableApiDataURL, data);
+  }
+  getCqrResumenEquipos(data): Observable<any> {
+    this.loadTableApiDataURL = `${environment.api_url}getCqrResumenEquipos`;
+    return this.http.post(this.loadTableApiDataURL, data);
+  }
+  getCqrResumenEstancia(data): Observable<any> {
+    this.loadTableApiDataURL = `${environment.api_url}getCqrResumenEstancia`;
+    return this.http.post(this.loadTableApiDataURL, data);
+  }
+  getCqrResumenGrafica(data): Observable<any> {
+    this.loadTableApiDataURL = `${environment.api_url}getCqrResumenGrafica`;
+    return this.http.post(this.loadTableApiDataURL, data);
+  }
 }
 
