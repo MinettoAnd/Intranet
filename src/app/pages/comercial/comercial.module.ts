@@ -12,9 +12,17 @@ import { ListadoContratosVigentesComponent } from './programasSalud/listado-cont
 import { ListadoMadreNinoComponent } from './programasSalud/listado-madre-nino/listado-madre-nino.component';
 import { ListadoMadreNinoMorososComponent } from './programasSalud/listado-madre-nino-morosos/listado-madre-nino-morosos.component';
 import { ListadoAfiliadosComponent } from './programasSalud/listado-afiliados/listado-afiliados.component';
+import { EstadisticasComponent } from './programasSalud/estadisticas/estadisticas.component';
 
 @NgModule({
-  declarations: [CuotasProgramasSaludComponent, ListadoMorososComponent, ListadoContratosVigentesComponent, ListadoMadreNinoComponent, ListadoMadreNinoMorososComponent, ListadoAfiliadosComponent],
+  declarations: [
+    CuotasProgramasSaludComponent, 
+    ListadoMorososComponent, 
+    ListadoContratosVigentesComponent, 
+    ListadoMadreNinoComponent, 
+    ListadoMadreNinoMorososComponent, 
+    ListadoAfiliadosComponent, 
+    EstadisticasComponent],
   imports: [
     CommonModule,
     NgxDatatableModule,
@@ -45,6 +53,10 @@ import { ListadoAfiliadosComponent } from './programasSalud/listado-afiliados/li
       {
         path: 'listadoAfiliados',
         component: ListadoAfiliadosComponent
+      },
+      {
+        path: 'estadisticas',
+        component: EstadisticasComponent
       }
     ])
   ],

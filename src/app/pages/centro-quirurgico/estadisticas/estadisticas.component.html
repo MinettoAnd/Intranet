@@ -90,11 +90,11 @@
                                     <div class="col-md-12 div_panel_cabecera">
                                     <div class="col-md-3 col-sm-6 col-xs-12" style="display: flex;">
                                         <div class="info-box">
-                                            <span style="background:#57AA50 !important; color:#fff !important;" class="info-box-icon">
-                                            <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+                                            <span style="background:#3c8dbc!important; color:#fff !important;" class="info-box-icon">
+                                            <i class="fa fa-users" aria-hidden="true"></i>
                                             </span>		
                                             <div class="info-box-content">
-                                            <span style="font-family:arial; font-size:15px; " class="info-box-text">REALIZADAS</span>
+                                            <span style="font-family:arial; font-size:15px; " class="info-box-text">PACIENTES PROGRAMADOS</span>
                                                 <span *ngIf="resumenMes.total" class="info-box-number">{{resumenMes.total}} </span>
                                                 <!-- <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">Tiempo programado / 12 horas x dia
                                                 </label> -->
@@ -103,8 +103,8 @@
                                     </div>
                                     <div class="col-md-3 col-sm-6 col-xs-12" id="ausentismo">
                                         <div class="info-box">
-                                            <span style="background: #FF3636 !important; color:#fff !important;" class="info-box-icon">			
-                                            <i class="fa fa-user-times" aria-hidden="true"></i>		</span>		
+                                            <span style="background: #FF3636!important; color:#fff !important;" class="info-box-icon">			
+                                            <i class="fa fa-street-view" aria-hidden="true"></i>		</span>		
                                             <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">AUSENTISMO</span>			<span *ngIf="resumenMes.ausentismo" class="info-box-number">{{resumenMes.ausentismo}} </span>			
                                             <!-- <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">Tiempo de atención / 12 horas x dia
                                                 </label>		 -->
@@ -136,9 +136,9 @@
                                     </div>
                                     <div class="col-md-3 col-sm-6 col-xs-12" style="display: flex;">
                                         <div class="info-box">
-                                            <span style="background: #63B6DE !important; color:#fff !important;" class="info-box-icon">			
-                                            <i class="fa fa-users" aria-hidden="true"></i>		</span>		
-                                            <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">RESERVADAS</span>			
+                                            <span style="background: #00c0ef!important; color:#fff !important;" class="info-box-icon">			
+                                            <i class="fa fa-crosshairs" aria-hidden="true"></i>		</span>		
+                                            <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">PROGRAMACIONES SUSPENDIDAS</span>			
                                             <span *ngIf="resumenMes.reservadas" class="info-box-number">{{resumenMes.reservadas}}</span>			
                                             <!-- <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success" >Tiempo de atención / tiempo programado
                                             </label>		 -->
@@ -246,7 +246,7 @@
                                         </div>
                                       </div>
                                     </div>
-                                    <div class="box-header with-border" style="margin:1rem; ">
+                                    <!-- <div class="box-header with-border" style="margin:1rem; ">
                                       <h5 class="box-title">Comparativo del mes anterior</h5>
                                     </div> 
                                     <div class="col-md-12 div_panel_cabecera">
@@ -259,8 +259,8 @@
                                                 </span>
                                                 <h5 class="description-header" >{{resumenMesAnterior.total}}</h5>
                                                 <span class="description-text">REALIZADAS</span>
-                                            </div><!-- /.description-block -->
-                                          </div><!-- /.col -->
+                                            </div>
+                                          </div>
                                           <div class="col-md-3 col-sm-6 col-xs-12">
                                             <div class="description-block border-right">
                                               <span class="description-percentage text-green" [ngClass]="{'text-red': porcCompaMesAntAusentismo < 0 }">
@@ -270,8 +270,8 @@
                                               </span>
                                                 <h5 class="description-header" >{{resumenMesAnterior.ausentismo}}</h5>
                                                 <span class="description-text">AUSENTISMO</span>
-                                            </div><!-- /.description-block -->
-                                          </div><!-- /.col -->
+                                            </div>
+                                          </div>
                                           <div class="col-md-3 col-sm-6 col-xs-12">
                                             <div class="description-block border-right">
                                               <span class="description-percentage text-green" [ngClass]="{'text-red': porcCompaMesAntReservadas < 0 }">
@@ -281,61 +281,72 @@
                                               </span>
                                                <h5 class="description-header" >{{resumenMesAnterior.reservadas}}</h5>
                                                <span class="description-text">RESERVADAS</span>
-                                            </div><!-- /.description-block -->
-                                          </div><!-- /.col -->
+                                            </div>
+                                          </div>
                                       
-                                    </div>
-                                    <div class="box-header with-border" style="margin:1rem; ">
+                                    </div> -->
+                                    <!-- <div class="box-header with-border" style="margin:1rem; ">
                                       <h5 class="box-title">Costo por atenciones realizadas: <b> S/ {{resumenMontos.montoTotal | number : '1.2-2' }}</b>
                                       </h5>
-                                    </div>
+                                    </div> -->
                                     <div class="col-md-12 div_panel_cabecera">
-                                        <div class="col-md-3 col-sm-6 col-xs-12" style="display: flex;">
+                                        <div class="col-md-4 col-sm-6 col-xs-12" style="display: flex;">
                                            <div class="info-box">
-                                              <span style="background: #63B6DE !important; color:#fff !important;" class="info-box-icon">
+                                              <!-- <span style="background: #63B6DE !important; color:#fff !important;" class="info-box-icon">
                                                 <i class="fa fa-credit-card" aria-hidden="true"></i>
-                                              </span>		
+                                              </span>		 -->
                                               <div class="info-box-content">
-                                                <span style="font-family:arial; font-size:15px; " class="info-box-text">PROGRAMAS DE SALUD</span>
+                                                <span style="font-family:arial; font-size:15px; " class="info-box-text">ARCO EN C</span>
                                                   <span *ngIf="resumenMontos.tarjeta" class="info-box-number" ><b _ngcontent-xkc-c219=""> S/ </b>{{resumenMontos.tarjeta  }}</span>
                                                   
                                               </div>
                                            </div>
-                                        </div>
-                                        <div class="col-md-3 col-sm-6 col-xs-12" style="display: flex;">
                                            <div class="info-box">
-                                              <span style="background: #DD4B39!important; color:#fff !important;" class="info-box-icon">			
-                                                <i class="fa fa-hospital-o" aria-hidden="true"></i>		</span>		
-                                              <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">INSTITUCIONAL Y PRIVADO</span>			
-                                                <span *ngIf="resumenMontos.instipriva" class="info-box-number"><b _ngcontent-xkc-c219=""> S/ </b>{{resumenMontos.instipriva  }}</span>			
-                                                	</div>
-                                           </div>
-                                        </div>
-                                        <div class="col-md-3 col-sm-6 col-xs-12" style="display: flex;">
-                                           <div class="info-box">
-                                              <span style="background: #57AA50 !important; color:#fff !important;" class="info-box-icon">			
-                                                <i class="fa fa-hospital-o" aria-hidden="true"></i>		</span>		
-                                              <div class="info-box-content">			
-                                                <span style="font-family:arial; font-size:15px; " class="info-box-text" >CONVENIOS Y
-                                                  CIA. DE SEGUROS</span>			
-                                                <span *ngIf="resumenMontos.ciasegcon" class="info-box-number"> S/ {{resumenMontos.ciasegcon }}</span>			
+                                            <!-- <span style="background: #DD4B39!important; color:#fff !important;" class="info-box-icon">			
+                                              <i class="fa fa-hospital-o" aria-hidden="true"></i>		</span>		 -->
+                                            <div class="info-box-content">			
+                                              <span style="font-family:arial; font-size:15px; " class="info-box-text">TORRE ENDOSCÓPICA</span>			
+                                              <span *ngIf="resumenMontos.instipriva" class="info-box-number"><b _ngcontent-xkc-c219=""> S/ </b>{{resumenMontos.instipriva  }}</span>			
                                                 </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8 col-sm-6 col-xs-12" style="display: flex;">
+                                           <div class="info-box">
+                                              <!-- <span style="background: #DD4B39!important; color:#fff !important;" class="info-box-icon">			
+                                                <i class="fa fa-hospital-o" aria-hidden="true"></i>		</span>		 -->
+                                              <div class="info-box-content">	
+                                                <span *ngIf="resumenMontos.instipriva" class="info-box-number"><b _ngcontent-xkc-c219=""> S/ </b>{{resumenMontos.instipriva  }}</span>			<span style="font-family:arial; font-size:15px; " class="info-box-text">SALA</span>			
+                                              </div>
+                                           </div>
+                                           <div class="info-box">
+                                            <!-- <span style="background: #57AA50 !important; color:#fff !important;" class="info-box-icon">			
+                                              <i class="fa fa-hospital-o" aria-hidden="true"></i>		</span>		 -->
+                                            <div class="info-box-content">	
+                                              <span *ngIf="resumenMontos.ciasegcon" class="info-box-number"> S/ {{resumenMontos.ciasegcon }}</span>		
+                                              <span style="font-family:arial; font-size:15px; " class="info-box-text" >INTERVENCIÓN</span>			
+                                              			
+                                              </div>
+                                           </div>
+                                           <div class="info-box">
+                                            <!-- <span style="background: #F39C12!important; color:#fff !important;" class="info-box-icon">			
+                                              <i class="fa fa-wheelchair" aria-hidden="true"></i>		</span>		 -->
+                                            <div class="info-box-content">		
+                                              <span *ngIf="resumenMontos.otros" class="info-box-number"> S/ {{resumenMontos.otros | number : '1.2-2' }}</span>	
+                                              <span style="font-family:arial; font-size:15px; " class="info-box-text">ANESTESIA</span>						
+                                             </div>
                                            </div>
                                         </div>
+                                        <!-- <div class="col-md-3 col-sm-6 col-xs-12" style="display: flex;">
+                                           
+                                        </div>
                                         <div class="col-md-3 col-sm-6 col-xs-12" style="display: flex;">
-                                          <div class="info-box">
-                                             <span style="background: #F39C12!important; color:#fff !important;" class="info-box-icon">			
-                                               <i class="fa fa-wheelchair" aria-hidden="true"></i>		</span>		
-                                             <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">OTROS</span>			<span *ngIf="resumenMontos.otros" class="info-box-number"> S/ {{resumenMontos.otros | number : '1.2-2' }}</span>			
-                                              </div>
-                                          </div>
-                                       </div>
-                                       
+                                          
+                                       </div> -->
                                     </div>
                                     <div class="box-header with-border" style="margin:1rem; ">
                                       <div class="box-footer">
-                                        <p>* Información existente desde Enero 2019</p>
-                                        <p>* Costo por atenciones realizadas NO incluye IGV - (Pago de pacientes + Facturado a Empresas)</p>
+                                        <!-- <p>* Información existente desde Enero 2019</p> -->
+                                        <p>* Se considera el registro cuando se registra en la programación de sala y registran fecha de ingreso a sala o intervención al ser realizada</p>
                                       </div>
                                     </div>
                                 </div>
