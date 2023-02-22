@@ -75,10 +75,10 @@ export class ListadoAfiliadosComponent implements OnInit {
     this.page.size = 10;
 
     this.filtroForm = new FormGroup({
-      tipoLista: new FormControl('1'),
-      tipoItem: new FormControl('TO'),
-      paciente: new FormControl(''),
-      tipoEstado: new FormControl('Vigente'),
+      tipoLista: new FormControl(this.tipoLista),
+      tipoItem: new FormControl(this.tipoItem),
+      paciente: new FormControl(this.paciente),
+      tipoEstado: new FormControl(this.tipoEstado),
   });
    }
 
