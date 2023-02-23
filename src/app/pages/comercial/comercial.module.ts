@@ -22,7 +22,8 @@ import { EstadisticasComponent } from './programasSalud/estadisticas/estadistica
     ListadoMadreNinoComponent, 
     ListadoMadreNinoMorososComponent, 
     ListadoAfiliadosComponent, 
-    EstadisticasComponent],
+    EstadisticasComponent
+  ],
   imports: [
     CommonModule,
     NgxDatatableModule,
