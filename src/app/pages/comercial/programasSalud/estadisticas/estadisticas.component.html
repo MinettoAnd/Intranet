@@ -132,11 +132,8 @@
                                                         [rows]="rows1"
                                                         [columnMode]="ColumnMode.force"
                                                         [headerHeight]="50"
-                                                        [footerHeight]="65"
                                                         [rowHeight]="$any('auto')"
-                                                        [scrollbarH]="true"
-                                                        (page)="setPage($event)"
-                                                        [rowClass]="getRowClass"
+                                                        
                                                         >
                                                         <ngx-datatable-column [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns1; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                             <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
@@ -216,8 +213,23 @@
                                                                 </li>
                                                             </ul>                                
                                                         </div>
-                                                        
-                                                        <ngx-datatable #myTable2
+                                                        <ag-grid-angular
+                                                    #agGrid
+                                                    style="width: 100%; height: 380px;"
+                                                    id="myTable2"
+                                                    ag-grid="gridOptions"
+                                                    class="ag-theme-balham"
+                                                    [columnDefs]="columns2"
+                                                    [groupSelectsChildren]="true"
+                                                    [groupDefaultExpanded]="groupDefaultExpanded"
+                                                    [autoGroupColumnDef]="autoGroupColumnDef"
+                                                    [defaultColDef]="defaultColDef"
+                                                    [rowData]="rows2"
+                                                    [rowSelection]="rowSelection"
+                                                    [rowClassRules]="rowClassRules"
+ 
+                                                    ></ag-grid-angular>
+                                                        <!-- <ngx-datatable #myTable2
                                                         class="bootstrap table table-striped"
                                                         [columns]="columns2"
                                                         [rows]="rows2"
@@ -227,7 +239,7 @@
                                                         [rowHeight]="$any('auto')"
                                                         [scrollbarH]="true"
                                                         (page)="setPage($event)"
-                                                        [rowClass]="getRowClass"
+
                                                         >
                                                         <ngx-datatable-column [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns2; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                             <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
@@ -235,18 +247,9 @@
                                                             <div>
                                                                 <span  [title]="value">{{value}}</span>
                                                             </div>
-                                                            <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
-                                                                <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
-                                                            </div> -->
-                    
                                                             </ng-template>
-                                                            <!-- <ngx-datatable-column prop="per1">
-                                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                                {{row.per1 | currency:'S/.  ':'code'}}
-                                                            </ng-template>
-                                                            </ngx-datatable-column> -->
                                                         </ngx-datatable-column>
-                                                        </ngx-datatable>
+                                                        </ngx-datatable> -->
                                                         
                                                     </div>
                                                     </div>
@@ -260,7 +263,11 @@
                                     <div class="card-content collapse show">
                                     <div class="card-body row" style="align-items: center;justify-content: space-between;">
                                       <div class="col-md-6">
+                                        
                                         <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
+                                          <div class="callout callout-info">
+                                            <h3 class="box-title">Ingresos por cuotas en soles de Programas de Salud</h3>
+                                          </div>
                                           <li class="list-group-item border-0 pl-0">
                                             <a  id="downloadlink1" href="#" 
                                               class="btn btn-sm font-weight-bold btn-link" (click)="guardarImagen('chart-1', 'downloadlink1')" download>
@@ -277,7 +284,11 @@
                                         </div>
                                       </div>
                                       <div class="col-md-6">
+                                        
                                         <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
+                                          <div class="callout callout-info">
+                                            <h3 class="box-title">Siniestraliedad de Programas de Salud</h3>
+                                          </div> 
                                           <li class="list-group-item border-0 pl-0">
                                             <a  id="downloadlink2" href="#" 
                                               class="btn btn-sm font-weight-bold btn-link" (click)="guardarImagen('chart-2', 'downloadlink2')" download>
@@ -344,7 +355,7 @@
                                                         </li>
                                                         </ul>                               
                                                     </div>
-                                                    <ngx-datatable #myTable3
+                                                    <!-- <ngx-datatable #myTable3
                                                     class="bootstrap table table-striped"
                                                         [columns]="columns3"
                                                         [rows]="rows3"
@@ -361,19 +372,25 @@
                                                             <div>
                                                             <span  [title]="value">{{value}}</span>
                                                             </div>
-                                                            <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
-                                                            <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
-                                                            </div> -->
-                
                                                         </ng-template>
-                                                        <!-- <ngx-datatable-column prop="per1">
-                                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                            {{row.per1 | currency:'S/.  ':'code'}}
-                                                            </ng-template>
-                                                        </ngx-datatable-column> -->
                                                         </ngx-datatable-column>
-                                                    </ngx-datatable>
-                                                    
+                                                    </ngx-datatable> -->
+                                                    <ag-grid-angular
+                                                    #agGrid
+                                                    style="width: 100%; height: 380px;"
+                                                    id="myTable3"
+                                                    ag-grid="gridOptions"
+                                                    class="ag-theme-balham"
+                                                    [columnDefs]="columns3"
+                                                    [groupSelectsChildren]="true"
+                                                    [groupDefaultExpanded]="groupDefaultExpanded"
+                                                    [autoGroupColumnDef]="autoGroupColumnDef"
+                                                    [defaultColDef]="defaultColDef"
+                                                    [rowData]="rows3"
+                                                    [rowSelection]="rowSelection"
+                                                    [rowClassRules]="rowClassRules"
+ 
+                                                    ></ag-grid-angular>
                                                     </div>
                                                 </div>
                                                 <div class="card col-md-6">
@@ -410,7 +427,7 @@
                                                         </ul>                            
                                                     </div>
                                                     
-                                                    <ngx-datatable #myTable4
+                                                    <!-- <ngx-datatable #myTable4
                                                     class="bootstrap table table-striped"
                                                         [columns]="columns4"
                                                         [rows]="rows4"
@@ -427,19 +444,25 @@
                                                             <div>
                                                             <span  [title]="value">{{value}}</span>
                                                             </div>
-                                                            <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
-                                                            <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
-                                                            </div> -->
-                
                                                         </ng-template>
-                                                        <!-- <ngx-datatable-column prop="per1">
-                                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                            {{row.per1 | currency:'S/.  ':'code'}}
-                                                            </ng-template>
-                                                        </ngx-datatable-column> -->
                                                         </ngx-datatable-column>
-                                                    </ngx-datatable>
-                                                    
+                                                    </ngx-datatable> -->
+                                                    <ag-grid-angular
+                                                    #agGrid
+                                                    style="width: 100%; height:380px;"
+                                                    id="myTable4"
+                                                    ag-grid="gridOptions"
+                                                    class="ag-theme-balham"
+                                                    [columnDefs]="columns4"
+                                                    [groupSelectsChildren]="true"
+                                                    [groupDefaultExpanded]="groupDefaultExpanded"
+                                                    [autoGroupColumnDef]="autoGroupColumnDef"
+                                                    [defaultColDef]="defaultColDef"
+                                                    [rowData]="rows4"
+                                                    [rowSelection]="rowSelection"
+                                                    [rowClassRules]="rowClassRules"
+ 
+                                                    ></ag-grid-angular>
                                                     </div>
                                                 </div> 
                                             </div>
@@ -487,7 +510,7 @@
                                                     </div>                              
                                                 </div>
                                                 
-                                                <ngx-datatable #myTable5
+                                                <!-- <ngx-datatable #myTable5
                                                 class="bootstrap table table-striped"
                                                 [columns]="columns5"
                                                 [rows]="rows5"
@@ -508,19 +531,25 @@
                                                     <div>
                                                         <span  [title]="value">{{value}}</span>
                                                     </div>
-                                                    <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
-                                                        <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
-                                                    </div> -->
-            
                                                     </ng-template>
-                                                    <!-- <ngx-datatable-column prop="per1">
-                                                    <ng-template let-row="row" ngx-datatable-cell-template>
-                                                        {{row.per1 | currency:'S/.  ':'code'}}
-                                                    </ng-template>
-                                                    </ngx-datatable-column> -->
                                                 </ngx-datatable-column>
-                                                </ngx-datatable>
-                                                
+                                                </ngx-datatable> -->
+                                                <ag-grid-angular
+                                                    #agGrid
+                                                    style="width: 100%; height: 380px;"
+                                                    id="myTable5"
+                                                    ag-grid="gridOptions"
+                                                    class="ag-theme-balham"
+                                                    [columnDefs]="columns5"
+                                                    [groupSelectsChildren]="true"
+                                                    [groupDefaultExpanded]="groupDefaultExpanded"
+                                                    [autoGroupColumnDef]="autoGroupColumnDef"
+                                                    [defaultColDef]="defaultColDef"
+                                                    [rowData]="rows5"
+                                                    [rowSelection]="rowSelection"
+                                                    [rowClassRules]="rowClassRules"
+ 
+                                                    ></ag-grid-angular>
                                             </div>
                                             </div>
                                             </div>                       
@@ -616,10 +645,8 @@
                                                   [rows]="rows6"
                                                   [columnMode]="ColumnMode.force"
                                                   [headerHeight]="50"
-                                                  [footerHeight]="65"
                                                   [rowHeight]="$any('auto')"
                                                   [scrollbarH]="true"
-                                                  [limit]="page1.size"
                                                   >
                                                   <ngx-datatable-column [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns6; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
@@ -682,10 +709,7 @@
                                                   [rows]="rows7"
                                                   [columnMode]="ColumnMode.force"
                                                   [headerHeight]="40"
-                                                  [footerHeight]="65"
                                                   [rowHeight]="$any('auto')"
-                                                  [scrollbarH]="true"
-                                                  [limit]="page2.size"
                                                   >
                                                   <ngx-datatable-column [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns7; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
@@ -758,14 +782,8 @@
                                                   [rows]="rows8"
                                                   [columnMode]="ColumnMode.force"
                                                   [headerHeight]="50"
-                                                  [footerHeight]="65"
                                                   [rowHeight]="$any('auto')"
-                                                  [scrollbarH]="true"
-                                                  [limit]="page3.size"
-                                                  [selected]="selected"
-                                                  [selectionType]="SelectionType.single"
-                                                  (activate)="onActivate($event)"
-                                                  (select)='onSelect($event)'
+
                                                   >
                                                   <ngx-datatable-column [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns8; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
@@ -843,14 +861,12 @@
                                                     </div>
                                                     <ngx-datatable #myTable9
                                                     class="bootstrap table table-striped"
+                                                       [rows]="rows9"
                                                       [columns]="columns9"
-                                                      [rows]="rows9"
+                                                      [columnMode]="ColumnMode.force"
                                                       [columnMode]="ColumnMode.force"
                                                       [headerHeight]="50"
-                                                      [footerHeight]="65"
                                                       [rowHeight]="$any('auto')"
-                                                      [scrollbarH]="true"
-                                                      [limit]="page1.size"
                                                       >
                                                       <ngx-datatable-column [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns9; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
@@ -913,10 +929,8 @@
                                                       [rows]="rows10"
                                                       [columnMode]="ColumnMode.force"
                                                       [headerHeight]="40"
-                                                      [footerHeight]="65"
                                                       [rowHeight]="$any('auto')"
                                                       [scrollbarH]="true"
-                                                      [limit]="page2.size"
                                                       >
                                                       <ngx-datatable-column [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns10; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
@@ -989,14 +1003,7 @@
                                                       [rows]="rows11"
                                                       [columnMode]="ColumnMode.force"
                                                       [headerHeight]="50"
-                                                      [footerHeight]="65"
                                                       [rowHeight]="$any('auto')"
-                                                      [scrollbarH]="true"
-                                                      [limit]="page3.size"
-                                                      [selected]="selected"
-                                                      [selectionType]="SelectionType.single"
-                                                      (activate)="onActivate($event)"
-                                                      (select)='onSelect($event)'
                                                       >
                                                       <ngx-datatable-column [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns11; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"

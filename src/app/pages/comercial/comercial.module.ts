@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { AgGridModule } from 'ag-grid-angular';
 import { CuotasProgramasSaludComponent } from './ventas/cuotas-programas-salud/cuotas-programas-salud.component';
 import { ListadoMorososComponent } from './programasSalud/listado-morosos/listado-morosos.component';
 import { ListadoContratosVigentesComponent } from './programasSalud/listado-contratos-vigentes/listado-contratos-vigentes.component';
@@ -25,6 +25,7 @@ import { EstadisticasComponent } from './programasSalud/estadisticas/estadistica
     EstadisticasComponent
   ],
   imports: [
+    AgGridModule.withComponents([]),
     CommonModule,
     NgxDatatableModule,
     NgbModule,
