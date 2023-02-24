@@ -74,4 +74,10 @@ export class ComercialService {
       this.loadTableApiDataURL = `${environment.api_url}getMadreNinoMorososDetalle`;
       return this.http.get(this.loadTableApiDataURL);
     }
+    // Comercial -Estadisticas
+    getPsContratosEstadistica(data): Observable<any> {
+      this.loadTableApiDataURL = `${environment.api_url}getPsContratosEstadistica`;
+      return this.http.post(this.loadTableApiDataURL, data);
+    }
+
 }
