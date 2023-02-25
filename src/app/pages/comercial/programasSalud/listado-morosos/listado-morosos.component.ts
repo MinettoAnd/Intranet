@@ -144,9 +144,9 @@ export class ListadoMorososComponent implements OnInit {
         if(response.data.success){
           this.message = response.message;
           this.title = response.data.title;
-          console.log(response.data);
+          //console.log(response.data);
           this.data = response.data ? response : [];
-      console.log(168, this.data);   
+          //console.log(168, this.data);   
           this.columns = this.data.data.cabeceras;
           this.columns1 = [
             {prop: 'Programa', name: 'Programa'},
@@ -175,15 +175,16 @@ export class ListadoMorososComponent implements OnInit {
           let totalPeriodos = 0;
           let totalDeuda = 0;
           this.rows.forEach(function (a) {
-              if ( !this[a.Programa]) {
-                  this[a.Programa] =  { Programa: a.Programa, TotalContratos: 0, TotalMiembros: 0, CuotasVencidas: 0, ImpCuotasVencidas: 0 };
+            //console.log(177,a);
+              if ( !this[a.grupoPrograma]) {
+                  this[a.grupoPrograma] =  { Programa: a.grupoPrograma, TotalContratos: 0, TotalMiembros: 0, CuotasVencidas: 0, ImpCuotasVencidas: 0 };
 
-                  result.push(this[a.Programa]);
+                  result.push(this[a.grupoPrograma]);
               }
-              this[a.Programa].TotalContratos += 1;
-              this[a.Programa].TotalMiembros += Number(a.TotalMiembros);
-              this[a.Programa].CuotasVencidas += Number(a.CuotasVencidas);
-              this[a.Programa].ImpCuotasVencidas += Number(a.ImpCuotasVencidas);
+              this[a.grupoPrograma].TotalContratos += 1;
+              this[a.grupoPrograma].TotalMiembros += Number(a.TotalMiembros);
+              this[a.grupoPrograma].CuotasVencidas += Number(a.CuotasVencidas);
+              this[a.grupoPrograma].ImpCuotasVencidas += Number(a.ImpCuotasVencidas);
              
              
           }, Object.create(null));
@@ -204,13 +205,14 @@ export class ListadoMorososComponent implements OnInit {
           
           this.rows1.push(total);
           this.rows.map(item=>{
-            item.ImpCuotasVencidas = this._cp.transform( item.ImpCuotasVencidas);
+            //console.log(222,item.ImpCuotasVencidas);
+            item.ImpCuotasVencidas =  item.ImpCuotasVencidas;
             item.Telefono = this._phone.transform( item.Telefono);
           });
           this.totalAfiliados = this._cnp.transform(totalAfiliados);
           this.totalPeriodos = this._cnp.transform(totalPeriodos);
           this.totalDeuda = totalDeuda;
-          console.log(198, this.rows1);
+          //console.log(198, this.rows1);
 
           this.rows2 = [];
           let nuContratosP1= 0;
@@ -242,7 +244,10 @@ export class ListadoMorososComponent implements OnInit {
           let nuAfiliadosP6 = 0;
           let nuCuotasVencidasP6 = 0;
           let totalImpP6 = 0;
+          //console.log(300,this.rows);
           this.rows.map(item =>{
+           // console.log(300,this._cp.transform(item.ImpCuotasVencidas));
+           //console.log(223,Number(item.ImpCuotasVencidas))
             item.Telefono = this._phone.transform( item.Telefono);
             item.Celular = this._phone.transform( item.Celular);
             if(item.CuotasVencidas === '1'){
@@ -333,10 +338,11 @@ export class ListadoMorososComponent implements OnInit {
           this.rows2.push(datosPeriodo5);
           this.rows2.push(datosPeriodo6);
           this.rows2.push(datosPeriodo7);
+          //console.log(200,this.rows2);
           this.rows2.map(item=>{
             item.ImpCuotasVencidas = this._cp.transform( item.ImpCuotasVencidas);
           });
-          console.log(response.data.page);
+          //console.log(response.data.page);
           this.page = (response as any).data.page;
           this.temp = this.rows;
           

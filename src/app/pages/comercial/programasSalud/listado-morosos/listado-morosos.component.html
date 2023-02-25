@@ -10,8 +10,9 @@
             <div class="col-12">
               <form [formGroup]="filtroForm">
                 <div class="row" style="margin-bottom: -0.5rem;">
-                  <div class="form-group col-sm-12 col-md-4 col-lg-3">
-                    <div class="input-group input-group-sm">
+                  <div class="form-group col-sm-12">
+
+                    <div class="input-group input-group-sm fecha">
                       <div class="input-group-prepend">
                         <span class="input-group-text">Fecha Inicio</span>
                       </div>
@@ -21,25 +22,10 @@
                         class="form-control"
                       />
                     </div>
-                  </div>
-      
-                  <!-- <div class="form-group col-sm-12 col-md-4 col-lg-3">
-                    <div class="input-group input-group-sm">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text">Num. Doc. Titular</span>
-                      </div>
-                      <input
-                        type="text"
-                        formControlName="n_doc"
-                        class="form-control"
-                      />
-                    </div>
-                  </div> -->
-                  <div class="form-group col-sm-12 col-md-4 col-lg-3">
+                  
                     <div class="input-group input-group-sm">
                       <div class="input-group-append">
-                        <span class="input-group-text">
-                            Meses de Morosidad</span>
+                        <span class="input-group-text">Meses de Morosidad</span>
                       </div>
                       <select
                         class="form-control form-select"
@@ -58,54 +44,13 @@
                         <option value="5M">05 Meses a mas</option>	
                       </select>
                     </div>
-                  </div>
-                  <!-- <div class="form-group col-sm-12 col-md-4 col-lg-3">
-                    <div class="input-group input-group-sm">
-                      <div class="input-group-append">
-                        <span class="input-group-text">Tipos de Paciente</span>
-                      </div>
-                      <select
-                        class="form-control form-select"
-                        formControlName="tipo_paciente"
-                        id="inputGroupSelect05"
-                      >
-                      <optgroup>
-                        <option value="0">Todo tipo de Paciente</option>
-                        <option value="46">Campaña</option>
-                        <option value="3">Institucional</option>
-                        <option value="19">Plan de Salud</option>
-                        <option value="21">Programa Madre Niño</option>
-                        <option value="22">Sante Card</option>
-                        <optgroup label="____________________________________">
-                      </optgroup>  
-                      <optgroup>
-                        <option value="14">SCTR</option>
-                        <option value="13">Soat</option>
-                        <option value="6">EPS</option>
-                        <option value="5">Seguros</option>
-                        <option value="23">Convenios - Contado</option>
-                        <option value="4">Convenios - Crédito</option>
-                        <option value=" ">Grupo Empresa - Credito</option>
-                        <optgroup label="____________________________________">
-                      </optgroup>
-                      <optgroup>
-                        <option value="24">Tarjeta Clásica</option>
-                        <option value="25">Tarjeta Dorada</option>
-                        <option value="26">Tarjeta Diamante</option>
-                        <option value="4,5,6,13,14">Grupo Tarjetas de Salud</option>
-                      </optgroup>
-  
-                      </select>
-                    </div>
-                  </div> -->
-                  <div class="form-group col-sm-12 col-md-4 col-lg-2">
-                    <div class="input-group">
+
                       <div class="input-group-btn">
                         <button (click)="filter()" class="btn btn-sm btn-primary">
                           <i class="fa fa-search"></i> Filtrar
                         </button>
                       </div>
-                    </div>
+                   
                   </div>
                 </div>
               </form>
@@ -268,7 +213,7 @@
                               <div class="box box-solid">
                                 <div id="accordion1">
                                   <div class="card">
-                                    <div class="card-header" >
+                                    <div class="card-header-info" >
                                       <div class="box-header">
                                         <div class="toggle-table">
                                           <div class="callout callout-info">
@@ -333,7 +278,7 @@
                                     </div>
                                   </div>
                                   <div class="card">
-                                    <div class="card-header" >
+                                    <div class="card-header-info" >
                                       <div class="box-header">
                                         <div class="toggle-table">
                                           <div class="callout callout-info">
