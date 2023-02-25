@@ -31,14 +31,26 @@ export class EstadisticasComponent implements OnInit {
   active = 1;
   closeResult = '';
   @ViewChild("agGrid") agGrid: AgGridAngular;
+  data;
+  ingresoTotal: any;
+  ingresoFamil: any;
+  ingresoColec: any;
+  ingresoInscr: any;
+  ingresoFamilNumComtratos: any;
+  ingresoColecNumComtratos: any;
+  ingresoInscrNumComtratos: any;
+  ingresoTotalNumComtratos: any;
+  data2;
+  data3;
+  data4;
   @ViewChild("baseChart", { static: false }) set content(
     content: ElementRef
   ) {
     if (content) {
       // initially setter gets called with undefined
       this.baseChart = content;
-      this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del mes seleccionado', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
-      this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'pie');
+      this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'', '','chart-1', this.anio, this.anioAnterior, 'line');
+      this.getBarChart(this.chartLabels2, this.chartData3, this.chartData4,'', '','chart-2', this.anioAnterior, this.anio, 'line');
       // this.getBarChart(this.chartLabels, this.chartData3, this.chartData4, 'chart-2', 'MENSUAL-INGRESO CON IGV - TOTAL CUOTAS', 'MENSUAL-INGRESO CON IGV - TOTAL RECAUDADO', 'bar');
       // this.getBarChart(this.chartLabels2, this.chartData5, this.chartData6, 'chart-3', 'MENSUAL-NÚMERO DE CONTRATOS PAGADOS-TOTAL CUOTAS', 'MENSUAL-NÚMERO DE CONTRATOS PAGADOS-TOTAL RECAUDADO', 'bar');
       // this.getBarChart(this.chartLabels3, this.chartData7, this.chartData8, 'chart-4', 'ANUAL-INGRESO SIN IGV - TOTAL CUOTAS', 'ANUAL-INGRESO SIN IGV - TOTAL RECAUDADO', 'bar');
@@ -92,6 +104,7 @@ export class EstadisticasComponent implements OnInit {
   filtroForm: FormGroup;
   mes = moment(new Date()).format('MM');
   anio = moment(new Date()).format('YYYY');
+  anioAnterior = Number(this.anio) - 1;
   periodo_consulta = this.anio + this.mes;
   public breadcrumb: any;
   parameters;
@@ -191,19 +204,19 @@ export class EstadisticasComponent implements OnInit {
       this.optionsAnio.push(anioNew);
       anioOp--;
     }
-    // this.rowClassRules = {
-    //   "totals": function(params) {
-    //     //  console.log(301, params); 
-    //     var totales;
-    //     if(params.data.sucursal !== undefined){
-    //       totales = params.data.sucursal;
-    //     }else if(params.data.grupo !== undefined){
-    //       totales = params.data.grupo;
-    //     }
-    //     return totales === 'TOTAL';
-    //   },
-    //   "sick-days-breach": "data.sickDays > 8"
-    // };
+    this.rowClassRules = {
+      "totals": function(params) {
+        //  console.log(301, params); 
+        var totales;
+        if(params.data.sucursal !== undefined){
+          totales = params.data.sucursal;
+        }else if(params.data.grupo !== undefined){
+          totales = params.data.grupo;
+        }
+        return totales === 'TOTAL';
+      },
+      "sick-days-breach": "data.sickDays > 8"
+    };
   }
 
   ngOnInit(){
@@ -610,18 +623,39 @@ export class EstadisticasComponent implements OnInit {
       };
 
       this.loading();
-            this.tableApiservice.getPsContratosEstadistica(this.parameters).subscribe(
+    this.tableApiservice.getPsContratosEstadistica(this.parameters).subscribe(
                 (response) => {
                   console.log(615, response)
                   if(response.success){
-                    this.resumenMes = response.data;
-                    
-                     this.porcMedico =  ( this.resumenMes.medico / this.resumenMes.ausentismo) * 100;
-                      this.porcPaciente = (this.resumenMes.paciente / this.resumenMes.ausentismo) * 100;
-                      this.porcAnuladas = (this.resumenMes.anuladas / this.resumenMes.ausentismo) * 100;
-                    
+                    this.columns1 = response.data.cabeceras_resumen_afiliados_Tipo;
+                    this.rows1 = response.data.tabla_resumen_afiliados_Tipo;
 
-                     
+                    this.columns2 = response.data.cabeceras_resumen_afiliados_Total;
+                    this.rows2 = response.data.tabla_resumen_afiliados_Total;
+
+                    this.columns3 = response.data.cabeceras_contratos;
+                    this.rows3 = response.data.tabla_contratos;
+
+                    this.columns4 = response.data.cabeceras_afiliados;
+                    this.rows4 = response.data.tabla_afiliados;
+
+                    this.columns5 = response.data.cabeceras_contratos_soles;
+                    this.rows5 = response.data.tabla_contratos_soles;
+                    // this.chartData1 = response.data.hist_total
+                    response.data.hist_total.map(item => {
+                        this.chartLabels1.push(item.name);
+                        this.chartData1.push(item.item_1);
+                        this.chartData2.push(item.item_2);
+                      
+                    });
+                    // this.chartData3 = response.data.hist_siniestralidad
+                    response.data.hist_siniestralidad.map(item => {
+                      this.chartLabels2.push(item.name);
+                      this.chartData3.push(item.item_1);
+                      this.chartData4.push(item.item_2);
+                    });
+                     console.log(645, response.data.hist_total)
+                     console.log('646', response.data.hist_siniestralidad)
                   }
                 },
                 (error) => {
@@ -629,506 +663,512 @@ export class EstadisticasComponent implements OnInit {
                 }
               );
     // this.loading();
-    // this.tableApiservice.getPagoCuotasMesProgramasSalud(this.parameters).subscribe(
-    //   (response: ApiResponse<AttentionConsultation>) => {
-    //     this.barChartLabels = [];
-    //     this.barChartData = [];
-    //     this.barChartData2 = [];
-    //     this.barChartData3 = [];
-    //     this.barChartData4 = [];
-    //     if(response.data.success){
-    //       // this.message = response.message;
-    //       // this.title = response.data.title;
-    //       this.data = response.data ? response.data : [];
-    //       this.columns = this.data.cabeceras;
-    //       this.columns.map(item => {
-    //         if (item.prop !== 'item') {
-    //           this.barChartLabels.push(item.name);
-    //         } 
-    //       });
-    //       this.rows = this.data.query_sin_igv;
-    //       this.rows.map(item => {
+    this.tableApiservice.getPagoCuotasMesProgramasSalud(this.parameters).subscribe(
+      (response: ApiResponse<AttentionConsultation>) => {
+        // this.barChartLabels = [];
+        // this.barChartData = [];
+        // this.barChartData2 = [];
+        // this.barChartData3 = [];
+        // this.barChartData4 = [];
+        console.log(659, response)
+        if(response.data.success){
+          // this.message = response.message;
+          // this.title = response.data.title;
+          this.data = response.data ? response.data : [];
+          this.columns6 = this.data.cabeceras;
+          this.columns7 = this.columns6
+          // this.columns6.map(item => {
+          //   if (item.prop !== 'item') {
+          //     this.barChartLabels.push(item.name);
+          //   } 
+          // });
+          this.rows6 = this.data.query_sin_igv;
+          this.rows6.map(item => {
             
-    //         if(item.item.trim() === 'CUOTAS COLECTIVA - CONTINUADORES'){
-    //           console.log(451, item.item.trim());
-    //           item.per1 = this.rows[0].per1 - this.rows[1].per1
-    //           item.per2 = this.rows[0].per2 - this.rows[1].per2
-    //           item.per3 = this.rows[0].per3 - this.rows[1].per3
-    //           item.per4 = this.rows[0].per4 - this.rows[1].per4
+            if(item.item.trim() === 'CUOTAS COLECTIVA - CONTINUADORES'){
+              // console.log(451, item.item.trim());
+              item.per1 = this.rows6[0].per1 - this.rows6[1].per1
+              item.per2 = this.rows6[0].per2 - this.rows6[1].per2
+              item.per3 = this.rows6[0].per3 - this.rows6[1].per3
+              item.per4 = this.rows6[0].per4 - this.rows6[1].per4
 
-    //         }else if(item.item.trim() === 'CUOTAS FAMILIAR EXTERNO - CONTINUADORES'){
-    //           console.log(451, item.item.trim());
-    //           item.per1 = this.rows[3].per1 - this.rows[4].per1
-    //           item.per2 = this.rows[3].per2 - this.rows[4].per2
-    //           item.per3 = this.rows[3].per3 - this.rows[4].per3
-    //           item.per4 = this.rows[3].per4 - this.rows[4].per4
+            }else if(item.item.trim() === 'CUOTAS FAMILIAR EXTERNO - CONTINUADORES'){
+              // console.log(451, item.item.trim());
+              item.per1 = this.rows6[3].per1 - this.rows6[4].per1
+              item.per2 = this.rows6[3].per2 - this.rows6[4].per2
+              item.per3 = this.rows6[3].per3 - this.rows6[4].per3
+              item.per4 = this.rows6[3].per4 - this.rows6[4].per4
               
-    //         }else if(item.item.trim() === 'CUOTAS FAMILIAR INTERNO'){
+            }else if(item.item.trim() === 'CUOTAS FAMILIAR INTERNO'){
               
-    //           if(item.per1 === 0){
-    //             for (let i = 0; i < this.rows.length; i++) {
-    //               if(i === 7 || i === 8){
-    //                 item.per1 += this.rows[i].per1
-    //                 item.per2 += this.rows[i].per2
-    //                 item.per3 += this.rows[i].per3
-    //                 item.per4 += this.rows[i].per4
-    //               }
+              if(item.per1 === 0){
+                for (let i = 0; i < this.rows6.length; i++) {
+                  if(i === 7 || i === 8){
+                    item.per1 += this.rows6[i].per1
+                    item.per2 += this.rows6[i].per2
+                    item.per3 += this.rows6[i].per3
+                    item.per4 += this.rows6[i].per4
+                  }
 
-    //             }
-    //           }
-    //         }else if (item.item.trim() === 'TOTAL CUOTAS') {
+                }
+              }
+            }
+            // else if (item.item.trim() === 'TOTAL CUOTAS') {
 
-    //           this.barChartData.push(typeof item.per1 === 'number' ? item.per1.toFixed(2) : Number(item.per1).toFixed(2));
-    //           this.barChartData.push(typeof item.per2 === 'number' ? item.per2.toFixed(2) : Number(item.per2).toFixed(2));
-    //           this.barChartData.push(typeof item.per3 === 'number' ? item.per3.toFixed(2) : Number(item.per3).toFixed(2));
-    //           this.barChartData.push(typeof item.per4 === 'number' ? item.per4.toFixed(2) : Number(item.per4).toFixed(2));
+            //   this.barChartData.push(typeof item.per1 === 'number' ? item.per1.toFixed(2) : Number(item.per1).toFixed(2));
+            //   this.barChartData.push(typeof item.per2 === 'number' ? item.per2.toFixed(2) : Number(item.per2).toFixed(2));
+            //   this.barChartData.push(typeof item.per3 === 'number' ? item.per3.toFixed(2) : Number(item.per3).toFixed(2));
+            //   this.barChartData.push(typeof item.per4 === 'number' ? item.per4.toFixed(2) : Number(item.per4).toFixed(2));
 
-    //           // this.totales = item.per1 + item.per2 + item.per3 + item.per1
-    //         }else if (item.item.trim() === 'TOTAL RECAUDADO') {
+            //   // this.totales = item.per1 + item.per2 + item.per3 + item.per1
+            // }else if (item.item.trim() === 'TOTAL RECAUDADO') {
 
-    //           this.barChartData2.push(typeof item.per1 === 'number' ? item.per1.toFixed(2) : Number(item.per1).toFixed(2));
-    //           this.barChartData2.push(typeof item.per2 === 'number' ? item.per2.toFixed(2) : Number(item.per2).toFixed(2));
-    //           this.barChartData2.push(typeof item.per3 === 'number' ? item.per3.toFixed(2) : Number(item.per3).toFixed(2));
-    //           this.barChartData2.push(typeof item.per4 === 'number' ? item.per4.toFixed(2) : Number(item.per4).toFixed(2));
+            //   this.barChartData2.push(typeof item.per1 === 'number' ? item.per1.toFixed(2) : Number(item.per1).toFixed(2));
+            //   this.barChartData2.push(typeof item.per2 === 'number' ? item.per2.toFixed(2) : Number(item.per2).toFixed(2));
+            //   this.barChartData2.push(typeof item.per3 === 'number' ? item.per3.toFixed(2) : Number(item.per3).toFixed(2));
+            //   this.barChartData2.push(typeof item.per4 === 'number' ? item.per4.toFixed(2) : Number(item.per4).toFixed(2));
 
 
-    //           // this.totales = item.per1 + item.per2 + item.per3 + item.per1
-    //         }
-    //       });
+            //   // this.totales = item.per1 + item.per2 + item.per3 + item.per1
+            // }
+          });
 
-    //       this.rows2 = this.data.query_con_igv;
+          this.rows7 = this.data.query_con_igv;
 
-    //       this.rows2.map(item => {
-    //         if (item.item.trim() === 'TOTAL CUOTAS') {
+          // this.rows2.map(item => {
+          //   if (item.item.trim() === 'TOTAL CUOTAS') {
               
-    //           this.barChartData3.push(typeof item.per1 === 'number' ? item.per1.toFixed(2) : Number(item.per1).toFixed(2));
-    //           this.barChartData3.push(typeof item.per2 === 'number' ? item.per2.toFixed(2) : Number(item.per2).toFixed(2));
-    //           this.barChartData3.push(typeof item.per3 === 'number' ? item.per3.toFixed(2) : Number(item.per3).toFixed(2));
-    //           this.barChartData3.push(typeof item.per4 === 'number' ? item.per4.toFixed(2) : Number(item.per4).toFixed(2));
+          //     this.barChartData3.push(typeof item.per1 === 'number' ? item.per1.toFixed(2) : Number(item.per1).toFixed(2));
+          //     this.barChartData3.push(typeof item.per2 === 'number' ? item.per2.toFixed(2) : Number(item.per2).toFixed(2));
+          //     this.barChartData3.push(typeof item.per3 === 'number' ? item.per3.toFixed(2) : Number(item.per3).toFixed(2));
+          //     this.barChartData3.push(typeof item.per4 === 'number' ? item.per4.toFixed(2) : Number(item.per4).toFixed(2));
 
-    //           // this.totales = item.per1 + item.per2 + item.per3 + item.per1
-    //         }else if (item.item.trim() === 'TOTAL RECAUDADO') {
+          //     // this.totales = item.per1 + item.per2 + item.per3 + item.per1
+          //   }else if (item.item.trim() === 'TOTAL RECAUDADO') {
 
-    //           this.barChartData4.push(typeof item.per1 === 'number' ? item.per1.toFixed(2) : Number(item.per1).toFixed(2));
-    //           this.barChartData4.push(typeof item.per2 === 'number' ? item.per2.toFixed(2) : Number(item.per2).toFixed(2));
-    //           this.barChartData4.push(typeof item.per3 === 'number' ? item.per3.toFixed(2) : Number(item.per3).toFixed(2));
-    //           this.barChartData4.push(typeof item.per4 === 'number' ? item.per4.toFixed(2) : Number(item.per4).toFixed(2));
+          //     this.barChartData4.push(typeof item.per1 === 'number' ? item.per1.toFixed(2) : Number(item.per1).toFixed(2));
+          //     this.barChartData4.push(typeof item.per2 === 'number' ? item.per2.toFixed(2) : Number(item.per2).toFixed(2));
+          //     this.barChartData4.push(typeof item.per3 === 'number' ? item.per3.toFixed(2) : Number(item.per3).toFixed(2));
+          //     this.barChartData4.push(typeof item.per4 === 'number' ? item.per4.toFixed(2) : Number(item.per4).toFixed(2));
 
-    //           // this.totales = item.per1 + item.per2 + item.per3 + item.per1
-    //         } 
-    //       });
-    //       this.ingresoTotal=  this.data.ingreso_total;
-    //       this.ingresoFamil=  this.data.ingreso_famil;
-    //       this.ingresoColec=  this.data.ingreso_colec;
-    //       this.ingresoInscr=  this.data.ingreso_inscr;
-    //       this.formatPipe(this.rows);
-    //       this.formatPipe(this.rows2);
-    //       // this.barChartLabels = ['Lima', 'chorrillos', 'Surco']
-    //       // this.barChartData = [65, 59, 80];
-    //       // this.barChartLabels = this.columns;
-    //       // this.barChartData = [ 80, 60, 76, 666];
-    //         // Swal.close();
-    //     }else{
-    //       Swal.close();
-    //     }
+          //     // this.totales = item.per1 + item.per2 + item.per3 + item.per1
+          //   } 
+          // });
+          this.ingresoTotal=  this.data.ingreso_total;
+          this.ingresoFamil=  this.data.ingreso_famil;
+          this.ingresoColec=  this.data.ingreso_colec;
+          this.ingresoInscr=  this.data.ingreso_inscr;
+          // this.formatPipe(this.rows6);
+          // this.formatPipe(this.rows7);
+          // this.barChartLabels = ['Lima', 'chorrillos', 'Surco']
+          // this.barChartData = [65, 59, 80];
+          // this.barChartLabels = this.columns;
+          // this.barChartData = [ 80, 60, 76, 666];
+            // Swal.close();
+        }else{
+          Swal.close();
+        }
         
-    //   },
-    //   (error) => {
-    //       Swal.close();
-    //   }
-    // );
-    // // this.loading();
-    // this.tableApiservice.getPagoCuotasContratosMesProgramasSalud(this.parameters).subscribe(
-    //   (response: ApiResponse<AttentionConsultation>) => {
-        
-    //     if(response.data.success){
-    //       this.barChartLabels2 = [];
-    //       this.barChartData5 = [];
-    //       this.barChartData6 = [];
-
-    //       // this.message3 = response.message;
-    //       // this.title3 = response.data.title;
-    //       this.data2 = response.data ? response.data : [];
-    //       this.columns2 = this.data2.cabeceras;
-    //       this.columns2.map(item => {
-    //         if (item.prop !== 'item') {
-    //           this.barChartLabels2.push(item.name);
-    //         } 
-    //       });
-    //       this.rows3 = this.data2.data;
-    //       this.rows3.map(item => {
-    //         if (item.item.trim() === 'TOTAL CUOTAS'){
-    //           this.ingresoTotalNumComtratos = item.per1;
-    //           // para graficos
-    //           this.barChartData5.push(item.per1);
-    //           this.barChartData5.push(item.per2);
-    //           this.barChartData5.push(item.per3);
-    //           this.barChartData5.push(item.per4);
-    //         }else if (item.item.trim() === 'CUOTAS FAMILIAR EXTERNO'){
-    //           this.ingresoFamilNumComtratos = item.per1;
-    //         }else if (item.item.trim() === 'CUOTAS FAMILIAR INTERNO' ){
-    //           this.ingresoFamilNumComtratos = parseInt(this.ingresoFamilNumComtratos) + parseInt(item.per1);
-    //         }else if (item.item.trim() === 'CUOTAS COLECTIVA'){
-              
-    //           this.ingresoColecNumComtratos = item.per1;
-    //         }else if (item.item.trim() === 'INSCRIPCIONES'){
-    //           this.ingresoInscrNumComtratos = item.per1;
-
-    //         }else if (item.item.trim() === 'TOTAL RECAUDADO'){  //para graficos
-    //           this.barChartData6.push(item.per1);
-    //           this.barChartData6.push(item.per2);
-    //           this.barChartData6.push(item.per3);
-    //           this.barChartData6.push(item.per4);
-    //         }
-    //       });
-          
-          
-          
-          
-    //         // Swal.close();
-    //     }else{
-    //       Swal.close();
-    //     }
-    //   },
-    //   (error) => {
-    //       Swal.close();
-    //   }
-    // );
-    // // this.loading();
-    // this.tableApiservice.getPagoCuotasProgramasSalud(this.parameters).subscribe(
-    //   (response: ApiResponse<AttentionConsultation>) => {
-    //     this.barChartLabels3 = [];
-    //     this.barChartData7 = [];
-    //     this.barChartData8 = [];
-    //     this.barChartData9 = [];
-    //     this.barChartData10 = [];
-    //     if(response.data.success){
-    //       // this.message = response.message;
-    //       // this.title = response.data.title;
-    //       this.data3 = response.data ? response.data : [];
-    //       this.columns3 = this.data3.cabeceras;
-    //       this.columns3.map(item => {
-    //         if (item.prop !== 'item') {
-    //           if (item.prop !== 'PER13'){
-    //             this.barChartLabels3.push(item.name);
-    //           }
-              
-    //         } 
-    //       });
-    //       this.rows4 = this.data3.query_sin_igv;
-          
-    //       this.rows4.map(item => {
-    //         if(item.item.trim() === 'CUOTAS COLECTIVA - CONTINUADORES'){
-    //           console.log(451, item.item.trim());
-    //           item.PER1 = this.rows4[0].PER1 - this.rows4[1].PER1
-    //           item.PER2 = this.rows4[0].PER2 - this.rows4[1].PER2
-    //           item.PER3 = this.rows4[0].PER3 - this.rows4[1].PER3
-    //           item.PER4 = this.rows4[0].PER4 - this.rows4[1].PER4
-
-    //           item.PER5 = this.rows4[0].PER5 - this.rows4[1].PER5
-    //           item.PER6 = this.rows4[0].PER6 - this.rows4[1].PER6
-    //           item.PER7 = this.rows4[0].PER7 - this.rows4[1].PER7
-    //           item.PER8 = this.rows4[0].PER8 - this.rows4[1].PER8
-    //           item.PER9 = this.rows4[0].PER9 - this.rows4[1].PER9
-    //           item.PER10 = this.rows4[0].PER10 - this.rows4[1].PER10
-    //           item.PER11 = this.rows4[0].PER11 - this.rows4[1].PER11
-    //           item.PER12 = this.rows4[0].PER12 - this.rows4[1].PER12
-    //           item.PER13 = this.rows4[0].PER13 - this.rows4[1].PER13
-
-    //         }else if(item.item.trim() === 'CUOTAS FAMILIAR EXTERNO - CONTINUADORES'){
-    //           console.log(451, item.item.trim());
-    //           item.PER1 = this.rows4[3].PER1 - this.rows4[4].PER1
-    //           item.PER2 = this.rows4[3].PER2 - this.rows4[4].PER2
-    //           item.PER3 = this.rows4[3].PER3 - this.rows4[4].PER3
-    //           item.PER4 = this.rows4[3].PER4 - this.rows4[4].PER4
-    //           item.PER4 = this.rows4[3].PER4 - this.rows4[4].PER4
-    //           item.PER5 = this.rows4[3].PER5 - this.rows4[4].PER5
-    //           item.PER6 = this.rows4[3].PER6 - this.rows4[4].PER6
-    //           item.PER7 = this.rows4[3].PER7 - this.rows4[4].PER7
-    //           item.PER8 = this.rows4[3].PER8 - this.rows4[4].PER8
-    //           item.PER9 = this.rows4[3].PER9 - this.rows4[4].PER9
-    //           item.PER10 = this.rows4[3].PER10 - this.rows4[4].PER10
-    //           item.PER11 = this.rows4[3].PER11 - this.rows4[4].PER11
-    //           item.PER12 = this.rows4[3].PER12 - this.rows4[4].PER12
-    //           item.PER13 = this.rows4[3].PER13 - this.rows4[4].PER13
-    //         }else if(item.item.trim() === 'CUOTAS FAMILIAR INTERNO'){
-              
-    //           if(item.PER1 === 0){
-    //             for (let i = 0; i < this.rows4.length; i++) {
-    //               if(i === 7 || i === 8){
-    //                 item.PER1 += this.rows4[i].PER1
-    //                 item.PER2 += this.rows4[i].PER2
-    //                 item.PER3 += this.rows4[i].PER3
-    //                 item.PER4 += this.rows4[i].PER4
-    //                 item.PER5 += this.rows4[i].PER5
-    //                 item.PER6 += this.rows4[i].PER6
-    //                 item.PER7 += this.rows4[i].PER7
-    //                 item.PER8 += this.rows4[i].PER8
-    //                 item.PER9 += this.rows4[i].PER9
-    //                 item.PER10 += this.rows4[i].PER10
-    //                 item.PER11 += this.rows4[i].PER11
-    //                 item.PER12 += this.rows4[i].PER12
-    //                 item.PER13 += this.rows4[i].PER13
-    //               }
-
-    //             }
-    //           }
-    //         }else if (item.item.trim() === 'TOTAL CUOTAS') {
-    //           if(item.PER1 === 0){
-    //             for (let i = 0; i < this.rows4.length; i++) {
-    //               if(i === 0 || i === 3 || i === 6 ){
-    //                 item.PER1 += this.rows4[i].PER1
-    //                 item.PER2 += this.rows4[i].PER2
-    //                 item.PER3 += this.rows4[i].PER3
-    //                 item.PER4 += this.rows4[i].PER4
-    //                 item.PER5 += this.rows4[i].PER5
-    //                 item.PER6 += this.rows4[i].PER6
-    //                 item.PER7 += this.rows4[i].PER7
-    //                 item.PER8 += this.rows4[i].PER8
-    //                 item.PER9 += this.rows4[i].PER9
-    //                 item.PER10 += this.rows4[i].PER10
-    //                 item.PER11 += this.rows4[i].PER11
-    //                 item.PER12 += this.rows4[i].PER12
-    //                 item.PER13 += this.rows4[i].PER13
-    //               }
-
-    //             }
-    //           }
-    //           this.barChartData7.push(typeof item.PER1 === 'number' ? item.PER1.toFixed(2) : Number(item.PER1).toFixed(2));
-    //           this.barChartData7.push(typeof item.PER2 === 'number' ? item.PER2.toFixed(2) : Number(item.PER2).toFixed(2));
-    //           this.barChartData7.push(typeof item.PER3 === 'number' ? item.PER3.toFixed(2) : Number(item.PER3).toFixed(2));
-    //           this.barChartData7.push(typeof item.PER4 === 'number' ? item.PER4.toFixed(2) : Number(item.PER4).toFixed(2));
-
-    //           this.barChartData7.push(typeof item.PER5 === 'number' ? item.PER5.toFixed(2) : Number(item.PER5).toFixed(2));
-    //           this.barChartData7.push(typeof item.PER6 === 'number' ? item.PER6.toFixed(2) : Number(item.PER6).toFixed(2));
-    //           this.barChartData7.push(typeof item.PER7 === 'number' ? item.PER7.toFixed(2) : Number(item.PER7).toFixed(2));
-    //           this.barChartData7.push(typeof item.PER8 === 'number' ? item.PER8.toFixed(2) : Number(item.PER8).toFixed(2));
-    //           this.barChartData7.push(typeof item.PER9 === 'number' ? item.PER9.toFixed(2) : Number(item.PER9).toFixed(2));
-    //           this.barChartData7.push(typeof item.PER10 === 'number' ? item.PER10.toFixed(2) : Number(item.PER10).toFixed(2));
-    //           this.barChartData7.push(typeof item.PER11 === 'number' ? item.PER11.toFixed(2) : Number(item.PER11).toFixed(2));
-    //           this.barChartData7.push(typeof item.PER12 === 'number' ? item.PER12.toFixed(2) : Number(item.PER12).toFixed(2));
-    //           // this.barChartData7.push(typeof item.PER13 === 'number' ? item.PER13.toFixed(2) : Number(item.PER13).toFixed(2));
-
-    //           // this.totales = item.PER1 + item.PER2 + item.PER3 + item.PER1
-    //         }else if (item.item.trim() === 'TOTAL RECAUDADO') {
-    //           if(item.PER1 === 0){
-    //               item.PER1 = this.rows4[9].PER1 + this.rows4[10].PER1;
-    //               item.PER2 = this.rows4[9].PER2 + this.rows4[10].PER2;
-    //               item.PER3 = this.rows4[9].PER3 + this.rows4[10].PER3;
-    //               item.PER4 = this.rows4[9].PER4 + this.rows4[10].PER4;
-    //               item.PER5 = this.rows4[9].PER5 + this.rows4[10].PER5;
-    //               item.PER6 = this.rows4[9].PER6 + this.rows4[10].PER6;
-    //               item.PER7 = this.rows4[9].PER7 + this.rows4[10].PER7;
-    //               item.PER8 = this.rows4[9].PER8 + this.rows4[10].PER8;
-    //               item.PER9 = this.rows4[9].PER9 + this.rows4[10].PER9;
-    //               item.PER10 = this.rows4[9].PER10 + this.rows4[10].PER10;
-    //               item.PER11 = this.rows4[9].PER11 + this.rows4[10].PER11;
-    //               item.PER12 = this.rows4[9].PER12 + this.rows4[10].PER12;
-    //               item.PER13 = this.rows4[9].PER13 + this.rows4[10].PER13;
-    //           }
-    //           this.barChartData8.push(typeof item.PER1 === 'number' ? item.PER1.toFixed(2) : Number(item.PER1).toFixed(2));
-    //           this.barChartData8.push(typeof item.PER2 === 'number' ? item.PER2.toFixed(2) : Number(item.PER2).toFixed(2));
-    //           this.barChartData8.push(typeof item.PER3 === 'number' ? item.PER3.toFixed(2) : Number(item.PER3).toFixed(2));
-    //           this.barChartData8.push(typeof item.PER4 === 'number' ? item.PER4.toFixed(2) : Number(item.PER4).toFixed(2));
-
-    //           this.barChartData8.push(typeof item.PER5 === 'number' ? item.PER5.toFixed(2) : Number(item.PER5).toFixed(2));
-    //           this.barChartData8.push(typeof item.PER6 === 'number' ? item.PER6.toFixed(2) : Number(item.PER6).toFixed(2));
-    //           this.barChartData8.push(typeof item.PER7 === 'number' ? item.PER7.toFixed(2) : Number(item.PER7).toFixed(2));
-    //           this.barChartData8.push(typeof item.PER8 === 'number' ? item.PER8.toFixed(2) : Number(item.PER8).toFixed(2));
-
-    //           this.barChartData8.push(typeof item.PER9 === 'number' ? item.PER9.toFixed(2) : Number(item.PER9).toFixed(2));
-    //           this.barChartData8.push(typeof item.PER10 === 'number' ? item.PER10.toFixed(2) : Number(item.PER10).toFixed(2));
-    //           this.barChartData8.push(typeof item.PER11 === 'number' ? item.PER11.toFixed(2) : Number(item.PER11).toFixed(2));
-    //           this.barChartData8.push(typeof item.PER12 === 'number' ? item.PER12.toFixed(2) : Number(item.PER12).toFixed(2));
-    //           // this.barChartData8.push(typeof item.PER13 === 'number' ? item.PER13.toFixed(2) : Number(item.PER13).toFixed(2));
-
-    //           // this.totales = item.PER1 + item.PER2 + item.PER3 + item.PER1
-    //         } 
-    //       });
-    //       // console.log(2202, this.barChartData7,  this.barChartData8);
-    //       this.rows5 = this.data3.query_con_igv;
-    //       console.log(this.rows5);
-    //       this.rows5.map(item => {
-
-    //         if (item.item.trim() === 'TOTAL CUOTAS') {
-              
-    //           this.barChartData9.push(typeof item.PER1 === 'number' ? item.PER1.toFixed(2) : Number(item.PER1).toFixed(2));
-    //           this.barChartData9.push(typeof item.PER2 === 'number' ? item.PER2.toFixed(2) : Number(item.PER2).toFixed(2));
-    //           this.barChartData9.push(typeof item.PER3 === 'number' ? item.PER3.toFixed(2) : Number(item.PER3).toFixed(2));
-    //           this.barChartData9.push(typeof item.PER4 === 'number' ? item.PER4.toFixed(2) : Number(item.PER4).toFixed(2));
-
-    //           this.barChartData9.push(typeof item.PER5 === 'number' ? item.PER5.toFixed(2) : Number(item.PER5).toFixed(2));
-    //           this.barChartData9.push(typeof item.PER6 === 'number' ? item.PER6.toFixed(2) : Number(item.PER6).toFixed(2));
-    //           this.barChartData9.push(typeof item.PER7 === 'number' ? item.PER7.toFixed(2) : Number(item.PER7).toFixed(2));
-    //           this.barChartData9.push(typeof item.PER8 === 'number' ? item.PER8.toFixed(2) : Number(item.PER8).toFixed(2));
-    //           this.barChartData9.push(typeof item.PER9 === 'number' ? item.PER9.toFixed(2) : Number(item.PER9).toFixed(2));
-    //           this.barChartData9.push(typeof item.PER10 === 'number' ? item.PER10.toFixed(2) : Number(item.PER10).toFixed(2));
-    //           this.barChartData9.push(typeof item.PER11 === 'number' ? item.PER11.toFixed(2) : Number(item.PER11).toFixed(2));
-    //           this.barChartData9.push(typeof item.PER12 === 'number' ? item.PER12.toFixed(2) : Number(item.PER12).toFixed(2));
-    //           // this.barChartData9.push(typeof item.PER13 === 'number' ? item.PER13.toFixed(2) : Number(item.PER13).toFixed(2));
-
-    //           // this.totales = item.PER1 + item.PER2 + item.PER3 + item.PER1
-    //         }else if (item.item.trim() === 'TOTAL RECAUDADO') {
-              
-    //           this.barChartData10.push(typeof item.PER1 === 'number' ? item.PER1.toFixed(2) : Number(item.PER1).toFixed(2));
-    //           this.barChartData10.push(typeof item.PER2 === 'number' ? item.PER2.toFixed(2) : Number(item.PER2).toFixed(2));
-    //           this.barChartData10.push(typeof item.PER3 === 'number' ? item.PER3.toFixed(2) : Number(item.PER3).toFixed(2));
-    //           this.barChartData10.push(typeof item.PER4 === 'number' ? item.PER4.toFixed(2) : Number(item.PER4).toFixed(2));
-
-    //           this.barChartData10.push(typeof item.PER5 === 'number' ? item.PER5.toFixed(2) : Number(item.PER5).toFixed(2));
-    //           this.barChartData10.push(typeof item.PER6 === 'number' ? item.PER6.toFixed(2) : Number(item.PER6).toFixed(2));
-    //           this.barChartData10.push(typeof item.PER7 === 'number' ? item.PER7.toFixed(2) : Number(item.PER7).toFixed(2));
-    //           this.barChartData10.push(typeof item.PER8 === 'number' ? item.PER8.toFixed(2) : Number(item.PER8).toFixed(2));
-
-    //           this.barChartData10.push(typeof item.PER9 === 'number' ? item.PER9.toFixed(2) : Number(item.PER9).toFixed(2));
-    //           this.barChartData10.push(typeof item.PER10 === 'number' ? item.PER10.toFixed(2) : Number(item.PER10).toFixed(2));
-    //           this.barChartData10.push(typeof item.PER11 === 'number' ? item.PER11.toFixed(2) : Number(item.PER11).toFixed(2));
-    //           this.barChartData10.push(typeof item.PER12 === 'number' ? item.PER12.toFixed(2) : Number(item.PER12).toFixed(2));
-    //           // this.barChartData10.push(typeof item.PER13 === 'number' ? item.PER13.toFixed(2) : Number(item.PER13).toFixed(2));
-
-
-    //           // this.totales = item.PER1 + item.PER2 + item.PER3 + item.PER1
-    //         } 
-    //       });
-    //       this.formatPipe2(this.rows4);
-    //       this.formatPipe2(this.rows5);
-          
-    //         // Swal.close();
-    //     }else{
-    //       Swal.close();
-    //     }
-        
-    //   },
-    //   (error) => {
-    //       Swal.close();
-    //   }
-    // );
+      },
+      (error) => {
+          Swal.close();
+      }
+    );
     // this.loading();
-    // this.tableApiservice.getPagoCuotasContratosProgramasSalud(this.parameters).subscribe(
-    //   (response: ApiResponse<AttentionConsultation>) => {
-    //     this.barChartLabels4 = [];
-    //     this.barChartData11 = [];
-    //     this.barChartData12 = [];
-    //     if(response.data.success){
-    //       // this.message3 = response.message;
-    //       // this.title3 = response.data.title;
-    //       this.data4 = response.data ? response.data : [];
-    //       this.columns4 = this.data4.cabeceras;
-    //       this.columns4.map(item => {
-    //         if (item.prop !== 'item') {
-    //           if (item.prop !== 'PER13'){
-    //             this.barChartLabels4.push(item.name);
-    //           }
-    //         } 
-    //       });
-    //       this.rows6 = this.data4.data;
-    //       console.log(814,this.rows6,this.columns4);
-    //       this.rows6.map(item => {
-    //         if(item.item.trim() === 'CUOTAS FAMILIAR INTERNO'){
+    this.tableApiservice.getPagoCuotasContratosMesProgramasSalud(this.parameters).subscribe(
+      (response: ApiResponse<AttentionConsultation>) => {
+        
+        if(response.data.success){
+          // this.barChartLabels2 = [];
+          // this.barChartData5 = [];
+          // this.barChartData6 = [];
+
+          // this.message3 = response.message;
+          // this.title3 = response.data.title;
+          this.data2 = response.data ? response.data : [];
+          this.columns8 = this.data2.cabeceras;
+          // this.columns8.map(item => {
+          //   if (item.prop !== 'item') {
+          //     this.barChartLabels2.push(item.name);
+          //   } 
+          // });
+          this.rows8 = this.data2.data;
+          this.rows8.map(item => {
+            if (item.item.trim() === 'TOTAL CUOTAS'){
+              this.ingresoTotalNumComtratos = item.per1;
+              // para graficos
+              // this.barChartData5.push(item.per1);
+              // this.barChartData5.push(item.per2);
+              // this.barChartData5.push(item.per3);
+              // this.barChartData5.push(item.per4);
+            }else if (item.item.trim() === 'CUOTAS FAMILIAR EXTERNO'){
+              this.ingresoFamilNumComtratos = item.per1;
+            }else if (item.item.trim() === 'CUOTAS FAMILIAR INTERNO' ){
+              this.ingresoFamilNumComtratos = parseInt(this.ingresoFamilNumComtratos) + parseInt(item.per1);
+            }else if (item.item.trim() === 'CUOTAS COLECTIVA'){
               
-    //           if(Number(item.PER1) === 0){
-    //             for (let i = 0; i < this.rows6.length; i++) {
-    //               if(i === 7 || i === 8){
-    //                 item.PER1 = Number(item.PER1) + Number(this.rows6[i].PER1)
-    //                 item.PER2 = Number(item.PER1) + Number(this.rows6[i].PER2)
-    //                 item.PER3 = Number(item.PER1) + Number(this.rows6[i].PER3)
-    //                 item.PER4 = Number(item.PER1) + Number(this.rows6[i].PER4)
-    //                 item.PER5 = Number(item.PER1) + Number(this.rows6[i].PER5)
-    //                 item.PER6 = Number(item.PER1) + Number(this.rows6[i].PER6)
-    //                 item.PER7 = Number(item.PER1) + Number(this.rows6[i].PER7)
-    //                 item.PER8 = Number(item.PER1) + Number(this.rows6[i].PER8)
-    //                 item.PER9 = Number(item.PER1) + Number(this.rows6[i].PER9)
-    //                 item.PER10 = Number(item.PER1) + Number(this.rows6[i].PER10)
-    //                 item.PER11 = Number(item.PER1) + Number(this.rows6[i].PER11)
-    //                 item.PER12 = Number(item.PER1) + Number(this.rows6[i].PER12)
-    //                 item.PER13 = Number(item.PER1) + Number(this.rows6[i].PER13)
-    //                 console.log(743, item.PER1);
-    //               }
+              this.ingresoColecNumComtratos = item.per1;
+            }else if (item.item.trim() === 'INSCRIPCIONES'){
+              this.ingresoInscrNumComtratos = item.per1;
 
-    //             }
-    //           }
-    //           console.log(this.rows6);
-    //         }
-    //         if (item.item.trim() === 'TOTAL CUOTAS') {
-    //           if(Number(item.PER1) === 0){
-    //             for (let i = 0; i < this.rows6.length; i++) {
-    //               if(i === 0 || i === 3 || i === 6 ){
-    //                 item.PER1 = Number(item.PER1) + Number(this.rows6[i].PER1)
-    //                 item.PER2 = Number(item.PER1) + Number(this.rows6[i].PER2)
-    //                 item.PER3 = Number(item.PER1) + Number(this.rows6[i].PER3)
-    //                 item.PER4 = Number(item.PER1) + Number(this.rows6[i].PER4)
-    //                 item.PER5 = Number(item.PER1) + Number(this.rows6[i].PER5)
-    //                 item.PER6 = Number(item.PER1) + Number(this.rows6[i].PER6)
-    //                 item.PER7 = Number(item.PER1) + Number(this.rows6[i].PER7)
-    //                 item.PER8 = Number(item.PER1) + Number(this.rows6[i].PER8)
-    //                 item.PER9 = Number(item.PER1) + Number(this.rows6[i].PER9)
-    //                 item.PER10 = Number(item.PER1) + Number(this.rows6[i].PER10)
-    //                 item.PER11 = Number(item.PER1) + Number(this.rows6[i].PER11)
-    //                 item.PER12 = Number(item.PER1) + Number(this.rows6[i].PER12)
-    //                 item.PER13 = Number(item.PER1) + Number(this.rows6[i].PER13)
-    //               }
+            }
+            // else if (item.item.trim() === 'TOTAL RECAUDADO'){  //para graficos
+            //   this.barChartData6.push(item.per1);
+            //   this.barChartData6.push(item.per2);
+            //   this.barChartData6.push(item.per3);
+            //   this.barChartData6.push(item.per4);
+            // }
+          });
+          
+          
+          
+          
+            // Swal.close();
+        }else{
+          Swal.close();
+        }
+      },
+      (error) => {
+          Swal.close();
+      }
+    );
+    // // this.loading();
+    this.tableApiservice.getPagoCuotasProgramasSalud(this.parameters).subscribe(
+      (response: ApiResponse<AttentionConsultation>) => {
+        // this.barChartLabels3 = [];
+        // this.barChartData7 = [];
+        // this.barChartData8 = [];
+        // this.barChartData9 = [];
+        // this.barChartData10 = [];
+        if(response.data.success){
+          // this.message = response.message;
+          // this.title = response.data.title;
+          this.data3 = response.data ? response.data : [];
+          this.columns9 = this.data3.cabeceras;
+          this.columns10 = this.columns9;
+          // this.columns3.map(item => {
+          //   if (item.prop !== 'item') {
+          //     if (item.prop !== 'PER13'){
+          //       this.barChartLabels3.push(item.name);
+          //     }
+              
+          //   } 
+          // });
+          this.rows9 = this.data3.query_sin_igv;
+          
+          
+          this.rows9.map(item => {
+            if(item.item.trim() === 'CUOTAS COLECTIVA - CONTINUADORES'){
+              console.log(451, item.item.trim());
+              item.PER1 = this.rows9[0].PER1 - this.rows9[1].PER1
+              item.PER2 = this.rows9[0].PER2 - this.rows9[1].PER2
+              item.PER3 = this.rows9[0].PER3 - this.rows9[1].PER3
+              item.PER4 = this.rows9[0].PER4 - this.rows9[1].PER4
 
-    //             }
-    //           }
-    //           this.barChartData11.push(typeof item.PER1 === 'number' ? item.PER1.toFixed(2) : Number(item.PER1).toFixed(2));
-    //           this.barChartData11.push(typeof item.PER2 === 'number' ? item.PER2.toFixed(2) : Number(item.PER2).toFixed(2));
-    //           this.barChartData11.push(typeof item.PER3 === 'number' ? item.PER3.toFixed(2) : Number(item.PER3).toFixed(2));
-    //           this.barChartData11.push(typeof item.PER4 === 'number' ? item.PER4.toFixed(2) : Number(item.PER4).toFixed(2));
+              item.PER5 = this.rows9[0].PER5 - this.rows9[1].PER5
+              item.PER6 = this.rows9[0].PER6 - this.rows9[1].PER6
+              item.PER7 = this.rows9[0].PER7 - this.rows9[1].PER7
+              item.PER8 = this.rows9[0].PER8 - this.rows9[1].PER8
+              item.PER9 = this.rows9[0].PER9 - this.rows9[1].PER9
+              item.PER10 = this.rows9[0].PER10 - this.rows9[1].PER10
+              item.PER11 = this.rows9[0].PER11 - this.rows9[1].PER11
+              item.PER12 = this.rows9[0].PER12 - this.rows9[1].PER12
+              item.PER13 = this.rows9[0].PER13 - this.rows9[1].PER13
 
-    //           this.barChartData11.push(typeof item.PER5 === 'number' ? item.PER5.toFixed(2) : Number(item.PER5).toFixed(2));
-    //           this.barChartData11.push(typeof item.PER6 === 'number' ? item.PER6.toFixed(2) : Number(item.PER6).toFixed(2));
-    //           this.barChartData11.push(typeof item.PER7 === 'number' ? item.PER7.toFixed(2) : Number(item.PER7).toFixed(2));
-    //           this.barChartData11.push(typeof item.PER8 === 'number' ? item.PER8.toFixed(2) : Number(item.PER8).toFixed(2));
-    //           this.barChartData11.push(typeof item.PER9 === 'number' ? item.PER9.toFixed(2) : Number(item.PER9).toFixed(2));
-    //           this.barChartData11.push(typeof item.PER10 === 'number' ? item.PER10.toFixed(2) : Number(item.PER10).toFixed(2));
-    //           this.barChartData11.push(typeof item.PER11 === 'number' ? item.PER11.toFixed(2) : Number(item.PER11).toFixed(2));
-    //           this.barChartData11.push(typeof item.PER12 === 'number' ? item.PER12.toFixed(2) : Number(item.PER12).toFixed(2));
-    //           // this.barChartData11.push(typeof item.PER13 === 'number' ? item.PER13.toFixed(2) : Number(item.PER13).toFixed(2));
-    //           // this.totales = item.PER1 + item.PER2 + item.PER3 + item.PER1
-    //         }else if (item.item.trim() === 'TOTAL RECAUDADO') {
-    //           if(Number(item.PER1) === 0){
-    //             item.PER1 = Number(this.rows6[9].PER1) + Number(this.rows6[10].PER1);
-    //             item.PER2 = Number(this.rows6[9].PER2) + Number(this.rows6[10].PER2);
-    //             item.PER3 = Number(this.rows6[9].PER3) + Number(this.rows6[10].PER3);
-    //             item.PER4 = Number(this.rows6[9].PER4) + Number(this.rows6[10].PER4);
-    //             item.PER5 = Number(this.rows6[9].PER5) + Number(this.rows6[10].PER5);
-    //             item.PER6 = Number(this.rows6[9].PER6) + Number(this.rows6[10].PER6);
-    //             item.PER7 = Number(this.rows6[9].PER7) + Number(this.rows6[10].PER7);
-    //             item.PER8 = Number(this.rows6[9].PER8) + Number(this.rows6[10].PER8);
-    //             item.PER9 = Number(this.rows6[9].PER9) + Number(this.rows6[10].PER9);
-    //             item.PER10 = Number(this.rows6[9].PER10) + Number(this.rows6[10].PER10);
-    //             item.PER11 = Number(this.rows6[9].PER11) + Number(this.rows6[10].PER11);
-    //             item.PER12 = Number(this.rows6[9].PER12) + Number(this.rows6[10].PER12);
-    //             item.PER13 = Number(this.rows6[9].PER13) + Number(this.rows6[10].PER13);
-    //           }
-    //           this.barChartData12.push(typeof item.PER1 === 'number' ? item.PER1.toFixed(2) : Number(item.PER1).toFixed(2));
-    //           this.barChartData12.push(typeof item.PER2 === 'number' ? item.PER2.toFixed(2) : Number(item.PER2).toFixed(2));
-    //           this.barChartData12.push(typeof item.PER3 === 'number' ? item.PER3.toFixed(2) : Number(item.PER3).toFixed(2));
-    //           this.barChartData12.push(typeof item.PER4 === 'number' ? item.PER4.toFixed(2) : Number(item.PER4).toFixed(2));
+            }else if(item.item.trim() === 'CUOTAS FAMILIAR EXTERNO - CONTINUADORES'){
+              console.log(451, item.item.trim());
+              item.PER1 = this.rows9[3].PER1 - this.rows9[4].PER1
+              item.PER2 = this.rows9[3].PER2 - this.rows9[4].PER2
+              item.PER3 = this.rows9[3].PER3 - this.rows9[4].PER3
+              item.PER4 = this.rows9[3].PER4 - this.rows9[4].PER4
+              item.PER4 = this.rows9[3].PER4 - this.rows9[4].PER4
+              item.PER5 = this.rows9[3].PER5 - this.rows9[4].PER5
+              item.PER6 = this.rows9[3].PER6 - this.rows9[4].PER6
+              item.PER7 = this.rows9[3].PER7 - this.rows9[4].PER7
+              item.PER8 = this.rows9[3].PER8 - this.rows9[4].PER8
+              item.PER9 = this.rows9[3].PER9 - this.rows9[4].PER9
+              item.PER10 = this.rows9[3].PER10 - this.rows9[4].PER10
+              item.PER11 = this.rows9[3].PER11 - this.rows9[4].PER11
+              item.PER12 = this.rows9[3].PER12 - this.rows9[4].PER12
+              item.PER13 = this.rows9[3].PER13 - this.rows9[4].PER13
+            }else if(item.item.trim() === 'CUOTAS FAMILIAR INTERNO'){
+              
+              if(item.PER1 === 0){
+                for (let i = 0; i < this.rows9.length; i++) {
+                  if(i === 7 || i === 8){
+                    item.PER1 += this.rows9[i].PER1
+                    item.PER2 += this.rows9[i].PER2
+                    item.PER3 += this.rows9[i].PER3
+                    item.PER4 += this.rows9[i].PER4
+                    item.PER5 += this.rows9[i].PER5
+                    item.PER6 += this.rows9[i].PER6
+                    item.PER7 += this.rows9[i].PER7
+                    item.PER8 += this.rows9[i].PER8
+                    item.PER9 += this.rows9[i].PER9
+                    item.PER10 += this.rows9[i].PER10
+                    item.PER11 += this.rows9[i].PER11
+                    item.PER12 += this.rows9[i].PER12
+                    item.PER13 += this.rows9[i].PER13
+                  }
 
-    //           this.barChartData12.push(typeof item.PER5 === 'number' ? item.PER5.toFixed(2) : Number(item.PER5).toFixed(2));
-    //           this.barChartData12.push(typeof item.PER6 === 'number' ? item.PER6.toFixed(2) : Number(item.PER6).toFixed(2));
-    //           this.barChartData12.push(typeof item.PER7 === 'number' ? item.PER7.toFixed(2) : Number(item.PER7).toFixed(2));
-    //           this.barChartData12.push(typeof item.PER8 === 'number' ? item.PER8.toFixed(2) : Number(item.PER8).toFixed(2));
+                }
+              }
+            }else if (item.item.trim() === 'TOTAL CUOTAS') {
+              if(item.PER1 === 0){
+                for (let i = 0; i < this.rows9.length; i++) {
+                  if(i === 0 || i === 3 || i === 6 ){
+                    item.PER1 += this.rows9[i].PER1
+                    item.PER2 += this.rows9[i].PER2
+                    item.PER3 += this.rows9[i].PER3
+                    item.PER4 += this.rows9[i].PER4
+                    item.PER5 += this.rows9[i].PER5
+                    item.PER6 += this.rows9[i].PER6
+                    item.PER7 += this.rows9[i].PER7
+                    item.PER8 += this.rows9[i].PER8
+                    item.PER9 += this.rows9[i].PER9
+                    item.PER10 += this.rows9[i].PER10
+                    item.PER11 += this.rows9[i].PER11
+                    item.PER12 += this.rows9[i].PER12
+                    item.PER13 += this.rows9[i].PER13
+                  }
 
-    //           this.barChartData12.push(typeof item.PER9 === 'number' ? item.PER9.toFixed(2) : Number(item.PER9).toFixed(2));
-    //           this.barChartData12.push(typeof item.PER10 === 'number' ? item.PER10.toFixed(2) : Number(item.PER10).toFixed(2));
-    //           this.barChartData12.push(typeof item.PER11 === 'number' ? item.PER11.toFixed(2) : Number(item.PER11).toFixed(2));
-    //           this.barChartData12.push(typeof item.PER12 === 'number' ? item.PER12.toFixed(2) : Number(item.PER12).toFixed(2));
-    //           // this.barChartData12.push(typeof item.PER13 === 'number' ? item.PER13.toFixed(2) : Number(item.PER13).toFixed(2));
+                }
+              }
+              // this.barChartData7.push(typeof item.PER1 === 'number' ? item.PER1.toFixed(2) : Number(item.PER1).toFixed(2));
+              // this.barChartData7.push(typeof item.PER2 === 'number' ? item.PER2.toFixed(2) : Number(item.PER2).toFixed(2));
+              // this.barChartData7.push(typeof item.PER3 === 'number' ? item.PER3.toFixed(2) : Number(item.PER3).toFixed(2));
+              // this.barChartData7.push(typeof item.PER4 === 'number' ? item.PER4.toFixed(2) : Number(item.PER4).toFixed(2));
 
-    //           // this.totales = item.PER1 + item.PER2 + item.PER3 + item.PER1
-    //         } 
-    //       });
-    //         Swal.close();
-    //     }else{
-    //       Swal.close();
-    //     }
-    //   },
-    //   (error) => {
-    //       Swal.close();
-    //   }
-    // );
+              // this.barChartData7.push(typeof item.PER5 === 'number' ? item.PER5.toFixed(2) : Number(item.PER5).toFixed(2));
+              // this.barChartData7.push(typeof item.PER6 === 'number' ? item.PER6.toFixed(2) : Number(item.PER6).toFixed(2));
+              // this.barChartData7.push(typeof item.PER7 === 'number' ? item.PER7.toFixed(2) : Number(item.PER7).toFixed(2));
+              // this.barChartData7.push(typeof item.PER8 === 'number' ? item.PER8.toFixed(2) : Number(item.PER8).toFixed(2));
+              // this.barChartData7.push(typeof item.PER9 === 'number' ? item.PER9.toFixed(2) : Number(item.PER9).toFixed(2));
+              // this.barChartData7.push(typeof item.PER10 === 'number' ? item.PER10.toFixed(2) : Number(item.PER10).toFixed(2));
+              // this.barChartData7.push(typeof item.PER11 === 'number' ? item.PER11.toFixed(2) : Number(item.PER11).toFixed(2));
+              // this.barChartData7.push(typeof item.PER12 === 'number' ? item.PER12.toFixed(2) : Number(item.PER12).toFixed(2));
+              // this.barChartData7.push(typeof item.PER13 === 'number' ? item.PER13.toFixed(2) : Number(item.PER13).toFixed(2));
+
+              // this.totales = item.PER1 + item.PER2 + item.PER3 + item.PER1
+            }else if (item.item.trim() === 'TOTAL RECAUDADO') {
+              if(item.PER1 === 0){
+                  item.PER1 = this.rows9[9].PER1 + this.rows9[10].PER1;
+                  item.PER2 = this.rows9[9].PER2 + this.rows9[10].PER2;
+                  item.PER3 = this.rows9[9].PER3 + this.rows9[10].PER3;
+                  item.PER4 = this.rows9[9].PER4 + this.rows9[10].PER4;
+                  item.PER5 = this.rows9[9].PER5 + this.rows9[10].PER5;
+                  item.PER6 = this.rows9[9].PER6 + this.rows9[10].PER6;
+                  item.PER7 = this.rows9[9].PER7 + this.rows9[10].PER7;
+                  item.PER8 = this.rows9[9].PER8 + this.rows9[10].PER8;
+                  item.PER9 = this.rows9[9].PER9 + this.rows9[10].PER9;
+                  item.PER10 = this.rows9[9].PER10 + this.rows9[10].PER10;
+                  item.PER11 = this.rows9[9].PER11 + this.rows9[10].PER11;
+                  item.PER12 = this.rows9[9].PER12 + this.rows9[10].PER12;
+                  item.PER13 = this.rows9[9].PER13 + this.rows9[10].PER13;
+              }
+              // this.barChartData8.push(typeof item.PER1 === 'number' ? item.PER1.toFixed(2) : Number(item.PER1).toFixed(2));
+              // this.barChartData8.push(typeof item.PER2 === 'number' ? item.PER2.toFixed(2) : Number(item.PER2).toFixed(2));
+              // this.barChartData8.push(typeof item.PER3 === 'number' ? item.PER3.toFixed(2) : Number(item.PER3).toFixed(2));
+              // this.barChartData8.push(typeof item.PER4 === 'number' ? item.PER4.toFixed(2) : Number(item.PER4).toFixed(2));
+
+              // this.barChartData8.push(typeof item.PER5 === 'number' ? item.PER5.toFixed(2) : Number(item.PER5).toFixed(2));
+              // this.barChartData8.push(typeof item.PER6 === 'number' ? item.PER6.toFixed(2) : Number(item.PER6).toFixed(2));
+              // this.barChartData8.push(typeof item.PER7 === 'number' ? item.PER7.toFixed(2) : Number(item.PER7).toFixed(2));
+              // this.barChartData8.push(typeof item.PER8 === 'number' ? item.PER8.toFixed(2) : Number(item.PER8).toFixed(2));
+
+              // this.barChartData8.push(typeof item.PER9 === 'number' ? item.PER9.toFixed(2) : Number(item.PER9).toFixed(2));
+              // this.barChartData8.push(typeof item.PER10 === 'number' ? item.PER10.toFixed(2) : Number(item.PER10).toFixed(2));
+              // this.barChartData8.push(typeof item.PER11 === 'number' ? item.PER11.toFixed(2) : Number(item.PER11).toFixed(2));
+              // this.barChartData8.push(typeof item.PER12 === 'number' ? item.PER12.toFixed(2) : Number(item.PER12).toFixed(2));
+              // this.barChartData8.push(typeof item.PER13 === 'number' ? item.PER13.toFixed(2) : Number(item.PER13).toFixed(2));
+
+              // this.totales = item.PER1 + item.PER2 + item.PER3 + item.PER1
+            } 
+          });
+          // console.log(2202, this.barChartData7,  this.barChartData8);
+          this.rows10 = this.data3.query_con_igv;
+          console.log(this.rows10);
+          // this.rows5.map(item => {
+
+          //   if (item.item.trim() === 'TOTAL CUOTAS') {
+              
+          //     this.barChartData9.push(typeof item.PER1 === 'number' ? item.PER1.toFixed(2) : Number(item.PER1).toFixed(2));
+          //     this.barChartData9.push(typeof item.PER2 === 'number' ? item.PER2.toFixed(2) : Number(item.PER2).toFixed(2));
+          //     this.barChartData9.push(typeof item.PER3 === 'number' ? item.PER3.toFixed(2) : Number(item.PER3).toFixed(2));
+          //     this.barChartData9.push(typeof item.PER4 === 'number' ? item.PER4.toFixed(2) : Number(item.PER4).toFixed(2));
+
+          //     this.barChartData9.push(typeof item.PER5 === 'number' ? item.PER5.toFixed(2) : Number(item.PER5).toFixed(2));
+          //     this.barChartData9.push(typeof item.PER6 === 'number' ? item.PER6.toFixed(2) : Number(item.PER6).toFixed(2));
+          //     this.barChartData9.push(typeof item.PER7 === 'number' ? item.PER7.toFixed(2) : Number(item.PER7).toFixed(2));
+          //     this.barChartData9.push(typeof item.PER8 === 'number' ? item.PER8.toFixed(2) : Number(item.PER8).toFixed(2));
+          //     this.barChartData9.push(typeof item.PER9 === 'number' ? item.PER9.toFixed(2) : Number(item.PER9).toFixed(2));
+          //     this.barChartData9.push(typeof item.PER10 === 'number' ? item.PER10.toFixed(2) : Number(item.PER10).toFixed(2));
+          //     this.barChartData9.push(typeof item.PER11 === 'number' ? item.PER11.toFixed(2) : Number(item.PER11).toFixed(2));
+          //     this.barChartData9.push(typeof item.PER12 === 'number' ? item.PER12.toFixed(2) : Number(item.PER12).toFixed(2));
+          //     // this.barChartData9.push(typeof item.PER13 === 'number' ? item.PER13.toFixed(2) : Number(item.PER13).toFixed(2));
+
+          //     // this.totales = item.PER1 + item.PER2 + item.PER3 + item.PER1
+          //   }else if (item.item.trim() === 'TOTAL RECAUDADO') {
+              
+          //     this.barChartData10.push(typeof item.PER1 === 'number' ? item.PER1.toFixed(2) : Number(item.PER1).toFixed(2));
+          //     this.barChartData10.push(typeof item.PER2 === 'number' ? item.PER2.toFixed(2) : Number(item.PER2).toFixed(2));
+          //     this.barChartData10.push(typeof item.PER3 === 'number' ? item.PER3.toFixed(2) : Number(item.PER3).toFixed(2));
+          //     this.barChartData10.push(typeof item.PER4 === 'number' ? item.PER4.toFixed(2) : Number(item.PER4).toFixed(2));
+
+          //     this.barChartData10.push(typeof item.PER5 === 'number' ? item.PER5.toFixed(2) : Number(item.PER5).toFixed(2));
+          //     this.barChartData10.push(typeof item.PER6 === 'number' ? item.PER6.toFixed(2) : Number(item.PER6).toFixed(2));
+          //     this.barChartData10.push(typeof item.PER7 === 'number' ? item.PER7.toFixed(2) : Number(item.PER7).toFixed(2));
+          //     this.barChartData10.push(typeof item.PER8 === 'number' ? item.PER8.toFixed(2) : Number(item.PER8).toFixed(2));
+
+          //     this.barChartData10.push(typeof item.PER9 === 'number' ? item.PER9.toFixed(2) : Number(item.PER9).toFixed(2));
+          //     this.barChartData10.push(typeof item.PER10 === 'number' ? item.PER10.toFixed(2) : Number(item.PER10).toFixed(2));
+          //     this.barChartData10.push(typeof item.PER11 === 'number' ? item.PER11.toFixed(2) : Number(item.PER11).toFixed(2));
+          //     this.barChartData10.push(typeof item.PER12 === 'number' ? item.PER12.toFixed(2) : Number(item.PER12).toFixed(2));
+          //     // this.barChartData10.push(typeof item.PER13 === 'number' ? item.PER13.toFixed(2) : Number(item.PER13).toFixed(2));
+
+
+          //     // this.totales = item.PER1 + item.PER2 + item.PER3 + item.PER1
+          //   } 
+          // });
+          // this.formatPipe2(this.rows9);
+          // this.formatPipe2(this.rows10);
+          
+            // Swal.close();
+        }else{
+          Swal.close();
+        }
+        
+      },
+      (error) => {
+          Swal.close();
+      }
+    );
+    // this.loading();
+    this.tableApiservice.getPagoCuotasContratosProgramasSalud(this.parameters).subscribe(
+      (response: ApiResponse<AttentionConsultation>) => {
+        // this.barChartLabels4 = [];
+        // this.barChartData11 = [];
+        // this.barChartData12 = [];
+        if(response.data.success){
+          // this.message3 = response.message;
+          // this.title3 = response.data.title;
+          this.data4 = response.data ? response.data : [];
+          this.columns11 = this.data4.cabeceras;
+          // this.columns4.map(item => {
+          //   if (item.prop !== 'item') {
+          //     if (item.prop !== 'PER13'){
+          //       this.barChartLabels4.push(item.name);
+          //     }
+          //   } 
+          // });
+          this.rows11 = this.data4.data;
+          console.log(814,this.rows11,this.columns4);
+          this.rows11.map(item => {
+            if(item.item.trim() === 'CUOTAS FAMILIAR INTERNO'){
+              
+              if(Number(item.PER1) === 0){
+                for (let i = 0; i < this.rows11.length; i++) {
+                  if(i === 7 || i === 8){
+                    item.PER1 = Number(item.PER1) + Number(this.rows11[i].PER1)
+                    item.PER2 = Number(item.PER1) + Number(this.rows11[i].PER2)
+                    item.PER3 = Number(item.PER1) + Number(this.rows11[i].PER3)
+                    item.PER4 = Number(item.PER1) + Number(this.rows11[i].PER4)
+                    item.PER5 = Number(item.PER1) + Number(this.rows11[i].PER5)
+                    item.PER6 = Number(item.PER1) + Number(this.rows11[i].PER6)
+                    item.PER7 = Number(item.PER1) + Number(this.rows11[i].PER7)
+                    item.PER8 = Number(item.PER1) + Number(this.rows11[i].PER8)
+                    item.PER9 = Number(item.PER1) + Number(this.rows11[i].PER9)
+                    item.PER10 = Number(item.PER1) + Number(this.rows11[i].PER10)
+                    item.PER11 = Number(item.PER1) + Number(this.rows11[i].PER11)
+                    item.PER12 = Number(item.PER1) + Number(this.rows11[i].PER12)
+                    item.PER13 = Number(item.PER1) + Number(this.rows11[i].PER13)
+                    console.log(743, item.PER1);
+                  }
+
+                }
+              }
+              console.log(this.rows11);
+            }
+            if (item.item.trim() === 'TOTAL CUOTAS') {
+              if(Number(item.PER1) === 0){
+                for (let i = 0; i < this.rows11.length; i++) {
+                  if(i === 0 || i === 3 || i === 6 ){
+                    item.PER1 = Number(item.PER1) + Number(this.rows11[i].PER1)
+                    item.PER2 = Number(item.PER1) + Number(this.rows11[i].PER2)
+                    item.PER3 = Number(item.PER1) + Number(this.rows11[i].PER3)
+                    item.PER4 = Number(item.PER1) + Number(this.rows11[i].PER4)
+                    item.PER5 = Number(item.PER1) + Number(this.rows11[i].PER5)
+                    item.PER6 = Number(item.PER1) + Number(this.rows11[i].PER6)
+                    item.PER7 = Number(item.PER1) + Number(this.rows11[i].PER7)
+                    item.PER8 = Number(item.PER1) + Number(this.rows11[i].PER8)
+                    item.PER9 = Number(item.PER1) + Number(this.rows11[i].PER9)
+                    item.PER10 = Number(item.PER1) + Number(this.rows11[i].PER10)
+                    item.PER11 = Number(item.PER1) + Number(this.rows11[i].PER11)
+                    item.PER12 = Number(item.PER1) + Number(this.rows11[i].PER12)
+                    item.PER13 = Number(item.PER1) + Number(this.rows11[i].PER13)
+                  }
+
+                }
+              }
+              // this.barChartData11.push(typeof item.PER1 === 'number' ? item.PER1.toFixed(2) : Number(item.PER1).toFixed(2));
+              // this.barChartData11.push(typeof item.PER2 === 'number' ? item.PER2.toFixed(2) : Number(item.PER2).toFixed(2));
+              // this.barChartData11.push(typeof item.PER3 === 'number' ? item.PER3.toFixed(2) : Number(item.PER3).toFixed(2));
+              // this.barChartData11.push(typeof item.PER4 === 'number' ? item.PER4.toFixed(2) : Number(item.PER4).toFixed(2));
+
+              // this.barChartData11.push(typeof item.PER5 === 'number' ? item.PER5.toFixed(2) : Number(item.PER5).toFixed(2));
+              // this.barChartData11.push(typeof item.PER6 === 'number' ? item.PER6.toFixed(2) : Number(item.PER6).toFixed(2));
+              // this.barChartData11.push(typeof item.PER7 === 'number' ? item.PER7.toFixed(2) : Number(item.PER7).toFixed(2));
+              // this.barChartData11.push(typeof item.PER8 === 'number' ? item.PER8.toFixed(2) : Number(item.PER8).toFixed(2));
+              // this.barChartData11.push(typeof item.PER9 === 'number' ? item.PER9.toFixed(2) : Number(item.PER9).toFixed(2));
+              // this.barChartData11.push(typeof item.PER10 === 'number' ? item.PER10.toFixed(2) : Number(item.PER10).toFixed(2));
+              // this.barChartData11.push(typeof item.PER11 === 'number' ? item.PER11.toFixed(2) : Number(item.PER11).toFixed(2));
+              // this.barChartData11.push(typeof item.PER12 === 'number' ? item.PER12.toFixed(2) : Number(item.PER12).toFixed(2));
+              // this.barChartData11.push(typeof item.PER13 === 'number' ? item.PER13.toFixed(2) : Number(item.PER13).toFixed(2));
+              // this.totales = item.PER1 + item.PER2 + item.PER3 + item.PER1
+            }else if (item.item.trim() === 'TOTAL RECAUDADO') {
+              if(Number(item.PER1) === 0){
+                item.PER1 = Number(this.rows11[9].PER1) + Number(this.rows11[10].PER1);
+                item.PER2 = Number(this.rows11[9].PER2) + Number(this.rows11[10].PER2);
+                item.PER3 = Number(this.rows11[9].PER3) + Number(this.rows11[10].PER3);
+                item.PER4 = Number(this.rows11[9].PER4) + Number(this.rows11[10].PER4);
+                item.PER5 = Number(this.rows11[9].PER5) + Number(this.rows11[10].PER5);
+                item.PER6 = Number(this.rows11[9].PER6) + Number(this.rows11[10].PER6);
+                item.PER7 = Number(this.rows11[9].PER7) + Number(this.rows11[10].PER7);
+                item.PER8 = Number(this.rows11[9].PER8) + Number(this.rows11[10].PER8);
+                item.PER9 = Number(this.rows11[9].PER9) + Number(this.rows11[10].PER9);
+                item.PER10 = Number(this.rows11[9].PER10) + Number(this.rows11[10].PER10);
+                item.PER11 = Number(this.rows11[9].PER11) + Number(this.rows11[10].PER11);
+                item.PER12 = Number(this.rows11[9].PER12) + Number(this.rows11[10].PER12);
+                item.PER13 = Number(this.rows11[9].PER13) + Number(this.rows11[10].PER13);
+              }
+              // this.barChartData12.push(typeof item.PER1 === 'number' ? item.PER1.toFixed(2) : Number(item.PER1).toFixed(2));
+              // this.barChartData12.push(typeof item.PER2 === 'number' ? item.PER2.toFixed(2) : Number(item.PER2).toFixed(2));
+              // this.barChartData12.push(typeof item.PER3 === 'number' ? item.PER3.toFixed(2) : Number(item.PER3).toFixed(2));
+              // this.barChartData12.push(typeof item.PER4 === 'number' ? item.PER4.toFixed(2) : Number(item.PER4).toFixed(2));
+
+              // this.barChartData12.push(typeof item.PER5 === 'number' ? item.PER5.toFixed(2) : Number(item.PER5).toFixed(2));
+              // this.barChartData12.push(typeof item.PER6 === 'number' ? item.PER6.toFixed(2) : Number(item.PER6).toFixed(2));
+              // this.barChartData12.push(typeof item.PER7 === 'number' ? item.PER7.toFixed(2) : Number(item.PER7).toFixed(2));
+              // this.barChartData12.push(typeof item.PER8 === 'number' ? item.PER8.toFixed(2) : Number(item.PER8).toFixed(2));
+
+              // this.barChartData12.push(typeof item.PER9 === 'number' ? item.PER9.toFixed(2) : Number(item.PER9).toFixed(2));
+              // this.barChartData12.push(typeof item.PER10 === 'number' ? item.PER10.toFixed(2) : Number(item.PER10).toFixed(2));
+              // this.barChartData12.push(typeof item.PER11 === 'number' ? item.PER11.toFixed(2) : Number(item.PER11).toFixed(2));
+              // this.barChartData12.push(typeof item.PER12 === 'number' ? item.PER12.toFixed(2) : Number(item.PER12).toFixed(2));
+              // this.barChartData12.push(typeof item.PER13 === 'number' ? item.PER13.toFixed(2) : Number(item.PER13).toFixed(2));
+
+              // this.totales = item.PER1 + item.PER2 + item.PER3 + item.PER1
+            } 
+          });
+            Swal.close();
+        }else{
+          Swal.close();
+        }
+      },
+      (error) => {
+          Swal.close();
+      }
+    );
 
   }
   public onLimitChange(limit: any, numberT): void {
