@@ -26,8 +26,8 @@
                                 </select>
                             </div>
                         </div>   -->
-                        <div class="form-group col-sm-12 col-md-4 col-lg-2">
-                        <div class="input-group input-group-sm">
+                        <div class="form-group col-sm-12 col-md-4 col-lg-2 ">
+                        <div class="input-group input-group-sm fecha">
                             <div class="input-group-prepend">
                             <span class="input-group-text">Año</span>
                             </div>
@@ -46,8 +46,8 @@
                         </select>
                         </div>
                         </div>
-                        <div class="form-group col-sm-12 col-md-4 col-lg-2">
-                            <div class="input-group input-group-sm">
+                        <div class="form-group col-sm-12 col-md-4 col-lg-2 ">
+                            <div class="input-group input-group-sm fecha">
                                 <div class="input-group-prepend">
                                 <span class="input-group-text">Mes</span>
                                 </div>
@@ -67,15 +67,15 @@
                             </div>
                         </div>
                         
-                        <div class="form-group col-sm-12 col-md-4 col-lg-3">
-                            <div class="input-group">
+                        <!-- <div class="form-group col-sm-12 col-md-4 col-lg-3">
+                            <div class="input-group"> -->
                                 <div class="input-group-btn">
                                     <button (click)="filter()" class="btn btn-sm btn-primary">
                                         <i class="fa fa-search"></i> Filtrar
                                     </button>
                                 </div>
-                            </div>
-                        </div>           
+                            <!-- </div>
+                        </div>            -->
                     </div>
                     </form>
                     <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs" style="justify-content: end;">
@@ -95,7 +95,7 @@
                                                 <div class="box box-solid">
                                                 <div id="accordion1">
                                                     <div class="card">
-                                                    <div class="card-header" >
+                                                    <div class="card-header-info" >
                                                         <div class="box-header">
                                                         <div class="toggle-table">
                                                             <div class="callout callout-info">
@@ -174,7 +174,7 @@
                                                 <div class="box box-solid">
                                                 <div id="accordion2">
                                                     <div class="card">
-                                                    <div class="card-header" >
+                                                    <div class="card-header-info" >
                                                         <div class="box-header">
                                                         <div class="toggle-table">
                                                             <div class="callout callout-info">
@@ -207,7 +207,7 @@
                                                         </div>
                                                         <ag-grid-angular
                                                     #agGrid
-                                                    style="width: 100%; height: 380px;"
+                                                    style="width: 100%; height: 395px;"
                                                     id="myTable2"
                                                     ag-grid="gridOptions"
                                                     class="ag-theme-balham"
@@ -316,7 +316,7 @@
                                             <div id="accordion2">
                                             <div class="row">
                                                 <div class="card col-md-6">
-                                                    <div class="card-header" >
+                                                    <div class="card-header-info" >
                                                     <div class="box-header">
                                                         <div class="toggle-table">
                                                         <div class="callout callout-info">
@@ -386,7 +386,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="card col-md-6">
-                                                    <div class="card-header" >
+                                                    <div class="card-header-info" >
                                                     <div class="box-header">
                                                         <div class="toggle-table">
                                                         <div class="callout callout-info">
@@ -459,7 +459,7 @@
                                                 </div> 
                                             </div>
                                             <div class="card">
-                                            <div class="card-header" >
+                                            <div class="card-header-info" >
                                                 <div class="box-header">
                                                 <div class="toggle-table">
                                                     <div class="callout callout-info">
@@ -600,7 +600,7 @@
                                         <div class="box box-solid">
                                           <div id="accordion3">
                                             <div class="card">
-                                              <div class="card-header" >
+                                              <div class="card-header-info" >
                                                 <div class="box-header">
                                                   <div class="toggle-table">
                                                     <div class="callout callout-info">
@@ -663,7 +663,7 @@
                                               </div>
                                             </div>
                                             <div class="card">
-                                              <div class="card-header" >
+                                              <div class="card-header-info" >
                                                 <div class="box-header">
                                                   <div class="toggle-table">
                                                     <div class="callout callout-info">
@@ -727,7 +727,7 @@
                                               </div>
                                             </div>
                                             <div class="card">
-                                              <div class="card-header" >
+                                              <div class="card-header-info" >
                                                 <div class="box-header">
                                                   <div class="toggle-table">
                                                     <div class="callout callout-info">
@@ -823,7 +823,7 @@
                                             <div class="box box-solid">
                                               <div id="accordion4">
                                                 <div class="card">
-                                                  <div class="card-header" >
+                                                  <div class="card-header-info" >
                                                     <div class="box-header">
                                                       <div class="toggle-table">
                                                         <div class="callout callout-info">
@@ -886,7 +886,7 @@
                                                   </div>
                                                 </div>
                                                 <div class="card">
-                                                  <div class="card-header" >
+                                                  <div class="card-header-info" >
                                                     <div class="box-header">
                                                       <div class="toggle-table">
                                                         <div class="callout callout-info">
@@ -951,7 +951,7 @@
                                                   </div>
                                                 </div>
                                                 <div class="card">
-                                                  <div class="card-header" >
+                                                  <div class="card-header-info" >
                                                     <div class="box-header">
                                                       <div class="toggle-table">
                                                         <div class="callout callout-info">

@@ -734,8 +734,7 @@ export class EstadisticasComponent implements OnInit {
                       this.chartData4.push(item.item_2);
                     });
                     this.getBarChart(this.chartLabels2, this.chartData3, this.chartData4,'', '','chart-2', this.anioAnterior, this.anio, 'line');
-                     console.log(645, response.data.hist_total)
-                     console.log('646', response.data.hist_siniestralidad)
+
                   }
                 },
                 (error) => {
@@ -1107,10 +1106,9 @@ console.log(846, response.data);
             item.PER12 = this._cnp.transform(item.PER12);
             item.PER13 = this._cnp.transform(item.PER13);
           });
-            Swal.close();
-        }else{
-          Swal.close();
+            // Swal.close();
         }
+          Swal.close();
       },
       (error) => {
           Swal.close();
