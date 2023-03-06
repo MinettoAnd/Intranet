@@ -266,7 +266,7 @@ export class LiquidacionEmpresaBiohealthComponent implements OnInit {
     };
   }
   getRowClass2(row) {
-    console.log(251, row)
+    //console.log(251, row)
     // if (row.item.includes('COLECTIVA')){
     //   return {'totals': row.item.includes('TOTAL') || row.item.includes('COLECTIVA') }
     // }
