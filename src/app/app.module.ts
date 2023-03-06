@@ -105,6 +105,7 @@ import { registerLocaleData } from '@angular/common';
 import localePe from '@angular/common/locales/es-PE';
 import { CustomNumberPipe } from './pipes/customNumber.pipe';
 import { PhonePipe } from './pipes/phone.pipe';
+
 registerLocaleData(localePe);
 // import { CuotasProgramasSaludComponent } from './pages/comercial/ventas/cuotas-programas-salud/cuotas-programas-salud.component';
 // import { BsDatepickerModule, BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
@@ -175,7 +176,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ReporteComponent,
     CustomFilterPipe,
     CustomNumberPipe,
-    PhonePipe
+    PhonePipe,
+
     // CuotasProgramasSaludComponent,
 
         

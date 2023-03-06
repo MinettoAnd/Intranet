@@ -176,6 +176,11 @@ const routes: Routes = [
                 loadChildren: () => import('../app/pages/imagenes/imagenes.module').then(m => m.ImagenesModule),
                 data: { extraParameter: "imagenesMenu" },
             },
+            {
+                path: "dashboard-general",
+                loadChildren: () => import('../app/pages/dashboard-general/dashboard-general.module').then(m => m.DashboardGeneralModule),
+                data: { extraParameter: "dashboardGeneralMenu" },
+            },
         ],
     },
 
