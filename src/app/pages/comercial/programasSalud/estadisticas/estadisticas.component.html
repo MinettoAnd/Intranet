@@ -26,8 +26,8 @@
                                 </select>
                             </div>
                         </div>   -->
-                        <div class="form-group col-sm-12 col-md-4 col-lg-2">
-                        <div class="input-group input-group-sm">
+                        <div class="form-group col-sm-12 col-md-4 col-lg-2 ">
+                        <div class="input-group input-group-sm fecha">
                             <div class="input-group-prepend">
                             <span class="input-group-text">Año</span>
                             </div>
@@ -46,8 +46,8 @@
                         </select>
                         </div>
                         </div>
-                        <div class="form-group col-sm-12 col-md-4 col-lg-2">
-                            <div class="input-group input-group-sm">
+                        <div class="form-group col-sm-12 col-md-4 col-lg-2 ">
+                            <div class="input-group input-group-sm fecha">
                                 <div class="input-group-prepend">
                                 <span class="input-group-text">Mes</span>
                                 </div>
@@ -67,15 +67,15 @@
                             </div>
                         </div>
                         
-                        <div class="form-group col-sm-12 col-md-4 col-lg-3">
-                            <div class="input-group">
+                        <!-- <div class="form-group col-sm-12 col-md-4 col-lg-3">
+                            <div class="input-group"> -->
                                 <div class="input-group-btn">
                                     <button (click)="filter()" class="btn btn-sm btn-primary">
                                         <i class="fa fa-search"></i> Filtrar
                                     </button>
                                 </div>
-                            </div>
-                        </div>           
+                            <!-- </div>
+                        </div>            -->
                     </div>
                     </form>
                     <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs" style="justify-content: end;">
@@ -95,7 +95,7 @@
                                                 <div class="box box-solid">
                                                 <div id="accordion1">
                                                     <div class="card">
-                                                    <div class="card-header" >
+                                                    <div class="card-header-info" >
                                                         <div class="box-header">
                                                         <div class="toggle-table">
                                                             <div class="callout callout-info">
@@ -133,24 +133,16 @@
                                                         [columnMode]="ColumnMode.force"
                                                         [headerHeight]="50"
                                                         [rowHeight]="$any('auto')"
-                                                        
+                                                        [rowClass]="myRowClass"
                                                         >
                                                         <ngx-datatable-column [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns1; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                             <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                                             let-row="row">
-                                                            <div>
-                                                                <span  [title]="value">{{value}}</span>
-                                                            </div>
-                                                            <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
-                                                                <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
-                                                            </div> -->
-                    
+                                                              <div >
+                                                                <span [ngClass]="{'row-paddin': row.Estado.includes('Cuotas Adelantadas') || row.Estado.includes('Cuotas Atrasadas') || row.Estado.includes('Cuotas Puntuales') && column.name === 'CONCEPTO'}
+                                                                                  " [title]="value" >{{value}}</span>
+                                                              </div>
                                                             </ng-template>
-                                                            <!-- <ngx-datatable-column prop="per1">
-                                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                                {{row.per1 | currency:'S/.  ':'code'}}
-                                                            </ng-template>
-                                                            </ngx-datatable-column> -->
                                                         </ngx-datatable-column>
                                                         </ngx-datatable>
                                                         
@@ -182,7 +174,7 @@
                                                 <div class="box box-solid">
                                                 <div id="accordion2">
                                                     <div class="card">
-                                                    <div class="card-header" >
+                                                    <div class="card-header-info" >
                                                         <div class="box-header">
                                                         <div class="toggle-table">
                                                             <div class="callout callout-info">
@@ -215,7 +207,7 @@
                                                         </div>
                                                         <ag-grid-angular
                                                     #agGrid
-                                                    style="width: 100%; height: 380px;"
+                                                    style="width: 100%; height: 395px;"
                                                     id="myTable2"
                                                     ag-grid="gridOptions"
                                                     class="ag-theme-balham"
@@ -324,7 +316,7 @@
                                             <div id="accordion2">
                                             <div class="row">
                                                 <div class="card col-md-6">
-                                                    <div class="card-header" >
+                                                    <div class="card-header-info" >
                                                     <div class="box-header">
                                                         <div class="toggle-table">
                                                         <div class="callout callout-info">
@@ -394,7 +386,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="card col-md-6">
-                                                    <div class="card-header" >
+                                                    <div class="card-header-info" >
                                                     <div class="box-header">
                                                         <div class="toggle-table">
                                                         <div class="callout callout-info">
@@ -467,7 +459,7 @@
                                                 </div> 
                                             </div>
                                             <div class="card">
-                                            <div class="card-header" >
+                                            <div class="card-header-info" >
                                                 <div class="box-header">
                                                 <div class="toggle-table">
                                                     <div class="callout callout-info">
@@ -608,7 +600,7 @@
                                         <div class="box box-solid">
                                           <div id="accordion3">
                                             <div class="card">
-                                              <div class="card-header" >
+                                              <div class="card-header-info" >
                                                 <div class="box-header">
                                                   <div class="toggle-table">
                                                     <div class="callout callout-info">
@@ -647,12 +639,13 @@
                                                   [headerHeight]="50"
                                                   [rowHeight]="$any('auto')"
                                                   [scrollbarH]="true"
+                                                  [rowClass]="getRowClass"
                                                   >
                                                   <ngx-datatable-column [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns6; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                                       let-row="row">
-                                                      <div>
-                                                        <span  [title]="value">{{value}}</span>
+                                                      <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM'}">
+                                                        <span  [ngClass]="{'row-paddin': row.item.includes('-') || row.item.includes('TRABAJADORES') || row.item.includes('SOCIOS') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
                                                       </div>
                                                       <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
                                                         <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
@@ -670,7 +663,7 @@
                                               </div>
                                             </div>
                                             <div class="card">
-                                              <div class="card-header" >
+                                              <div class="card-header-info" >
                                                 <div class="box-header">
                                                   <div class="toggle-table">
                                                     <div class="callout callout-info">
@@ -710,12 +703,13 @@
                                                   [columnMode]="ColumnMode.force"
                                                   [headerHeight]="40"
                                                   [rowHeight]="$any('auto')"
+                                                  [rowClass]="getRowClass"
                                                   >
                                                   <ngx-datatable-column [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns7; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                                       let-row="row">
-                                                      <div>
-                                                        <span  [title]="value">{{value}}</span>
+                                                      <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM'}">
+                                                        <span  [ngClass]="{'row-paddin': row.item.includes('-') || row.item.includes('TRABAJADORES') || row.item.includes('SOCIOS') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
                                                       </div>
                                                       <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
                                                         <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
@@ -733,7 +727,7 @@
                                               </div>
                                             </div>
                                             <div class="card">
-                                              <div class="card-header" >
+                                              <div class="card-header-info" >
                                                 <div class="box-header">
                                                   <div class="toggle-table">
                                                     <div class="callout callout-info">
@@ -783,13 +777,14 @@
                                                   [columnMode]="ColumnMode.force"
                                                   [headerHeight]="50"
                                                   [rowHeight]="$any('auto')"
+                                                  [rowClass]="getRowClass"
 
                                                   >
                                                   <ngx-datatable-column [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns8; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                                       let-row="row">
-                                                      <div>
-                                                        <span  [title]="value">{{value}}</span>
+                                                      <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM'}">
+                                                        <span  [ngClass]="{'row-paddin': row.item.includes('-') || row.item.includes('TRABAJADORES') || row.item.includes('SOCIOS') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
                                                       </div>
                                                       <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
                                                         <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
@@ -828,7 +823,7 @@
                                             <div class="box box-solid">
                                               <div id="accordion4">
                                                 <div class="card">
-                                                  <div class="card-header" >
+                                                  <div class="card-header-info" >
                                                     <div class="box-header">
                                                       <div class="toggle-table">
                                                         <div class="callout callout-info">
@@ -867,12 +862,13 @@
                                                       [columnMode]="ColumnMode.force"
                                                       [headerHeight]="50"
                                                       [rowHeight]="$any('auto')"
+                                                      [rowClass]="getRowClass"
                                                       >
                                                       <ngx-datatable-column [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns9; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                                           let-row="row">
-                                                          <div>
-                                                            <span  [title]="value">{{value}}</span>
+                                                          <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM'}">
+                                                            <span  [ngClass]="{'row-paddin': row.item.includes('-') || row.item.includes('TRABAJADORES') || row.item.includes('SOCIOS') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
                                                           </div>
                                                           <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
                                                             <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
@@ -890,7 +886,7 @@
                                                   </div>
                                                 </div>
                                                 <div class="card">
-                                                  <div class="card-header" >
+                                                  <div class="card-header-info" >
                                                     <div class="box-header">
                                                       <div class="toggle-table">
                                                         <div class="callout callout-info">
@@ -931,12 +927,13 @@
                                                       [headerHeight]="40"
                                                       [rowHeight]="$any('auto')"
                                                       [scrollbarH]="true"
+                                                      [rowClass]="getRowClass"
                                                       >
                                                       <ngx-datatable-column [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns10; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                                           let-row="row">
-                                                          <div>
-                                                            <span  [title]="value">{{value}}</span>
+                                                          <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM'}">
+                                                            <span  [ngClass]="{'row-paddin': row.item.includes('-') || row.item.includes('TRABAJADORES') || row.item.includes('SOCIOS') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
                                                           </div>
                                                           <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
                                                             <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
@@ -954,7 +951,7 @@
                                                   </div>
                                                 </div>
                                                 <div class="card">
-                                                  <div class="card-header" >
+                                                  <div class="card-header-info" >
                                                     <div class="box-header">
                                                       <div class="toggle-table">
                                                         <div class="callout callout-info">
@@ -1004,12 +1001,13 @@
                                                       [columnMode]="ColumnMode.force"
                                                       [headerHeight]="50"
                                                       [rowHeight]="$any('auto')"
+                                                      [rowClass]="getRowClass"
                                                       >
                                                       <ngx-datatable-column [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns11; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                                           let-row="row">
-                                                          <div>
-                                                            <span  [title]="value">{{value}}</span>
+                                                          <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM'}">
+                                                            <span  [ngClass]="{'row-paddin': row.item.includes('-') || row.item.includes('TRABAJADORES') || row.item.includes('SOCIOS') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
                                                           </div>
                                                           <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
                                                             <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>

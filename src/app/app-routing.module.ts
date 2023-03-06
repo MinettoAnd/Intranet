@@ -171,6 +171,11 @@ const routes: Routes = [
                 loadChildren: () => import('../app/pages/laboratorio/laboratorio.module').then(m => m.LaboratorioModule),
                 data: { extraParameter: "laboratorioMenu" },
             },
+            {
+                path: "imagenes",
+                loadChildren: () => import('../app/pages/imagenes/imagenes.module').then(m => m.ImagenesModule),
+                data: { extraParameter: "imagenesMenu" },
+            },
         ],
     },
 
