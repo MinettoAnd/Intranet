@@ -13,6 +13,7 @@ import { ListadoMadreNinoComponent } from './programasSalud/listado-madre-nino/l
 import { ListadoMadreNinoMorososComponent } from './programasSalud/listado-madre-nino-morosos/listado-madre-nino-morosos.component';
 import { ListadoAfiliadosComponent } from './programasSalud/listado-afiliados/listado-afiliados.component';
 import { EstadisticasComponent } from './programasSalud/estadisticas/estadisticas.component';
+import { ListadoPSFMorososSeguimientoComponent } from './programasSalud/listado-psf-morosos-seguimiento/listado-psf-morosos-seguimiento.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,7 @@ import { EstadisticasComponent } from './programasSalud/estadisticas/estadistica
     ListadoMadreNinoComponent, 
     ListadoMadreNinoMorososComponent, 
     ListadoAfiliadosComponent, 
-    EstadisticasComponent
+    EstadisticasComponent, ListadoPSFMorososSeguimientoComponent
   ],
   imports: [
     AgGridModule.withComponents([]),
@@ -39,6 +40,10 @@ import { EstadisticasComponent } from './programasSalud/estadisticas/estadistica
       {
         path: 'listadoMorosos',
         component: ListadoMorososComponent
+      },
+      {
+        path: 'listadoPSFMorososSeguimiento',
+        component: ListadoPSFMorososSeguimientoComponent
       },
       {
         path: 'listadoContratosVigentes',
