@@ -113,28 +113,30 @@
                                                 </div><br>
                                                 <div #collapse1="ngbCollapse" [(ngbCollapse)]="isCollapsed1">
                                                 <div style="display:flex;">
-                                                  <ngx-datatable #myTable1
-                                                  class="bootstrap table table-striped  col-md-8"
-                                                  id="datatablele"
-                                                    [columns]="columns1"
-                                                    [rows]="rows1"
-                                                    [columnMode]="ColumnMode.flex"
-                                                    [headerHeight]="40"
-                                                    [rowHeight]="35" 
-                                                    [scrollbarH]="true"
-                                                    (page)="setPage($event)"
-                                                    [rowClass] = "getRowClass"
-                                                    >
-                                                    <ngx-datatable-column [flexGrow]="1" 
-                                                    [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns1; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
-                                                      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
-                                                        let-row="row">
-                                                        <div>
-                                                          <span  [title]="value">{{value}}</span>
-                                                        </div>      
-                                                      </ng-template>
-                                                    </ngx-datatable-column>
-                                                  </ngx-datatable>
+                                                  <div class="p-3 col-md-8">
+                                                    <ngx-datatable #myTable1
+                                                    class="bootstrap table table-striped"
+                                                    id="datatablele"
+                                                      [columns]="columns1"
+                                                      [rows]="rows1"
+                                                      [columnMode]="ColumnMode.flex"
+                                                      [headerHeight]="30"
+                                                      [rowHeight]="30" 
+                                                      [scrollbarH]="false"
+                                                      (page)="setPage($event)"
+                                                      [rowClass] = "getRowClass"
+                                                      >
+                                                      <ngx-datatable-column [flexGrow]="1" 
+                                                      [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns1; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                                                          let-row="row">
+                                                          <div>
+                                                            <span  [title]="value">{{value}}</span>
+                                                          </div>      
+                                                        </ng-template>
+                                                      </ngx-datatable-column>
+                                                    </ngx-datatable>
+                                                  </div>
                                                   <div class="col-md-4">
                                                     <div class="callout text-center p-3">
                                                       <h4 class="box-title">PRECIO DE VENTA POR SUCURSAL</h4>
@@ -171,36 +173,29 @@
                                                 </div><br>
                                                 <div #collapse2="ngbCollapse" [(ngbCollapse)]="isCollapsed2">
                                                   <div style="display:flex">
-                                                    <ngx-datatable #myTable2
-                                                    class="bootstrap table table-striped col-md-8"
-                                                    id="datatablele"
-                                                      [columns]="columns2"
-                                                      [rows]="rows2"
-                                                      [columnMode]="ColumnMode.flex"
-                                                      [headerHeight]="40"
-                                                      [rowHeight]="35"
-                                                      [scrollbarH]="false"
-                                                      (page)="setPage($event)"
-                                                      [rowClass] = "getRowClass2"
-                                                      >
-                                                      <ngx-datatable-column [flexGrow]="1" [minWidth]="80" [pipe]="column.pipe" *ngFor="let column of columns2; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
-                                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
-                                                          let-row="row">
-                                                          <div>
-                                                            <span  [title]="value">{{value}}</span>
-                                                          </div>
-                                                          <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
-                                                            <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
-                                                          </div> -->
-                
-                                                        </ng-template>
-                                                        <!-- <ngx-datatable-column prop="per1">
-                                                          <ng-template let-row="row" ngx-datatable-cell-template>
-                                                            {{row.per1 | currency:'S/.  ':'code'}}
+                                                    <div class="p-3 col-md-8">
+                                                      <ngx-datatable #myTable2
+                                                      class="bootstrap table table-striped"
+                                                      id="datatablele"
+                                                        [columns]="columns2"
+                                                        [rows]="rows2"
+                                                        [columnMode]="ColumnMode.flex"
+                                                        [headerHeight]="30"
+                                                        [rowHeight]="30"
+                                                        [scrollbarH]="false"
+                                                        (page)="setPage($event)"
+                                                        [rowClass] = "getRowClass2"
+                                                        >
+                                                        <ngx-datatable-column [flexGrow]="1" [minWidth]="80" [pipe]="column.pipe" *ngFor="let column of columns2; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                                          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                                                            let-row="row">
+                                                            <div>
+                                                              <span  [title]="value">{{value}}</span>
+                                                            </div>         
                                                           </ng-template>
-                                                        </ngx-datatable-column> -->
-                                                      </ngx-datatable-column>
-                                                    </ngx-datatable>
+                                                        </ngx-datatable-column>
+                                                      </ngx-datatable>
+                                                    </div>
                                                     <div class="col-md-4">
                                                       <div class="callout text-center p-3">
                                                         <h4 class="box-title">PRECIO DE VENTA POR TIPO DE ATENCION</h4>
@@ -236,33 +231,34 @@
                                                     </div>
                                                   </div>
                                                 </div><br>
-                                                <div #collapse3="ngbCollapse" [(ngbCollapse)]="isCollapsed3">
-                                                  <ngx-datatable #myTable3
-                                                  class="bootstrap table table-striped"
-                                                  id="datatablele"
-                                                    [columns]="columns3"
-                                                    [rows]="rows3"
-                                                    [columnMode]="ColumnMode.flex"
-                                                    [headerHeight]="40"
-                                                    [rowHeight]="35"
-                                                    [scrollbarH]="true"
-                                                    [limit]="20"
-                                                    [rowClass] = "getRowClass1"
-                                                    >
-                                                    <ngx-datatable-column [flexGrow]="1" [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns3; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
-                                                      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
-                                                        let-row="row">
-                                                        <div>
-                                                          <span  [title]="value">{{value}}</span>
-                                                        </div>
-                                                      </ng-template>
-                                                      <!-- <ngx-datatable-column prop="per1">
-                                                        <ng-template let-row="row" ngx-datatable-cell-template>
-                                                          {{row.per1 | currency:'S/.  ':'code'}}
+                                                
+                                                <div #collapse3="ngbCollapse" [(ngbCollapse)]="isCollapsed3" class="p-3">
+                                                    <ngx-datatable #myTable3
+                                                    class="bootstrap table table-striped"
+                                                    id="datatablele"
+                                                      [columns]="columns3"
+                                                      [rows]="rows3"
+                                                      [columnMode]="ColumnMode.flex"
+                                                      [headerHeight]="30"
+                                                      [rowHeight]="30"
+                                                      [scrollbarH]="true"
+                                                      [limit]="20"
+                                                      [rowClass] = "getRowClass1"
+                                                      >
+                                                      <ngx-datatable-column [flexGrow]="1" [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns3; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                                                          let-row="row">
+                                                          <div>
+                                                            <span  [title]="value">{{value}}</span>
+                                                          </div>
                                                         </ng-template>
-                                                      </ngx-datatable-column> -->
-                                                    </ngx-datatable-column>
-                                                  </ngx-datatable>
+                                                        <!-- <ngx-datatable-column prop="per1">
+                                                          <ng-template let-row="row" ngx-datatable-cell-template>
+                                                            {{row.per1 | currency:'S/.  ':'code'}}
+                                                          </ng-template>
+                                                        </ngx-datatable-column> -->
+                                                      </ngx-datatable-column>
+                                                    </ngx-datatable>
                                                   
                                                 </div>
                                               </div>
@@ -282,15 +278,15 @@
                                                     </div>
                                                   </div>
                                                 </div><br>
-                                                <div #collapse4="ngbCollapse" [(ngbCollapse)]="isCollapsed4">
+                                                <div #collapse4="ngbCollapse" [(ngbCollapse)]="isCollapsed4" class="p-3">
                                                   <ngx-datatable #myTable4
                                                   class="bootstrap table table-striped"
                                                   id="datatablele"
                                                     [columns]="columns4"
                                                     [rows]="rows4"
                                                     [columnMode]="ColumnMode.flex"
-                                                    [headerHeight]="40"
-                                                    [rowHeight]="35"
+                                                    [headerHeight]="30"
+                                                    [rowHeight]="30"
                                                     [scrollbarH]="true"
                                                     [rowClass] = "getRowClass"
                                                     [limit]="20"
@@ -369,7 +365,7 @@
                                                     </div>
                                                   </div>
                                                 </div>
-                                                <div #collapse5="ngbCollapse" [(ngbCollapse)]="isCollapsed5">
+                                                <div #collapse5="ngbCollapse" [(ngbCollapse)]="isCollapsed5" class="p-3">
                                                   <div class="row" style="align-items: center;justify-content: space-between;">
                                                     <div style='margin-left:15px;'>
                                                         <select class="form-control form-select" (change)="onLimitChange($event.target.value, '3')">
@@ -456,12 +452,12 @@
                             <ng-template ngbNavContent>
                                 <div class="card">
                                     <div class="card-header">
-                                      <h4 class="card-title" style="bottom:13px;">Examenes Realizados ( NO incluye IGV )   -   Periodo del {{f_inicio}} al {{f_fin}}
+                                      <h4 class="card-title" style="bottom:13px;">Examenes Realizados   -   Periodo del {{f_inicio}} al {{f_fin}}
                                         Empresa BIOHEALTH</h4>
                                       <p>{{message}}</p>
                                     </div>
                                     <div class="card-content collapse show">
-                                      <div class="card-body col-sm-12 col-md-7 col-lg-7">
+                                      <div class="card-body col-sm-12 col-md-8 col-lg-8">
                                         <div class="table table-striped table-bordered selection-deletion-row">
                                           <div class="box box-solid">
                                             <div id="accordion3">
@@ -480,7 +476,7 @@
                                                     </div>
                                                   </div>
                                                 </div><br>
-                                                <div #collapse6="ngbCollapse" [(ngbCollapse)]="isCollapsed6">
+                                                <div #collapse6="ngbCollapse" [(ngbCollapse)]="isCollapsed6" class="p-3">
                                                  
                                                   <ngx-datatable #myTable6
                                                   class="bootstrap table table-striped"
@@ -490,7 +486,7 @@
                                                     [columnMode]="ColumnMode.flex"
                                                     [headerHeight]="50"
                                                     [rowHeight]="$any('auto')"
-                                                    [scrollbarH]="true"
+                                                    [scrollbarH]="false"
                                                     (page)="setPage($event)"
                                                     [selected]="selected"
                                                     [selectionType]="SelectionType.single"
@@ -568,11 +564,13 @@
                             <a ngbNavLink>Condiciones</a>
                             <ng-template ngbNavContent>
                                 <div class="card">
+                                    <!--
                                     <div class="card-header">
-                                      <h4 class="card-title" style="bottom:13px;">Examenes Realizados ( NO incluye IGV )   -   Periodo del {{f_inicio}} al {{f_fin}}
+                                      <h4 class="card-title" style="bottom:13px;">Periodo del {{f_inicio}} al {{f_fin}}
                                         Empresa BIOHEALTH</h4>
                                       <p>{{message}}</p>
                                     </div>
+                                    -->
                                     <div class="card-content collapse show">
                                       <div class="card-body">
                                         <div id="div_section_panel_04" *ngIf="area === 'Laboratorio'"   style="padding:40px; margin-left:5% !important; margin-right:5% !important; margin-top:40px !important; border-radius:20px; box-shadow: 7px 7px 15px #17074d; border: 1px solid #ccc;">
@@ -595,25 +593,25 @@
                                                 <tr>
                                                    <td>&nbsp;</td>
                                                    <td>&nbsp;</td>
-                                                   <td style="text-align: center; border: 1px solid black;" colspan="3">TIPOS DE PACIENTE</td>
+                                                   <td style="text-align:center; border: 1px solid black; background-color: #10004c; color: white; padding:10px;" colspan="3">TIPOS DE PACIENTE</td>
                                                 </tr>
                                                 <tr>
                                                    <td>&nbsp;</td>
-                                                   <td style="text-align: center;border: 1px solid black;">PORCENTAJE RETRIBUCION ENTRE EMPRESAS</td>
-                                                   <td style="text-align: center;border: 1px solid black; background-color: #CCC;">CONVENIOS, CIAS DE SEGURO</td>
-                                                   <td style="text-align: center;border: 1px solid black; background-color: #CCC;">PARTICULARES</td>
-                                                   <td style="text-align: center;border: 1px solid black; background-color: #CCC;">PROGRAMAS <br> DE SALUD</td>
+                                                   <td style="text-align:center; border: 1px solid black;background-color: #10004c; color: white; padding:10px;">PORCENTAJE RETRIBUCION ENTRE EMPRESAS</td>
+                                                   <td style="text-align:center; border: 1px solid black; background-color: #ffaa00; color:#10004c;">CONVENIOS, CIAS DE SEGURO</td>
+                                                   <td style="text-align:center; border: 1px solid black; background-color: #ffaa00; color:#10004c;">PARTICULARES</td>
+                                                   <td style="text-align:center; border: 1px solid black; background-color: #ffaa00; color:#10004c;">PROGRAMAS <br> DE SALUD</td>
                                                 </tr>
                                                 <tr>
-                                                   <td style="text-align: center;border: 1px solid black; width:200px; background-color: #339966;">BIOHEALTH SAC</td>
-                                                   <td style="text-align: center;border: 1px solid black; width:200px; background-color: #339966;">70%</td>
-                                                   <td style="text-align: center;border: 1px solid black; width:200px;" rowspan="2">PRECIO DE VENTA DEL EXAMEN <br> (CIA + PACIENTE)</td>
-                                                   <td style="text-align: center;border: 1px solid black; width:200px;" rowspan="2">PRECIO DE VENTA DEL EXAMEN <br> (PAGO DEL PACIENTE)</td>
-                                                   <td style="text-align: center;border: 1px solid black; width:100px;" rowspan="2">PAGO DEL PACIENTE</td>
+                                                   <td style="text-align:center; border: 1px solid black; width:200px; background-color: #c5d452; padding:10px;">BIOHEALTH SAC</td>
+                                                   <td style="text-align:center; border: 1px solid black; width:200px; background-color: #c5d452; padding:10px;">70%</td>
+                                                   <td style="text-align:center; border: 1px solid black; width:200px;" rowspan="2">PRECIO DE VENTA DEL EXAMEN <br> (CIA + PACIENTE)</td>
+                                                   <td style="text-align:center; border: 1px solid black; width:200px;" rowspan="2">PRECIO DE VENTA DEL EXAMEN <br> (PAGO DEL PACIENTE)</td>
+                                                   <td style="text-align:center; border: 1px solid black; width:200px;" rowspan="2">PAGO DEL PACIENTE</td>
                                                 </tr>
                                                 <tr>
-                                                   <td style="text-align: center;border: 1px solid black; background-color: #3366ff;">CSALUD S.A.</td>
-                                                   <td style="text-align: center;border: 1px solid black; background-color: #3366ff;">30%</td>
+                                                   <td style="text-align: center;border: 1px solid black; background-color: #63b6de; padding:10px;">CSALUD S.A.</td>
+                                                   <td style="text-align: center;border: 1px solid black; background-color: #63b6de; padding:10px;">30%</td>
                                                 </tr>
                                              </tbody>
                                           </table>

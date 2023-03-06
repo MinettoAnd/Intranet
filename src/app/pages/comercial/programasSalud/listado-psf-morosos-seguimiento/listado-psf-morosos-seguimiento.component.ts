@@ -381,13 +381,13 @@ export class ListadoPSFMorososSeguimientoComponent implements OnInit {
       // this.rows.map(item=>{
       //   item.ImpCuotasVencidas = this._cp.transform( item.ImpCuotasVencidas);
       // });
-      this.exportService.exportTableElmToExcel(this.rows, 'Listado de Morosos');
+      this.exportService.exportTableElmToExcel(this.rows, 'Examenes Laboratorio');
     }else if (numberTabla === 1){
       
-      this.exportService.exportTableElmToExcel(this.rows1, 'Listado de Morosos - Distribución por Programa');
+      this.exportService.exportTableElmToExcel(this.rows1, 'Examenes Laboratorio');
     }else if (numberTabla === 2){
       
-      this.exportService.exportTableElmToExcel(this.rows2, 'Listado de Morosos - Distribución por Período');
+      this.exportService.exportTableElmToExcel(this.rows2, 'Examenes Laboratorio');
     }
   }
 

@@ -1,9 +1,13 @@
-.ngx-datatable .datatable-body-cell, .ngx-datatable .datatable-header-cell {
-    line-height: 1rem !important;
+
+#datatablele5 {
+    font-family: "Arial Narrow", "Roboto", "Helvetica Neue", Arial, "Noto Color Emoji" !important;
+    font-size: 10px !important;
 }
+
 .card-body {
-    padding: 0.8rem 1.25rem;
+    padding: 0.8rem 1.25rem !important;
 }
+
 
 .toggle-table{
     display: flex;
@@ -15,8 +19,6 @@
     font-size: 1rem!important;
     font-weight: 600;
 }
-
-
 .info-box-content{
     display: flex;
     flex-direction: column;
@@ -131,7 +133,15 @@ margin: 0.5rem 0;
     background-color: #FFAA00 !important;
   }
 
-  .callout.callout-info {
+ .callout.text-center{
+    height: 30px;
+    padding: 0px 5px;
+    width: 100%;
+    margin-top: -30px; 
+    margin-bottom: 20px;
+}
+
+.callout.callout-info {
     height: 36px;
     padding: 6px 15px;
     color: white;
@@ -153,13 +163,5 @@ margin: 0.5rem 0;
     border-bottom-left-radius: 0px;
 }
 
-#datatablele {
-    padding: 5px 20px;
-}
-#datatablele5 {
-    font-family: "Arial Narrow", "Roboto", "Helvetica Neue", Arial, "Noto Color Emoji" !important;
-    font-size: 10px !important;
-    padding: 5px 20px;
-}
 
 
