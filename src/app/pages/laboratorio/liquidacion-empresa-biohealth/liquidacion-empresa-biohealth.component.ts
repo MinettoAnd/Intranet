@@ -450,6 +450,9 @@ export class LiquidacionEmpresaBiohealthComponent implements OnInit {
                       if(item.pipe === 'currency'){
                         item.pipe = this._cp;
                       }
+                      if(item.pipe === 'cantidad'){
+                        item.pipe = this._cnp;
+                      }
                     });
                     // console.log(401, this.columns5);
                     this.rows5 = response.data.tabla_pago_empresa;
