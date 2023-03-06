@@ -271,7 +271,7 @@ export class LiquidacionEmpresaBiohealthComponent implements OnInit {
     //   return {'totals': row.item.includes('TOTAL') || row.item.includes('COLECTIVA') }
     // }
     return {
-      'totals': row.Campo.includes('TOTAL'), 'sub-totals': row.Campo === 'CHORRILLOS' || row.Campo === 'LIMA' || row.Campo ==='CHORRILLOS'
+      'totals': row.Campo.includes('TOTAL'), 'sub-totals': row.Campo === 'CHORRILLOS' || row.Campo === 'LIMA' || row.Campo ==='SURCO'
     };
   }
   getRowClass3(row) {

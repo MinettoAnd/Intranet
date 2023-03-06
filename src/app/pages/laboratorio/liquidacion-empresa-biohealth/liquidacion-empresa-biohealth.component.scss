@@ -1,7 +1,10 @@
+.ngx-datatable .datatable-body-cell, .ngx-datatable .datatable-header-cell {
+    line-height: 1rem !important;
+}
+.card-body {
+    padding: 0.8rem 1.25rem;
+}
 
-// .row-background{
-//     background:red;
-// }
 .toggle-table{
     display: flex;
     /* position: relative; */
@@ -100,10 +103,6 @@ margin: 0.5rem 0;
           }
         }
       }
-  
-    //   .card-body {
-    //     padding: 1rem;
-    //   }
     }
   }
   :host ::ng-deep .datatable-body-row.active .datatable-row-group {
@@ -124,3 +123,42 @@ margin: 0.5rem 0;
         max-width: 50%!important;
     }
 }
+
+.card-header-info {
+    height: 35px;
+    border-color: #FFAA00;
+    border-radius: 5px;
+    background-color: #FFAA00 !important;
+  }
+
+  .callout.callout-info {
+    height: 36px;
+    padding: 6px 15px;
+    color: white;
+    background-color: #10004C !important;
+    margin-left: 10px;
+    width: 100%;
+}
+
+.btn-outline-primary {
+    color: #10004C;
+    border-color: #10004C;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+.btn-outline-primary:hover {
+    background: #FFF;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+#datatablele {
+    padding: 5px 20px;
+}
+#datatablele5 {
+    font-family: "Arial Narrow", Roboto, "Helvetica Neue", Arial, "Noto Color Emoji" !important;
+    font-size: 10px !important;
+}
+
+
