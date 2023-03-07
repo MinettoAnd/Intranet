@@ -1,1 +1,247 @@
-<p>impresion-informes-realizados works!</p>
+<div class="card">
+    <div class="card-body">
+      <form [formGroup]="formSearch">
+        <div class="form-row">
+          <div class="col-md-3">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="position-relative form-group">
+                  <label for="condF_FIni">Fecha Inicio</label
+                  ><input
+                    id="condF_FIni"
+                    formControlName="condF_FIni"
+                    type="date"
+                    class="form-control-sm form-control"
+                  />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="position-relative form-group">
+                  <label for="condF_FFin">Fecha Final</label
+                  ><input
+                    id="condF_FFin"
+                    formControlName="condF_FFin"
+                    type="date"
+                    class="form-control-sm form-control"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-9">
+            <div class="row">
+              <div class="col-md-2">
+                <div class="position-relative form-group">
+                  <label for="condSede">Sedes</label
+                  ><select
+                    formControlName="condSede"
+                    class="form-control-sm form-control"
+                  >
+                    <option value="F">Todos</option>
+                    <option value="1">Lima</option>
+                    <option value="2">Chorrillos</option>
+                    <option value="4">Surco</option>
+                    <option value="5">Olguin</option>
+                    <option value="6">Tinajones</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="position-relative form-group">
+                  <label for="condFiltro">Paciente</label
+                  ><input
+                    id="condFiltro"
+                    formControlName="condFiltro"
+                    placeholder=""
+                    type="text"
+                    class="form-control-sm form-control"
+                  />
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="position-relative form-group">
+                  <label for="condExamen">Tipo de Examen</label
+                  ><select
+                    formControlName="condExamen"
+                    class="form-control-sm form-control"
+                  >
+                    <option value="Mamografía">Mamografía</option>
+                    <option value="Ecografía">Ecografía</option>
+                    <option value="Rayos X">Rayos X</option>
+                    <option value="Tomografía">Tomografía</option>
+                    <option value="Densitometria Osea">Densitometria Osea</option>
+                    <option value="Biopsia">Biopsia</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="position-relative form-group">
+                  <label for="condPrograma">Tipo de Paciente</label
+                  ><select
+                    formControlName="condPrograma"
+                    class="form-control-sm form-control"
+                  >
+                    <option value="4">Afiliación Colectiva</option>
+                    <option value="24">Afiliacion Colectiva Dorada</option>
+                    <option value="7">Cia. de Seguros</option>
+                    <option value="28">Club 110 RBC</option>
+                    <option value="11">Consejo Directivo</option>
+                    <option value="6">Convenio</option>
+                    <option value="10">Familia del Trabajador</option>
+                    <option value="20">Hogar Geriátrico</option>
+                    <option value="1">Institucional</option>
+                    <option value="13">Ley de Emergencia</option>
+                    <option value="27">Listos para el Colegio</option>
+                    <option value="15">Madre - Niño</option>
+                    <option value="14">Paciente de Cortesia</option>
+                    <option value="2">Privado</option>
+                    <option value="12">Programa de Beneficencia</option>
+                    <option value="5">Protección Escolar</option>
+                    <option value="19">Salud Sin Fronteras</option>
+                    <option value="16">Sante Card</option>
+                    <option value="29">SFB - Salud Ocupacional</option>
+                    <option value="8">Socios SFB</option>
+                    <option value="3">Tarjeta Clásica</option>
+                    <option value="21">Tarjeta Diamante</option>
+                    <option value="18">Tarjeta Dorada</option>
+                    <option value="31">Tarjeta Platino</option>
+                    <option value="9">Trabajador</option>
+                    <option value="26">Vecino Surcano Preferencial</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="position-relative form-group">
+                  <label for="condPlaca">Nro. Orden</label
+                  ><input
+                    id="condPlaca"
+                    formControlName="condPlaca"
+                    placeholder=""
+                    type="text"
+                    class="form-control-sm form-control"
+                  />
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="input-group">
+                    <div class="input-group-btn" style="padding-top: 1.7rem !important;">
+                        <button
+                        (click)="searh()"
+                        class="mb-2 mr-2 btn btn-primary btn-sm"
+                        >
+                        <i class="pe-7s-search"> </i> Procesar
+                        </button>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </form>
+    </div>
+  </div>
+  
+  <div class="main-card mb-3 card">
+    <div class="card-header">
+      <div
+        class="card-header-title font-size-lg text-capitalize font-weight-normal"
+      >
+        <select
+          class="custom-select"
+          style="width: auto"
+          [(ngModel)]="pageSize"
+          (ngModelChange)="refreshCountries()"
+        >
+          <option [ngValue]="50">50</option>
+          <option [ngValue]="100">100</option>
+          <option [ngValue]="150">150</option>
+        </select>
+  
+      </div>
+    </div>
+    <div class="table-responsive p-4">
+      <table
+        class="
+          align-middle
+          text-truncate
+          mb-0
+          table table-sm table-borderless table-hover
+        "
+      >
+        <thead>
+          <tr>
+            <th>Accion</th>
+            <th>Correlativo</th>
+            <th>F.Reclamo</th>
+            <th>F.Evento</th>
+            <th>Sede</th>
+            <th>Estado</th>
+            <th>Afectado</th>
+            <th>Resultado Reclamo</th>
+            <th>Area Involucrado</th>
+            <th>Causa</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of reclamos">
+            <td class="text-center">
+              <div role="group" class="btn-group-sm btn-group">
+                <button
+                  (click)="
+                    open(
+                      1,
+                      item.id_reclamo,
+                      item.id_sede,
+                      item.v_correlativo_reclamo
+                    )
+                  "
+                  class="btn-shadow btn btn-outline-success"
+                  data-tooltip="Detalle"
+                >
+                  <i class="pe-7s-look btn-icon-wrapper"> </i>
+                </button>
+              </div>
+            </td>
+            <td class="text-left">
+              {{ newCorrelativoCorrecto(item.v_correlativo_reclamo) }}
+            </td>
+            <td class="text-left">{{ diaEvento(item.d_registra_reclamo) }}</td>
+            <td class="text-left">
+              {{ diaEvento(item.d_fecha_reclamo) }}
+            </td>
+            <td class="text-left">
+              {{ getsedeName(item.id_sede) }}
+            </td>
+            <td class="text-left">
+              {{ item.name_estado }}
+            </td>
+            <td class="text-left">
+              {{ item.V_nombre1.trim() }} {{ item.v_paterno1.trim() }}
+              {{ item.v_materno1.trim() }}
+            </td>
+            <td class="text-left">
+              {{ getRultadoReclamo(item.id_resultado_reclamo) }}
+            </td>
+            <td class="text-left">{{ item.area_name }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="d-block p-4 text-center card-footer">
+      <ngb-pagination
+        [collectionSize]="collectionSize"
+        [(page)]="page"
+        [pageSize]="pageSize"
+        (pageChange)="refreshCountries()"
+      >
+        <ng-template ngbPaginationPrevious>
+          <i class="pe-7s-angle-left-circle"></i
+        ></ng-template>
+        <ng-template ngbPaginationNext
+          ><i class="pe-7s-angle-right-circle"></i
+        ></ng-template>
+      </ngb-pagination>
+    </div>
+  </div>
+  

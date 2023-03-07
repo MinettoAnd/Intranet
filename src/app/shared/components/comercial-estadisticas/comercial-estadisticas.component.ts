@@ -4,15 +4,15 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { NgBlockUI, BlockUI } from 'ng-block-ui';
 import { PerfectScrollbarDirective, PerfectScrollbarComponent, PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import Swal from 'sweetalert2';
-import { ComercialService } from '../../../../_services/comercial.service';
-import {AttentionConsultation} from '../../../../interfaces/attentionConsultation';
-import {ApiResponse} from '../../../../interfaces/response';
+import { ComercialService } from '../../../_services/comercial.service';
+import {AttentionConsultation} from '../../../interfaces/attentionConsultation';
+import {ApiResponse} from '../../../interfaces/response';
 import * as moment from 'moment';
-import { Page } from '../../../../models/forms-data/page';
+import { Page } from '../../../models/forms-data/page';
 import { ColumnMode, SelectionType, NgxDatatableModule, DatatableComponent  } from '@swimlane/ngx-datatable';
 import * as XLSX from 'xlsx';
-import { ExcelJson } from '../../../../interfaces/excel-json.interface';
-import { ExportService } from '../../../../_services/export.service';
+import { ExcelJson } from '../../../interfaces/excel-json.interface';
+import { ExportService } from '../../../_services/export.service';
 import * as Chart from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import ResizeObserver from 'resize-observer-polyfill';
@@ -24,11 +24,11 @@ import { CustomNumberPipe } from 'src/app/pipes/customNumber.pipe';
 import { PhonePipe } from 'src/app/pipes/phone.pipe';
 
 @Component({
-  selector: 'app-estadisticas',
-  templateUrl: './estadisticas.component.html',
-  styleUrls: ['./estadisticas.component.scss']
+  selector: 'app-comercial-estadisticas',
+  templateUrl: './comercial-estadisticas.component.html',
+  styleUrls: ['./comercial-estadisticas.component.scss']
 })
-export class EstadisticasComponent implements OnInit {
+export class ComercialEstadisticasComponent implements OnInit {
   active = 1;
   closeResult = '';
   @ViewChild("agGrid") agGrid: AgGridAngular;
@@ -235,7 +235,7 @@ export class EstadisticasComponent implements OnInit {
     };
   }
 
-  ngOnInit(){
+  ngOnInit(): void {
 
     // this.setPage({ offset: 0 });
   }
@@ -360,22 +360,22 @@ export class EstadisticasComponent implements OnInit {
           font: {
             weight: 'bold'
           },
-          // formatter: function(value, context) {
-          //   let sum = 0;
+          formatter: function(value, context) {
+            let sum = 0;
             
-          //   let dataArr = context.chart.data.datasets[context.datasetIndex].data;
+            let dataArr = context.chart.data.datasets[context.datasetIndex].data;
               
-          //   dataArr.map((data) => {
-          //     return sum += parseFloat(data);
-          //   });
-          //   // console.log(292,value , sum );
-          //   if (sum > 0 ){
-          //     return ((value * 100) / sum).toFixed(2) + '%';
-          //   }else{
-          //     return (0 + '%');
-          //   }
+            dataArr.map((data) => {
+              return sum += parseFloat(data);
+            });
+            // console.log(292,value , sum );
+            if (sum > 0 ){
+              return ((value * 100) / sum).toFixed(2) + '%';
+            }else{
+              return (0 + '%');
+            }
             
-          // },
+          },
           /* Podemos modificar el texto a mostrar */
           // formatter: function (dato, ctx) {
           //   return ((dato * 100) / total).toFixed(2) + '%'; 
@@ -735,7 +735,8 @@ export class EstadisticasComponent implements OnInit {
                       this.chartData4.push(item.item_2);
                     });
                     this.getBarChart(this.chartLabels2, this.chartData3, this.chartData4,'', '','chart-2', this.anioAnterior, this.anio, 'line');
-
+                     console.log(645, response.data.hist_total)
+                     console.log('646', response.data.hist_siniestralidad)
                   }
                 },
                 (error) => {
@@ -1107,9 +1108,10 @@ console.log(846, response.data);
             item.PER12 = this._cnp.transform(item.PER12);
             item.PER13 = this._cnp.transform(item.PER13);
           });
-            // Swal.close();
-        }
+            Swal.close();
+        }else{
           Swal.close();
+        }
       },
       (error) => {
           Swal.close();

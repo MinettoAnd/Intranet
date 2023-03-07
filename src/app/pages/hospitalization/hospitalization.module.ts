@@ -7,6 +7,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HospitalDischargeConsultationComponent } from './hospital-discharge-consultation/hospital-discharge-consultation.component';
 import { EstadisticasComponent } from './estadisticas/estadisticas.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [HospitalDischargeConsultationComponent, EstadisticasComponent],
@@ -16,6 +17,7 @@ import { EstadisticasComponent } from './estadisticas/estadisticas.component';
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
+    SharedModule,
     RouterModule.forChild([
       {
         path: 'consulta-altas-hospitalarias',

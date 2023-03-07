@@ -1,0 +1,41 @@
+// .nav-link[data-toggle].collapsed:after {
+//     content: "▾";
+// }
+// .nav-link[data-toggle]:not(.collapsed):after {
+//     content: "▴";
+// }
+
+.nav-item a:hover{
+color: #fff!important;
+}
+#sidebar {
+    width: 8%;
+    font-size: 1rem;
+    margin:0 15px;
+   
+}
+#sidebar .nav-item{
+    cursor: pointer;
+    background-color: var(--secondary);
+}
+#sidebar .nav-item:first-child{
+    // text-align: center;
+    border-radius: 5px 5px 0 0;
+}
+#sidebar .nav-item:last-child{
+    // text-align: center;
+    border-radius: 0 0 5px 5px;
+}
+.dropdown-menu.show {
+    font-size: 0.9rem;
+    min-width: 10rem!important;
+    background-color: var(--secondary);
+    transform: translate(5px, 35px)!important;
+}
+.dropdown-menu li a{
+    cursor: pointer;
+    color: var(--primary)!important;
+}
+.dropdown-menu li a:hover{
+    color: #fff!important;
+}

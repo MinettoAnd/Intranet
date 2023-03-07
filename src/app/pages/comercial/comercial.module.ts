@@ -13,8 +13,10 @@ import { ListadoMadreNinoComponent } from './programasSalud/listado-madre-nino/l
 import { ListadoMadreNinoMorososComponent } from './programasSalud/listado-madre-nino-morosos/listado-madre-nino-morosos.component';
 import { ListadoAfiliadosComponent } from './programasSalud/listado-afiliados/listado-afiliados.component';
 import { EstadisticasComponent } from './programasSalud/estadisticas/estadisticas.component';
-import { ListadoPSFMorososSeguimientoComponent } from './programasSalud/listado-psf-morosos-seguimiento/listado-psf-morosos-seguimiento.component';
 
+import { SharedModule } from 'src/app/shared/shared.module';
+
+import { ListadoPSFMorososSeguimientoComponent } from './programasSalud/listado-psf-morosos-seguimiento/listado-psf-morosos-seguimiento.component';
 @NgModule({
   declarations: [
     CuotasProgramasSaludComponent, 
@@ -29,7 +31,7 @@ import { ListadoPSFMorososSeguimientoComponent } from './programasSalud/listado-
     AgGridModule.withComponents([]),
     CommonModule,
     NgxDatatableModule,
-    NgbModule,
+    NgbModule,SharedModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forChild([

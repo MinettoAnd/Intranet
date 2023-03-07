@@ -84,8 +84,7 @@ import { ModalComponent } from './pages/claims/portal/modal/modal.component';
 import { SendComponent } from './pages/report/send/send.component';
 import { FilesComponent } from './modals/claims/list/detalle/modal/files/files.component';
 import { DocsComponent } from './modals/claims/docs/docs.component';
-import { PiecharComponent } from './components/piechar/piechar.component';
-import { BarcharComponent } from './components/barchar/barchar.component';
+
 import { DashboardIpressComponent } from './pages/claims/ipress/taps/dashboard/dashboard-ipress.component';
 import { LoadingComponent } from './pages/loaging/loading';
 import { SusaludComponent } from './pages/claims/susalud/susalud.component';
@@ -105,6 +104,14 @@ import { registerLocaleData } from '@angular/common';
 import localePe from '@angular/common/locales/es-PE';
 import { CustomNumberPipe } from './pipes/customNumber.pipe';
 import { PhonePipe } from './pipes/phone.pipe';
+import { DefaultComponent } from './pages/default/default.component';
+import { CustomTooltip } from 'utils/custom-tooltip.component';
+import { EmpresaCellRenderer } from 'utils/EmpresaCellRenderer';
+import { EstadoCellRenderer } from 'utils/EstadoCellRenderer';
+import { GenderCellRenderer } from 'utils/GenderCellRenderer';
+import { SucursalCellRenderer } from 'utils/SucursalCellRenderer';
+
+
 registerLocaleData(localePe);
 // import { CuotasProgramasSaludComponent } from './pages/comercial/ventas/cuotas-programas-salud/cuotas-programas-salud.component';
 // import { BsDatepickerModule, BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
@@ -162,8 +169,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ModalComponent,
     FilesComponent,
     DocsComponent,
-    PiecharComponent,
-    BarcharComponent,
+    // PiecharComponent,
+    // BarcharComponent,
     LoadingComponent,
     SusaludComponent,
 
@@ -175,7 +182,13 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ReporteComponent,
     CustomFilterPipe,
     CustomNumberPipe,
-    PhonePipe
+    PhonePipe,
+    PorcentajePipe,
+    DefaultComponent,
+    CustomTooltip,
+    EmpresaCellRenderer,
+    EstadoCellRenderer, GenderCellRenderer, SucursalCellRenderer, 
+    
     // CuotasProgramasSaludComponent,
 
         
@@ -229,10 +242,10 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     DecimalPipe,
     PorcentajePipe,
     CustomNumberPipe,
-    PhonePipe
+    PhonePipe,
   ],
   bootstrap: [AppComponent],
-  schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
+  schemas: [ ],
 })
 
 export class AppModule {
