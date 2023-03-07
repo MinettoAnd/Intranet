@@ -1,7 +1,14 @@
 
-// .row-background{
-//     background:red;
-// }
+#datatablele5 {
+    font-family: "Arial Narrow", "Roboto", "Helvetica Neue", Arial, "Noto Color Emoji" !important;
+    font-size: 10px !important;
+}
+
+.card-body {
+    padding: 0.8rem 1.25rem !important;
+}
+
+
 .toggle-table{
     display: flex;
     /* position: relative; */
@@ -12,8 +19,6 @@
     font-size: 1rem!important;
     font-weight: 600;
 }
-
-
 .info-box-content{
     display: flex;
     flex-direction: column;
@@ -100,10 +105,6 @@ margin: 0.5rem 0;
           }
         }
       }
-  
-    //   .card-body {
-    //     padding: 1rem;
-    //   }
     }
   }
   :host ::ng-deep .datatable-body-row.active .datatable-row-group {
@@ -124,3 +125,43 @@ margin: 0.5rem 0;
         max-width: 50%!important;
     }
 }
+
+.card-header-info {
+    height: 35px;
+    border-color: #FFAA00;
+    border-radius: 5px;
+    background-color: #FFAA00 !important;
+  }
+
+ .callout.text-center{
+    height: 30px;
+    padding: 0px 5px;
+    width: 100%;
+    margin-top: -30px; 
+    margin-bottom: 20px;
+}
+
+.callout.callout-info {
+    height: 36px;
+    padding: 6px 15px;
+    color: white;
+    background-color: #10004C !important;
+    margin-left: 10px;
+    width: 100%;
+}
+
+.btn-outline-primary {
+    color: #10004C;
+    border-color: #10004C;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+.btn-outline-primary:hover {
+    background: #FFF;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+
+
