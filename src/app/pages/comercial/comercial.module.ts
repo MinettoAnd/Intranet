@@ -13,7 +13,7 @@ import { ListadoMadreNinoComponent } from './programasSalud/listado-madre-nino/l
 import { ListadoMadreNinoMorososComponent } from './programasSalud/listado-madre-nino-morosos/listado-madre-nino-morosos.component';
 import { ListadoAfiliadosComponent } from './programasSalud/listado-afiliados/listado-afiliados.component';
 import { EstadisticasComponent } from './programasSalud/estadisticas/estadisticas.component';
-
+import { SharedModule } from 'src/app/shared/shared.module';
 @NgModule({
   declarations: [
     CuotasProgramasSaludComponent, 
@@ -22,13 +22,13 @@ import { EstadisticasComponent } from './programasSalud/estadisticas/estadistica
     ListadoMadreNinoComponent, 
     ListadoMadreNinoMorososComponent, 
     ListadoAfiliadosComponent, 
-    EstadisticasComponent
+    EstadisticasComponent,
   ],
   imports: [
     AgGridModule.withComponents([]),
     CommonModule,
     NgxDatatableModule,
-    NgbModule,
+    NgbModule,SharedModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forChild([

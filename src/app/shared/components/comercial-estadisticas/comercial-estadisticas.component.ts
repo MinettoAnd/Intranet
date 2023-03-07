@@ -4,15 +4,15 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { NgBlockUI, BlockUI } from 'ng-block-ui';
 import { PerfectScrollbarDirective, PerfectScrollbarComponent, PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import Swal from 'sweetalert2';
-import { ComercialService } from '../../_services/comercial.service';
-import {AttentionConsultation} from '../../interfaces/attentionConsultation';
-import {ApiResponse} from '../../interfaces/response';
+import { ComercialService } from '../../../_services/comercial.service';
+import {AttentionConsultation} from '../../../interfaces/attentionConsultation';
+import {ApiResponse} from '../../../interfaces/response';
 import * as moment from 'moment';
-import { Page } from '../../models/forms-data/page';
+import { Page } from '../../../models/forms-data/page';
 import { ColumnMode, SelectionType, NgxDatatableModule, DatatableComponent  } from '@swimlane/ngx-datatable';
 import * as XLSX from 'xlsx';
-import { ExcelJson } from '../../interfaces/excel-json.interface';
-import { ExportService } from '../../_services/export.service';
+import { ExcelJson } from '../../../interfaces/excel-json.interface';
+import { ExportService } from '../../../_services/export.service';
 import * as Chart from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import ResizeObserver from 'resize-observer-polyfill';
@@ -235,7 +235,7 @@ export class ComercialEstadisticasComponent implements OnInit {
     };
   }
 
-  ngOnInit(){
+  ngOnInit(): void {
 
     // this.setPage({ offset: 0 });
   }

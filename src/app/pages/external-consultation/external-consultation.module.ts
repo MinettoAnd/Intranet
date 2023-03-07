@@ -10,6 +10,7 @@ import { ExternalAttentionConsultationComponent } from './attention-consultation
 import { OcupabilidadMedicoComponent } from './ocupabilidad-medico/ocupabilidad-medico.component';
 import { OcupabilidadConsultorioComponent } from './ocupabilidad-consultorio/ocupabilidad-consultorio.component';
 import { EstadisticasComponent } from './estadisticas/estadisticas.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 @NgModule({
   declarations: [
     ExternalAttentionConsultationComponent,
@@ -23,6 +24,7 @@ import { EstadisticasComponent } from './estadisticas/estadisticas.component';
     NgxDatatableModule,
     NgbModule,
     FormsModule,
+    SharedModule,
     ReactiveFormsModule,
     RouterModule.forChild([
       {

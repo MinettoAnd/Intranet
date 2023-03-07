@@ -9,6 +9,11 @@ import { Component, OnInit } from '@angular/core';
 export class ResumenGerencialComponent implements OnInit {
   collapsed = true;
   active = '1';
+  public comercialEstadisticas = true;
+  public hospitalizacionEstadisticas = false;
+  public emergenciasEstadisticas = false;
+  public consultaExternaEstadisticas = false;
+
   public categories  = [
     {
       id: 1,
@@ -42,5 +47,32 @@ export class ResumenGerencialComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+  showComponent(id: number) {
+    switch (id) {
+      case 1:
+        this.comercialEstadisticas = true;
+        this.hospitalizacionEstadisticas = false;
+        this.emergenciasEstadisticas = false;
+        this.consultaExternaEstadisticas = false;
+        break;
+      case 2:
+        this.comercialEstadisticas = false;
+        this.hospitalizacionEstadisticas = true;
+        this.emergenciasEstadisticas = false;
+        this.consultaExternaEstadisticas = false;
+        break;
+      case 3:
+        this.comercialEstadisticas = false;
+        this.hospitalizacionEstadisticas = false;
+        this.emergenciasEstadisticas = true;
+        this.consultaExternaEstadisticas = false;
+        break;
+      case 4:
+        this.comercialEstadisticas = false;
+        this.hospitalizacionEstadisticas = false;
+        this.emergenciasEstadisticas = false;
+        this.consultaExternaEstadisticas = true;
+        break;
+    }
+  }
 }

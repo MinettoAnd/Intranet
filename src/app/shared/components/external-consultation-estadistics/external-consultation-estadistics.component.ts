@@ -4,15 +4,15 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { NgBlockUI, BlockUI } from 'ng-block-ui';
 import { PerfectScrollbarDirective, PerfectScrollbarComponent, PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import Swal from 'sweetalert2';
-import { ExternalConsultationService } from '../../_services/external-consultation.service';
-import {AttentionConsultation} from '../../interfaces/attentionConsultation';
-import {ApiResponse} from '../../interfaces/response';
+import { ExternalConsultationService } from '../../../_services/external-consultation.service';
+import {AttentionConsultation} from '../../../interfaces/attentionConsultation';
+import {ApiResponse} from '../../../interfaces/response';
 import * as moment from 'moment';
-import { Page } from '../../models/forms-data/page';
+import { Page } from '../../../models/forms-data/page';
 import { ColumnMode, SelectionType, NgxDatatableModule, DatatableComponent  } from '@swimlane/ngx-datatable';
 import * as XLSX from 'xlsx';
-import { ExcelJson } from '../../interfaces/excel-json.interface';
-import { ExportService } from '../../_services/export.service';
+import { ExcelJson } from '../../../interfaces/excel-json.interface';
+import { ExportService } from '../../../_services/export.service';
 import { CurrencyPipe } from '@angular/common';
 import * as Chart from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
@@ -357,22 +357,22 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
           font: {
             weight: 'bold'
           },
-          formatter: function(value, context) {
-            let sum = 0;
+          // formatter: function(value, context) {
+          //   let sum = 0;
             
-            let dataArr = context.chart.data.datasets[context.datasetIndex].data;
+          //   let dataArr = context.chart.data.datasets[context.datasetIndex].data;
               
-            dataArr.map((data) => {
-              return sum += parseFloat(data);
-            });
-            // console.log(292,value , sum );
-            if (sum > 0 ){
-              return ((value * 100) / sum).toFixed(2) + '%';
-            }else{
-              return (0 + '%');
-            }
+          //   dataArr.map((data) => {
+          //     return sum += parseFloat(data);
+          //   });
+          //   // console.log(292,value , sum );
+          //   if (sum > 0 ){
+          //     return ((value * 100) / sum).toFixed(2) + '%';
+          //   }else{
+          //     return (0 + '%');
+          //   }
             
-          },
+          // },
           /* Podemos modificar el texto a mostrar */
           // formatter: function (dato, ctx) {
           //   return ((dato * 100) / total).toFixed(2) + '%'; 

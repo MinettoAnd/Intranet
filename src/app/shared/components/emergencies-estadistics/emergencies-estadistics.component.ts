@@ -4,16 +4,15 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { NgBlockUI, BlockUI } from 'ng-block-ui';
 import { PerfectScrollbarDirective, PerfectScrollbarComponent, PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import Swal from 'sweetalert2';
-import { EmergenciesService } from '../../_services/emergencies.service';
-import { HospitalizationService } from '../../_services/hospitalization.service';
-import {AttentionConsultation} from '../../interfaces/attentionConsultation';
-import {ApiResponse} from '../../interfaces/response';
+import { EmergenciesService } from '../../../_services/emergencies.service';
+import {AttentionConsultation} from '../../../interfaces/attentionConsultation';
+import {ApiResponse} from '../../../interfaces/response';
 import * as moment from 'moment';
-import { Page } from '../../models/forms-data/page';
+import { Page } from '../../../models/forms-data/page';
 import { ColumnMode, SelectionType, NgxDatatableModule, DatatableComponent  } from '@swimlane/ngx-datatable';
 import * as XLSX from 'xlsx';
-import { ExcelJson } from '../../interfaces/excel-json.interface';
-import { ExportService } from '../../_services/export.service';
+import { ExcelJson } from '../../../interfaces/excel-json.interface';
+import { ExportService } from '../../../_services/export.service';
 import { CurrencyPipe } from '@angular/common';
 import * as Chart from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
@@ -23,19 +22,20 @@ import { AgGridAngular } from "ag-grid-angular";
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { PagedData } from '../../models/forms-data/paged-data';
+import { PagedData } from '../../../models/forms-data/paged-data';
 interface PageInfo {
   offset: number;
   pageSize: number;
   limit: number;
   count: number;
 }
+
 @Component({
-  selector: 'app-hospitalization-estadistics',
-  templateUrl: './hospitalization-estadistics.component.html',
-  styleUrls: ['./hospitalization-estadistics.component.scss']
+  selector: 'app-emergencies-estadistics',
+  templateUrl: './emergencies-estadistics.component.html',
+  styleUrls: ['./emergencies-estadistics.component.scss']
 })
-export class HospitalizationEstadisticsComponent implements OnInit {
+export class EmergenciesEstadisticsComponent implements OnInit {
   active = 1;
   closeResult = '';
   @ViewChild("agGrid") agGrid: AgGridAngular;
@@ -48,13 +48,11 @@ export class HospitalizationEstadisticsComponent implements OnInit {
       // initially setter gets called with undefined
       this.baseChart = content;
       if (this.baseChart.nativeElement.id === 'chart-1'){
-        this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del mes seleccionado', 'N° Pacientes','chart-1', 'Internados', 'Internados Ingresados x Emer.', 'bar');
-        this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'pie');
+        this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del mes seleccionado', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
+         this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'pie');
       }else if (this.baseChart.nativeElement.id === 'chart-3'){
-        this.getBarChart(this.chartLabels3, this.chartData4, this.chartData5,'Día del mes seleccionado', 'N° Pacientes','chart-3', 'Ingresos x Hosp.', 'Ingresos x Emergencia.', 'bar');
+        this.getBarChart(this.chartLabels3, this.chartData4, this.chartData5,'Día del mes seleccionado', 'N° Pacientes','chart-3', 'C.E Reservada', 'C.E Realizada', 'bar');
         this.getPieChart(this.chartLabels4, this.chartData6,'chart-4', 'pie');
-      }else if (this.baseChart.nativeElement.id === 'chart-5'){
-        this.getBarChart(this.chartLabels5, this.chartData7, this.chartData8,'Día del mes seleccionado', 'N° Pacientes','chart-5', 'Altas x Hosp.', 'Ingresos x Hosp.', 'bar');
       }
     }
   }
@@ -95,23 +93,20 @@ export class HospitalizationEstadisticsComponent implements OnInit {
   public chartLabels2 = [];
   public chartLabels3 = [];
   public chartLabels4 = [];
-  public chartLabels5 = [];
   public chartData1 = [];
   public chartData2 = [];
   public chartData3 = [];
   public chartData4 = [];
   public chartData5 = [];
   public chartData6 = [];
-  public chartData7 = [];
-  public chartData8 = [];
   selectedOptionTipo='cantidad';
   selectedOptionTipo2='cantidad';
   selectedOptionTipo3='cantidad';
   progressBarLabels;
   progressBar1;
-  porcCompaMesAntIngr;
-  porcCompaMesAntAltas;
-  porcCompaMesAntIngrEmerg;
+  porcCompaMesAntRealizas;
+  porcCompaMesAntAusentismo;
+  porcCompaMesAntReservadas;
   totales;
   id_sede = '0001';
   CMP;
@@ -139,10 +134,11 @@ export class HospitalizationEstadisticsComponent implements OnInit {
   resumenMesAnterior:any = {
     success: '',
     total: '',
-    altas: '',
-    fallecidos: '',
-    admision: '',
-    emergencia: '',
+    ausentismo: '',
+    medico: '',
+    paciente: '',
+    anuladas: '',
+    reservadas: ''
   };
   resumenMontos = {
     ciasegcon: '',
@@ -224,7 +220,6 @@ export class HospitalizationEstadisticsComponent implements OnInit {
   };
 
 
-
 totalElements1: number;
 pageNumber1: number;
 totalElements2: number;
@@ -234,9 +229,9 @@ pageNumber3: number;
 cache: any = {};
 isLoad = 0;
 isLoading = 0;
-selectedOptionGraph1 = 'pacientes_hospitalizados';
-selectedOptionGraph2 = 'ingresos_hospitalizacion';
-  constructor(private tableApiservice: HospitalizationService, private exportService: ExportService,
+selectedOptionGraph1 = 'ingresos_emergencia';
+selectedOptionGraph2 = 'ingresos_emergencia';
+  constructor(private tableApiservice: EmergenciesService, private exportService: ExportService,
     private _cp: CurrencyPipe, private modalService: NgbModal) { 
       this.pageNumber1 = 0;
       this.pageNumber2 = 0;
@@ -255,7 +250,6 @@ selectedOptionGraph2 = 'ingresos_hospitalizacion';
       mes: new FormControl(this.mes),
       anio: new FormControl(this.anio),
     });
-
     var anioOp = Number(this.anio);
     while ( Number(anioOp) > 2017 ) {
       console.log(275, anioOp);
@@ -408,22 +402,22 @@ selectedOptionGraph2 = 'ingresos_hospitalizacion';
           font: {
             weight: 'bold'
           },
-          formatter: function(value, context) {
-            let sum = 0;
+          // formatter: function(value, context) {
+          //   let sum = 0;
             
-            let dataArr = context.chart.data.datasets[context.datasetIndex].data;
+          //   let dataArr = context.chart.data.datasets[context.datasetIndex].data;
               
-            dataArr.map((data) => {
-              return sum += parseFloat(data);
-            });
-            // console.log(292,value , sum );
-            if (sum > 0 ){
-              return ((value * 100) / sum).toFixed(2) + '%';
-            }else{
-              return (0 + '%');
-            }
+          //   dataArr.map((data) => {
+          //     return sum += parseFloat(data);
+          //   });
+          //   // console.log(292,value , sum );
+          //   if (sum > 0 ){
+          //     return ((value * 100) / sum).toFixed(2) + '%';
+          //   }else{
+          //     return (0 + '%');
+          //   }
             
-          },
+          // },
           /* Podemos modificar el texto a mostrar */
           // formatter: function (dato, ctx) {
           //   return ((dato * 100) / total).toFixed(2) + '%'; 
@@ -729,8 +723,8 @@ selectedOptionGraph2 = 'ingresos_hospitalizacion';
     
   }
   tipoChangeGraph(event, graph){
-
-    this.loading();
+console.log(827, this.selectedOptionGraph1);
+this.loading();
     this.parameters = {
       // periodo_consulta:this.periodo_consulta,
       sede: this.id_sede,
@@ -749,20 +743,16 @@ selectedOptionGraph2 = 'ingresos_hospitalizacion';
     const input = event;
     if (graph === 'bar'){
       // const lenght1 = this.rows1.length;
-      if (input === 'pacientes_hospitalizados') {
-        this.parameters.tipo= 'INTE';
-          this.tableApiservice.getHsChartIndex(this.parameters).subscribe(
+      if (input === 'ingresos_emergencia') {
+          this.tableApiservice.getEmChartIndex(this.parameters).subscribe(
             (response) => {  
-                this.chartData4 = [];   
-                this.chartData5 = [];   
-                this.chartData7 = [];   
-                this.chartData8 = [];   
-
+      
                 this.chartLabels1 = [];
                 this.chartData1 = [];   
                 this.chartData2 = [];
 
-                
+                // this.chartData4 = [];   
+                // this.chartData5 = [];   
               if(response.success){
                 
                 response.data.data.map(item =>{
@@ -773,22 +763,18 @@ selectedOptionGraph2 = 'ingresos_hospitalizacion';
                 // this.resumenMontos = response.data;
                 
               }
-              this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del mes seleccionado', 'N° Pacientes','chart-1', 'Internados', 'Internados Ingresados x Emer.', 'bar');
+              this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del mes seleccionado', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
               Swal.close();
             },
             (error) => {
                 Swal.close();
             }
           );
-       } else if (input === 'ingresos_hospitalizacion'){
-          this.parameters.tipo= 'INGR';
-          this.tableApiservice.getHsChartIndex(this.parameters).subscribe(
+       } else if (input === 'altas_emergencia'){
+          this.parameters.tipo= 'ALTA';
+          this.tableApiservice.getEmChartIndex(this.parameters).subscribe(
             (response) => {  
-                this.chartData1 = [];   
-                this.chartData2 = [];   
-                this.chartData7 = [];   
-                this.chartData8 = [];   
-
+      
                 this.chartLabels3 = [];   
                 this.chartData4 = [];
                 this.chartData5 = [];    
@@ -802,146 +788,17 @@ selectedOptionGraph2 = 'ingresos_hospitalizacion';
                 // this.resumenMontos = response.data;
                 
               }
-              this.getBarChart(this.chartLabels3, this.chartData4, this.chartData5,'Día del mes seleccionado', 'N° Pacientes','chart-3', 'Ingresos x Hosp.', 'Ingresos x Emergencia.', 'bar');
+              this.getBarChart(this.chartLabels3, this.chartData4, this.chartData5,'Día del mes seleccionado', 'N° Pacientes','chart-3', 'C.E Reservada', 'C.E Realizada', 'bar');
               Swal.close();
             },
             (error) => {
                 Swal.close();
             }
           );
-      } else if (input === 'altas_hospitalizacion'){
-        this.parameters.tipo= 'ALTA';
-        this.tableApiservice.getHsChartIndex(this.parameters).subscribe(
-          (response) => {  
-              this.chartData1 = [];   
-              this.chartData2 = [];   
-              this.chartData4 = [];   
-              this.chartData5 = [];
-
-              this.chartLabels5 = [];   
-              this.chartData7 = [];
-              this.chartData8 = [];    
-            if(response.success){
-              
-              response.data.data.map(item =>{
-                this.chartLabels5.push(item.dia);
-                this.chartData7.push(item.cantidad);
-                this.chartData8.push(item.procedencia);
-              });
-              // this.resumenMontos = response.data;
-              
-            }
-            this.getBarChart(this.chartLabels5, this.chartData7, this.chartData8,'Día del mes seleccionado', 'N° Pacientes','chart-5', 'Altas x Hosp.', 'Ingresos x Hosp.', 'bar');
-            Swal.close();
-          },
-          (error) => {
-              Swal.close();
-          }
-        );
-      }
+       }
     } else if (graph === 'pie'){
-      if (input === 'ingresos_hospitalizacion') {
-        this.parameters.tipo= 'INGR';
-        this.tableApiservice.getHsTiposPacientes(this.parameters).subscribe(
-          (response) => { 
-            // console.log(1138,response);
-            this.progressBarLabels = [];
-            this.progressBar1 = [];
-            let total = response.data.total_prog;
-            console.log(1533, response);
-            if(response.success){
-              this.totalProgs =  response.data.total_prog;
-              for (let value of Object.values(response.data.tipo_prog)) {
-                let porcentaje:any = Object.values(value);
-                
-                // this.progressBar1.push(datos);
-                
-                let label = Object.keys(value)[0];
-                if ( label == 'seguros_conv'){
-                  this.progressBarLabels.push('CIA. Seguros / Convenios')
-                  response.data.tipo_prog_d.seguros_conv.map(item=>{
-                    if (item.cantidad){
-                      let subPorcentaje = ((item.cantidad/porcentaje)*100).toFixed(2)
-                      item.porcentaje = subPorcentaje;
-                    }
-                    return item.porcentaje;
-                  });
-                  const datos = {
-                    porcentaje : ((porcentaje/total)*100).toFixed(2),
-                    value: porcentaje[0],
-                    table:response.data.tipo_prog_d.seguros_conv
-                  }
-                  this.progressBar1.push(datos);
-                }else if (label === 'insti_priva'){
-                  this.progressBarLabels.push('Institucional / Privados')
-                  response.data.tipo_prog_d.insti_priva.map(item=>{
-                    if (item.cantidad){
-                      let subPorcentaje = ((item.cantidad/porcentaje)*100).toFixed(2)
-                      item.porcentaje = subPorcentaje;
-                    }
-                    return item.porcentaje;
-                  });
-                  const datos = {
-                    porcentaje : ((porcentaje/total)*100).toFixed(2),
-                    value: porcentaje[0],
-                    table:response.data.tipo_prog_d.insti_priva
-                  }
-                  this.progressBar1.push(datos);
-                }else if (label === 'madre_nino'){
-                  this.progressBarLabels.push('Madre Niño')
-                  response.data.tipo_prog_d.madre_nino.map(item=>{
-                    if (item.cantidad){
-                      let subPorcentaje = ((item.cantidad/porcentaje)*100).toFixed(2)
-                      item.porcentaje = subPorcentaje;
-                    }
-                    return item.porcentaje;
-                  });
-                  const datos = {
-                    porcentaje : ((porcentaje/total)*100).toFixed(2),
-                    value: porcentaje[0],
-                    table:response.data.tipo_prog_d.madre_nino
-                  }
-                  this.progressBar1.push(datos);
-                }else if (label === 'tarjeta_salud'){
-                  this.progressBarLabels.push('Programas de Salud')
-                  response.data.tipo_prog_d.tarjeta_salud.map(item=>{
-                    if (item.cantidad){
-                      let subPorcentaje = ((item.cantidad/porcentaje)*100).toFixed(2)
-                      item.porcentaje = subPorcentaje;
-                    }
-                    return item.porcentaje;
-                  });
-                  const datos = {
-                    porcentaje : ((porcentaje/total)*100).toFixed(2),
-                    value: porcentaje[0],
-                    table:response.data.tipo_prog_d.tarjeta_salud
-                  }
-                  this.progressBar1.push(datos);
-                }else{
-                  this.progressBarLabels.push('Otros')
-                  response.data.tipo_prog_d.Otros.map(item=>{
-                    if (item.cantidad){
-                      let subPorcentaje = ((item.cantidad/porcentaje)*100).toFixed(2)
-                      item.porcentaje = subPorcentaje;
-                    }
-                    return item.porcentaje;
-                  });
-                  const datos = {
-                    porcentaje : ((porcentaje/total)*100).toFixed(2),
-                    value: porcentaje[0],
-                    table:response.data.tipo_prog_d.Otros
-                  }
-                  this.progressBar1.push(datos);
-                }
-              }
-            }
-            Swal.close();
-          },
-          (error) => {
-              Swal.close();
-          }
-        );
-        this.tableApiservice.getHsPieIndex(this.parameters).subscribe(
+      if (input === 'ingresos_emergencia') {
+        this.tableApiservice.getEmPieIndex(this.parameters).subscribe(
           (response) => { 
             if(response.success){
               this.chartLabels2 = [];
@@ -960,109 +817,9 @@ selectedOptionGraph2 = 'ingresos_hospitalizacion';
               Swal.close();
           }
         );
-      } else if (input === 'altas_hospitalizacion'){
+      } else if (input === 'altas_emergencia'){
         this.parameters.tipo= 'ALTA';
-        this.parameters.typepie= 'AL';
-        this.tableApiservice.getHsTiposPacientes(this.parameters).subscribe(
-          (response) => { 
-            // console.log(1138,response);
-            this.progressBarLabels = [];
-            this.progressBar1 = [];
-            let total = response.data.total_prog;
-            console.log(1533, response);
-            if(response.success){
-              this.totalProgs =  response.data.total_prog;
-              for (let value of Object.values(response.data.tipo_prog)) {
-                let porcentaje:any = Object.values(value);
-                
-                // this.progressBar1.push(datos);
-                
-                let label = Object.keys(value)[0];
-                if ( label == 'seguros_conv'){
-                  this.progressBarLabels.push('CIA. Seguros / Convenios')
-                  response.data.tipo_prog_d.seguros_conv.map(item=>{
-                    if (item.cantidad){
-                      let subPorcentaje = ((item.cantidad/porcentaje)*100).toFixed(2)
-                      item.porcentaje = subPorcentaje;
-                    }
-                    return item.porcentaje;
-                  });
-                  const datos = {
-                    porcentaje : ((porcentaje/total)*100).toFixed(2),
-                    value: porcentaje[0],
-                    table:response.data.tipo_prog_d.seguros_conv
-                  }
-                  this.progressBar1.push(datos);
-                }else if (label === 'insti_priva'){
-                  this.progressBarLabels.push('Institucional / Privados')
-                  response.data.tipo_prog_d.insti_priva.map(item=>{
-                    if (item.cantidad){
-                      let subPorcentaje = ((item.cantidad/porcentaje)*100).toFixed(2)
-                      item.porcentaje = subPorcentaje;
-                    }
-                    return item.porcentaje;
-                  });
-                  const datos = {
-                    porcentaje : ((porcentaje/total)*100).toFixed(2),
-                    value: porcentaje[0],
-                    table:response.data.tipo_prog_d.insti_priva
-                  }
-                  this.progressBar1.push(datos);
-                }else if (label === 'madre_nino'){
-                  this.progressBarLabels.push('Madre Niño')
-                  response.data.tipo_prog_d.madre_nino.map(item=>{
-                    if (item.cantidad){
-                      let subPorcentaje = ((item.cantidad/porcentaje)*100).toFixed(2)
-                      item.porcentaje = subPorcentaje;
-                    }
-                    return item.porcentaje;
-                  });
-                  const datos = {
-                    porcentaje : ((porcentaje/total)*100).toFixed(2),
-                    value: porcentaje[0],
-                    table:response.data.tipo_prog_d.madre_nino
-                  }
-                  this.progressBar1.push(datos);
-                }else if (label === 'tarjeta_salud'){
-                  this.progressBarLabels.push('Programas de Salud')
-                  response.data.tipo_prog_d.tarjeta_salud.map(item=>{
-                    if (item.cantidad){
-                      let subPorcentaje = ((item.cantidad/porcentaje)*100).toFixed(2)
-                      item.porcentaje = subPorcentaje;
-                    }
-                    return item.porcentaje;
-                  });
-                  const datos = {
-                    porcentaje : ((porcentaje/total)*100).toFixed(2),
-                    value: porcentaje[0],
-                    table:response.data.tipo_prog_d.tarjeta_salud
-                  }
-                  this.progressBar1.push(datos);
-                }else{
-                  this.progressBarLabels.push('Otros')
-                  response.data.tipo_prog_d.Otros.map(item=>{
-                    if (item.cantidad){
-                      let subPorcentaje = ((item.cantidad/porcentaje)*100).toFixed(2)
-                      item.porcentaje = subPorcentaje;
-                    }
-                    return item.porcentaje;
-                  });
-                  const datos = {
-                    porcentaje : ((porcentaje/total)*100).toFixed(2),
-                    value: porcentaje[0],
-                    table:response.data.tipo_prog_d.Otros
-                  }
-                  this.progressBar1.push(datos);
-                }
-              }
-            }
-            Swal.close();
-          },
-          (error) => {
-              Swal.close();
-          }
-        );
-        this.tableApiservice.getHsPieIndex(this.parameters).subscribe(
+        this.tableApiservice.getEmPieIndex(this.parameters).subscribe(
           (response) => { 
             if(response.success){
               this.chartLabels4 = [];
@@ -1319,7 +1076,7 @@ private getPagedData(page: Page, data: any[]) {
         anio: this.anio,
         chkena: 'on',
         typepie: 'IN',
-        tipo: 'INTE',
+        tipo: 'INGR',
         // page: 1,
         // start: 0,
         // limit: 50
@@ -1331,9 +1088,9 @@ private getPagedData(page: Page, data: any[]) {
         this.selectedOptionTipo='cantidad';
         this.selectedOptionTipo2='cantidad';
         this.selectedOptionTipo3='cantidad';
-        this.selectedOptionGraph1 = 'pacientes_hospitalizados';
-        this.selectedOptionGraph2 = 'ingresos_hospitalizacion';
-            this.tableApiservice.getHsResumenGeneralProcesar(this.parameters).subscribe(
+        this.selectedOptionGraph1 = 'ingresos_emergencia';
+        this.selectedOptionGraph2 = 'ingresos_emergencia';
+            this.tableApiservice.getEmResumenGeneralProcesar(this.parameters).subscribe(
                 (response) => {
                   // console.log(response);
                   if(response.success){
@@ -1351,7 +1108,7 @@ private getPagedData(page: Page, data: any[]) {
                     Swal.close();
                 }
               );
-            this.tableApiservice.getHsAtencionesResumenAnual(this.parameters).subscribe(
+            this.tableApiservice.getEmAtencionesResumenMensual(this.parameters).subscribe(
               (response) => { 
                 if(response.success){
                   this.columns1 = response.data.cabeceras_tpacientes;
@@ -1526,94 +1283,94 @@ private getPagedData(page: Page, data: any[]) {
                   Swal.close();
               }
             );
-            // this.tableApiservice.getHsAtencionesResumenAnual(this.parameters).subscribe(
-            //   (response) => { 
-            //     // console.log(982, response);
-            //     if(response.success){
-            //       this.columns6 = response.data.cabeceras_tpacientes_anual;
-            //       this.rows6 = response.data.tabla_tpacientes_anual; 
-            //       const totalCantidad6 = {
-            //         GRUPO1: '',
-            //         GRUPO2: '',
-            //         GRUPO3: '',
-            //         PER1: 0,
-            //         PER2: 0,
-            //         PER3: 0,
-            //         PER4: 0,
-            //         PER5: 0,
-            //       };
-            //       const totalSoles6 = {
-            //         GRUPO1: '',
-            //         GRUPO2: '',
-            //         GRUPO3: '',
-            //         PER1: 0,
-            //         PER2: 0,
-            //         PER3: 0,
-            //         PER4: 0,
-            //         PER5: 0,
-            //       };
-            //       this.rows6.map((item, index)=>{
-            //         if(item.GRUPO3 === 'CANTIDAD'){
-            //           totalCantidad6.PER1 += Number(item.PER1);
-            //           totalCantidad6.PER2 += Number(item.PER2);
-            //           totalCantidad6.PER3 += Number(item.PER3);
-            //           totalCantidad6.PER4 += Number(item.PER4);
-            //           totalCantidad6.PER5 += Number(item.PER5);
-            //         }else if(item.GRUPO3 === 'SOLES'){
-            //           totalSoles6.PER1 += Number(item.PER1);
-            //           totalSoles6.PER2 += Number(item.PER2);
-            //           totalSoles6.PER3 += Number(item.PER3);
-            //           totalSoles6.PER4 += Number(item.PER4);
-            //           totalSoles6.PER5 += Number(item.PER5);
-            //         }
-            //         if(this.rows6.length === index+2 ){
-            //           totalCantidad6.GRUPO1 ="";
-            //           totalCantidad6.GRUPO2 = 'Total';
-            //           totalCantidad6.GRUPO3 = 'CANTIDAD';
-            //           this.rows6.push(totalCantidad6);
-            //           totalSoles6.GRUPO1 ="";
-            //           totalSoles6.GRUPO2 = 'Total';
-            //           totalSoles6.GRUPO3 = 'SOLES';
-            //           this.rows6.push(totalSoles6);
-            //         }
-            //       });
+            this.tableApiservice.getEmAtencionesResumenAnual(this.parameters).subscribe(
+              (response) => { 
+                // console.log(982, response);
+                if(response.success){
+                  this.columns6 = response.data.cabeceras_tpacientes_anual;
+                  this.rows6 = response.data.tabla_tpacientes_anual; 
+                  const totalCantidad6 = {
+                    GRUPO1: '',
+                    GRUPO2: '',
+                    GRUPO3: '',
+                    PER1: 0,
+                    PER2: 0,
+                    PER3: 0,
+                    PER4: 0,
+                    PER5: 0,
+                  };
+                  const totalSoles6 = {
+                    GRUPO1: '',
+                    GRUPO2: '',
+                    GRUPO3: '',
+                    PER1: 0,
+                    PER2: 0,
+                    PER3: 0,
+                    PER4: 0,
+                    PER5: 0,
+                  };
+                  this.rows6.map((item, index)=>{
+                    if(item.GRUPO3 === 'CANTIDAD'){
+                      totalCantidad6.PER1 += Number(item.PER1);
+                      totalCantidad6.PER2 += Number(item.PER2);
+                      totalCantidad6.PER3 += Number(item.PER3);
+                      totalCantidad6.PER4 += Number(item.PER4);
+                      totalCantidad6.PER5 += Number(item.PER5);
+                    }else if(item.GRUPO3 === 'SOLES'){
+                      totalSoles6.PER1 += Number(item.PER1);
+                      totalSoles6.PER2 += Number(item.PER2);
+                      totalSoles6.PER3 += Number(item.PER3);
+                      totalSoles6.PER4 += Number(item.PER4);
+                      totalSoles6.PER5 += Number(item.PER5);
+                    }
+                    if(this.rows6.length === index+2 ){
+                      totalCantidad6.GRUPO1 ="";
+                      totalCantidad6.GRUPO2 = 'Total';
+                      totalCantidad6.GRUPO3 = 'CANTIDAD';
+                      this.rows6.push(totalCantidad6);
+                      totalSoles6.GRUPO1 ="";
+                      totalSoles6.GRUPO2 = 'Total';
+                      totalSoles6.GRUPO3 = 'SOLES';
+                      this.rows6.push(totalSoles6);
+                    }
+                  });
 
-            //       this.formatPipe3(this.rows6);
-            //       this.rows6filtered = this.rows6.filter(item => item.GRUPO3 === 'CANTIDAD');
-            //       this.columns7 = response.data.cabeceras_rangoetareo_anual;
-            //       this.rows7 = response.data.tabla_rangoetareo_anual;
-            //       // console.log(1153, this.rows7);
-            //       const totalRango7 = {
-            //         RANGO: '',
-            //         PER1: 0,
-            //         PER2: 0,
-            //         PER3: 0,
-            //         PER4: 0,
-            //         PER5: 0,
-            //       };
-            //       this.rows7.map((item, index)=>{
+                  this.formatPipe3(this.rows6);
+                  this.rows6filtered = this.rows6.filter(item => item.GRUPO3 === 'CANTIDAD');
+                  this.columns7 = response.data.cabeceras_rangoetareo_anual;
+                  this.rows7 = response.data.tabla_rangoetareo_anual;
+                  // console.log(1153, this.rows7);
+                  const totalRango7 = {
+                    RANGO: '',
+                    PER1: 0,
+                    PER2: 0,
+                    PER3: 0,
+                    PER4: 0,
+                    PER5: 0,
+                  };
+                  this.rows7.map((item, index)=>{
 
-            //           totalRango7.PER1 += Number(item.PER1);
-            //           totalRango7.PER2 += Number(item.PER2);
-            //           totalRango7.PER3 += Number(item.PER3);
-            //           totalRango7.PER4 += Number(item.PER4);
-            //           totalRango7.PER5 += Number(item.PER5);
-            //         if(this.rows7.length === index+1 ){
-            //           totalRango7.RANGO = 'Total';
-            //           this.rows7.push(totalRango7);
-            //         }
-            //       });
-            //       this.formatPipe3(this.rows7);
-            //       this.temp7 = this.rows7;
-            //     }
-            //     Swal.close();
-            //   },
-            //   (error) => {
-            //       Swal.close();
-            //   }
-            // );
+                      totalRango7.PER1 += Number(item.PER1);
+                      totalRango7.PER2 += Number(item.PER2);
+                      totalRango7.PER3 += Number(item.PER3);
+                      totalRango7.PER4 += Number(item.PER4);
+                      totalRango7.PER5 += Number(item.PER5);
+                    if(this.rows7.length === index+1 ){
+                      totalRango7.RANGO = 'Total';
+                      this.rows7.push(totalRango7);
+                    }
+                  });
+                  this.formatPipe3(this.rows7);
+                  this.temp7 = this.rows7;
+                }
+                Swal.close();
+              },
+              (error) => {
+                  Swal.close();
+              }
+            );
 
-            this.tableApiservice.getHsTiposPacientes(this.parameters).subscribe(
+            this.tableApiservice.getEmTiposPacientes(this.parameters).subscribe(
               (response) => { 
                 // console.log(1138,response);
                 this.progressBarLabels = [];
@@ -1713,7 +1470,7 @@ private getPagedData(page: Page, data: any[]) {
               }
             );
 
-            this.tableApiservice.getHsCalcularMontos(this.parameters).subscribe(
+            this.tableApiservice.getEmCalcularMontos(this.parameters).subscribe(
               (response) => { 
                 console.log(1718, response)
                 this.resumenMontos = response.data.total;
@@ -1730,30 +1487,9 @@ private getPagedData(page: Page, data: any[]) {
                   Swal.close();
               }
             );
-            this.tableApiservice.getHsProcesarAnterior(this.parameters).subscribe(
-              (response) => {
-                console.log(1874, response);
-                if(response.success){ 
-                    this.resumenMesAnterior = response.data;
-                    this.porcCompaMesAntIngr =  (((this.resumenMes.total - this.resumenMesAnterior.total) / this.resumenMesAnterior.total) * 100).toFixed(2)
-                    this.porcCompaMesAntAltas = (((this.resumenMes.altas - this.resumenMesAnterior.altas) / this.resumenMesAnterior.altas) * 100).toFixed(2)
-                    this.porcCompaMesAntIngrEmerg = (((this.resumenMes.emergencia - this.resumenMesAnterior.emergencia) / this.resumenMesAnterior.emergencia) * 100).toFixed(2)
-                
-                this.resumenMes.total = this.separadorDeMiles(this.resumenMes.total);
-                  // this.resumenMes.ausentismo = this.separadorDeMiles(this.resumenMes.ausentismo);
-                  // this.resumenMes.medico = this.separadorDeMiles(this.resumenMes.medico);
-                  // this.resumenMes.paciente = this.separadorDeMiles(this.resumenMes.paciente);
-                  // this.resumenMes.anuladas = this.separadorDeMiles(this.resumenMes.anuladas);
-                  // this.resumenMes.reservadas = this.separadorDeMiles(this.resumenMes.reservadas);
-                  }
-                Swal.close(); 
-              },
-              (error) => {
-                  Swal.close();
-              }
-            );
+
 // chart y pie
-            this.tableApiservice.getHsChartIndex(this.parameters).subscribe(
+            this.tableApiservice.getEmChartIndex(this.parameters).subscribe(
               (response) => {  
 
                   this.chartLabels1 = [];
@@ -1769,15 +1505,14 @@ private getPagedData(page: Page, data: any[]) {
                   // this.resumenMontos = response.data;
                   
                 }
-                this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del mes seleccionado', 'N° Pacientes','chart-1', 'Internados', 'Internados Ingresados x Emer.', 'bar');
+                this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del mes seleccionado', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
                 Swal.close();
               },
               (error) => {
                   Swal.close();
               }
             );
-            this.parameters.tipo = 'INGR';
-            this.tableApiservice.getHsPieIndex(this.parameters).subscribe(
+            this.tableApiservice.getEmPieIndex(this.parameters).subscribe(
               (response) => { 
     
                 if(response.success){
@@ -2114,7 +1849,7 @@ private getPagedData(page: Page, data: any[]) {
         CheckF: 1
       }
       this.loading();
-      this.tableApiservice.getHsMedicosStatistics(parameters).subscribe(
+      this.tableApiservice.getCeMedicosStatistics(parameters).subscribe(
         (response) =>{
           this.columnsMedicos = response.data.cabeceras;
           this.rowsMedicos = response.data.tabla_medicos_anual;

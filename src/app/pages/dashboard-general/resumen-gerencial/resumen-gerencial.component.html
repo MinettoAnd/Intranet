@@ -1,15 +1,15 @@
-<!-- <div id="sidebar" class="py-3">
-	<ul class="navbar-nav ml-auto">
-		<li *ngFor="let menu of categories" class="nav-item" ngbDropdown>
-			<a *ngIf="!menu.isDropDownMenu" class='nav-link' tabindex="0" href='{{menu.dropDownTarget}}'><span>{{ menu.description }}</span></a>
-			<a *ngIf="menu.isDropDownMenu" class='nav-link'
+<div class="d-flex" >
+	<ul id="sidebar" class="navbar-nav ml-auto">
+		<li *ngFor="let menu of categories" class=" nav-item" ngbDropdown>
+			<a *ngIf="!menu.isDropDownMenu" class='ml-3 nav-link' tabindex="0" role="button" (click)="showComponent(1)"><span>{{ menu.description }}</span></a>
+			<a *ngIf="menu.isDropDownMenu" class='ml-3 nav-link'
 				tabindex="0" ngbDropdownToggle id="navbarDropdown1" role="button">
                 <span>{{ menu.description }}</span>
                 <div ngbDropdownMenu aria-labelledby="navbarDropdown1" class="dropdown-menu">
                     <div *ngIf="menu.isDropDownMenu" [id]="menu.dropDownTarget">
                         <ul class=" list-unstyled border-left border-primary border-thick">
-                            <li *ngFor="let subMenu of menu.subMenuList">
-                                <a class='text-muted ml-5 nav-link' (click)="$event.preventDefault()" [routerLink]="['/consultoriosExternos/estadisticas']"><span>{{ subMenu.description}}</span></a>
+                            <li *ngFor="let subMenu of menu.subMenuList; let i=index">
+                                <a class='text-muted ml-3 nav-link' (click)="$event.preventDefault()" role="button" (click)="showComponent(i+2)"><span>{{ subMenu.description}}</span></a>
                             </li>
                         </ul>
                     </div>
@@ -17,8 +17,14 @@
 			</a>
 		</li>
 	</ul>
-</div> -->
-<div class="d-flex" >
+  <app-comercial-estadisticas *ngIf="comercialEstadisticas" style="flex-grow: 1;"></app-comercial-estadisticas>
+  <app-hospitalization-estadistics *ngIf="hospitalizacionEstadisticas" style="flex-grow: 1;"></app-hospitalization-estadistics>
+  <app-emergencies-estadistics *ngIf="emergenciasEstadisticas" style="flex-grow: 1;"></app-emergencies-estadistics>
+  <app-external-consultation-estadistics *ngIf="consultaExternaEstadisticas" style="flex-grow: 1;"></app-external-consultation-estadistics>
+</div>
+
+
+<!-- <div class="d-flex" >
     <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-pills" orientation="vertical" >
       <li ngbNavItem="1" style="background-color: var(--secondary); border-radius: 5px 5px 0 0;">
         <a ngbNavLink>Afiliados</a>
@@ -47,4 +53,4 @@
     </ul>
   
     <div [ngbNavOutlet]="nav" class="ml-4" style="flex-grow: 1;"></div>
-  </div>
+</div> -->

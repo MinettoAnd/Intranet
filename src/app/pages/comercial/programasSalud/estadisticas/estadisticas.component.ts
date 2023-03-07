@@ -22,6 +22,7 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { CurrencyPipe } from '@angular/common';
 import { CustomNumberPipe } from 'src/app/pipes/customNumber.pipe';
 import { PhonePipe } from 'src/app/pipes/phone.pipe';
+
 @Component({
   selector: 'app-estadisticas',
   templateUrl: './estadisticas.component.html',
@@ -359,22 +360,22 @@ export class EstadisticasComponent implements OnInit {
           font: {
             weight: 'bold'
           },
-          formatter: function(value, context) {
-            let sum = 0;
+          // formatter: function(value, context) {
+          //   let sum = 0;
             
-            let dataArr = context.chart.data.datasets[context.datasetIndex].data;
+          //   let dataArr = context.chart.data.datasets[context.datasetIndex].data;
               
-            dataArr.map((data) => {
-              return sum += parseFloat(data);
-            });
-            // console.log(292,value , sum );
-            if (sum > 0 ){
-              return ((value * 100) / sum).toFixed(2) + '%';
-            }else{
-              return (0 + '%');
-            }
+          //   dataArr.map((data) => {
+          //     return sum += parseFloat(data);
+          //   });
+          //   // console.log(292,value , sum );
+          //   if (sum > 0 ){
+          //     return ((value * 100) / sum).toFixed(2) + '%';
+          //   }else{
+          //     return (0 + '%');
+          //   }
             
-          },
+          // },
           /* Podemos modificar el texto a mostrar */
           // formatter: function (dato, ctx) {
           //   return ((dato * 100) / total).toFixed(2) + '%'; 

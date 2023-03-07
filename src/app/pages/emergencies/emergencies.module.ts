@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AttentionConsultationComponent } from './attention-consultation/attention-consultation.component';
 import { EstadisticasComponent } from './estadisticas/estadisticas.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [AttentionConsultationComponent, EstadisticasComponent],
@@ -17,6 +18,7 @@ import { EstadisticasComponent } from './estadisticas/estadisticas.component';
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
+    SharedModule,
     RouterModule.forChild([
       {
         path: 'attention-consultation',
