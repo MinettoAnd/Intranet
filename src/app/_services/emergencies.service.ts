@@ -39,6 +39,12 @@ export class EmergenciesService {
   this.loadTableApiDataURL = `${environment.api_url}emergenciasConsultaAtenciones`;
   return this.http.post(this.loadTableApiDataURL, data);
   }
+
+  getEmergenciesHotelConsultation(data): Observable<any> {
+    this.loadTableApiDataURL = `${environment.api_url}emergenciasConsultaHoteleria`;
+    return this.http.post(this.loadTableApiDataURL, data);
+    }
+
     // Estadisticas 
     getEmResumenGeneralProcesar(data): Observable<any> {
       this.loadTableApiDataURL = `${environment.api_url}getEmResumenGeneralProcesar`;

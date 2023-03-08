@@ -35,8 +35,8 @@ export class EstadisticasComponent implements OnInit {
     if (content) {
       // initially setter gets called with undefined
       this.baseChart = content;
-      this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del mes seleccionado', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
-      this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'pie');
+      this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'', '','chart-1', 'Prgramado', 'Atendido', 'bar');
+      // this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'pie');
       // this.getBarChart(this.chartLabels, this.chartData3, this.chartData4, 'chart-2', 'MENSUAL-INGRESO CON IGV - TOTAL CUOTAS', 'MENSUAL-INGRESO CON IGV - TOTAL RECAUDADO', 'bar');
       // this.getBarChart(this.chartLabels2, this.chartData5, this.chartData6, 'chart-3', 'MENSUAL-NÚMERO DE CONTRATOS PAGADOS-TOTAL CUOTAS', 'MENSUAL-NÚMERO DE CONTRATOS PAGADOS-TOTAL RECAUDADO', 'bar');
       // this.getBarChart(this.chartLabels3, this.chartData7, this.chartData8, 'chart-4', 'ANUAL-INGRESO SIN IGV - TOTAL CUOTAS', 'ANUAL-INGRESO SIN IGV - TOTAL RECAUDADO', 'bar');
@@ -77,10 +77,13 @@ export class EstadisticasComponent implements OnInit {
   selectedOptionTipo='cantidad';
   selectedOptionTipo2='cantidad';
   progressBarLabels;
+  progressBarLabels1;
   progressBar1;
-  porcCompaMesAntRealizas;
-  porcCompaMesAntAusentismo;
-  porcCompaMesAntReservadas;
+  usoArco;
+  usoTorre;
+  minutosSalaProm;
+  minutosActoQxProm;
+  minutosAnestesiaProm;
   totales;
   id_sede = '0000';
   CMP;
@@ -93,12 +96,12 @@ export class EstadisticasComponent implements OnInit {
   parameters;
   resumenMes:any = {
     success: '',
-    total: '',
-    ausentismo: '',
-    medico: '',
-    paciente: '',
-    anuladas: '',
-    reservadas: ''
+    programados: '',
+    atendidos: '',
+    cirugiaMayor: '',
+    cirugiaMenor: '',
+    procedimientos: '',
+    suspendidos: ''
   };
   resumenMesAnterior:any = {
     success: '',
@@ -170,9 +173,11 @@ export class EstadisticasComponent implements OnInit {
   page4 = new Page();
   selected = [];
   SelectionType = SelectionType;
-  porcMedico;
-  porcPaciente;
-  porcAnuladas;
+  progressBarTabla1;
+  progressBarTabla2;
+  progressBarTabla3;
+  progressBarTabla4;
+  progressBarTabla5;
   frameworkComponents;
   tooltipShowDelay;
   defaultColDef;
@@ -626,8 +631,8 @@ export class EstadisticasComponent implements OnInit {
  setPage(pageInfo) {
       console.log(pageInfo);
       // this.page.pageNumber = pageInfo.offset;
-      this.archivo_atenciones = this.makeid(7);
-      this.archivo_componentes = this.makeid(7);
+      this.archivo_atenciones = 'aaaTmpA';
+      this.archivo_componentes = 'aaaTmpP';
       this.parameters = {
         periodo:this.periodo_consulta,
         sede: this.id_sede,
@@ -639,82 +644,13 @@ export class EstadisticasComponent implements OnInit {
       this.loading();
             this.tableApiservice.getCqrGeneraArchivos(this.parameters).subscribe(
                 (response) => {
-                  console.log(626, response);
+                  
                   if(response.success){
                       this.tableApiservice.getCqrResumenCabecera(this.parameters).subscribe(
                                       (response) => {
-                                        // console.log(response);
-                                        // if(response.success){
-                                        //   this.columns1 = response.data.cabeceras_tpacientes;
-                                        //   this.rows1 = response.data.tabla_tpacientes;
-
-                                        //   this.rows1filtered = this.rows1.filter(item => item.GRUPO3 === 'CANTIDAD');
-                                        //   this.columns2 = response.data.cabeceras_rangoetareo;
-                                        //   this.rows2 = response.data.tabla_rangoetareo;
-                                        //   this.temp2 = this.rows2;
-                                        //   this.columns3 = response.data.cabeceras_empresas;
-                                        //   this.rows3 = response.data.tabla_empresas;
-
-                                        //   this.rows3filtered = this.rows3.filter(item => item.GRUPOEM === 'CANTIDAD');
-                                        //   this.columns4 = response.data.cabeceras_diagnostico;
-                                        //   this.rows4 = response.data.tabla_diagnostico;
-                                        //   this.temp4 = this.rows4;
-                                        //   this.columns5 = response.data.cabeceras_especialidades;
-                                        //   this.rows5 = response.data.tabla_especialidades;
-                                        //   this.temp5 = this.rows5;
-                                        //   this.columns6 = response.data.cabeceras_inasistencia;
-                                        //   this.rows6 = response.data.tabla_inasistencia;
-                                        //   this.temp6 = this.rows6;
-                                        //   this.columns7 = response.data.cabeceras_resumen;
-                                        //   this.rows7 = response.data.tabla_resumen;
-
-                                        //   this.columns8 = response.data.cabeceras_utilidad;
-                                        //   this.columns8.map(item => {
-                                        //     if (item.children){
-                                        //       item.children.map(subitem =>{
-                                        //         subitem.cellClassRules = {
-                                        //           "cell-red": function(params) {
-                                        //             return params.value.includes('-');
-                                        //           }
-                                        //         }
-                                        //         return subitem.cellClassRules
-                                        //      })
-                                        //     }
-                                        //   });
-                                        //   this.rows8 = response.data.tabla_utilidad;
-                                        //   this.columns9 = response.data.cabeceras_utilidad_TPac;
-                                        //   this.columns9.map(item => {
-                                        //     if (item.children){
-                                        //         item.children.map(subitem =>{
-                                        //           subitem.cellClassRules = {
-                                        //             "cell-red": function(params) {
-                                        //               return params.value.includes('-');
-                                        //             }
-                                        //           }
-                                        //           return subitem.cellClassRules
-                                        //       })
-                                        //     }
-                                        //   });
-                                        //   this.rows9 = response.data.tabla_utilidad_TPac;
-
-                                        //   this.columns10 = response.data.cabeceras_utilidad_Emp;
-                                        //   this.columns10.map(item => {
-                                        //     if (item.children){
-                                        //       item.children.map(subitem =>{
-                                        //         subitem.cellClassRules = {
-                                        //           "cell-red": function(params) {
-                                        //             return params.value.includes('-');
-                                        //           }
-                                        //         }
-                                        //         return subitem.cellClassRules
-                                        //       })
-                                        //     }
-                                        //   });
-                                        //   this.rows10 = response.data.tabla_utilidad_Emp;
-
-
-                                        // }
-                                        Swal.close();
+                                        
+                                        this.resumenMes = response.data;
+                                        // Swal.close();
                                       },
                                       (error) => {
                                           Swal.close();
@@ -723,122 +659,35 @@ export class EstadisticasComponent implements OnInit {
 
                                     this.tableApiservice.getCqrResumenTipoPaciente(this.parameters).subscribe(
                                       (response) => { 
-                                        this.progressBarLabels = [];
-                                        this.progressBar1 = [];
-                                        let total = response.data.total_prog;
-                                        
-                                        if(response.success){
-                                          // for (let value of Object.values(response.data.tipo_prog)) {
-                                          //   let porcentaje:any = Object.values(value);
-                                            
-                                          //   // this.progressBar1.push(datos);
-                                            
-                                          //   let label = Object.keys(value)[0];
-                                          //   if ( label == 'seguros_conv'){
-                                          //     this.progressBarLabels.push('CIA. Seguros / Convenios')
-                                          //     response.data.tipo_prog_d.seguros_conv.map(item=>{
-                                          //       if (item.cantidad){
-                                          //        let subPorcentaje = ((item.cantidad/porcentaje)*100).toFixed(2)
-                                          //        item.porcentaje = subPorcentaje;
-                                          //       }
-                                          //       return item.porcentaje;
-                                          //     });
-                                          //     const datos = {
-                                          //       porcentaje : ((porcentaje/total)*100).toFixed(2),
-                                          //       value: porcentaje[0],
-                                          //       table:response.data.tipo_prog_d.seguros_conv
-                                          //     }
-                                          //     this.progressBar1.push(datos);
-                                          //   }else if (label === 'insti_priva'){
-                                          //     this.progressBarLabels.push('Institucional / Privados')
-                                          //     response.data.tipo_prog_d.insti_priva.map(item=>{
-                                          //       if (item.cantidad){
-                                          //        let subPorcentaje = ((item.cantidad/porcentaje)*100).toFixed(2)
-                                          //        item.porcentaje = subPorcentaje;
-                                          //       }
-                                          //       return item.porcentaje;
-                                          //     });
-                                          //     const datos = {
-                                          //       porcentaje : ((porcentaje/total)*100).toFixed(2),
-                                          //       value: porcentaje[0],
-                                          //       table:response.data.tipo_prog_d.insti_priva
-                                          //     }
-                                          //     this.progressBar1.push(datos);
-                                          //   }else if (label === 'madre_nino'){
-                                          //     this.progressBarLabels.push('Madre Niño')
-                                          //     response.data.tipo_prog_d.madre_nino.map(item=>{
-                                          //       if (item.cantidad){
-                                          //        let subPorcentaje = ((item.cantidad/porcentaje)*100).toFixed(2)
-                                          //        item.porcentaje = subPorcentaje;
-                                          //       }
-                                          //       return item.porcentaje;
-                                          //     });
-                                          //     const datos = {
-                                          //       porcentaje : ((porcentaje/total)*100).toFixed(2),
-                                          //       value: porcentaje[0],
-                                          //       table:response.data.tipo_prog_d.madre_nino
-                                          //     }
-                                          //     this.progressBar1.push(datos);
-                                          //   }else if (label === 'tarjeta_salud'){
-                                          //     this.progressBarLabels.push('Programas de Salud')
-                                          //     response.data.tipo_prog_d.tarjeta_salud.map(item=>{
-                                          //       if (item.cantidad){
-                                          //        let subPorcentaje = ((item.cantidad/porcentaje)*100).toFixed(2)
-                                          //        item.porcentaje = subPorcentaje;
-                                          //       }
-                                          //       return item.porcentaje;
-                                          //     });
-                                          //     const datos = {
-                                          //       porcentaje : ((porcentaje/total)*100).toFixed(2),
-                                          //       value: porcentaje[0],
-                                          //       table:response.data.tipo_prog_d.tarjeta_salud
-                                          //     }
-                                          //     this.progressBar1.push(datos);
-                                          //   }else{
-                                          //     this.progressBarLabels.push('Otros')
-                                          //     response.data.tipo_prog_d.Otros.map(item=>{
-                                          //       if (item.cantidad){
-                                          //        let subPorcentaje = ((item.cantidad/porcentaje)*100).toFixed(2)
-                                          //        item.porcentaje = subPorcentaje;
-                                          //       }
-                                          //       return item.porcentaje;
-                                          //     });
-                                          //     const datos = {
-                                          //       porcentaje : ((porcentaje/total)*100).toFixed(2),
-                                          //       value: porcentaje[0],
-                                          //       table:response.data.tipo_prog_d.Otros
-                                          //     }
-                                          //     this.progressBar1.push(datos);
-                                          //   }
-                                          // }
-                                          // this.progressBarTabla1 = response.data.tipo_prog_d.tarjeta_salud;
-                                          // this.progressBarTabla2 = response.data.tipo_prog_d.insti_priva;
-                                          // this.progressBarTabla3 = response.data.tipo_prog_d.madre_nino;
-                                          // this.progressBarTabla4 = response.data.tipo_prog_d.seguros_conv;
-                                          // this.progressBarTabla5 = response.data.tipo_prog_d.Otros;
-                                          // console.log(596,this.progressBarTabla1);
-                                          // for (let value of Object.values(response.data.tipo_prog_d.tarjeta_salud)) {
-                                          //   // console.log(616, value)
-                                          //   // let porcentaje:any = Object.values(value);
-                                          //   // const datosTabla = {
-                                          //   //   porcentaje : ((porcentaje/total)*100).toFixed(2),
-                                          //   //   value: porcentaje[0]
-                                          //   // }
-                                          //   // this.progressBarTabla1.push(datosTabla);
-                                          //   // let label = Object.keys(value)[0];
-                                          //   // if ( label == 'seguros_conv'){
-                                          //   //   this.progressBarLabels.push('CIA. Seguros / Convenios')
-                                          //   // }else if (label === 'insti_priva'){
-                                          //   //   this.progressBarLabels.push('Institucional / Privados')
-                                          //   // }else if (label === 'madre_nino'){
-                                          //   //   this.progressBarLabels.push('Madre Niño')
-                                          //   // }else if (label === 'tarjeta_salud'){
-                                          //   //   this.progressBarLabels.push('Programas de Salud')
-                                          //   // }
-                                            
-                                          // }
-                                        }
-                                        Swal.close();
+                                        this.progressBarLabels =  response.data.grupo_detalle;
+                                        this.progressBarLabels1 =  response.data.grupo;
+                                        const data= [];
+                                        let table;
+                                        response.data.grupo_porc.map((item, index) =>{
+                                         
+                                          if (index === 0){
+                                            table = response.data.tabla_grupo_Prg
+                                          }else if (index === 1){
+                                            table = response.data.tabla_grupo_Ins
+                                          }else if (index === 2){
+                                            table = response.data.tabla_grupo_Mad
+                                          }else if (index === 3){
+                                            table = response.data.tabla_grupo_Cia
+                                          }else if (index === 4){
+                                            table = response.data.tabla_grupo_Otr
+                                          }
+
+                                         
+                                          let data1 = {
+                                            porcentaje: item,
+                                            value: 0,
+                                            table: table
+                                          }
+                                          data.push(data1)
+                                        });
+                                        this.progressBar1 = data
+                            
+                                        // Swal.close();
                                       },
                                       (error) => {
                                           Swal.close();
@@ -847,15 +696,10 @@ export class EstadisticasComponent implements OnInit {
                                     this.parameters.archivo_temporal = this.archivo_componentes;
                                     this.tableApiservice.getCqrResumenEquipos(this.parameters).subscribe(
                                       (response) => { 
-                                        // this.resumenMontos = response.data.total;
                                         
-                                        //   this.resumenMontos.ciasegcon =  typeof this.resumenMontos.ciasegcon === 'number' ? this.separadorDeMiles(this.resumenMontos.ciasegcon) : this.separadorDeMiles(Number(this.resumenMontos.ciasegcon));
-                                        //   this.resumenMontos.instipriva = typeof this.resumenMontos.instipriva === 'number' ? this.separadorDeMiles(this.resumenMontos.instipriva) : this.separadorDeMiles(Number(this.resumenMontos.instipriva));
-                                        //   this.resumenMontos.otros = typeof this.resumenMontos.otros === 'number' ? this.separadorDeMiles(this.resumenMontos.otros) : this.separadorDeMiles(Number(this.resumenMontos.otros));
-                                        //   this.resumenMontos.tarjeta = typeof this.resumenMontos.tarjeta === 'number' ? this.separadorDeMiles(this.resumenMontos.tarjeta) : this.separadorDeMiles(Number(this.resumenMontos.tarjeta));
-                                          // this.resumenMontos.montoTotal = typeof this.resumenMontos.montoTotal === 'number' ? this.resumenMontos.montoTotal.toFixed(2) : this.separadorDeMiles(Number(this.resumenMontos.montoTotal));
-
-                                          Swal.close();
+                                        this.usoArco = response.data.uso_arco;
+                                        this.usoTorre = response.data.uso_torre;
+                                          // Swal.close();
                                       },
                                       (error) => {
                                           Swal.close();
@@ -865,19 +709,11 @@ export class EstadisticasComponent implements OnInit {
                                     this.tableApiservice.getCqrResumenEstancia(this.parameters).subscribe(
                                       (response) => {
                                         if(response.success){ 
-                                        //     this.resumenMesAnterior = response.data;
-                                        //     this.porcCompaMesAntRealizas =  (((this.resumenMes.total - this.resumenMesAnterior.total) / this.resumenMesAnterior.total) * 100).toFixed(2)
-                                        //     this.porcCompaMesAntAusentismo = (((this.resumenMes.ausentismo - this.resumenMesAnterior.ausentismo) / this.resumenMesAnterior.ausentismo) * 100).toFixed(2)
-                                        //     this.porcCompaMesAntReservadas = (((this.resumenMes.reservadas - this.resumenMesAnterior.reservadas) / this.resumenMesAnterior.reservadas) * 100).toFixed(2)
-                                        
-                                        // this.resumenMes.total = this.separadorDeMiles(this.resumenMes.total);
-                                        //   this.resumenMes.ausentismo = this.separadorDeMiles(this.resumenMes.ausentismo);
-                                        //   this.resumenMes.medico = this.separadorDeMiles(this.resumenMes.medico);
-                                        //   this.resumenMes.paciente = this.separadorDeMiles(this.resumenMes.paciente);
-                                        //   this.resumenMes.anuladas = this.separadorDeMiles(this.resumenMes.anuladas);
-                                        //   this.resumenMes.reservadas = this.separadorDeMiles(this.resumenMes.reservadas);
+                                          this.minutosSalaProm = response.data.minutos_sala_PROM;
+                                          this.minutosActoQxProm = response.data.minutos_actoQx_PROM;
+                                          this.minutosAnestesiaProm = response.data.minutos_Anestesia_PROM;
                                           }
-                                        Swal.close(); 
+                                        // Swal.close(); 
                                       },
                                       (error) => {
                                           Swal.close();
@@ -886,28 +722,33 @@ export class EstadisticasComponent implements OnInit {
                       // chart y pie
                                     this.tableApiservice.getCqrResumenGrafica(this.parameters).subscribe(
                                       (response) => {  
-                                        //  this.chartLabels1 = [];
-                                        //  this.chartData1 = [];   
-                                        //  this.chartData2 = [];
+                                        console.log(725, response)
+                                         this.chartLabels1 = [];
+                                         this.chartData1 = [];   
+                                         this.chartData2 = [];
                                         //  this.chartData3 = [];    
-                                        // if(response.success){
+                                        if(response.success){
                                           
-                                        //   response.data.data.map(item =>{
-                                        //     this.chartLabels1.push(item.dia);
-                                        //     this.chartData1.push(item.cantidad);
-                                        //     this.chartData2.push(item.procedencia);
-                                        //   });
-                                        //   // this.resumenMontos = response.data;
+                                          response.data.resumen_grafica.map(item =>{
+                                            this.chartLabels1.push(item.name);
+                                            this.chartData1.push(item.item_1);
+                                            this.chartData2.push(item.item_2);
+                                          });
                                           
-                                        // }
-                                        this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del mes seleccionado', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
-                                        Swal.close();
+                                          
+                                        }
+                                        this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'', '','chart-1', 'Prgramado', 'Atendido', 'bar');
+                                        // Swal.close();
                                       },
                                       (error) => {
                                           Swal.close();
                                       }
                                     );
                   }
+                  setTimeout(() => {
+                   Swal.close(); 
+                  }, 3000);
+                  
                 },
                 (error) => {
                     Swal.close();

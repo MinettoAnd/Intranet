@@ -1,5 +1,5 @@
 import { map } from 'rxjs/operators';
-import { Component, ElementRef, OnInit, PipeTransform, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, PipeTransform, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { NgBlockUI, BlockUI } from 'ng-block-ui';
 import { PerfectScrollbarDirective, PerfectScrollbarComponent, PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
@@ -266,12 +266,12 @@ export class LiquidacionEmpresaBiohealthComponent implements OnInit {
     };
   }
   getRowClass2(row) {
-    console.log(251, row)
+    //console.log(251, row)
     // if (row.item.includes('COLECTIVA')){
     //   return {'totals': row.item.includes('TOTAL') || row.item.includes('COLECTIVA') }
     // }
     return {
-      'totals': row.Campo.includes('TOTAL'), 'sub-totals': row.Campo === 'CHORRILLOS' || row.Campo === 'LIMA' || row.Campo ==='CHORRILLOS'
+      'totals': row.Campo.includes('TOTAL'), 'sub-totals': row.Campo === 'CHORRILLOS' || row.Campo === 'LIMA' || row.Campo ==='SURCO'
     };
   }
   getRowClass3(row) {
@@ -450,6 +450,9 @@ export class LiquidacionEmpresaBiohealthComponent implements OnInit {
                       if(item.pipe === 'currency'){
                         item.pipe = this._cp;
                       }
+                      if(item.pipe === 'cantidad'){
+                        item.pipe = this._cnp;
+                      }
                     });
                     // console.log(401, this.columns5);
                     this.rows5 = response.data.tabla_pago_empresa;
@@ -557,13 +560,13 @@ export class LiquidacionEmpresaBiohealthComponent implements OnInit {
       }else if (numberTabla === 3){
         this.exportService.exportTableElmToExcel(this.rows3, 'MENSUAL - INGRESOS POR CUOTAS-NÚMERO DE CONTRATOS PAGADOS');
       }else if (numberTabla === 4){
-        this.exportService.exportTableElmToExcel(this.rows4, 'ANUAL - INGRESOS POR CUOTAS-INGRESO SIN IGV');
+        this.exportService.exportTableElmToExcel(this.rows4, 'Laboratorio - Examenes Realizados');
       }else if (numberTabla === 5){
-        this.exportService.exportTableElmToExcel(this.rows5, 'ANUAL - INGRESOS POR CUOTAS-INGRESO SIN IGV');
+        this.exportService.exportTableElmToExcel(this.rows5, 'Laboratorio - Examenes Realizados');
       }else if (numberTabla === 6){
-        this.exportService.exportTableElmToExcel(this.rows6, 'ANUAL - INGRESOS POR CUOTAS-NÚMERO DE CONTRATOS PAGADOS');
+        this.exportService.exportTableElmToExcel(this.rows6, 'Laboratorio - Examenes Realizados');
       }else if (numberTabla === 7){
-        this.exportService.exportTableElmToExcel(this.rows7, 'ANUAL - INGRESOS POR CUOTAS-NÚMERO DE CONTRATOS PAGADOS');
+        this.exportService.exportTableElmToExcel(this.rows7, 'Laboratorio - Examenes Realizados');
       }else if (numberTabla === 8){
         this.exportService.exportTableElmToExcel(this.rows8, 'ANUAL - INGRESOS POR CUOTAS-NÚMERO DE CONTRATOS PAGADOS');
       }else if (numberTabla === 9){

@@ -280,3 +280,16 @@
 .row-paddin .ag-cell:first-child{
     margin-left: 1rem;
 }
+
+.datatable-body-cell {
+    line-height: 0.9rem !important;
+    padding: 0.35rem 0.75rem !important;
+   // text-align: left !important;
+    vertical-align: middle !important;
+}
+.datatable-header-cell {
+    line-height: 1.01rem !important;
+    padding: 0.2rem 0.75rem !important;
+   // text-align: left !important;
+    vertical-align: middle !important;
+}

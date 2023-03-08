@@ -10,7 +10,7 @@
                     <form [formGroup]="filtroForm">
                     <div class="row" style="margin-bottom: -0.5rem;">
                         <div class="form-group col-sm-12 col-md-4 col-lg-2">
-                        <div class="input-group input-group-sm">
+                        <div class="input-group input-group-sm fecha">
                             <div class="input-group-append">
                             <span class="input-group-text">Sedes</span>
                             </div>
@@ -27,7 +27,7 @@
                         </div>
                         </div>  
                         <div class="form-group col-sm-12 col-md-4 col-lg-2">
-                        <div class="input-group input-group-sm">
+                        <div class="input-group input-group-sm fecha">
                             <div class="input-group-prepend">
                             <span class="input-group-text">Año</span>
                             </div>
@@ -47,7 +47,7 @@
                         </div>
                         </div>
                         <div class="form-group col-sm-12 col-md-4 col-lg-2">
-                            <div class="input-group input-group-sm">
+                            <div class="input-group input-group-sm fecha">
                                 <div class="input-group-prepend">
                                 <span class="input-group-text">Mes</span>
                                 </div>
@@ -67,15 +67,15 @@
                             </div>
                         </div>
                         
-                        <div class="form-group col-sm-12 col-md-4 col-lg-3">
-                            <div class="input-group">
+                        <!-- <div class="form-group col-sm-12 col-md-4 col-lg-3">
+                            <div class="input-group"> -->
                                 <div class="input-group-btn">
                                     <button (click)="filter()" class="btn btn-sm btn-primary">
                                         <i class="fa fa-search"></i> Filtrar
                                     </button>
                                 </div>
-                            </div>
-                        </div>           
+                            <!-- </div>
+                        </div>            -->
                     </div>
                     </form>
                     <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs" style="justify-content: end;">
@@ -95,7 +95,7 @@
                                             </span>		
                                             <div class="info-box-content">
                                             <span style="font-family:arial; font-size:15px; " class="info-box-text">PACIENTES PROGRAMADOS</span>
-                                                <span *ngIf="resumenMes.total" class="info-box-number">{{resumenMes.total}} </span>
+                                                <span *ngIf="resumenMes.programados" class="info-box-number">{{resumenMes.programados}} </span>
                                                 <!-- <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">Tiempo programado / 12 horas x dia
                                                 </label> -->
                                             </div>
@@ -105,7 +105,7 @@
                                         <div class="info-box">
                                             <span style="background: #FF3636!important; color:#fff !important;" class="info-box-icon">			
                                             <i class="fa fa-street-view" aria-hidden="true"></i>		</span>		
-                                            <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">AUSENTISMO</span>			<span *ngIf="resumenMes.ausentismo" class="info-box-number">{{resumenMes.ausentismo}} </span>			
+                                            <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">PACIENTES ATENDIDOS</span>			<span *ngIf="resumenMes.atendidos" class="info-box-number">{{resumenMes.atendidos}} </span>			
                                             <!-- <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">Tiempo de atención / 12 horas x dia
                                                 </label>		 -->
                                               </div>
@@ -115,19 +115,19 @@
                                           <table class="table table-bordered">
                                               <tbody>
                                                 <tr>
-                                                    <th style="padding: 2px 4px!important; line-height: inherit; font-size: 14px!important;">Inasistencia de Paciente</th>
-                                                    <th style="padding: 2px 8px!important; line-height: inherit;"><span id="ptable_anul">{{resumenMes.paciente}}</span></th>
-                                                    <th style="width: 40px; padding: 2px 8px!important; line-height: inherit;"><span class="badge bg-blue" id="ptable_anul_por">{{porcPaciente  | number : '1.2-2' }} %</span></th>
+                                                    <th style="padding: 2px 4px!important; line-height: inherit; font-size: 14px!important;">Cirugia Mayor</th>
+                                                    <th style="padding: 2px 8px!important; line-height: inherit;"><span id="ptable_anul">{{resumenMes.cirugiaMayor}}</span></th>
+                                                    <th style="width: 40px; padding: 2px 8px!important; line-height: inherit;"><span class="badge bg-blue" id="ptable_anul_por">{{(resumenMes.cirugiaMayor / resumenMes.atendidos)*100  | number : '1.2-2' }} %</span></th>
                                                 </tr>
                                                 <tr>
-                                                    <th style="padding: 2px 4px!important; line-height: inherit; font-size: 14px!important;">Por Inasistencia Medico</th>
-                                                    <th style="padding: 2px 8px!important; line-height: inherit;"><span id="ptable_inas">{{resumenMes.medico}}</span></th>
-                                                    <th style="width: 40px; padding: 2px 8px!important; line-height: inherit;"><span class="badge bg-green" id="ptable_inas_por">{{porcMedico  | number : '1.2-2' }} %</span></th>
+                                                    <th style="padding: 2px 4px!important; line-height: inherit; font-size: 14px!important;">Cirugia Menor</th>
+                                                    <th style="padding: 2px 8px!important; line-height: inherit;"><span id="ptable_inas">{{resumenMes.cirugiaMenor}}</span></th>
+                                                    <th style="width: 40px; padding: 2px 8px!important; line-height: inherit;"><span class="badge bg-green" id="ptable_inas_por">{{(resumenMes.cirugiaMenor / resumenMes.atendidos)*100  | number : '1.2-2' }} %</span></th>
                                                 </tr>
                                                 <tr>
-                                                    <th style="padding: 2px 4px!important; line-height: inherit; font-size: 14px!important;">Anulacion de Cita Por Paciente</th>
-                                                    <th style="padding: 2px 8px!important; line-height: inherit;"><span id="ptable_anul_paci">{{resumenMes.anuladas}}</span></th>
-                                                    <th style="width: 40px; padding: 2px 8px!important; line-height: inherit;"><span class="badge bg-red" id="ptable_anul_paci_por">{{porcAnuladas  | number : '1.2-2' }} %</span></th>
+                                                    <th style="padding: 2px 4px!important; line-height: inherit; font-size: 14px!important;">Procedimientos</th>
+                                                    <th style="padding: 2px 8px!important; line-height: inherit;"><span id="ptable_anul_paci">{{resumenMes.procedimientos}}</span></th>
+                                                    <th style="width: 40px; padding: 2px 8px!important; line-height: inherit;"><span class="badge bg-red" id="ptable_anul_paci_por">{{(resumenMes.procedimientos / resumenMes.atendidos)*100  | number : '1.2-2' }} %</span></th>
                                                 </tr>
                                               </tbody>
                                           </table>
@@ -139,7 +139,7 @@
                                             <span style="background: #00c0ef!important; color:#fff !important;" class="info-box-icon">			
                                             <i class="fa fa-crosshairs" aria-hidden="true"></i>		</span>		
                                             <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">PROGRAMACIONES SUSPENDIDAS</span>			
-                                            <span *ngIf="resumenMes.reservadas" class="info-box-number">{{resumenMes.reservadas}}</span>			
+                                            <span *ngIf="resumenMes.suspendidos" class="info-box-number">{{resumenMes.suspendidos}}</span>			
                                             <!-- <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success" >Tiempo de atención / tiempo programado
                                             </label>		 -->
                                           </div>
@@ -167,26 +167,12 @@
                                           </div>
                                         </div>
                                         <div class="col-md-4">
-                                          <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
-                                            <li class="list-group-item border-0 pl-0">
-                                              <a  id="downloadlink2" href="#" 
-                                                class="btn btn-sm font-weight-bold btn-link" (click)="guardarImagen('chart-2', 'downloadlink2')" download>
-                                                <i class="fa fa-external-link"></i>
-                                                Guardar Imagen
-                                              </a>
-                                            </li>
-                                          </ul>
-                                          <div class="card-body">
-                                            <div class="d-block" >
-                                              <canvas #baseChart id="chart-2">
-                                              </canvas>
-                                            </div>
-                                          </div>
+                                          
                                           <div class="card-body">
                                             <ngb-accordion [destroyOnHide]="false" [closeOthers]="true" #acc="ngbAccordion" activeIds="ngb-panel-0">
                                               <ngb-panel *ngFor="let percentageCompleted of progressBar1; let i = index;">
                                                 <ng-template ngbPanelTitle style="width:100%!important;">
-                                                  <span style="display:flex;color:#000; justify-content: space-between;"><i><b>{{progressBarLabels[i]}}</b></i><i>{{percentageCompleted.value}} - [{{percentageCompleted.porcentaje}}] %</i></span>
+                                                  <span style="display:flex;color:#000; justify-content: space-between;"><i><b>{{progressBarLabels[i]}}</b></i><i>{{progressBarLabels1[i]}}</i></span>
                                                   <ngb-progressbar
                                                       [type]="color[i]"
                                                       [value]="percentageCompleted.porcentaje"
@@ -205,9 +191,9 @@
                                                     </thead>
                                                       <tbody *ngFor="let rowTable of percentageCompleted.table; let i = index;">
                                                       <tr style="font-size:16px;">
-                                                          <td>{{rowTable.programa }}</td>
-                                                          <td><strong><span>{{rowTable.cantidad}}</span></strong></td>
-                                                          <td><strong><span>{{rowTable.porcentaje}}</span></strong></td>
+                                                          <td>{{rowTable.TipoPacienteDescripcion }}</td>
+                                                          <td><strong><span>{{rowTable.total_atendidos}}</span></strong></td>
+                                                          <td><strong><span>{{rowTable.porc_atendidos}}</span></strong></td>
                                                       </tr>
                                                     </tbody>
                                                 </table>
@@ -290,11 +276,69 @@
                                       </h5>
                                     </div> -->
                                     <div class="col-md-12 div_panel_cabecera">
-                                        <div class="col-md-4 col-sm-6 col-xs-12" style="display: flex;">
+                                      <div class="col-md-4 col-sm-6 col-xs-12" id="div_panel_0103">
+                                        <div class="box box-widget widget-user">
+                                          <div class="widget-user-header bg-navy-active">
+                                            <h3 class="widget-user-username" style="font-size: 18px;">USO DE EQUIPOS</h3>
+                                            <h5 class="widget-user-desc"> &nbsp; Nro de Veces que se usó</h5>
+                                          </div>
+                                          <div class="widget-user-image" style="top:10px !important;">
+                                            <img class="img-circle" style="margin-left:105px; width:110px !important;" src="https://www.maisondesante.org.pe/imagenes/arco.png" alt="User Avatar">
+                                          </div>
+                                          <div class="box-footer" style="padding-top:10px;">
+                                            <div class="row">
+                                              <div class="col-sm-6 border-right">
+                                                <div class="description-block">
+                                                  <h5 class="description-header" style="padding-bottom: 8px !important; font-size: 18px;  cursor:pointer;" onclick="detalle_componente('arco');" id="div_panel_0103_01">{{usoArco}}</h5>
+                                                  <span class="description-text" style="font-size: 16px;">Arco en C</span>
+                                                </div>
+                                              </div>
+                                              <div class="col-sm-6 border-right">
+                                                <div class="description-block">
+                                                  <h5 class="description-header" style="padding-bottom: 8px !important; font-size: 18px;  cursor:pointer;" onclick="detalle_componente('torre');" id="div_panel_0103_02">{{usoTorre}}</h5>
+                                                  <span class="description-text" style="font-size: 16px;">Torre Endoscópica</span>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="col-md-4 col-sm-6 col-xs-12" id="div_panel_0104">
+                                        <div class="box box-widget widget-user">
+                                          <div class="widget-user-header bg-aqua-active">
+                                            <h3 class="widget-user-username" style="font-size: 18px;">ESTANCIA PROMEDIO</h3>
+                                            <h5 class="widget-user-desc"> &nbsp; En Cirugias y Procedimientos</h5>
+                                          </div>
+                                          <div class="widget-user-image" style="top:10px !important;">
+                                            <img class="img-circle" style="margin-left:105px; width:110px !important;" src="https://www.maisondesante.org.pe/imagenes/cirugia2.png" alt="User Avatar">
+                                          </div>
+                                          <div class="box-footer" style="padding-top:10px;">
+                                            <div class="row">
+                                              <div class="col-sm-4 border-right">
+                                                <div class="description-block">
+                                                  <h5 class="description-header" style="padding-bottom: 8px !important; font-size: 18px;  cursor:pointer;" onclick="detalle_estancia();" id="div_panel_0104_01">{{minutosSalaProm}}</h5>
+                                                  <span class="description-text" style="font-size: 16px;">Sala</span>
+                                                </div>
+                                              </div>
+                                              <div class="col-sm-4 border-right">
+                                                <div class="description-block">
+                                                  <h5 class="description-header" style="padding-bottom: 8px !important; font-size: 18px;  cursor:pointer;" onclick="detalle_estancia();" id="div_panel_0104_02">{{minutosActoQxProm}}</h5>
+                                                  <span class="description-text" style="font-size: 16px;">Intervención</span>
+                                                </div>
+                                              </div>
+                                              <div class="col-sm-4 border-right">
+                                                <div class="description-block">
+                                                  <h5 class="description-header" style="padding-bottom: 8px !important; font-size: 18px;  cursor:pointer;" onclick="detalle_estancia();" id="div_panel_0104_03">{{minutosAnestesiaProm}}</h5>
+                                                  <span class="description-text" style="font-size: 16px;">Anestesia</span>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                        <!-- <div class="col-md-4 col-sm-6 col-xs-12" style="display: flex;">
                                            <div class="info-box">
-                                              <!-- <span style="background: #63B6DE !important; color:#fff !important;" class="info-box-icon">
-                                                <i class="fa fa-credit-card" aria-hidden="true"></i>
-                                              </span>		 -->
+                                            
                                               <div class="info-box-content">
                                                 <span style="font-family:arial; font-size:15px; " class="info-box-text">ARCO EN C</span>
                                                   <span *ngIf="resumenMontos.tarjeta" class="info-box-number" ><b _ngcontent-xkc-c219=""> S/ </b>{{resumenMontos.tarjeta  }}</span>
@@ -302,8 +346,7 @@
                                               </div>
                                            </div>
                                            <div class="info-box">
-                                            <!-- <span style="background: #DD4B39!important; color:#fff !important;" class="info-box-icon">			
-                                              <i class="fa fa-hospital-o" aria-hidden="true"></i>		</span>		 -->
+                                           
                                             <div class="info-box-content">			
                                               <span style="font-family:arial; font-size:15px; " class="info-box-text">TORRE ENDOSCÓPICA</span>			
                                               <span *ngIf="resumenMontos.instipriva" class="info-box-number"><b _ngcontent-xkc-c219=""> S/ </b>{{resumenMontos.instipriva  }}</span>			
@@ -312,15 +355,13 @@
                                         </div>
                                         <div class="col-md-8 col-sm-6 col-xs-12" style="display: flex;">
                                            <div class="info-box">
-                                              <!-- <span style="background: #DD4B39!important; color:#fff !important;" class="info-box-icon">			
-                                                <i class="fa fa-hospital-o" aria-hidden="true"></i>		</span>		 -->
+                                              
                                               <div class="info-box-content">	
                                                 <span *ngIf="resumenMontos.instipriva" class="info-box-number"><b _ngcontent-xkc-c219=""> S/ </b>{{resumenMontos.instipriva  }}</span>			<span style="font-family:arial; font-size:15px; " class="info-box-text">SALA</span>			
                                               </div>
                                            </div>
                                            <div class="info-box">
-                                            <!-- <span style="background: #57AA50 !important; color:#fff !important;" class="info-box-icon">			
-                                              <i class="fa fa-hospital-o" aria-hidden="true"></i>		</span>		 -->
+                                            
                                             <div class="info-box-content">	
                                               <span *ngIf="resumenMontos.ciasegcon" class="info-box-number"> S/ {{resumenMontos.ciasegcon }}</span>		
                                               <span style="font-family:arial; font-size:15px; " class="info-box-text" >INTERVENCIÓN</span>			
@@ -328,20 +369,13 @@
                                               </div>
                                            </div>
                                            <div class="info-box">
-                                            <!-- <span style="background: #F39C12!important; color:#fff !important;" class="info-box-icon">			
-                                              <i class="fa fa-wheelchair" aria-hidden="true"></i>		</span>		 -->
+                                           
                                             <div class="info-box-content">		
                                               <span *ngIf="resumenMontos.otros" class="info-box-number"> S/ {{resumenMontos.otros | number : '1.2-2' }}</span>	
                                               <span style="font-family:arial; font-size:15px; " class="info-box-text">ANESTESIA</span>						
                                              </div>
                                            </div>
-                                        </div>
-                                        <!-- <div class="col-md-3 col-sm-6 col-xs-12" style="display: flex;">
-                                           
-                                        </div>
-                                        <div class="col-md-3 col-sm-6 col-xs-12" style="display: flex;">
-                                          
-                                       </div> -->
+                                        </div> -->
                                     </div>
                                     <div class="box-header with-border" style="margin:1rem; ">
                                       <div class="box-footer">

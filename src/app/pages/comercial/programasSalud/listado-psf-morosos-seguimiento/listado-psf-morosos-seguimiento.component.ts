@@ -19,10 +19,10 @@ import { PhonePipe } from 'src/app/pipes/phone.pipe';
 
 @Component({
   selector: 'app-listado-morosos',
-  templateUrl: './listado-morosos.component.html',
-  styleUrls: ['./listado-morosos.component.scss'],
+  templateUrl: './listado-psf-morosos-seguimiento.component.html',
+  styleUrls: ['./listado-psf-morosos-seguimiento.component.scss'],
 })
-export class ListadoMorososComponent implements OnInit {
+export class ListadoPSFMorososSeguimientoComponent implements OnInit {
   initialSize = 0;
   active = 1;
 
@@ -64,6 +64,7 @@ export class ListadoMorososComponent implements OnInit {
       // f_fin: '2022-11-30',
   fecha = moment(new Date()).format('YYYY-MM-DD');
   meses = '00';
+  contacto = 'TE';
   tipo_paciente = '0';
 
   page = new Page()
@@ -87,6 +88,7 @@ export class ListadoMorososComponent implements OnInit {
     this.filtroForm = new FormGroup({
       fecha: new FormControl(this.fecha),
       meses: new FormControl("00"),
+      contacto: new FormControl("TE"),
       tipo_paciente: new FormControl("0"),
   });
    }
@@ -132,13 +134,14 @@ export class ListadoMorososComponent implements OnInit {
     this.parameters = {
       fecha: this.fecha,
       meses: this.meses,
+      contacto: this.contacto,
       tipo_paciente: this.tipo_paciente,
       pageNumber: this.page.pageNumber,
       size: this.page.size
     };
 
     this.loading();
-    this.tableApiservice.getMorososDetalle(this.parameters).subscribe(
+    this.tableApiservice.getMorososSeguimiento(this.parameters).subscribe(
       (response: ApiResponse<AttentionConsultation>) => {
         this.rows = [];
         if(response.data.success){
@@ -378,13 +381,13 @@ export class ListadoMorososComponent implements OnInit {
       // this.rows.map(item=>{
       //   item.ImpCuotasVencidas = this._cp.transform( item.ImpCuotasVencidas);
       // });
-      this.exportService.exportTableElmToExcel(this.rows, 'Listado de Morosos');
+      this.exportService.exportTableElmToExcel(this.rows, 'Examenes Laboratorio');
     }else if (numberTabla === 1){
       
-      this.exportService.exportTableElmToExcel(this.rows1, 'Listado de Morosos - Distribución por Programa');
+      this.exportService.exportTableElmToExcel(this.rows1, 'Examenes Laboratorio');
     }else if (numberTabla === 2){
       
-      this.exportService.exportTableElmToExcel(this.rows2, 'Listado de Morosos - Distribución por Período');
+      this.exportService.exportTableElmToExcel(this.rows2, 'Examenes Laboratorio');
     }
   }
 
