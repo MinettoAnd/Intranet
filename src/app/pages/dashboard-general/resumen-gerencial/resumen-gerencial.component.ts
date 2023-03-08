@@ -44,7 +44,7 @@ export class ResumenGerencialComponent implements OnInit {
 
   ngOnInit() {
     if (localStorage.getItem('access') === '1' || localStorage.getItem('access') === '2' ) {
-      this.getModelsUsers();
+      this.getModelsAdmin();
     } else if (localStorage.getItem('access') === '0') {
       this.getModelsUsers();
     }
