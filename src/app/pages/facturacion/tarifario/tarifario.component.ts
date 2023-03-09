@@ -13,7 +13,9 @@ import * as XLSX from 'xlsx';
 import { ExcelJson } from '../../../interfaces/excel-json.interface';
 import { ExportService } from '../../../_services/export.service';
 import ResizeObserver from 'resize-observer-polyfill';
-
+import { PorcentajePipe } from '../../../pipes/porcentaje.pipe';
+import { CustomNumberPipe } from '../../../pipes/customNumber.pipe';
+import { CurrencyPipe, DecimalPipe } from '@angular/common';
 @Component({
   selector: 'app-tarifario',
   templateUrl: './tarifario.component.html',
@@ -73,7 +75,8 @@ export class TarifarioComponent implements OnInit {
     {value: 50},
     {value: 100},
   ];
-  constructor(private tableApiservice: FacturacionService, private exportService: ExportService) {
+  constructor(private tableApiservice: FacturacionService, private exportService: ExportService,
+    private _cp: CurrencyPipe, private _dp: DecimalPipe, private _pp:PorcentajePipe, private _cnp:CustomNumberPipe) {
     this.page.pageNumber = 0;
     this.page.size = 10;
 
@@ -181,6 +184,17 @@ console.log(this.parameters);
           this.data = response.data ? response : [];
          
           this.columns = this.data.data.cabeceras;
+          this.columns.map(item =>{
+            if(item.pipe === 'currency'){
+              item.pipe = this._cp;
+            }else if(item.pipe === 'porcentaje'){
+              item.pipe = this._pp;
+            }else if(item.pipe === 'cantidad'){
+              item.pipe = this._cnp;
+            }else if(item.pipe === 'decimal'){
+              item.pipe = this._dp;
+            }
+          }); 
           this.rows = this.data.data.data;
           console.log(response.data.page);
           this.page = (response as any).data.page;

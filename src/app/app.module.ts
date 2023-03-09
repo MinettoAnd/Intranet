@@ -111,6 +111,7 @@ import { EstadoCellRenderer } from 'utils/EstadoCellRenderer';
 import { GenderCellRenderer } from 'utils/GenderCellRenderer';
 import { SucursalCellRenderer } from 'utils/SucursalCellRenderer';
 
+import { InformeComponent } from "./modals/claims/popup/informe/informe.component";
 
 registerLocaleData(localePe);
 // import { CuotasProgramasSaludComponent } from './pages/comercial/ventas/cuotas-programas-salud/cuotas-programas-salud.component';
@@ -188,7 +189,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     CustomTooltip,
     EmpresaCellRenderer,
     EstadoCellRenderer, GenderCellRenderer, SucursalCellRenderer, 
-    
+    InformeComponent
     // CuotasProgramasSaludComponent,
 
         

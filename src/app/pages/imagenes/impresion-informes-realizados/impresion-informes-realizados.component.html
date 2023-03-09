@@ -37,7 +37,7 @@
                     formControlName="condSede"
                     class="form-control-sm form-control"
                   >
-                    <option value="F">Todos</option>
+                    <option value="F">TODAS</option>
                     <option value="1">Lima</option>
                     <option value="2">Chorrillos</option>
                     <option value="4">Surco</option>
@@ -126,7 +126,7 @@
                 <div class="input-group">
                     <div class="input-group-btn" style="padding-top: 1.7rem !important;">
                         <button
-                        (click)="searh()"
+                        (click)="filter()"
                         class="mb-2 mr-2 btn btn-primary btn-sm"
                         >
                         <i class="pe-7s-search"> </i> Procesar
@@ -147,101 +147,65 @@
       <div
         class="card-header-title font-size-lg text-capitalize font-weight-normal"
       >
-        <select
+        <!-- <select
           class="custom-select"
           style="width: auto"
           [(ngModel)]="pageSize"
-          (ngModelChange)="refreshCountries()"
+
         >
           <option [ngValue]="50">50</option>
           <option [ngValue]="100">100</option>
           <option [ngValue]="150">150</option>
+        </select> -->
+        <select class="custom-select" style="width: auto" (change)="onLimitChange($event.target.value)">
+          <option
+            *ngFor="let option of pageLimitOptions"
+            [value]="option.value"
+
+          >
+            {{ option.value }} Registros
+          </option>
+          <option value="0" *ngIf="this.page.totalElements">Todos los Registros</option>
         </select>
-  
       </div>
     </div>
     <div class="table-responsive p-4">
-      <table
-        class="
-          align-middle
-          text-truncate
-          mb-0
-          table table-sm table-borderless table-hover
-        "
-      >
-        <thead>
-          <tr>
-            <th>Accion</th>
-            <th>Correlativo</th>
-            <th>F.Reclamo</th>
-            <th>F.Evento</th>
-            <th>Sede</th>
-            <th>Estado</th>
-            <th>Afectado</th>
-            <th>Resultado Reclamo</th>
-            <th>Area Involucrado</th>
-            <th>Causa</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of reclamos">
-            <td class="text-center">
-              <div role="group" class="btn-group-sm btn-group">
-                <button
-                  (click)="
-                    open(
-                      1,
-                      item.id_reclamo,
-                      item.id_sede,
-                      item.v_correlativo_reclamo
-                    )
-                  "
-                  class="btn-shadow btn btn-outline-success"
-                  data-tooltip="Detalle"
-                >
-                  <i class="pe-7s-look btn-icon-wrapper"> </i>
-                </button>
-              </div>
-            </td>
-            <td class="text-left">
-              {{ newCorrelativoCorrecto(item.v_correlativo_reclamo) }}
-            </td>
-            <td class="text-left">{{ diaEvento(item.d_registra_reclamo) }}</td>
-            <td class="text-left">
-              {{ diaEvento(item.d_fecha_reclamo) }}
-            </td>
-            <td class="text-left">
-              {{ getsedeName(item.id_sede) }}
-            </td>
-            <td class="text-left">
-              {{ item.name_estado }}
-            </td>
-            <td class="text-left">
-              {{ item.V_nombre1.trim() }} {{ item.v_paterno1.trim() }}
-              {{ item.v_materno1.trim() }}
-            </td>
-            <td class="text-left">
-              {{ getRultadoReclamo(item.id_resultado_reclamo) }}
-            </td>
-            <td class="text-left">{{ item.area_name }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="d-block p-4 text-center card-footer">
-      <ngb-pagination
-        [collectionSize]="collectionSize"
-        [(page)]="page"
-        [pageSize]="pageSize"
-        (pageChange)="refreshCountries()"
-      >
-        <ng-template ngbPaginationPrevious>
-          <i class="pe-7s-angle-left-circle"></i
-        ></ng-template>
-        <ng-template ngbPaginationNext
-          ><i class="pe-7s-angle-right-circle"></i
-        ></ng-template>
-      </ngb-pagination>
+      <ngx-datatable #myTable
+      class="bootstrap table table-striped"
+      id="datatablele"
+        [columns]="columns"
+        [rows]="rows"
+        [columnMode]="ColumnMode.force"
+        [headerHeight]="$any('auto')"
+        [footerHeight]="65"
+        [rowHeight]="$any('auto')"
+        [scrollbarH]="true"
+        [externalPaging]="true"
+        [count]="page.totalElements"
+        [offset]="page.pageNumber"
+        [limit]="page.size"
+        (page)="setPage($event)"
+        [selected]="selected"
+        [selectionType]="SelectionType.single"
+
+        >
+        <ngx-datatable-column  [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+            let-row="row">
+            <div *ngIf="column.prop !== 'id_informe'">
+              <span  [title]="value">{{value}}</span>
+            </div>
+            <div *ngIf="column.prop === 'id_informe' && row.responsable">
+              <!-- <span  [title]="value"><a href="javascript:;" (click)="onSelect($event, content)" style="color: #007ad7;">{{value}}</a></span> -->
+              <span  title="ver informe"><a href="javascript:;" (click)="onSelect(row)" class="btn-shadow btn btn-outline-secondary"><i class="pe-7s-look btn-icon-wrapper"></i></a></span>
+            </div>
+            <div *ngIf="column.prop === 'id_informe' && !row.responsable">
+              <!-- <span  [title]="value"><a href="javascript:;" (click)="onSelect($event, content)" style="color: #007ad7;">{{value}}</a></span> -->
+              <span  title="no hay informe"><a href="javascript:;" class="btn-shadow btn btn-outline-danger"><i class="pe-7s-close btn-icon-wrapper"></i></a></span>
+            </div>
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
     </div>
   </div>
   

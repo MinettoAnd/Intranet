@@ -1,0 +1,138 @@
+<div class="modal-header">
+  <h5 class="modal-title">Visualizar Informe</h5>
+  <a (click)="print()" class="btn btn-icon icon-left btn-dark ml-2 text-white">
+    <i class="pe-7s-print"></i> Imprimir</a
+  >
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="activeModal.dismiss('Cross click')"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<!--  -->
+<div class="modal-body" id="dataToPrint">
+  <table cellspacing="0" cellpadding="5" border="0" width="100%" style="font-family:Didact Gothic;">
+    <tr>
+      <td style="float:center;padding-left:28px;width:18%">
+        <div id="graficos1" style="text-align:left">
+          <img  width="100" height="50"  src={{dato.imagen_logo}}>
+        </div>
+      </td>
+      <td style="font-family:Didact Gothic!important;width:70%;float:center;font-weight:bold;font-size:17px;text-align:center;text-transform: uppercase">
+        <div id="graficos1" style="padding-top:10px">
+          <div><b>INFORME DE {{dato.tipo_examen}}</b></div>
+          <div><b> Departamento de Imágenes - {{dato.id_sedeRegistro}}</b></div>
+        </div>
+      </td>
+      <td style="padding-right:18px">
+      </td>
+    </tr>
+  </table>
+  <hr width=100%/>
+  <table cellspacing="2" cellpadding="1" border="0" style="font-family:Didact Gothic;font-size:13px">
+    <tr>
+        <td width="180" align="left">PACIENTE</td>
+        <td align="center">:</td>
+        <td colspan="4"><font style="text-transform: uppercase;">{{dato.datos}}</font></td>
+    </tr>
+    <tr>
+        <td align="left">MEDICO SOLICITANTE</td>
+        <td align="center">:</td>
+        <td colspan="4">{{dato.medico}}</td>
+    </tr>
+    <tr>
+        <td align="left">EXAMEN REALIZADO</td>
+        <td align="center">:</td>
+        <td colspan="4" width="380"><font style="text-transform: uppercase;">{{dato.examen_realizado1}}</font></td>
+    </tr>
+    <tr>
+        <td align="left">HISTORIA CLINICA</td>
+        <td align="center">:</td>
+        <td>{{dato.hclinica}}</td>
+        <td width="110" align="left">Nro. ORDEN (OA):</td>
+        <td align="center">:</td>
+        <td>{{dato.placa}}</td>
+    </tr>
+    <tr>
+        <td align="left">SERVICIO DE ORIGEN</td>
+        <td align="center">:</td>
+        <td>{{dato.Torigen}}</td>
+        <td width="110" align="left">&nbsp;</td>
+        <td align="center">&nbsp;</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td align="left">FECHA DEL EXAMEN</td>
+        <td align="center">:</td>
+        <td>{{dato.f_examen_Im}}</td>
+        <td width="110" align="left">EDAD</td>
+        <td align="center">:</td>
+        <!-- if(($Edad >= '0')&&($Edad < '120')){	 -->
+            <td *ngIf="dato.Edad > 0 && dato.Edad < 120">{{dato.Edad}} años</td>
+        <!-- }else{ -->
+            <td *ngIf="!(dato.Edad > 0 && dato.Edad < 120)"></td>
+            <!-- } -->
+    </tr>
+    <tr>
+        <td align="left">TIPO DE PROGRAMA</td>
+        <td align="center">:</td>
+        <td width="200">{{dato.programas}}</td>
+        <td width="110" align="left">SEDE DE ORIGEN</td>
+        <td align="center">:</td>
+        <td>{{dato.tipo_sede}}</td>
+    </tr>
+  </table>
+  <hr width=100%/>
+                    <table cellspacing="0" cellpadding="4" border="0" style="font-family:Didact Gothic;font-size:13px;line-height:normal;" width="100%">
+                        <tr>
+                            <td colspan="4" style="font-family:Didact Gothic!important;font-size:13px!important;line-height:normal!important;text-align: justify!important;">
+                                <p style="text-align: justify!important;font-family:Didact Gothic!important;font-size:13px!important;line-height:normal!important;" [innerHTML]="dato.resultado"></p>
+                            </td>
+                        </tr>
+                       
+                          <tr *ngif="dato.conclusiones.lenght > 21">	
+                            <td colspan="4" valign="bottom" style="padding: 7px 0px 10px;">
+                                <b>CONCLUSION:</b>
+                            </td>
+                          </tr>
+                        
+                        <tr *ngIf="dato.conclusiones.lenght > 21">			
+                            <td colspan="4" valign="top" style="font-family:Didact Gothic!important;font-size:13px!important;line-height:normal!important">
+                                <p align="justify">
+                                    <b style="font-family:Didact Gothic!important;font-size:13px!important;line-height:normal!important">{{dato.conclusiones}}</b>
+                                </p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="4"><b>Atentamente;</b></td>
+                        </tr>
+                    </table>
+                    <table cellspacing="2" cellpadding="1" border="0" width="100%"  align="center" style="font-family:Didact Gothic;font-size:13px">
+                        <tr>
+                            <td><br></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" align="center" [innerHTML]="dato.Dresponsable"></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="4">{{dato.Iusuario}}</td>
+                        </tr>
+                    </table>
+</div>
+<div class="modal-footer">
+  <!--button type="button" class="btn btn-primary">
+      <i class="fas fa-save"></i> Guardar
+    </button-->
+  <button
+    type="button"
+    class="btn btn-outline-dark"
+    (click)="activeModal.close('Close click')"
+  >
+    <i class="fa fa-minus-circle"></i> Cancelar
+  </button>
+</div>
