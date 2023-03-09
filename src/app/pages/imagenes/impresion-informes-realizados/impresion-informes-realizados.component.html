@@ -37,7 +37,7 @@
                     formControlName="condSede"
                     class="form-control-sm form-control"
                   >
-                    <option value="F">Todos</option>
+                    <option value="F">TODAS</option>
                     <option value="1">Lima</option>
                     <option value="2">Chorrillos</option>
                     <option value="4">Surco</option>
@@ -187,7 +187,7 @@
         (page)="setPage($event)"
         [selected]="selected"
         [selectionType]="SelectionType.single"
-        (select)='onSelect($event)'
+
         >
         <ngx-datatable-column  [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
           <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
@@ -195,8 +195,13 @@
             <div *ngIf="column.prop !== 'id_informe'">
               <span  [title]="value">{{value}}</span>
             </div>
-            <div *ngIf="column.prop === 'id_informe'">
-              <span  [title]="value"><a href="javascript:;" (click)="onSelect($event, content)" style="color: #007ad7;">{{value}}</a></span>
+            <div *ngIf="column.prop === 'id_informe' && row.responsable">
+              <!-- <span  [title]="value"><a href="javascript:;" (click)="onSelect($event, content)" style="color: #007ad7;">{{value}}</a></span> -->
+              <span  title="ver informe"><a href="javascript:;" (click)="onSelect(row)" class="btn-shadow btn btn-outline-secondary"><i class="pe-7s-look btn-icon-wrapper"></i></a></span>
+            </div>
+            <div *ngIf="column.prop === 'id_informe' && !row.responsable">
+              <!-- <span  [title]="value"><a href="javascript:;" (click)="onSelect($event, content)" style="color: #007ad7;">{{value}}</a></span> -->
+              <span  title="no hay informe"><a href="javascript:;" class="btn-shadow btn btn-outline-danger"><i class="pe-7s-close btn-icon-wrapper"></i></a></span>
             </div>
           </ng-template>
         </ngx-datatable-column>

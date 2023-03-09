@@ -42,6 +42,9 @@ export class ImagenesService {
     this.loadTableApiDataURL = `${environment.api_url}imgsGetRadiologiaAll`;
     return this.http.post(this.loadTableApiDataURL, data);
   }
-
+  imgsImprimir(data): Observable<any> {
+    this.loadTableApiDataURL = `${environment.api_url}imgsImprimir`;
+    return this.http.post(this.loadTableApiDataURL, data);
+  }
 }
 

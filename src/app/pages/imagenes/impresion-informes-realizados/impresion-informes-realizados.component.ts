@@ -17,6 +17,7 @@ import { Page } from "src/app/models/forms-data/page";
 import { ExportService } from '../../../_services/export.service';
 import { ColumnMode, SelectionType, NgxDatatableModule, DatatableComponent  } from '@swimlane/ngx-datatable';
 import * as moment from 'moment';
+import { InformeComponent } from "src/app/modals/claims/popup/informe/informe.component";
 @Component({
   selector: 'app-impresion-informes-realizados',
   templateUrl: './impresion-informes-realizados.component.html',
@@ -56,6 +57,24 @@ export class ImpresionInformesRealizadosComponent implements OnInit {
     condPrograma: any;
     condPlaca: any;
     message: string;
+  data: any;
+  // imagen_logo: any;
+  // tipo_examen: any;
+  // id_sedeRegistro: any;
+  // datos: any;
+  // medico: any;
+  // examen_realizado1: any;
+  // Iusuario: any;
+  // Dresponsable: any;
+  // conclusiones: any;
+  // resultado: any;
+  // tipo_sede: any;
+  // programas: any;
+  // Edad: any;
+  // f_examen_Im: any;
+  // Torigen: any;
+  // hclinica: any;
+  // placa: any;
   constructor(
       private datePipe: DatePipe,
       private formBuilder: FormBuilder,
@@ -284,27 +303,38 @@ export class ImpresionInformesRealizadosComponent implements OnInit {
     // Whenever the filter changes, always go back to the first page
     // this.table.offset = 0;
   }
-  onSelect({ selected }, content?: any) {
-    if (selected !== undefined){
-        console.log(1141, selected);
+//  onSelect({ selected }, content?: any) {
+  onSelect(row) {
+  console.log(307, row)
+    if (row !== undefined){
+
         const parameters = {
-         Id: selected[0].Empleado,
-         CMP: selected[0].CMP,
-         Especialidad: selected[0].ESPECIALIDAD,
-         Medico: selected[0].MEDICO,
-       }
-       
+          id_resultado: row.id_resultado,
+        }
+        this.loading("Generando Informe....");
+          this.apiService.imgsImprimir(parameters).subscribe(
+            async (response) =>{ 
+            this.data =  response.data;
+
+            if(this.data){
+              const  modalRef =  this.modalService.open(InformeComponent, {
+                size: <any>"md",
+              });
+              modalRef.componentInstance.dato = await this.data;
+            }
+            
+            // console.log(344, this.data)
+            Swal.close();
+        });
+        
      }else{
-    //    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-    //      console.log(content);
-    //      this.closeResult = `Closed with: ${result}`;
-    //    }, (reason) => {
-    //      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    //    });
-    const modalRef = this.modalService.open(RespuestaReclamoComponent, {
-        size: <any>"xl",
-    });
-    // modalRef.componentInstance.dato = data;
+      //  this.modalService.open(InformeComponent, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      //    console.log(content);
+      //    this.closeResult = `Closed with: ${result}`;
+      //  }, (reason) => {
+      //    this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      //  });
+        
      }
   }
   private getDismissReason(reason: any): string {
