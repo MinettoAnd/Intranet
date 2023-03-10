@@ -17,7 +17,7 @@ import { Page } from "src/app/models/forms-data/page";
 import { ExportService } from '../../../_services/export.service';
 import { ColumnMode, SelectionType, NgxDatatableModule, DatatableComponent  } from '@swimlane/ngx-datatable';
 import * as moment from 'moment';
-import { InformeComponent } from "src/app/modals/claims/popup/informe/informe.component";
+import { InformeComponent } from "src/app/modals/imagenes/informe/informe.component";
 @Component({
   selector: 'app-impresion-informes-realizados',
   templateUrl: './impresion-informes-realizados.component.html',
@@ -326,14 +326,6 @@ export class ImpresionInformesRealizadosComponent implements OnInit {
             // console.log(344, this.data)
             Swal.close();
         });
-        
-     }else{
-      //  this.modalService.open(InformeComponent, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      //    console.log(content);
-      //    this.closeResult = `Closed with: ${result}`;
-      //  }, (reason) => {
-      //    this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-      //  });
         
      }
   }
