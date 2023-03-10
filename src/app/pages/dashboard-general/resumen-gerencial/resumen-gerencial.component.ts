@@ -53,26 +53,26 @@ export class ResumenGerencialComponent implements OnInit {
     switch (id) {
       case 1:
         this.comercialEstadisticas = true;
-        this.hospitalizacionEstadisticas = false;
         this.emergenciasEstadisticas = false;
+        this.hospitalizacionEstadisticas = false;
         this.consultaExternaEstadisticas = false;
         break;
       case 2:
         this.comercialEstadisticas = false;
-        this.hospitalizacionEstadisticas = true;
-        this.emergenciasEstadisticas = false;
+        this.emergenciasEstadisticas = true;
+        this.hospitalizacionEstadisticas = false;
         this.consultaExternaEstadisticas = false;
         break;
       case 3:
         this.comercialEstadisticas = false;
-        this.hospitalizacionEstadisticas = false;
-        this.emergenciasEstadisticas = true;
+        this.emergenciasEstadisticas = false;
+        this.hospitalizacionEstadisticas = true;
         this.consultaExternaEstadisticas = false;
         break;
       case 4:
         this.comercialEstadisticas = false;
-        this.hospitalizacionEstadisticas = false;
         this.emergenciasEstadisticas = false;
+        this.hospitalizacionEstadisticas = false;
         this.consultaExternaEstadisticas = true;
         break;
     }
