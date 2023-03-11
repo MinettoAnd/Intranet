@@ -128,17 +128,21 @@
                                 [rowHeight]="$any('auto')"
                                 [scrollbarH]="true"
                                 [limit]="page.size"
+                                [selected]="selected"
+                                [selectionType]="SelectionType.single"
                                 >
                                 <ngx-datatable-column  [flexGrow]="1" [minWidth]="90" [width]="column.width" *ngFor="let column of columns; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                   <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                     let-row="row">
-                                    <span [title]="value">{{value}}</span>
-                                    <!-- <span title="Double click to edit" (dblclick)="editing[rowIndex + '-{{column.name}}'] = true"
-                                      *ngIf="!editing[rowIndex + '-{{column.name}}']">
-                                      {{value}}
-                                    </span>
-                                    <input autofocus (blur)="updateValue($event, '{{column.name}}', rowIndex)"
-                                      *ngIf="editing[rowIndex+ '-{{column.name}}']" type="text" [value]="value" /> -->
+                                    <!-- <span [title]="value">{{value}}</span> -->
+                                    <div *ngIf="column.prop !== 'accion'">
+                                      <span  [title]="value">{{value}}</span>
+                                      <!-- <span  [title]="value">{{row | json }}</span> -->
+                                    </div>
+                                    <div *ngIf="column.prop === 'accion'">
+                                      <!-- <span  [title]="value"><a href="javascript:;" (click)="onSelect($event, content)" style="color: #007ad7;">{{value}}</a></span> -->
+                                      <span  title="ver informe"><a href="javascript:;" (click)="onSelect(row)" class="btn-shadow btn btn-outline-secondary"><i class="pe-7s-note btn-icon-wrapper"></i></a></span>
+                                    </div>
                                   </ng-template>
                                 </ngx-datatable-column>
                               </ngx-datatable>

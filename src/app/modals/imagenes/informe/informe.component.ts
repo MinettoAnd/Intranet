@@ -1,19 +1,18 @@
 import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ClaimsService } from 'src/app/pages/claims/claims.service';
-import { CommonModule } from '@angular/common';
+
 @Component({
   selector: 'app-informe',
   templateUrl: './informe.component.html',
-  styleUrls: ['./informe.component.sass']
+  styleUrls: ['./informe.component.scss']
 })
 export class InformeComponent implements OnInit {
   @Input() dato;
 Edad;
   conclusiones: boolean;
 
-  constructor(public activeModal: NgbActiveModal, private apiService: ClaimsService, private datePipe: DatePipe) { }
+  constructor(public activeModal: NgbActiveModal, private datePipe: DatePipe) { }
 
   ngOnInit() {
     // if (this.dato.showtemplate === 1) {

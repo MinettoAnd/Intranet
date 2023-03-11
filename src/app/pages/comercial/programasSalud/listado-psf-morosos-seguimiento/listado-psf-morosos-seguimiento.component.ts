@@ -8,7 +8,7 @@ import {AttentionConsultation} from '../../../../interfaces/attentionConsultatio
 import {ApiResponse} from '../../../../interfaces/response';
 import * as moment from 'moment';
 import { Page } from '../../../../models/forms-data/page';
-import { ColumnMode, NgxDatatableModule, DatatableComponent  } from '@swimlane/ngx-datatable';
+import { ColumnMode, SelectionType, NgxDatatableModule, DatatableComponent  } from '@swimlane/ngx-datatable';
 import * as XLSX from 'xlsx';
 import { ExcelJson } from '../../../../interfaces/excel-json.interface';
 import { ExportService } from '../../../../_services/export.service';
@@ -16,6 +16,8 @@ import ResizeObserver from 'resize-observer-polyfill';
 import { CurrencyPipe } from '@angular/common';
 import { CustomNumberPipe } from 'src/app/pipes/customNumber.pipe';
 import { PhonePipe } from 'src/app/pipes/phone.pipe';
+import { ContactoComponent } from 'src/app/modals/seguimientoMorosos/contacto/contacto.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-listado-morosos',
@@ -42,7 +44,6 @@ export class ListadoPSFMorososSeguimientoComponent implements OnInit {
     reload: true
   };
   temp = [];
-  selected = [];
   id: number;
   loadingIndicator: true;
   rows: any;
@@ -67,7 +68,9 @@ export class ListadoPSFMorososSeguimientoComponent implements OnInit {
   contacto = 'TE';
   tipo_paciente = '0';
 
-  page = new Page()
+  page = new Page();
+  SelectionType = SelectionType;
+  selected = [];
   ColumnMode = ColumnMode;
   filtered;
   public pageLimitOptions = [
@@ -81,7 +84,7 @@ export class ListadoPSFMorososSeguimientoComponent implements OnInit {
   totalPeriodos:any;
   totalDeuda:any;
   constructor(private tableApiservice: ComercialService, private exportService: ExportService, private _cnp:CustomNumberPipe,
-    private _cp: CurrencyPipe, private _phone: PhonePipe) {
+    private _cp: CurrencyPipe, private _phone: PhonePipe, private modalService: NgbModal) {
     this.page.pageNumber = 0;
     this.page.size = 10;
 
@@ -116,7 +119,7 @@ export class ListadoPSFMorososSeguimientoComponent implements OnInit {
   }
 
   private changePageLimit(limit: any): void {
-    this.loading();
+    this.loading("Filtrando....");
     if (limit === '0'){
       
       this.page.size = this.page.totalElements;
@@ -140,7 +143,7 @@ export class ListadoPSFMorososSeguimientoComponent implements OnInit {
       size: this.page.size
     };
 
-    this.loading();
+    this.loading("Realizando Busqueda....");
     this.tableApiservice.getMorososSeguimiento(this.parameters).subscribe(
       (response: ApiResponse<AttentionConsultation>) => {
         this.rows = [];
@@ -400,17 +403,7 @@ export class ListadoPSFMorososSeguimientoComponent implements OnInit {
 
         this.setPage({ offset: 0 });
     }
-  async loading() {
-      Swal.fire({
-          html: "<div>Filtrando ...</div>",
-          width: "200px",
-          allowEscapeKey: false,
-          allowOutsideClick: false,
-          onOpen: () => {
-              Swal.showLoading();
-          },
-      });
-  }
+
   updateFilter(event) {
     const input = event.target.value.toLowerCase();
     console.log(input);
@@ -432,10 +425,28 @@ export class ListadoPSFMorososSeguimientoComponent implements OnInit {
     // Whenever the filter changes, always go back to the first page
     // this.table.offset = 0;
   }
-  onSelect({ selected }) {
-    this.selected.splice(0, this.selected.length);
-    this.selected.push(...selected);
-  }
+  onSelect(row) {
 
+    if (row !== undefined){
+
+              const  modalRef =  this.modalService.open(ContactoComponent, {
+                size: <any>"lg",
+              });
+              modalRef.componentInstance.dato =  row;
+        
+     }
+  }
+  //loading
+  async loading(searchtxt) {
+    Swal.fire({
+        html: `<h3 style="font-size:12px;text-align: center;">${searchtxt}</h3>`,
+        width: "250px",
+        allowEscapeKey: false,
+        allowOutsideClick: false,
+        onOpen: () => {
+            Swal.showLoading();
+        },
+    });
+}
 }
 
