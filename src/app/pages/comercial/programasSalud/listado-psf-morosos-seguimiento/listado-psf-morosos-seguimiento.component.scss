@@ -154,3 +154,12 @@ margin: 0.5rem 0;
         max-width: 50%!important;
     }
 }
+.ImpCuotasVencidas, .Telefono {
+    text-align: right;
+}
+.CuotasVencidas, .FechacioContrato, .ProgramaAbrev, .TotalMiembros, .accion {
+    text-align: center;
+}
+:host ::ng-deep .datatable-header{
+    text-align: center!important;
+  }

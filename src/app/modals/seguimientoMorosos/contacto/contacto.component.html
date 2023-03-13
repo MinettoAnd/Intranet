@@ -60,7 +60,7 @@
               <label for="ImpCuotasVencidas"
                 >Importe</label
               >
-              <input id="ImpCuotasVencidas" type="text" class="form-control form-control-sm" readonly value={{dato.ImpCuotasVencidas}}>
+              <input id="ImpCuotasVencidas" type="text" class="form-control form-control-sm" readonly value={{_cp.transform(dato.ImpCuotasVencidas)}}>
             </div>
             <div class="form-group col-md-4">
               <label for="TotalMiembros"
@@ -76,180 +76,13 @@
             </div>
           </div>
           <div class="row">
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-8">
               <label for="periodos_deuda"
                 >Períodos de Deuda</label
               >
               <input id="periodos_deuda" type="text" class="form-control form-control-sm" readonly value={{dato.periodos_deuda}}>
             </div>
           </div>
-          <!-- <div class="row">
-            <div class="form-group col-md-8">
-              <label for="competencia"
-                >Competencia para la atención del reclamo</label
-              ><span class="text-danger">*</span>
-              <select
-                id="competencia"
-                [ngModel]="listDetalle[0]?.id_competencia_atencion"
-                formControlName="competencia"
-                [ngClass]="{
-                  'is-invalid': submitter_accion && s.competencia.errors
-                }"
-                class="form-control form-select form-control-sm"
-              >
-                <option value="">Seleccione...</option>
-                <option value="1">Si</option>
-                <option value="2">No</option>
-                <option value="3">Compartida</option>
-              </select>
-              <div
-                *ngIf="submitter_accion && s.competencia.errors"
-                class="invalid-feedback"
-              >
-                <div *ngIf="s.competencia.errors.required">Campo requerido</div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="form-group col-md-4">
-              <label for="estado">Estado</label>
-              <select
-                id="estado"
-                [ngModel]="listDetalle[0]?.id_estado_v2"
-                (change)="onChangeEstado($event)"
-                formControlName="estado"
-                class="form-control form-select form-control-sm"
-              >
-                <option value="">Seleccione...</option>
-                <option
-                  *ngFor="let item of listestado"
-                  value="{{ item.id_estado }}"
-                >
-                  {{ item.v_decripcion }}
-                </option>
-              </select>
-            </div>
-            <div class="form-group col-md-4" *ngIf="showreclamoprimigenio">
-              <label for="codigoreclamo">Código de Reclamo Primigenio</label>
-              <div class="input-group">
-                <input
-                  type="text"
-                  [(ngModel)]="codigo_reclamo"
-                  formControlName="codigoreclamo"
-                  class="form-control form-control-sm"
-                />
-              </div>
-            </div>
-            <div class="form-group col-md-4">
-              <label for="estapareclamo">Etapa del Reclamo</label>
-              <select
-                formControlName="estapareclamo"
-                class="form-control form-select form-control-sm"
-                [ngModel]="listDetalle[0]?.estapa_reclamo"
-              >
-                <option value="">Seleccione ...</option>
-                <option value="1">Adminisón y Registro</option>
-                <option value="2">Evaluacion e Investigacion</option>
-                <option value="3">Resulado y Notificación</option>
-                <option value="4">Archivo y Custodia del Expediente</option>
-              </select>
-            </div>
-          </div>
-          <div class="row" *ngIf="showtraslado">
-            <div class="form-group col-md-4">
-              <label for="tipoadministrador">Tipo de Administrado </label>
-              <select
-                formControlName="tipoadministrador"
-                [(ngModel)]="tipoadmin"
-                class="form-control form-select form-control-sm"
-              >
-                <option value="">Seleccione ...</option>
-                <option value="1">IPRESS</option>
-                <option value="2">UGIPRESS</option>
-                <option value="3">IAFAS</option>
-              </select>
-            </div>
-            <div class="form-group col-md-4">
-              <label for="codigoadmin">Código del administrado</label>
-              <div class="input-group">
-                <input
-                  type="text"
-                  [(ngModel)]="codigoadmin"
-                  formControlName="codigoadmin"
-                  class="form-control form-control-sm"
-                />
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="form-group col-md-4">
-              <label for="resultado_reclamo">Resultado Reclamo </label>
-              <select
-                formControlName="resultado_reclamo"
-                [(ngModel)]="resultado_reclamo"
-                (change)="onChangeResultadoreclamo($event)"
-                class="form-control form-select form-control-sm"
-              >
-                <option value="">Seleccione ...</option>
-                <option
-                  value="{{ item.id_resultado_v2 }}"
-                  *ngFor="let item of listresultadoreclamo"
-                >
-                  {{ item.v_descripcion_v2 }}
-                </option>
-              </select>
-            </div>
-            <div class="form-group col-md-4" *ngIf="showmotivo">
-              <label for="motivo">Motivo de Conclusión anticipada</label>
-              <select
-                formControlName="motivo"
-                [(ngModel)]="motivo"
-                class="form-control form-select form-control-sm"
-              >
-                <option value="">Seleccione ...</option>
-                <option value="{{ item.id }}" *ngFor="let item of listmotivo">
-                  {{ item.name }}
-                </option>
-              </select>
-            </div>
-            <div class="col-md-4">
-              <div class="row">
-                <div class="form-group col-md-8">
-                  <label for="fechasolucion">Fecha de Solución </label>
-                  <div class="input-group">
-                    <input
-                      type="date"
-                      [(ngModel)]="fechasolucion"
-                      formControlName="fechasolucion"
-                      class="form-control form-control-sm"
-                    />
-                  </div>
-                </div>
-                <div class="form-group col-md-4">
-                  <label for="horasolucion">hora </label>
-                  <div class="input-group">
-                    <input
-                      type="time"
-                      [(ngModel)]="horasolucion"
-                      formControlName="horasolucion"
-                      class="form-control form-control-sm"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="form-group col-md-12">
-              <label for="solucion_al_reclamo">Solución al Reclamo</label>
-              <textarea
-                class="form-control form-control-sm"
-                [ngModel]="listDetalle[0]?.detalle_reclamo"
-                formControlName="solucion_al_reclamo"
-                rows="5"
-              ></textarea>
-            </div>
-          </div> -->
         </form>
       </ng-template>
     </li>
@@ -263,9 +96,10 @@
               <div class="input-group">
                 <input
                   type="date"
-                  [(ngModel)]="fecha_respuesta"
+                  [(ngModel)]="fecha"
                   formControlName="fecha"
                   class="form-control form-control-sm"
+                  id="fecha"
                 />
               </div>
             </div>
@@ -274,28 +108,27 @@
               <div class="input-group">
                 <input
                   type="time"
-                  [(ngModel)]="fecha_respuesta_hora"
+                  [(ngModel)]="hora"
                   formControlName="hora"
                   class="form-control form-control-sm"
+                  id="hora"
                 />
               </div>
             </div>
             <div class="form-group col-md-4">
-              <label for="forma_entrega">Medio de comunicación</label>
+              <label for="medio_comunicacion">Medio de comunicación</label>
               <select
-                
-                formControlName="forma_entrega"
+                formControlName="medio_comunicacion"
                 class="form-control form-select form-control-sm"
+                id="medio_comunicacion"
               >
                 <option value="">Seleccionar ....</option>
                 <option value="1">Correo Electronico</option>
                 <option value="2">Via Telefónica</option>
-                <!-- <option value="3">Courier</option>
-                <option value="4">Otros</option> -->
               </select>
             </div>
             <div class="form-group col-md-4">
-              <label for="forma_entrega">¿Éxito en la comunicación?</label>
+              <label for="exito_comunicacion">¿Éxito en la comunicación?</label>
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-check">
@@ -303,9 +136,9 @@
                       class="form-check-input"
                       type="radio"
                       value="1"
-                      id="exito1"
-                      formControlName="exito"
-                      [(ngModel)]="exito" 
+                      id="exito_comunicacion1"
+                      formControlName="exito_comunicacion"
+                      [(ngModel)]="exito_comunicacion" 
                     />
                     <label class="form-check-label" for="gridRadios2c">
                       Si
@@ -318,19 +151,18 @@
                       class="form-check-input"
                       type="radio"
                       value="2"
-                      id="exito2"
-                      formControlName="exito"
-                      [(ngModel)]="exito" 
+                      id="exito_comunicacion2"
+                      formControlName="exito_comunicacion"
+                      [(ngModel)]="exito_comunicacion" 
                     />
                     <label class="form-check-label" for="gridRadios3c">
                       No
                     </label>
                   </div>
                 </div>
-                <!-- Valor seleccionado: {{exito}} -->
               </div>
             </div>
-            <div class="form-group col-md-4" *ngIf="exito == 1">
+            <div class="form-group col-md-4" *ngIf="exito_comunicacion == 1">
               <label for="contacto"
                 >Contacto</label
               >
@@ -340,22 +172,24 @@
                   'is-invalid': submitter_accion && s.contacto.errors
                 }"
                 class="form-control form-select form-control-sm"
+                formControlName="contacto"
               >
                 <option value="">Seleccione...</option>
-                <option value="Titular">Titular</option>
-                <option value="Esposo(a)">Esposo(a)</option>
-                <option value="Hijo(a)">Hijo(a)</option>
-                <option value="Padre">Padre</option>
-                <option value="Otro Familiar">Otro Familiar</option>
+                <option value="1">Titular</option>
+                <option value="2">Esposo(a)</option>
+                <option value="3">Hijo(a)</option>
+                <option value="4">Padre</option>
+                <option value="5">Madre</option>
+                <option value="6">Otro Familiar</option>
               </select>
-              <div
+              <!-- <div
                 *ngIf="submitter_accion && s.contacto.errors"
                 class="invalid-feedback"
               >
                 <div *ngIf="s.contacto.errors.required">Campo requerido</div>
-              </div>
+              </div> -->
             </div>
-            <div class="form-group col-md-4" *ngIf="exito == 2">
+            <div class="form-group col-md-4" *ngIf="exito_comunicacion == 2">
               <label for="motivo"
                 >Motivo</label
               >
@@ -365,36 +199,38 @@
                   'is-invalid': submitter_accion && s.motivo.errors
                 }"
                 class="form-control form-select form-control-sm"
+                formControlName="motivo"
               >
                 <option value="">Seleccione...</option>
-                <option value="No respondieron">No respondieron</option>
-                <option value="Contacto equivocado">Contacto equivocado</option>
-                <option value="Contacto no se encontraba disponible">Contacto no se encontraba disponible</option>
+                <option value="01">No respondieron</option>
+                <option value="02">Contacto equivocado</option>
+                <option value="03">Contacto no se encontraba disponible</option>
               </select>
-              <div
+              <!-- <div
                 *ngIf="submitter_accion && s.motivo.errors"
                 class="invalid-feedback"
               >
                 <div *ngIf="s.motivo.errors.required">Campo requerido</div>
-              </div>
+              </div> -->
             </div>
-            <div class="form-group col-md-12" *ngIf="exito == 1">
-              <label for="solucion_al_reclamo">Observaciones</label>
+            <div class="form-group col-md-12" *ngIf="exito_comunicacion == 1">
+              <label for="observaciones">Observaciones</label>
               <textarea
                 class="form-control form-control-sm"
                 rows="5"
+                formControlName="observaciones"
               ></textarea>
             </div>
-            <div class="form-group col-md-12" *ngIf="exito == 1">
+            <div class="form-group col-md-12" *ngIf="exito_comunicacion == 1">
               <label for="compromiso" class="form-label">Compromiso de cuotas a pagar</label>
-              <ngx-slider [(value)]="value" id="compromiso" [options]="options"></ngx-slider>
+              <ngx-slider [(value)]="value" formControlName="compromiso" id="compromiso" [options]="options"></ngx-slider>
               Valor seleccionado: {{value}}
             </div>
-            <div class="form-group col-md-4" *ngIf="exito == 1 && value > 0">
+            <div class="form-group col-md-8" *ngIf="exito_comunicacion == 1 && value > 0">
               <label for="periodos_deuda"
                 >Modificar Períodos de deuda</label
               >
-              <input id="periodos_deuda" type="text" class="form-control form-control-sm" value={{dato.periodos_deuda}}>
+              <input id="cuotas" type="text" formControlName="cuotas" class="form-control form-control-sm" value={{cuotas}}>
             </div>
           </div>
         </form>
@@ -404,7 +240,7 @@
       <a ngbNavLink>Seguimiento</a>
       <ng-template ngbNavContent>
         <div class="card mt-4">
-          <div class="card-header">
+          <!-- <div class="card-header">
             <div class="row">
               <div class="col-md-1">
                 <select
@@ -418,22 +254,33 @@
                   <option [ngValue]="150">150</option>
                 </select>
               </div>
-              <!-- <div class="col-md-11 p-1">
-                <button
-                  class="button btn btn-icon btn-sm btn-primary"
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  title="Agregar"
-                  (click)="openModalMedida(1, '')"
-                >
-                  <i class="fa fa-plus"></i> Agregar Acciones
-                </button>
-              </div> -->
             </div>
-          </div>
+          </div> -->
           <div class="card-body">
             <div class="table-responsive p-4">
-              <table
+              <ngx-datatable #myTable
+              class="bootstrap table table-striped"
+              id="datatablele"
+                [columns]="columns"
+                [rows]="rows"
+                [columnMode]="ColumnMode.force"
+                [headerHeight]="$any('auto')"
+                [footerHeight]="65"
+                [rowHeight]="$any('auto')"
+                [scrollbarH]="true"
+                [limit]="10"
+                [selected]="selected"
+                [selectionType]="SelectionType.single"
+                >
+                <ngx-datatable-column [flexGrow]="1" [minWidth]="90" [width]="column.width" [pipe]="column.pipe" *ngFor="let column of columns; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                  <ng-template  ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                    let-row="row">
+                    <span [title]="value">{{value}}</span>
+                    
+                  </ng-template>
+                </ngx-datatable-column>
+              </ngx-datatable>
+              <!-- <table
                 class="
                   align-middle
                   text-truncate
@@ -480,9 +327,9 @@
                     </td>
                   </tr>
                 </tbody>
-              </table>
+              </table> -->
             </div>
-            <div class="p-2">
+            <!-- <div class="p-2">
               <ngb-pagination
                 class="float-right"
                 [collectionSize]="collectionSize"
@@ -497,7 +344,7 @@
                   ><i class="fa fa-chevron-right"></i
                 ></ng-template>
               </ngb-pagination>
-            </div>
+            </div> -->
           </div>
         </div>
       </ng-template>
@@ -508,7 +355,7 @@
 <div class="modal-footer">
   <button
     type="button"
-    (click)="updateRespuestaReclamo()"
+    (click)="saveComunication()"
     class="btn btn-primary"
   >
     <i class="pe-7s-diskette"></i> Guardar

@@ -91,7 +91,8 @@ export class LoginBoxedComponent implements OnInit {
       localStorage.setItem('Apellidos', this.profiles[0]?.Apellidos);
       localStorage.setItem('name_area', this.profiles[0]?.DES_AREAS);
       localStorage.setItem('cargo', this.profiles[0]?.DES_CARGO);
-      localStorage.setItem('cod_user', this.profiles[0]?.Persona)
+      localStorage.setItem('cod_user', this.profiles[0]?.Persona);
+      localStorage.setItem('CodigoUsuario', this.profiles[0]?.CodigoUsuario)
       localStorage.setItem('id_area', this.profiles[0]?.id_area);
       localStorage.setItem('sede', this.profiles[0]?.Sucursal);
       if (this.profiles[0]?.id_area === '02060603') {

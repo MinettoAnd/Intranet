@@ -154,6 +154,12 @@ export class ListadoPSFMorososSeguimientoComponent implements OnInit {
           this.data = response.data ? response : [];
           //console.log(168, this.data);   
           this.columns = this.data.data.cabeceras;
+          console.log(168, this.columns);  
+          this.columns.map(item=>{
+            if (item.pipe === 'currency'){
+              item.pipe = this._cp;
+            }
+          });
           this.columns1 = [
             {prop: 'Programa', name: 'Programa'},
             {prop: 'TotalContratos', name: 'Contratos', pipe: this._cnp},
@@ -430,7 +436,7 @@ export class ListadoPSFMorososSeguimientoComponent implements OnInit {
     if (row !== undefined){
 
               const  modalRef =  this.modalService.open(ContactoComponent, {
-                size: <any>"lg",
+                size: <any>"xl",
               });
               modalRef.componentInstance.dato =  row;
         

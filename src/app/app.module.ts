@@ -114,6 +114,8 @@ import { SucursalCellRenderer } from 'utils/SucursalCellRenderer';
 import { InformeComponent } from "./modals/imagenes/informe/informe.component";
 import { ContactoComponent } from "./modals/seguimientoMorosos/contacto/contacto.component";
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
+
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 registerLocaleData(localePe);
 // import { CuotasProgramasSaludComponent } from './pages/comercial/ventas/cuotas-programas-salud/cuotas-programas-salud.component';
 // import { BsDatepickerModule, BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
@@ -226,7 +228,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     AgGridModule.withComponents([]),
     // BsDatepickerModule.forRoot(),
     // NgxDatatableModule,
-    NgxSliderModule
+    NgxSliderModule,
+    NgxDatatableModule
   ],
 
   providers: [
