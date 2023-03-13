@@ -62,6 +62,14 @@ export class ComercialService {
       this.loadTableApiDataURL = `${environment.api_url}getMorososSeguimiento`;
       return this.http.post(this.loadTableApiDataURL, data);
     }
+    saveMorososComunicacion(data): Observable<any> {
+      this.loadTableApiDataURL = `${environment.api_url}saveMorososComunicacion`;
+      return this.http.post(this.loadTableApiDataURL, data);
+    }
+    getListComunicacionMorosos(data): Observable<any> {
+      this.loadTableApiDataURL = `${environment.api_url}getListComunicacionMorosos/${data}`;
+      return this.http.get(this.loadTableApiDataURL);
+    }
     getVigentesDetalle(): Observable<any> {
       this.loadTableApiDataURL = `${environment.api_url}getVigentesDetalle`;
       return this.http.get(this.loadTableApiDataURL);
