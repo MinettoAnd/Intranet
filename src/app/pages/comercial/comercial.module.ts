@@ -17,6 +17,7 @@ import { EstadisticasComponent } from './programasSalud/estadisticas/estadistica
 import { SharedModule } from 'src/app/shared/shared.module';
 
 import { ListadoPSFMorososSeguimientoComponent } from './programasSalud/listado-psf-morosos-seguimiento/listado-psf-morosos-seguimiento.component';
+import { PsfMorososContactadosComponent } from './programasSalud/psf-morosos-contactados/psf-morosos-contactados.component';
 @NgModule({
   declarations: [
     CuotasProgramasSaludComponent, 
@@ -25,7 +26,7 @@ import { ListadoPSFMorososSeguimientoComponent } from './programasSalud/listado-
     ListadoMadreNinoComponent, 
     ListadoMadreNinoMorososComponent, 
     ListadoAfiliadosComponent, 
-    EstadisticasComponent, ListadoPSFMorososSeguimientoComponent
+    EstadisticasComponent, ListadoPSFMorososSeguimientoComponent, PsfMorososContactadosComponent
   ],
   imports: [
     AgGridModule.withComponents([]),
@@ -46,6 +47,10 @@ import { ListadoPSFMorososSeguimientoComponent } from './programasSalud/listado-
       {
         path: 'listadoPSFMorososSeguimiento',
         component: ListadoPSFMorososSeguimientoComponent
+      },
+      {
+        path: 'listadoPSFMorososContactados',
+        component: PsfMorososContactadosComponent
       },
       {
         path: 'listadoContratosVigentes',

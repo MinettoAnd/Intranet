@@ -11,7 +11,7 @@
 </div>
 <div class="modal-body">
   <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
-    <li [ngbNavItem]="1">
+    <!-- <li [ngbNavItem]="1">
     <a ngbNavLink>Datos de Morosidad</a>
       <ng-template ngbNavContent>
         <form [formGroup]="accionForm" class="mt-3 p-4">
@@ -85,8 +85,8 @@
           </div>
         </form>
       </ng-template>
-    </li>
-    <li [ngbNavItem]="2">
+    </li> -->
+    <!-- <li [ngbNavItem]="2">
       <a ngbNavLink>Acción</a>
       <ng-template ngbNavContent>
         <form [formGroup]="accionForm">
@@ -182,12 +182,6 @@
                 <option value="5">Madre</option>
                 <option value="6">Otro Familiar</option>
               </select>
-              <!-- <div
-                *ngIf="submitter_accion && s.contacto.errors"
-                class="invalid-feedback"
-              >
-                <div *ngIf="s.contacto.errors.required">Campo requerido</div>
-              </div> -->
             </div>
             <div class="form-group col-md-4" *ngIf="exito_comunicacion == 2">
               <label for="motivo"
@@ -206,12 +200,6 @@
                 <option value="02">Contacto equivocado</option>
                 <option value="03">Contacto no se encontraba disponible</option>
               </select>
-              <!-- <div
-                *ngIf="submitter_accion && s.motivo.errors"
-                class="invalid-feedback"
-              >
-                <div *ngIf="s.motivo.errors.required">Campo requerido</div>
-              </div> -->
             </div>
             <div class="form-group col-md-12" *ngIf="exito_comunicacion == 1">
               <label for="observaciones">Observaciones</label>
@@ -235,11 +223,27 @@
           </div>
         </form>
       </ng-template>
-    </li>
-    <!-- <li [ngbNavItem]="3">
+    </li> -->
+    <li [ngbNavItem]="1">
       <a ngbNavLink>Seguimiento</a>
       <ng-template ngbNavContent>
         <div class="card mt-4">
+          <!-- <div class="card-header">
+            <div class="row">
+              <div class="col-md-1">
+                <select
+                  class="custom-select form-select"
+                  style="width: auto"
+                  [(ngModel)]="pageSize"
+                  (ngModelChange)="refreshCountries()"
+                >
+                  <option [ngValue]="50">50</option>
+                  <option [ngValue]="100">100</option>
+                  <option [ngValue]="150">150</option>
+                </select>
+              </div>
+            </div>
+          </div> -->
           <div class="card-body">
             <div class="table-responsive p-4">
               <ngx-datatable #myTable
@@ -264,24 +268,86 @@
                   </ng-template>
                 </ngx-datatable-column>
               </ngx-datatable>
-              
+              <!-- <table
+                class="
+                  align-middle
+                  text-truncate
+                  mb-0
+                  table table-sm table-borderless table-hover
+                "
+              >
+                <thead>
+                  <tr>
+                    <th>F.inicio</th>
+                    <th>F.Culminación</th>
+                    <th>T.Reclamo</th>
+                    <th>C.Asignado</th>
+                    <th>C.Adoptado</th>
+                    <th>Naturaleza</th>
+                    <th>P.M.Adoptada</th>
+                    <th>Accion</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of medidas">
+                    <td>{{ diaEvento(item.fecha_inicio) }}</td>
+                    <td>{{ diaEvento(item.fecha_culminacion) }}</td>
+                    <td>{{ getTipoReclamo(item.tipo_reclamo) }}</td>
+                    <td>{{ item.codigo_unico }}</td>
+                    <td>{{ item.codigo_adoptado }}</td>
+                    <td>{{ getNaturaleza(item.naturaleza) }}</td>
+                    <td>{{ getProceso(item.processo_adoptada) }}</td>
+                    <td>
+                      <div role="group" class="btn-group-sm btn-group">
+                        <button
+                          (click)="openModalMedida(2, item)"
+                          class="btn-shadow btn btn-outline-success"
+                        >
+                          <i class="pe-7s-note btn-icon-wrapper"> </i>
+                        </button>
+                        <button
+                          (click)="showDelete(item.id)"
+                          class="btn-shadow btn btn-outline-danger"
+                        >
+                          <i class="pe-7s-trash btn-icon-wrapper"> </i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table> -->
             </div>
-            
+            <!-- <div class="p-2">
+              <ngb-pagination
+                class="float-right"
+                [collectionSize]="collectionSize"
+                [(page)]="page"
+                [pageSize]="pageSize"
+                (pageChange)="refreshCountries()"
+              >
+                <ng-template ngbPaginationPrevious>
+                  <i class="fa fa-chevron-left"></i
+                ></ng-template>
+                <ng-template ngbPaginationNext
+                  ><i class="fa fa-chevron-right"></i
+                ></ng-template>
+              </ngb-pagination>
+            </div> -->
           </div>
         </div>
       </ng-template>
-    </li> -->
+    </li>
   </ul>
   <div [ngbNavOutlet]="nav" class="mt-2"></div>
 </div>
 <div class="modal-footer">
-  <button
+  <!-- <button
     type="button"
     (click)="saveComunication()"
     class="btn btn-primary"
   >
     <i class="pe-7s-diskette"></i> Guardar
-  </button>
+  </button> -->
   <button
     type="button"
     class="btn btn-outline-dark"

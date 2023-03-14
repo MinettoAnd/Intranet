@@ -113,6 +113,7 @@ import { SucursalCellRenderer } from 'utils/SucursalCellRenderer';
 
 import { InformeComponent } from "./modals/imagenes/informe/informe.component";
 import { ContactoComponent } from "./modals/seguimientoMorosos/contacto/contacto.component";
+import { MorososContactadosComponent } from "./modals/seguimientoMorosos/listado/morosos-contactados.component";
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
@@ -195,7 +196,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     GenderCellRenderer, 
     SucursalCellRenderer, 
     InformeComponent,
-    ContactoComponent
+    ContactoComponent,
+    MorososContactadosComponent
 
         
   ],
