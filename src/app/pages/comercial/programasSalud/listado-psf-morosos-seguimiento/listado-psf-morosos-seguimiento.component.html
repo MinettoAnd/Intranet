@@ -59,7 +59,34 @@
                         <option value="5M">05 Meses a mas</option>	
                       </select>
                     </div>
-
+                    <div class="input-group input-group-sm">
+                      <div class="input-group-append">
+                        <span class="input-group-text">Planes de Salud</span>
+                      </div>
+                      <select class="form-control form-select"
+                              formControlName="planDeSalud"
+                              id="planDeSalud"
+                      >	
+                        <option value="0" selected>Todos</option>
+                        <option value="3">Tarjeta Clásica</option>
+                        <option value="18">Tarjeta Dorada</option>
+                        <option value="21">Tarjeta Diamante</option>
+                      </select>
+                    </div>
+                    <div class="input-group input-group-sm">
+                      <div class="input-group-append">
+                        <span class="input-group-text">Acción</span>
+                      </div>
+                      <select class="form-control form-select"
+                              formControlName="accion"
+                              id="accion"
+                      >	
+                        <option value="0" selected>Todos</option>
+                        <option value="1">Contactados</option>
+                        <option value="2">No Contactados</option>
+                        <option value="30">Compromiso(últimos 30 días)</option>
+                      </select>
+                    </div>
                       <div class="input-group-btn">
                         <button (click)="filter()" class="btn btn-sm btn-primary">
                           <i class="fa fa-search"></i> Filtrar
@@ -134,14 +161,14 @@
                                 <ngx-datatable-column [flexGrow]="1" [minWidth]="90" [width]="column.width" [pipe]="column.pipe" *ngFor="let column of columns; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                   <ng-template  ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                     let-row="row">
-                                    <!-- <span [title]="value">{{value}}</span> -->
                                     <div class="{{column.prop}}" *ngIf="column.prop !== 'accion'">
                                       <span  [title]="value">{{value}}</span>
-                                      <!-- <span  [title]="value">{{row | json }}</span> -->
                                     </div>
                                     <div class="{{column.prop}}" *ngIf="column.prop === 'accion'">
-                                      <!-- <span  [title]="value"><a href="javascript:;" (click)="onSelect($event, content)" style="color: #007ad7;">{{value}}</a></span> -->
-                                      <span  title="ver informe"><a href="javascript:;" (click)="onSelect(row)" class="btn-shadow btn btn-outline-secondary"><i class="pe-7s-note btn-icon-wrapper"></i></a></span>
+                                      <span  title="ver informe">
+                                        <a href="javascript:;" (click)="onSelect(row)" class="btn-shadow btn " [ngClass]="{'btn-outline-success': row.TotalAcciones > 0 && hoy_menos_seis <= row.UltimaAccion, 'btn-outline-focus': row.TotalAcciones > 0 && hoy_menos_seis > row.UltimaAccion, 'btn-outline-danger': row.TotalAcciones === null && row.UltimaAccion === null}">
+                                        <i class="pe-7s-note btn-icon-wrapper"></i></a>
+                                      </span>
                                     </div>
                                   </ng-template>
                                 </ngx-datatable-column>
