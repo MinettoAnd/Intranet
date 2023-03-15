@@ -123,8 +123,10 @@
                 id="medio_comunicacion"
               >
                 <option value="">Seleccionar ....</option>
-                <option value="1">Correo Electronico</option>
-                <option value="2">Via Telefónica</option>
+                <option value="1">Correo Electrónico</option>
+                <option value="2">Vía Telefónica</option>
+                <option value="3">SMS</option>
+                <option value="4">WhatsApp</option>
               </select>
             </div>
             <div class="form-group col-md-4">
@@ -182,12 +184,41 @@
                 <option value="5">Madre</option>
                 <option value="6">Otro Familiar</option>
               </select>
-              <!-- <div
-                *ngIf="submitter_accion && s.contacto.errors"
-                class="invalid-feedback"
-              >
-                <div *ngIf="s.contacto.errors.required">Campo requerido</div>
-              </div> -->
+            </div>
+            <div class="form-group col-md-4" *ngIf="exito_comunicacion == 1">
+              <div class="custom-control custom-switch mt-2">
+                <input
+                  type="checkbox"
+                  formControlName="titular_fallecido"
+                  class="custom-control-input"
+                  id="titular_fallecido"
+                />
+                <label class="custom-control-label" for="titular_fallecido"
+                  >Titular fallecido</label
+                >
+              </div>
+              <div class="custom-control custom-switch mt-2">
+                <input
+                  type="checkbox"
+                  formControlName="anular_contrato"
+                  class="custom-control-input"
+                  id="anular_contrato"
+                />
+                <label class="custom-control-label" for="anular_contrato"
+                  >Desea anular contrato</label
+                >
+              </div>
+              <div class="custom-control custom-switch mt-2">
+                <input
+                  type="checkbox"
+                  formControlName="retirar_miembro"
+                  class="custom-control-input"
+                  id="retirar_miembro"
+                />
+                <label class="custom-control-label" for="retirar_miembro"
+                  >Desea retirar miembro del contrato</label
+                >
+              </div>
             </div>
             <div class="form-group col-md-4" *ngIf="exito_comunicacion == 2">
               <label for="motivo"
@@ -206,12 +237,6 @@
                 <option value="02">Contacto equivocado</option>
                 <option value="03">Contacto no se encontraba disponible</option>
               </select>
-              <!-- <div
-                *ngIf="submitter_accion && s.motivo.errors"
-                class="invalid-feedback"
-              >
-                <div *ngIf="s.motivo.errors.required">Campo requerido</div>
-              </div> -->
             </div>
             <div class="form-group col-md-12" *ngIf="exito_comunicacion == 1">
               <label for="observaciones">Observaciones</label>
@@ -221,12 +246,25 @@
                 formControlName="observaciones"
               ></textarea>
             </div>
+            
             <div class="form-group col-md-12" *ngIf="exito_comunicacion == 1">
               <label for="compromiso" class="form-label">Compromiso de cuotas a pagar</label>
               <ngx-slider [(value)]="value" formControlName="compromiso" id="compromiso" [options]="options"></ngx-slider>
               Valor seleccionado: {{value}}
             </div>
-            <div class="form-group col-md-8" *ngIf="exito_comunicacion == 1 && value > 0">
+            <div class="form-group col-md-6" *ngIf="exito_comunicacion == 1 && value > 0">
+              <label for="compromiso_fecha">Fecha de Compromiso</label>
+              <div class="input-group">
+                <input
+                  type="date"
+                  [(ngModel)]="compromiso_fecha"
+                  formControlName="compromiso_fecha"
+                  class="form-control form-control-sm"
+                  id="compromiso_fecha"
+                />
+              </div>
+            </div>
+            <div class="form-group col-md-6" *ngIf="exito_comunicacion == 1 && value > 0">
               <label for="periodos_deuda"
                 >Modificar Períodos de deuda</label
               >
@@ -236,7 +274,7 @@
         </form>
       </ng-template>
     </li>
-    <!-- <li [ngbNavItem]="3">
+    <li [ngbNavItem]="3">
       <a ngbNavLink>Seguimiento</a>
       <ng-template ngbNavContent>
         <div class="card mt-4">
@@ -270,7 +308,7 @@
           </div>
         </div>
       </ng-template>
-    </li> -->
+    </li>
   </ul>
   <div [ngbNavOutlet]="nav" class="mt-2"></div>
 </div>

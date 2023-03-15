@@ -31,6 +31,7 @@ export class ContactoComponent implements OnInit {
   active = 1;
   accionForm: FormGroup;
   fecha = moment(new Date()).format('YYYY-MM-DD');
+  compromiso_fecha = moment(new Date()).format('YYYY-MM-DD');
   hora = moment().locale('America/Lima').format('HH:mm:ss');
   exito_comunicacion: number = 0;
 
@@ -59,6 +60,9 @@ export class ContactoComponent implements OnInit {
   ngOnInit() {
 console.log(60, this.dato);
   this.options.ceil = this.dato.CuotasVencidas
+
+    const regex =/([^0-9,{])"([^:,}])/;
+  this.dato.periodos_deuda = this.dato.periodos_deuda.replaceAll(',',', ').replaceAll("'", '')
   this.periodos_deuda = this.dato.periodos_deuda
   this.accionForm = this.formBuilder.group({
         fecha: [this.fecha, Validators.required],
@@ -71,6 +75,10 @@ console.log(60, this.dato);
         compromiso: [""],
         cuotas: [this.dato.periodos_deuda],
         observaciones: [""],
+        compromiso_fecha: this.compromiso_fecha,
+        titular_fallecido: [false],
+        anular_contrato: [false],
+        retirar_miembro: [false],
       });
       
     this.getResultadoComunication(this.dato.idAfiliado);
@@ -110,6 +118,10 @@ console.log(60, this.dato);
                         item.medio_comunicacion = 'Teléfono'
                     }else if(item.medio_comunicacion === '2'){
                         item.medio_comunicacion = 'Correo'
+                    }else if(item.medio_comunicacion === '3'){
+                        item.medio_comunicacion = 'SMS'
+                    }else if(item.medio_comunicacion === '4'){
+                        item.medio_comunicacion = 'WhatsApp'
                     }
                 }
                 if(item.contacto){
@@ -127,6 +139,7 @@ console.log(60, this.dato);
                         item.contacto = 'Otro Familiar'
                     }
                 }
+                
             });
             console.log(70, this.columns);
             console.log(70, this.rows);
@@ -161,10 +174,14 @@ console.log(60, this.dato);
         motivo: formValue.motivo,
         contacto: formValue.contacto,
         compromiso: formValue.compromiso,
+        compromiso_fecha: formValue.compromiso_fecha,
         cuotas: formValue.cuotas,
         observaciones: formValue.observaciones,
+        titular_fallecido: formValue.titular_fallecido,
+        anular_contrato: formValue.anular_contrato,
+        retirar_miembro: formValue.retirar_miembro,
       };
-      console.log(data);
+      console.log(181, data);
       this.textLoadion = "Actualizando Informacion...";
       this.showLoading();
       this.apiService.saveMorososComunicacion(data).subscribe(
