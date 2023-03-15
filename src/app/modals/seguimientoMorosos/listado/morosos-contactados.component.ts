@@ -6,17 +6,17 @@ import { IMedidas } from "src/app/pages/models/claims/IMedidas";
 import Swal from "sweetalert2";
 import { DocsComponent } from "../../claims/docs/docs.component";
 import { FilesComponent } from "../../claims/list/detalle/modal/files/files.component";
-import { MedidasAdoptadasComponent } from "./../../claims/list/respuesta-reclamo/medidas-adoptadas/medidas-adoptadas.component";
+import { MedidasAdoptadasComponent } from "../../claims/list/respuesta-reclamo/medidas-adoptadas/medidas-adoptadas.component";
 import { Options } from '@angular-slider/ngx-slider';
 import * as moment from "moment";
 import { ComercialService } from "src/app/_services/comercial.service";
 import { ColumnMode, SelectionType, NgxDatatableModule, DatatableComponent  } from '@swimlane/ngx-datatable';
 @Component({
-  selector: 'app-contacto',
-  templateUrl: './contacto.component.html',
-  styleUrls: ['./contacto.component.scss']
+  selector: 'app-listado-morosos-contactados',
+  templateUrl: './morosos-contactados.component.html',
+  styleUrls: ['./morosos-contactados.component.scss']
 })
-export class ContactoComponent implements OnInit {
+export class MorososContactadosComponent implements OnInit {
   @Input() dato;
   value: number = 0;
   
@@ -73,7 +73,7 @@ console.log(60, this.dato);
         observaciones: [""],
       });
       
-    this.getResultadoComunication(this.dato.idAfiliado);
+    this.getResultadoComunication(this.dato.idPaciente);
   }
   get s() {
       return this.accionForm.controls;
