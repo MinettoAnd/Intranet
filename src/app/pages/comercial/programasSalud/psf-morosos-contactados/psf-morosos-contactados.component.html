@@ -12,54 +12,34 @@
                 <div class="row" style="margin-bottom: -0.5rem;">
                   <div class="form-group col-sm-12">
 
-                    <!-- <div class="input-group input-group-sm fecha">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text">Fecha</span>
-                      </div>
-                      <input
-                        type="date"
-                        formControlName="fecha"
-                        class="form-control"
-                      />
-                    </div>
-
-                    
-                    <div class="input-group input-group-sm">
-                        <div class="input-group-append">
-                          <span class="input-group-text">Tipo de Contacto</span>
-                        </div>
-                        <select class="form-control form-select"
-                                formControlName="contacto"
-                                id="inputGroupSelect05"
-                        >	
-                          <option value="TE" selected>Telefónico</option>
-                          <option value="CO">Correo</option>
-                          <option value="TC">Telefónico y Correo</option>
-                          <option value="NI">Ninguno</option>
-                        </select>
-                    </div>
-
                     <div class="input-group input-group-sm">
                       <div class="input-group-append">
-                        <span class="input-group-text">Meses de Morosidad</span>
+                        <span class="input-group-text">Planes de Salud</span>
                       </div>
                       <select class="form-control form-select"
-                              formControlName="meses"
-                              id="inputGroupSelect04"
+                              formControlName="planDeSalud"
+                              id="planDeSalud"
                       >	
-                        <option value="00" selected>Todos</option>
-                        <option value="1">01 Mes</option>
-                        <option value="2">02 Meses</option>
-                        <option value="3">03 Meses</option>
-                        <option value="4">04 Meses</option>
-                        <option value="5">05 Meses</option>
-                        <option value="2M">02 Meses a mas</option>
-                        <option value="3M">03 Meses a mas</option>
-                        <option value="4M">04 Meses a mas</option>
-                        <option value="5M">05 Meses a mas</option>	
+                        <option value="0" selected>Todos</option>
+                        <option value="3">Tarjeta Clásica</option>
+                        <option value="18">Tarjeta Dorada</option>
+                        <option value="21">Tarjeta Diamante</option>
                       </select>
-                    </div> -->
-
+                    </div>
+                    <div class="input-group input-group-sm">
+                      <div class="input-group-append">
+                        <span class="input-group-text">Acción</span>
+                      </div>
+                      <select class="form-control form-select"
+                              formControlName="accion"
+                              id="accion"
+                      >	
+                        <option value="0" selected>Todos</option>
+                        <option value="1">Contactados</option>
+                        <option value="2">No Contactados</option>
+                        <option value="30">Compromiso(últimos 30 días)</option>
+                      </select>
+                    </div>
                       <div class="input-group-btn">
                         <button (click)="filter()" class="btn btn-sm btn-primary">
                           <i class="fa fa-search"></i> Filtrar
@@ -76,7 +56,7 @@
                       <div class="card">
                         <div class="card-header">
                           <h4 class="card-title">{{title}}</h4>
-                          <p>{{message}}</p>
+                          <!-- <p>{{message}}</p> -->
                         </div>
                         <div class="card-content collapse show">
                           <div class="card-body">

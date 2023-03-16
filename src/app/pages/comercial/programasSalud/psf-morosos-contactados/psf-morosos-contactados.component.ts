@@ -64,9 +64,9 @@ export class PsfMorososContactadosComponent implements OnInit {
         // f_inicio: '2022-11-01',
       // f_fin: '2022-11-30',
   fecha = moment(new Date()).format('YYYY-MM-DD');
-  meses = '00';
-  contacto = 'TE';
-  tipo_paciente = '0';
+  planDeSalud = '0';
+  accion = '0';
+ 
 
   page = new Page();
   SelectionType = SelectionType;
@@ -89,10 +89,12 @@ export class PsfMorososContactadosComponent implements OnInit {
     this.page.size = 10;
 
     this.filtroForm = new FormGroup({
-      fecha: new FormControl(this.fecha),
-      meses: new FormControl("00"),
-      contacto: new FormControl("TE"),
-      tipo_paciente: new FormControl("0"),
+      // fecha: new FormControl(this.fecha),
+      // meses: new FormControl("00"),
+      // contacto: new FormControl("TE"),
+      // tipo_paciente: new FormControl("0"),
+      planDeSalud: new FormControl(this.planDeSalud),
+      accion: new FormControl(this.accion),
   });
    }
 
@@ -134,17 +136,17 @@ export class PsfMorososContactadosComponent implements OnInit {
   setPage(pageInfo) {
     console.log(pageInfo);
     // this.page.pageNumber = pageInfo.offset;
-    // this.parameters = {
-    //   fecha: this.fecha,
-    //   meses: this.meses,
-    //   contacto: this.contacto,
-    //   tipo_paciente: this.tipo_paciente,
-    //   pageNumber: this.page.pageNumber,
-    //   size: this.page.size
-    // };
+    this.parameters = {
+      planDeSalud: this.planDeSalud,
+      accion: this.accion,
+
+      pageNumber: this.page.pageNumber,
+      size: this.page.size
+    };
 
     this.loading("Realizando Busqueda....");
-    this.tableApiservice.getListMorososSeguimiento().subscribe(
+    console.log(this.parameters);
+    this.tableApiservice.getListMorososSeguimiento(this.parameters).subscribe(
       (response: ApiResponse<AttentionConsultation>) => {
         this.rows = [];
         this.columns = [];
@@ -192,8 +194,8 @@ export class PsfMorososContactadosComponent implements OnInit {
   
         const form = this.filtroForm.value;
           this.fecha = moment(form.fecha).format('YYYY-MM-DD'),
-          this.meses = form.meses,
-          this.tipo_paciente = form.tipo_paciente,
+          this.planDeSalud = form.planDeSalud,
+          this.accion = form.accion,
 
         this.setPage({ offset: 0 });
     }
