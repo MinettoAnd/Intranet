@@ -31,7 +31,7 @@ export class ContactoComponent implements OnInit {
   active = 1;
   accionForm: FormGroup;
   fecha = moment(new Date()).format('YYYY-MM-DD');
-  compromiso_fecha = moment(new Date()).format('YYYY-MM-DD');
+  compromiso_fecha = '';
   hora = moment().locale('America/Lima').format('HH:mm:ss');
   exito_comunicacion: number = 0;
 

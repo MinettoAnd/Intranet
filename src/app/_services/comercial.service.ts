@@ -70,9 +70,9 @@ export class ComercialService {
       this.loadTableApiDataURL = `${environment.api_url}getListComunicacionMorosos/${data}`;
       return this.http.get(this.loadTableApiDataURL);
     }
-    getListMorososSeguimiento(): Observable<any> {
+    getListMorososSeguimiento(data): Observable<any> {
       this.loadTableApiDataURL = `${environment.api_url}getListMorososSeguimiento`;
-      return this.http.get(this.loadTableApiDataURL);
+      return this.http.post(this.loadTableApiDataURL, data);
     }
     getVigentesDetalle(): Observable<any> {
       this.loadTableApiDataURL = `${environment.api_url}getVigentesDetalle`;
