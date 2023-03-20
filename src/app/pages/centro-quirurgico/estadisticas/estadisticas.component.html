@@ -172,7 +172,7 @@
                                             <ngb-accordion [destroyOnHide]="false" [closeOthers]="true" #acc="ngbAccordion" activeIds="ngb-panel-0">
                                               <ngb-panel *ngFor="let percentageCompleted of progressBar1; let i = index;">
                                                 <ng-template ngbPanelTitle style="width:100%!important;">
-                                                  <span style="display:flex;color:#000; justify-content: space-between;"><i><b>{{progressBarLabels[i]}}</b></i><i>{{progressBarLabels1[i]}}</i></span>
+                                                  <span style="display:flex;color:#000; justify-content: space-between;"><b>{{progressBarLabels[i]}}</b>{{progressBarLabels1[i]}}</span>
                                                   <ngb-progressbar
                                                       [type]="color[i]"
                                                       [value]="percentageCompleted.porcentaje"
