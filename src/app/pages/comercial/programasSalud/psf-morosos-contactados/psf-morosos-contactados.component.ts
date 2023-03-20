@@ -13,7 +13,7 @@ import * as XLSX from 'xlsx';
 import { ExcelJson } from '../../../../interfaces/excel-json.interface';
 import { ExportService } from '../../../../_services/export.service';
 import ResizeObserver from 'resize-observer-polyfill';
-import { CurrencyPipe } from '@angular/common';
+import { CurrencyPipe, DatePipe } from '@angular/common';
 import { CustomNumberPipe } from 'src/app/pipes/customNumber.pipe';
 import { PhonePipe } from 'src/app/pipes/phone.pipe';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -60,13 +60,15 @@ export class PsfMorososContactadosComponent implements OnInit {
   columns1:any;
   columns2:any;
   optionsWithCaption = {};
-  datePipe: any;
+  // datePipe: any;
         // f_inicio: '2022-11-01',
       // f_fin: '2022-11-30',
-  fecha = moment(new Date()).format('YYYY-MM-DD');
+  fecha_inicio = moment(this.restarDias(new Date, -7)).format('YYYY-MM-DD');
+  fecha_fin = moment(new Date()).format('YYYY-MM-DD');
+
   planDeSalud = '0';
   accion = '0';
- 
+  // tipo_paciente = '0';
 
   page = new Page();
   SelectionType = SelectionType;
@@ -74,25 +76,25 @@ export class PsfMorososContactadosComponent implements OnInit {
   ColumnMode = ColumnMode;
   filtered;
   public pageLimitOptions = [
-    {value: 10},
-    {value: 25},
     {value: 50},
     {value: 100},
+    {value: 200},
+    // {value: 100},
   ];
   totalMorosos:any;
   totalAfiliados:any;
   totalPeriodos:any;
   totalDeuda:any;
-  constructor(private tableApiservice: ComercialService, private exportService: ExportService, private _cnp:CustomNumberPipe,
+
+  constructor(private tableApiservice: ComercialService, private exportService: ExportService, private _cnp:CustomNumberPipe, private datePipe: DatePipe,
     private _cp: CurrencyPipe, private _phone: PhonePipe, private modalService: NgbModal) {
     this.page.pageNumber = 0;
     this.page.size = 10;
 
     this.filtroForm = new FormGroup({
-      // fecha: new FormControl(this.fecha),
-      // meses: new FormControl("00"),
-      // contacto: new FormControl("TE"),
-      // tipo_paciente: new FormControl("0"),
+      fecha_inicio: new FormControl(this.fecha_inicio),
+      fecha_fin: new FormControl(this.fecha_fin),
+      // tipo_paciente: new FormControl(this.tipo_paciente),
       planDeSalud: new FormControl(this.planDeSalud),
       accion: new FormControl(this.accion),
   });
@@ -119,7 +121,11 @@ export class PsfMorososContactadosComponent implements OnInit {
     this.setPage({ offset: 0 });
 
   }
-
+  restarDias(fecha, dias) {
+    var fechalim = fecha.setDate(fecha.getDate() + dias);
+    var fechas = this.datePipe.transform(fechalim, 'yyyy-MM-dd');
+    return fechas;
+  }
   private changePageLimit(limit: any): void {
     this.loading("Filtrando....");
     if (limit === '0'){
@@ -137,6 +143,9 @@ export class PsfMorososContactadosComponent implements OnInit {
     console.log(pageInfo);
     // this.page.pageNumber = pageInfo.offset;
     this.parameters = {
+      fecha_inicio: this.fecha_inicio,
+      fecha_fin: this.fecha_fin,
+      // tipo_paciente: this.tipo_paciente,
       planDeSalud: this.planDeSalud,
       accion: this.accion,
 
@@ -193,11 +202,22 @@ export class PsfMorososContactadosComponent implements OnInit {
   filter() {
   
         const form = this.filtroForm.value;
-          this.fecha = moment(form.fecha).format('YYYY-MM-DD'),
-          this.planDeSalud = form.planDeSalud,
-          this.accion = form.accion,
-
-        this.setPage({ offset: 0 });
+          this.fecha_inicio = moment(form.fecha_inicio).format('YYYY-MM-DD'),
+          this.fecha_fin = moment(form.fecha_fin).format('YYYY-MM-DD');
+          // this.tipo_paciente = form.tipo_paciente,
+          this.planDeSalud = form.planDeSalud;
+          this.accion = form.accion;
+          var diff = moment(this.fecha_fin).diff(moment(this.fecha_inicio));
+          if((diff/(1000*60*60*24)) < 31){
+            this.setPage({ offset: 0 });
+          }else{
+            Swal.fire({
+              title: "Problema",
+              text: "El sistema puede presentar datos de 31 DÍAS como máximo. Agradeceríamos modificar sus filtros de FECHA!",
+              icon: "error"
+            })
+            return;
+          }
     }
 
   updateFilter(event) {

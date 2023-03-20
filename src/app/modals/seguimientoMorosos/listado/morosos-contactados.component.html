@@ -225,9 +225,9 @@
       </ng-template>
     </li> -->
     <li [ngbNavItem]="1">
-      <a ngbNavLink>Seguimiento</a>
+      <a ngbNavLink>Seguimiento (Últimas 10 acciones)</a>
       <ng-template ngbNavContent>
-        <div class="card mt-4">
+        <div class="card ">
           <!-- <div class="card-header">
             <div class="row">
               <div class="col-md-1">
@@ -244,8 +244,8 @@
               </div>
             </div>
           </div> -->
-          <div class="card-body">
-            <div class="table-responsive p-4">
+          <div class="card-body ">
+            <!-- <div class="table-responsive p-4">
               <ngx-datatable #myTable
               class="bootstrap table table-striped"
               id="datatablele"
@@ -268,71 +268,21 @@
                   </ng-template>
                 </ngx-datatable-column>
               </ngx-datatable>
-              <!-- <table
-                class="
-                  align-middle
-                  text-truncate
-                  mb-0
-                  table table-sm table-borderless table-hover
-                "
-              >
-                <thead>
-                  <tr>
-                    <th>F.inicio</th>
-                    <th>F.Culminación</th>
-                    <th>T.Reclamo</th>
-                    <th>C.Asignado</th>
-                    <th>C.Adoptado</th>
-                    <th>Naturaleza</th>
-                    <th>P.M.Adoptada</th>
-                    <th>Accion</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let item of medidas">
-                    <td>{{ diaEvento(item.fecha_inicio) }}</td>
-                    <td>{{ diaEvento(item.fecha_culminacion) }}</td>
-                    <td>{{ getTipoReclamo(item.tipo_reclamo) }}</td>
-                    <td>{{ item.codigo_unico }}</td>
-                    <td>{{ item.codigo_adoptado }}</td>
-                    <td>{{ getNaturaleza(item.naturaleza) }}</td>
-                    <td>{{ getProceso(item.processo_adoptada) }}</td>
-                    <td>
-                      <div role="group" class="btn-group-sm btn-group">
-                        <button
-                          (click)="openModalMedida(2, item)"
-                          class="btn-shadow btn btn-outline-success"
-                        >
-                          <i class="pe-7s-note btn-icon-wrapper"> </i>
-                        </button>
-                        <button
-                          (click)="showDelete(item.id)"
-                          class="btn-shadow btn btn-outline-danger"
-                        >
-                          <i class="pe-7s-trash btn-icon-wrapper"> </i>
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table> -->
-            </div>
-            <!-- <div class="p-2">
-              <ngb-pagination
-                class="float-right"
-                [collectionSize]="collectionSize"
-                [(page)]="page"
-                [pageSize]="pageSize"
-                (pageChange)="refreshCountries()"
-              >
-                <ng-template ngbPaginationPrevious>
-                  <i class="fa fa-chevron-left"></i
-                ></ng-template>
-                <ng-template ngbPaginationNext
-                  ><i class="fa fa-chevron-right"></i
-                ></ng-template>
-              </ngb-pagination>
             </div> -->
+            <div class="row">
+              <div class="card col-md-3" style="margin: 1rem 2.5rem!important;" *ngFor="let row of rows">
+                  <div class="card-header text-center"><b>{{ row.comunicacion_fecha }}</b></div>
+                  <ul class="list-group list-group-flush " >
+                    <li class="list-group-item"><b>Medio :</b> {{ row.medio_comunicacion }}</li>
+                    <li class="list-group-item"><b>Éxito :</b> {{ row.exito_comunicacion }}</li>
+                    <li class="list-group-item" *ngIf="row.exito_comunicacion === 'No'"><b>Motivo :</b> {{ row.motivo }}</li>
+                    <li class="list-group-item"><b>Contacto :</b> {{ row.contacto }}</li>
+                    <li class="list-group-item" *ngIf="row.exito_comunicacion === 'Sí'"><b>Compromiso :</b> {{ row.compromiso }}</li>
+                    <li class="list-group-item"><b>Cuotas :</b> {{ row.cuotas }}</li>
+                    <li class="list-group-item"><b>Observaciones :</b> {{ row.observaciones }}</li>
+                  </ul>
+              </div>
+            </div>
           </div>
         </div>
       </ng-template>

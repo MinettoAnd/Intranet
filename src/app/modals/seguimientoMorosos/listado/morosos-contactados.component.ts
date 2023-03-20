@@ -126,6 +126,14 @@ console.log(60, this.dato);
                     }else if(item.contacto === '6'){
                         item.contacto = 'Otro Familiar'
                     }
+                }if(item.compromiso){
+                    if(item.compromiso === '1'){
+                        item.compromiso = 'Sí'
+                    }else if(item.compromiso === '0'){
+                        item.compromiso = 'No'
+                    }
+                }if(item.comunicacion_fecha){
+                    item.comunicacion_fecha = this.datePipe.transform(item.comunicacion_fecha, 'dd-MM-yyyy');
                 }
             });
             console.log(70, this.columns);
