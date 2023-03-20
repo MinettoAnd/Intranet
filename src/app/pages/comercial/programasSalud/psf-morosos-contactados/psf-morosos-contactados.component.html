@@ -11,10 +11,32 @@
               <form [formGroup]="filtroForm">
                 <div class="row" style="margin-bottom: -0.5rem;">
                   <div class="form-group col-sm-12">
-
+                    <div class="input-group input-group-sm">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">Fecha Inicio</span>
+                      </div>
+                        <input
+                          type="date"
+                          [(ngModel)]="fecha_inicio"
+                          formControlName="fecha_inicio"
+                          class="form-control"
+                        />
+                      
+                    </div>
+                    <div class="input-group input-group-sm">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">Fecha Fin</span>
+                      </div>
+                        <input
+                          type="date"
+                          [(ngModel)]="fecha_fin"
+                          formControlName="fecha_fin"
+                          class="form-control"
+                        />
+                    </div>
                     <div class="input-group input-group-sm">
                       <div class="input-group-append">
-                        <span class="input-group-text">Planes de Salud</span>
+                        <span class="input-group-text">Tipo de Paciente</span>
                       </div>
                       <select class="form-control form-select"
                               formControlName="planDeSalud"
