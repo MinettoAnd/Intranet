@@ -283,13 +283,82 @@
 
 .datatable-body-cell {
     line-height: 0.9rem !important;
-    padding: 0.35rem 0.75rem !important;
+    padding: 0.2rem 0.75rem !important;
    // text-align: left !important;
     vertical-align: middle !important;
+    line-height: 1.625 !important;
 }
 .datatable-header-cell {
     line-height: 1.01rem !important;
     padding: 0.2rem 0.75rem !important;
    // text-align: left !important;
     vertical-align: middle !important;
+}
+
+.card-header {
+    padding: 0.70rem 1.25rem 0rem 1.25rem;
+}
+
+.card-header-info {
+    height: 35px;
+    border-color: #FFAA00;
+    border-radius: 5px;
+    background-color: #FFAA00 !important;
+  }
+
+ .callout.text-center{
+    height: 30px;
+    padding: 0px 5px;
+    width: 100%;
+    margin-top: -30px; 
+    margin-bottom: 20px;
+}
+
+.callout.callout-info {
+    height: 36px;
+    padding: 6px 15px;
+    color: white;
+    background-color: #10004C !important;
+    margin-left: 10px;
+    width: 100%;
+}
+
+.table th, .table td {
+    padding: 0.2rem;
+    vertical-align: middle;
+    border-top: 1px solid #e9ecef;
+    font-size: 12px;
+}
+
+.table thead th {
+    vertical-align: middle;
+    border-bottom: 2px solid #e9ecef;
+    background: #FFAA00;
+    font-size: 12px;
+}
+
+.card-body {
+    padding: 0.8rem 1.25rem;
+}
+
+.p-3 {
+    padding: 0.2rem 1rem !important;
+}
+
+.btn-outline-primary {
+    color: #10004C;
+    border-color: #10004C;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+.btn-outline-primary:hover {
+    background: #FFF;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+.card {
+    border-radius: 0.25rem;
+    margin: 20px 0px;
 }

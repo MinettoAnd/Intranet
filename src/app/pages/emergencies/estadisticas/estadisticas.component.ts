@@ -48,10 +48,10 @@ export class EstadisticasComponent implements OnInit {
       // initially setter gets called with undefined
       this.baseChart = content;
       if (this.baseChart.nativeElement.id === 'chart-1'){
-        this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del mes seleccionado', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
+        this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del Mes', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
          this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'pie');
       }else if (this.baseChart.nativeElement.id === 'chart-3'){
-        this.getBarChart(this.chartLabels3, this.chartData4, this.chartData5,'Día del mes seleccionado', 'N° Pacientes','chart-3', 'C.E Reservada', 'C.E Realizada', 'bar');
+        this.getBarChart(this.chartLabels3, this.chartData4, this.chartData5,'Día del Mes', 'N° Pacientes','chart-3', 'C.E Reservada', 'C.E Realizada', 'bar');
         this.getPieChart(this.chartLabels4, this.chartData6,'chart-4', 'pie');
       }
     }
@@ -763,7 +763,7 @@ this.loading();
                 // this.resumenMontos = response.data;
                 
               }
-              this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del mes seleccionado', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
+              this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del Mes', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
               Swal.close();
             },
             (error) => {
@@ -1505,7 +1505,7 @@ private getPagedData(page: Page, data: any[]) {
                   // this.resumenMontos = response.data;
                   
                 }
-                this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del mes seleccionado', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
+                this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del Mes', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
                 Swal.close();
               },
               (error) => {
