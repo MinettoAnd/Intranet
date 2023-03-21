@@ -216,6 +216,9 @@ sum_ocup_ca_mt;
   isLoading4 = false;
   isLoading5 = false;
   isLoading6 = false;
+  archivo_atenciones_matriz;
+  archivo_especialidades_mes;
+  archivo_medico_mes;
   constructor(private tableApiservice: ExternalConsultationService, private exportService: ExportService,
     private _cp: CurrencyPipe
      ) {
@@ -489,9 +492,23 @@ formatPipe2(rows) {
   // console.log(rows);
 // });
 }
+makeid(length) {
+  var today 			 = moment().format('HHmmss');
+  var result           = '';
+  var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  var charactersLength = characters.length;
+  
+  for ( var i = 0; i < length; i++ ) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return 'aaTmp_' + today + result;
+}
 setPage(pageInfo) {
     console.log(pageInfo);
     // this.page.pageNumber = pageInfo.offset;
+    this.archivo_atenciones_matriz = this.makeid(22);
+    this.archivo_especialidades_mes =  this.makeid(22);
+    this.archivo_medico_mes =  this.makeid(22);
     this.parameters = {
       archivo_temporal: 'aaammTmpA',
       mes: this.mes,
@@ -503,18 +520,18 @@ setPage(pageInfo) {
       // size: this.page.size
     };
     this.tablas = {
-      archivo_atenciones_matriz: 'aaaTmpmmAMaaaTmp_133621r9RaQ',
+      archivo_atenciones_matriz: this.archivo_atenciones_matriz,
       archivo_atenciones: 'aaammTmpA',
-      archivo_especialidades_mes: 'aaammTmpAEmesaaTmp_133621r9RaQ',
-      archivo_medico_mes: 'aaammTmpAMedEmesaaTmp_133621r9RaQ',
+      archivo_especialidades_mes: this.archivo_especialidades_mes,
+      archivo_medico_mes: this.archivo_medico_mes,
     };
     this.tablasParms = {
       periodo_consulta: this.periodo_consulta,
 	    sede: this.id_sede,
-      archivo_atenciones_matriz: 'aaaTmpmmAMaaaTmp_133621r9RaQ',
+      archivo_atenciones_matriz: this.archivo_atenciones_matriz,
       archivo_atenciones: 'aaammTmpA',
-      archivo_especialidades_mes: 'aaammTmpAEmesaaTmp_133621r9RaQ',
-      archivo_medico_mes: 'aaammTmpAMedEmesaaTmp_133621r9RaQ',
+      archivo_especialidades_mes: this.archivo_especialidades_mes,
+      archivo_medico_mes: this.archivo_medico_mes,
     };
     this.loading();
 this.tableApiservice.eliminarTablasConsultorio(this.tablas).subscribe(

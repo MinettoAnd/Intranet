@@ -289,8 +289,8 @@ selectedOptionGraph2 = 'ingresos_hospitalizacion';
   
     const form = this.filtroForm.value;
       this.id_sede = form.id_sede,
-      this.mes = moment(form.mes).format('MM'),
-      this.anio = moment(form.anio).format('YYYY'),
+      this.mes = form.mes,
+      this.anio = form.anio,
       this.periodo_consulta = form.anio + form.mes,
 
     this.setPage({ offset: 0 });
@@ -1309,7 +1309,7 @@ private getPagedData(page: Page, data: any[]) {
   return pagedData;
 }
  setPage(pageInfo) {
-      // console.log(pageInfo);
+      console.log(1312, this.mes);
 
       this.parameters = {
         // periodo_consulta:this.periodo_consulta,
