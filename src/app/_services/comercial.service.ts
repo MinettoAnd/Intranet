@@ -58,6 +58,7 @@ export class ComercialService {
       this.loadTableApiDataURL = `${environment.api_url}getMorososDetalle`;
       return this.http.post(this.loadTableApiDataURL, data);
     }
+    // Seguimiento de moroso
     getMorososSeguimiento(data): Observable<any> {
       this.loadTableApiDataURL = `${environment.api_url}getMorososSeguimiento`;
       return this.http.post(this.loadTableApiDataURL, data);
@@ -74,6 +75,16 @@ export class ComercialService {
       this.loadTableApiDataURL = `${environment.api_url}getListMorososSeguimiento`;
       return this.http.post(this.loadTableApiDataURL, data);
     }
+      // Dashboard Morosos Contactados
+    getContratosGestionadosMes(data): Observable<any> {
+      this.loadTableApiDataURL = `${environment.api_url}getContratosGestionadosMes`;
+      return this.http.post(this.loadTableApiDataURL, data);
+    }
+    getContratosGestionadosAnual(data): Observable<any> {
+      this.loadTableApiDataURL = `${environment.api_url}getContratosGestionadosAnual`;
+      return this.http.post(this.loadTableApiDataURL, data);
+    }
+    // Fin Morosos
     getVigentesDetalle(): Observable<any> {
       this.loadTableApiDataURL = `${environment.api_url}getVigentesDetalle`;
       return this.http.get(this.loadTableApiDataURL);

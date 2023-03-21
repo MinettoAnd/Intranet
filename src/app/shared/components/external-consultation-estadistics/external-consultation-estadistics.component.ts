@@ -239,8 +239,8 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
   
     const form = this.filtroForm.value;
       this.id_sede = form.id_sede,
-      this.mes = moment(form.mes).format('MM'),
-      this.anio = moment(form.anio).format('YYYY'),
+      this.mes = form.mes,
+      this.anio = form.anio,
       this.periodo_consulta = form.anio + form.mes,
 
     this.setPage({ offset: 0 });

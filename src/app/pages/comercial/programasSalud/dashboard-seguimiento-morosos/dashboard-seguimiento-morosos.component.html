@@ -11,108 +11,84 @@
               <form [formGroup]="filtroForm">
                 <div class="row" style="margin-bottom: -0.5rem;">
                   <div class="form-group col-sm-12">
-
-                    <div class="input-group input-group-sm fecha">
+                    <!-- <div class="input-group input-group-sm">
                       <div class="input-group-prepend">
-                        <span class="input-group-text">Fecha</span>
+                        <span class="input-group-text">Sedes</span>
                       </div>
-                      <input
-                        type="date"
-                        formControlName="fecha"
-                        class="form-control"
-                      />
+                      <select
+                      class="form-control form-select"
+                      formControlName="id_sede"
+                      id="inputGroupSelect04"
+                      >
+                        <option value="0000">Todos</option>
+                        <option value="0001">Lima</option>
+                        <option value="0002">Chorrillos</option>
+                        <option value="0004">Surco</option>
+                      </select>
+                    </div> -->
+                    <div class="input-group input-group-sm">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">Año</span>
+                      </div>
+                      <select formControlName="anio" class="form-control form-select" >
+                        <option
+                            *ngFor="let option of optionsAnio"
+                            [value]="option.value"
+                        >
+                            {{ option.label }}
+                        </option>
+                      </select>
                     </div>
 
                     
                     <div class="input-group input-group-sm">
                         <div class="input-group-append">
-                          <span class="input-group-text">Tipo de Contacto</span>
+                          <span class="input-group-text">Tipo Periodo :</span>
                         </div>
-                        <select class="form-control form-select"
-                                formControlName="contacto"
-                                id="inputGroupSelect05"
-                        >	
-                          <option value="TE" selected>Telefónico</option>
-                          <option value="CO">Correo</option>
-                          <option value="TC">Telefónico y Correo</option>
-                          <option value="NI">Ninguno</option>
+                        <select class="form-control form-select" disabled="disabled">
+                          <option value="1">Mensual </option>
                         </select>
                     </div>
 
                     <div class="input-group input-group-sm">
                       <div class="input-group-append">
-                        <span class="input-group-text">Meses de Morosidad</span>
+                        <span class="input-group-text">Mes</span>
                       </div>
-                      <select class="form-control form-select"
-                              formControlName="meses"
-                              id="inputGroupSelect04"
-                      >	
-                        <option value="00" selected>Todos</option>
-                        <option value="1">01 Mes</option>
-                        <option value="2">02 Meses</option>
-                        <option value="3">03 Meses</option>
-                        <option value="4">04 Meses</option>
-                        <option value="5">05 Meses</option>
-                        <option value="2M">02 Meses a mas</option>
-                        <option value="3M">03 Meses a mas</option>
-                        <option value="4M">04 Meses a mas</option>
-                        <option value="5M">05 Meses a mas</option>	
+                      <select formControlName="mes" class="form-control form-select">
+                        <option
+                            *ngFor="let option of optionsMes"
+                            [value]="option.value"
+                        >
+                            {{ option.label }}
+                        </option>
                       </select>
                     </div>
-                    <div class="input-group input-group-sm">
-                      <div class="input-group-append">
-                        <span class="input-group-text">Planes de Salud</span>
-                      </div>
-                      <select class="form-control form-select"
-                              formControlName="planDeSalud"
-                              id="planDeSalud"
-                      >	
-                        <option value="0" selected>Todos</option>
-                        <option value="3">Tarjeta Clásica</option>
-                        <option value="18">Tarjeta Dorada</option>
-                        <option value="21">Tarjeta Diamante</option>
-                      </select>
+                    <div class="input-group-btn">
+                      <button (click)="filter()" class="btn btn-sm btn-primary">
+                        <i class="fa fa-search"></i> Filtrar
+                      </button>
                     </div>
-                    <div class="input-group input-group-sm">
-                      <div class="input-group-append">
-                        <span class="input-group-text">Acción</span>
-                      </div>
-                      <select class="form-control form-select"
-                              formControlName="accion"
-                              id="accion"
-                      >	
-                        <option value="0" selected>Todos</option>
-                        <option value="1">Contactados</option>
-                        <option value="2">No Contactados</option>
-                        <option value="30">Compromiso(últimos 30 días)</option>
-                      </select>
-                    </div>
-                      <div class="input-group-btn">
-                        <button (click)="filter()" class="btn btn-sm btn-primary">
-                          <i class="fa fa-search"></i> Filtrar
-                        </button>
-                      </div>
                    
                   </div>
                 </div>
               </form>
               <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs" style="justify-content: end;">
                 <li [ngbNavItem]="1">
-                    <a ngbNavLink>Resumen</a>
+                    <a ngbNavLink>RESUMEN DEL MES SELECCIONADO</a>
                       <ng-template ngbNavContent>
                         
                         <div class="card atencionesConsultaExterna">
                           <div class="card-header">
-                            <h4 class="card-title" style="bottom:13px;">Resumen de Morosos (Mientras mas antigua es la fecha procesada, menos consistente podría ser la información)</h4>
+                            <h4 class="card-title" style="bottom:13px;">Resumen de Morosos </h4>
                             <p>{{message}}</p>
                             <div class="col-md-12 div_panel_cabecera">
                               <div class="col-md-3 col-sm-6 col-xs-12" id="div_mostrar_ptable_i">
                                   <div class="info-box">
-                                      <span style="background:#00c0ef !important; color:#fff !important;" class="info-box-icon">
-                                      <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                      <span style="background:#10004C !important; color:#fff !important;" class="info-box-icon">
+                                      <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
                                       </span>		
                                       <div class="info-box-content">
-                                      <span style="font-family:arial; font-size:15px; " class="info-box-text">CONTRATOS MOROSOS</span>
+                                      <span style="font-family:arial; font-size:15px; " class="info-box-text">CONTRATOS GESTIONADOS</span>
                                           <span  class="info-box-number" *ngIf="totalMorosos">{{totalMorosos }}</span>
                                       </div>
                                   </div>
@@ -120,32 +96,78 @@
                               </div>
                               <div class="col-md-3 col-sm-6 col-xs-12" id="div_mostrar_ptable_a">
                                   <div class="info-box">
-                                      <span style="background: #dd4b39 !important; color:#fff !important;" class="info-box-icon">			
-                                      <i class="fa fa-users" aria-hidden="true"></i>		</span>		
+                                      <span style="background: #57AA50 !important; color:#fff !important;" class="info-box-icon">			
+                                      <i class="fa fa-plus-circle" aria-hidden="true"></i>		</span>		
                                       <div class="info-box-content">			
-                                          <span style="font-family:arial; font-size:15px; " class="info-box-text">MOROSOS AFILIADOS</span>			
+                                          <span style="font-family:arial; font-size:15px; " class="info-box-text">GESTIONES REALIZADAS</span>			
                                           <span class="info-box-number" *ngIf="totalAfiliados">{{totalAfiliados}}</span>			
                                       </div>
                                   </div>                              
                               </div>
                               <div class="col-md-3 col-sm-6 col-xs-12" style="display: flex;">
                                   <div class="info-box">
-                                      <span style="background: #FEB02D !important; color:#fff !important;" class="info-box-icon">			
-                                      <i class="fa fa-calendar" aria-hidden="true"></i>		</span>		
-                                      <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">PERIODOS DE MOROSIDAD</span>			
+                                      <span style="background: #FF3636 !important; color:#fff !important;" class="info-box-icon">			
+                                      <i class="fa fa-medkit" aria-hidden="true"></i>		</span>		
+                                      <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">GESTIONES CON RESPUESTA</span>			
                                       <span  class="info-box-number" *ngIf="totalPeriodos">{{totalPeriodos }}</span>			
                                     </div>
                                   </div>
                               </div>
                               <div class="col-md-3 col-sm-6 col-xs-12" style="display: flex;">
                                 <div class="info-box">
-                                    <span style="background: #00a65a !important; color:#fff !important;" class="info-box-icon">			
-                                    <i class="fa fa-money" aria-hidden="true"></i>		</span>		
-                                    <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">TOTAL DEUDA POR MOROSIDAD</span>			
+                                    <span style="background: #FFAA00 !important; color:#fff !important;" class="info-box-icon">			
+                                    <i class="fa fa-bank" aria-hidden="true"></i>		</span>		
+                                    <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">GESTIONES SIN RESPUESTA</span>			
                                     <span  class="info-box-number" *ngIf="totalDeuda">{{totalDeuda | currency }}</span>			
                                   </div>
                                 </div>
                               </div>
+                            </div>
+                          </div>
+                          <div class="card-content collapse show">
+                            <div class="row" style="align-items: center;justify-content: space-between;">
+                            <div class="col-md-8">
+                              
+                              <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
+                              <li class="list-group-item border-0 pl-0">
+                                <a  id="downloadlink1" href="#" 
+                                class="btn btn-sm font-weight-bold btn-link" (click)="guardarImagen('chart-1', 'downloadlink1')" download *ngIf="selectedOptionGraph1 == 'contratos_gestionados'">
+                                <i class="fa fa-external-link"></i>
+                                Guardar Imagen
+                                </a>
+                                <a  id="downloadlink1" href="#" 
+                                class="btn btn-sm font-weight-bold btn-link" (click)="guardarImagen('chart-2', 'downloadlink1')" download *ngIf="selectedOptionGraph1 !== 'contratos_gestionados'">
+                                <i class="fa fa-external-link"></i>
+                                Guardar Imagen
+                                </a>
+                              </li>
+                              <li class="list-group-item border-0 pl-0">
+                                <select class="form-control" style="width: auto!important; height: 2.2rem;" (change)="tipoChangeGraph($event.target.value, 'bar')" [(ngModel)]="selectedOptionGraph1">
+                                <option value="contratos_gestionados">Contratos Gestionados</option>
+                                <option value="contratos_con_compromiso_pago">Contratos con Compromiso de Pago</option>
+                                </select>
+                              </li>
+                              </ul>
+                              <p class="text-center">
+                              <i class="fa fa-line-chart"></i>
+                              <strong *ngIf="selectedOptionGraph1 == 'contratos_gestionados'">Contratos Gestionados</strong>
+                              <strong *ngIf="selectedOptionGraph1 !== 'contratos_gestionados'">Contratos con Compromiso de Pago</strong>
+                              </p>
+                              <div class="card-body">
+                              <div class="d-block" >
+                                <canvas #baseChart id="chart-1" *ngIf="selectedOptionGraph1 == 'contratos_gestionados'">
+                                </canvas>
+                                
+                                <canvas #baseChart id="chart-2" *ngIf="selectedOptionGraph1 !== 'contratos_gestionados'">
+                                </canvas>
+                              </div>
+                              </div>
+                              <!-- <div class="card-body" *ngIf="selectedOptionGraph1 !== 'ingresos_emergencia'">
+                              <div class="d-block" >
+                                
+                              </div>
+                              </div> -->
+                            </div>
                             </div>
                           </div>
                           <div class="card-content collapse show">
@@ -158,7 +180,7 @@
                                         <div class="box-header">
                                           <div class="toggle-table">
                                             <div class="callout callout-info">
-                                              <h3 class="box-title">Distribución por Programa</h3>
+                                              <h3 class="box-title">Producción</h3>
                                             </div>
                                             <button type="button" class="btn btn-outline-primary" (click)="collapse1.toggle()" [attr.aria-expanded]="!isCollapsed1"
                                             aria-controls="collapseExample">
@@ -223,7 +245,7 @@
                                         <div class="box-header">
                                           <div class="toggle-table">
                                             <div class="callout callout-info">
-                                              <h3 class="box-title">Distribución por Períodos</h3>
+                                              <h3 class="box-title">Indicadores</h3>
                                             </div>
                                             <button type="button" class="btn btn-outline-primary" (click)="collapse2.toggle()" [attr.aria-expanded]="!isCollapsed2"
                                             aria-controls="collapseExample">
@@ -291,7 +313,7 @@
                       </ng-template>
                   </li>
                 <li [ngbNavItem]="2">
-                    <a ngbNavLink>Listado de Morosos</a>
+                    <a ngbNavLink>RESUMEN ANUAL</a>
                     <ng-template ngbNavContent>
                       <div class="card">
                         <div class="card-header">
@@ -300,72 +322,140 @@
                         </div>
                         <div class="card-content collapse show">
                           <div class="card-body">
-
                             <div class="table table-striped table-bordered selection-deletion-row">
-                                <div class="row" style="align-items: center;justify-content: space-between;">
-                                  <ul class="list-group list-group-horizontal list-group-flush">
-                                    <li class="list-group-item border-0 pl-0">
-                                      <select class="form-control form-select" (change)="onLimitChange($event.target.value)">
-                                        <option
-                                          *ngFor="let option of pageLimitOptions"
-                                          [value]="option.value"
-                  
+                              <div class="box box-solid">
+                                <div id="accordion3">
+                                  <div class="card">
+                                    <div class="card-header-info" >
+                                      <div class="box-header">
+                                        <div class="toggle-table">
+                                          <div class="callout callout-info">
+                                            <h3 class="box-title">Producción</h3>
+                                          </div>
+                                          <button type="button" class="btn btn-outline-primary" (click)="collapse3.toggle()" [attr.aria-expanded]="!isCollapsed3"
+                                          aria-controls="collapseExample">
+                                          <i class="fa fa-minus" *ngIf="!isCollapsed3"> </i>
+                                          <i class="fa fa-plus" *ngIf="isCollapsed3"> </i> 
+                                          </button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div #collapse3="ngbCollapse" [(ngbCollapse)]="isCollapsed3">
+                                      <div class="row" style="align-items: center;justify-content: space-between;">
+                                        <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
+                                          <li class="list-group-item border-0 pl-0">
+                                            <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(3)">
+                                              <i class="fa fa-external-link"></i>
+                                              Copiar tabla
+                                            </button>
+                                          </li>
+                                          <li class="list-group-item border-0 pl-0">
+                                            <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(3)">
+                                              <i class="fa fa-external-link"></i>
+                                              Exportar tabla a Excel
+                                            </button>
+                                          </li>
+                                        </ul>
+                                      </div>
+                                      <ngx-datatable #myTable3
+                                      class="bootstrap table table-striped "
+                                      id="datatablele"
+                                        [columns]="columns3"
+                                        [rows]="rows3"
+                                        [columnMode]="ColumnMode.flex"
+                                        [headerHeight]="40"
+                                        [rowHeight]="$any('auto')"
+                                        [scrollbarH]="true"
+                                        (page)="setPage($event)"
+                                        [rowClass] = "getRowClass"
                                         >
-                                          {{ option.value }} Registros
-                                        </option>
-                                        <option value="0" *ngIf="this.page.totalElements">Todos los Registros</option>
-                                      </select>
-                                    </li>
-                                    <li class="list-group-item border-0 pl-0">
-                                      <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(0)">
-                                        <i class="fa fa-external-link"></i>
-                                        Copiar tabla
-                                      </button>
-                                    </li>
-                                    <li class="list-group-item border-0 pl-0">
-                                      <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(0)">
-                                        <i class="fa fa-external-link"></i>
-                                        Exportar tabla a Excel
-                                      </button>
-                                    </li>
-                                  </ul>
-                                  <div class="" style="display:flex;margin:15px;align-items: center;">
-                                    <span>Buscar</span>&nbsp;&nbsp;
-                                      <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter($event)'>
+                                        <ngx-datatable-column [flexGrow]="1" 
+                                        [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns3; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                                            let-row="row">
+                                            <div>
+                                              <span  [title]="value">{{value}}</span>
+                                            </div>
+                                            <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
+                                              <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
+                                            </div> -->
+  
+                                          </ng-template>
+                                          <!-- <ngx-datatable-column prop="per1">
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                              {{row.per1 | currency:'S/.  ':'code'}}
+                                            </ng-template>
+                                          </ngx-datatable-column> -->
+                                        </ngx-datatable-column>
+                                      </ngx-datatable>
+                                    </div>
                                   </div>
-                                
+                                  <div class="card">
+                                    <div class="card-header-info" >
+                                      <div class="box-header">
+                                        <div class="toggle-table">
+                                          <div class="callout callout-info">
+                                            <h3 class="box-title">Indicadores</h3>
+                                          </div>
+                                          <button type="button" class="btn btn-outline-primary" (click)="collapse4.toggle()" [attr.aria-expanded]="!isCollapsed4"
+                                          aria-controls="collapseExample">
+                                          <i class="fa fa-minus" *ngIf="!isCollapsed4"> </i>
+                                          <i class="fa fa-plus" *ngIf="isCollapsed4"> </i> 
+                                          </button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div #collapse4="ngbCollapse" [(ngbCollapse)]="isCollapsed4">
+                                      <div class="row" style="align-items: center;justify-content: space-between;">
+                                        <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
+                                          <li class="list-group-item border-0 pl-0">
+                                            <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(4)">
+                                              <i class="fa fa-external-link"></i>
+                                              Copiar tabla
+                                            </button>
+                                          </li>
+                                          <li class="list-group-item border-0 pl-0">
+                                            <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(4)">
+                                              <i class="fa fa-external-link"></i>
+                                              Exportar tabla a Excel
+                                            </button>
+                                          </li>
+                                        </ul>
+                                      </div>
+                                      <ngx-datatable #myTable4
+                                        class="bootstrap table table-striped "
+                                        id="datatablele"
+                                          [columns]="columns4"
+                                          [rows]="rows4"
+                                          [columnMode]="ColumnMode.flex"
+                                          [headerHeight]="50"
+                                          [rowHeight]="$any('auto')"
+                                          [scrollbarH]="true"
+                                          (page)="setPage($event)"
+                                          [rowClass] = "getRowClass1"
+                                          >
+                                          <ngx-datatable-column [flexGrow]="1" [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns4; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                                              let-row="row">
+                                              <div>
+                                                <span  [title]="value">{{value}}</span>
+                                              </div>
+                                              <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
+                                                <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
+                                              </div> -->
+    
+                                            </ng-template>
+                                            <!-- <ngx-datatable-column prop="per1">
+                                              <ng-template let-row="row" ngx-datatable-cell-template>
+                                                {{row.per1 | currency:'S/.  ':'code'}}
+                                              </ng-template>
+                                            </ngx-datatable-column> -->
+                                          </ngx-datatable-column>
+                                      </ngx-datatable>
+                                    </div>
+                                  </div>
+                                </div>                       
                               </div>
-                              
-                              
-                              <ngx-datatable #myTable
-                              class="bootstrap table table-striped"
-                              id="datatablele"
-                                [columns]="columns"
-                                [rows]="rows"
-                                [columnMode]="ColumnMode.force"
-                                [headerHeight]="$any('auto')"
-                                [footerHeight]="65"
-                                [rowHeight]="$any('auto')"
-                                [scrollbarH]="true"
-                                [limit]="page.size"
-                                [selected]="selected"
-                                [selectionType]="SelectionType.single"
-                                >
-                                <ngx-datatable-column [flexGrow]="1" [minWidth]="90" [width]="column.width" [pipe]="column.pipe" *ngFor="let column of columns; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
-                                  <ng-template  ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
-                                    let-row="row">
-                                    <div class="{{column.prop}}" *ngIf="column.prop !== 'accion'">
-                                      <span  [title]="value">{{value}}</span>
-                                    </div>
-                                    <div class="{{column.prop}}" *ngIf="column.prop === 'accion'">
-                                      <span  title="ver informe">
-                                        <a href="javascript:;" (click)="onSelect(row)" class="btn-shadow btn " [ngClass]="{'btn-outline-success': row.TotalAcciones > 0 && hoy_menos_seis <= row.UltimaAccion, 'btn-outline-focus': row.TotalAcciones > 0 && hoy_menos_seis > row.UltimaAccion, 'btn-outline-danger': row.TotalAcciones === null && row.UltimaAccion === null}">
-                                        <i class="pe-7s-note btn-icon-wrapper"></i></a>
-                                      </span>
-                                    </div>
-                                  </ng-template>
-                                </ngx-datatable-column>
-                              </ngx-datatable>
                             </div>
                           </div>
                         </div>
