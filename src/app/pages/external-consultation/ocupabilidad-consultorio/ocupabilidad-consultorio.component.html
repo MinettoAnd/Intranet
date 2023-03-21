@@ -269,7 +269,7 @@
                                     <div style="display:flex">
                                       <div class="card-body">
                                         <div class="d-block" *ngFor="let percentageCompleted of progressBar1; let i = index;">
-                                          <span style="display:flex; justify-content: space-between;"><i><b>{{progressBarLabels[i]}}</b></i><i>{{percentageCompleted}} %</i></span>
+                                          <span style="display:flex; justify-content: space-between;"><b>{{progressBarLabels[i]}}</b>{{percentageCompleted}} %</span>
                                             <ngb-progressbar
                                                 [type]="color[i]"
                                                 [value]="percentageCompleted"
@@ -281,7 +281,7 @@
                                       </div>
                                       <div class="card-body">
                                         <div class="d-block" *ngFor="let percentageCompleted of progressBar2; let i = index;">
-                                          <span style="display:flex; justify-content: space-between;"><i><b>{{progressBarLabels[i]}}</b></i><i>{{percentageCompleted}} %</i></span>
+                                          <span style="display:flex; justify-content: space-between;"><b>{{progressBarLabels[i]}}</b>{{percentageCompleted}} %</span>
                                           <ngb-progressbar
                                               [type]="color[i]"
                                               [value]="percentageCompleted"
@@ -293,7 +293,7 @@
                                       </div>
                                       <div class="card-body">
                                         <div class="d-block" *ngFor="let percentageCompleted of progressBar3; let i = index;">
-                                          <span style="display:flex; justify-content: space-between;"><i><b>{{progressBarLabels[i]}}</b></i><i>{{percentageCompleted}} %</i></span>
+                                          <span style="display:flex; justify-content: space-between;"><b>{{progressBarLabels[i]}}</b>{{percentageCompleted}} %</span>
                                           <ngb-progressbar
                                             [type]="color[i]"
                                             [value]="percentageCompleted"
