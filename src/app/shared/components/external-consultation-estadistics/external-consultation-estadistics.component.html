@@ -116,7 +116,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-3 col-sm-6 col-xs-12" id="ausentismo">
+                                    <div class="col-md-3 col-sm-6 col-xs-12" id="ausentismo" (mouseenter)="changeTable=true" (mouseout)="changeTable=false">
                                         <div class="info-box">
                                             <span style="background: #FF3636 !important; color:#fff !important;" class="info-box-icon">			
                                             <i class="fa fa-user-times" aria-hidden="true"></i>		</span>		
@@ -125,7 +125,19 @@
                                                 </label>		 -->
                                               </div>
                                         </div>
-                                      <div class="col-md-3 col-sm-6 col-xs-12 div_ocultar_ptable_a" style="display: none;">
+                                    </div>
+                                    <div class="col-md-3 col-sm-6 col-xs-12" style="display: flex;">
+                                        <div class="info-box">
+                                            <span style="background: #63B6DE !important; color:#fff !important;" class="info-box-icon">			
+                                            <i class="fa fa-users" aria-hidden="true"></i>		</span>		
+                                            <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">RESERVADAS</span>			
+                                            <span *ngIf="resumenMes.reservadas" class="info-box-number">{{resumenMes.reservadas}}</span>			
+                                            <!-- <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success" >Tiempo de atención / tiempo programado
+                                            </label>		 -->
+                                          </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-6 col-xs-12 div_ocultar_ptable_a" *ngIf="changeTable">
                                         <div class="info-box">
                                           <table class="table table-bordered">
                                               <tbody>
@@ -148,19 +160,6 @@
                                           </table>
                                         </div>
                                       </div>
-                                    </div>
-                                    <div class="col-md-3 col-sm-6 col-xs-12" style="display: flex;">
-                                        <div class="info-box">
-                                            <span style="background: #63B6DE !important; color:#fff !important;" class="info-box-icon">			
-                                            <i class="fa fa-users" aria-hidden="true"></i>		</span>		
-                                            <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">RESERVADAS</span>			
-                                            <span *ngIf="resumenMes.reservadas" class="info-box-number">{{resumenMes.reservadas}}</span>			
-                                            <!-- <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success" >Tiempo de atención / tiempo programado
-                                            </label>		 -->
-                                          </div>
-                                        </div>
-                                    </div>
-                                    
                                     </div>
                                     <div class="card-content collapse show">
                                       <div class="row" style="align-items: center;justify-content: space-between;">
