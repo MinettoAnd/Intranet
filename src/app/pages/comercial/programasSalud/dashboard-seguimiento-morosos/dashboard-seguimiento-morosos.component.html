@@ -141,24 +141,21 @@
                                 Guardar Imagen
                                 </a>
                               </li>
-                              <li class="list-group-item border-0 pl-0">
+                              <!-- <li class="list-group-item border-0 pl-0">
                                 <select class="form-control" style="width: auto!important; height: 2.2rem;" (change)="tipoChangeGraph($event.target.value, 'bar')" [(ngModel)]="selectedOptionGraph1">
                                 <option value="contratos_gestionados">Contratos Gestionados</option>
                                 <option value="contratos_con_compromiso_pago">Contratos con Compromiso de Pago</option>
                                 </select>
-                              </li>
+                              </li> -->
                               </ul>
                               <p class="text-center">
                               <i class="fa fa-line-chart"></i>
-                              <strong *ngIf="selectedOptionGraph1 == 'contratos_gestionados'">Contratos Gestionados</strong>
-                              <strong *ngIf="selectedOptionGraph1 !== 'contratos_gestionados'">Contratos con Compromiso de Pago</strong>
+                              <strong >Contratos Gestionados</strong>
+                              <!-- <strong *ngIf="selectedOptionGraph1 !== 'contratos_gestionados'">Contratos con Compromiso de Pago</strong> -->
                               </p>
                               <div class="card-body">
                               <div class="d-block" >
-                                <canvas #baseChart id="chart-1" *ngIf="selectedOptionGraph1 == 'contratos_gestionados'">
-                                </canvas>
-                                
-                                <canvas #baseChart id="chart-2" *ngIf="selectedOptionGraph1 !== 'contratos_gestionados'">
+                                <canvas #baseChart id="chart-1">
                                 </canvas>
                               </div>
                               </div>
