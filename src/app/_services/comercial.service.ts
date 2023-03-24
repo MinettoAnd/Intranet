@@ -84,6 +84,10 @@ export class ComercialService {
       this.loadTableApiDataURL = `${environment.api_url}getContratosGestionadosAnual`;
       return this.http.post(this.loadTableApiDataURL, data);
     }
+    getChartContratosGestionadosMes(data): Observable<any> {
+      this.loadTableApiDataURL = `${environment.api_url}getChartContratosGestionadosMes`;
+      return this.http.post(this.loadTableApiDataURL, data);
+    }
     // Fin Morosos
     getVigentesDetalle(): Observable<any> {
       this.loadTableApiDataURL = `${environment.api_url}getVigentesDetalle`;

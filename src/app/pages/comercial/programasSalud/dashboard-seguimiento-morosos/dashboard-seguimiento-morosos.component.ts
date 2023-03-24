@@ -31,7 +31,7 @@ export class DashboardSeguimientoMorososComponent implements OnInit {
   active = 1;
   private baseChart: ElementRef;
   filtroForm: FormGroup;
-  selectedOptionGraph1 = 'contratos_gestionados';
+  // selectedOptionGraph1 = 'contratos_gestionados';
 
   public chartLabels1 = [];
   public chartLabels2 = [];
@@ -47,6 +47,7 @@ export class DashboardSeguimientoMorososComponent implements OnInit {
   @ViewChild(PerfectScrollbarDirective, { static: true }) directiveRef?: PerfectScrollbarDirective;
 
   @ViewChild(DatatableComponent) private table: DatatableComponent;
+  grafico: Chart;
   @ViewChild("baseChart", { static: false }) set content(
     content: ElementRef
   ) {
@@ -55,7 +56,7 @@ export class DashboardSeguimientoMorososComponent implements OnInit {
       // initially setter gets called with undefined
       this.baseChart = content;
       if (this.baseChart.nativeElement.id === 'chart-1'){
-        this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del mes seleccionado', 'N° Contratos','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
+        this.grafico = this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del mes seleccionado', 'N° Contratos','chart-1','Contratos Gestionados', 'Contratos con Compromiso de Pago', 'bar');
         
       }else if (this.baseChart.nativeElement.id === 'chart-2'){
         this.getBarChart(this.chartLabels2, this.chartData3, this.chartData4,'Día del mes seleccionado', 'N° Contratos','chart-3', 'C.E Reservada', 'C.E Realizada', 'bar');
@@ -339,9 +340,32 @@ export class DashboardSeguimientoMorososComponent implements OnInit {
     // this.setPage({ offset: 0 });
 
   }
+  addData(chart, label,  data) {
+    this.removeData(chart) 
+    chart.data.labels = label;
+    chart.data.datasets.forEach((dataset, index) => {
+        dataset.data = data[index];
+        if (index === 0){
+          // dataset.data = data1;
+        }else if (index === 1){
+          // dataset.data = data2;
+        }
+        // dataset.data = data;
+    });
+    chart.update();
+  }
 
+  removeData(chart) {
+      chart.data.labels = [];
+      chart.data.datasets.forEach((dataset) => {
+          dataset.data = [];
+          console.log(663, dataset.data);
+      });
+      chart.update();
+      
+  }
   tipoChangeGraph(event, graph){
-    console.log(827, this.selectedOptionGraph1);
+    // console.log(827, this.selectedOptionGraph1);
     this.loading('Filtrando');
         this.parameters = {
           // periodo_consulta:this.periodo_consulta,
@@ -432,225 +456,31 @@ export class DashboardSeguimientoMorososComponent implements OnInit {
     this.parameters = {
       mes: this.mes,
       anio: this.anio,
+      periodo_consulta: this.periodo_consulta,
       pageNumber: this.page.pageNumber,
       size: this.page.size
     };
 
     this.loading("Realizando Busqueda....");
-    this.tableApiservice.getMorososSeguimiento(this.parameters).subscribe(
-      (response: ApiResponse<AttentionConsultation>) => {
+    this.tableApiservice.getChartContratosGestionadosMes(this.parameters).subscribe(
+      (response) => {
         this.rows = [];
         if(response.data.success){
-          this.message = response.message;
-          this.title = response.data.title;
-          //console.log(response.data);
-          this.data = response.data ? response : [];
-          console.log(168, this.data);   
-          this.columns = this.data.data.cabeceras;
-          // console.log(168, this.columns);  
-          this.columns.map(item=>{
-            if (item.pipe === 'currency'){
-              item.pipe = this._cp;
-            }
-          });
-          this.columns1 = [
-            {prop: 'Programa', name: 'Programa'},
-            {prop: 'TotalContratos', name: 'Contratos', pipe: this._cnp},
-            {prop: 'TotalMiembros', name: 'Afiliados', pipe: this._cnp},
-            {prop: 'CuotasVencidas', name: 'Periodos', pipe: this._cnp},
-            {prop: 'ImpCuotasVencidas', name: 'Deuda', pipe: this._cp},
-          ]
-          this.columns2 = [
-            {prop: 'periodo', name: 'Periodos'},
-            {prop: 'nuContratos', name: 'Contratos', pipe: this._cnp},
-            {prop: 'nuAfiliados', name: 'Afiliados', pipe: this._cnp},
-            {prop: 'nuCuotasVencidas', name: 'Periodos', pipe: this._cnp},
-            {prop: 'totalImpCuotasVencidas', name: 'Deuda', pipe: this._cp},
-          ]
-          this.rows = this.data.data.data;
-          this.rows1 = [];
-          this.totalMorosos = this._cnp.transform(this.rows.length);
-          this.totalAfiliados = 0;
-          this.totalPeriodos = 0;
-          this.totalDeuda = 0;
-          
-          let result = [];
-          let totalContratos = 0;
-          let totalAfiliados = 0;
-          let totalPeriodos = 0;
-          let totalDeuda = 0;
-          this.rows.forEach(function (a) {
-            //console.log(177,a);
-              if ( !this[a.grupoPrograma]) {
-                  this[a.grupoPrograma] =  { Programa: a.grupoPrograma, TotalContratos: 0, TotalMiembros: 0, CuotasVencidas: 0, ImpCuotasVencidas: 0 };
-
-                  result.push(this[a.grupoPrograma]);
-              }
-              this[a.grupoPrograma].TotalContratos += 1;
-              this[a.grupoPrograma].TotalMiembros += Number(a.TotalMiembros);
-              this[a.grupoPrograma].CuotasVencidas += Number(a.CuotasVencidas);
-              this[a.grupoPrograma].ImpCuotasVencidas += Number(a.ImpCuotasVencidas);
-             
-             
-          }, Object.create(null));
-          this.rows1 = result;
-          this.rows1.map(item =>{
-            totalContratos += item.TotalContratos;
-            totalAfiliados += item.TotalMiembros;
-            totalPeriodos += item.CuotasVencidas;
-            totalDeuda += item.ImpCuotasVencidas;
-          });
-          const total = {
-            Programa: 'TOTAL', 
-            TotalContratos: totalContratos, 
-            TotalMiembros: totalAfiliados, 
-            CuotasVencidas: totalPeriodos, 
-            ImpCuotasVencidas: totalDeuda
-          };
-          
-          this.rows1.push(total);
-          this.rows.map(item=>{
-            //console.log(222,item.ImpCuotasVencidas);
-            item.ImpCuotasVencidas =  item.ImpCuotasVencidas;
-            item.Telefono = this._phone.transform( item.Telefono);
-          });
-          this.totalAfiliados = this._cnp.transform(totalAfiliados);
-          this.totalPeriodos = this._cnp.transform(totalPeriodos);
-          this.totalDeuda = totalDeuda;
-          //console.log(198, this.rows1);
-
-          this.rows2 = [];
-          let nuContratosP1= 0;
-          let nuAfiliadosP1 = 0;
-          let nuCuotasVencidasP1 = 0;
-          let totalImpP1 = 0;
-
-          let nuContratosP2 = 0;
-          let nuAfiliadosP2 = 0;
-          let nuCuotasVencidasP2 = 0;
-          let totalImpP2 = 0;
-
-          let nuContratosP3 = 0;
-          let nuAfiliadosP3 = 0;
-          let nuCuotasVencidasP3 = 0;
-          let totalImpP3 = 0;
-
-          let nuContratosP4 = 0;
-          let nuAfiliadosP4 = 0;
-          let nuCuotasVencidasP4 = 0;
-          let totalImpP4 = 0;
-          
-          let nuContratosP5 = 0;
-          let nuAfiliadosP5 = 0;
-          let nuCuotasVencidasP5 = 0;
-          let totalImpP5 = 0;
-
-          let nuContratosP6 = 0;
-          let nuAfiliadosP6 = 0;
-          let nuCuotasVencidasP6 = 0;
-          let totalImpP6 = 0;
-          //console.log(300,this.rows);
-          this.rows.map(item =>{
-           // console.log(300,this._cp.transform(item.ImpCuotasVencidas));
-           //console.log(223,Number(item.ImpCuotasVencidas))
-            item.Telefono = this._phone.transform( item.Telefono);
-            item.Celular = this._phone.transform( item.Celular);
-            if(item.CuotasVencidas === '1'){
-              nuContratosP1 += 1;
-              nuAfiliadosP1 += Number(item.TotalMiembros);
-              nuCuotasVencidasP1 += Number(item.CuotasVencidas);
-              totalImpP1 += Number(item.ImpCuotasVencidas);
-            }else if(item.CuotasVencidas === '2'){
-              nuContratosP2 += 1;
-              nuAfiliadosP2 += Number(item.TotalMiembros);
-              nuCuotasVencidasP2 += Number(item.CuotasVencidas);
-              totalImpP2 += Number(item.ImpCuotasVencidas);
-            }else if(item.CuotasVencidas === '3'){
-              nuContratosP3 += 1;
-              nuAfiliadosP3 += Number(item.TotalMiembros);
-              nuCuotasVencidasP3 += Number(item.CuotasVencidas);
-              totalImpP3 += Number(item.ImpCuotasVencidas);
-            }else if(item.CuotasVencidas === '4'){
-              nuContratosP4 += 1;
-              nuAfiliadosP4 += Number(item.TotalMiembros);
-              nuCuotasVencidasP4 += Number(item.CuotasVencidas);
-              totalImpP4 += Number(item.ImpCuotasVencidas);
-            }else if(item.CuotasVencidas === '5'){
-              nuContratosP5 += 1;
-              nuAfiliadosP5 += Number(item.TotalMiembros);
-              nuCuotasVencidasP5 += Number(item.CuotasVencidas);
-              totalImpP5 += Number(item.ImpCuotasVencidas);
-            }else if(Number(item.CuotasVencidas) > 5){
-              nuContratosP6 += 1;
-              nuAfiliadosP6 += Number(item.TotalMiembros);
-              nuCuotasVencidasP6 += Number(item.CuotasVencidas);
-              totalImpP6 += Number(item.ImpCuotasVencidas);
-            }
-          });
-          const datosPeriodo1 =  {
-              periodo: '1 PERIODO',
-              nuContratos: nuContratosP1,
-              nuAfiliados: nuAfiliadosP1,
-              nuCuotasVencidas: nuCuotasVencidasP1,
-              totalImpCuotasVencidas: totalImpP1
-            };
-          const datosPeriodo2 =  {
-            periodo: '2 PERIODOS',
-            nuContratos: nuContratosP2,
-            nuAfiliados: nuAfiliadosP1,
-            nuCuotasVencidas: nuCuotasVencidasP2,
-            totalImpCuotasVencidas: totalImpP2
-            };
-          const datosPeriodo3 = {
-            periodo: '3 PERIODOS',
-            nuContratos: nuContratosP3,
-            nuAfiliados: nuAfiliadosP3,
-            nuCuotasVencidas: nuCuotasVencidasP3,
-            totalImpCuotasVencidas: totalImpP3
-            };
-          const datosPeriodo4 = {
-              periodo: '4 PERIODOS',
-              nuContratos: nuContratosP4,
-              nuAfiliados: nuAfiliadosP4,
-              nuCuotasVencidas: nuCuotasVencidasP4,
-              totalImpCuotasVencidas: totalImpP4
-            };
-          const datosPeriodo5 = {
-              periodo: '5 PERIODOS',
-              nuContratos: nuContratosP5,
-              nuAfiliados: nuAfiliadosP5,
-              nuCuotasVencidas: nuCuotasVencidasP5,
-              totalImpCuotasVencidas: totalImpP5
-            };
-          const datosPeriodo6 = {
-              periodo: 'MÁS DE 5 PERIODOS',
-              nuContratos: nuContratosP6,
-              nuAfiliados: nuAfiliadosP6,
-              nuCuotasVencidas: nuCuotasVencidasP6,
-              totalImpCuotasVencidas: totalImpP6
-            };
-          const datosPeriodo7 = {
-              periodo: 'TOTAL',
-              nuContratos: nuContratosP1 + nuContratosP2 + nuContratosP3 + nuContratosP4 + nuContratosP5 + nuContratosP6,
-              nuAfiliados: nuAfiliadosP1 + nuAfiliadosP2 +nuAfiliadosP3 + nuAfiliadosP4 + nuAfiliadosP5 + nuAfiliadosP6,
-              nuCuotasVencidas: nuCuotasVencidasP1 + nuCuotasVencidasP2 + nuCuotasVencidasP3 + nuCuotasVencidasP4 + nuCuotasVencidasP5+ nuCuotasVencidasP6,
-              totalImpCuotasVencidas: totalImpP1 + totalImpP2 + totalImpP3 + totalImpP4 + totalImpP5 + totalImpP6,
-          };
-          this.rows2.push(datosPeriodo1);
-          this.rows2.push(datosPeriodo2);
-          this.rows2.push(datosPeriodo3);
-          this.rows2.push(datosPeriodo4);
-          this.rows2.push(datosPeriodo5);
-          this.rows2.push(datosPeriodo6);
-          this.rows2.push(datosPeriodo7);
-          //console.log(200,this.rows2);
-          this.rows2.map(item=>{
-            item.ImpCuotasVencidas = this._cp.transform( item.ImpCuotasVencidas);
-          });
-          //console.log(response.data.page);
-          this.page = (response as any).data.page;
-          this.temp = this.rows;
-          
+          this.chartLabels1 = [];
+          this.chartData1 = [];   
+          this.chartData2 = [];
+         //  this.chartData3 = [];    
+         if(response.success){
+           
+           response.data.query.map(item =>{
+             this.chartLabels1.push(item.dia);
+             this.chartData1.push(item.gestionados);
+             this.chartData2.push(item.compromisos);
+           });
+           var data = [];
+                  data.push(this.chartData1, this.chartData2);
+                  this.addData(this.grafico, this.chartLabels1, data)
+         }
             Swal.close();
         }else{
           Swal.close();
@@ -661,6 +491,230 @@ export class DashboardSeguimientoMorososComponent implements OnInit {
           Swal.close();
       }
     );
+    // this.tableApiservice.getChartContratosGestionadosMes(this.parameters).subscribe(
+    //   (response: ApiResponse<AttentionConsultation>) => {
+    //     this.rows = [];
+    //     if(response.data.success){
+    //       this.message = response.message;
+    //       this.title = response.data.title;
+    //       //console.log(response.data);
+    //       this.data = response.data ? response : [];
+    //       console.log(168, this.data);   
+    //       this.columns = this.data.data.cabeceras;
+    //       // console.log(168, this.columns);  
+    //       this.columns.map(item=>{
+    //         if (item.pipe === 'currency'){
+    //           item.pipe = this._cp;
+    //         }
+    //       });
+    //       this.columns1 = [
+    //         {prop: 'Programa', name: 'Programa'},
+    //         {prop: 'TotalContratos', name: 'Contratos', pipe: this._cnp},
+    //         {prop: 'TotalMiembros', name: 'Afiliados', pipe: this._cnp},
+    //         {prop: 'CuotasVencidas', name: 'Periodos', pipe: this._cnp},
+    //         {prop: 'ImpCuotasVencidas', name: 'Deuda', pipe: this._cp},
+    //       ]
+    //       this.columns2 = [
+    //         {prop: 'periodo', name: 'Periodos'},
+    //         {prop: 'nuContratos', name: 'Contratos', pipe: this._cnp},
+    //         {prop: 'nuAfiliados', name: 'Afiliados', pipe: this._cnp},
+    //         {prop: 'nuCuotasVencidas', name: 'Periodos', pipe: this._cnp},
+    //         {prop: 'totalImpCuotasVencidas', name: 'Deuda', pipe: this._cp},
+    //       ]
+    //       this.rows = this.data.data.data;
+    //       this.rows1 = [];
+    //       this.totalMorosos = this._cnp.transform(this.rows.length);
+    //       this.totalAfiliados = 0;
+    //       this.totalPeriodos = 0;
+    //       this.totalDeuda = 0;
+          
+    //       let result = [];
+    //       let totalContratos = 0;
+    //       let totalAfiliados = 0;
+    //       let totalPeriodos = 0;
+    //       let totalDeuda = 0;
+    //       this.rows.forEach(function (a) {
+    //         //console.log(177,a);
+    //           if ( !this[a.grupoPrograma]) {
+    //               this[a.grupoPrograma] =  { Programa: a.grupoPrograma, TotalContratos: 0, TotalMiembros: 0, CuotasVencidas: 0, ImpCuotasVencidas: 0 };
+
+    //               result.push(this[a.grupoPrograma]);
+    //           }
+    //           this[a.grupoPrograma].TotalContratos += 1;
+    //           this[a.grupoPrograma].TotalMiembros += Number(a.TotalMiembros);
+    //           this[a.grupoPrograma].CuotasVencidas += Number(a.CuotasVencidas);
+    //           this[a.grupoPrograma].ImpCuotasVencidas += Number(a.ImpCuotasVencidas);
+             
+             
+    //       }, Object.create(null));
+    //       this.rows1 = result;
+    //       this.rows1.map(item =>{
+    //         totalContratos += item.TotalContratos;
+    //         totalAfiliados += item.TotalMiembros;
+    //         totalPeriodos += item.CuotasVencidas;
+    //         totalDeuda += item.ImpCuotasVencidas;
+    //       });
+    //       const total = {
+    //         Programa: 'TOTAL', 
+    //         TotalContratos: totalContratos, 
+    //         TotalMiembros: totalAfiliados, 
+    //         CuotasVencidas: totalPeriodos, 
+    //         ImpCuotasVencidas: totalDeuda
+    //       };
+          
+    //       this.rows1.push(total);
+    //       this.rows.map(item=>{
+    //         //console.log(222,item.ImpCuotasVencidas);
+    //         item.ImpCuotasVencidas =  item.ImpCuotasVencidas;
+    //         item.Telefono = this._phone.transform( item.Telefono);
+    //       });
+    //       this.totalAfiliados = this._cnp.transform(totalAfiliados);
+    //       this.totalPeriodos = this._cnp.transform(totalPeriodos);
+    //       this.totalDeuda = totalDeuda;
+    //       //console.log(198, this.rows1);
+
+    //       this.rows2 = [];
+    //       let nuContratosP1= 0;
+    //       let nuAfiliadosP1 = 0;
+    //       let nuCuotasVencidasP1 = 0;
+    //       let totalImpP1 = 0;
+
+    //       let nuContratosP2 = 0;
+    //       let nuAfiliadosP2 = 0;
+    //       let nuCuotasVencidasP2 = 0;
+    //       let totalImpP2 = 0;
+
+    //       let nuContratosP3 = 0;
+    //       let nuAfiliadosP3 = 0;
+    //       let nuCuotasVencidasP3 = 0;
+    //       let totalImpP3 = 0;
+
+    //       let nuContratosP4 = 0;
+    //       let nuAfiliadosP4 = 0;
+    //       let nuCuotasVencidasP4 = 0;
+    //       let totalImpP4 = 0;
+          
+    //       let nuContratosP5 = 0;
+    //       let nuAfiliadosP5 = 0;
+    //       let nuCuotasVencidasP5 = 0;
+    //       let totalImpP5 = 0;
+
+    //       let nuContratosP6 = 0;
+    //       let nuAfiliadosP6 = 0;
+    //       let nuCuotasVencidasP6 = 0;
+    //       let totalImpP6 = 0;
+    //       //console.log(300,this.rows);
+    //       this.rows.map(item =>{
+    //        // console.log(300,this._cp.transform(item.ImpCuotasVencidas));
+    //        //console.log(223,Number(item.ImpCuotasVencidas))
+    //         item.Telefono = this._phone.transform( item.Telefono);
+    //         item.Celular = this._phone.transform( item.Celular);
+    //         if(item.CuotasVencidas === '1'){
+    //           nuContratosP1 += 1;
+    //           nuAfiliadosP1 += Number(item.TotalMiembros);
+    //           nuCuotasVencidasP1 += Number(item.CuotasVencidas);
+    //           totalImpP1 += Number(item.ImpCuotasVencidas);
+    //         }else if(item.CuotasVencidas === '2'){
+    //           nuContratosP2 += 1;
+    //           nuAfiliadosP2 += Number(item.TotalMiembros);
+    //           nuCuotasVencidasP2 += Number(item.CuotasVencidas);
+    //           totalImpP2 += Number(item.ImpCuotasVencidas);
+    //         }else if(item.CuotasVencidas === '3'){
+    //           nuContratosP3 += 1;
+    //           nuAfiliadosP3 += Number(item.TotalMiembros);
+    //           nuCuotasVencidasP3 += Number(item.CuotasVencidas);
+    //           totalImpP3 += Number(item.ImpCuotasVencidas);
+    //         }else if(item.CuotasVencidas === '4'){
+    //           nuContratosP4 += 1;
+    //           nuAfiliadosP4 += Number(item.TotalMiembros);
+    //           nuCuotasVencidasP4 += Number(item.CuotasVencidas);
+    //           totalImpP4 += Number(item.ImpCuotasVencidas);
+    //         }else if(item.CuotasVencidas === '5'){
+    //           nuContratosP5 += 1;
+    //           nuAfiliadosP5 += Number(item.TotalMiembros);
+    //           nuCuotasVencidasP5 += Number(item.CuotasVencidas);
+    //           totalImpP5 += Number(item.ImpCuotasVencidas);
+    //         }else if(Number(item.CuotasVencidas) > 5){
+    //           nuContratosP6 += 1;
+    //           nuAfiliadosP6 += Number(item.TotalMiembros);
+    //           nuCuotasVencidasP6 += Number(item.CuotasVencidas);
+    //           totalImpP6 += Number(item.ImpCuotasVencidas);
+    //         }
+    //       });
+    //       const datosPeriodo1 =  {
+    //           periodo: '1 PERIODO',
+    //           nuContratos: nuContratosP1,
+    //           nuAfiliados: nuAfiliadosP1,
+    //           nuCuotasVencidas: nuCuotasVencidasP1,
+    //           totalImpCuotasVencidas: totalImpP1
+    //         };
+    //       const datosPeriodo2 =  {
+    //         periodo: '2 PERIODOS',
+    //         nuContratos: nuContratosP2,
+    //         nuAfiliados: nuAfiliadosP1,
+    //         nuCuotasVencidas: nuCuotasVencidasP2,
+    //         totalImpCuotasVencidas: totalImpP2
+    //         };
+    //       const datosPeriodo3 = {
+    //         periodo: '3 PERIODOS',
+    //         nuContratos: nuContratosP3,
+    //         nuAfiliados: nuAfiliadosP3,
+    //         nuCuotasVencidas: nuCuotasVencidasP3,
+    //         totalImpCuotasVencidas: totalImpP3
+    //         };
+    //       const datosPeriodo4 = {
+    //           periodo: '4 PERIODOS',
+    //           nuContratos: nuContratosP4,
+    //           nuAfiliados: nuAfiliadosP4,
+    //           nuCuotasVencidas: nuCuotasVencidasP4,
+    //           totalImpCuotasVencidas: totalImpP4
+    //         };
+    //       const datosPeriodo5 = {
+    //           periodo: '5 PERIODOS',
+    //           nuContratos: nuContratosP5,
+    //           nuAfiliados: nuAfiliadosP5,
+    //           nuCuotasVencidas: nuCuotasVencidasP5,
+    //           totalImpCuotasVencidas: totalImpP5
+    //         };
+    //       const datosPeriodo6 = {
+    //           periodo: 'MÁS DE 5 PERIODOS',
+    //           nuContratos: nuContratosP6,
+    //           nuAfiliados: nuAfiliadosP6,
+    //           nuCuotasVencidas: nuCuotasVencidasP6,
+    //           totalImpCuotasVencidas: totalImpP6
+    //         };
+    //       const datosPeriodo7 = {
+    //           periodo: 'TOTAL',
+    //           nuContratos: nuContratosP1 + nuContratosP2 + nuContratosP3 + nuContratosP4 + nuContratosP5 + nuContratosP6,
+    //           nuAfiliados: nuAfiliadosP1 + nuAfiliadosP2 +nuAfiliadosP3 + nuAfiliadosP4 + nuAfiliadosP5 + nuAfiliadosP6,
+    //           nuCuotasVencidas: nuCuotasVencidasP1 + nuCuotasVencidasP2 + nuCuotasVencidasP3 + nuCuotasVencidasP4 + nuCuotasVencidasP5+ nuCuotasVencidasP6,
+    //           totalImpCuotasVencidas: totalImpP1 + totalImpP2 + totalImpP3 + totalImpP4 + totalImpP5 + totalImpP6,
+    //       };
+    //       this.rows2.push(datosPeriodo1);
+    //       this.rows2.push(datosPeriodo2);
+    //       this.rows2.push(datosPeriodo3);
+    //       this.rows2.push(datosPeriodo4);
+    //       this.rows2.push(datosPeriodo5);
+    //       this.rows2.push(datosPeriodo6);
+    //       this.rows2.push(datosPeriodo7);
+    //       //console.log(200,this.rows2);
+    //       this.rows2.map(item=>{
+    //         item.ImpCuotasVencidas = this._cp.transform( item.ImpCuotasVencidas);
+    //       });
+    //       //console.log(response.data.page);
+    //       this.page = (response as any).data.page;
+    //       this.temp = this.rows;
+          
+    //         Swal.close();
+    //     }else{
+    //       Swal.close();
+    //     }
+        
+    //   },
+    //   (error) => {
+    //       Swal.close();
+    //   }
+    // );
   }
 
   copyTableToClipboard(numberTabla){
@@ -694,10 +748,11 @@ export class DashboardSeguimientoMorososComponent implements OnInit {
   }
 
   filter() {
-  
+    this.removeData(this.grafico);
         const form = this.filtroForm.value;
         this.mes = form.mes,
         this.anio = form.anio,
+        this.periodo_consulta = this.anio + this.mes;
         this.setPage({ offset: 0 });
     }
 
