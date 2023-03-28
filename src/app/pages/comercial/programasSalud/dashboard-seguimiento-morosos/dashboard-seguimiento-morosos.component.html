@@ -214,7 +214,7 @@
                                           [rowHeight]="$any('auto')"
                                           [scrollbarH]="true"
                                           (page)="setPage($event)"
-                                          [rowClass] = "getRowClass"
+                                       
                                           >
                                           <ngx-datatable-column [flexGrow]="1" 
                                           [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns1; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
@@ -279,7 +279,7 @@
                                             [rowHeight]="$any('auto')"
                                             [scrollbarH]="true"
                                             (page)="setPage($event)"
-                                            [rowClass] = "getRowClass1"
+                                            
                                             >
                                             <ngx-datatable-column [flexGrow]="1" [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns2; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                               <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
@@ -364,7 +364,7 @@
                                         [rowHeight]="$any('auto')"
                                         [scrollbarH]="true"
                                         (page)="setPage($event)"
-                                        [rowClass] = "getRowClass"
+                                      
                                         >
                                         <ngx-datatable-column [flexGrow]="1" 
                                         [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns3; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
@@ -422,14 +422,14 @@
                                       <ngx-datatable #myTable4
                                         class="bootstrap table table-striped "
                                         id="datatablele"
-                                          [columns]="columns4"
+                                          [columns]="columns3"
                                           [rows]="rows4"
                                           [columnMode]="ColumnMode.flex"
                                           [headerHeight]="50"
                                           [rowHeight]="$any('auto')"
                                           [scrollbarH]="true"
                                           (page)="setPage($event)"
-                                          [rowClass] = "getRowClass1"
+                                         
                                           >
                                           <ngx-datatable-column [flexGrow]="1" [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns4; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                             <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"

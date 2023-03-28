@@ -13,13 +13,14 @@ import * as XLSX from 'xlsx';
 import { ExcelJson } from '../../../../interfaces/excel-json.interface';
 import { ExportService } from '../../../../_services/export.service';
 import ResizeObserver from 'resize-observer-polyfill';
-import { CurrencyPipe } from '@angular/common';
+import { CurrencyPipe, DecimalPipe } from '@angular/common';
 import { CustomNumberPipe } from 'src/app/pipes/customNumber.pipe';
 import { PhonePipe } from 'src/app/pipes/phone.pipe';
 import { ContactoComponent } from 'src/app/modals/seguimientoMorosos/contacto/contacto.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as Chart from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { PorcentajePipe } from 'src/app/pipes/porcentaje.pipe';
 
 @Component({
   selector: 'app-dashboard-seguimiento-morosos',
@@ -48,6 +49,7 @@ export class DashboardSeguimientoMorososComponent implements OnInit {
 
   @ViewChild(DatatableComponent) private table: DatatableComponent;
   grafico: Chart;
+  columns4: any;
   @ViewChild("baseChart", { static: false }) set content(
     content: ElementRef
   ) {
@@ -73,9 +75,10 @@ export class DashboardSeguimientoMorososComponent implements OnInit {
   temp = [];
   id: number;
   loadingIndicator: true;
-  rows: any;
-  rows1 = [];
-  rows2: any;
+  rows1: any;
+  rows2 = [];
+  rows3: any;
+  rows4: any;
   editing = {};
   row: any;
   public breadcrumb: any;
@@ -83,9 +86,10 @@ export class DashboardSeguimientoMorososComponent implements OnInit {
   parameters:any;
   message;
   title;
-  columns:any;
+ 
   columns1:any;
   columns2:any;
+  columns3:any;
   optionsWithCaption = {};
   datePipe: any;
   optionsAnio = [];
@@ -129,7 +133,7 @@ export class DashboardSeguimientoMorososComponent implements OnInit {
   totalPeriodos:any;
   totalDeuda:any;
   constructor(private tableApiservice: ComercialService, private exportService: ExportService, private _cnp:CustomNumberPipe,
-    private _cp: CurrencyPipe, private _phone: PhonePipe, private modalService: NgbModal) {
+    private _cp: CurrencyPipe, private _pp:PorcentajePipe, private _dp: DecimalPipe,  private modalService: NgbModal) {
     this.page.pageNumber = 0;
     this.page.size = 10;
 
@@ -464,7 +468,6 @@ export class DashboardSeguimientoMorososComponent implements OnInit {
     this.loading("Realizando Busqueda....");
     this.tableApiservice.getChartContratosGestionadosMes(this.parameters).subscribe(
       (response) => {
-        this.rows = [];
         if(response.data.success){
           this.chartLabels1 = [];
           this.chartData1 = [];   
@@ -491,230 +494,94 @@ export class DashboardSeguimientoMorososComponent implements OnInit {
           Swal.close();
       }
     );
-    // this.tableApiservice.getChartContratosGestionadosMes(this.parameters).subscribe(
-    //   (response: ApiResponse<AttentionConsultation>) => {
-    //     this.rows = [];
-    //     if(response.data.success){
-    //       this.message = response.message;
-    //       this.title = response.data.title;
-    //       //console.log(response.data);
-    //       this.data = response.data ? response : [];
-    //       console.log(168, this.data);   
-    //       this.columns = this.data.data.cabeceras;
-    //       // console.log(168, this.columns);  
-    //       this.columns.map(item=>{
-    //         if (item.pipe === 'currency'){
-    //           item.pipe = this._cp;
-    //         }
-    //       });
-    //       this.columns1 = [
-    //         {prop: 'Programa', name: 'Programa'},
-    //         {prop: 'TotalContratos', name: 'Contratos', pipe: this._cnp},
-    //         {prop: 'TotalMiembros', name: 'Afiliados', pipe: this._cnp},
-    //         {prop: 'CuotasVencidas', name: 'Periodos', pipe: this._cnp},
-    //         {prop: 'ImpCuotasVencidas', name: 'Deuda', pipe: this._cp},
-    //       ]
-    //       this.columns2 = [
-    //         {prop: 'periodo', name: 'Periodos'},
-    //         {prop: 'nuContratos', name: 'Contratos', pipe: this._cnp},
-    //         {prop: 'nuAfiliados', name: 'Afiliados', pipe: this._cnp},
-    //         {prop: 'nuCuotasVencidas', name: 'Periodos', pipe: this._cnp},
-    //         {prop: 'totalImpCuotasVencidas', name: 'Deuda', pipe: this._cp},
-    //       ]
-    //       this.rows = this.data.data.data;
-    //       this.rows1 = [];
-    //       this.totalMorosos = this._cnp.transform(this.rows.length);
-    //       this.totalAfiliados = 0;
-    //       this.totalPeriodos = 0;
-    //       this.totalDeuda = 0;
-          
-    //       let result = [];
-    //       let totalContratos = 0;
-    //       let totalAfiliados = 0;
-    //       let totalPeriodos = 0;
-    //       let totalDeuda = 0;
-    //       this.rows.forEach(function (a) {
-    //         //console.log(177,a);
-    //           if ( !this[a.grupoPrograma]) {
-    //               this[a.grupoPrograma] =  { Programa: a.grupoPrograma, TotalContratos: 0, TotalMiembros: 0, CuotasVencidas: 0, ImpCuotasVencidas: 0 };
-
-    //               result.push(this[a.grupoPrograma]);
-    //           }
-    //           this[a.grupoPrograma].TotalContratos += 1;
-    //           this[a.grupoPrograma].TotalMiembros += Number(a.TotalMiembros);
-    //           this[a.grupoPrograma].CuotasVencidas += Number(a.CuotasVencidas);
-    //           this[a.grupoPrograma].ImpCuotasVencidas += Number(a.ImpCuotasVencidas);
-             
-             
-    //       }, Object.create(null));
-    //       this.rows1 = result;
-    //       this.rows1.map(item =>{
-    //         totalContratos += item.TotalContratos;
-    //         totalAfiliados += item.TotalMiembros;
-    //         totalPeriodos += item.CuotasVencidas;
-    //         totalDeuda += item.ImpCuotasVencidas;
-    //       });
-    //       const total = {
-    //         Programa: 'TOTAL', 
-    //         TotalContratos: totalContratos, 
-    //         TotalMiembros: totalAfiliados, 
-    //         CuotasVencidas: totalPeriodos, 
-    //         ImpCuotasVencidas: totalDeuda
-    //       };
-          
-    //       this.rows1.push(total);
-    //       this.rows.map(item=>{
-    //         //console.log(222,item.ImpCuotasVencidas);
-    //         item.ImpCuotasVencidas =  item.ImpCuotasVencidas;
-    //         item.Telefono = this._phone.transform( item.Telefono);
-    //       });
-    //       this.totalAfiliados = this._cnp.transform(totalAfiliados);
-    //       this.totalPeriodos = this._cnp.transform(totalPeriodos);
-    //       this.totalDeuda = totalDeuda;
-    //       //console.log(198, this.rows1);
-
-    //       this.rows2 = [];
-    //       let nuContratosP1= 0;
-    //       let nuAfiliadosP1 = 0;
-    //       let nuCuotasVencidasP1 = 0;
-    //       let totalImpP1 = 0;
-
-    //       let nuContratosP2 = 0;
-    //       let nuAfiliadosP2 = 0;
-    //       let nuCuotasVencidasP2 = 0;
-    //       let totalImpP2 = 0;
-
-    //       let nuContratosP3 = 0;
-    //       let nuAfiliadosP3 = 0;
-    //       let nuCuotasVencidasP3 = 0;
-    //       let totalImpP3 = 0;
-
-    //       let nuContratosP4 = 0;
-    //       let nuAfiliadosP4 = 0;
-    //       let nuCuotasVencidasP4 = 0;
-    //       let totalImpP4 = 0;
-          
-    //       let nuContratosP5 = 0;
-    //       let nuAfiliadosP5 = 0;
-    //       let nuCuotasVencidasP5 = 0;
-    //       let totalImpP5 = 0;
-
-    //       let nuContratosP6 = 0;
-    //       let nuAfiliadosP6 = 0;
-    //       let nuCuotasVencidasP6 = 0;
-    //       let totalImpP6 = 0;
-    //       //console.log(300,this.rows);
-    //       this.rows.map(item =>{
-    //        // console.log(300,this._cp.transform(item.ImpCuotasVencidas));
-    //        //console.log(223,Number(item.ImpCuotasVencidas))
-    //         item.Telefono = this._phone.transform( item.Telefono);
-    //         item.Celular = this._phone.transform( item.Celular);
-    //         if(item.CuotasVencidas === '1'){
-    //           nuContratosP1 += 1;
-    //           nuAfiliadosP1 += Number(item.TotalMiembros);
-    //           nuCuotasVencidasP1 += Number(item.CuotasVencidas);
-    //           totalImpP1 += Number(item.ImpCuotasVencidas);
-    //         }else if(item.CuotasVencidas === '2'){
-    //           nuContratosP2 += 1;
-    //           nuAfiliadosP2 += Number(item.TotalMiembros);
-    //           nuCuotasVencidasP2 += Number(item.CuotasVencidas);
-    //           totalImpP2 += Number(item.ImpCuotasVencidas);
-    //         }else if(item.CuotasVencidas === '3'){
-    //           nuContratosP3 += 1;
-    //           nuAfiliadosP3 += Number(item.TotalMiembros);
-    //           nuCuotasVencidasP3 += Number(item.CuotasVencidas);
-    //           totalImpP3 += Number(item.ImpCuotasVencidas);
-    //         }else if(item.CuotasVencidas === '4'){
-    //           nuContratosP4 += 1;
-    //           nuAfiliadosP4 += Number(item.TotalMiembros);
-    //           nuCuotasVencidasP4 += Number(item.CuotasVencidas);
-    //           totalImpP4 += Number(item.ImpCuotasVencidas);
-    //         }else if(item.CuotasVencidas === '5'){
-    //           nuContratosP5 += 1;
-    //           nuAfiliadosP5 += Number(item.TotalMiembros);
-    //           nuCuotasVencidasP5 += Number(item.CuotasVencidas);
-    //           totalImpP5 += Number(item.ImpCuotasVencidas);
-    //         }else if(Number(item.CuotasVencidas) > 5){
-    //           nuContratosP6 += 1;
-    //           nuAfiliadosP6 += Number(item.TotalMiembros);
-    //           nuCuotasVencidasP6 += Number(item.CuotasVencidas);
-    //           totalImpP6 += Number(item.ImpCuotasVencidas);
-    //         }
-    //       });
-    //       const datosPeriodo1 =  {
-    //           periodo: '1 PERIODO',
-    //           nuContratos: nuContratosP1,
-    //           nuAfiliados: nuAfiliadosP1,
-    //           nuCuotasVencidas: nuCuotasVencidasP1,
-    //           totalImpCuotasVencidas: totalImpP1
-    //         };
-    //       const datosPeriodo2 =  {
-    //         periodo: '2 PERIODOS',
-    //         nuContratos: nuContratosP2,
-    //         nuAfiliados: nuAfiliadosP1,
-    //         nuCuotasVencidas: nuCuotasVencidasP2,
-    //         totalImpCuotasVencidas: totalImpP2
-    //         };
-    //       const datosPeriodo3 = {
-    //         periodo: '3 PERIODOS',
-    //         nuContratos: nuContratosP3,
-    //         nuAfiliados: nuAfiliadosP3,
-    //         nuCuotasVencidas: nuCuotasVencidasP3,
-    //         totalImpCuotasVencidas: totalImpP3
-    //         };
-    //       const datosPeriodo4 = {
-    //           periodo: '4 PERIODOS',
-    //           nuContratos: nuContratosP4,
-    //           nuAfiliados: nuAfiliadosP4,
-    //           nuCuotasVencidas: nuCuotasVencidasP4,
-    //           totalImpCuotasVencidas: totalImpP4
-    //         };
-    //       const datosPeriodo5 = {
-    //           periodo: '5 PERIODOS',
-    //           nuContratos: nuContratosP5,
-    //           nuAfiliados: nuAfiliadosP5,
-    //           nuCuotasVencidas: nuCuotasVencidasP5,
-    //           totalImpCuotasVencidas: totalImpP5
-    //         };
-    //       const datosPeriodo6 = {
-    //           periodo: 'MÁS DE 5 PERIODOS',
-    //           nuContratos: nuContratosP6,
-    //           nuAfiliados: nuAfiliadosP6,
-    //           nuCuotasVencidas: nuCuotasVencidasP6,
-    //           totalImpCuotasVencidas: totalImpP6
-    //         };
-    //       const datosPeriodo7 = {
-    //           periodo: 'TOTAL',
-    //           nuContratos: nuContratosP1 + nuContratosP2 + nuContratosP3 + nuContratosP4 + nuContratosP5 + nuContratosP6,
-    //           nuAfiliados: nuAfiliadosP1 + nuAfiliadosP2 +nuAfiliadosP3 + nuAfiliadosP4 + nuAfiliadosP5 + nuAfiliadosP6,
-    //           nuCuotasVencidas: nuCuotasVencidasP1 + nuCuotasVencidasP2 + nuCuotasVencidasP3 + nuCuotasVencidasP4 + nuCuotasVencidasP5+ nuCuotasVencidasP6,
-    //           totalImpCuotasVencidas: totalImpP1 + totalImpP2 + totalImpP3 + totalImpP4 + totalImpP5 + totalImpP6,
-    //       };
-    //       this.rows2.push(datosPeriodo1);
-    //       this.rows2.push(datosPeriodo2);
-    //       this.rows2.push(datosPeriodo3);
-    //       this.rows2.push(datosPeriodo4);
-    //       this.rows2.push(datosPeriodo5);
-    //       this.rows2.push(datosPeriodo6);
-    //       this.rows2.push(datosPeriodo7);
-    //       //console.log(200,this.rows2);
-    //       this.rows2.map(item=>{
-    //         item.ImpCuotasVencidas = this._cp.transform( item.ImpCuotasVencidas);
-    //       });
-    //       //console.log(response.data.page);
-    //       this.page = (response as any).data.page;
-    //       this.temp = this.rows;
-          
-    //         Swal.close();
-    //     }else{
-    //       Swal.close();
-    //     }
+    this.tableApiservice.getContratosGestionadosMes(this.parameters).subscribe(
+      (response) => {
+        this.rows1 = [];
+        this.rows2 = [];
+        this.columns1 = [];
+        if(response.data.success){
+          console.log(499, response.data);
+          this.columns1 = response.data.cabeceras1;
+          this.columns1.map(item =>{
+            if(item.pipe === 'currency'){
+              item.pipe = this._cp;
+            }else if(item.pipe === 'porcentaje'){
+              item.pipe = this._pp;
+            }else if(item.pipe === 'cantidad'){
+              item.pipe = this._cnp;
+            }else if(item.pipe === 'decimal'){
+              item.pipe = this._dp;
+            }
+          }); 
+          this.columns2 = response.data.cabeceras2;
+          this.columns2.map(item =>{
+            if(item.pipe === 'currency'){
+              item.pipe = this._cp;
+            }else if(item.pipe === 'porcentaje'){
+              item.pipe = this._pp;
+            }else if(item.pipe === 'cantidad'){
+              item.pipe = this._cnp;
+            }else if(item.pipe === 'decimal'){
+              item.pipe = this._dp;
+            }
+          }); 
+          this.rows1 = response.data.produccion;
+          this.rows2 = response.data.indicadores;
+            Swal.close();
+        }else{
+          Swal.close();
+        }
+        console.log(508, this.columns1);
+       
+      },
+      (error) => {
+          Swal.close();
+      }
+    );
+    this.tableApiservice.getContratosGestionadosAnual(this.parameters).subscribe(
+      (response) => {
+        this.rows3 = [];
+        this.rows4 = [];
+        this.columns3 = [];
+        if(response.data.success){
+          console.log(516, response.data);
+          this.columns3 = response.data.cabeceras1;
+          this.columns3.map(item =>{
+            if(item.pipe === 'currency'){
+              item.pipe = this._cp;
+            }else if(item.pipe === 'porcentaje'){
+              item.pipe = this._pp;
+            }else if(item.pipe === 'cantidad'){
+              item.pipe = this._cnp;
+            }else if(item.pipe === 'decimal'){
+              item.pipe = this._dp;
+            }
+          }); 
+          this.columns4 = response.data.cabeceras2;
+          this.columns4.map(item =>{
+            if(item.pipe === 'currency'){
+              item.pipe = this._cp;
+            }else if(item.pipe === 'porcentaje'){
+              item.pipe = this._pp;
+            }else if(item.pipe === 'cantidad'){
+              item.pipe = this._cnp;
+            }else if(item.pipe === 'decimal'){
+              item.pipe = this._dp;
+            }
+          }); 
+          this.rows3 = response.data.produccion;
+          this.rows4 = response.data.indicadores;
+          console.log(509, this.rows4);
+            Swal.close();
+        }else{
+          Swal.close();
+        }
         
-    //   },
-    //   (error) => {
-    //       Swal.close();
-    //   }
-    // );
+      },
+      (error) => {
+          Swal.close();
+      }
+    );
   }
 
   copyTableToClipboard(numberTabla){
@@ -722,7 +589,7 @@ export class DashboardSeguimientoMorososComponent implements OnInit {
       // this.rows.map(item=>{
       //   item.ImpCuotasVencidas = this._cp.transform( item.ImpCuotasVencidas);
       // });
-      this.exportService.exportToClipboard(this.rows, this.columns);
+      this.exportService.exportToClipboard(this.rows1, this.columns1);
     }else if (numberTabla === 1){
 
       this.exportService.exportToClipboard(this.rows2, this.columns2);
@@ -737,7 +604,7 @@ export class DashboardSeguimientoMorososComponent implements OnInit {
       // this.rows.map(item=>{
       //   item.ImpCuotasVencidas = this._cp.transform( item.ImpCuotasVencidas);
       // });
-      this.exportService.exportTableElmToExcel(this.rows, 'Examenes Laboratorio');
+      this.exportService.exportTableElmToExcel(this.rows1, 'Examenes Laboratorio');
     }else if (numberTabla === 1){
       
       this.exportService.exportTableElmToExcel(this.rows1, 'Examenes Laboratorio');
@@ -761,16 +628,16 @@ export class DashboardSeguimientoMorososComponent implements OnInit {
     console.log(input);
     // filter our data
     if (input.length > 0) {
-      const filtered = this.rows
+      const filtered = this.rows1
         .filter(el =>
           Object.values(el).find( val => val?.toString().toLowerCase().indexOf(input) !== -1 ) != undefined
         );
         // console.log(filtered);
-      this.rows = [...filtered]
+      this.rows1 = [...filtered]
       
     } else {
       console.log(this.filtered);
-      this.rows = [...this.temp]
+      this.rows1 = [...this.temp]
     }
 
     // update the rows
