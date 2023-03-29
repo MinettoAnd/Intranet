@@ -548,18 +548,18 @@ export class DashboardSeguimientoMorososComponent implements OnInit {
               this.gestionesConRespuesta = row.per1;
               return row.id =  3;
             }else if(row.item == 'Desean Anular Contrato'){
-              return row.id =  4;
+              return row.id =  9;
             }else if(row.item == 'Con Compromiso de Pago'){
-              return row.id =  5;
+              return row.id =  4;
             }else if(row.item == 'Sin Compromiso de Pago'){
-              return row.id =  6;
+              return row.id =  5;
             }else if(row.item == 'Sin Respuesta'){
               this.gestionesSinRespuesta = row.per1;
-              return row.id =  7;
+              return row.id =  6;
             }else if(row.item == 'Contacto Equivocado'){
-              return row.id =  8;
+              return row.id =  7;
             }else if(row.item == 'Otros'){
-              return row.id =  9;
+              return row.id =  8;
             }
           });
           const alphaOrder = (a, b) => {
@@ -579,20 +579,20 @@ export class DashboardSeguimientoMorososComponent implements OnInit {
               return row.id =  1;
             }else if(row.item == 'Desean Anular Contrato'){
               this.contratosDeseanAnular = row.per1;
-              return row.id =  2;
+              return row.id =  7;
             }else if(row.item == 'Con Compromiso de Pago'){
               this.contratosConCompromisoPago = row.per1;
-              return row.id =  3;
+              return row.id =  2;
             }else if(row.item == 'Sin Compromiso de Pago'){
-              return row.id =  4;
+              return row.id =  3;
             }else if(row.item == 'Contratos Sin Respuesta'){
               this.contratosSinRespuesta = row.per1;
-              return row.id =  5;
+              return row.id =  4;
             }else if(row.item == 'Contacto Equivocado'){
               this.contratosContactoEquivocado = row.per1;
-              return row.id =  6;
+              return row.id =  5;
             }else if(row.item == 'Otros'){
-              return row.id =  7;
+              return row.id =  6;
             }else if(row.item == 'Desean Retirar Integrante del Contrato'){
               return row.id =  8;
             }else if(row.item == 'Titular Fallecido'){
@@ -655,17 +655,17 @@ export class DashboardSeguimientoMorososComponent implements OnInit {
             }else if(row.item == 'Con Respuesta'){
               return row.id =  3;
             }else if(row.item == 'Desean Anular Contrato'){
-              return row.id =  4;
-            }else if(row.item == 'Con Compromiso de Pago'){
-              return row.id =  5;
-            }else if(row.item == 'Sin Compromiso de Pago'){
-              return row.id =  6;
-            }else if(row.item == 'Sin Respuesta'){
-              return row.id =  7;
-            }else if(row.item == 'Contacto Equivocado'){
-              return row.id =  8;
-            }else if(row.item == 'Otros'){
               return row.id =  9;
+            }else if(row.item == 'Con Compromiso de Pago'){
+              return row.id =  4;
+            }else if(row.item == 'Sin Compromiso de Pago'){
+              return row.id =  5;
+            }else if(row.item == 'Sin Respuesta'){
+              return row.id =  6;
+            }else if(row.item == 'Contacto Equivocado'){
+              return row.id =  7;
+            }else if(row.item == 'Otros'){
+              return row.id =  8;
             }
           });
           const alphaOrder = (a, b) => {
@@ -682,17 +682,17 @@ export class DashboardSeguimientoMorososComponent implements OnInit {
             }else if(row.item == 'Contratos Con Respuesta'){
               return row.id =  1;
             }else if(row.item == 'Desean Anular Contrato'){
-              return row.id =  2;
-            }else if(row.item == 'Con Compromiso de Pago'){
-              return row.id =  3;
-            }else if(row.item == 'Sin Compromiso de Pago'){
-              return row.id =  4;
-            }else if(row.item == 'Contratos Sin Respuesta'){
-              return row.id =  5;
-            }else if(row.item == 'Contacto Equivocado'){
-              return row.id =  6;
-            }else if(row.item == 'Otros'){
               return row.id =  7;
+            }else if(row.item == 'Con Compromiso de Pago'){
+              return row.id =  2;
+            }else if(row.item == 'Sin Compromiso de Pago'){
+              return row.id =  3;
+            }else if(row.item == 'Contratos Sin Respuesta'){
+              return row.id =  4;
+            }else if(row.item == 'Contacto Equivocado'){
+              return row.id =  5;
+            }else if(row.item == 'Otros'){
+              return row.id =  6;
             }else if(row.item == 'Desean Retirar Integrante del Contrato'){
               return row.id =  8;
             }else if(row.item == 'Titular Fallecido'){

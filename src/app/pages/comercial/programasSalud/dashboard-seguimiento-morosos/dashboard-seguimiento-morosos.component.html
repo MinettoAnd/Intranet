@@ -91,7 +91,7 @@
                                           <span style="font-family:arial; font-size:15px; " class="info-box-text">CONTRATOS GESTIONADOS</span>
                                           <span  class="info-box-number" *ngIf="contratosGestionados">{{contratosGestionados }} ({{contratosDeseanAnular | number : '1.2-2'}} % Anularan contrato) </span>
                                           <!-- <span  class="info-box-number">{{contratosDeseanAnular | number : '1.2-2'}} Anularan contrato</span>			 -->
-                                          <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">{{contratosConCompromisoPago | number : '1.2-2'}} %</label>	
+                                          <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">{{contratosConCompromisoPago | number : '1.2-2'}} % Con Compromiso de pago</label>	
                                           
                                       </div>
                                   </div>
@@ -116,7 +116,7 @@
                                       <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">GESTIONES CON RESPUESTA</span>			
                                       <span  class="info-box-number" *ngIf="gestionesConRespuesta">{{gestionesConRespuesta }} ({{contratosConRespuesta | number : '1.2-2'}} %)</span>	
                                       <!-- <span  class="info-box-number"></span>			 -->
-                                          <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">{{contratosConCompromisoPago | number : '1.2-2'}} % Gestiones con compromiso de pago</label>			
+                                          <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">{{contratosConCompromisoPago/gestionesConRespuesta | number : '1.2-2'}} % Gestiones con compromiso de pago</label>			
                                     </div>
                                   </div>
                               </div>
