@@ -98,6 +98,7 @@ import { ResponseformComponent } from './pages/encuesta/responseform/responsefor
 import { ReporteComponent } from './pages/encuesta/reporte/reporte.component';
 import { CustomFilterPipe } from './pipes/custom-filter.pipe';
 import { PorcentajePipe } from './pipes/porcentaje.pipe';
+import { NumberDecimalPipe } from './pipes/numberDecimal.pipe';
 import { ExportService } from './_services/export.service';
 
 import { registerLocaleData } from '@angular/common';
@@ -189,6 +190,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     CustomNumberPipe,
     PhonePipe,
     PorcentajePipe,
+    NumberDecimalPipe,
     DefaultComponent,
     CustomTooltip,
     EmpresaCellRenderer,
@@ -251,6 +253,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     CurrencyPipe,
     DecimalPipe,
     PorcentajePipe,
+    NumberDecimalPipe,
     CustomNumberPipe,
     PhonePipe,
   ],
