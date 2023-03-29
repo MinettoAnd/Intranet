@@ -120,10 +120,12 @@
                                         <div class="info-box">
                                             <span style="background: #f56954 !important; color:#fff !important;" class="info-box-icon">			
                                             <i class="fa fa-street-view" aria-hidden="true"></i>		</span>		
-                                            <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">HOSPITALIZADOS</span>			<span *ngIf="resumenMes.hospitalizados" class="info-box-number">{{resumenMes.hospitalizados}} </span>			
-                                            <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">{{(resumenMes.hospitalizados/resumenMes.emergencia) * 100 | number : '1.2-2' }} %
-                                                </label>		
-                                              </div>
+                                            <div class="info-box-content">			
+                                              <span style="font-family:arial; font-size:15px; " class="info-box-text">HOSPITALIZADOS</span>			
+                                              <span *ngIf="resumenMes.hospitalizados" class="info-box-number">{{resumenMes.hospitalizados}} </span>			
+                                              <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">{{(resumenMes.hospitalizados/resumenMes.emergencia) * 100 | number : '1.2-2' }} %
+                                              </label>		
+                                            </div>
                                         </div>
                                       
                                     </div>

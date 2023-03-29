@@ -88,8 +88,11 @@
                                       <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
                                       </span>		
                                       <div class="info-box-content">
-                                      <span style="font-family:arial; font-size:15px; " class="info-box-text">CONTRATOS GESTIONADOS</span>
-                                          <span  class="info-box-number" *ngIf="totalMorosos">{{totalMorosos }}</span>
+                                          <span style="font-family:arial; font-size:15px; " class="info-box-text">CONTRATOS GESTIONADOS</span>
+                                          <span  class="info-box-number" *ngIf="contratosGestionados">{{contratosGestionados }} ({{contratosDeseanAnular | number : '1.2-2'}} % Anularan contrato) </span>
+                                          <!-- <span  class="info-box-number">{{contratosDeseanAnular | number : '1.2-2'}} Anularan contrato</span>			 -->
+                                          <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">{{contratosConCompromisoPago | number : '1.2-2'}} % Con Compromiso de pago</label>	
+                                          
                                       </div>
                                   </div>
                                   
@@ -100,7 +103,9 @@
                                       <i class="fa fa-plus-circle" aria-hidden="true"></i>		</span>		
                                       <div class="info-box-content">			
                                           <span style="font-family:arial; font-size:15px; " class="info-box-text">GESTIONES REALIZADAS</span>			
-                                          <span class="info-box-number" *ngIf="totalAfiliados">{{totalAfiliados}}</span>			
+                                          <span class="info-box-number" *ngIf="gestionesRealizadas">{{gestionesRealizadas}}</span>		
+                                          <!-- <span  class="info-box-number"></span>			 -->
+                                          <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">{{ contratosGestionados/gestionesRealizadas | number : '1.2-2'}} Gestiones por Contrato</label>		
                                       </div>
                                   </div>                              
                               </div>
@@ -109,7 +114,9 @@
                                       <span style="background: #FF3636 !important; color:#fff !important;" class="info-box-icon">			
                                       <i class="fa fa-medkit" aria-hidden="true"></i>		</span>		
                                       <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">GESTIONES CON RESPUESTA</span>			
-                                      <span  class="info-box-number" *ngIf="totalPeriodos">{{totalPeriodos }}</span>			
+                                      <span  class="info-box-number" *ngIf="gestionesConRespuesta">{{gestionesConRespuesta }} ({{contratosConRespuesta | number : '1.2-2'}} %)</span>	
+                                      <!-- <span  class="info-box-number"></span>			 -->
+                                          <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">{{contratosConCompromisoPago/gestionesConRespuesta | number : '1.2-2'}} % Gestiones con compromiso de pago</label>			
                                     </div>
                                   </div>
                               </div>
@@ -118,7 +125,9 @@
                                     <span style="background: #FFAA00 !important; color:#fff !important;" class="info-box-icon">			
                                     <i class="fa fa-bank" aria-hidden="true"></i>		</span>		
                                     <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">GESTIONES SIN RESPUESTA</span>			
-                                    <span  class="info-box-number" *ngIf="totalDeuda">{{totalDeuda | currency }}</span>			
+                                    <span  class="info-box-number" *ngIf="gestionesSinRespuesta">{{gestionesSinRespuesta}} ({{contratosSinRespuesta | number : '1.2-2'}} %)</span>		
+                                    <!-- <span  class="info-box-number"></span>			 -->
+                                          <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">{{contratosContactoEquivocado | number : '1.2-2'}} % Contactos Equivocados</label>		
                                   </div>
                                 </div>
                               </div>
@@ -214,13 +223,13 @@
                                           [rowHeight]="$any('auto')"
                                           [scrollbarH]="true"
                                           (page)="setPage($event)"
-                                       
+                                          [rowClass]="getRowClass"
                                           >
                                           <ngx-datatable-column [flexGrow]="1" 
                                           [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns1; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                             <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                               let-row="row">
-                                              <div>
+                                              <div class="{{value.replaceAll(' ', '-')}} {{column.prop}}">
                                                 <span  [title]="value">{{value}}</span>
                                               </div>
                                               <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
@@ -279,12 +288,12 @@
                                             [rowHeight]="$any('auto')"
                                             [scrollbarH]="true"
                                             (page)="setPage($event)"
-                                            
+                                            [rowClass]="getRowClass"
                                             >
                                             <ngx-datatable-column [flexGrow]="1" [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns2; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                               <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                                 let-row="row">
-                                                <div>
+                                                <div class="{{value.replaceAll(' ', '-')}} {{column.prop}}">
                                                   <span  [title]="value">{{value}}</span>
                                                 </div>
                                                 <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
@@ -364,13 +373,13 @@
                                         [rowHeight]="$any('auto')"
                                         [scrollbarH]="true"
                                         (page)="setPage($event)"
-                                      
+                                        [rowClass]="getRowClass"
                                         >
                                         <ngx-datatable-column [flexGrow]="1" 
                                         [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns3; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                           <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                             let-row="row">
-                                            <div>
+                                            <div class="{{value.replaceAll(' ', '-')}} {{column.prop}}">
                                               <span  [title]="value">{{value}}</span>
                                             </div>
                                             <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
@@ -429,12 +438,12 @@
                                           [rowHeight]="$any('auto')"
                                           [scrollbarH]="true"
                                           (page)="setPage($event)"
-                                         
+                                          [rowClass]="getRowClass"
                                           >
                                           <ngx-datatable-column [flexGrow]="1" [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns4; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                             <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                               let-row="row">
-                                              <div>
+                                              <div class="{{value.replaceAll(' ', '-')}} {{column.prop}}">
                                                 <span  [title]="value">{{value}}</span>
                                               </div>
                                               <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
