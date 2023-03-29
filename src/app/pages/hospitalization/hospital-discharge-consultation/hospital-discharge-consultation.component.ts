@@ -68,6 +68,7 @@ export class HospitalDischargeConsultationComponent implements OnInit {
     {value: 50},
     {value: 100},
   ];
+  optionSize=10;
   constructor(private tableApiservice: HospitalizationService, private exportService: ExportService) {
     this.page.pageNumber = 0;
     this.page.size = 10;
@@ -142,13 +143,6 @@ export class HospitalDischargeConsultationComponent implements OnInit {
   }
 
   private changePageLimit(limit: any): void {
-    
-    if (limit === '0'){
-      
-      this.page.size = this.page.totalElements;
-      console.log(this.page.totalElements);
-      return
-    }
     this.page.size = parseInt(limit, 10);
   }
   setPage(pageInfo) {
@@ -225,6 +219,14 @@ export class HospitalDischargeConsultationComponent implements OnInit {
           this.like_medico = form.like_medico;
           this.like_paciente = form.like_paciente;
           var diff = moment(this.f_fin).diff(moment(this.f_inicio));
+          if( this.page.size > 800 ){
+            this.page.size = 25;
+            this.optionSize = this.page.size;
+          }
+          if( this.page.size > 800 ){
+            this.page.size = 25;
+            this.optionSize = this.page.size;
+          }
           if((diff/(1000*60*60*24)) < 31){
             this.setPage({ offset: 0 });
           }else{

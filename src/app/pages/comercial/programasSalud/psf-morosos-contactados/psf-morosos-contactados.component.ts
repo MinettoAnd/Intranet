@@ -65,7 +65,7 @@ export class PsfMorososContactadosComponent implements OnInit {
       // f_fin: '2022-11-30',
   fecha_inicio = moment(this.restarDias(new Date, -7)).format('YYYY-MM-DD');
   fecha_fin = moment(new Date()).format('YYYY-MM-DD');
-
+  optionSize=10;
   planDeSalud = '0';
   accion = '0';
   // tipo_paciente = '0';
@@ -128,12 +128,12 @@ export class PsfMorososContactadosComponent implements OnInit {
   }
   private changePageLimit(limit: any): void {
     this.loading("Filtrando....");
-    if (limit === '0'){
+    // if (limit === '0'){
       
-      this.page.size = this.page.totalElements;
-      console.log(this.page.totalElements);
-      return
-    }
+    //   this.page.size = this.page.totalElements;
+    //   console.log(this.page.totalElements);
+    //   return
+    // }
     this.page.size = parseInt(limit, 10);
     setTimeout(() => {
       Swal.close();
@@ -208,6 +208,10 @@ export class PsfMorososContactadosComponent implements OnInit {
           this.planDeSalud = form.planDeSalud;
           this.accion = form.accion;
           var diff = moment(this.fecha_fin).diff(moment(this.fecha_inicio));
+          if( this.page.size > 800 ){
+            this.page.size = 25;
+            this.optionSize = this.page.size;
+          }
           if((diff/(1000*60*60*24)) < 31){
             this.setPage({ offset: 0 });
           }else{

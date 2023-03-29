@@ -157,7 +157,7 @@
           <option [ngValue]="100">100</option>
           <option [ngValue]="150">150</option>
         </select> -->
-        <select class="custom-select" style="width: auto" (change)="onLimitChange($event.target.value)">
+        <select class="custom-select" style="width: auto" [ngModel]="optionSize" (change)="onLimitChange($event.target.value)">
           <option
             *ngFor="let option of pageLimitOptions"
             [value]="option.value"
@@ -165,7 +165,7 @@
           >
             {{ option.value }} Registros
           </option>
-          <option value="0" *ngIf="this.page.totalElements">Todos los Registros</option>
+          <option value="{{this.page.totalElements}}"  *ngIf="this.page.totalElements">Todos los Registros</option>
         </select>
       </div>
     </div>

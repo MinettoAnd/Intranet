@@ -50,6 +50,15 @@ export class DashboardSeguimientoMorososComponent implements OnInit {
   @ViewChild(DatatableComponent) private table: DatatableComponent;
   grafico: Chart;
   columns4: any;
+  contratosGestionados: any;
+  gestionesRealizadas: any;
+  gestionesConRespuesta: any;
+  gestionesSinRespuesta: any;
+  contratosConRespuesta: any;
+  contratosConCompromisoPago: any;
+  contratosSinRespuesta: any;
+  contratosContactoEquivocado: any;
+  contratosDeseanAnular: any;
   @ViewChild("baseChart", { static: false }) set content(
     content: ElementRef
   ) {
@@ -159,17 +168,17 @@ export class DashboardSeguimientoMorososComponent implements OnInit {
     // this.setPage({ offset: 0 });
   }
   getRowClass(row) {
-
     return {
-      'totals': row.Programa.includes('TOTAL')
+      // 'row-paddin': row.item.includes('Con Respuesta')
+      'row-paddin-1': row.item === 'Con Respuesta' || row.item === 'Sin Respuesta'  || row.item === 'Contratos Con Respuesta'  || row.item === 'Contratos Sin Respuesta', 'row-paddin-2': row.item === 'Desean Anular Contrato' || row.item === 'Con Compromiso de Pago' || row.item === 'Sin Compromiso de Pago' || row.item === 'Contacto Equivocado' || row.item === 'Otros' 
     };
   }
-  getRowClass1(row) {
+  // getRowClass1(row) {
 
-    return {
-      'totals': row.periodo.includes('TOTAL')
-    };
-  }
+  //   return {
+  //     'row-paddin': row.item === 'Con Respuesta' || row.item === 'Sin Respuesta', 'row-paddin-doble': row.item === 'Desean Anular Contrato' || row.item === 'Con Compromiso de Pago' || row.item === 'Sin Compromiso de Pago'
+  //   };
+  // }
   getBarChart(chartLabels1, chartData1, chartData2,scaleLabel1,scaleLabel2, chartNum, title, title2, typeChart) {
     const data = {
       labels: chartLabels1,
@@ -526,7 +535,73 @@ export class DashboardSeguimientoMorososComponent implements OnInit {
             }
           }); 
           this.rows1 = response.data.produccion;
+          this.rows1.map(row => {
+            if(row.item == 'Contratos Morosos a Inicio del Período'){
+              return row.id =  0;
+            }else if(row.item == 'Contratos Gestionados'){
+              this.contratosGestionados = row.per1;
+              return row.id =  1;
+            }else if(row.item == 'Gestiones Realizadas'){
+              this.gestionesRealizadas = row.per1;
+              return row.id =  2;
+            }else if(row.item == 'Con Respuesta'){
+              this.gestionesConRespuesta = row.per1;
+              return row.id =  3;
+            }else if(row.item == 'Desean Anular Contrato'){
+              return row.id =  4;
+            }else if(row.item == 'Con Compromiso de Pago'){
+              return row.id =  5;
+            }else if(row.item == 'Sin Compromiso de Pago'){
+              return row.id =  6;
+            }else if(row.item == 'Sin Respuesta'){
+              this.gestionesSinRespuesta = row.per1;
+              return row.id =  7;
+            }else if(row.item == 'Contacto Equivocado'){
+              return row.id =  8;
+            }else if(row.item == 'Otros'){
+              return row.id =  9;
+            }
+          });
+          const alphaOrder = (a, b) => {
+            // console.log(553, a.id, b.id);
+            if (a.id > b.id) return 1;
+            if (a.id < b.id) return -1;
+            return 0;
+          }
+          this.rows1.sort(alphaOrder);
+
           this.rows2 = response.data.indicadores;
+          this.rows2.map(row => {
+            if(row.item == 'Contratos Gestionados'){
+              return row.id =  0;
+            }else if(row.item == 'Contratos Con Respuesta'){
+              this.contratosConRespuesta = row.per1;
+              return row.id =  1;
+            }else if(row.item == 'Desean Anular Contrato'){
+              this.contratosDeseanAnular = row.per1;
+              return row.id =  2;
+            }else if(row.item == 'Con Compromiso de Pago'){
+              this.contratosConCompromisoPago = row.per1;
+              return row.id =  3;
+            }else if(row.item == 'Sin Compromiso de Pago'){
+              return row.id =  4;
+            }else if(row.item == 'Contratos Sin Respuesta'){
+              this.contratosSinRespuesta = row.per1;
+              return row.id =  5;
+            }else if(row.item == 'Contacto Equivocado'){
+              this.contratosContactoEquivocado = row.per1;
+              return row.id =  6;
+            }else if(row.item == 'Otros'){
+              return row.id =  7;
+            }else if(row.item == 'Desean Retirar Integrante del Contrato'){
+              return row.id =  8;
+            }else if(row.item == 'Titular Fallecido'){
+              return row.id =  9;
+            }
+          });
+
+          this.rows2.sort(alphaOrder);
+          console.log(591, this.rows2);
             Swal.close();
         }else{
           Swal.close();
@@ -570,7 +645,62 @@ export class DashboardSeguimientoMorososComponent implements OnInit {
             }
           }); 
           this.rows3 = response.data.produccion;
+          this.rows3.map(row => {
+            if(row.item == 'Contratos Morosos a Inicio del Período'){
+              return row.id =  0;
+            }else if(row.item == 'Contratos Gestionados'){
+              return row.id =  1;
+            }else if(row.item == 'Gestiones Realizadas'){
+              return row.id =  2;
+            }else if(row.item == 'Con Respuesta'){
+              return row.id =  3;
+            }else if(row.item == 'Desean Anular Contrato'){
+              return row.id =  4;
+            }else if(row.item == 'Con Compromiso de Pago'){
+              return row.id =  5;
+            }else if(row.item == 'Sin Compromiso de Pago'){
+              return row.id =  6;
+            }else if(row.item == 'Sin Respuesta'){
+              return row.id =  7;
+            }else if(row.item == 'Contacto Equivocado'){
+              return row.id =  8;
+            }else if(row.item == 'Otros'){
+              return row.id =  9;
+            }
+          });
+          const alphaOrder = (a, b) => {
+            // console.log(553, a.id, b.id);
+            if (a.id > b.id) return 1;
+            if (a.id < b.id) return -1;
+            return 0;
+          }
+          this.rows3.sort(alphaOrder);
           this.rows4 = response.data.indicadores;
+          this.rows4.map(row => {
+            if(row.item == 'Contratos Gestionados'){
+              return row.id =  0;
+            }else if(row.item == 'Contratos Con Respuesta'){
+              return row.id =  1;
+            }else if(row.item == 'Desean Anular Contrato'){
+              return row.id =  2;
+            }else if(row.item == 'Con Compromiso de Pago'){
+              return row.id =  3;
+            }else if(row.item == 'Sin Compromiso de Pago'){
+              return row.id =  4;
+            }else if(row.item == 'Contratos Sin Respuesta'){
+              return row.id =  5;
+            }else if(row.item == 'Contacto Equivocado'){
+              return row.id =  6;
+            }else if(row.item == 'Otros'){
+              return row.id =  7;
+            }else if(row.item == 'Desean Retirar Integrante del Contrato'){
+              return row.id =  8;
+            }else if(row.item == 'Titular Fallecido'){
+              return row.id =  9;
+            }
+          });
+
+          this.rows4.sort(alphaOrder);
           console.log(509, this.rows4);
             Swal.close();
         }else{
@@ -585,32 +715,32 @@ export class DashboardSeguimientoMorososComponent implements OnInit {
   }
 
   copyTableToClipboard(numberTabla){
-    if(numberTabla === 0){
-      // this.rows.map(item=>{
-      //   item.ImpCuotasVencidas = this._cp.transform( item.ImpCuotasVencidas);
-      // });
+    if(numberTabla === 1){
       this.exportService.exportToClipboard(this.rows1, this.columns1);
-    }else if (numberTabla === 1){
+    }else if (numberTabla === 2){
 
       this.exportService.exportToClipboard(this.rows2, this.columns2);
-    }else if (numberTabla === 2){
+    }else if (numberTabla === 3){
     
-      this.exportService.exportToClipboard(this.rows2, this.columns2);
+      this.exportService.exportToClipboard(this.rows3, this.columns3);
+    }else if (numberTabla === 4){
+    
+      this.exportService.exportToClipboard(this.rows4, this.columns4);
     }
   }
 
   exportToExcel(numberTabla): void {
-    if(numberTabla === 0){
-      // this.rows.map(item=>{
-      //   item.ImpCuotasVencidas = this._cp.transform( item.ImpCuotasVencidas);
-      // });
-      this.exportService.exportTableElmToExcel(this.rows1, 'Examenes Laboratorio');
-    }else if (numberTabla === 1){
-      
-      this.exportService.exportTableElmToExcel(this.rows1, 'Examenes Laboratorio');
+    if(numberTabla === 1){
+      this.exportService.exportTableElmToExcel(this.rows1, 'Resumen de Morosos - Producción - Mensual');
     }else if (numberTabla === 2){
       
-      this.exportService.exportTableElmToExcel(this.rows2, 'Examenes Laboratorio');
+      this.exportService.exportTableElmToExcel(this.rows2, 'Resumen de Morosos - Indicadores Sobre Atenciones - Mensual');
+    }else if (numberTabla === 3){
+      
+      this.exportService.exportTableElmToExcel(this.rows3, 'Resumen de Morosos - Producción - Anual');
+    }else if (numberTabla === 4){
+      
+      this.exportService.exportTableElmToExcel(this.rows4, 'Resumen de Morosos - Indicadores Sobre Atenciones - Anual');
     }
   }
 

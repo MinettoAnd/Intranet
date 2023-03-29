@@ -189,7 +189,7 @@
                       <div class="row" style="align-items: center;justify-content: space-between;">
                         <ul class="list-group list-group-horizontal list-group-flush">
                           <li class="list-group-item border-0 pl-0">
-                            <select class="form-control form-select" (change)="onLimitChange($event.target.value)">
+                            <select class="form-control form-select" [ngModel]="optionSize" (change)="onLimitChange($event.target.value)">
                               <option
                                 *ngFor="let option of pageLimitOptions"
                                 [value]="option.value"
@@ -197,7 +197,7 @@
                               >
                                 {{ option.value }} Registros
                               </option>
-                              <option value="0" *ngIf="this.page.totalElements">Todos los Registros</option>
+                              <option value="{{this.page.totalElements}}" *ngIf="this.page.totalElements">Todos los Registros</option>
                             </select>
                           </li>
                           <li class="list-group-item border-0 pl-0">

@@ -58,6 +58,7 @@ export class ImpresionInformesRealizadosComponent implements OnInit {
     condPlaca: any;
     message: string;
   data: any;
+  optionSize=10;
   // imagen_logo: any;
   // tipo_examen: any;
   // id_sedeRegistro: any;
@@ -189,13 +190,6 @@ export class ImpresionInformesRealizadosComponent implements OnInit {
   }
 
   private changePageLimit(limit: any): void {
-    
-    if (limit === '0'){
-      
-      this.page.size = this.page.totalElements;
-      //console.log(this.page.totalElements);
-      return
-    }
     this.page.size = parseInt(limit, 10);
   }
   filter() {
@@ -210,6 +204,10 @@ export class ImpresionInformesRealizadosComponent implements OnInit {
             this.condPlaca = form.condPlaca;
   
             var diff = moment(this.condF_FFin).diff(moment(this.condF_FIni));
+            if( this.page.size > 800 ){
+              this.page.size = 25;
+              this.optionSize = this.page.size;
+            }
             if((diff/(1000*60*60*24)) < 31){
               this.setPage({ offset: 0 });
             }else{
