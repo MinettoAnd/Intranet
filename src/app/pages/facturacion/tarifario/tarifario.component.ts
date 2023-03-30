@@ -14,12 +14,13 @@ import { ExcelJson } from '../../../interfaces/excel-json.interface';
 import { ExportService } from '../../../_services/export.service';
 import ResizeObserver from 'resize-observer-polyfill';
 import { PorcentajePipe } from '../../../pipes/porcentaje.pipe';
+import { NumberDecimalPipe } from '../../../pipes/numberDecimal.pipe';
 import { CustomNumberPipe } from '../../../pipes/customNumber.pipe';
 import { CurrencyPipe, DecimalPipe } from '@angular/common';
 @Component({
   selector: 'app-tarifario',
   templateUrl: './tarifario.component.html',
-  styleUrls: ['./tarifario.component.sass']
+  styleUrls: ['./tarifario.component.scss']
 })
 export class TarifarioComponent implements OnInit {
   initialSize = 0;
@@ -76,7 +77,7 @@ export class TarifarioComponent implements OnInit {
     {value: 100},
   ];
   constructor(private tableApiservice: FacturacionService, private exportService: ExportService,
-    private _cp: CurrencyPipe, private _dp: DecimalPipe, private _pp:PorcentajePipe, private _cnp:CustomNumberPipe) {
+    private _cp: CurrencyPipe, private _dp: DecimalPipe, private _pp:PorcentajePipe, private _cnp:CustomNumberPipe, private _ndp:NumberDecimalPipe) {
     this.page.pageNumber = 0;
     this.page.size = 10;
 
@@ -185,8 +186,8 @@ console.log(this.parameters);
          
           this.columns = this.data.data.cabeceras;
           this.columns.map(item =>{
-            if(item.pipe === 'currency'){
-              item.pipe = this._cp;
+            if(item.pipe === 'numberDecimal'){
+              item.pipe = this._ndp;
             }else if(item.pipe === 'porcentaje'){
               item.pipe = this._pp;
             }else if(item.pipe === 'cantidad'){

@@ -221,7 +221,10 @@
                         <ngx-datatable-column  [flexGrow]="1" [width]="column.width" [pipe]="column.pipe" *ngFor="let column of columns; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                           <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                             let-row="row">
-                            <span [title]="value">{{value}}</span>
+                            <div class="{{column.prop}}">
+                              <span [title]="value">{{value}}</span>
+                            </div>
+                            
                             <!-- <span title="Double click to edit" (dblclick)="editing[rowIndex + '-{{column.name}}'] = true"
                               *ngIf="!editing[rowIndex + '-{{column.name}}']">
                               {{value}}
