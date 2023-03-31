@@ -24,7 +24,7 @@
                     </div>
 
                     
-                    <div class="input-group input-group-sm">
+                    <div class="input-group input-group-sm md">
                         <div class="input-group-append">
                           <span class="input-group-text">Tipo de Contacto</span>
                         </div>
@@ -39,7 +39,7 @@
                         </select>
                     </div>
 
-                    <div class="input-group input-group-sm">
+                    <div class="input-group input-group-sm ">
                       <div class="input-group-append">
                         <span class="input-group-text">Meses de Morosidad</span>
                       </div>
@@ -59,7 +59,7 @@
                         <option value="5M">05 Meses a mas</option>	
                       </select>
                     </div>
-                    <div class="input-group input-group-sm">
+                    <div class="input-group input-group-sm ">
                       <div class="input-group-append">
                         <span class="input-group-text">Planes de Salud</span>
                       </div>
@@ -73,7 +73,7 @@
                         <option value="21">Tarjeta Diamante</option>
                       </select>
                     </div>
-                    <div class="input-group input-group-sm">
+                    <div class="input-group input-group-sm md">
                       <div class="input-group-append">
                         <span class="input-group-text">Acción</span>
                       </div>
@@ -86,6 +86,17 @@
                         <option value="2">No Contactados</option>
                         <option value="30">Compromiso(últimos 30 días)</option>
                       </select>
+                    </div>
+                    <div class="input-group input-group-sm md">
+                          <div class="input-group-append">
+                            <span class="input-group-text">Titular:</span>
+                          </div>
+                          <input
+                            type="text"
+                            formControlName="titular"
+                            class="form-control"
+                            id="titular"
+                          />
                     </div>
                       <div class="input-group-btn">
                         <button (click)="filter()" class="btn btn-sm btn-primary">

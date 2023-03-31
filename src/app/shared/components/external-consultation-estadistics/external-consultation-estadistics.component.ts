@@ -344,6 +344,11 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
             labelString: scaleLabel2,
             fontSize: 18,
             fontColor: '#000',
+          },
+          ticks: {
+            beginAtZero: true,
+            max: 300,
+            min: 0
           }
         }]
       },
@@ -400,6 +405,27 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
           // borderColor: 'darkblue',
           // borderRadius: 8,
           // backgroundColor: 'lightblue'
+        }
+      },
+      tooltips: {
+        enabled: true,
+        callbacks: {
+            // label: function(tooltipItem, data) {
+            //     var label = data.datasets[tooltipItem.datasetIndex].label || '';
+              
+            //     if (label) {
+            //         label += ': ';
+            //     }
+            //     label += Math.round(tooltipItem.yLabel * 100) / 100;
+            //     tooltipItem.xLabel = 'Día: ' + tooltipItem.xLabel + '   ' ;
+            //     tooltipItem.label = 'Día: ' + tooltipItem.Label + '   ' ;
+                
+            //     return label;
+            // },
+            title: function(tooltipItem, data) {
+             var title = 'Día: ' + tooltipItem[0].xLabel + '   ' ;
+              return title;
+          }
         }
       }
     };
