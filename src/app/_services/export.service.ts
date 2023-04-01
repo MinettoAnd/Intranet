@@ -7,7 +7,15 @@ import { ExcelJson } from '../interfaces/excel-json.interface';
 const EXCEL_EXTENSION = '.xlsx';
 const CSV_EXTENSION = '.csv';
 const CSV_TYPE = 'text/plain;charset=utf-8';
-
+const getFileName = (name: string) => {
+  let timeSpan = new Date().toISOString();
+  let sheetName = "Sheet1";
+  let fileName = "ExportResult" + `-${timeSpan}`;
+  return {
+    sheetName,
+    fileName
+  };
+};
 
 @Injectable()
 export class ExportService {
@@ -19,11 +27,12 @@ export class ExportService {
    * @param element DOM table element reference.
    * @param fileName filename to save as.
    */
-  public exportTableElmToExcel(rows: any[], fileName: string): void {
+  public exportTableElmToExcel(rows: any[], name?: string): void {
+    let { sheetName, fileName } = getFileName(name);
     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(rows);
     // generate workbook and add the worksheet
     const workbook: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, ws, 'Sheet1');
+    XLSX.utils.book_append_sheet(workbook, ws, sheetName);
     // save to file
     XLSX.writeFile(workbook, `${fileName}${EXCEL_EXTENSION}`);
 

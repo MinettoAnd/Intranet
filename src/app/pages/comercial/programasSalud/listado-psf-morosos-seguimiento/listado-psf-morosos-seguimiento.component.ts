@@ -70,6 +70,7 @@ export class ListadoPSFMorososSeguimientoComponent implements OnInit {
   tipo_paciente = '0';
   planDeSalud = 0;
   accion = 0;
+  titular;
   page = new Page();
   SelectionType = SelectionType;
   selected = [];
@@ -97,6 +98,7 @@ export class ListadoPSFMorososSeguimientoComponent implements OnInit {
       tipo_paciente: new FormControl("0"),
       planDeSalud: new FormControl(this.planDeSalud),
       accion: new FormControl(this.accion),
+      titular: new FormControl(this.titular),
   });
    }
 
@@ -145,6 +147,7 @@ export class ListadoPSFMorososSeguimientoComponent implements OnInit {
       tipo_paciente: this.tipo_paciente,
       planDeSalud: this.planDeSalud,
       accion: this.accion,
+      titular: this.titular,
       pageNumber: this.page.pageNumber,
       size: this.page.size
     };
@@ -377,6 +380,26 @@ export class ListadoPSFMorososSeguimientoComponent implements OnInit {
   }
 
   copyTableToClipboard(numberTabla){
+    this.rows.map(item => {
+      item.ImpCuotasVencidas = parseFloat(item.ImpCuotasVencidas);
+      item.TotalMiembros = parseFloat(item.TotalMiembros);
+      item.CuotasVencidas = parseFloat(item.CuotasVencidas);
+    });
+    this.rows1.map(item => {
+      item.TotalContratos = parseFloat(item.TotalContratos);
+      item.TotalMiembros = parseFloat(item.TotalMiembros);
+      item.CuotasVencidas = parseFloat(item.CuotasVencidas);
+      item.ImpCuotasVencidas = parseFloat(item.ImpCuotasVencidas);
+    });
+    this.rows2.map(item => {
+      item.nuContratos = parseFloat(item.nuContratos);
+      item.nuAfiliados = parseFloat(item.nuAfiliados);
+      item.nuCuotasVencidas = parseFloat(item.nuCuotasVencidas);
+      item.totalImpCuotasVencidas = parseFloat(item.totalImpCuotasVencidas);
+      item.ImpCuotasVencidas = parseFloat(item.ImpCuotasVencidas);
+    });
+    console.log(383, this.rows1);
+    console.log(383, this.rows2);
     if(numberTabla === 0){
       // this.rows.map(item=>{
       //   item.ImpCuotasVencidas = this._cp.transform( item.ImpCuotasVencidas);
@@ -384,7 +407,7 @@ export class ListadoPSFMorososSeguimientoComponent implements OnInit {
       this.exportService.exportToClipboard(this.rows, this.columns);
     }else if (numberTabla === 1){
 
-      this.exportService.exportToClipboard(this.rows2, this.columns2);
+      this.exportService.exportToClipboard(this.rows1, this.columns2);
     }else if (numberTabla === 2){
     
       this.exportService.exportToClipboard(this.rows2, this.columns2);
@@ -392,6 +415,24 @@ export class ListadoPSFMorososSeguimientoComponent implements OnInit {
   }
 
   exportToExcel(numberTabla): void {
+    this.rows.map(item => {
+      item.ImpCuotasVencidas = parseFloat(item.ImpCuotasVencidas);
+      item.TotalMiembros = parseFloat(item.TotalMiembros);
+      item.CuotasVencidas = parseFloat(item.CuotasVencidas);
+    });
+    this.rows1.map(item => {
+      item.TotalContratos = parseFloat(item.TotalContratos);
+      item.TotalMiembros = parseFloat(item.TotalMiembros);
+      item.CuotasVencidas = parseFloat(item.CuotasVencidas);
+      item.ImpCuotasVencidas = parseFloat(item.ImpCuotasVencidas);
+    });
+    this.rows2.map(item => {
+      item.nuContratos = parseFloat(item.nuContratos);
+      item.nuAfiliados = parseFloat(item.nuAfiliados);
+      item.nuCuotasVencidas = parseFloat(item.nuCuotasVencidas);
+      item.totalImpCuotasVencidas = parseFloat(item.totalImpCuotasVencidas);
+      item.ImpCuotasVencidas = parseFloat(item.ImpCuotasVencidas);
+    });
     if(numberTabla === 0){
       // this.rows.map(item=>{
       //   item.ImpCuotasVencidas = this._cp.transform( item.ImpCuotasVencidas);
@@ -414,6 +455,7 @@ export class ListadoPSFMorososSeguimientoComponent implements OnInit {
           this.tipo_paciente = form.tipo_paciente,
           this.planDeSalud = form.planDeSalud,
           this.accion = form.accion,
+          this.titular = form.titular
         this.setPage({ offset: 0 });
     }
 

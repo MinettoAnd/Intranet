@@ -214,12 +214,18 @@ console.log(this.parameters);
   }
 
   copyTableToClipboard(){
+    this.rows.map(item => {
+      item.PrecioUnitarioLista = parseFloat(item.PrecioUnitarioLista);
+    });
     this.exportService.exportToClipboard(this.rows, this.columns);
     
   }
 
   exportToExcel(): void {
-    this.exportService.exportTableElmToExcel(this.rows, 'Atenciones-Realizadas-por-Emergencia');
+    this.rows.map(item => {
+      item.PrecioUnitarioLista = parseFloat(item.PrecioUnitarioLista);
+    });
+    this.exportService.exportTableElmToExcel(this.rows,'');
   }
 
 
