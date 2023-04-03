@@ -83,7 +83,7 @@ export class TarifarioComponent implements OnInit {
 
     this.filtroForm = new FormGroup({
       sede: new FormControl("0000"),
-      tipoLista: new FormControl("NO"),
+      tipoLista: new FormControl("00"),
       tipoTarifario: new FormControl("SG"),
       tipoMatriz: new FormControl("N"),
       tipoServicio: new FormControl("0"),
