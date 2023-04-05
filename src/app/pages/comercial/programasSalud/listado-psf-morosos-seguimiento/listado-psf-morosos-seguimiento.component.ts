@@ -380,23 +380,25 @@ export class ListadoPSFMorososSeguimientoComponent implements OnInit {
   }
 
   copyTableToClipboard(numberTabla){
+    
     this.rows.map(item => {
-      item.ImpCuotasVencidas = parseFloat(item.ImpCuotasVencidas);
-      item.TotalMiembros = parseFloat(item.TotalMiembros);
-      item.CuotasVencidas = parseFloat(item.CuotasVencidas);
+      item.TotalAcciones = typeof item.TotalAcciones === 'number' ? item.TotalAcciones : Number(item.TotalAcciones);
+      item.ImpCuotasVencidas = typeof item.ImpCuotasVencidas === 'number' ? item.ImpCuotasVencidas : Number(item.ImpCuotasVencidas);
+      item.TotalMiembros = typeof item.TotalMiembros === 'number' ? item.TotalMiembros : Number(item.TotalMiembros);
+      item.CuotasVencidas = typeof item.CuotasVencidas === 'number' ? item.CuotasVencidas : Number(item.CuotasVencidas);
     });
     this.rows1.map(item => {
-      item.TotalContratos = parseFloat(item.TotalContratos);
-      item.TotalMiembros = parseFloat(item.TotalMiembros);
-      item.CuotasVencidas = parseFloat(item.CuotasVencidas);
-      item.ImpCuotasVencidas = parseFloat(item.ImpCuotasVencidas);
+      item.TotalContratos = typeof item.TotalContratos === 'number' ? item.TotalContratos : Number(item.TotalContratos);
+      item.TotalMiembros = typeof item.TotalMiembros === 'number' ? item.TotalMiembros : Number(item.TotalMiembros);
+      item.CuotasVencidas = typeof item.CuotasVencidas === 'number' ? item.CuotasVencidas : Number(item.CuotasVencidas);
+      item.ImpCuotasVencidas = typeof item.ImpCuotasVencidas === 'number' ? item.ImpCuotasVencidas : Number(item.ImpCuotasVencidas);
     });
     this.rows2.map(item => {
-      item.nuContratos = parseFloat(item.nuContratos);
-      item.nuAfiliados = parseFloat(item.nuAfiliados);
-      item.nuCuotasVencidas = parseFloat(item.nuCuotasVencidas);
-      item.totalImpCuotasVencidas = parseFloat(item.totalImpCuotasVencidas);
-      item.ImpCuotasVencidas = parseFloat(item.ImpCuotasVencidas);
+      item.nuContratos = typeof item.nuContratos === 'number' ? item.nuContratos : Number(item.nuContratos);
+      item.nuAfiliados = typeof item.nuAfiliados === 'number' ? item.nuAfiliados : Number(item.nuAfiliados);
+      item.nuCuotasVencidas = typeof item.nuCuotasVencidas === 'number' ? item.nuCuotasVencidas : Number(item.nuCuotasVencidas);
+      item.totalImpCuotasVencidas = typeof item.totalImpCuotasVencidas === 'number' ? item.totalImpCuotasVencidas : Number(item.totalImpCuotasVencidas);
+      item.ImpCuotasVencidas = typeof item.ImpCuotasVencidas === 'number' ? item.ImpCuotasVencidas : Number(item.ImpCuotasVencidas);
     });
     console.log(383, this.rows1);
     console.log(383, this.rows2);
@@ -416,22 +418,23 @@ export class ListadoPSFMorososSeguimientoComponent implements OnInit {
 
   exportToExcel(numberTabla): void {
     this.rows.map(item => {
-      item.ImpCuotasVencidas = parseFloat(item.ImpCuotasVencidas);
-      item.TotalMiembros = parseFloat(item.TotalMiembros);
-      item.CuotasVencidas = parseFloat(item.CuotasVencidas);
+      item.TotalAcciones = typeof item.TotalAcciones === 'number' ? item.TotalAcciones : Number(item.TotalAcciones);
+      item.ImpCuotasVencidas = typeof item.ImpCuotasVencidas === 'number' ? item.ImpCuotasVencidas : Number(item.ImpCuotasVencidas);
+      item.TotalMiembros = typeof item.TotalMiembros === 'number' ? item.TotalMiembros : Number(item.TotalMiembros);
+      item.CuotasVencidas = typeof item.CuotasVencidas === 'number' ? item.CuotasVencidas : Number(item.CuotasVencidas);
     });
     this.rows1.map(item => {
-      item.TotalContratos = parseFloat(item.TotalContratos);
-      item.TotalMiembros = parseFloat(item.TotalMiembros);
-      item.CuotasVencidas = parseFloat(item.CuotasVencidas);
-      item.ImpCuotasVencidas = parseFloat(item.ImpCuotasVencidas);
+      item.TotalContratos = typeof item.TotalContratos === 'number' ? item.TotalContratos : Number(item.TotalContratos);
+      item.TotalMiembros = typeof item.TotalMiembros === 'number' ? item.TotalMiembros : Number(item.TotalMiembros);
+      item.CuotasVencidas = typeof item.CuotasVencidas === 'number' ? item.CuotasVencidas : Number(item.CuotasVencidas);
+      item.ImpCuotasVencidas = typeof item.ImpCuotasVencidas === 'number' ? item.ImpCuotasVencidas : Number(item.ImpCuotasVencidas);
     });
     this.rows2.map(item => {
-      item.nuContratos = parseFloat(item.nuContratos);
-      item.nuAfiliados = parseFloat(item.nuAfiliados);
-      item.nuCuotasVencidas = parseFloat(item.nuCuotasVencidas);
-      item.totalImpCuotasVencidas = parseFloat(item.totalImpCuotasVencidas);
-      item.ImpCuotasVencidas = parseFloat(item.ImpCuotasVencidas);
+      item.nuContratos = typeof item.nuContratos === 'number' ? item.nuContratos : Number(item.nuContratos);
+      item.nuAfiliados = typeof item.nuAfiliados === 'number' ? item.nuAfiliados : Number(item.nuAfiliados);
+      item.nuCuotasVencidas = typeof item.nuCuotasVencidas === 'number' ? item.nuCuotasVencidas : Number(item.nuCuotasVencidas);
+      item.totalImpCuotasVencidas = typeof item.totalImpCuotasVencidas === 'number' ? item.totalImpCuotasVencidas : Number(item.totalImpCuotasVencidas);
+      item.ImpCuotasVencidas = typeof item.ImpCuotasVencidas === 'number' ? item.ImpCuotasVencidas : Number(item.ImpCuotasVencidas);
     });
     if(numberTabla === 0){
       // this.rows.map(item=>{

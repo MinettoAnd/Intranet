@@ -49,6 +49,10 @@ export class HospitalizationService {
     this.loadTableApiDataURL = `${environment.api_url}hospitalizaConsultaAltas`;
     return this.http.post(this.loadTableApiDataURL, data);
   }
+  getInternadosDetalle(data): Observable<any> {
+    this.loadTableApiDataURL = `${environment.api_url}getInternadosDetalle`;
+    return this.http.post(this.loadTableApiDataURL, data);
+  }
       // Estadisticas 
       getHsResumenGeneralProcesar(data): Observable<any> {
         this.loadTableApiDataURL = `${environment.api_url}getHsResumenGeneralProcesar`;

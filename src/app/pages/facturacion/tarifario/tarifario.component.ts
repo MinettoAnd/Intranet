@@ -215,7 +215,7 @@ console.log(this.parameters);
 
   copyTableToClipboard(){
     this.rows.map(item => {
-      item.PrecioUnitarioLista = parseFloat(item.PrecioUnitarioLista);
+      item.PrecioUnitarioLista = typeof item.PrecioUnitarioLista === 'number' ? item.PrecioUnitarioLista : Number(item.PrecioUnitarioLista);;
     });
     this.exportService.exportToClipboard(this.rows, this.columns);
     
@@ -223,7 +223,7 @@ console.log(this.parameters);
 
   exportToExcel(): void {
     this.rows.map(item => {
-      item.PrecioUnitarioLista = parseFloat(item.PrecioUnitarioLista);
+      item.PrecioUnitarioLista = typeof item.PrecioUnitarioLista === 'number' ? item.PrecioUnitarioLista : Number(item.PrecioUnitarioLista);;
     });
     this.exportService.exportTableElmToExcel(this.rows,'');
   }
