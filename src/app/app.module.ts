@@ -200,8 +200,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     InformeComponent,
     ContactoComponent,
     MorososContactadosComponent
-
-        
   ],
   imports: [
     BrowserModule,

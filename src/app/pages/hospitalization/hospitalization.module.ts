@@ -8,9 +8,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HospitalDischargeConsultationComponent } from './hospital-discharge-consultation/hospital-discharge-consultation.component';
 import { EstadisticasComponent } from './estadisticas/estadisticas.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { PacientesHospitalizadosComponent } from './pacientes-hospitalizados/pacientes-hospitalizados.component';
 
 @NgModule({
-  declarations: [HospitalDischargeConsultationComponent, EstadisticasComponent],
+  declarations: [HospitalDischargeConsultationComponent, EstadisticasComponent, PacientesHospitalizadosComponent],
   imports: [
     CommonModule,
     NgxDatatableModule,
@@ -26,6 +27,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
       {
         path: 'estadisticas',
         component: EstadisticasComponent
+      },
+      {
+        path: 'pacientesHospitalizados',
+        component: PacientesHospitalizadosComponent
       }
     ])
   ],
