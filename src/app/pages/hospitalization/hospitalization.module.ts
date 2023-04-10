@@ -1,6 +1,6 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { AgGridModule } from 'ag-grid-angular';
 import { RouterModule } from '@angular/router';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -9,10 +9,12 @@ import { HospitalDischargeConsultationComponent } from './hospital-discharge-con
 import { EstadisticasComponent } from './estadisticas/estadisticas.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { PacientesHospitalizadosComponent } from './pacientes-hospitalizados/pacientes-hospitalizados.component';
+import { SeguimientoAltaHospitalariaComponent } from './seguimiento-alta-hospitalaria/seguimiento-alta-hospitalaria.component';
 
 @NgModule({
-  declarations: [HospitalDischargeConsultationComponent, EstadisticasComponent, PacientesHospitalizadosComponent],
+  declarations: [HospitalDischargeConsultationComponent, EstadisticasComponent, PacientesHospitalizadosComponent, SeguimientoAltaHospitalariaComponent],
   imports: [
+    AgGridModule.withComponents([]),
     CommonModule,
     NgxDatatableModule,
     NgbModule,
@@ -31,6 +33,10 @@ import { PacientesHospitalizadosComponent } from './pacientes-hospitalizados/pac
       {
         path: 'pacientesHospitalizados',
         component: PacientesHospitalizadosComponent
+      },
+      {
+        path: 'seguimiento-alta-hospitalaria',
+        component: SeguimientoAltaHospitalariaComponent
       }
     ])
   ],
