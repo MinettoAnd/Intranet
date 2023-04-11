@@ -53,6 +53,27 @@ export class HospitalizationService {
     this.loadTableApiDataURL = `${environment.api_url}getInternadosDetalle`;
     return this.http.post(this.loadTableApiDataURL, data);
   }
+  // Seguimiento-alta-hospitalaria
+  generaArchivos(data): Observable<any> {
+    this.loadTableApiDataURL = `${environment.api_url}HsGeneraArchivos`;
+    return this.http.post(this.loadTableApiDataURL, data);
+  }
+  getDetalleSeguimiento(data): Observable<any> {
+    this.loadTableApiDataURL = `${environment.api_url}HsGetDetalleSeguimiento`;
+    return this.http.post(this.loadTableApiDataURL, data);
+  }
+  getResumenSeguimiento(data): Observable<any> {
+    this.loadTableApiDataURL = `${environment.api_url}HsGetResumenSeguimiento`;
+    return this.http.post(this.loadTableApiDataURL, data);
+  }
+  getResumenTipoPaciente(data): Observable<any> {
+    this.loadTableApiDataURL = `${environment.api_url}HsGetResumenTipoPaciente`;
+    return this.http.post(this.loadTableApiDataURL, data);
+  }
+  eliminaTabla(data): Observable<any> {
+    this.loadTableApiDataURL = `${environment.api_url}HsEliminaTabla`;
+    return this.http.post(this.loadTableApiDataURL, data);
+  }
       // Estadisticas 
       getHsResumenGeneralProcesar(data): Observable<any> {
         this.loadTableApiDataURL = `${environment.api_url}getHsResumenGeneralProcesar`;

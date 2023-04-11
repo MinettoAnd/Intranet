@@ -1,0 +1,550 @@
+<div class="app-content content">
+    <div class="content-wrapper">
+      <div class="content-header row mb-1">
+        <app-breadcrumb class="col-12" [breadcrumb]="breadcrumb"></app-breadcrumb>
+      </div>
+      <div class="content-body">
+        <section id="selection-n-deletion">
+          <div class="row">
+  
+            <div class="col-12">
+              <form [formGroup]="filtroForm">
+                <div class="row" style="margin-bottom: -0.5rem;">
+                  <div class="form-group col-sm-12">
+
+                    <div class="input-group input-group-sm fecha">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">Fecha Inicio</span>
+                      </div>
+                      <input
+                        type="date"
+                        formControlName="f_inicio"
+                        class="form-control"
+                      />
+                    </div>
+
+                    <div class="input-group input-group-sm fecha">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">Fecha Fin</span>
+                      </div>
+                      <input
+                        type="date"
+                        formControlName="f_fin"
+                        class="form-control"
+                      />
+                    </div>
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-append">
+                          <span class="input-group-text">Sedes</span>
+                        </div>
+                        <select
+                          class="form-control form-select"
+                          formControlName="sede"
+                          id="sede"
+                        >
+                          <!-- <option value="0000">Todos</option> -->
+                          <option value="0001">Lima</option>
+                          <option value="0002">Chorrillos</option>
+                          <option value="0004">Surco</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group-btn">
+                    <button (click)="filter()" class="btn btn-sm btn-primary">
+                        <i class="fa fa-search"></i> Filtrar
+                    </button>
+                    </div>
+                   
+                  </div>
+                </div>
+              </form>
+              <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs" style="justify-content: end;">
+                <li [ngbNavItem]="1">
+                    <a ngbNavLink>Listado</a>
+                    <ng-template ngbNavContent>
+                      <div class="card">
+                        <div class="card-header">
+                          <h4 class="card-title">Pacientes de Alta Hospitalaria</h4>
+                          <p>{{message}}</p>
+                        </div>
+                        <div class="card-content collapse show">
+                          <div class="card-body">
+                            <!-- <a class="btn btn-primary" id="downloadLink" (click)="exportexcel()">Exportar tabla a Excel</a>
+                            <a class="btn btn-primary" id="downloadLink" (click)="copyTableToClipboard()">Copiar tabla</a> -->
+                            <div class="table table-striped table-bordered selection-deletion-row">
+                              <div class="box box-solid">
+                                <div id="accordion1">
+                                  <div class="card">
+                                    <div class="card-header-info" >
+                                      <div class="box-header">
+                                        <div class="toggle-table">
+                                          <div class="callout callout-info">
+                                            <h3 class="box-title">INTERNADOS POR PISO</h3>
+                                          </div>
+                                          <button type="button" class="btn btn-outline-primary" (click)="collapse1.toggle()" [attr.aria-expanded]="!isCollapsed1"
+                                          aria-controls="collapseExample">
+                                          <i class="fa fa-minus" *ngIf="!isCollapsed1"> </i>
+                                          <i class="fa fa-plus" *ngIf="isCollapsed1"> </i> 
+                                          </button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div #collapse1="ngbCollapse" [(ngbCollapse)]="isCollapsed1">
+                                      <div class="row" style="align-items: center;justify-content: space-between;">
+                                        <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
+                                          <li class="list-group-item border-0 pl-0">
+                                            <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(0)">
+                                              <i class="fa fa-external-link"></i>
+                                              Copiar tabla
+                                            </button>
+                                          </li>
+                                          <li class="list-group-item border-0 pl-0">
+                                            <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(0)">
+                                              <i class="fa fa-external-link"></i>
+                                              Exportar tabla a Excel
+                                            </button>
+                                          </li>
+                                        </ul>
+                                      </div>
+                                      <ngx-datatable #myTable
+                                      class="bootstrap table table-striped "
+                                      id="datatablele"
+                                        [columns]="columns"
+                                        [rows]="rows"
+                                        [columnMode]="ColumnMode.flex"
+                                        [headerHeight]="50"
+                                        [rowHeight]="$any('auto')"
+                                        [scrollbarH]="true"
+                                        (page)="setPage($event)"
+                                        [rowClass] = "getRowClass"
+                                        [summaryRow]="enableSummary"
+                                        [summaryPosition]="summaryPosition"
+                                        [summaryHeight]="35"
+                                        >
+                                        <ngx-datatable-column [summaryFunc]="column.prop == 'internados' ? summaryForAmount:summaryNull"
+                                        [flexGrow]="1" 
+                                        [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                                            let-row="row">
+                                            <div>
+                                              <span  [title]="value">{{value}}</span>
+                                            </div>
+                                            <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
+                                              <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
+                                            </div> -->
+  
+                                          </ng-template>
+                                          <!-- <ngx-datatable-column prop="per1">
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                              {{row.per1 | currency:'S/.  ':'code'}}
+                                            </ng-template>
+                                          </ngx-datatable-column> -->
+                                        </ngx-datatable-column>
+                                      </ngx-datatable>
+                                    </div>
+                                  </div>
+                                </div>                       
+                              </div>
+                            </div>
+                            
+                          </div>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </li>
+                <li [ngbNavItem]="2">
+                  <a ngbNavLink>Resumen</a>
+                    <ng-template ngbNavContent>
+                      
+                      <div class="card atencionesConsultaExterna">
+                        <div class="card-header">
+                          <h4 class="card-title" style="bottom:13px;">Pacientes de Alta Hospitalaria</h4>
+                          <p>{{message}}</p>
+                          
+                        </div>
+                        <div class="card-content collapse show">
+                          <div class="card-body">
+                            <div class="col-md-12 div_panel_cabecera">
+                              <div class="col-md-3 col-sm-6 col-xs-12" id="div_mostrar_ptable_i">
+                                  <div class="info-box">
+                                      <span style="background:#3c8dbc !important; color:#fff !important;" class="info-box-icon">
+                                      <i class="fa fa-users" aria-hidden="true"></i>
+                                      </span>		
+                                      <div class="info-box-content">
+                                      <span style="font-family:arial; font-size:15px; " class="info-box-text">NRO DE REGISTROS</span>
+                                          <span  class="info-box-number" *ngIf="totalMorosos">{{totalMorosos }}</span>
+                                          <!-- <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">Tiempo programado / 12 horas x dia
+                                          </label> -->
+                                      </div>
+                                  </div>
+                                  
+                              </div>
+                              <div class="col-md-3 col-sm-6 col-xs-12" id="div_mostrar_ptable_a">
+                                  <div class="info-box">
+                                      <span style="background: #f56954 !important; color:#fff !important;" class="info-box-icon">			
+                                      <i class="fa fa-street-view" aria-hidden="true"></i>		</span>		
+                                      <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">REGISTROS CORRECTOS</span>			<span class="info-box-number" *ngIf="totalAfiliados">{{totalAfiliados}}</span>			
+                                      <!-- <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success">{{(resumenMes.hospitalizados/resumenMes.emergencia) * 100 | number : '1.2-2' }} %
+                                          </label>		 -->
+                                        </div>
+                                  </div>
+                                
+                              </div>
+                              <div class="col-md-3 col-sm-6 col-xs-12" style="display: flex;">
+                                  <div class="info-box">
+                                      <span style="background: #00c0ef !important; color:#fff !important;" class="info-box-icon">			
+                                      <i class="fa fa-crosshairs" aria-hidden="true"></i>		</span>		
+                                      <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">REGISTROS CORRECTOS</span>			
+                                      <span  class="info-box-number" *ngIf="totalPeriodos">{{totalPeriodos }}</span>			
+                                      <!-- <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success" >Tiempo de atención / tiempo programado
+                                      </label>		 -->
+                                    </div>
+                                  </div>
+                              </div>
+                              <div class="col-md-3 col-sm-6 col-xs-12" style="display: flex;">
+                                <div class="info-box">
+                                    <span style="background: #605ca8 !important; color:#fff !important;" class="info-box-icon">			
+                                    <i class="fa fa-crosshairs" aria-hidden="true"></i>		</span>		
+                                    <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">TIEMPO PROMEDIO TOTAL                                    </span>			
+                                    <span  class="info-box-number" *ngIf="totalDeuda">{{totalDeuda | currency }}</span>			
+                                    <!-- <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success" >Tiempo de atención / tiempo programado
+                                    </label>		 -->
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-12 div_panel_cabecera">
+                                <div class="col-md-3 col-sm-6 col-xs-12" id="div_panel_0103">
+                                  <div class="box box-widget widget-user">
+                                    <div class="widget-user-header bg-navy-active">
+                                      <h3 class="widget-user-username" style="font-size: 18px;">FARMACIA</h3>
+                                      <p style="margin-bottom: 0px!important;">&nbsp; Demora desde el</p>
+                                      <p>&nbsp; Alta Médica al Alta de Farmacia</p>
+                                    </div>
+                                    <div class="widget-user-image" style="top:10px !important;">
+                                      <img class="img-circle" style="margin-left:105px; width:110px !important;" src="https://www.maisondesante.org.pe/imagenes/cruz_verde.png" alt="User Avatar">
+                                    </div>
+                                    <div class="box-footer" style="padding-top:10px;">
+                                      <div class="row">
+                                        <div class="col-sm-4 border-right">
+                                          <div class="description-block">
+                                            <h5 class="description-header" style="padding-bottom: 8px !important; font-size: 18px;  cursor:pointer;" onclick="detalle_componente('arco');" id="div_panel_0103_01">{{usoArco}}</h5>
+                                            <span class="description-text" style="font-size: 16px;">TIEMPO PROMEDIO</span>
+                                          </div>
+                                        </div>
+                                        <div class="col-sm-4 border-right">
+                                          <div class="description-block">
+                                            <h5 class="description-header" style="padding-bottom: 8px !important; font-size: 18px;  cursor:pointer;" onclick="detalle_componente('torre');" id="div_panel_0103_02">{{usoTorre}}</h5>
+                                            <span class="description-text" style="font-size: 16px;">TIEMPO MÍNIMO</span>
+                                          </div>
+                                        </div>
+                                        <div class="col-sm-4 border-right">
+                                          <div class="description-block">
+                                            <h5 class="description-header" style="padding-bottom: 8px !important; font-size: 18px;  cursor:pointer;" onclick="detalle_componente('torre');" id="div_panel_0103_02">{{usoTorre}}</h5>
+                                            <span class="description-text" style="font-size: 16px;">TIEMPO MÁXIMO</span>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <ag-grid-angular
+                                  #agGrid
+                                  style="width: 100%; height: 380px;"
+                                  id="myTable1"
+                                  ag-grid="gridOptions"
+                                  class="ag-theme-balham"
+                                  [columnDefs]="columns1"
+                                  [groupSelectsChildren]="true"
+                                  [groupDefaultExpanded]="groupDefaultExpanded"
+                                  [autoGroupColumnDef]="autoGroupColumnDef"
+                                  [defaultColDef]="defaultColDef"
+                                  [rowData]="rows1"
+                                  [rowSelection]="rowSelection"
+                                  [rowClassRules]="rowClassRules"
+                                  ></ag-grid-angular>
+                                  <ngb-accordion [destroyOnHide]="false" [closeOthers]="true" #acc="ngbAccordion" activeIds="ngb-panel-0">
+                                    <ngb-panel *ngFor="let percentageCompleted of progressBar1; let i = index;">
+                                      <ng-template ngbPanelTitle style="width:100%!important;">
+                                        <span style="display:flex;color:#000; justify-content: space-between;"><b>{{progressBarLabels[i]}}</b>{{progressBarLabels1[i]}}</span>
+                                        <ngb-progressbar
+                                            [type]="color[i]"
+                                            [value]="percentageCompleted.porcentaje"
+                                            [striped]="false"
+                                            [animated]="false">
+                                        </ngb-progressbar>
+                                      </ng-template>
+                                      <ng-template ngbPanelContent>
+                                        <table class="table table-bordered">
+                                          <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>Cantidad</th>
+                                                <th>Porcentaje</th>
+                                            </tr>
+                                          </thead>
+                                            <tbody *ngFor="let rowTable of percentageCompleted.table; let i = index;">
+                                            <tr style="font-size:16px;">
+                                                <td>{{rowTable.TipoPacienteDescripcion }}</td>
+                                                <td><strong><span>{{rowTable.total_atendidos}}</span></strong></td>
+                                                <td><strong><span>{{rowTable.porc_atendidos}}</span></strong></td>
+                                            </tr>
+                                          </tbody>
+                                      </table>
+                                      </ng-template>
+                                    </ngb-panel>
+                                  </ngb-accordion>
+                                </div>
+                                <div class="col-md-3 col-sm-6 col-xs-12" id="div_panel_0104">
+                                  <div class="box box-widget widget-user">
+                                    <div class="widget-user-header bg-aqua-active">
+                                      <h3 class="widget-user-username" style="font-size: 18px;">ENFERMERÍA</h3>
+                                      <p style="margin-bottom: 0px!important;">&nbsp; Demora desde el</p>
+                                      <p>&nbsp; Alta de Farmacia al Alta de Enfermeria</p>
+                                    </div>
+                                    <div class="widget-user-image" style="top:10px !important;">
+                                      <img class="img-circle" style="margin-left:105px; width:110px !important;" src="	https://www.maisondesante.org.pe/imagenes/enfermera.png" alt="User Avatar">
+                                    </div>
+                                    <div class="box-footer" style="padding-top:10px;">
+                                      <div class="row">
+                                        <div class="col-sm-4 border-right">
+                                          <div class="description-block">
+                                            <h5 class="description-header" style="padding-bottom: 8px !important; font-size: 18px;  cursor:pointer;" onclick="detalle_estancia();" id="div_panel_0104_01">{{minutosSalaProm}}</h5>
+                                            <span class="description-text" style="font-size: 16px;">TIEMPO PROMEDIO</span>
+                                          </div>
+                                        </div>
+                                        <div class="col-sm-4 border-right">
+                                          <div class="description-block">
+                                            <h5 class="description-header" style="padding-bottom: 8px !important; font-size: 18px;  cursor:pointer;" onclick="detalle_estancia();" id="div_panel_0104_02">{{minutosActoQxProm}}</h5>
+                                            <span class="description-text" style="font-size: 16px;">TIEMPO MÍNIMO</span>
+                                          </div>
+                                        </div>
+                                        <div class="col-sm-4 border-right">
+                                          <div class="description-block">
+                                            <h5 class="description-header" style="padding-bottom: 8px !important; font-size: 18px;  cursor:pointer;" onclick="detalle_estancia();" id="div_panel_0104_03">{{minutosAnestesiaProm}}</h5>
+                                            <span class="description-text" style="font-size: 16px;">TIEMPO MÁXIMO</span>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <ag-grid-angular
+                                  #agGrid
+                                  style="width: 100%; height: 380px;"
+                                  id="myTable2"
+                                  ag-grid="gridOptions"
+                                  class="ag-theme-balham"
+                                  [columnDefs]="columns2"
+                                  [groupSelectsChildren]="true"
+                                  [groupDefaultExpanded]="groupDefaultExpanded"
+                                  [autoGroupColumnDef]="autoGroupColumnDef"
+                                  [defaultColDef]="defaultColDef"
+                                  [rowData]="rows2"
+                                  [rowSelection]="rowSelection"
+                                  [rowClassRules]="rowClassRules"
+                                  ></ag-grid-angular>
+                                    <ngb-accordion [destroyOnHide]="false" [closeOthers]="true" #acc="ngbAccordion" activeIds="ngb-panel-0">
+                                      <ngb-panel *ngFor="let percentageCompleted of progressBar2; let i = index;">
+                                        <ng-template ngbPanelTitle style="width:100%!important;">
+                                          <span style="display:flex;color:#000; justify-content: space-between;"><b>{{progressBarLabels[i]}}</b>{{progressBarLabels1[i]}}</span>
+                                          <ngb-progressbar
+                                              [type]="color[i]"
+                                              [value]="percentageCompleted.porcentaje"
+                                              [striped]="false"
+                                              [animated]="false">
+                                          </ngb-progressbar>
+                                        </ng-template>
+                                        <ng-template ngbPanelContent>
+                                          <table class="table table-bordered">
+                                            <thead>
+                                              <tr>
+                                                  <th></th>
+                                                  <th>Cantidad</th>
+                                                  <th>Porcentaje</th>
+                                              </tr>
+                                            </thead>
+                                              <tbody *ngFor="let rowTable of percentageCompleted.table; let i = index;">
+                                              <tr style="font-size:16px;">
+                                                  <td>{{rowTable.TipoPacienteDescripcion }}</td>
+                                                  <td><strong><span>{{rowTable.total_atendidos}}</span></strong></td>
+                                                  <td><strong><span>{{rowTable.porc_atendidos}}</span></strong></td>
+                                              </tr>
+                                            </tbody>
+                                        </table>
+                                        </ng-template>
+                                      </ngb-panel>
+                                    </ngb-accordion>
+                                    <!-- <div class="d-block" *ngFor="let percentageCompleted of progressBar1; let i = index;">
+                                      <span style="display:flex; justify-content: space-between;"><i><b>{{progressBarLabels[i]}}</b></i><i>{{percentageCompleted.value}} - [{{percentageCompleted.porcentaje}}] %</i></span>
+                                        <ngb-progressbar
+                                            [type]="color[i]"
+                                            [value]="percentageCompleted.porcentaje"
+                                            [striped]="false"
+                                            [animated]="false">
+                                        </ngb-progressbar>
+                                        <p></p>
+                                        <div id="div_ocultar_tarjetas" style="margin-bottom: 15px; display: block;">
+                                          <table class="table table-bordered">
+                                             <thead>
+                                                <tr>
+                                                   <th></th>
+                                                   <th>Cantidad</th>
+                                                   <th>Porcentaje</th>
+                                                </tr>
+                                             </thead>
+                                               <tbody *ngFor="let rowTable of percentageCompleted.table; let i = index;">
+                                                <tr style="font-size:16px;">
+                                                   <td>{{rowTable.programa }}</td>
+                                                   <td><strong><span>{{rowTable.cantidad}}</span></strong></td>
+                                                   <td><strong><span>{{rowTable.porcentaje}}</span></strong></td>
+                                                </tr>
+                                              </tbody>
+                                          </table>
+                                       </div>
+                                    </div> -->
+                                </div>
+                                <div class="col-md-3 col-sm-6 col-xs-12" id="div_panel_0103">
+                                  <div class="box box-widget widget-user">
+                                    <div class="widget-user-header bg-navy-active">
+                                      <h3 class="widget-user-username" style="font-size: 18px;">FACTURADOR ASIGNADO</h3>
+                                      <p style="margin-bottom: 0px!important;">&nbsp; Demora desde el</p>
+                                      <p>&nbsp;Alta de Enfermería a la asignación de Facturador</p>
+                                    </div>
+                                    <div class="widget-user-image" style="top:10px !important;">
+                                      <img class="img-circle" style="margin-left:105px; width:110px !important;" src="https://www.maisondesante.org.pe/imagenes/facturacion.png" alt="User Avatar">
+                                    </div>
+                                    <div class="box-footer" style="padding-top:10px;">
+                                      <div class="row">
+                                        <div class="col-sm-4 border-right">
+                                          <div class="description-block">
+                                            <h5 class="description-header" style="padding-bottom: 8px !important; font-size: 18px;  cursor:pointer;" onclick="detalle_componente('arco');" id="div_panel_0103_01">{{usoArco}}</h5>
+                                            <span class="description-text" style="font-size: 16px;">TIEMPO PROMEDIO</span>
+                                          </div>
+                                        </div>
+                                        <div class="col-sm-4 border-right">
+                                          <div class="description-block">
+                                            <h5 class="description-header" style="padding-bottom: 8px !important; font-size: 18px;  cursor:pointer;" onclick="detalle_componente('torre');" id="div_panel_0103_02">{{usoTorre}}</h5>
+                                            <span class="description-text" style="font-size: 16px;">TIEMPO MÍNIMO</span>
+                                          </div>
+                                        </div>
+                                        <div class="col-sm-4 border-right">
+                                          <div class="description-block">
+                                            <h5 class="description-header" style="padding-bottom: 8px !important; font-size: 18px;  cursor:pointer;" onclick="detalle_componente('torre');" id="div_panel_0103_02">{{usoTorre}}</h5>
+                                            <span class="description-text" style="font-size: 16px;">TIEMPO MÁXIMO</span>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <ag-grid-angular
+                                  #agGrid
+                                  style="width: 100%; height: 380px;"
+                                  id="myTable3"
+                                  ag-grid="gridOptions"
+                                  class="ag-theme-balham"
+                                  [columnDefs]="columns3"
+                                  [groupSelectsChildren]="true"
+                                  [groupDefaultExpanded]="groupDefaultExpanded"
+                                  [autoGroupColumnDef]="autoGroupColumnDef"
+                                  [defaultColDef]="defaultColDef"
+                                  [rowData]="rows3"
+                                  [rowSelection]="rowSelection"
+                                  [rowClassRules]="rowClassRules"
+                                  ></ag-grid-angular>
+                                </div>
+                                <div class="col-md-3 col-sm-6 col-xs-12" id="div_panel_0104">
+                                  <div class="box box-widget widget-user">
+                                    <div class="widget-user-header bg-aqua-active">
+                                      <h3 class="widget-user-username" style="font-size: 18px;">ENVÍO A AUDITORIA</h3>
+                                      <p style="margin-bottom: 0px!important;">&nbsp; Demora desde el</p>
+                                      <p>&nbsp;Asignación de Facturador al Envío a Auditoría</p>
+                                    </div>
+                                    <div class="widget-user-image" style="top:10px !important;">
+                                      <img class="img-circle" style="margin-left:105px; width:110px !important;" src="https://www.maisondesante.org.pe/imagenes/auditoria.png" alt="User Avatar">
+                                    </div>
+                                    <div class="box-footer" style="padding-top:10px;">
+                                      <div class="row">
+                                        <div class="col-sm-4 border-right">
+                                          <div class="description-block">
+                                            <h5 class="description-header" style="padding-bottom: 8px !important; font-size: 18px;  cursor:pointer;" onclick="detalle_estancia();" id="div_panel_0104_01">{{minutosSalaProm}}</h5>
+                                            <span class="description-text" style="font-size: 16px;">TIEMPO PROMEDIO</span>
+                                          </div>
+                                        </div>
+                                        <div class="col-sm-4 border-right">
+                                          <div class="description-block">
+                                            <h5 class="description-header" style="padding-bottom: 8px !important; font-size: 18px;  cursor:pointer;" onclick="detalle_estancia();" id="div_panel_0104_02">{{minutosActoQxProm}}</h5>
+                                            <span class="description-text" style="font-size: 16px;">TIEMPO MÍNIMO</span>
+                                          </div>
+                                        </div>
+                                        <div class="col-sm-4 border-right">
+                                          <div class="description-block">
+                                            <h5 class="description-header" style="padding-bottom: 8px !important; font-size: 18px;  cursor:pointer;" onclick="detalle_estancia();" id="div_panel_0104_03">{{minutosAnestesiaProm}}</h5>
+                                            <span class="description-text" style="font-size: 16px;">TIEMPO MÁXIMO</span>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <ag-grid-angular
+                                                    #agGrid
+                                                    style="width: 100%; height: 380px;"
+                                                    id="myTable4"
+                                                    ag-grid="gridOptions"
+                                                    class="ag-theme-balham"
+                                                    [columnDefs]="columns4"
+                                                    [groupSelectsChildren]="true"
+                                                    [groupDefaultExpanded]="groupDefaultExpanded"
+                                                    [autoGroupColumnDef]="autoGroupColumnDef"
+                                                    [defaultColDef]="defaultColDef"
+                                                    [rowData]="rows4"
+                                                    [rowSelection]="rowSelection"
+                                                    [rowClassRules]="rowClassRules"
+ 
+                                  ></ag-grid-angular><ngb-accordion [destroyOnHide]="false" [closeOthers]="true" #acc="ngbAccordion" activeIds="ngb-panel-0">
+                                    <ngb-panel *ngFor="let percentageCompleted of progressBar3; let i = index;">
+                                      <ng-template ngbPanelTitle style="width:100%!important;">
+                                        <span style="display:flex;color:#000; justify-content: space-between;"><b>{{progressBarLabels[i]}}</b>{{progressBarLabels1[i]}}</span>
+                                        <ngb-progressbar
+                                            [type]="color[i]"
+                                            [value]="percentageCompleted.porcentaje"
+                                            [striped]="false"
+                                            [animated]="false">
+                                        </ngb-progressbar>
+                                      </ng-template>
+                                      <ng-template ngbPanelContent>
+                                        <table class="table table-bordered">
+                                          <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>Cantidad</th>
+                                                <th>Porcentaje</th>
+                                            </tr>
+                                          </thead>
+                                            <tbody *ngFor="let rowTable of percentageCompleted.table; let i = index;">
+                                            <tr style="font-size:16px;">
+                                                <td>{{rowTable.TipoPacienteDescripcion }}</td>
+                                                <td><strong><span>{{rowTable.total_atendidos}}</span></strong></td>
+                                                <td><strong><span>{{rowTable.porc_atendidos}}</span></strong></td>
+                                            </tr>
+                                          </tbody>
+                                      </table>
+                                      </ng-template>
+                                    </ngb-panel>
+                                  </ngb-accordion>
+                                </div>                             
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    </ng-template>
+                </li>
+                </ul>
+                <div [ngbNavOutlet]="nav" class="mt-2"></div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+  
+  <!-- ////////////////////////////////////////////////////////////////////////////-->
+  
