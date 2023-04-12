@@ -16,7 +16,9 @@ import { CurrencyPipe, DatePipe } from '@angular/common';
 import { CustomNumberPipe } from 'src/app/pipes/customNumber.pipe';
 import { PhonePipe } from 'src/app/pipes/phone.pipe';
 import { HospitalizationService } from 'src/app/_services/hospitalization.service';
-
+import { ButtonRendererComponent } from './../../../shared/components/renderer/button-renderer.component';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AltaHospitalariaComponent } from 'src/app/modals/comercial/alta-hospitalaria/alta-hospitalaria.component';
 @Component({
   selector: 'app-seguimiento-alta-hospitalaria',
   templateUrl: './seguimiento-alta-hospitalaria.component.html',
@@ -66,12 +68,24 @@ export class SeguimientoAltaHospitalariaComponent implements OnInit {
   optionsWithCaption = {};
         // f_inicio: '2022-11-01',
       // f_fin: '2022-11-30',
-  f_inicio = moment(this.restarDias(new Date, -28)).format('YYYY-MM-DD');;
+  f_inicio = moment(this.restarDias(new Date, -28)).format('YYYY-MM-DD');
+  progressBar1 = [];
+  progressBarLabels1 = [];
+  progressBarLabels2 = [];
+  progressBar2 = [];
+  progressBarLabels3 = [];
+  progressBarLabels4 = [];
+  progressBar3 = [];
+  progressBarLabels5 = [];
+  progressBarLabels6 = [];
+  progressBar4 = [];
+  progressBarLabels7 = [];
+  progressBarLabels8 = [];
   f_fin = moment(new Date()).format('YYYY-MM-DD');
-  sede = '0001';
+  sede = '0000';
   estado = 'T';
   tipo_lista = 'E';
-
+  color = [ 'graph-primary', 'primary','graph-tertiary', 'graph-quaternary '];
   page = new Page()
   ColumnMode = ColumnMode;
   filtered;
@@ -81,12 +95,28 @@ export class SeguimientoAltaHospitalariaComponent implements OnInit {
     {value: 50},
     {value: 100},
   ];
-  totalMorosos:any;
-  totalAfiliados:any;
-  totalPeriodos:any;
+  RegObs:any;
+  RegOk:any;
+  RegTotal:any;
   totalDeuda:any;
+  frameworkComponents: any;
+  closeResult = '';
+  farmMin: any;
+  farmProm: any;
+  farmMax: any;
+  enfProm: any;
+  enfMax: any;
+  enfMin: any;
+  facProm: any;
+  facMax: any;
+  facMin: any;
+  audProm: any;
+  audMax: any;
+  audMin: any;
+  rowHeight = 38;
+
   constructor(private tableApiservice: HospitalizationService, private exportService: ExportService, private _cnp:CustomNumberPipe,
-    private _cp: CurrencyPipe, private _phone: PhonePipe, private datePipe: DatePipe,) {
+    private _cp: CurrencyPipe, private _phone: PhonePipe, private datePipe: DatePipe,private modalService: NgbModal) {
     this.page.pageNumber = 0;
     this.page.size = 10;
 
@@ -94,8 +124,10 @@ export class SeguimientoAltaHospitalariaComponent implements OnInit {
       f_inicio: new FormControl(this.f_inicio),
       f_fin: new FormControl(this.f_fin),
       sede: new FormControl(this.sede),
-
-  });
+     });
+     this.frameworkComponents = {
+      buttonRenderer: ButtonRendererComponent,
+    }
    }
 
   ngOnInit() {
@@ -124,6 +156,17 @@ export class SeguimientoAltaHospitalariaComponent implements OnInit {
     // this.setPage({ offset: 0 });
 
   }
+  onBtnClick1(e) {
+
+    if ( e.rowData !== undefined){
+          const  modalRef =  this.modalService.open(AltaHospitalariaComponent, {
+            size: <any>"lg",
+          });
+          console.log( 139, e.rowData)
+          modalRef.componentInstance.dato =  e.rowData;
+    }
+  }
+
   makeid(length) {
 		var today 			 = moment().format('HHmmss');
 		var result           = '';
@@ -171,23 +214,24 @@ export class SeguimientoAltaHospitalariaComponent implements OnInit {
             this.tableApiservice.getDetalleSeguimiento(this.parameters).subscribe(
               (response) => {
                 this.rows = [];
+                this.columns = [];
                 console.log(response);
                 if(response.data.success){
-                  // this.data = response.data ? response.data : [];
-                  // this.message = this.data.titulo;
+                  this.data = response.data ? response.data : [];
+                  this.message = this.data.titulo;
         
-                  // this.columns = this.data.cabeceras_internados;
-                  // this.rows = this.data.tabla_internados;
-                  // this.temp = this.rows;
-                  // this.columns1 = this.data.cabeceras_piso;
-                  // this.rows1 = this.data.tabla_piso;
-                  // this.columns2 = this.data.cabeceras_grupo_dx;
-                  // this.rows2 = this.data.tabla_grupo_dx;
-                  // this.columns3 = this.data.cabeceras_grupo_aseg;
-                  // this.rows3 = this.data.tabla_grupo_aseg;
-                  // this.columns4 = this.data.cabeceras_grupo_dx;
-                  // this.rows4 = this.data.tabla_grupo_dx;
-                  // console.log(169, this.rows1);
+                  this.columns = this.data.cabeceras_atenciones;
+                  this.columns.map(item =>{
+                    if(item.headerName === 'VER MÁS'){
+                      item.cellRenderer= 'buttonRenderer',
+                      item.cellRendererParams= {
+                        onClick: this.onBtnClick1.bind(this),
+                        label: 'Click 1'
+                      }
+                    }
+                  });
+                  this.rows = this.data.tabla_atenciones;
+                  this.temp = this.rows;
         
                     // Swal.close();
                 }
@@ -200,8 +244,35 @@ export class SeguimientoAltaHospitalariaComponent implements OnInit {
             this.tableApiservice.getResumenSeguimiento(this.parameters).subscribe(
               (response) => {
                 if(response.data.success){
+                  this.RegObs = response.data.RegObs;
+                  this.RegOk = response.data.RegOk;
+                  this.RegTotal = response.data.RegTotal;
 
-                    // Swal.close();
+                  this.farmProm = response.data.farmProm;
+                  this.farmMin = response.data.farmMin;
+                  this.farmMax = response.data.farmMax;
+
+                  this.enfProm = response.data.enfProm;
+                  this.enfMax = response.data.enfMax;
+                  this.enfMin = response.data.enfMin;
+
+                  this.facProm = response.data.facProm;
+                  this.facMax = response.data.facMax;
+                  this.facMin = response.data.facMin;
+
+                  this.audProm = response.data.audProm;
+                  this.audMax = response.data.audMax;
+                  this.audMin = response.data.audMin;
+
+                  this.rows1 = response.data.tabla_far;
+                  this.columns1 = response.data.cabeceras_far;
+                  this.rows2 = response.data.tabla_enf;
+                  this.columns2 = response.data.cabeceras_enf;
+                  this.rows3 = response.data.tabla_fac;
+                  this.columns3 = response.data.cabeceras_fac;
+                  this.rows4 = response.data.tabla_aud;
+                  this.columns4 = response.data.cabeceras_aud;
+
                 }
                 
               },
@@ -209,11 +280,39 @@ export class SeguimientoAltaHospitalariaComponent implements OnInit {
                   Swal.close();
               }
             );
-           this.tableApiservice.getResumenTipoPaciente(this.parameters).subscribe(
+            this.tableApiservice.getResumenTipoPaciente(this.parameters).subscribe(
               (response) => {
+                this.progressBar1 = [];
+                this.progressBarLabels1 = [];
+                this.progressBarLabels2 = [];
                 if(response.data.success){
+                  // this.rows1      = response.data.grupo_porc
+                  this.progressBarLabels1 = response.data.grupo_detalle
+                  this.progressBarLabels2 = response.data.grupo
+                  let table: any;
+                  for (const [key, value] of Object.entries(response.data.grupo_porc)) {
+                    console.log(key, '=>', value)
+                    let porcentaje:any = value;
+                    if (key === '0'){
+                      table = response.data.tabla_grupo_Prg
+                    }else if (key === '1'){
+                      table = response.data.tabla_grupo_Ins
+                    }else if (key === '2'){
+                      table = response.data.tabla_grupo_Mad
+                    }else if (key === '3'){
+                      table = response.data.tabla_grupo_Cia
+                    }else if (key === '4'){
+                      table = response.data.tabla_grupo_Otr
+                    }
+                    const datos = {
+                        porcentaje : porcentaje.toFixed(2),
+                        // value: porcentaje[0],
+                        table: table
+                    }
+                    this.progressBar1.push(datos);
+                  }
+                  console.log(265, this.progressBar1)
 
-                    // Swal.close();
                 }
                 
               },
@@ -224,9 +323,37 @@ export class SeguimientoAltaHospitalariaComponent implements OnInit {
             this.parameters.tipo = 'Enfermeria';
             this.tableApiservice.getResumenTipoPaciente(this.parameters).subscribe(
               (response) => {
+                this.progressBar2 = [];
+                this.progressBarLabels3 = [];
+                this.progressBarLabels4 = [];
                 if(response.data.success){
+                  // this.rows1      = response.data.grupo_porc
+                  this.progressBarLabels3 = response.data.grupo_detalle
+                  this.progressBarLabels4 = response.data.grupo
+                  let table: any;
+                  for (const [key, value] of Object.entries(response.data.grupo_porc)) {
+                    console.log(key, '=>', value)
+                    let porcentaje:any = value;
+                    if (key === '0'){
+                      table = response.data.tabla_grupo_Prg
+                    }else if (key === '1'){
+                      table = response.data.tabla_grupo_Ins
+                    }else if (key === '2'){
+                      table = response.data.tabla_grupo_Mad
+                    }else if (key === '3'){
+                      table = response.data.tabla_grupo_Cia
+                    }else if (key === '4'){
+                      table = response.data.tabla_grupo_Otr
+                    }
+                    const datos = {
+                        porcentaje : porcentaje.toFixed(2),
+                        // value: porcentaje[0],
+                        table: table
+                    }
+                    this.progressBar2.push(datos);
+                  }
+                  console.log(265, this.progressBar2)
 
-                    // Swal.close();
                 }
                 
               },
@@ -238,8 +365,38 @@ export class SeguimientoAltaHospitalariaComponent implements OnInit {
             this.tableApiservice.getResumenTipoPaciente(this.parameters).subscribe(
               (response) => {
                 if(response.data.success){
-
-                    // Swal.close();
+                  this.progressBar3 = [];
+                  this.progressBarLabels4 = [];
+                  this.progressBarLabels5 = [];
+                  if(response.data.success){
+                    // this.rows1      = response.data.grupo_porc
+                    this.progressBarLabels4 = response.data.grupo_detalle
+                    this.progressBarLabels5 = response.data.grupo
+                    let table: any;
+                    for (const [key, value] of Object.entries(response.data.grupo_porc)) {
+                      console.log(key, '=>', value)
+                      let porcentaje:any = value;
+                      if (key === '0'){
+                        table = response.data.tabla_grupo_Prg
+                      }else if (key === '1'){
+                        table = response.data.tabla_grupo_Ins
+                      }else if (key === '2'){
+                        table = response.data.tabla_grupo_Mad
+                      }else if (key === '3'){
+                        table = response.data.tabla_grupo_Cia
+                      }else if (key === '4'){
+                        table = response.data.tabla_grupo_Otr
+                      }
+                      const datos = {
+                          porcentaje : porcentaje.toFixed(2),
+                          // value: porcentaje[0],
+                          table: table
+                      }
+                      this.progressBar3.push(datos);
+                    }
+                    console.log(265, this.progressBar3)
+  
+                  }
                 }
                 
               },
@@ -251,8 +408,38 @@ export class SeguimientoAltaHospitalariaComponent implements OnInit {
             this.tableApiservice.getResumenTipoPaciente(this.parameters).subscribe(
               (response) => {
                 if(response.data.success){
-
-                    // Swal.close();
+                  this.progressBar4 = [];
+                  this.progressBarLabels6 = [];
+                  this.progressBarLabels7 = [];
+                  if(response.data.success){
+                    // this.rows1      = response.data.grupo_porc
+                    this.progressBarLabels6 = response.data.grupo_detalle
+                    this.progressBarLabels7 = response.data.grupo
+                    let table: any;
+                    for (const [key, value] of Object.entries(response.data.grupo_porc)) {
+                      console.log(key, '=>', value)
+                      let porcentaje:any = value;
+                      if (key === '0'){
+                        table = response.data.tabla_grupo_Prg
+                      }else if (key === '1'){
+                        table = response.data.tabla_grupo_Ins
+                      }else if (key === '2'){
+                        table = response.data.tabla_grupo_Mad
+                      }else if (key === '3'){
+                        table = response.data.tabla_grupo_Cia
+                      }else if (key === '4'){
+                        table = response.data.tabla_grupo_Otr
+                      }
+                      const datos = {
+                          porcentaje : porcentaje.toFixed(2),
+                          // value: porcentaje[0],
+                          table: table
+                      }
+                      this.progressBar4.push(datos);
+                    }
+                    console.log(265, this.progressBar4)
+  
+                  }
                 }
                 
               },
@@ -263,7 +450,7 @@ export class SeguimientoAltaHospitalariaComponent implements OnInit {
           await  this.tableApiservice.eliminaTabla(this.parameters).subscribe(
               (response) => {
                 if(response.data.success){
-        
+        Swal.close();
         
                 }
                 
@@ -272,7 +459,7 @@ export class SeguimientoAltaHospitalariaComponent implements OnInit {
                   Swal.close();
               }
             );
-          Swal.close();
+          // 
         }else{
           Swal.close();
         }
@@ -286,9 +473,14 @@ export class SeguimientoAltaHospitalariaComponent implements OnInit {
 
   copyTableToClipboard(numberTabla){
     if(numberTabla === 0){
-      // this.rows.map(item=>{
-      //   item.ImpCuotasVencidas = this._cp.transform( item.ImpCuotasVencidas);
-      // });
+      this.rows.map(item => {
+        item.estancia = typeof item.estancia === 'number' ? item.estancia : Number(item.estancia);
+        item.demFarmacia = typeof item.demFarmacia === 'number' ? item.demFarmacia : Number(item.demFarmacia);
+        item.demEnfermeria = typeof item.demEnfermeria === 'number' ? item.demEnfermeria : Number(item.demEnfermeria);
+        item.demAuditoria = typeof item.demAuditoria === 'number' ? item.demAuditoria : Number(item.demAuditoria);
+        item.demAltaAdmin = typeof item.demAltaAdmin === 'number' ? item.demAltaAdmin : Number(item.demAltaAdmin);
+        item.montoTotal = typeof item.montoTotal === 'number' ? item.montoTotal : Number(item.montoTotal);
+      });
       this.exportService.exportToClipboard(this.rows, this.columns);
     }else if (numberTabla === 1){
 
@@ -301,9 +493,14 @@ export class SeguimientoAltaHospitalariaComponent implements OnInit {
 
   exportToExcel(numberTabla): void {
     if(numberTabla === 0){
-      // this.rows.map(item=>{
-      //   item.ImpCuotasVencidas = this._cp.transform( item.ImpCuotasVencidas);
-      // });
+      this.rows.map(item => {
+        item.estancia = typeof item.estancia === 'number' ? item.estancia : Number(item.estancia);
+        item.demFarmacia = typeof item.demFarmacia === 'number' ? item.demFarmacia : Number(item.demFarmacia);
+        item.demEnfermeria = typeof item.demEnfermeria === 'number' ? item.demEnfermeria : Number(item.demEnfermeria);
+        item.demAuditoria = typeof item.demAuditoria === 'number' ? item.demAuditoria : Number(item.demAuditoria);
+        item.demAltaAdmin = typeof item.demAltaAdmin === 'number' ? item.demAltaAdmin : Number(item.demAltaAdmin);
+        item.montoTotal = typeof item.montoTotal === 'number' ? item.montoTotal : Number(item.montoTotal);
+      });
       this.exportService.exportTableElmToExcel(this.rows, 'Listado de Morosos');
     }else if (numberTabla === 1){
       
@@ -320,7 +517,17 @@ export class SeguimientoAltaHospitalariaComponent implements OnInit {
           this.f_inicio = moment(form.f_inicio).format('YYYY-MM-DD');
           this.f_fin = moment(form.f_fin).format('YYYY-MM-DD');
           this.sede = form.sede;
-        this.setPage({ offset: 0 });
+          var diff = moment(this.f_fin).diff(moment(this.f_inicio));
+          if((diff/(1000*60*60*24)) < 31){
+            this.setPage({ offset: 0 });
+          }else{
+            Swal.fire({
+              title: "Problema",
+              text: "El sistema puede presentar datos de 31 DÍAS como máximo. Agradeceríamos modificar sus filtros de FECHA!",
+              icon: "error"
+            })
+            return;
+          }
     }
   async loading() {
       Swal.fire({
