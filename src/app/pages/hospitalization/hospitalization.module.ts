@@ -1,6 +1,7 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AgGridModule } from 'ag-grid-angular';
+import { ButtonRendererComponent } from '../../shared/components/renderer/button-renderer.component';
 import { RouterModule } from '@angular/router';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -12,9 +13,12 @@ import { PacientesHospitalizadosComponent } from './pacientes-hospitalizados/pac
 import { SeguimientoAltaHospitalariaComponent } from './seguimiento-alta-hospitalaria/seguimiento-alta-hospitalaria.component';
 
 @NgModule({
-  declarations: [HospitalDischargeConsultationComponent, EstadisticasComponent, PacientesHospitalizadosComponent, SeguimientoAltaHospitalariaComponent],
+  declarations: [
+    HospitalDischargeConsultationComponent, 
+    EstadisticasComponent, 
+    PacientesHospitalizadosComponent, SeguimientoAltaHospitalariaComponent, ButtonRendererComponent],
   imports: [
-    AgGridModule.withComponents([]),
+    AgGridModule.withComponents([ButtonRendererComponent]),
     CommonModule,
     NgxDatatableModule,
     NgbModule,

@@ -118,6 +118,7 @@ import { MorososContactadosComponent } from "./modals/seguimientoMorosos/listado
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { AltaHospitalariaComponent } from './modals/comercial/alta-hospitalaria/alta-hospitalaria.component';
 registerLocaleData(localePe);
 // import { CuotasProgramasSaludComponent } from './pages/comercial/ventas/cuotas-programas-salud/cuotas-programas-salud.component';
 // import { BsDatepickerModule, BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
@@ -199,7 +200,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     SucursalCellRenderer, 
     InformeComponent,
     ContactoComponent,
-    MorososContactadosComponent
+    MorososContactadosComponent,
+    AltaHospitalariaComponent
   ],
   imports: [
     BrowserModule,
