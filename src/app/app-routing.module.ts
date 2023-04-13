@@ -1,8 +1,8 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 
-import { BaseLayoutComponent } from "./layout/base-layout/base-layout.component";
-import { PagesLayoutComponent } from "./layout/pages-layout/pages-layout.component";
+import { BaseLayoutComponent } from "./Layout/base-layout/base-layout.component";
+import { PagesLayoutComponent } from "./Layout/pages-layout/pages-layout.component";
 
 // DEMO PAGES
 
@@ -180,6 +180,11 @@ const routes: Routes = [
                 path: "dashboard-general",
                 loadChildren: () => import('../app/pages/dashboard-general/dashboard-general.module').then(m => m.DashboardGeneralModule),
                 data: { extraParameter: "dashboardGeneralMenu" },
+            },
+            {
+                path: "tesoreria",
+                loadChildren: () => import('../app/pages/tesoreria/tesoreria.module').then(m => m.TesoreriaModule),
+                data: { extraParameter: "facturacionMenu" },
             },
         ],
     },

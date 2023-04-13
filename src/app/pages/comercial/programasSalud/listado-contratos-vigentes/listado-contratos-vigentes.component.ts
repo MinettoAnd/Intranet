@@ -191,11 +191,19 @@ export class ListadoContratosVigentesComponent implements OnInit {
   }
 
   copyTableToClipboard(){
+    this.rows.map(item => {
+      item.TotalMiembros = typeof item.TotalMiembros === 'number' ? item.TotalMiembros : Number(item.TotalMiembros);
+      item.ultimoMontoPagado = typeof item.ultimoMontoPagado === 'number' ? item.ultimoMontoPagado : Number(item.ultimoMontoPagado);
+    })
     this.exportService.exportToClipboard(this.rows, this.columns);
     
   }
 
   exportToExcel(): void {
+    this.rows.map(item => {
+      item.TotalMiembros = typeof item.TotalMiembros === 'number' ? item.TotalMiembros : Number(item.TotalMiembros);
+      item.ultimoMontoPagado = typeof item.ultimoMontoPagado === 'number' ? item.ultimoMontoPagado : Number(item.ultimoMontoPagado);
+    })
     this.exportService.exportTableElmToExcel(this.rows, 'Atenciones-Realizadas-por-Emergencia');
   }
 
