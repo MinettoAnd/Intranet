@@ -343,6 +343,7 @@ export class LiquidacionEmpresaBiohealthComponent implements OnInit {
                     let totalcobraCSALUD = 0;
                     let totalcobraBIOHEALTH = 0;
                     let totalporcCobraBIOHEALTH = 0;
+                    this.progressBar1 = [];
                     this.rows1.map(item=>{
                         totalCantidad += Number(item.Cantidad);
                         totalcobraCSALUD += Number(item.cobraCSALUD);
@@ -380,6 +381,7 @@ export class LiquidacionEmpresaBiohealthComponent implements OnInit {
                     const taCobraBIOHEALTH = [];
                     const taPorcCobraBIOHEALTH = [];
                     let totalBIOHEALTH;
+                    this.progressBar2 = [];
                     this.rows2.map(item=>{
                       if(item.Campo ==='TOTAL'){
                         totalBIOHEALTH = item.cobraBIOHEALTH;

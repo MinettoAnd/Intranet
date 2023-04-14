@@ -18,7 +18,7 @@ import { PhonePipe } from 'src/app/pipes/phone.pipe';
 import { HospitalizationService } from 'src/app/_services/hospitalization.service';
 import { ButtonRendererComponent } from './../../../shared/components/renderer/button-renderer.component';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { AltaHospitalariaComponent } from 'src/app/modals/comercial/alta-hospitalaria/alta-hospitalaria.component';
+import { AltaHospitalariaComponent } from 'src/app/modals/hospitalization/alta-hospitalaria/alta-hospitalaria.component';
 @Component({
   selector: 'app-seguimiento-alta-hospitalaria',
   templateUrl: './seguimiento-alta-hospitalaria.component.html',
