@@ -1,0 +1,32 @@
+<div class="modal-content">
+    <div class="modal-header">
+            <h4 class="modal-title">{{dato.paciente}}</h4>
+            <button
+              type="button"
+              class="close"
+              aria-label="Close"
+              (click)="activeModal.dismiss('Cross click')"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+    </div>
+    <div class="modal-body" id="modal-window-alert-body">
+        <p> Origen de Reserva : &nbsp;&nbsp;{{dato.origenCita}}</p>
+        <p> Fecha de la Cita :&nbsp;&nbsp;{{dato.FechaCita}}</p>
+        <p> Médico :&nbsp;&nbsp;{{dato.medicoNombreCompleto}}</p>
+        <p> Especialidad :&nbsp;&nbsp;{{dato.especialidad}}</p>
+        <p> id Orden Atención : &nbsp;&nbsp;{{dato.idOA}}</p>
+        <p> id Comprobante : &nbsp;&nbsp;{{dato.idComprobante }}</p>
+        <p> id Transacción Bancaria : &nbsp;&nbsp;{{dato.idTransaccion }}</p>
+        <p> Usuario que Genera Comprobante : &nbsp;&nbsp;{{dato.UsuarioCreacion }}</p>
+    </div>
+    <div class="modal-footer">
+        <button
+        type="button"
+        class="btn btn-outline-dark"
+        (click)="activeModal.close('Close click')"
+      >
+        <i class="pe-7s-less"></i> Cancelar
+      </button>
+    </div>
+</div>

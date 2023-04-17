@@ -30,6 +30,7 @@
 }
 .box-title{
     font-size: 1rem!important;
+    font-weight: 500;
 }
 
 
@@ -310,6 +311,7 @@ margin: 0.5rem 0;
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
 }
+
 ::ng-deep .ag-header-cell-text {            
   text-overflow: clip !important;
   overflow: visible !important;
