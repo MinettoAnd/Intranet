@@ -7,10 +7,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { AgGridModule } from 'ag-grid-angular';
 import { ButtonRendererComponent } from 'src/app/shared/components/renderer/button-renderer.component';
+import { EstadisticasComponent } from './ingresos/estadisticas/estadisticas.component';
 
 @NgModule({
   declarations: [
-    DetallePagosAppMovilComponent
+    DetallePagosAppMovilComponent,
+    EstadisticasComponent
   ],
   imports: [
     AgGridModule.withComponents([ButtonRendererComponent]),
@@ -21,6 +23,10 @@ import { ButtonRendererComponent } from 'src/app/shared/components/renderer/butt
       {
         path: 'detallePagosAppMovil',
         component: DetallePagosAppMovilComponent
+      },
+      {
+        path: 'ingresos/estadisticas',
+        component: EstadisticasComponent
       },
     ])
   ],

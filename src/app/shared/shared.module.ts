@@ -10,6 +10,7 @@ import { EmergenciesEstadisticsComponent } from './components/emergencies-estadi
 import { ExternalConsultationEstadisticsComponent } from './components/external-consultation-estadistics/external-consultation-estadistics.component';
 import { HospitalizationEstadisticsComponent } from './components/hospitalization-estadistics/hospitalization-estadistics.component';
 import { AgGridModule } from 'ag-grid-angular';
+import { IngresosEstadisticasComponent } from './components/ingresos-estadisticas/ingresos-estadisticas.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { AgGridModule } from 'ag-grid-angular';
     ComercialEstadisticasComponent,
     EmergenciesEstadisticsComponent,
     ExternalConsultationEstadisticsComponent,
-    HospitalizationEstadisticsComponent
+    HospitalizationEstadisticsComponent,
+    IngresosEstadisticasComponent
   ],
   imports: [
     AgGridModule.withComponents([]),
