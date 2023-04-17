@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ResumenGerencialComponent } from './resumen-gerencial/resumen-gerencial.component';
 import { RouterModule } from '@angular/router';
@@ -27,6 +27,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
         component: ResumenGerencialComponent
       },
     ])
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class DashboardGeneralModule { }
