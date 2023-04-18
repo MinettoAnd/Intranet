@@ -62,5 +62,10 @@ export class TesoreriaService {
     this.loadTableApiDataURL = `${environment.api_url}TsEliminaTabla`;
     return this.http.post(this.loadTableApiDataURL, data);
   }
+  // Ingresos Estadisticas
+  IngGetIngresosResumen(data): Observable<any> {
+    this.loadTableApiDataURL = `${environment.api_url}IngGetIngresosResumen`;
+    return this.http.post(this.loadTableApiDataURL, data);
+  }
 }
 

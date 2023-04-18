@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PiecharComponent } from './components/piechar/piechar.component';
 import { BarcharComponent } from './components/barchar/barchar.component';
@@ -29,11 +29,13 @@ import { IngresosEstadisticasComponent } from './components/ingresos-estadistica
     NgxDatatableModule,
     NgbModule,
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   exports: [
     ComercialEstadisticasComponent,
     EmergenciesEstadisticsComponent,
     ExternalConsultationEstadisticsComponent,
-    HospitalizationEstadisticsComponent
+    HospitalizationEstadisticsComponent,
+    IngresosEstadisticasComponent
   ],
 })
 export class SharedModule { }

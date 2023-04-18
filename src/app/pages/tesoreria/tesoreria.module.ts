@@ -8,7 +8,7 @@ import { RouterModule } from '@angular/router';
 import { AgGridModule } from 'ag-grid-angular';
 import { ButtonRendererComponent } from 'src/app/shared/components/renderer/button-renderer.component';
 import { EstadisticasComponent } from './ingresos/estadisticas/estadisticas.component';
-
+import { SharedModule } from 'src/app/shared/shared.module';
 @NgModule({
   declarations: [
     DetallePagosAppMovilComponent,
@@ -19,6 +19,7 @@ import { EstadisticasComponent } from './ingresos/estadisticas/estadisticas.comp
     CommonModule,NgxDatatableModule,NgbModule, 
     FormsModule,
     ReactiveFormsModule,
+    SharedModule,
     RouterModule.forChild([
       {
         path: 'detallePagosAppMovil',
