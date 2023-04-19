@@ -30,6 +30,7 @@
 }
 .box-title{
     font-size: 1rem!important;
+    font-weight: 600;
 }
 
 
@@ -179,4 +180,7 @@ margin: 0.5rem 0;
     #div_mostrar_ptable_i, #div_mostrar_ptable_a{
         max-width: 50%!important;
     }
+}
+.tipoPacienteNombre{
+    padding-left: 1rem;
 }
