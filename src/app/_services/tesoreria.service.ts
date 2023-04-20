@@ -67,5 +67,10 @@ export class TesoreriaService {
     this.loadTableApiDataURL = `${environment.api_url}IngGetIngresosResumen`;
     return this.http.post(this.loadTableApiDataURL, data);
   }
+  // JPRIC gpric/get_resumen
+  GpricGetResumen(data): Observable<any> {
+    this.loadTableApiDataURL = `${environment.api_url}GpricGetResumen`;
+    return this.http.post(this.loadTableApiDataURL, data);
+  }
 }
 

@@ -11,6 +11,7 @@ import { ExternalConsultationEstadisticsComponent } from './components/external-
 import { HospitalizationEstadisticsComponent } from './components/hospitalization-estadistics/hospitalization-estadistics.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { IngresosEstadisticasComponent } from './components/ingresos-estadisticas/ingresos-estadisticas.component';
+import { JPRICComponent } from './components/jpric/jpric.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { IngresosEstadisticasComponent } from './components/ingresos-estadistica
     EmergenciesEstadisticsComponent,
     ExternalConsultationEstadisticsComponent,
     HospitalizationEstadisticsComponent,
-    IngresosEstadisticasComponent
+    IngresosEstadisticasComponent,
+    JPRICComponent
   ],
   imports: [
     AgGridModule.withComponents([]),
@@ -35,7 +37,8 @@ import { IngresosEstadisticasComponent } from './components/ingresos-estadistica
     EmergenciesEstadisticsComponent,
     ExternalConsultationEstadisticsComponent,
     HospitalizationEstadisticsComponent,
-    IngresosEstadisticasComponent
+    IngresosEstadisticasComponent,
+    JPRICComponent
   ],
 })
 export class SharedModule { }

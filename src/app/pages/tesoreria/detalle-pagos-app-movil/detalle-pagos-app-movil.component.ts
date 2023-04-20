@@ -357,8 +357,6 @@ export class DetallePagosAppMovilComponent implements OnInit {
     
     return graph;
   }
-  
-  
   addData(chart, label,  data) {
     this.removeData(chart) 
     chart.data.labels = label;
@@ -373,7 +371,6 @@ export class DetallePagosAppMovilComponent implements OnInit {
     });
     chart.update();
   }
-
   removeData(chart) {
       chart.data.labels = [];
       chart.data.datasets.forEach((dataset) => {

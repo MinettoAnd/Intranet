@@ -13,6 +13,7 @@ export class ResumenGerencialComponent implements OnInit {
   public hospitalizacionEstadisticas = false;
   public emergenciasEstadisticas = false;
   public consultaExternaEstadisticas = false;
+  public jpric = false;
   public menuItems: any = [];
   public subMenuItems: any = [];
   public categories: any = [];
@@ -56,6 +57,7 @@ export class ResumenGerencialComponent implements OnInit {
       case 1:
         this.comercialEstadisticas = true;
         this.ingresosEstadisticas = false;
+        this.jpric = false;
         this.emergenciasEstadisticas = false;
         this.hospitalizacionEstadisticas = false;
         this.consultaExternaEstadisticas = false;
@@ -63,6 +65,7 @@ export class ResumenGerencialComponent implements OnInit {
       case 2:
         this.comercialEstadisticas = false;
         this.ingresosEstadisticas = true;
+        this.jpric = false;
         this.emergenciasEstadisticas = false;
         this.hospitalizacionEstadisticas = false;
         this.consultaExternaEstadisticas = false;
@@ -70,20 +73,31 @@ export class ResumenGerencialComponent implements OnInit {
       case 3:
         this.comercialEstadisticas = false;
         this.ingresosEstadisticas = false;
-        this.emergenciasEstadisticas = true;
+        this.jpric = true;
+        this.emergenciasEstadisticas = false;
         this.hospitalizacionEstadisticas = false;
         this.consultaExternaEstadisticas = false;
         break;
       case 4:
         this.comercialEstadisticas = false;
         this.ingresosEstadisticas = false;
-        this.emergenciasEstadisticas = false;
-        this.hospitalizacionEstadisticas = true;
+        this.jpric = false;
+        this.emergenciasEstadisticas = true;
+        this.hospitalizacionEstadisticas = false;
         this.consultaExternaEstadisticas = false;
         break;
       case 5:
         this.comercialEstadisticas = false;
         this.ingresosEstadisticas = false;
+        this.jpric = false;
+        this.emergenciasEstadisticas = false;
+        this.hospitalizacionEstadisticas = true;
+        this.consultaExternaEstadisticas = false;
+        break;
+      case 6:
+        this.comercialEstadisticas = false;
+        this.ingresosEstadisticas = false;
+        this.jpric = false;
         this.emergenciasEstadisticas = false;
         this.hospitalizacionEstadisticas = false;
         this.consultaExternaEstadisticas = true;
@@ -141,15 +155,22 @@ export class ResumenGerencialComponent implements OnInit {
           }
          
        }) 
+      const menuItem3 = {
+        id: 3,
+        isDropDownMenu: false,
+        description: "JPRIC",
+        subMenuList: []
+      }
+       this.categories.push(menuItem3);
        if(this.subMenuItems.length > 0 ){
-            const menuItem3 = {
-              id: 3,
+            const menuItem4 = {
+              id: 4,
               isDropDownMenu: true,
               description: "Producción",
               dropDownTarget: "",
               subMenuList: this.subMenuItems
             }
-            this.categories.push(menuItem3);
+            this.categories.push(menuItem4);
           }
        console.log(514, this.categories);
     });
@@ -205,15 +226,22 @@ export class ResumenGerencialComponent implements OnInit {
           }
          
        }) 
+       const menuItem3 = {
+        id: 3,
+        isDropDownMenu: false,
+        description: "JPRIC",
+        subMenuList: []
+      }
+       this.categories.push(menuItem3);
        if(this.subMenuItems.length > 0 ){
-            const menuItem3 = {
-              id: 3,
+            const menuItem4 = {
+              id: 4,
               isDropDownMenu: true,
               description: "Producción",
               dropDownTarget: "",
               subMenuList: this.subMenuItems
             }
-            this.categories.push(menuItem3);
+            this.categories.push(menuItem4);
           }
        console.log(514, this.categories);
     });

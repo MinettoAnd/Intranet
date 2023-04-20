@@ -19,12 +19,13 @@ import { TesoreriaService } from 'src/app/_services/tesoreria.service';
 import { NumberDecimalPipe } from 'src/app/pipes/numberDecimal.pipe';
 import * as Chart from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+
 @Component({
-  selector: 'app-ingresos-estadisticas',
-  templateUrl: './ingresos-estadisticas.component.html',
-  styleUrls: ['./ingresos-estadisticas.component.scss']
+  selector: 'app-jpric',
+  templateUrl: './jpric.component.html',
+  styleUrls: ['./jpric.component.scss']
 })
-export class IngresosEstadisticasComponent implements OnInit {
+export class JPRICComponent implements OnInit {
   initialSize = 0;
   active = 1;
   enableSummary = true;
@@ -38,17 +39,7 @@ export class IngresosEstadisticasComponent implements OnInit {
   @ViewChild(PerfectScrollbarDirective, { static: true }) directiveRef?: PerfectScrollbarDirective;
 
   @ViewChild(DatatableComponent) private table: DatatableComponent;
-  grafico1: Chart;
-  grafico2: Chart;
-  private baseChart: ElementRef;
-  @ViewChild("baseChart", { static: false }) set content(
-    content: ElementRef
-  ) {
-    if (content) {
-      // initially setter gets called with undefined
-      this.baseChart = content;
-      this.grafico1 = this.getBarChart(this.barChartLabels, this.barChartData1, this.barChartData2,this.barChartData3,this.barChartData4,'', '','chart-1', 'Lima', 'Chorrillos','Surco','Total', 'line');
-  } }
+
   options = {
     close: true,
     expand: true,
@@ -59,12 +50,45 @@ export class IngresosEstadisticasComponent implements OnInit {
   selected = [];
   id: number;
   loadingIndicator: true;
+  columns:any;
+  columns1:any;
+  columns2:any;
+  columns3:any;
+  columns4:any;
+
+  columns5:any;
+  columns6:any;
+  columns7:any;
+  columns8:any;
+  columns9:any;
+
+  columns10:any;
+  columns11:any;
+  columns12:any;
+  columns13:any;
+  columns14:any;
+  columns15:any;
+  columns16:any;
+
   rows: any;
   rows1 = [];
   rows2 = [];
   rows3 = [];
   rows4 = [];
   rows4filtered = [];
+  rows5: any;
+  rows6 = [];
+  rows7 = [];
+  rows8 = [];
+  rows9 = [];
+  rows10: any;
+  rows11 = [];
+  rows12 = [];
+  rows13 = [];
+  rows14 = [];
+  rows15: any;
+  rows16 = [];
+
   editing = {};
   row: any;
   public breadcrumb: any;
@@ -72,11 +96,6 @@ export class IngresosEstadisticasComponent implements OnInit {
   parameters:any;
   message;
   title;
-  columns:any;
-  columns1:any;
-  columns2:any;
-  columns3:any;
-  columns4:any;
   optionsWithCaption = {};
   datePipe: any;
         // f_inicio: '2022-11-01',
@@ -117,11 +136,7 @@ export class IngresosEstadisticasComponent implements OnInit {
   mes = moment(new Date()).format('MM');
   anio = moment(new Date()).format('YYYY');
   periodo = this.anio + this.mes;
-  barChartLabels = [];
-  barChartData1 = [];
-  barChartData2 = [];
-  barChartData3 = [];
-  barChartData4 = [];
+  convenio= '000000'
   selectedOptionTipo='TODAS'; 
   constructor(private tableApiservice: TesoreriaService, private exportService: ExportService, private _cnp:CustomNumberPipe,
     private _cp: CurrencyPipe, private _phone: PhonePipe, private _ndp:NumberDecimalPipe) {
@@ -131,7 +146,7 @@ export class IngresosEstadisticasComponent implements OnInit {
     this.filtroForm = new FormGroup({
       anio: new FormControl(this.anio),
       mes: new FormControl(this.mes),
-
+      convenio: new FormControl(this.convenio),
   });
   var anioOp = Number(this.anio);
   while ( Number(anioOp) > 2017 ) {
@@ -150,8 +165,8 @@ export class IngresosEstadisticasComponent implements OnInit {
     // this.setPage({ offset: 0 });
   }
   getRowClass(row) {
-    return {
-      'totals': row.tipoPacienteNombre.includes('TOTAL'), 'sub-totals': row.tipoPacienteNombre === 'PROGRAMAS DE SALUD' || row.tipoPacienteNombre === 'CONVENIOS' || row.tipoPacienteNombre === 'SEGUROS' || row.tipoPacienteNombre === 'OTROS' };
+    // return {
+    //   'totals': row.tipoPacienteNombre.includes('TOTAL'), 'sub-totals': row.tipoPacienteNombre === 'PROGRAMAS DE SALUD' || row.tipoPacienteNombre === 'CONVENIOS' || row.tipoPacienteNombre === 'SEGUROS' || row.tipoPacienteNombre === 'OTROS' };
   }
   getRowClass1(row) {
 
@@ -160,234 +175,7 @@ export class IngresosEstadisticasComponent implements OnInit {
     // };
   }
 
-  guardarImagen(){
-    var canvas = document.getElementById("chart-1") as HTMLCanvasElement;
-    var downloadlink = document.getElementById("downloadlink") as HTMLAnchorElement;
-    
-    // var ctx = canvas.getContext("2d");
-    // ctx.strokeStyle = "yellow";
-    // ctx.lineWidth = 4;
-    // ctx.beginPath();
-    // ctx.arc(100,75,50,0,Math.PI*2);
-    // ctx.stroke();
-    var imagedata = canvas.toDataURL("image/png");
-    console.log(imagedata)
-    downloadlink.href = imagedata;
-  }
-  getBarChart(chartLabels1, chartData1, chartData2,chartData3,chartData4,scaleLabel1,scaleLabel2, chartNum, title, title2, title3, title4,typeChart) {
-    const data = {
-      labels: chartLabels1,
-      datasets: [
-        {
-          barPercentage: 0.8,
-          categoryPercentage: 1,
-          label: title,
-          // borderColor: 'rgba(99, 255, 132, 1)',
-          borderWidth: 1,
-          data: chartData1,
-          backgroundColor: '#28a74559'
-          // backgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#adb5bd','#ffc107', '#28a745', '#6610f2','#20c997'],
-          // hoverBackgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14','#adb5bd', '#ffc107', '#28a745', '#6610f2', '#20c997']
-        },
-        {
-          label: title2,
-          // borderColor: 'rgba(99, 255, 132, 1)',
-          borderWidth: 1,
-          data: chartData2,
-          backgroundColor     : '#6610f259',
-          // borderColor         : 'rgba(33,104,163,1)',
-          // backgroundColor: 'rgb(255, 164, 8, 0.7)',
-          // backgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#adb5bd','#ffc107', '#28a745', '#6610f2','#20c997'],
-          // hoverBackgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14','#adb5bd', '#ffc107', '#28a745', '#6610f2', '#20c997']
-          type                : 'line',
-        },
-        {
-          label: title3,
-          // borderColor: 'rgba(99, 255, 132, 1)',
-          borderWidth: 1,
-          data: chartData3,
-          backgroundColor: '#ffa40859'
-          // backgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#adb5bd','#ffc107', '#28a745', '#6610f2','#20c997'],
-          // hoverBackgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14','#adb5bd', '#ffc107', '#28a745', '#6610f2', '#20c997']
-        },
-        {
-          label: title4,
-          // borderColor: 'rgba(99, 255, 132, 1)',
-          borderWidth: 1,
-          data: chartData4,
-          backgroundColor: '#eb445a59'
-          // backgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#adb5bd','#ffc107', '#28a745', '#6610f2','#20c997'],
-          // hoverBackgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14','#adb5bd', '#ffc107', '#28a745', '#6610f2', '#20c997']
-        }
-      ]
-    };
-    const options = {
-      // callbacks: {
-      //   label: function (t, d) {
-      //     var xLabel = d.datasets[t.datasetIndex].label;
-      //     var yLabel = t.yLabel >= 1000 ? 'S/.' + t.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : '$' + t.yLabel;
-      //     return xLabel + ': ' + yLabel;
-      //   }
-      // },
-      responsive: true,
-      // We use these empty structures as placeholders for dynamic theming.
-      // scales: {
-      //   yAxes: [{
-      //     ticks: {
-      //       beginAtZero: true,
-      //       callback: function (value, index, values) {
-      //         // console.log(444,Number.isInteger(value), value,index,values);
-      //         if (chartNum = 'chart-3'){
-      //           return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-      //         }else{
-      //           if (parseInt(value) >= 1000) {
-      //                           return 'S/.' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-      //           } else { return 'S/.' + value; }
-      //         }
-              
-      //       }
-      //     }
-      //   }]
-      // },
-      // legend: {
-      //   display: false
-      // },
-      scales: {
-        xAxes: [{
-          scaleLabel: {
-            display: true,
-            labelString: scaleLabel1,
-            fontSize: 18,
-            fontColor: '#000',
-          }
-        }],
-        yAxes: [{
-          scaleLabel: {
-            display: true,
-            labelString: scaleLabel2,
-            fontSize: 18,
-            fontColor: '#000',
-          },
-          ticks: {
-            beginAtZero: true,
-            // max: 300,
-            // min: 0
-          }
-        }],
-      },
-      plugins: {
-        datalabels: {
-          
-          /* anchor puede ser "start", "center" o "end" */
-          anchor: 'center',
-          backgroundColor: function(context) {
-            return context.dataset.backgroundColor;
-          },
-          borderRadius: 4,
-          clip: true,
-          color: 'white',
-          font: {
-            weight: 'bold'
-          },
-          formatter: function(value, context) {
-            let sum = 0;
-            
-            let dataArr = context.chart.data.datasets[context.datasetIndex].data;
-              
-            dataArr.map((data) => {
-              return sum += parseFloat(data);
-            });
-            // console.log(292,value , sum );
-            if (sum > 0 ){
-              return ((value * 100) / sum).toFixed(2) + '%';
-            }else{
-              return (0 + '%');
-            }
-            
-          },
-          /* Podemos modificar el texto a mostrar */
-          // formatter: function (dato, ctx) {
-          //   return ((dato * 100) / total).toFixed(2) + '%'; 
-          // },
-          // formatter: (dato) => ((dato * 100) / total).toFixed(2) + '%',
-          // formatter: function (value, ctx) {
-          //   return ((value * 100) / this.total(ctx)).toFixed(2) + '%';
-          // },
-          // formatter: (dato) => Math.floor((dato / totales) * 100) + '%',
-          /* Color del texto */
-          // color: '#ffffff',
-          // /* Formato de la fuente */
-          // font: {
-          //   // family: '"Times New Roman", Times, serif',
-          //   size: '11',
-          //   weight: 'bold',
-          // },
-          /* Formato de la caja contenedora */
-          // padding: '4',
-          // borderWidth: 2,
-          // borderColor: 'darkblue',
-          // borderRadius: 8,
-          // backgroundColor: 'lightblue'
-        }
-      },
-      tooltips: {
-        enabled: true,
-        callbacks: {
-          label: function(tooltipItem, data) {
-              var label = data.datasets[tooltipItem.datasetIndex].label || '';
-            
-              if (label) {
-                  label += ': ';
-              }
-              label += Math.round(tooltipItem.yLabel * 100) / 100;
-              // tooltipItem.xLabel = 'Día: ' + tooltipItem.xLabel + '   ' ;
-              // tooltipItem.label = 'Día: ' + tooltipItem.Label + '   ' ;
-              
-              return label;
-          },
-          title: function(tooltipItem, data) {
-           var title = 'Mes: ' + tooltipItem[0].xLabel + '   ' ;
-            return title;
-        }
-        }
-      }
-    };
-    return this.getChart(chartNum, typeChart, data, options);
-    
-  }
-  getChart(context, chartType, data, options?) {
-    const graph = new Chart(context, {
-      data,
-      options,
-      type: chartType,
-      plugins: [ChartDataLabels]
-    });
-    
-    return graph;
-  }
-  addData(chart, label,  data) {
-    this.removeData(chart) 
-    chart.data.labels = label;
-    chart.data.datasets.forEach((dataset, index) => {
-        dataset.data = data[index];
-        if (index === 0){
-          // dataset.data = data1;
-        }else if (index === 1){
-          // dataset.data = data2;
-        }
-        // dataset.data = data;
-    });
-    chart.update();
-  }
-  removeData(chart) {
-      chart.data.labels = [];
-      chart.data.datasets.forEach((dataset) => {
-          dataset.data = [];
-          console.log(663, dataset.data);
-      });
-      chart.update();
-      
-  }
+
   public onLimitChange(limit: any): void {
     this.changePageLimit(limit);
     // this.setPage({ offset: 0 });
@@ -423,12 +211,13 @@ export class IngresosEstadisticasComponent implements OnInit {
       anio: this.anio,
       mes: this.mes,
       periodo:this.periodo,
+      convenio:this.convenio,
       pageNumber: this.page.pageNumber,
       size: this.page.size
     };
 
     this.loading();
-    this.tableApiservice.IngGetIngresosResumen(this.parameters).subscribe(
+    this.tableApiservice.GpricGetResumen(this.parameters).subscribe(
       (response) => {
         this.rows = [];
         console.log(response);
@@ -437,34 +226,35 @@ export class IngresosEstadisticasComponent implements OnInit {
           this.message = this.data.titulo;
           this.title = response.data.title;
   
-          this.columns = this.data.cabeceras_ingresos_TPac;
-          this.rows = this.data.tabla_ingresos_TPac;
-          // this.temp = this.rows;
-          this.columns1 = this.data.cabeceras_ingresos_empresa;
-          this.rows1 = this.data.tabla_ingresos_empresa;
-          this.columns2 = this.data.cabeceras_ingresos_sede_anual;
-          this.rows2 = this.data.tabla_ingresos_sede_anual;
+          // this.columns = this.data.cabeceras_ingresos_TPac;
+          // this.rows = this.data.tabla_ingresos_TPac;
+          // // this.temp = this.rows;
+          // this.columns1 = this.data.cabeceras_ingresos_empresa;
+          // this.rows1 = this.data.tabla_ingresos_empresa;
+          // this.columns2 = this.data.cabeceras_ingresos_sede_anual;
+          // this.rows2 = this.data.tabla_ingresos_sede_anual;
 
-          this.columns3 = this.data.cabeceras_ingresos_tPaciente_anual;
-          this.rows3 = this.data.tabla_ingresos_tPaciente_anual;
-          this.columns4 = this.data.cabeceras_ingresos_empresa_anual;
-          this.rows4 = this.data.tabla_ingresos_empresa_anual;
-          this.rows4filtered = this.rows4.filter(item => item.sucursal === 'TODAS');
-          this.barChartLabels = [];
-          this.barChartData1 = [];
-          this.barChartData2 = [];
-          this.barChartData3 = [];
-          this.barChartData4 = [];
-          this.data.hist_mensual.map(item => {
-            this.barChartLabels.push(item.name);
-            this.barChartData1.push(item.item_1);
-            this.barChartData2.push(item.item_2);
-            this.barChartData3.push(item.item_3)
-            this.barChartData4.push(item.item_4)
-          })
-          var data = [];
-          data.push(this.barChartData1, this.barChartData2);
-          this.addData(this.grafico1, this.barChartLabels, data)
+          this.columns3 = this.data.tabla_cobranzas_periodo_emision_soles.cabeceras;
+          this.rows3 = this.data.tabla_cobranzas_periodo_emision_soles.tabla;
+          this.columns4 = this.data.tabla_cobranzas_periodo_emision_cantidad.cabeceras;
+          this.rows4 = this.data.tabla_cobranzas_periodo_emision_cantidad.tabla;
+          // this.rows4filtered = this.rows4.filter(item => item.sucursal === 'TODAS');
+
+
+
+
+          // this.columns6 = this.data.tabla_expedientes_facturados_periodo_soles.cabeceras;
+          // this.rows6 = this.data.tabla_expedientes_facturados_periodo_soles.tabla;
+          // this.columns7 = this.data.tabla_expedientes_facturados_periodo_cantidad.cabeceras;
+          // this.rows7 = this.data.tabla_expedientes_facturados_periodo_cantidad.tabla;
+
+          // this.columns9 = this.data.tabla_expedientes_pendientes_periodo_soles.cabeceras;
+          // this.rows9 = this.data.tabla_expedientes_pendientes_periodo_soles.tabla;
+          // this.columns10 = this.data.tabla_expedientes_pendientes_periodo_cantidad.cabeceras;
+          // this.rows10 = this.data.tabla_expedientes_pendientes_periodo_cantidad.tabla;
+
+          this.columns16 = this.data.cabeceras_ingresos_TPac;
+          this.rows16 = this.data.tabla_ingresos_TPac;
 
             Swal.close();
         }else{
@@ -639,11 +429,11 @@ export class IngresosEstadisticasComponent implements OnInit {
   }
 
   filter() {
-  this.removeData(this.grafico1);
+
         const form = this.filtroForm.value;
           this.anio = form.anio;
           this.mes = form.mes;
-
+          this.convenio = form.convenio
         this.setPage({ offset: 0 });
     }
   async loading() {
@@ -736,15 +526,52 @@ export class IngresosEstadisticasComponent implements OnInit {
 
           return count.toString().indexOf('-') > -1 ? count.toLocaleString().replace('-', '(').concat(')') : 'S/ ' + count.toLocaleString();
         }else{
+          console.log(515, cells);
+          return count.toString().indexOf('-') > -1 ? count.toLocaleString().replace('-', '(').concat(')') : 'S/ ' + count.toLocaleString();
+        }
+  }
+  summaryForAmount2(cells: any){
+    // console.log(cells);
+    let count: number = 0;
+    let re = /\,/gi;
+    let re1 = /\S\/./gi;
+    let re2 = /\S\//gi;
+        
+        cells.filter((cell) => {
+            cell = cell.toString();
+            if (cell != null && cell != undefined) {
+              
+              if (cell.indexOf('S/') > -1){  
+                count = count + +cell.replace(re2, '').replace(',', '');
+              }else if (!(cell.indexOf('-') > -1 || cell.indexOf('(') > -1)) {
+              //  console.log(719, typeof cell, count)
+                    count = count + +cell.replace(re, '');
+                    // console.log(722,cell, count)
+              }else if (cell.indexOf('-') > -1) {
+                    count = count + 0;
+              }else if (cell.indexOf('(') > -1) {
+                let number = cell.replace('(', '').replace(')', '');
+                count = count - +number.replace(re, '');
+              }
+            }
+        });
+        
+        if(!count){
+          return count.toString().replace('NaN', 'Total');
+        }else if (count.toString().indexOf('.') > -1){
+
+          return count.toString().indexOf('-') > -1 ? count.toLocaleString().replace('-', '(').concat(')') : 'S/ ' + count.toLocaleString();
+        }else{
+          console.log(515, cells);
           return count.toString().indexOf('-') > -1 ? count.toLocaleString().replace('-', '(').concat(')') : count.toLocaleString();
         }
   }
   private summaryNull(cells: any): string {
-    if (cells[0] !== 'TODAS' && cells[0] !== 'LIMA' && cells[0] !== 'CHORRILLOS' && cells[0] !== 'SURCO'){
-      console.log(739, cells.cell)
-        return 'TOTAL';
-    }
-    
+    // if (cells[0] !== 'TODAS' && cells[0] !== 'LIMA' && cells[0] !== 'CHORRILLOS' && cells[0] !== 'SURCO'){
+    //   console.log(739, cells.cell)
+    //     return 'TOTAL';
+    // }
+    return 'TOTAL';
   }
 }
 
