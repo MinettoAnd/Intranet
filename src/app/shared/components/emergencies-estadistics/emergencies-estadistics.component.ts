@@ -656,6 +656,17 @@ selectedOptionGraph2 = 'ingresos_emergencia';
       };
     } 
   }
+  public onAnioChange(anio: any): void {
+    this.anio = anio;
+    this.periodo_consulta = this.anio + this.mes;
+    // this.setPage({ offset: 0 });
+  }
+  public onMesChange(mes: any): void {
+    this.mes = mes;
+    this.periodo_consulta = this.anio + this.mes;
+    // this.setPage({ offset: 0 });
+  }
+
   tipoChange(event, tabla){
     console.log(751, event);
     const input = event;

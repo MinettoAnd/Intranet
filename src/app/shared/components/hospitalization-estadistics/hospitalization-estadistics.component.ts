@@ -728,6 +728,16 @@ selectedOptionGraph2 = 'ingresos_hospitalizacion';
     }
     
   }
+  public onAnioChange(anio: any): void {
+    this.anio = anio;
+    this.periodo_consulta = this.anio + this.mes;
+    // this.setPage({ offset: 0 });
+  }
+  public onMesChange(mes: any): void {
+    this.mes = mes;
+    this.periodo_consulta = this.anio + this.mes;
+    // this.setPage({ offset: 0 });
+  }
   tipoChangeGraph(event, graph){
 
     this.loading();

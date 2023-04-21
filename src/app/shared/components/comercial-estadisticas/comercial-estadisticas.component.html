@@ -36,7 +36,7 @@
                             formControlName="mes"
                             class="form-control"
                             /> -->
-                            <select formControlName="anio" class="form-control form-select" >
+                            <select formControlName="anio" class="form-control form-select" (change)="onAnioChange($event.target.value)">
                             <option
                                 *ngFor="let option of optionsAnio"
                                 [value]="option.value"
@@ -56,7 +56,7 @@
                                 formControlName="anio"
                                 class="form-control"
                                 /> -->
-                                <select formControlName="mes" class="form-control form-select">
+                                <select formControlName="mes" class="form-control form-select" (change)="onMesChange($event.target.value)">
                                 <option
                                     *ngFor="let option of optionsMes"
                                     [value]="option.value"
