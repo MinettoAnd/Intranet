@@ -393,16 +393,16 @@ export class IngresosEstadisticasComponent implements OnInit {
     // this.setPage({ offset: 0 });
 
   }
-  // public onAnioChange(anio: any): void {
-  //   this.anio = anio;
-  //   this.periodo = this.anio + this.mes;
-  //   // this.setPage({ offset: 0 });
-  // }
-  // public onMesChange(mes: any): void {
-  //   this.mes = mes;
-  //   this.periodo = this.anio + this.mes;
-  //   // this.setPage({ offset: 0 });
-  // }
+  public onAnioChange(anio: any): void {
+    this.anio = anio;
+    this.periodo = this.anio + this.mes;
+    // this.setPage({ offset: 0 });
+  }
+  public onMesChange(mes: any): void {
+    this.mes = mes;
+    this.periodo = this.anio + this.mes;
+    // this.setPage({ offset: 0 });
+  }
   private changePageLimit(limit: any): void {
     this.loading();
     if (limit === '0'){

@@ -138,11 +138,11 @@ export class JPRICComponent implements OnInit {
   periodo = this.anio + this.mes;
   convenio= '000000'
   selectedOptionTipo='TODAS'; 
+
   constructor(private tableApiservice: TesoreriaService, private exportService: ExportService, private _cnp:CustomNumberPipe,
     private _cp: CurrencyPipe, private _phone: PhonePipe, private _ndp:NumberDecimalPipe) {
     this.page.pageNumber = 0;
     this.page.size = 10;
-
     this.filtroForm = new FormGroup({
       anio: new FormControl(this.anio),
       mes: new FormControl(this.mes),
@@ -181,16 +181,16 @@ export class JPRICComponent implements OnInit {
     // this.setPage({ offset: 0 });
 
   }
-  // public onAnioChange(anio: any): void {
-  //   this.anio = anio;
-  //   this.periodo = this.anio + this.mes;
-  //   // this.setPage({ offset: 0 });
-  // }
-  // public onMesChange(mes: any): void {
-  //   this.mes = mes;
-  //   this.periodo = this.anio + this.mes;
-  //   // this.setPage({ offset: 0 });
-  // }
+  public onAnioChange(anio: any): void {
+    this.anio = anio;
+    this.periodo = this.anio + this.mes;
+    // this.setPage({ offset: 0 });
+  }
+  public onMesChange(mes: any): void {
+    this.mes = mes;
+    this.periodo = this.anio + this.mes;
+    // this.setPage({ offset: 0 });
+  }
   private changePageLimit(limit: any): void {
     this.loading();
     if (limit === '0'){
@@ -229,10 +229,10 @@ export class JPRICComponent implements OnInit {
           // this.columns = this.data.cabeceras_ingresos_TPac;
           // this.rows = this.data.tabla_ingresos_TPac;
           // // this.temp = this.rows;
-          // this.columns1 = this.data.cabeceras_ingresos_empresa;
-          // this.rows1 = this.data.tabla_ingresos_empresa;
-          // this.columns2 = this.data.cabeceras_ingresos_sede_anual;
-          // this.rows2 = this.data.tabla_ingresos_sede_anual;
+          this.columns1 = this.data.tabla_KPI_RESUMEN_soles.cabeceras;
+          this.rows1 = this.data.tabla_KPI_RESUMEN_soles.tabla;
+          this.columns2 = this.data.tabla_KPI_RESUMEN_SALUDPOL_soles.cabeceras;
+          this.rows2 = this.data.tabla_KPI_RESUMEN_SALUDPOL_soles.tabla;
 
           this.columns3 = this.data.tabla_cobranzas_periodo_emision_soles.cabeceras;
           this.rows3 = this.data.tabla_cobranzas_periodo_emision_soles.tabla;
@@ -240,18 +240,35 @@ export class JPRICComponent implements OnInit {
           this.rows4 = this.data.tabla_cobranzas_periodo_emision_cantidad.tabla;
           // this.rows4filtered = this.rows4.filter(item => item.sucursal === 'TODAS');
 
+          this.columns5 = this.data.tabla_cobranzas_empresa_mixto.cabeceras;
+          this.rows5 = this.data.tabla_cobranzas_empresa_mixto.tabla;
 
 
+          this.columns6 = this.data.tabla_expedientes_facturados_periodo_soles.cabeceras;
+          this.rows6 = this.data.tabla_expedientes_facturados_periodo_soles.tabla;
+          this.columns7 = this.data.tabla_expedientes_facturados_periodo_cantidad.cabeceras;
+          this.rows7 = this.data.tabla_expedientes_facturados_periodo_cantidad.tabla;
 
-          // this.columns6 = this.data.tabla_expedientes_facturados_periodo_soles.cabeceras;
-          // this.rows6 = this.data.tabla_expedientes_facturados_periodo_soles.tabla;
-          // this.columns7 = this.data.tabla_expedientes_facturados_periodo_cantidad.cabeceras;
-          // this.rows7 = this.data.tabla_expedientes_facturados_periodo_cantidad.tabla;
+          this.columns8 = this.data.tabla_expedientes_facturados_empresa_mixto.cabeceras;
+          this.rows8 = this.data.tabla_expedientes_facturados_empresa_mixto.tabla;
 
-          // this.columns9 = this.data.tabla_expedientes_pendientes_periodo_soles.cabeceras;
-          // this.rows9 = this.data.tabla_expedientes_pendientes_periodo_soles.tabla;
-          // this.columns10 = this.data.tabla_expedientes_pendientes_periodo_cantidad.cabeceras;
-          // this.rows10 = this.data.tabla_expedientes_pendientes_periodo_cantidad.tabla;
+          this.columns9 = this.data.tabla_expedientes_pendientes_periodo_soles.cabeceras;
+          this.rows9 = this.data.tabla_expedientes_pendientes_periodo_soles.tabla;
+          this.columns10 = this.data.tabla_expedientes_pendientes_periodo_cantidad.cabeceras;
+          this.rows10 = this.data.tabla_expedientes_pendientes_periodo_cantidad.tabla;
+
+          this.columns11 = this.data.tabla_expedientes_pendientes_empresa_mixto.cabeceras;
+          this.rows11 = this.data.tabla_expedientes_pendientes_empresa_mixto.tabla;
+
+          this.columns12 = this.data.tabla_expedientes_facturados_SP_periodo_soles.cabeceras;
+          this.rows12 = this.data.tabla_expedientes_facturados_SP_periodo_soles.tabla;
+          this.columns13 = this.data.tabla_expedientes_facturados_SP_periodo_cantidad.cabeceras;
+          this.rows13 = this.data.tabla_expedientes_facturados_SP_periodo_cantidad.tabla;
+
+          this.columns14 = this.data.tabla_expedientes_pendientes_SP_periodo_soles.cabeceras;
+          this.rows14 = this.data.tabla_expedientes_pendientes_SP_periodo_soles.tabla;
+          this.columns15 = this.data.tabla_expedientes_pendientes_SP_periodo_cantidad.cabeceras;
+          this.rows15 = this.data.tabla_expedientes_pendientes_SP_periodo_cantidad.tabla;
 
           this.columns16 = this.data.cabeceras_ingresos_TPac;
           this.rows16 = this.data.tabla_ingresos_TPac;
@@ -526,7 +543,7 @@ export class JPRICComponent implements OnInit {
 
           return count.toString().indexOf('-') > -1 ? count.toLocaleString().replace('-', '(').concat(')') : 'S/ ' + count.toLocaleString();
         }else{
-          console.log(515, cells);
+          // console.log(515, cells);
           return count.toString().indexOf('-') > -1 ? count.toLocaleString().replace('-', '(').concat(')') : 'S/ ' + count.toLocaleString();
         }
   }
