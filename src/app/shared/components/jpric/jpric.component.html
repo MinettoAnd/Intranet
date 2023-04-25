@@ -299,7 +299,7 @@
                                                 [summaryPosition]="summaryPosition"
                                                 [summaryHeight]="35"
                                                 >
-                                                <ngx-datatable-column [summaryFunc]="column.prop == 'Lima' || column.prop == 'Chorrillos' || column.prop == 'Surco' || column.prop == 'Total' ? summaryForAmount:summaryNull"
+                                                <ngx-datatable-column [headerClass]="column.headerClass" [cellClass]="column.cellClass" [summaryFunc]="column.prop == 'Lima' || column.prop == 'Chorrillos' || column.prop == 'Surco' || column.prop == 'Total' ? summaryForAmount:summaryNull"
                                                 [flexGrow]="1" [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns3; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                                     let-row="row">
@@ -367,7 +367,7 @@
                                                 [summaryPosition]="summaryPosition"
                                                 [summaryHeight]="35"
                                                 >
-                                                <ngx-datatable-column
+                                                <ngx-datatable-column [headerClass]="column.headerClass" [cellClass]="column.cellClass"
                                                 [flexGrow]="1" [summaryFunc]="column.prop == 'Lima' || column.prop == 'Chorrillos' || column.prop == 'Surco' || column.prop == 'Total' ? summaryForAmount2:summaryNull" [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns4; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                                     let-row="row">
@@ -545,7 +545,7 @@
                                                 [summaryPosition]="summaryPosition"
                                                 [summaryHeight]="35"
                                                 >
-                                                <ngx-datatable-column [summaryFunc]="column.prop == 'Lima' || column.prop == 'Chorrillos' || column.prop == 'Surco' || column.prop == 'Total' ? summaryForAmount:summaryNull"
+                                                <ngx-datatable-column [headerClass]="column.headerClass" [cellClass]="column.cellClass" [summaryFunc]="column.prop == 'Lima' || column.prop == 'Chorrillos' || column.prop == 'Surco' || column.prop == 'Total' ? summaryForAmount:summaryNull"
                                                 [flexGrow]="1" [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns6; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                                     let-row="row">
@@ -629,7 +629,7 @@
                                                 [summaryPosition]="summaryPosition"
                                                 [summaryHeight]="35"
                                                 >
-                                                <ngx-datatable-column [summaryFunc]="column.prop == 'Lima' || column.prop == 'Chorrillos' || column.prop == 'Surco' || column.prop == 'Total' ? summaryForAmount2:summaryNull"
+                                                <ngx-datatable-column [headerClass]="column.headerClass" [cellClass]="column.cellClass" [summaryFunc]="column.prop == 'Lima' || column.prop == 'Chorrillos' || column.prop == 'Surco' || column.prop == 'Total' ? summaryForAmount2:summaryNull"
                                                 [flexGrow]="1" [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns7; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                                     let-row="row">
@@ -767,13 +767,16 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <ngx-datatable #myTable9 class="bootstrap table table-striped " id="datatablele" [columns]="columns9" [rows]="rows9" [columnMode]="ColumnMode.flex" [headerHeight]="50" [rowHeight]="$any('auto')" [scrollbarH]="true" (page)="setPage($event)" [rowClass]="getRowClass1" [summaryRow]="enableSummary" [summaryPosition]="summaryPosition" [summaryHeight]="35">
-                                                    <ngx-datatable-column [summaryFunc]="column.prop == 'Lima' || column.prop == 'Chorrillos' || column.prop == 'Surco' || column.prop == 'Total' ? summaryForAmount:summaryNull" [flexGrow]="1" [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns9; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                                <ngx-datatable #myTable9 class="bootstrap table table-striped " id="datatablele" [columns]="columns9" [rows]="rows9" [columnMode]="ColumnMode.flex" [headerHeight]="50" [rowHeight]="$any('auto')" [scrollbarH]="true" (page)="setPage($event)" [rowClass]="getRowClass1" [summaryRow]="enableSummary" [summaryPosition]="summaryPosition" [summaryHeight]="35" [selected]="selected"
+                                                [selectionType]="SelectionType.single"
+                                                (select)='open($event)'>
+                                                    <ngx-datatable-column [headerClass]="column.headerClass" [cellClass]="column.cellClass" [summaryFunc]="column.prop == 'Lima' || column.prop == 'Chorrillos' || column.prop == 'Surco' || column.prop == 'Total' ? summaryForAmount:summaryNull" [flexGrow]="1" [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns9; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
                                                             <div>
                                                                 <!-- <span  [title]="value">{{value}}</span> -->
                                                                 <span *ngIf="column.prop == 'PeriodoTXT'">{{value}}</span>
-                                                                <span *ngIf="column.prop == 'Lima' || column.prop == 'Chorrillos' || column.prop == 'Surco' || column.prop == 'Total' ">{{value  | currency }}</span>
+                                                                <span *ngIf="column.prop == 'Lima' && value > 0 || column.prop == 'Chorrillos' && value > 0 || column.prop == 'Surco' && value > 0 || column.prop == 'Total' && value > 0 "><a href="javascript:;" (click)="open($event, column.prop)" style="color: #4B9FDE;">{{value  | currency }}</a></span>
+                                                                <span *ngIf="value == 0 ">{{value  | currency }}</span>
                                                             </div>
                                                             <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
                                     <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
@@ -787,6 +790,42 @@
                                     </ngx-datatable-column> -->
                                                     </ngx-datatable-column>
                                                 </ngx-datatable>
+                                                <ng-template #content let-modal>
+                                                    <div class="modal-header">
+                                                      <p class="modal-title" id="modal-basic-title"><b>MÉDICO:</b> {{Medico}} -  <b>CMP:</b> {{CMP}}</p>
+                                                      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                                                        <span aria-hidden="true">&times;</span>
+                                                      </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                      <ngx-datatable #myTable11
+                                                  class="bootstrap table table-striped"
+                                                  id="datatablele"
+                                                    [columns]="columnsPendientes"
+                                                    [loadingIndicator]="loading"
+                                                    [rows]="rowsPendientes"
+                                                    [columnMode]="ColumnMode.flex"
+                                                    [headerHeight]="50"
+                                                    [footerHeight]="50"
+                                                    [rowHeight]="$any('auto')"
+                                                    [scrollbarH]="true"
+                                                    [limit]="5"
+                                                    >
+                                                    <ngx-datatable-column [flexGrow]="1" [minWidth]="90" *ngFor="let column of columnsPendientes; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                                      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                                                        let-row="row">
+                                                        <div>
+                                                          <span  [title]="value">{{value}}</span>
+                                                        </div>
+                                                      </ng-template>
+                                                    </ngx-datatable-column>
+                                                  </ngx-datatable>
+                                                  
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cerrar</button>
+                                                    </div>
+                                                  </ng-template>
                                             </div>
                                         </div>
                                         <div class="col-md-6 card">
@@ -835,7 +874,7 @@
                                                     </div>
                                                 </div>
                                                 <ngx-datatable #myTable10 class="bootstrap table table-striped " id="datatablele" [columns]="columns10" [rows]="rows10" [columnMode]="ColumnMode.flex" [headerHeight]="50" [rowHeight]="$any('auto')" [scrollbarH]="true" (page)="setPage($event)" [rowClass]="getRowClass1" [summaryRow]="enableSummary" [summaryPosition]="summaryPosition" [summaryHeight]="35">
-                                                    <ngx-datatable-column [summaryFunc]="column.prop == 'Lima' || column.prop == 'Chorrillos' || column.prop == 'Surco' || column.prop == 'Total' ? summaryForAmount2:summaryNull" [flexGrow]="1" [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns10; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                                    <ngx-datatable-column [headerClass]="column.headerClass" [cellClass]="column.cellClass" [summaryFunc]="column.prop == 'Lima' || column.prop == 'Chorrillos' || column.prop == 'Surco' || column.prop == 'Total' ? summaryForAmount2:summaryNull" [flexGrow]="1" [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns10; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
                                                             <div>
                                                               <span *ngIf="column.prop == 'PeriodoTXT'">{{value}}</span>
@@ -977,7 +1016,7 @@
                                                           </ul>
                                                       </div>
                                                       <ngx-datatable #myTable12 class="bootstrap table table-striped " id="datatablele" [columns]="columns12" [rows]="rows12" [columnMode]="ColumnMode.flex" [headerHeight]="50" [rowHeight]="$any('auto')" [scrollbarH]="true" (page)="setPage($event)" [summaryRow]="enableSummary" [summaryPosition]="summaryPosition" [summaryHeight]="35">
-                                                          <ngx-datatable-column [summaryFunc]="column.prop == 'Lima' || column.prop == 'Chorrillos' || column.prop == 'Surco' || column.prop == 'Total' ? summaryForAmount:summaryNull" [flexGrow]="1" [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns12; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                                          <ngx-datatable-column [headerClass]="column.headerClass" [cellClass]="column.cellClass" [summaryFunc]="column.prop == 'Lima' || column.prop == 'Chorrillos' || column.prop == 'Surco' || column.prop == 'Total' ? summaryForAmount:summaryNull" [flexGrow]="1" [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns12; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                               <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
                                                                   <div>
                                                                     <span *ngIf="column.prop == 'PeriodoTXT'">{{value}}</span>
@@ -1029,7 +1068,7 @@
                                                           </ul>
                                                       </div>
                                                       <ngx-datatable #myTable13 class="bootstrap table table-striped " id="datatablele" [columns]="columns13" [rows]="rows13" [columnMode]="ColumnMode.flex" [headerHeight]="50" [rowHeight]="$any('auto')" [scrollbarH]="true" (page)="setPage($event)" [summaryRow]="enableSummary" [summaryPosition]="summaryPosition" [summaryHeight]="35">
-                                                          <ngx-datatable-column [summaryFunc]="column.prop == 'Lima' || column.prop == 'Chorrillos' || column.prop == 'Surco' || column.prop == 'Total' ? summaryForAmount2:summaryNull" [flexGrow]="1" [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns13; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                                          <ngx-datatable-column [headerClass]="column.headerClass" [cellClass]="column.cellClass" [summaryFunc]="column.prop == 'Lima' || column.prop == 'Chorrillos' || column.prop == 'Surco' || column.prop == 'Total' ? summaryForAmount2:summaryNull" [flexGrow]="1" [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns13; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                               <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
                                                                   <div>
                                                                     <span *ngIf="column.prop == 'PeriodoTXT'">{{value}}</span>
@@ -1083,7 +1122,7 @@
                                                           </ul>
                                                       </div>
                                                       <ngx-datatable #myTable14 class="bootstrap table table-striped " id="datatablele" [columns]="columns14" [rows]="rows14" [columnMode]="ColumnMode.flex" [headerHeight]="50" [rowHeight]="$any('auto')" [scrollbarH]="true" (page)="setPage($event)" [summaryRow]="enableSummary" [summaryPosition]="summaryPosition" [summaryHeight]="35">
-                                                          <ngx-datatable-column [summaryFunc]="column.prop == 'Lima' || column.prop == 'Chorrillos' || column.prop == 'Surco' || column.prop == 'Total' ? summaryForAmount:summaryNull" [flexGrow]="1" [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns14; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                                          <ngx-datatable-column [headerClass]="column.headerClass" [cellClass]="column.cellClass" [summaryFunc]="column.prop == 'Lima' || column.prop == 'Chorrillos' || column.prop == 'Surco' || column.prop == 'Total' ? summaryForAmount:summaryNull" [flexGrow]="1" [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns14; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                               <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
                                                                   <div>
                                                                     <span *ngIf="column.prop == 'PeriodoTXT'">{{value}}</span>
@@ -1135,7 +1174,7 @@
                                                           </ul>
                                                       </div>
                                                       <ngx-datatable #myTable15 class="bootstrap table table-striped " id="datatablele" [columns]="columns15" [rows]="rows15" [columnMode]="ColumnMode.flex" [headerHeight]="50" [rowHeight]="$any('auto')" [scrollbarH]="true" (page)="setPage($event)" [summaryRow]="enableSummary" [summaryPosition]="summaryPosition" [summaryHeight]="35">
-                                                          <ngx-datatable-column [summaryFunc]="column.prop == 'Lima' || column.prop == 'Chorrillos' || column.prop == 'Surco' || column.prop == 'Total' ? summaryForAmount2:summaryNull" [flexGrow]="1" [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns15; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                                          <ngx-datatable-column [headerClass]="column.headerClass" [cellClass]="column.cellClass" [summaryFunc]="column.prop == 'Lima' || column.prop == 'Chorrillos' || column.prop == 'Surco' || column.prop == 'Total' ? summaryForAmount2:summaryNull" [flexGrow]="1" [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns15; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                               <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
                                                                   <div>
                                                                     <span *ngIf="column.prop == 'PeriodoTXT'">{{value}}</span>
@@ -1211,7 +1250,7 @@
                                                     </ul>
                                                 </div>
                                                 <ngx-datatable #myTable16 class="bootstrap table table-striped " id="datatablele" [columns]="columns16" [rows]="rows16" [columnMode]="ColumnMode.flex" [headerHeight]="50" [rowHeight]="$any('auto')" [scrollbarH]="true" (page)="setPage($event)" [rowClass]="getRowClass">
-                                                    <ngx-datatable-column [flexGrow]="1" [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns16; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                                    <ngx-datatable-column [headerClass]="column.headerClass" [cellClass]="column.cellClass" [flexGrow]="1" [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns16; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
                                                             <div>
                                                               <span [ngClass]="{'row-paddin': row.tipoPacienteNombre.includes('Tarjeta') || row.tipoPacienteNombre.includes('Contado') || row.tipoPacienteNombre.includes('Credito') || row.tipoPacienteNombre.includes('EPS') || row.tipoPacienteNombre.includes('SCTR') || row.tipoPacienteNombre.includes('Seguros') || row.tipoPacienteNombre.includes('SOAT') || row.tipoPacienteNombre.includes('CAMPAÑA') || row.tipoPacienteNombre.includes('Institucional') || row.tipoPacienteNombre.includes('Madre Niño') || row.tipoPacienteNombre.includes('No Registrado') || row.tipoPacienteNombre.includes('Privado') }" *ngIf="column.prop == 'tipoPacienteNombre'">{{value}}</span>

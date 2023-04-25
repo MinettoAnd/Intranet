@@ -72,5 +72,9 @@ export class TesoreriaService {
     this.loadTableApiDataURL = `${environment.api_url}GpricGetResumen`;
     return this.http.post(this.loadTableApiDataURL, data);
   }
+  GpricGetExpedientesPendiemtesResumen(data): Observable<any> {
+    this.loadTableApiDataURL = `${environment.api_url}GpricGetExpedientesPendiemtesResumen`;
+    return this.http.post(this.loadTableApiDataURL, data);
+  }
 }
 

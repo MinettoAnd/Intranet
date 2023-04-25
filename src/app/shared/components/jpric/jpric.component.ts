@@ -7,7 +7,7 @@ import {AttentionConsultation} from '../../../interfaces/attentionConsultation';
 import {ApiResponse} from '../../../interfaces/response';
 import * as moment from 'moment';
 import { Page } from '../../../models/forms-data/page';
-import { ColumnMode, NgxDatatableModule, DatatableComponent  } from '@swimlane/ngx-datatable';
+import { ColumnMode, SelectionType, NgxDatatableModule, DatatableComponent  } from '@swimlane/ngx-datatable';
 import * as XLSX from 'xlsx';
 import { ExcelJson } from '../../../interfaces/excel-json.interface';
 import { ExportService } from '../../../_services/export.service';
@@ -19,6 +19,7 @@ import { TesoreriaService } from 'src/app/_services/tesoreria.service';
 import { NumberDecimalPipe } from 'src/app/pipes/numberDecimal.pipe';
 import * as Chart from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-jpric',
@@ -39,7 +40,7 @@ export class JPRICComponent implements OnInit {
   @ViewChild(PerfectScrollbarDirective, { static: true }) directiveRef?: PerfectScrollbarDirective;
 
   @ViewChild(DatatableComponent) private table: DatatableComponent;
-
+  closeResult = '';
   options = {
     close: true,
     expand: true,
@@ -88,7 +89,8 @@ export class JPRICComponent implements OnInit {
   rows14 = [];
   rows15: any;
   rows16 = [];
-
+  columnsPendientes: any[];
+  rowsPendientes: any[];
   editing = {};
   row: any;
   public breadcrumb: any;
@@ -139,8 +141,10 @@ export class JPRICComponent implements OnInit {
   convenio= '000000'
   selectedOptionTipo='TODAS'; 
 
+  SelectionType = SelectionType;
+  id_sede: any;
   constructor(private tableApiservice: TesoreriaService, private exportService: ExportService, private _cnp:CustomNumberPipe,
-    private _cp: CurrencyPipe, private _phone: PhonePipe, private _ndp:NumberDecimalPipe) {
+    private _cp: CurrencyPipe, private _phone: PhonePipe, private _ndp:NumberDecimalPipe, private modalService: NgbModal) {
     this.page.pageNumber = 0;
     this.page.size = 10;
     this.filtroForm = new FormGroup({
@@ -174,7 +178,12 @@ export class JPRICComponent implements OnInit {
     //   'totals': row.periodo.includes('TOTAL')
     // };
   }
-
+  // getCellClass({ row, column, value }): any {
+  //   console.log(178, column);
+  //   return {
+  //     'text-rigth': column.prop !== 'PeriodoTXT'
+  //   };
+  // }
 
   public onLimitChange(limit: any): void {
     this.changePageLimit(limit);
@@ -220,7 +229,7 @@ export class JPRICComponent implements OnInit {
     this.tableApiservice.GpricGetResumen(this.parameters).subscribe(
       (response) => {
         this.rows = [];
-        console.log(response);
+        
         if(response.data.success){
           this.data = response.data ? response.data : [];
           this.message = this.data.titulo;
@@ -231,42 +240,74 @@ export class JPRICComponent implements OnInit {
           // // this.temp = this.rows;
           this.columns1 = this.data.tabla_KPI_RESUMEN_soles.cabeceras;
           this.rows1 = this.data.tabla_KPI_RESUMEN_soles.tabla;
+          this.rows1.map(item => {
+            item.monto_lima = this._cp.transform(item.monto_lima);
+            item.monto_chorrillos = this._cp.transform(item.monto_chorrillos)
+            item.monto_surco = this._cp.transform(item.monto_surco)
+            item.monto_total = this._cp.transform(item.monto_total)
+          });
           this.columns2 = this.data.tabla_KPI_RESUMEN_SALUDPOL_soles.cabeceras;
           this.rows2 = this.data.tabla_KPI_RESUMEN_SALUDPOL_soles.tabla;
-
+          this.rows2.map(item => {
+            item.monto_lima = this._cp.transform(item.monto_lima);
+            item.monto_chorrillos = this._cp.transform(item.monto_chorrillos)
+            item.monto_surco = this._cp.transform(item.monto_surco)
+            item.monto_total = this._cp.transform(item.monto_total)
+          });
           this.columns3 = this.data.tabla_cobranzas_periodo_emision_soles.cabeceras;
           this.rows3 = this.data.tabla_cobranzas_periodo_emision_soles.tabla;
+
           this.columns4 = this.data.tabla_cobranzas_periodo_emision_cantidad.cabeceras;
           this.rows4 = this.data.tabla_cobranzas_periodo_emision_cantidad.tabla;
+
           // this.rows4filtered = this.rows4.filter(item => item.sucursal === 'TODAS');
 
           this.columns5 = this.data.tabla_cobranzas_empresa_mixto.cabeceras;
           this.rows5 = this.data.tabla_cobranzas_empresa_mixto.tabla;
-
+          this.rows5.map(item => {
+            item.monto_lima = this._cp.transform(item.monto_lima);
+            item.monto_chorrillos = this._cp.transform(item.monto_chorrillos)
+            item.monto_surco = this._cp.transform(item.monto_surco)
+            item.monto_total = this._cp.transform(item.monto_total)
+          });
 
           this.columns6 = this.data.tabla_expedientes_facturados_periodo_soles.cabeceras;
           this.rows6 = this.data.tabla_expedientes_facturados_periodo_soles.tabla;
+
           this.columns7 = this.data.tabla_expedientes_facturados_periodo_cantidad.cabeceras;
           this.rows7 = this.data.tabla_expedientes_facturados_periodo_cantidad.tabla;
 
           this.columns8 = this.data.tabla_expedientes_facturados_empresa_mixto.cabeceras;
           this.rows8 = this.data.tabla_expedientes_facturados_empresa_mixto.tabla;
-
+          this.rows8.map(item => {
+            item.monto_lima = this._cp.transform(item.monto_lima);
+            item.monto_chorrillos = this._cp.transform(item.monto_chorrillos)
+            item.monto_surco = this._cp.transform(item.monto_surco)
+            item.monto_total = this._cp.transform(item.monto_total)
+          });
           this.columns9 = this.data.tabla_expedientes_pendientes_periodo_soles.cabeceras;
           this.rows9 = this.data.tabla_expedientes_pendientes_periodo_soles.tabla;
+          console.log(223, this.columns9);
           this.columns10 = this.data.tabla_expedientes_pendientes_periodo_cantidad.cabeceras;
           this.rows10 = this.data.tabla_expedientes_pendientes_periodo_cantidad.tabla;
 
           this.columns11 = this.data.tabla_expedientes_pendientes_empresa_mixto.cabeceras;
           this.rows11 = this.data.tabla_expedientes_pendientes_empresa_mixto.tabla;
-
+          this.rows11.map(item => {
+            item.monto_lima = this._cp.transform(item.monto_lima);
+            item.monto_chorrillos = this._cp.transform(item.monto_chorrillos)
+            item.monto_surco = this._cp.transform(item.monto_surco)
+            item.monto_total = this._cp.transform(item.monto_total)
+          });
           this.columns12 = this.data.tabla_expedientes_facturados_SP_periodo_soles.cabeceras;
           this.rows12 = this.data.tabla_expedientes_facturados_SP_periodo_soles.tabla;
+
           this.columns13 = this.data.tabla_expedientes_facturados_SP_periodo_cantidad.cabeceras;
           this.rows13 = this.data.tabla_expedientes_facturados_SP_periodo_cantidad.tabla;
 
           this.columns14 = this.data.tabla_expedientes_pendientes_SP_periodo_soles.cabeceras;
           this.rows14 = this.data.tabla_expedientes_pendientes_SP_periodo_soles.tabla;
+
           this.columns15 = this.data.tabla_expedientes_pendientes_SP_periodo_cantidad.cabeceras;
           this.rows15 = this.data.tabla_expedientes_pendientes_SP_periodo_cantidad.tabla;
 
@@ -510,6 +551,53 @@ export class JPRICComponent implements OnInit {
   onSelect({ selected }) {
     this.selected.splice(0, this.selected.length);
     this.selected.push(...selected);
+  }
+  open({ selected }, content?: any){
+      if (content === 'Lima'){
+        this.id_sede = '0001'
+      }else if (content === 'Chorrillos'){
+        this.id_sede = '0002'
+      }else if (content === 'Surco'){
+        this.id_sede = '0004'
+      }else if (content === 'Total'){
+        this.id_sede = '0000'
+      }
+    if (selected !== undefined){
+      // this.CMP = selected[0].CMP;
+      // this.Medico = selected[0].MEDICO;
+       console.log(1141, content);
+       const parameters = {
+        campo:' SS_SG_Expediente.Periodo',
+        idCampo: this.periodo,
+        estado: 'PENDIENTE',
+        sede: this.id_sede,
+      }
+       this.tableApiservice.GpricGetExpedientesPendiemtesResumen(parameters).subscribe(
+        (response) =>{ console.log(1155, response);
+          this.columnsPendientes = response.data.cabeceras;
+          this.rowsPendientes = response.data.tabla_medico_record;
+          this.rowsPendientes.map(item=>{
+            console.log(item);
+          })
+      });
+      
+    }else{
+      this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+        console.log(content);
+        this.closeResult = `Closed with: ${result}`;
+      }, (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      });
+    }
+  }
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
   }
   summaryForAmount(cells: any){
     // console.log(cells);
