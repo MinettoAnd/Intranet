@@ -120,7 +120,8 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { AltaHospitalariaComponent } from './modals/hospitalization/alta-hospitalaria/alta-hospitalaria.component';
 import { PagosAppMovilComponent } from './modals/tesoreria/pagos-app-movil/pagos-app-movil.component';
-
+import { LinkRendererComponent } from './shared/components/renderer/link-renderer.component';
+import { RowDetalleComponent } from './modals/jpric/row-detalle/row-detalle.component';
 registerLocaleData(localePe);
 // import { CuotasProgramasSaludComponent } from './pages/comercial/ventas/cuotas-programas-salud/cuotas-programas-salud.component';
 // import { BsDatepickerModule, BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
@@ -204,7 +205,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ContactoComponent,
     MorososContactadosComponent,
     AltaHospitalariaComponent,
-
+    LinkRendererComponent,
+    RowDetalleComponent
   ],
   imports: [
     BrowserModule,
@@ -261,7 +263,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     PhonePipe,
   ],
   bootstrap: [AppComponent],
-  schemas: [ ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 
 export class AppModule {
