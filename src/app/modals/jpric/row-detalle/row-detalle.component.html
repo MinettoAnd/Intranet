@@ -1,6 +1,6 @@
 <div class="modal-content">
     <div class="modal-header">
-            <h4 class="modal-title">{{dato.paciente}}</h4>
+            <h5 class="modal-title">Pendientes de : {{dato.nombre}} - ({{dato.sucursal}})</h5>
             <button
               type="button"
               class="close"
@@ -10,6 +10,51 @@
               <span aria-hidden="true">&times;</span>
             </button>
     </div>
+    
+    <div class="row" style='display:flex; justify-content: space-between;'>
+      <div class="col-md-2" style='margin-left:15px;'>
+          <select class="form-control form-select" (change)="onLimitChange($event.target.value)">
+              <option
+                  *ngFor="let option of pageLimitOptions"
+                  [value]="option.value"
+              >
+                  {{ option.value }} Registros
+              </option>
+          </select>
+      </div>
+      <div class="col-md-2" style="display:flex;margin-right:15px;align-items: center;">
+        <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard()">
+          <i class="fa fa-external-link"></i>
+          Copiar tabla
+        </button>
+      </div>
+      <div class="col-md-2" style="display:flex;margin-right:15px;align-items: center;">
+        <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel()">
+          <i class="fa fa-external-link"></i>
+          Exportar tabla a Excel
+        </button>
+      </div>
+      <div class="col-md-2" style="display:flex;margin-right:15px;align-items: center;">
+          <!-- <span>Buscar</span>&nbsp;&nbsp; -->
+          <input type="text" style='padding:6px;width:100%;' placeholder="Buscar por cualquier campo" (keyup)='updateFilter($event)'>
+      </div>
+    </div>
+    <!-- <div class="row" style="align-items: center;justify-content: space-between;">
+      <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
+          <li class="list-group-item border-0 pl-0">
+              <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard()">
+                  <i class="fa fa-external-link"></i>
+                  Copiar tabla
+              </button>
+          </li>
+          <li class="list-group-item border-0 pl-0">
+              <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel()">
+                  <i class="fa fa-external-link"></i>
+                  Exportar tabla a Excel
+              </button>
+          </li>
+      </ul>
+    </div> -->
     <div class="modal-body" id="modal-window-alert-body">
         <ngx-datatable #myTablePendientes
         class="bootstrap table table-striped"
@@ -22,7 +67,7 @@
           [footerHeight]="50"
           [rowHeight]="$any('auto')"
           [scrollbarH]="true"
-          [limit]="10"
+          [limit]="page.size"
           >
         <ngx-datatable-column [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
           <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"

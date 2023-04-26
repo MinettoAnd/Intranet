@@ -7,9 +7,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {SharedModule} from '../../shared/shared.module';
 import { AgGridModule } from 'ag-grid-angular';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { JpricComponent } from './jpric/jpric.component';
 @NgModule({
   declarations: [
-    ResumenGerencialComponent,    
+    ResumenGerencialComponent,
+    JpricComponent,    
     // EmergenciesEstadisticsComponent,
     // HospitalizationEstadisticsComponent,
     // ExternalConsultationEstadisticsComponent,
@@ -25,6 +27,10 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
       {
         path: 'resumen-gerencial',
         component: ResumenGerencialComponent
+      },
+      {
+        path: 'jpric',
+        component: JpricComponent
       },
     ])
   ],
