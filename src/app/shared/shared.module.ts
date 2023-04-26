@@ -12,6 +12,7 @@ import { HospitalizationEstadisticsComponent } from './components/hospitalizatio
 import { AgGridModule } from 'ag-grid-angular';
 import { IngresosEstadisticasComponent } from './components/ingresos-estadisticas/ingresos-estadisticas.component';
 import { JPRICComponent } from './components/jpric/jpric.component';
+import { LinkRendererComponent } from './components/renderer/link-renderer.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,7 @@ import { JPRICComponent } from './components/jpric/jpric.component';
     JPRICComponent
   ],
   imports: [
-    AgGridModule.withComponents([]),
+    AgGridModule.withComponents([LinkRendererComponent]),
     FormsModule, ReactiveFormsModule,
     CommonModule,
     NgxDatatableModule,

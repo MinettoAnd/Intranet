@@ -16,7 +16,7 @@ import { CurrencyPipe, DatePipe } from '@angular/common';
 import { CustomNumberPipe } from 'src/app/pipes/customNumber.pipe';
 import { PhonePipe } from 'src/app/pipes/phone.pipe';
 import { HospitalizationService } from 'src/app/_services/hospitalization.service';
-import { ButtonRendererComponent } from './../../../shared/components/renderer/button-renderer.component';
+import { ButtonRendererComponent } from '../../../shared/components/renderer/button-renderer.component';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AltaHospitalariaComponent } from 'src/app/modals/hospitalization/alta-hospitalaria/alta-hospitalaria.component';
 @Component({

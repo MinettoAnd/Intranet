@@ -20,6 +20,8 @@ import { NumberDecimalPipe } from 'src/app/pipes/numberDecimal.pipe';
 import * as Chart from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { LinkRendererComponent } from '../renderer/link-renderer.component';
+import { RowDetalleComponent } from 'src/app/modals/jpric/row-detalle/row-detalle.component';
 
 @Component({
   selector: 'app-jpric',
@@ -103,7 +105,7 @@ export class JPRICComponent implements OnInit {
         // f_inicio: '2022-11-01',
       // f_fin: '2022-11-30',
   fecha = moment(new Date()).format('YYYY-MM-DD');
-  sede = '0001';
+  sede = '';
   estado = 'T';
   tipo_lista = 'E';
 
@@ -140,7 +142,7 @@ export class JPRICComponent implements OnInit {
   periodo = this.anio + this.mes;
   convenio= '000000'
   selectedOptionTipo='TODAS'; 
-
+  frameworkComponents: any;
   SelectionType = SelectionType;
   id_sede: any;
   constructor(private tableApiservice: TesoreriaService, private exportService: ExportService, private _cnp:CustomNumberPipe,
@@ -152,6 +154,9 @@ export class JPRICComponent implements OnInit {
       mes: new FormControl(this.mes),
       convenio: new FormControl(this.convenio),
   });
+  this.frameworkComponents = {
+    buttonRenderer: LinkRendererComponent,
+  }
   var anioOp = Number(this.anio);
   while ( Number(anioOp) > 2017 ) {
     console.log(275, anioOp);
@@ -184,12 +189,6 @@ export class JPRICComponent implements OnInit {
   //     'text-rigth': column.prop !== 'PeriodoTXT'
   //   };
   // }
-
-  public onLimitChange(limit: any): void {
-    this.changePageLimit(limit);
-    // this.setPage({ offset: 0 });
-
-  }
   public onAnioChange(anio: any): void {
     this.anio = anio;
     this.periodo = this.anio + this.mes;
@@ -200,6 +199,12 @@ export class JPRICComponent implements OnInit {
     this.periodo = this.anio + this.mes;
     // this.setPage({ offset: 0 });
   }
+  public onLimitChange(limit: any): void {
+    this.changePageLimit(limit);
+    this.setPage({ offset: 0 });
+
+  }
+
   private changePageLimit(limit: any): void {
     this.loading();
     if (limit === '0'){
@@ -292,6 +297,26 @@ export class JPRICComponent implements OnInit {
           this.rows10 = this.data.tabla_expedientes_pendientes_periodo_cantidad.tabla;
 
           this.columns11 = this.data.tabla_expedientes_pendientes_empresa_mixto.cabeceras;
+          this.columns11.map(item => {
+            console.log(301, item)
+            if(item.children){
+              item.children.map(subitem =>{
+                
+                subitem.cellRenderer= 'buttonRenderer',
+                subitem.cellRendererParams=  {
+                  
+                  onClick: this.openClicked.bind(this),
+                  sucursal: item.headerName
+                }
+             })
+            }
+            //   item.cellRenderer = (params) => {
+            //     let keyData = params.data.key;
+            //     let newLink = `<a href= https://ag-grid.com/${keyData}-getting-started target="_blank">${keyData}</a>`;
+            //     return newLink;
+            // }
+          })
+          console.log(303, this.columns11)
           this.rows11 = this.data.tabla_expedientes_pendientes_empresa_mixto.tabla;
           this.rows11.map(item => {
             item.monto_lima = this._cp.transform(item.monto_lima);
@@ -325,7 +350,43 @@ export class JPRICComponent implements OnInit {
       }
     );
   }
+  openClicked(e) {    
+    if ( e.rowData !== undefined){
+       const parameters = {
+        campo:'SS_SG_Expediente.IdAseguradora',
+        idCampo: e.rowData.id_aseguradora,
+        estado: 'PENDIENTE',
+        sede: e.sede,
+      }
+      console.log(361, parameters)
+        this.loading();
+        this.tableApiservice.GpricGetExpedientesPendiemtesDetalle(parameters).subscribe(
+          (response) =>{ console.log(1155, response);
+            this.data = response.data;
+            // this.columnsPendientes = response.data.cabeceras;
+            // this.rowsPendientes = response.data.tabla_expediente_detalle;
+            // this.sede = this.rowsPendientes[0].sucursalNombre;
+            // this.rowsPendientes.map(item=>{
+            
+            // })
+            // console.log(584, this.rowsPendientes);
+            const  modalRef =  this.modalService.open(RowDetalleComponent, {
+              size: <any>"lg",
+            });
+            // console.log( 139, e)
+            modalRef.componentInstance.dato = response.data;
+            Swal.close();
+        });
+        // this.modalService.open(this.rowsPendientes, {size: <any>"xl", ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+        
+        //   console.log(this.rowsPendientes);
+        //   this.closeResult = `Closed with: ${result}`;
+        // }, (reason) => {
+        //   this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        // });
 
+    }
+  }
   copyTableToClipboard(numberTabla){
     if(numberTabla === 0){
       this.rows.map(item=>{
@@ -552,37 +613,42 @@ export class JPRICComponent implements OnInit {
     this.selected.splice(0, this.selected.length);
     this.selected.push(...selected);
   }
-  open({ selected }, content?: any){
-      if (content === 'Lima'){
-        this.id_sede = '0001'
-      }else if (content === 'Chorrillos'){
-        this.id_sede = '0002'
-      }else if (content === 'Surco'){
-        this.id_sede = '0004'
-      }else if (content === 'Total'){
-        this.id_sede = '0000'
+ open({ selected }, sucursal, content?: any){
+     console.log(' hola object')
+      if (sucursal === 'Lima'){
+        this.id_sede = '0001';
+      }else if (sucursal === 'Chorrillos'){
+        this.id_sede = '0002';
+      }else if (sucursal === 'Surco'){
+        this.id_sede = '0004';
+      }else if (sucursal === 'Total'){
+        this.id_sede = '0000';
       }
     if (selected !== undefined){
-      // this.CMP = selected[0].CMP;
-      // this.Medico = selected[0].MEDICO;
+      // this.sede = sucursal;
        console.log(1141, content);
        const parameters = {
-        campo:' SS_SG_Expediente.Periodo',
+        campo:'SS_SG_Expediente.Periodo',
         idCampo: this.periodo,
         estado: 'PENDIENTE',
         sede: this.id_sede,
       }
-       this.tableApiservice.GpricGetExpedientesPendiemtesResumen(parameters).subscribe(
+      this.loading();
+       this.tableApiservice.GpricGetExpedientesPendiemtesDetalle(parameters).subscribe(
         (response) =>{ console.log(1155, response);
           this.columnsPendientes = response.data.cabeceras;
-          this.rowsPendientes = response.data.tabla_medico_record;
+          this.rowsPendientes = response.data.tabla_expediente_detalle;
+          this.sede = this.rowsPendientes[0].sucursalNombre;
           this.rowsPendientes.map(item=>{
-            console.log(item);
+           
           })
+          console.log(584, this.rowsPendientes);
+          Swal.close();
       });
       
     }else{
-      this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.modalService.open(content, {size: <any>"xl", ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+        
         console.log(content);
         this.closeResult = `Closed with: ${result}`;
       }, (reason) => {
@@ -667,7 +733,7 @@ export class JPRICComponent implements OnInit {
 
           return count.toString().indexOf('-') > -1 ? count.toLocaleString().replace('-', '(').concat(')') : 'S/ ' + count.toLocaleString();
         }else{
-          console.log(515, cells);
+          // console.log(515, cells);
           return count.toString().indexOf('-') > -1 ? count.toLocaleString().replace('-', '(').concat(')') : count.toLocaleString();
         }
   }

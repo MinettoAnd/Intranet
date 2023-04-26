@@ -16,7 +16,7 @@ import { CurrencyPipe, DatePipe } from '@angular/common';
 import { CustomNumberPipe } from 'src/app/pipes/customNumber.pipe';
 import { PhonePipe } from 'src/app/pipes/phone.pipe';
 
-import { ButtonRendererComponent } from './../../../shared/components/renderer/button-renderer.component';
+import { ButtonRendererComponent } from '../../../shared/components/renderer/button-renderer.component';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PagosAppMovilComponent } from 'src/app/modals/tesoreria/pagos-app-movil/pagos-app-movil.component';
 import * as Chart from 'chart.js';

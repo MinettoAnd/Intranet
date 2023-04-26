@@ -775,7 +775,7 @@
                                                             <div>
                                                                 <!-- <span  [title]="value">{{value}}</span> -->
                                                                 <span *ngIf="column.prop == 'PeriodoTXT'">{{value}}</span>
-                                                                <span *ngIf="column.prop == 'Lima' && value > 0 || column.prop == 'Chorrillos' && value > 0 || column.prop == 'Surco' && value > 0 || column.prop == 'Total' && value > 0 "><a href="javascript:;" (click)="open($event, column.prop)" style="color: #4B9FDE;">{{value  | currency }}</a></span>
+                                                                <span *ngIf="column.prop == 'Lima' && value > 0 || column.prop == 'Chorrillos' && value > 0 || column.prop == 'Surco' && value > 0 || column.prop == 'Total' && value > 0 "><a href="javascript:;" (click)="open($event, column.prop, content)" style="color: #4B9FDE;">{{value  | currency }}</a></span>
                                                                 <span *ngIf="value == 0 ">{{value  | currency }}</span>
                                                             </div>
                                                             <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
@@ -792,13 +792,30 @@
                                                 </ngx-datatable>
                                                 <ng-template #content let-modal>
                                                     <div class="modal-header">
-                                                      <p class="modal-title" id="modal-basic-title"><b>MÉDICO:</b> {{Medico}} -  <b>CMP:</b> {{CMP}}</p>
+                                                      <p class="modal-title" id="modal-basic-title"><b>Pendientes de :</b> {{periodo}} - ({{sede}})</p>
                                                       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
                                                         <span aria-hidden="true">&times;</span>
                                                       </button>
                                                     </div>
+                                                    <div class="row" style='display:flex; justify-content: space-between;'>
+                                                        <div class="col-md-2" style='margin-left:15px;'>
+                                                            <select class="form-control form-select" (change)="onLimitChange($event.target.value, '1')">
+                                                                <option
+                                                                    *ngFor="let option of pageLimitOptions"
+                                                                    [value]="option.value"
+                                                                >
+                                                                    {{ option.value }} Registros
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-2" style="display:flex;margin-right:15px;align-items: center;">
+                                                            <span>Buscar</span>&nbsp;&nbsp;
+                                                            <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter($event, selectedOptionTipo)'>
+                                                        </div>
+                                                    </div>
+                                                    
                                                     <div class="modal-body">
-                                                      <ngx-datatable #myTable11
+                                                      <ngx-datatable #myTablePendientes
                                                   class="bootstrap table table-striped"
                                                   id="datatablele"
                                                     [columns]="columnsPendientes"
@@ -809,7 +826,7 @@
                                                     [footerHeight]="50"
                                                     [rowHeight]="$any('auto')"
                                                     [scrollbarH]="true"
-                                                    [limit]="5"
+                                                    [limit]="page.size"
                                                     >
                                                     <ngx-datatable-column [flexGrow]="1" [minWidth]="90" *ngFor="let column of columnsPendientes; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
