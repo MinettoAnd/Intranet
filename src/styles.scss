@@ -223,6 +223,10 @@
     .closed-sidebar .app-main__outer {
         padding-top: 0px!important;
     }
+    ngx-datatable{
+        margin-left:0.7%!important;
+        width:98.5%!important;
+     }
 }
 @media screen and ( max-height: 719px ){
     .closed-sidebar .app-main__outer {
@@ -368,3 +372,6 @@
 .text-rigth {
     text-align: right!important;
  }
+ datatable-summary-row .datatable-body-cell:first-child{
+    text-align: center!important;
+}
