@@ -22,10 +22,12 @@ import { SetiIpressComponent } from './seti-ipress/seti-ipress.component';
     RouterModule.forChild([
       {
         path: 'seti-ipress',
-        component: SetiIpressComponent
+        component: SetiIpressComponent,
+        pathMatch: 'full'
       },
     ])
   ],
+  // providers: [RedirectGuard],
   exports: [RouterModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

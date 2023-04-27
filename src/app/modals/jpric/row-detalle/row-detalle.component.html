@@ -1,0 +1,99 @@
+<div class="modal-content">
+    <div class="modal-header">
+            <h4 class="modal-title">{{dato.paciente}}</h4>
+            <button
+              type="button"
+              class="close"
+              aria-label="Close"
+              (click)="activeModal.dismiss('Cross click')"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+    </div>
+    <div class="modal-body" id="modal-window-alert-body">
+        <ngx-datatable #myTablePendientes
+        class="bootstrap table table-striped"
+        id="datatablele"
+          [columns]="columns"
+          [loadingIndicator]="loading"
+          [rows]="rows"
+          [columnMode]="ColumnMode.flex"
+          [headerHeight]="50"
+          [footerHeight]="50"
+          [rowHeight]="$any('auto')"
+          [scrollbarH]="true"
+          [limit]="10"
+          >
+        <ngx-datatable-column [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+            let-row="row">
+            <div>
+              <span  [title]="value">{{value}}</span>
+            </div>
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
+    </div>
+    <div class="modal-footer">
+        <button
+        type="button"
+        class="btn btn-outline-dark"
+        (click)="activeModal.close('Close click')"
+      >
+        <i class="pe-7s-less"></i> Cancelar
+      </button>
+    </div>
+</div>
+<!-- <ng-template #content let-modal>
+  <div class="modal-header">
+    <p class="modal-title" id="modal-basic-title"><b>Pendientes de :</b> {{periodo}} - ({{sede}})</p>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="row" style='display:flex; justify-content: space-between;'>
+      <div class="col-md-2" style='margin-left:15px;'>
+          <select class="form-control form-select" (change)="onLimitChange($event.target.value, '1')">
+              <option
+                  *ngFor="let option of pageLimitOptions"
+                  [value]="option.value"
+              >
+                  {{ option.value }} Registros
+              </option>
+          </select>
+      </div>
+      <div class="col-md-2" style="display:flex;margin-right:15px;align-items: center;">
+          <span>Buscar</span>&nbsp;&nbsp;
+          <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter($event, selectedOptionTipo)'>
+      </div>
+  </div>
+  
+  <div class="modal-body">
+    <ngx-datatable #myTablePendientes
+class="bootstrap table table-striped"
+id="datatablele"
+  [columns]="columns"
+  [loadingIndicator]="loading"
+  [rows]="rows"
+  [columnMode]="ColumnMode.flex"
+  [headerHeight]="50"
+  [footerHeight]="50"
+  [rowHeight]="$any('auto')"
+  [scrollbarH]="true"
+  [limit]="page.size"
+  >
+  <ngx-datatable-column [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+      let-row="row">
+      <div>
+        <span  [title]="value">{{value}}</span>
+      </div>
+    </ng-template>
+  </ngx-datatable-column>
+</ngx-datatable>
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cerrar</button>
+  </div>
+</ng-template> -->

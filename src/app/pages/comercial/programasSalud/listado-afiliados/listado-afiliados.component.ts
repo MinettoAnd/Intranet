@@ -193,11 +193,18 @@ export class ListadoAfiliadosComponent implements OnInit {
   }
 
   copyTableToClipboard(){
+    this.rows.map(item => {
+      item.edad = typeof item.edad === 'number' ? item.edad : Number(item.edad);
+      item.aniosAfiliado = typeof item.aniosAfiliado === 'number' ? item.aniosAfiliado : Number(item.aniosAfiliado);
+    })
     this.exportService.exportToClipboard(this.rows, this.columns);
-    
   }
 
   exportToExcel(): void {
+    this.rows.map(item => {
+      item.edad = typeof item.edad === 'number' ? item.edad : Number(item.edad);
+      item.aniosAfiliado = typeof item.aniosAfiliado === 'number' ? item.aniosAfiliado : Number(item.aniosAfiliado);
+    })
     this.exportService.exportTableElmToExcel(this.rows, 'Atenciones-Realizadas-por-Emergencia');
   }
 

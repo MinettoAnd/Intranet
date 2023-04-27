@@ -343,6 +343,7 @@ export class LiquidacionEmpresaBiohealthComponent implements OnInit {
                     let totalcobraCSALUD = 0;
                     let totalcobraBIOHEALTH = 0;
                     let totalporcCobraBIOHEALTH = 0;
+                    this.progressBar1 = [];
                     this.rows1.map(item=>{
                         totalCantidad += Number(item.Cantidad);
                         totalcobraCSALUD += Number(item.cobraCSALUD);
@@ -380,6 +381,7 @@ export class LiquidacionEmpresaBiohealthComponent implements OnInit {
                     const taCobraBIOHEALTH = [];
                     const taPorcCobraBIOHEALTH = [];
                     let totalBIOHEALTH;
+                    this.progressBar2 = [];
                     this.rows2.map(item=>{
                       if(item.Campo ==='TOTAL'){
                         totalBIOHEALTH = item.cobraBIOHEALTH;
@@ -535,6 +537,14 @@ export class LiquidacionEmpresaBiohealthComponent implements OnInit {
       }else if (numberTabla === 4){
         this.exportService.exportToClipboard(this.rows4, this.columns4);
       }else if (numberTabla === 5){
+        this.rows5.map(item => {
+          item.Cantidad = typeof item.Cantidad === 'number' ? item.Cantidad : Number(item.Cantidad);
+          item.precioVenta = typeof item.precioVenta === 'number' ? item.precioVenta :Number(item.precioVenta);
+          item.cobraCSALUD = typeof item.cobraCSALUD === 'number' ? item.cobraCSALUD : Number(item.cobraCSALUD);
+          item.cobraBIOHEALTH = typeof item.cobraBIOHEALTH === 'number' ? item.cobraBIOHEALTH : Number(item.cobraBIOHEALTH);
+          item.porcentajeFactor = typeof item.porcentajeFactor === 'number' ? item.porcentajeFactor : Number(item.porcentajeFactor);
+          item.precioUnitarioLista = typeof item.precioUnitarioLista === 'number' ? item.precioUnitarioLista : Number(item.precioUnitarioLista);
+        });
         this.exportService.exportToClipboard(this.rows5, this.columns5);
       }else if (numberTabla === 6){
         this.exportService.exportToClipboard(this.rows6, this.columns6);
@@ -562,6 +572,15 @@ export class LiquidacionEmpresaBiohealthComponent implements OnInit {
       }else if (numberTabla === 4){
         this.exportService.exportTableElmToExcel(this.rows4, 'Laboratorio - Examenes Realizados');
       }else if (numberTabla === 5){
+        // console.log(565, this.rows5);
+        this.rows5.map(item => {
+          item.Cantidad = typeof item.Cantidad === 'number' ? item.Cantidad : Number(item.Cantidad);
+          item.precioVenta = typeof item.precioVenta === 'number' ? item.precioVenta :Number(item.precioVenta);
+          item.cobraCSALUD = typeof item.cobraCSALUD === 'number' ? item.cobraCSALUD : Number(item.cobraCSALUD);
+          item.cobraBIOHEALTH = typeof item.cobraBIOHEALTH === 'number' ? item.cobraBIOHEALTH : Number(item.cobraBIOHEALTH);
+          item.porcentajeFactor = typeof item.porcentajeFactor === 'number' ? item.porcentajeFactor : Number(item.porcentajeFactor);
+          item.precioUnitarioLista = typeof item.precioUnitarioLista === 'number' ? item.precioUnitarioLista : Number(item.precioUnitarioLista);
+        });
         this.exportService.exportTableElmToExcel(this.rows5, 'Laboratorio - Examenes Realizados');
       }else if (numberTabla === 6){
         this.exportService.exportTableElmToExcel(this.rows6, 'Laboratorio - Examenes Realizados');

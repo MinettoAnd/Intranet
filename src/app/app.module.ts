@@ -26,24 +26,24 @@ import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 
 // LAYOUT
 
-import { BaseLayoutComponent } from './layout/base-layout/base-layout.component';
-import { PagesLayoutComponent } from './layout/pages-layout/pages-layout.component';
-import { PageTitleComponent } from './layout/Components/page-title/page-title.component';
+import { BaseLayoutComponent } from './Layout/base-layout/base-layout.component';
+import { PagesLayoutComponent } from './Layout/pages-layout/pages-layout.component';
+import { PageTitleComponent } from './Layout/Components/page-title/page-title.component';
 
 // HEADER
 
-import { HeaderComponent } from './layout/Components/header/header.component';
-import { SearchBoxComponent } from './layout/Components/header/elements/search-box/search-box.component';
-import { UserBoxComponent } from './layout/Components/header/elements/user-box/user-box.component';
+import { HeaderComponent } from './Layout/Components/header/header.component';
+import { SearchBoxComponent } from './Layout/Components/header/elements/search-box/search-box.component';
+import { UserBoxComponent } from './Layout/Components/header/elements/user-box/user-box.component';
 
 // SIDEBAR
 
-import { SidebarComponent } from './layout/Components/sidebar/sidebar.component';
-import { LogoComponent } from './layout/Components/sidebar/elements/logo/logo.component';
+import { SidebarComponent } from './Layout/Components/sidebar/sidebar.component';
+import { LogoComponent } from './Layout/Components/sidebar/elements/logo/logo.component';
 
 // FOOTER
 
-import { FooterComponent } from './layout/Components/footer/footer.component';
+import { FooterComponent } from './Layout/Components/footer/footer.component';
 
 import { LoginBoxedComponent } from './auth/login/login-boxed.component';
 
@@ -118,6 +118,10 @@ import { MorososContactadosComponent } from "./modals/seguimientoMorosos/listado
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { AltaHospitalariaComponent } from './modals/hospitalization/alta-hospitalaria/alta-hospitalaria.component';
+import { PagosAppMovilComponent } from './modals/tesoreria/pagos-app-movil/pagos-app-movil.component';
+import { LinkRendererComponent } from './shared/components/renderer/link-renderer.component';
+import { RowDetalleComponent } from './modals/jpric/row-detalle/row-detalle.component';
 registerLocaleData(localePe);
 // import { CuotasProgramasSaludComponent } from './pages/comercial/ventas/cuotas-programas-salud/cuotas-programas-salud.component';
 // import { BsDatepickerModule, BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
@@ -199,9 +203,10 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     SucursalCellRenderer, 
     InformeComponent,
     ContactoComponent,
-    MorososContactadosComponent
-
-        
+    MorososContactadosComponent,
+    AltaHospitalariaComponent,
+    LinkRendererComponent,
+    RowDetalleComponent
   ],
   imports: [
     BrowserModule,
@@ -258,7 +263,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     PhonePipe,
   ],
   bootstrap: [AppComponent],
-  schemas: [ ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 
 export class AppModule {

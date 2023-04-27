@@ -551,6 +551,7 @@ export class ComercialEstadisticasComponent implements OnInit {
     return this.getChart(chartNum, typeChart, data, options);
     
   }
+  
   // window.onload = function() {
   //   var ctx = document.getElementById('myChart').getContext('2d');
   //   window.myChart = new Chart(ctx, config);
@@ -584,7 +585,16 @@ export class ComercialEstadisticasComponent implements OnInit {
     }
   }
 
-
+  public onAnioChange(anio: any): void {
+    this.anio = anio;
+    this.periodo_consulta = this.anio + this.mes;
+    // this.setPage({ offset: 0 });
+  }
+  public onMesChange(mes: any): void {
+    this.mes = mes;
+    this.periodo_consulta = this.anio + this.mes;
+    // this.setPage({ offset: 0 });
+  }
   getChart(context, chartType, data, options?) {
     const graph = new Chart(context, {
       data,

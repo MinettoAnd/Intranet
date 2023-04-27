@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PiecharComponent } from './components/piechar/piechar.component';
 import { BarcharComponent } from './components/barchar/barchar.component';
@@ -10,6 +10,9 @@ import { EmergenciesEstadisticsComponent } from './components/emergencies-estadi
 import { ExternalConsultationEstadisticsComponent } from './components/external-consultation-estadistics/external-consultation-estadistics.component';
 import { HospitalizationEstadisticsComponent } from './components/hospitalization-estadistics/hospitalization-estadistics.component';
 import { AgGridModule } from 'ag-grid-angular';
+import { IngresosEstadisticasComponent } from './components/ingresos-estadisticas/ingresos-estadisticas.component';
+import { JPRICComponent } from './components/jpric/jpric.component';
+import { LinkRendererComponent } from './components/renderer/link-renderer.component';
 
 @NgModule({
   declarations: [
@@ -18,20 +21,25 @@ import { AgGridModule } from 'ag-grid-angular';
     ComercialEstadisticasComponent,
     EmergenciesEstadisticsComponent,
     ExternalConsultationEstadisticsComponent,
-    HospitalizationEstadisticsComponent
+    HospitalizationEstadisticsComponent,
+    IngresosEstadisticasComponent,
+    JPRICComponent
   ],
   imports: [
-    AgGridModule.withComponents([]),
+    AgGridModule.withComponents([LinkRendererComponent]),
     FormsModule, ReactiveFormsModule,
     CommonModule,
     NgxDatatableModule,
     NgbModule,
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   exports: [
     ComercialEstadisticasComponent,
     EmergenciesEstadisticsComponent,
     ExternalConsultationEstadisticsComponent,
-    HospitalizationEstadisticsComponent
+    HospitalizationEstadisticsComponent,
+    IngresosEstadisticasComponent,
+    JPRICComponent
   ],
 })
 export class SharedModule { }

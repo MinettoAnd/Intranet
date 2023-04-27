@@ -15,6 +15,8 @@ export class SetiIpressComponent implements OnInit {
 
   ngOnInit(): void {
     this.urlSafe= this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
+    // window.location.href = this.url
+    window.open(this.url, '_blank');
   }
 
 }

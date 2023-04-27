@@ -1,0 +1,480 @@
+<div class="app-content content">
+    <div class="content-wrapper">
+      <div class="content-header row mb-1">
+        <app-breadcrumb class="col-12" [breadcrumb]="breadcrumb"></app-breadcrumb>
+      </div>
+      <div class="content-body">
+        <section id="selection-n-deletion">
+          <div class="row">
+  
+            <div class="col-12">
+              <form [formGroup]="filtroForm">
+                <div class="row" style="margin-bottom: -0.5rem;">
+                  <div class="form-group col-sm-12">
+
+                    <div class="input-group input-group-sm fecha">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">Fecha</span>
+                      </div>
+                      <input
+                        type="date"
+                        formControlName="fecha"
+                        class="form-control"
+                      />
+                    </div>
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-append">
+                          <span class="input-group-text">Sedes</span>
+                        </div>
+                        <select
+                          class="form-control form-select"
+                          formControlName="sede"
+                          id="sede"
+                        >
+                          <!-- <option value="0000">Todos</option> -->
+                          <option value="0001">Lima</option>
+                          <option value="0002">Chorrillos</option>
+                          <option value="0004">Surco</option>
+                        </select>
+                    </div>
+                    <div class="input-group input-group-sm">
+                      <div class="input-group-append">
+                        <span class="input-group-text">Estado</span>
+                      </div>
+                      <select
+                        class="form-control form-select"
+                        formControlName="estado"
+                        id="estado"
+                      >	
+                      <option value="I">INTERNADOS</option>
+                      <option value="A">ALTAS</option>
+                      <option value="T">TODOS</option>
+                      </select>
+                    </div>
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-append">
+                          <span class="input-group-text">Tipo de Listado</span>
+                        </div>
+                        <select
+                          class="form-control form-select"
+                          formControlName="tipo_lista"
+                          id="tipo_lista"
+                        >	
+                            <option value="E">ESTANDAR</option>
+                            <option value="A">ALIMENTACION</option>
+                            <option value="F">FACTURACION</option>
+                            <option value="C">CREDITO Y COBRANZA</option>
+                            <option value="D">DIRECCION MEDICA</option>
+                        </select>
+                    </div>
+                    <div class="input-group-btn">
+                    <button (click)="filter()" class="btn btn-sm btn-primary">
+                        <i class="fa fa-search"></i> Filtrar
+                    </button>
+                    </div>
+                   
+                  </div>
+                </div>
+              </form>
+              <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs" style="justify-content: end;">
+                <li [ngbNavItem]="1">
+                    <a ngbNavLink>Listado</a>
+                    <ng-template ngbNavContent>
+                      <div class="card">
+                        <div class="card-header">
+                          <h4 class="card-title">{{title}}</h4>
+                          <p>{{message}}</p>
+                        </div>
+                        <div class="card-content collapse show">
+                          <div class="card-body">
+                            <!-- <a class="btn btn-primary" id="downloadLink" (click)="exportexcel()">Exportar tabla a Excel</a>
+                            <a class="btn btn-primary" id="downloadLink" (click)="copyTableToClipboard()">Copiar tabla</a> -->
+                            <div class="table table-striped table-bordered selection-deletion-row">
+                              <div class="box box-solid">
+                                <div id="accordion1">
+                                  <div class="card">
+                                    <div class="card-header-info" >
+                                      <div class="box-header">
+                                        <div class="toggle-table">
+                                          <div class="callout callout-info">
+                                            <h3 class="box-title">INTERNADOS POR PISO</h3>
+                                          </div>
+                                          <button type="button" class="btn btn-outline-primary" (click)="collapse1.toggle()" [attr.aria-expanded]="!isCollapsed1"
+                                          aria-controls="collapseExample">
+                                          <i class="fa fa-minus" *ngIf="!isCollapsed1"> </i>
+                                          <i class="fa fa-plus" *ngIf="isCollapsed1"> </i> 
+                                          </button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div #collapse1="ngbCollapse" [(ngbCollapse)]="isCollapsed1">
+                                      <div class="row" style="align-items: center;justify-content: space-between;">
+                                        <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
+                                          <li class="list-group-item border-0 pl-0">
+                                            <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(1)">
+                                              <i class="fa fa-external-link"></i>
+                                              Copiar tabla
+                                            </button>
+                                          </li>
+                                          <li class="list-group-item border-0 pl-0">
+                                            <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(1)">
+                                              <i class="fa fa-external-link"></i>
+                                              Exportar tabla a Excel
+                                            </button>
+                                          </li>
+                                        </ul>
+                                      </div>
+                                      <ngx-datatable #myTable1
+                                      class="bootstrap table table-striped "
+                                      id="datatablele"
+                                        [columns]="columns1"
+                                        [rows]="rows1"
+                                        [columnMode]="ColumnMode.flex"
+                                        [headerHeight]="50"
+                                        [rowHeight]="$any('auto')"
+                                        [scrollbarH]="true"
+                                        (page)="setPage($event)"
+                                        [rowClass] = "getRowClass"
+                                        [summaryRow]="enableSummary"
+                                        [summaryPosition]="summaryPosition"
+                                        [summaryHeight]="35"
+                                        >
+                                        <ngx-datatable-column [summaryFunc]="column.prop == 'internados' ? summaryForAmount:summaryNull"
+                                        [flexGrow]="1" 
+                                        [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns1; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                                            let-row="row">
+                                            <div>
+                                              <span  [title]="value">{{value}}</span>
+                                            </div>
+                                            <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
+                                              <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
+                                            </div> -->
+  
+                                          </ng-template>
+                                          <!-- <ngx-datatable-column prop="per1">
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                              {{row.per1 | currency:'S/.  ':'code'}}
+                                            </ng-template>
+                                          </ngx-datatable-column> -->
+                                        </ngx-datatable-column>
+                                      </ngx-datatable>
+                                    </div>
+                                  </div>
+                                  <div class="card">
+                                    <div class="card-header-info" >
+                                      <div class="box-header">
+                                        <div class="toggle-table">
+                                          <div class="callout callout-info">
+                                            <h3 class="box-title">INTERNADOS POR TIPO DE PACIENTE</h3>
+                                          </div>
+                                          <button type="button" class="btn btn-outline-primary" (click)="collapse2.toggle()" [attr.aria-expanded]="!isCollapsed2"
+                                          aria-controls="collapseExample">
+                                          <i class="fa fa-minus" *ngIf="!isCollapsed2"> </i>
+                                          <i class="fa fa-plus" *ngIf="isCollapsed2"> </i> 
+                                          </button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div #collapse2="ngbCollapse" [(ngbCollapse)]="isCollapsed2">
+                                      <div class="row" style="align-items: center;justify-content: space-between;">
+                                        <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
+                                          <li class="list-group-item border-0 pl-0">
+                                            <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(2)">
+                                              <i class="fa fa-external-link"></i>
+                                              Copiar tabla
+                                            </button>
+                                          </li>
+                                          <li class="list-group-item border-0 pl-0">
+                                            <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(2)">
+                                              <i class="fa fa-external-link"></i>
+                                              Exportar tabla a Excel
+                                            </button>
+                                          </li>
+                                        </ul>
+                                      </div>
+                                      <ngx-datatable #myTable2
+                                        class="bootstrap table table-striped "
+                                        id="datatablele"
+                                          [columns]="columns2"
+                                          [rows]="rows2"
+                                          [columnMode]="ColumnMode.flex"
+                                          [headerHeight]="50"
+                                          [rowHeight]="$any('auto')"
+                                          [scrollbarH]="true"
+                                          (page)="setPage($event)"
+                                          [rowClass] = "getRowClass1"
+                                          [summaryRow]="enableSummary"
+                                        [summaryPosition]="summaryPosition"
+                                        [summaryHeight]="35"
+                                          >
+                                          <ngx-datatable-column [summaryFunc]="column.prop == 'internados' ? summaryForAmount:summaryNull"
+                                          [flexGrow]="1" [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns2; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                                              let-row="row">
+                                              <div>
+                                                <span  [title]="value">{{value}}</span>
+                                              </div>
+                                              <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
+                                                <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
+                                              </div> -->
+    
+                                            </ng-template>
+                                            <!-- <ngx-datatable-column prop="per1">
+                                              <ng-template let-row="row" ngx-datatable-cell-template>
+                                                {{row.per1 | currency:'S/.  ':'code'}}
+                                              </ng-template>
+                                            </ngx-datatable-column> -->
+                                          </ngx-datatable-column>
+                                      </ngx-datatable>
+                                    </div>
+                                  </div>
+                                  <div class="card">
+                                    <div class="card-header-info" >
+                                      <div class="box-header">
+                                        <div class="toggle-table">
+                                          <div class="callout callout-info">
+                                            <h3 class="box-title">INTERNADOS POR ASEGURADORA     ( Cia.Seguros y Convenios )</h3>
+                                          </div>
+                                          <button type="button" class="btn btn-outline-primary" (click)="collapse3.toggle()" [attr.aria-expanded]="!isCollapsed3"
+                                          aria-controls="collapseExample">
+                                          <i class="fa fa-minus" *ngIf="!isCollapsed3"> </i>
+                                          <i class="fa fa-plus" *ngIf="isCollapsed3"> </i> 
+                                          </button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div #collapse3="ngbCollapse" [(ngbCollapse)]="isCollapsed3">
+                                      <div class="row" style="align-items: center;justify-content: space-between;">
+                                        <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
+                                          <li class="list-group-item border-0 pl-0">
+                                            <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(3)">
+                                              <i class="fa fa-external-link"></i>
+                                              Copiar tabla
+                                            </button>
+                                          </li>
+                                          <li class="list-group-item border-0 pl-0">
+                                            <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(3)">
+                                              <i class="fa fa-external-link"></i>
+                                              Exportar tabla a Excel
+                                            </button>
+                                          </li>
+                                        </ul>
+                                      </div>
+                                      <ngx-datatable #myTable3
+                                        class="bootstrap table table-striped "
+                                        id="datatablele"
+                                          [columns]="columns3"
+                                          [rows]="rows3"
+                                          [columnMode]="ColumnMode.flex"
+                                          [headerHeight]="50"
+                                          [rowHeight]="$any('auto')"
+                                          [scrollbarH]="true"
+                                          (page)="setPage($event)"
+                                          [rowClass] = "getRowClass1"
+                                          [summaryRow]="enableSummary"
+                                        [summaryPosition]="summaryPosition"
+                                        [summaryHeight]="35"
+                                          >
+                                          <ngx-datatable-column [summaryFunc]="column.prop == 'internados' ? summaryForAmount:summaryNull"
+                                          [flexGrow]="1" [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns3; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                                              let-row="row">
+                                              <div>
+                                                <span  [title]="value">{{value}}</span>
+                                              </div>
+                                              <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
+                                                <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
+                                              </div> -->
+    
+                                            </ng-template>
+                                            <!-- <ngx-datatable-column prop="per1">
+                                              <ng-template let-row="row" ngx-datatable-cell-template>
+                                                {{row.per1 | currency:'S/.  ':'code'}}
+                                              </ng-template>
+                                            </ngx-datatable-column> -->
+                                          </ngx-datatable-column>
+                                      </ngx-datatable>
+                                    </div>
+                                  </div>
+                                  <div class="card">
+                                    <div class="card-header-info" >
+                                      <div class="box-header">
+                                        <div class="toggle-table">
+                                          <div class="callout callout-info">
+                                            <h3 class="box-title">INTERNADOS POR DIAGNOSTICO</h3>
+                                          </div>
+                                          <button type="button" class="btn btn-outline-primary" (click)="collapse4.toggle()" [attr.aria-expanded]="!isCollapsed4"
+                                          aria-controls="collapseExample">
+                                          <i class="fa fa-minus" *ngIf="!isCollapsed4"> </i>
+                                          <i class="fa fa-plus" *ngIf="isCollapsed4"> </i> 
+                                          </button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div #collapse4="ngbCollapse" [(ngbCollapse)]="isCollapsed4">
+                                      <div class="row" style="align-items: center;justify-content: space-between;">
+                                        <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
+                                          <li class="list-group-item border-0 pl-0">
+                                            <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(4)">
+                                              <i class="fa fa-external-link"></i>
+                                              Copiar tabla
+                                            </button>
+                                          </li>
+                                          <li class="list-group-item border-0 pl-0">
+                                            <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(4)">
+                                              <i class="fa fa-external-link"></i>
+                                              Exportar tabla a Excel
+                                            </button>
+                                          </li>
+                                        </ul>
+                                      </div>
+                                      <ngx-datatable #myTable4
+                                        class="bootstrap table table-striped "
+                                        id="datatablele"
+                                          [columns]="columns4"
+                                          [rows]="rows4"
+                                          [columnMode]="ColumnMode.flex"
+                                          [headerHeight]="50"
+                                          [rowHeight]="$any('auto')"
+                                          [scrollbarH]="true"
+                                          (page)="setPage($event)"
+                                          [rowClass] = "getRowClass1"
+                                          [summaryRow]="enableSummary"
+                                        [summaryPosition]="summaryPosition"
+                                        [summaryHeight]="35"
+                                          >
+                                          <ngx-datatable-column [summaryFunc]="column.prop == 'internados' ? summaryForAmount:summaryNull"
+                                          [flexGrow]="1" [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns4; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                                              let-row="row">
+                                              <div>
+                                                <span  [title]="value">{{value}}</span>
+                                              </div>
+                                              <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
+                                                <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
+                                              </div> -->
+    
+                                            </ng-template>
+                                            <!-- <ngx-datatable-column prop="per1">
+                                              <ng-template let-row="row" ngx-datatable-cell-template>
+                                                {{row.per1 | currency:'S/.  ':'code'}}
+                                              </ng-template>
+                                            </ngx-datatable-column> -->
+                                          </ngx-datatable-column>
+                                      </ngx-datatable>
+                                    </div>
+                                  </div>
+                                </div>                       
+                              </div>
+                            </div>
+                            
+                          </div>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </li>
+                <li [ngbNavItem]="2">
+                  <a ngbNavLink>Resumen</a>
+                    <ng-template ngbNavContent>
+                      
+                      <div class="card atencionesConsultaExterna">
+                        <div class="card-header">
+                          <h4 class="card-title" style="bottom:13px;">Resumen de Morosos (Mientras mas antigua es la fecha procesada, menos consistente podría ser la información)</h4>
+                          <p>{{message}}</p>
+                          
+                        </div>
+                        <div class="card-content collapse show">
+                          <div class="card-body">
+                            <div class="table table-striped table-bordered selection-deletion-row">
+                              <!-- <div class="row" style='margin-left:0px;'>
+                                <div class="col-xs-6">
+                                  <select class="form-control form-select" (change)="onLimitChange($event.target.value)">
+                                    <option
+                                      *ngFor="let option of pageLimitOptions"
+                                      [value]="option.value"
+              
+                                    >
+                                      {{ option.value }} Registros
+                                    </option>
+                                    <option value="0" *ngIf="this.page.totalElements">Todos los Registros</option>
+                                  </select>
+                                </div>
+                              </div> -->
+                                <div class="row" style="align-items: center;justify-content: space-between;">
+                                  <ul class="list-group list-group-horizontal list-group-flush">
+                                    <li class="list-group-item border-0 pl-0">
+                                      <select class="form-control form-select" (change)="onLimitChange($event.target.value)">
+                                        <option
+                                          *ngFor="let option of pageLimitOptions"
+                                          [value]="option.value"
+                  
+                                        >
+                                          {{ option.value }} Registros
+                                        </option>
+                                        <option value="0" *ngIf="this.page.totalElements">Todos los Registros</option>
+                                      </select>
+                                    </li>
+                                    <li class="list-group-item border-0 pl-0">
+                                      <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(0)">
+                                        <i class="fa fa-external-link"></i>
+                                        Copiar tabla
+                                      </button>
+                                    </li>
+                                    <li class="list-group-item border-0 pl-0">
+                                      <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(0)">
+                                        <i class="fa fa-external-link"></i>
+                                        Exportar tabla a Excel
+                                      </button>
+                                    </li>
+                                  </ul>
+                                  <div class="" style="display:flex;margin:15px;align-items: center;">
+                                    <span>Buscar</span>&nbsp;&nbsp;
+                                      <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter($event)'>
+                                  </div>
+                                
+                              </div>
+                              
+                              
+                              <ngx-datatable #myTable
+                              class="bootstrap table table-striped"
+                              id="datatablele"
+                                [columns]="columns"
+                                [rows]="rows"
+                                [columnMode]="ColumnMode.force"
+                                [headerHeight]="$any('auto')"
+                                [footerHeight]="65"
+                                [rowHeight]="$any('auto')"
+                                [scrollbarH]="true"
+                                [limit]="page.size"
+                                >
+                                <ngx-datatable-column  [flexGrow]="1" [minWidth]="90" [width]="column.width" *ngFor="let column of columns; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                                    let-row="row">
+                                    <span [title]="value">{{value}}</span>
+                                    <!-- <span title="Double click to edit" (dblclick)="editing[rowIndex + '-{{column.name}}'] = true"
+                                      *ngIf="!editing[rowIndex + '-{{column.name}}']">
+                                      {{value}}
+                                    </span>
+                                    <input autofocus (blur)="updateValue($event, '{{column.name}}', rowIndex)"
+                                      *ngIf="editing[rowIndex+ '-{{column.name}}']" type="text" [value]="value" /> -->
+                                  </ng-template>
+                                </ngx-datatable-column>
+                              </ngx-datatable>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    </ng-template>
+                </li>
+                </ul>
+                <div [ngbNavOutlet]="nav" class="mt-2"></div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+  
+  <!-- ////////////////////////////////////////////////////////////////////////////-->
+  

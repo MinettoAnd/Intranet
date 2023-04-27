@@ -83,7 +83,7 @@ export class TarifarioComponent implements OnInit {
 
     this.filtroForm = new FormGroup({
       sede: new FormControl("0000"),
-      tipoLista: new FormControl("NO"),
+      tipoLista: new FormControl("00"),
       tipoTarifario: new FormControl("SG"),
       tipoMatriz: new FormControl("N"),
       tipoServicio: new FormControl("0"),
@@ -215,7 +215,7 @@ console.log(this.parameters);
 
   copyTableToClipboard(){
     this.rows.map(item => {
-      item.PrecioUnitarioLista = parseFloat(item.PrecioUnitarioLista);
+      item.PrecioUnitarioLista = typeof item.PrecioUnitarioLista === 'number' ? item.PrecioUnitarioLista : Number(item.PrecioUnitarioLista);;
     });
     this.exportService.exportToClipboard(this.rows, this.columns);
     
@@ -223,7 +223,7 @@ console.log(this.parameters);
 
   exportToExcel(): void {
     this.rows.map(item => {
-      item.PrecioUnitarioLista = parseFloat(item.PrecioUnitarioLista);
+      item.PrecioUnitarioLista = typeof item.PrecioUnitarioLista === 'number' ? item.PrecioUnitarioLista : Number(item.PrecioUnitarioLista);;
     });
     this.exportService.exportTableElmToExcel(this.rows,'');
   }
