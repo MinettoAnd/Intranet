@@ -68,7 +68,7 @@ menuI;
     this.subscription = this.apiService.currentMessage.subscribe(message => this.message = message);
     if (localStorage.getItem('access') === '1' || localStorage.getItem('access') === '2' ) {
       this.getModelsAdmin();
-    } else if (localStorage.getItem('access') === '0') {
+    } else if (localStorage.getItem('access') === '0' || localStorage.getItem('access') === '3') {
       this.getModelsUsers();
     }
   }    
@@ -513,6 +513,7 @@ menuI;
           return item;
        })
        console.log(514, this.menuItems);
+      //  localStorage.setItem('menuItems', JSON.stringify(this.menuItems) );
     });
   }
   toggleNavbar() {
@@ -532,6 +533,7 @@ menuI;
         }
         return item;
      })
+    //  localStorage.setItem('menuItems', JSON.stringify(this.menuItems));
     });
   }
   goRutePagesHeaderTitle(title) {

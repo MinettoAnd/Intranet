@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 import { DocsComponent } from "../../docs/docs.component";
 import { FilesComponent } from "../detalle/modal/files/files.component";
 import { MedidasAdoptadasComponent } from "./medidas-adoptadas/medidas-adoptadas.component";
+import { environment } from "src/environments/environment";
 
 @Component({
     selector: "app-respuesta-reclamo",
@@ -351,8 +352,10 @@ export class RespuestaReclamoComponent implements OnInit {
     }
 
     openDocs(url) {
+        const ruta = environment.baseURL + "/upload/archivos/" + url;
         const data = {
-            url: url,
+            url: ruta,
+            name: url
         };
         const modalRef = this.modalService.open(DocsComponent, {
             size: <any>"xl",

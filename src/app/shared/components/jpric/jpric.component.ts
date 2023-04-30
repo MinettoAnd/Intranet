@@ -249,7 +249,7 @@ export class JPRICComponent implements OnInit {
           // // this.temp = this.rows;
           this.columns1 = this.data.tabla_KPI_RESUMEN_soles.cabeceras;
           this.columns1.map(item => {
-            console.log(301, item)
+            // console.log(301, item)
             if(item.children){
               item.children.map(subitem =>{
                 if(subitem.field === 'monto_lima' || subitem.field === 'monto_chorrillos' || subitem.field === 'monto_surco' || subitem.field === 'monto_total'){
@@ -282,15 +282,23 @@ export class JPRICComponent implements OnInit {
 
           this.columns5 = this.data.tabla_cobranzas_empresa_mixto.cabeceras;
           this.columns5.map(item => {
-            console.log(301, item)
+           
             if(item.children){
               item.children.map(subitem =>{
                 if(subitem.field === 'monto_lima' || subitem.field === 'monto_chorrillos' || subitem.field === 'monto_surco' || subitem.field === 'monto_total'){
                   subitem.cellRenderer = this.CurrencyCellRendererPEN
+                  // subitem.setPinnedBottomRowData =  {function(params)  { 
+                  //   console.log(291,params)
+                  //   return '<strong>' + params.data.monto_lima + '</strong>'
+                  // }}
+                  
                 }
-             })
+             });
+             
             }
-          })
+            
+          }) 
+          // console.log(301, this.columns5)
           this.rows5 = this.data.tabla_cobranzas_empresa_mixto.tabla;
           this.temp5 = this.rows5;
 
@@ -302,7 +310,7 @@ export class JPRICComponent implements OnInit {
 
           this.columns8 = this.data.tabla_expedientes_facturados_empresa_mixto.cabeceras;
           this.columns8.map(item => {
-            console.log(301, item)
+            // console.log(301, item)
             if(item.children){
               item.children.map(subitem =>{
                 if(subitem.field === 'monto_lima' || subitem.field === 'monto_chorrillos' || subitem.field === 'monto_surco' || subitem.field === 'monto_total'){
@@ -320,7 +328,7 @@ export class JPRICComponent implements OnInit {
 
           this.columns11 = this.data.tabla_expedientes_pendientes_empresa_mixto.cabeceras;
           this.columns11.map(item => {
-            console.log(301, item)
+            // console.log(301, item)
             if(item.children){
               item.children.map(subitem =>{
                 subitem.cellRenderer= 'buttonRenderer',

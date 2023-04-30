@@ -92,10 +92,11 @@
           <div class="text-center py-4 h6">
             <button type="submit" class="btn btn-secondary btn-lg btn-block" [disabled]="loginForm.invalid && loginForm.touched">INGRESAR</button>
 
-            <!-- <p class="fw-light small my-3">
-              ¿Aún no tienes cuenta?
-              <span class="text-white" routerLink="/auth/register">Regístrate</span>
-            </p> -->
+            <p class="fw-light small my-3">
+              ¿Entrar sin Loguearte?
+              <span class="text-white" (click)="entrarSinLogueo()">Aquí</span>
+              <!-- <span class="text-white" routerLink="/auth/register">Aquí</span> -->
+            </p>
           </div>
         </div>
       </form>
