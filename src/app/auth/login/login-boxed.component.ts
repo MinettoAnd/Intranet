@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { SharedService } from 'src/app/layout/shared.service';
+import { SharedService } from 'src/app/Layout/shared.service';
 import Swal from 'sweetalert2';
 import { AuthService } from '../auth.service';
 
@@ -86,7 +86,7 @@ export class LoginBoxedComponent implements OnInit {
         
       this.profiles = response.length > 0 ? response : [];
       var splitted = this.profiles[0]?.Nombres.split(" ", 2);
-      console.log(splitted)
+      console.log(89, splitted)
       localStorage.setItem('Nombres', splitted[0]);
       localStorage.setItem('Apellidos', this.profiles[0]?.Apellidos);
       localStorage.setItem('name_area', this.profiles[0]?.DES_AREAS);
@@ -219,5 +219,19 @@ export class LoginBoxedComponent implements OnInit {
 
   goStepOne() {
     this.router.navigate(['/auth/step-one']);
+  }
+  entrarSinLogueo(){
+    console.log(224, 'hola')
+    this.getProfileUser('royal');
+    localStorage.setItem('username', 'royal');
+    localStorage.setItem('valuelogin', '1');
+
+    // localStorage.setItem('valuelogin', '0');
+    localStorage.setItem('access', '3');
+    // localStorage.setItem('access_area', area_access);
+    localStorage.setItem('idrol', '32');
+    // localStorage.setItem('access_area', '0');
+    // localStorage.setItem('idrol', this.listrol[0]?.idrol);
+    this.router.navigate(['/default']);
   }
 }

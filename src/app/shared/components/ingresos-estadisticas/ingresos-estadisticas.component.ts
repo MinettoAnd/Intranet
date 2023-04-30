@@ -60,10 +60,10 @@ export class IngresosEstadisticasComponent implements OnInit {
   id: number;
   loadingIndicator: true;
   rows: any;
-  rows1 = [];
-  rows2 = [];
-  rows3 = [];
-  rows4 = [];
+  rows1: any;
+  rows2: any;
+  rows3: any;
+  rows4: any;
   rows4filtered = [];
   editing = {};
   row: any;
@@ -289,26 +289,26 @@ export class IngresosEstadisticasComponent implements OnInit {
           font: {
             weight: 'bold'
           },
-          formatter: function(value, context) {
-            let sum = 0;
+          // formatter: function(value, context) {
+          //   let sum = 0;
             
-            let dataArr = context.chart.data.datasets[context.datasetIndex].data;
+          //   let dataArr = context.chart.data.datasets[context.datasetIndex].data;
               
-            dataArr.map((data) => {
-              return sum += parseFloat(data);
-            });
-            // console.log(292,value , sum );
-            if (sum > 0 ){
-              return ((value * 100) / sum).toFixed(2) + '%';
-            }else{
-              return (0 + '%');
-            }
+          //   dataArr.map((data) => {
+          //     return sum += parseFloat(data);
+          //   });
+          //   // console.log(292,value , sum );
+          //   if (sum > 0 ){
+          //     return ((value * 100) / sum).toFixed(2) + '%';
+          //   }else{
+          //     return (0 + '%');
+          //   }
             
-          },
-          /* Podemos modificar el texto a mostrar */
-          // formatter: function (dato, ctx) {
-          //   return ((dato * 100) / total).toFixed(2) + '%'; 
           // },
+          /* Podemos modificar el texto a mostrar */
+          formatter: function (dato, ctx) {
+            return Math.round(dato * 100) / 100; 
+          },
           // formatter: (dato) => ((dato * 100) / total).toFixed(2) + '%',
           // formatter: function (value, ctx) {
           //   return ((value * 100) / this.total(ctx)).toFixed(2) + '%';
@@ -462,9 +462,9 @@ export class IngresosEstadisticasComponent implements OnInit {
             this.barChartData3.push(item.item_3)
             this.barChartData4.push(item.item_4)
           })
-          var data = [];
-          data.push(this.barChartData1, this.barChartData2);
-          this.addData(this.grafico1, this.barChartLabels, data)
+          // var data = [];
+          // data.push(this.barChartData1, this.barChartData2);
+          // this.addData(this.grafico1, this.barChartLabels, data)
 
             Swal.close();
         }else{
@@ -639,7 +639,7 @@ export class IngresosEstadisticasComponent implements OnInit {
   }
 
   filter() {
-  this.removeData(this.grafico1);
+  // this.removeData(this.grafico1);
         const form = this.filtroForm.value;
           this.anio = form.anio;
           this.mes = form.mes;
@@ -745,6 +745,10 @@ export class IngresosEstadisticasComponent implements OnInit {
         return 'TOTAL';
     }
     
+  }
+  private summaryNull1(cells: any): string {
+
+        return 'TOTAL';
   }
 }
 
