@@ -170,18 +170,18 @@ export class ListadoPSFMorososSeguimientoComponent implements OnInit {
             }
           });
           this.columns1 = [
-            {prop: 'Programa', name: 'Programa'},
-            {prop: 'TotalContratos', name: 'Contratos', pipe: this._cnp},
-            {prop: 'TotalMiembros', name: 'Afiliados', pipe: this._cnp},
-            {prop: 'CuotasVencidas', name: 'Periodos', pipe: this._cnp},
-            {prop: 'ImpCuotasVencidas', name: 'Deuda', pipe: this._cp},
+            {prop: 'Programa', name: 'Programa', headerClass: 'text-center'},
+            {prop: 'TotalContratos', name: 'Contratos', headerClass: 'text-center', cellClass: 'text-rigth', pipe: this._cnp},
+            {prop: 'TotalMiembros', name: 'Afiliados', headerClass: 'text-center', cellClass: 'text-rigth', pipe: this._cnp},
+            {prop: 'CuotasVencidas', name: 'Periodos', headerClass: 'text-center', cellClass: 'text-rigth', pipe: this._cnp},
+            {prop: 'ImpCuotasVencidas', name: 'Deuda', headerClass: 'text-center', cellClass: 'text-rigth', pipe: this._cp},
           ]
           this.columns2 = [
-            {prop: 'periodo', name: 'Periodos'},
-            {prop: 'nuContratos', name: 'Contratos', pipe: this._cnp},
-            {prop: 'nuAfiliados', name: 'Afiliados', pipe: this._cnp},
-            {prop: 'nuCuotasVencidas', name: 'Periodos', pipe: this._cnp},
-            {prop: 'totalImpCuotasVencidas', name: 'Deuda', pipe: this._cp},
+            {prop: 'periodo', name: 'Periodos', headerClass: 'text-center'},
+            {prop: 'nuContratos', name: 'Contratos', headerClass: 'text-center', cellClass: 'text-rigth', pipe: this._cnp},
+            {prop: 'nuAfiliados', name: 'Afiliados', headerClass: 'text-center', cellClass: 'text-rigth', pipe: this._cnp},
+            {prop: 'nuCuotasVencidas', name: 'Periodos', headerClass: 'text-center', cellClass: 'text-rigth', pipe: this._cnp},
+            {prop: 'totalImpCuotasVencidas', name: 'Deuda', headerClass: 'text-center', cellClass: 'text-rigth', pipe: this._cp},
           ]
           this.rows = this.data.data.data;
           this.rows1 = [];
