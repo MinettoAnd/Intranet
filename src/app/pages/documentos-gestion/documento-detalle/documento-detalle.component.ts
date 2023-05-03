@@ -59,7 +59,9 @@ this.loading();
           name: item.ruta
       };
       const modalRef = this.modalService.open(DocsComponent, {
-          size: <any>"xl",
+          // size: <any>"xl",
+          size: <any>"xxl",
+          windowClass: 'modal-fullscreen',
       });
       modalRef.componentInstance.dato = data;
       modalRef.result

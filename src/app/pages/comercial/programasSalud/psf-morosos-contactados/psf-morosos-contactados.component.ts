@@ -65,7 +65,7 @@ export class PsfMorososContactadosComponent implements OnInit {
       // f_fin: '2022-11-30',
   fecha_inicio = moment(this.restarDias(new Date, -7)).format('YYYY-MM-DD');
   fecha_fin = moment(new Date()).format('YYYY-MM-DD');
-  optionSize=10;
+  optionSize=50;
   planDeSalud = '0';
   accion = '0';
   // tipo_paciente = '0';
@@ -89,7 +89,7 @@ export class PsfMorososContactadosComponent implements OnInit {
   constructor(private tableApiservice: ComercialService, private exportService: ExportService, private _cnp:CustomNumberPipe, private datePipe: DatePipe,
     private _cp: CurrencyPipe, private _phone: PhonePipe, private modalService: NgbModal) {
     this.page.pageNumber = 0;
-    this.page.size = 10;
+    this.page.size = 50;
 
     this.filtroForm = new FormGroup({
       fecha_inicio: new FormControl(this.fecha_inicio),

@@ -2,3 +2,9 @@
     width:64px!important;
     height:64px!important;
   }
+  @media (min-width: 1200px){
+    .modal-xl {
+      max-width: 1540px!important;
+    }
+  }
+  

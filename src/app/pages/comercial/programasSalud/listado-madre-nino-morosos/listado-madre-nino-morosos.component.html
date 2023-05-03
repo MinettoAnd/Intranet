@@ -155,14 +155,14 @@
                     id="datatablele"
                       [columns]="columns"
                       [rows]="rows"
-                      [columnMode]="initialSize > 1250 ? ColumnMode.flex : ColumnMode.force"
+                      [columnMode]="ColumnMode.force"
                       [headerHeight]="$any('auto')"
                       [footerHeight]="65"
                       [rowHeight]="$any('auto')"
                       [scrollbarH]="true"
                       [limit]="page.size"
                       >
-                      <ngx-datatable-column  [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                      <ngx-datatable-column [headerClass]="column.headerClass" [cellClass]="column.cellClass" [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                           let-row="row">
                           <span [title]="value">{{value}}</span>

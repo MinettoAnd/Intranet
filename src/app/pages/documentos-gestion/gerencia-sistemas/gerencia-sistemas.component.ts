@@ -141,7 +141,7 @@ async getCategoriesDocuments(){
           name: item.files[0].ruta
       };
       const modalRef = this.modalService.open(DocsComponent, {
-          size: <any>"xl",
+          size: <any>"xxl",
       });
       modalRef.componentInstance.dato = data;
       modalRef.result
