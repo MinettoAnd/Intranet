@@ -186,6 +186,11 @@ const routes: Routes = [
                 loadChildren: () => import('../app/pages/tesoreria/tesoreria.module').then(m => m.TesoreriaModule),
                 data: { extraParameter: "facturacionMenu" },
             },
+            {
+                path: "documentosGestion",
+                loadChildren: () => import('../app/pages/documentos-gestion/documentos-gestion.module').then(m => m.DocumentosGestionModule),
+                data: { extraParameter: "facturacionMenu" },
+            },
         ],
     },
 

@@ -33,7 +33,9 @@ export class SharedService {
   getMenuSidebarPermissionRoleService(idrol) {
     return this.http.get(`${this.baseURL}/permisos/user/${idrol}`).toPromise();
   }
-
+  getMenuSidebarAllService() {
+    return this.http.get(`${this.baseURL}/permisos/allUser/`).toPromise();
+  }
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('cod_user');

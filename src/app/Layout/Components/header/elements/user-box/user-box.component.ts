@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { SharedService } from 'src/app/layout/shared.service';
+import { SharedService } from 'src/app/Layout/shared.service';
 import { ThemeOptions } from '../../../../../theme-options';
 import { Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
@@ -14,6 +14,7 @@ export class UserBoxComponent implements OnInit {
   public Area: string = "";
   message: string;
   subscription: Subscription;
+  userWeb: string;
   constructor(public globals: ThemeOptions, private router: Router, private apiService: SharedService) {
   }
 
@@ -21,6 +22,7 @@ export class UserBoxComponent implements OnInit {
     this.Nombre = localStorage.getItem('Nombres');
     this.Apellido = localStorage.getItem('Apellidos');
     this.Area = localStorage.getItem('name_area');
+    this.userWeb = localStorage.getItem('username');
     this.subscription = this.apiService.currentMessage.subscribe(message => this.message = message)
   }
   ngOnDestroy() {
@@ -38,5 +40,10 @@ export class UserBoxComponent implements OnInit {
         this.router.navigate(['/auth/login']);
       }
     });
+  }
+  iniciarSesion() {
+    console.log('iniciarSesion')
+        this.apiService.logout();
+        this.router.navigate(['/auth/login']);
   }
 }

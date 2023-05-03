@@ -206,7 +206,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MorososContactadosComponent,
     AltaHospitalariaComponent,
     LinkRendererComponent,
-    RowDetalleComponent
+    RowDetalleComponent,
   ],
   imports: [
     BrowserModule,
@@ -219,7 +219,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     LoadingBarRouterModule,
 
     // Angular Bootstrap Components
-
     PerfectScrollbarModule,
     NgbModule,
     //AngularFontAwesomeModule,

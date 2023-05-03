@@ -7,9 +7,13 @@ import { ICellRendererParams, IAfterGuiAttachedParams } from 'ag-grid-community'
 @Component({
   selector: 'app-link-renderer',
   template: `
-    <a  *ngIf="label > 0" href="javascript:;" (click)="onClick($event)" style="color: #4B9FDE;">
+    <a  *ngIf="label > 0 && (field === 'monto_lima' || field === 'monto_chorrillos' || field === 'monto_surco' || field === 'monto_total')" href="javascript:;" (click)="onClick($event)" style="color: #4B9FDE;">
+    {{params.value | currency }}</a>
+    <a  *ngIf="label > 0 && !(field === 'monto_lima' || field === 'monto_chorrillos' || field === 'monto_surco' || field === 'monto_total')" href="javascript:;" (click)="onClick($event)" style="color: #4B9FDE;">
     {{params.value}}</a>
-    <span *ngIf="label == 0">
+    <span *ngIf="label == 0 && (field === 'monto_lima' || field === 'monto_chorrillos' || field === 'monto_surco' || field === 'monto_total')">
+    {{params.value | currency }}</span>
+    <span *ngIf="label == 0 && !(field === 'monto_lima' || field === 'monto_chorrillos' || field === 'monto_surco' || field === 'monto_total')">
     {{params.value}}</span>
     `
 })
@@ -19,12 +23,14 @@ export class LinkRendererComponent implements ICellRendererAngularComp {
   params;
   label: number;
   sucursal: string;
+  field: string;
   id_sede: string;
   agInit(params): void {
     let re2 = /\S\//gi;
     this.params = params;
     this.label = this.params.value.replace(re2, '').replace(',', '');
     this.sucursal = this.params.sucursal;
+    this.field = this.params.field;
   }
 
   refresh(params?: any): boolean {
@@ -32,7 +38,7 @@ export class LinkRendererComponent implements ICellRendererAngularComp {
   }
 
   onClick($event) {
-
+console.log(41, this.field)
     if (this.params.sucursal.toUpperCase() === 'LIMA'){
         this.id_sede = '0001';
       }else if (this.params.sucursal.toUpperCase() === 'CHORRILLOS'){
@@ -50,9 +56,11 @@ export class LinkRendererComponent implements ICellRendererAngularComp {
       const params = {
         event: $event,
         rowData: this.params.node.data,
-        sede: this.id_sede
+        sede: this.params.sucursal,
+        idSede: this.id_sede
         // ...something
       }
+      console.log(57, params)
       this.params.onClick(params);
 
     }

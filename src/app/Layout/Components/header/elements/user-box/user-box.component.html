@@ -48,11 +48,17 @@
                           </div>
                         </div>
                         <div class="widget-content-right mr-2">
-                          <button
+                          <button *ngIf="userWeb !== 'royal'"
                             (click)="cerrarSesion()"
                             class="btn-danger btn-shadow btn-shine btn"
                           >
                             Cerrar Sesión
+                          </button>
+                          <button *ngIf="userWeb === 'royal'"
+                            (click)="iniciarSesion()"
+                            class="btn-danger btn-shadow btn-shine btn"
+                          >
+                            Iniciar Sesión
                           </button>
                         </div>
                       </div>

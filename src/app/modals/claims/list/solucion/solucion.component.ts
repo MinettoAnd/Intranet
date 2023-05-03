@@ -10,6 +10,7 @@ import { DetalleInvolucradoComponent } from "../detalle/modal/detalle-involucrad
 import { FilesComponent } from "../detalle/modal/files/files.component";
 import { InfoclientComponent } from "../detalle/modal/infoclient/infoclient.component";
 import { RepresentanteComponent } from "../detalle/modal/representante/representante.component";
+import { environment } from "src/environments/environment";
 
 @Component({
     selector: "app-solucion",
@@ -621,8 +622,10 @@ export class SolucionComponent implements OnInit {
             });
     }
     openDocs(url) {
+        const ruta = environment.baseURL + "/upload/archivos/" + url;
         const data = {
-            url: url,
+            url: ruta,
+            name: url
         };
         const modalRef = this.modalService.open(DocsComponent, {
             size: <any>"xl",

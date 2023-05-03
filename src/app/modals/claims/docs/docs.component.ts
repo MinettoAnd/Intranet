@@ -15,6 +15,7 @@ export class DocsComponent implements OnInit {
 
   ngOnInit(): void {
     this.url;
+    console.log(18, this.dato)
   }
 
 }

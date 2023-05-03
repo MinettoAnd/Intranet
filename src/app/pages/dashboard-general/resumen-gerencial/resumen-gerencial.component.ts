@@ -155,13 +155,13 @@ export class ResumenGerencialComponent implements OnInit {
           }
          
        }) 
-      const menuItem3 = {
-        id: 3,
-        isDropDownMenu: false,
-        description: "JPRIC",
-        subMenuList: []
-      }
-       this.categories.push(menuItem3);
+      // const menuItem3 = {
+      //   id: 3,
+      //   isDropDownMenu: false,
+      //   description: "JPRIC",
+      //   subMenuList: []
+      // }
+      //  this.categories.push(menuItem3);
        if(this.subMenuItems.length > 0 ){
             const menuItem4 = {
               id: 4,
@@ -226,13 +226,13 @@ export class ResumenGerencialComponent implements OnInit {
           }
          
        }) 
-       const menuItem3 = {
-        id: 3,
-        isDropDownMenu: false,
-        description: "JPRIC",
-        subMenuList: []
-      }
-       this.categories.push(menuItem3);
+      //  const menuItem3 = {
+      //   id: 3,
+      //   isDropDownMenu: false,
+      //   description: "JPRIC",
+      //   subMenuList: []
+      // }
+      //  this.categories.push(menuItem3);
        if(this.subMenuItems.length > 0 ){
             const menuItem4 = {
               id: 4,
