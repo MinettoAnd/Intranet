@@ -229,7 +229,7 @@
                                           [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns1; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                             <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                               let-row="row">
-                                              <div class="{{value.replaceAll(' ', '-')}} {{column.prop}}">
+                                              <div [ngClass]="{'padding-l-10': (row.item.includes('Con Respuesta') || row.item.includes('Sin Respuesta')) && column.prop === 'item', 'padding-l-20': (row.item.includes('Con Compromiso de Pago')  || row.item.includes('Sin Compromiso de Pago') || row.item.includes('Contacto Equivocado') || row.item.includes('Otros')) && column.prop === 'item'}">
                                                 <span  [title]="value">{{value}}</span>
                                               </div>
                                               <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
@@ -293,7 +293,7 @@
                                             <ngx-datatable-column  [headerClass]="column.headerClass" [cellClass]="column.cellClass" [flexGrow]="1" [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns2; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                               <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                                 let-row="row">
-                                                <div class="{{value.replaceAll(' ', '-')}} {{column.prop}}">
+                                                <div [ngClass]="{'padding-l-10': (row.item.includes('Contratos Con Respuesta') || row.item.includes('Contratos Sin Respuesta')) && column.prop === 'item', 'padding-l-20': (row.item.includes('Con Compromiso de Pago')  || row.item.includes('Sin Compromiso de Pago') || row.item.includes('Contacto Equivocado') || row.item.includes('Otros')) && column.prop === 'item'}">
                                                   <span  [title]="value">{{value}}</span>
                                                 </div>
                                                 <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
@@ -379,7 +379,7 @@
                                         [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns3; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                           <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                             let-row="row">
-                                            <div class="{{value.replaceAll(' ', '-')}} {{column.prop}}">
+                                            <div [ngClass]="{'padding-l-10': (row.item.includes('Con Respuesta') || row.item.includes('Sin Respuesta')) && column.prop === 'item', 'padding-l-20': (row.item.includes('Con Compromiso de Pago')  || row.item.includes('Sin Compromiso de Pago') || row.item.includes('Contacto Equivocado') || row.item.includes('Otros')) && column.prop === 'item'}">
                                               <span  [title]="value">{{value}}</span>
                                             </div>
                                             <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
@@ -443,12 +443,12 @@
                                           <ngx-datatable-column  [headerClass]="column.headerClass" [cellClass]="column.cellClass" [flexGrow]="1" [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns4; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                             <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                               let-row="row">
-                                              <div class="{{value.replaceAll(' ', '-')}} {{column.prop}}">
+                                              <!-- <div class="{{value.replaceAll(' ', '-')}} {{column.prop}}">
+                                                <span  [title]="value">{{value}}</span>
+                                              </div> -->
+                                              <div [ngClass]="{'padding-l-10': (row.item.includes('Contratos Con Respuesta') || row.item.includes('Contratos Sin Respuesta')) && column.prop === 'item', 'padding-l-20': (row.item.includes('Con Compromiso de Pago')  || row.item.includes('Sin Compromiso de Pago') || row.item.includes('Contacto Equivocado') || row.item.includes('Otros')) && column.prop === 'item'}">
                                                 <span  [title]="value">{{value}}</span>
                                               </div>
-                                              <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
-                                                <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
-                                              </div> -->
     
                                             </ng-template>
                                             <!-- <ngx-datatable-column prop="per1">
