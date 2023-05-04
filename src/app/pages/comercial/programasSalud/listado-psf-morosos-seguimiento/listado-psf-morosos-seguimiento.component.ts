@@ -455,6 +455,7 @@ export class ListadoPSFMorososSeguimientoComponent implements OnInit {
         const form = this.filtroForm.value;
           this.fecha = moment(form.fecha).format('YYYY-MM-DD'),
           this.meses = form.meses,
+          this.contacto = form.contacto,
           this.tipo_paciente = form.tipo_paciente,
           this.planDeSalud = form.planDeSalud,
           this.accion = form.accion,

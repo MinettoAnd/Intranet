@@ -1668,7 +1668,7 @@ private getPagedData(page: Page, data: any[]) {
   
     exportToExcel(numberTabla): void {
       if(numberTabla === 1){
-        this.exportService.exportTableElmToExcel(this.rows1, 'MENSUAL - INGRESOS POR CUOTAS-INGRESO SIN IGV');
+        this.exportService.exportTableElmToExcel(this.rows1filtered, 'MENSUAL - INGRESOS POR CUOTAS-INGRESO SIN IGV');
       }else if (numberTabla === 2){
         this.exportService.exportTableElmToExcel(this.rows2, 'MENSUAL - INGRESOS POR CUOTAS-INGRESO SIN IGV');
       }else if (numberTabla === 3){
