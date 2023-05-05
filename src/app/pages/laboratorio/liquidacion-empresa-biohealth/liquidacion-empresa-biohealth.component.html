@@ -127,10 +127,10 @@
                                                       [rowClass] = "getRowClass"
                                                       >
                                                       <ngx-datatable-column [flexGrow]="1" 
-                                                      [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns1; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                                      [minWidth]="90" [pipe]="column.pipe" [headerClass]="column.headerClass" [cellClass]="column.cellClass" *ngFor="let column of columns1; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                                           let-row="row">
-                                                          <div>
+                                                          <div [ngClass]="{'text-center': row.Grupo.includes('TOTAL')}">
                                                             <span  [title]="value">{{value}}</span>
                                                           </div>      
                                                         </ng-template>
@@ -138,7 +138,7 @@
                                                     </ngx-datatable>
                                                   </div>
                                                   <div class="col-md-4">
-                                                    <div class="callout text-center p-3">
+                                                    <div class="callout text-center mt-2 p-3">
                                                       <h4 class="box-title">PRECIO DE VENTA POR SUCURSAL</h4>
                                                     </div>
                                                     <div class="pl-3 pr-3" *ngFor="let percentageCompleted of progressBar1; let i = index;">
@@ -186,7 +186,7 @@
                                                         (page)="setPage($event)"
                                                         [rowClass] = "getRowClass2"
                                                         >
-                                                        <ngx-datatable-column [flexGrow]="1" [minWidth]="80" [pipe]="column.pipe" *ngFor="let column of columns2; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                                        <ngx-datatable-column [flexGrow]="1" [minWidth]="80" [headerClass]="column.headerClass" [cellClass]="column.cellClass" [pipe]="column.pipe" *ngFor="let column of columns2; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                           <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                                             let-row="row">
                                                             <div>
@@ -197,7 +197,7 @@
                                                       </ngx-datatable>
                                                     </div>
                                                     <div class="col-md-4">
-                                                      <div class="callout text-center p-3">
+                                                      <div class="callout text-center mt-2 p-3">
                                                         <h4 class="box-title">PRECIO DE VENTA POR TIPO DE ATENCION</h4>
                                                       </div>
                                                       <div class="pl-3 pr-3" *ngFor="let percentageCompleted of progressBar2; let i = index;">
@@ -245,7 +245,7 @@
                                                       [limit]="20"
                                                       [rowClass] = "getRowClass1"
                                                       >
-                                                      <ngx-datatable-column [flexGrow]="1" [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns3; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                                      <ngx-datatable-column [flexGrow]="1" [minWidth]="90" [headerClass]="column.headerClass" [cellClass]="column.cellClass" [pipe]="column.pipe" *ngFor="let column of columns3; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                                           let-row="row">
                                                           <div>
@@ -291,10 +291,10 @@
                                                     [rowClass] = "getRowClass"
                                                     [limit]="20"
                                                     >
-                                                    <ngx-datatable-column [flexGrow]="1" [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns4; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                                    <ngx-datatable-column [flexGrow]="1" [minWidth]="90" [headerClass]="column.headerClass" [cellClass]="column.cellClass" [pipe]="column.pipe" *ngFor="let column of columns4; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                                         let-row="row">
-                                                        <div>
+                                                        <div [ngClass]="{'text-center': row.Grupo.includes('TOTAL')}">
                                                           <span  [title]="value">{{value}}</span>
                                                         </div>
                                                         <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
@@ -405,7 +405,7 @@
                                                   id="datatablele5"
                                                     [columns]="columns5"
                                                     [rows]="rows5"
-                                                    [columnMode]="ColumnMode.force"
+                                                    [columnMode]="ColumnMode.flex"
                                                     [headerHeight]="50"
                                                     [footerHeight]="65"
                                                     [rowHeight]="$any('auto')"
@@ -416,7 +416,7 @@
                                                     (activate)="onActivate($event)"
                                                     (select)='onSelect($event)'
                                                     >
-                                                    <ngx-datatable-column [flexGrow]="1" [minWidth]="10"  [width]="column.width" [pipe]="column.pipe" *ngFor="let column of columns5; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                                    <ngx-datatable-column [flexGrow]="1" [minWidth]="10" [headerClass]="column.headerClass" [cellClass]="column.cellClass" [width]="column.width" [pipe]="column.pipe" *ngFor="let column of columns5; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                                         let-row="row">
                                                         <div>
@@ -492,7 +492,7 @@
                                                     [selectionType]="SelectionType.single"
                                                     (select)='open($event)'
                                                     >
-                                                    <ngx-datatable-column [flexGrow]="1" [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns6; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                                    <ngx-datatable-column [flexGrow]="1" [minWidth]="90" [headerClass]="column.headerClass" [cellClass]="column.cellClass" [pipe]="column.pipe" *ngFor="let column of columns6; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                                         let-row="row">
                                                          
@@ -535,7 +535,7 @@
                                                     [scrollbarH]="true"
                                                     [limit]="5"
                                                     >
-                                                    <ngx-datatable-column [flexGrow]="1" [minWidth]="90" *ngFor="let column of columnsMedicoRecord; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                                    <ngx-datatable-column [flexGrow]="1" [minWidth]="90" [headerClass]="column.headerClass" [cellClass]="column.cellClass" *ngFor="let column of columnsMedicoRecord; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                                         let-row="row">
                                                         <div>

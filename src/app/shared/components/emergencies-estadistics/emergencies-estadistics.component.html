@@ -491,7 +491,7 @@
                                                     <ngx-datatable-column [flexGrow]="1" [minWidth]="90" [headerClass]="column.headerClass" [cellClass]="column.cellClass" *ngFor="let column of columns1; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                                         let-row="row">
-                                                        <div>
+                                                        <div [ngClass]="{'text-center': row.GRUPO2.includes('Total')}">
                                                           <span  [title]="value">{{value}}</span>
                                                         </div>
                                                         <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
@@ -571,7 +571,7 @@
                                                     <ngx-datatable-column [flexGrow]="1" [minWidth]="90" [headerClass]="column.headerClass" [cellClass]="column.cellClass" *ngFor="let column of columns2; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                                         let-row="row">
-                                                        <div>
+                                                        <div [ngClass]="{'text-center': row.RANGO.includes('Total')}">
                                                           <span  [title]="value">{{value}}</span>
                                                         </div>
                                                         <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
@@ -1099,12 +1099,12 @@
                                                       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                                         let-row="row">
                                                          
-                                                        <div *ngIf="column.prop !== 'MEDICO'">
+                                                        <div [ngClass]="{'text-center': row.GRUPO2.includes('Total')}">
                                                           <span  [title]="value">{{value}}</span>
                                                         </div>
-                                                        <div *ngIf="column.prop === 'MEDICO'">
+                                                        <!-- <div *ngIf="column.prop === 'MEDICO'">
                                                           <span  [title]="value"><a href="javascript:;" (click)="open($event, content)" style="color: #4B9FDE;">{{value}}</a></span>
-                                                        </div>
+                                                        </div> -->
                                                         <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
                                                           <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
                                                         </div> -->
@@ -1203,7 +1203,7 @@
                                                     <ngx-datatable-column [flexGrow]="1" [minWidth]="90" [headerClass]="column.headerClass" [cellClass]="column.cellClass" *ngFor="let column of columns7; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                                         let-row="row">
-                                                        <div>
+                                                        <div [ngClass]="{'text-center': row.RANGO.includes('Total')}">
                                                           <span  [title]="value">{{value}}</span>
                                                         </div>
                                                       </ng-template>

@@ -363,7 +363,7 @@ export class LiquidacionEmpresaBiohealthComponent implements OnInit {
                       cobraBIOHEALTH : totalcobraBIOHEALTH,
                       porcBIOHEALTH : totalporcCobraBIOHEALTH
                     }
-                    // console.log(344, total)
+                    console.log(344, this.rows1)
                     this.rows1.push(total);
                   //   this.rows1filtered = this.rows1.filter(item => item.GRUPO3 === 'CANTIDAD');
                     this.columns2 = response.data.cabeceras_SucTAtencion;
@@ -444,7 +444,7 @@ export class LiquidacionEmpresaBiohealthComponent implements OnInit {
                       cobraBIOHEALTH : totalcobraBIOHEALTH1,
                       porcBIOHEALTH : totalporcCobraBIOHEALTH1
                     }
-                    console.log(344, total1)
+                    console.log(344, this.rows4)
                     this.rows4.push(total1);
                     // this.temp4 = this.rows4;
                     this.columns5 = response.data.cabeceras_pago_empresa;

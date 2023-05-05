@@ -503,10 +503,10 @@
                                                     (page)="setPage($event)"
                                                     [rowClass]="getRowClass1"
                                                     >
-                                                    <ngx-datatable-column [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns1; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                                    <ngx-datatable-column [flexGrow]="1" [minWidth]="90" [headerClass]="column.headerClass" [cellClass]="column.cellClass" *ngFor="let column of columns1; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                                         let-row="row">
-                                                        <div>
+                                                        <div [ngClass]="{'text-center': row.GRUPO2.includes('Total')}">
                                                           <span  [title]="value">{{value}}</span>
                                                         </div>
                                                         <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
@@ -583,10 +583,10 @@
                                                     (page)="setPage($event)"
                                                     [rowClass] = "getRowClass2"
                                                     >
-                                                    <ngx-datatable-column [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns2; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                                    <ngx-datatable-column [flexGrow]="1" [minWidth]="90" [headerClass]="column.headerClass" [cellClass]="column.cellClass" *ngFor="let column of columns2; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                                         let-row="row">
-                                                        <div>
+                                                        <div [ngClass]="{'text-center': row.RANGO.includes('Total')}">
                                                           <span  [title]="value">{{value}}</span>
                                                         </div>
                                                         <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
@@ -684,7 +684,7 @@
                                                     [summaryRow]="enableSummary"
                                                     [summaryPosition]="summaryPosition"
                                                     >
-                                                    <ngx-datatable-column [flexGrow]="1"
+                                                    <ngx-datatable-column [flexGrow]="1" [headerClass]="column.headerClass" [cellClass]="column.cellClass"
                                                     [summaryFunc]="column.prop == 'GRUPOEM' || column.prop == 'TipoPacienteNombre' || column.prop == 'idEmpresa' ? summaryNull:summaryForAmount"
                                                     [minWidth]="90" *ngFor="let column of columns3; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
@@ -786,7 +786,7 @@
                                                     [summaryPosition]="summaryPosition"
            
                                                     >
-                                                    <ngx-datatable-column [flexGrow]="1" 
+                                                    <ngx-datatable-column [flexGrow]="1" [headerClass]="column.headerClass" [cellClass]="column.cellClass" 
                                                     [summaryFunc]="column.prop == 'CIE10' ? summaryNull:summaryForAmount"
                                                     [minWidth]="90" *ngFor="let column of columns4; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
@@ -889,7 +889,7 @@
                                                     (activate)="onActivate($event)"
                                                     (select)='onSelect($event)'
                                                     >
-                                                    <ngx-datatable-column [flexGrow]="1" 
+                                                    <ngx-datatable-column [flexGrow]="1" [headerClass]="column.headerClass" [cellClass]="column.cellClass"
                                                     [summaryFunc]="summaryForAmount"
                                                     [minWidth]="90" *ngFor="let column of columns5; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
@@ -983,7 +983,7 @@
                                                     [scrollbarH]="true"
                                                     [limit]="page4.size"
                                                     >
-                                                    <ngx-datatable-column [flexGrow]="1" [minWidth]="90" *ngFor="let column of columnsMedicos; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                                    <ngx-datatable-column [flexGrow]="1" [minWidth]="90" [headerClass]="column.headerClass" [cellClass]="column.cellClass" *ngFor="let column of columnsMedicos; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                                         let-row="row">
                                                         <div>
