@@ -1207,6 +1207,7 @@ private getPagedData(page: Page, data: any[]) {
                   })
                   this.formatPipe(this.rows1);
                   this.rows1filtered = this.rows1.filter(item => item.GRUPO3 === 'CANTIDAD');
+                  console.log(1210, this.rows1filtered)
                   this.columns2 = response.data.cabeceras_rangoetareo;
                   this.rows2 = response.data.tabla_rangoetareo;
                   const totalRango = {
@@ -1350,7 +1351,7 @@ private getPagedData(page: Page, data: any[]) {
                   this.rows6filtered = this.rows6.filter(item => item.GRUPO3 === 'CANTIDAD');
                   this.columns7 = response.data.cabeceras_rangoetareo_anual;
                   this.rows7 = response.data.tabla_rangoetareo_anual;
-                  // console.log(1153, this.rows7);
+                  console.log(1153, this.rows6filtered);
                   const totalRango7 = {
                     RANGO: '',
                     PER1: 0,

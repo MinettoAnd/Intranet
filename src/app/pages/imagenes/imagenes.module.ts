@@ -5,14 +5,17 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-
+import { EstadisticasComponent } from './estadisticas/estadisticas.component';
+import { AgGridModule } from 'ag-grid-angular';
 
 
 @NgModule({
   declarations: [
-    ImpresionInformesRealizadosComponent
+    ImpresionInformesRealizadosComponent,
+    EstadisticasComponent
   ],
   imports: [
+    AgGridModule.withComponents([]),
     CommonModule,
     NgxDatatableModule,
     NgbModule,
@@ -22,6 +25,10 @@ import { RouterModule } from '@angular/router';
       {
         path: 'impresion-informes-realizados',
         component: ImpresionInformesRealizadosComponent
+      },
+      {
+        path: 'estadisticas',
+        component: EstadisticasComponent
       },
     ])
   ],

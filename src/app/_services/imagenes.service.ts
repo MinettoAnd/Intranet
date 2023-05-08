@@ -46,5 +46,10 @@ export class ImagenesService {
     this.loadTableApiDataURL = `${environment.api_url}imgsImprimir`;
     return this.http.post(this.loadTableApiDataURL, data);
   }
+  // Estadísticas
+  imgsEstadisticasGetResumen(data): Observable<any> {
+    this.loadTableApiDataURL = `${environment.api_url}imgsEstadisticasGetResumen`;
+    return this.http.post(this.loadTableApiDataURL, data);
+  }
 }
 
