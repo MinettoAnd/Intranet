@@ -904,7 +904,8 @@ export class JPRICComponent implements OnInit {
                     count = count + +cell.replace(re, '');
                     // console.log(722,cell, count)
               }else if (cell.indexOf('-') > -1) {
-                    count = count + 0;
+                    // count = count + 0;
+                    count = count - -cell.replace(re, '');
               }else if (cell.indexOf('(') > -1) {
                 let number = cell.replace('(', '').replace(')', '');
                 count = count - +number.replace(re, '');
@@ -940,7 +941,8 @@ export class JPRICComponent implements OnInit {
                     count = count + +cell.replace(re, '');
                     // console.log(722,cell, count)
               }else if (cell.indexOf('-') > -1) {
-                    count = count + 0;
+                    // count = count + 0;
+                    count = count - -cell.replace(re, '');
               }else if (cell.indexOf('(') > -1) {
                 let number = cell.replace('(', '').replace(')', '');
                 count = count - +number.replace(re, '');

@@ -4,7 +4,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { NgBlockUI, BlockUI } from 'ng-block-ui';
 import { PerfectScrollbarDirective, PerfectScrollbarComponent, PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import Swal from 'sweetalert2';
-import { ExternalConsultationService } from '../../../_services/external-consultation.service';
+import { FacturacionService } from '../../../_services/facturacion.service';
 import {AttentionConsultation} from '../../../interfaces/attentionConsultation';
 import {ApiResponse} from '../../../interfaces/response';
 import * as moment from 'moment';
@@ -71,17 +71,19 @@ export class ReporteExpedientesComponent implements OnInit {
   selectedOptionTipo2='cantidad';
   progressBarLabels;
   progressBar1;
-  porcCompaMesAntRealizas;
-  porcCompaMesAntAusentismo;
-  porcCompaMesAntReservadas;
+  total_monto;
+  monto_prom_alta;
+  monto_prom_alta_dia;
   totales;
-  id_sede = '0001';
+  id_sede = '0000';
   CMP;
   Medico;
   filtroForm: FormGroup;
   mes = moment(new Date()).format('MM');
   anio = moment(new Date()).format('YYYY');
   periodo_consulta = this.anio + this.mes;
+  enableSummary = true;
+  summaryPosition = 'bottom';
   public breadcrumb: any;
   parameters;
   resumenMes:any = {
@@ -143,6 +145,22 @@ export class ReporteExpedientesComponent implements OnInit {
   rows9: any[];
   columns10: any;
   rows10: any[];
+
+  columns11: any;
+  rows11: any[];
+  columns12: any;
+  rows12: any[];
+  columns13: any;
+  rows13: any[];
+  columns14: any;
+  rows14: any[];
+  columns15: any;
+  rows15: any[];
+  columns16: any;
+  rows16: any[];
+  columns17: any;
+  rows17: any[];
+
   medicos = false;
   columnsMedicos: any[];
   rowsMedicos: any[];
@@ -175,8 +193,12 @@ export class ReporteExpedientesComponent implements OnInit {
       flex: "1 1 auto",
   };
   changeTable: boolean;
-
-  constructor(private tableApiservice: ExternalConsultationService, private exportService: ExportService,
+  convenio:string = '000000';
+  origen:string= '0';
+  data:any;
+  message;
+  title;
+  constructor(private tableApiservice: FacturacionService, private exportService: ExportService,
     private _cp: CurrencyPipe, private modalService: NgbModal) { 
       this.page1.pageNumber = 0;
       this.page1.size = 10;
@@ -187,9 +209,11 @@ export class ReporteExpedientesComponent implements OnInit {
       this.page4.pageNumber = 0;
       this.page4.size = 10;
     this.filtroForm = new FormGroup({
-      id_sede: new FormControl("0001"),
+      id_sede: new FormControl(this.id_sede),
       mes: new FormControl(this.mes),
       anio: new FormControl(this.anio),
+      convenio: new FormControl(this.convenio),
+      origen: new FormControl(this.origen),
     });
     var anioOp = Number(this.anio);
     while ( Number(anioOp) > 2017 ) {
@@ -203,20 +227,26 @@ export class ReporteExpedientesComponent implements OnInit {
     }
     this.rowClassRules = {
       "totals": function(params) {
-        //  console.log(301, params); 
+         console.log(301, params); 
         var totales;
-        if(params.data.sucursal !== undefined){
-          totales = params.data.sucursal;
+        if(params.data.aseguradora_Nombre !== undefined){
+          totales = params.data.aseguradora_Nombre;
         }else if(params.data.grupo !== undefined){
           totales = params.data.grupo;
         }
         return totales === 'TOTAL';
       },
-      "sick-days-breach": "data.sickDays > 8"
     };
     this.changeTable = false;
   }
-
+  CurrencyCellRendererPEN(params: any) {
+    var inrFormat = new Intl.NumberFormat('es-PE', {
+      style: 'currency',
+      currency: 'PEN',
+      minimumFractionDigits: 2,
+    });
+    return inrFormat.format(params.value);
+  }
   ngOnInit(){
 
     // this.setPage({ offset: 0 });
@@ -228,7 +258,8 @@ export class ReporteExpedientesComponent implements OnInit {
       this.mes = form.mes,
       this.anio = form.anio,
       this.periodo_consulta = form.anio + form.mes,
-
+      this.convenio = form.convenio,
+      this.origen = form.origen,
     this.setPage({ offset: 0 });
 }
   async loading() {
@@ -266,7 +297,8 @@ export class ReporteExpedientesComponent implements OnInit {
     //   return {'totals': row.item.includes('TOTAL') || row.item.includes('COLECTIVA') }
     // }
     return {
-      'totals': row.GRUPO2.includes('TOTAL'), 'sub-totals': row.GRUPO2 === 'PROGRAMA DE SALUD' || row.GRUPO2 === 'CONVENIOS' || row.GRUPO2 ==='SEGUROS' || row.GRUPO2 ==='OTROS'
+      'totals': row.Grupo.includes('TOTAL'), 'sub-totals': row.Grupo === 'BOLETA DE VENTA' || row.Grupo === 'FACTURA' || row.Grupo ==='NOTA DE CREDITO'
+      || row.Grupo ==='AMBULATORIA' || row.Grupo ==='EMERGENCIA' || row.Grupo ==='HOSPITALIZACION'
     };
   }
   getRowClass1(row) {
@@ -275,7 +307,7 @@ export class ReporteExpedientesComponent implements OnInit {
     //   return {'totals': row.item.includes('TOTAL') || row.item.includes('COLECTIVA') }
     // }
     return {
-      'sub-totals': row.condicion.includes('AUSENTISMO') || row.condicion.includes('REPROGRAMACIONES') || row.condicion === 'TURNOS POR INASISTENCIA MEDICA'
+      // 'sub-totals': row.condicion.includes('AUSENTISMO') || row.condicion.includes('REPROGRAMACIONES') || row.condicion === 'TURNOS POR INASISTENCIA MEDICA'
     };
   }
   getRowClass3(row) {
@@ -284,15 +316,15 @@ export class ReporteExpedientesComponent implements OnInit {
     //   return {'totals': row.item.includes('TOTAL') || row.item.includes('COLECTIVA') }
     // }
 
-    if (row.sucursal !== undefined){
-      return {
-        'totals': row.sucursal.includes('TOTAL')
-      };
-    }else if (row.grupo !== undefined ){
-      return {
-        'totals': row.grupo.includes('TOTAL')
-      };
-    } 
+    // if (row.sucursal !== undefined){
+    //   return {
+    //     'totals': row.sucursal.includes('TOTAL')
+    //   };
+    // }else if (row.grupo !== undefined ){
+    //   return {
+    //     'totals': row.grupo.includes('TOTAL')
+    //   };
+    // } 
   }
   public onAnioChange(anio: any): void {
     this.anio = anio;
@@ -405,28 +437,101 @@ export class ReporteExpedientesComponent implements OnInit {
       console.log(pageInfo);
       // this.page.pageNumber = pageInfo.offset;
       this.parameters = {
-        // periodo_consulta:this.periodo_consulta,
-        sede: this.id_sede,
-        mes: this.mes,
         // meses: this.mes,
         anio: this.anio,
-        chkena: 'on',
-        typepie: 'IN',
-        tipo: 'RERE'
+        mes: this.mes,
+        periodo:this.periodo_consulta,
+        convenio: this.convenio,
+        origen: this.origen,
+        sede: this.id_sede,
+
         // pageNumber: this.page.pageNumber,
         // size: this.page.size
       };
 
       this.loading();
-            this.tableApiservice.getCeResumenGeneralProcesar(this.parameters).subscribe(
+            this.tableApiservice.getFacReporteExpedientes(this.parameters).subscribe(
                 (response) => {
-                  
                   if(response.success){
-                    this.resumenMes = response.data;
+                    this.data = response.data ? response.data : [];
+                    this.title = this.data.titulo;
+                    this.total_monto = this.data.total_monto
+                    this.monto_prom_alta = this.data.monto_prom_alta
+                    this.monto_prom_alta_dia = this.data.monto_prom_alta_dia
+                    this.columns1 = this.data.cabeceras_expedientes_facturado_tdoc_soles
+                    this.rows1 = this.data.tabla_expedientes_facturado_tdoc_soles
+
+                    this.columns2 = this.data.cabeceras_expedientes_facturado_tdoc_cantidad
+                    this.rows2 = this.data.tabla_expedientes_facturado_tdoc_cantidad
+
+                    this.columns3 = this.data.cabeceras_expedientes_facturado_soles
+                    this.rows3 = this.data.tabla_expedientes_facturado_soles
+
+                    this.columns4 = this.data.cabeceras_expedientes_facturado_cantidad
+                    this.rows4 = this.data.tabla_expedientes_facturado_cantidad
+
+                    this.columns5 = this.data.cabeceras_expedientes_facturado_tpac_soles
+                    this.rows5 = this.data.tabla_expedientes_facturado_tpac_soles
+
+                    this.columns6 = this.data.cabeceras_expedientes_facturado_tpac_cantidad
+                    this.rows6 = this.data.tabla_expedientes_facturado_tpac_cantidad
+
+                    this.columns7 = this.data.cabeceras_expedientes_HTServ_soles
+                    this.rows7 = this.data.tabla_expFacturado_HTServ_soles
+
+                    this.columns8 = this.data.cabeceras_expedientes_HTServ_cantidad
+                    this.rows8 = this.data.tabla_expFacturado_HTServ_cantidad
+
+                    this.columns9 = this.data.cabeceras_expedientes_HTServPromDiaPac_soles
+                    this.rows9 = this.data.tabla_expFacturado_HTServPromDiaPac_soles
+
+                    this.columns10 = this.data.cabeceras_expedientes_HTServ_cantidadTotal
+                    this.rows10 = this.data.tabla_expFacturado_HTServ_cantidadTotal
+
+
+
+                    this.columns11 = this.data.cabeceras_expedientes_facturado_emp
+                    this.columns11.map(item => {
+                      // console.log(301, item)
+                      if(item.children){
+                        item.children.map(subitem =>{
+                          if(subitem.field !== 'tipoPaciente_Nombre' && subitem.field !== 'aseguradora_Nombre' && subitem.field !== 'conteo_lima' && subitem.field !== 'conteo_chorrillos' && subitem.field !== 'conteo_surco' && subitem.field !== 'conteo_total' ){
+                            subitem.cellRenderer = this.CurrencyCellRendererPEN
+                          }
+                       })
+                      }
+                    })
+                    this.rows11 = this.data.tabla_expedientes_facturado_emp
+
+
+                    this.columns12 = this.data.cabeceras_expedientes_pendientes_soles
+                    this.rows12 = this.data.tabla_expedientes_pendientes_soles
+                    this.columns13 = this.data.cabeceras_expedientes_pendientes_cantidad
+                    this.rows13 = this.data.tabla_expedientes_pendientes_cantidad
+                    this.columns14 = this.data.cabeceras_expedientes_pendientes_estado_soles
+                    this.rows14 = this.data.tabla_expedientes_pendientes_estado_soles
+                    this.columns15 = this.data.cabeceras_expedientes_pendientes_estado_cantidad
+                    this.rows15 = this.data.tabla_expedientes_pendientes_estado_cantidad
+                    this.columns16 = this.data.cabeceras_expedientes_pendientes_aseguradora
+                    this.columns16.map(item => {
+                      // console.log(301, item)
+                      if(item.children){
+                        item.children.map(subitem =>{
+                          if(subitem.field !== 'idEmpresaAseguradora' && subitem.field !== 'aseguradoraNombre' && subitem.field !== 'conteo_lima' && subitem.field !== 'conteo_chorrillos' && subitem.field !== 'conteo_surco' && subitem.field !== 'conteo_total' ){
+                            subitem.cellRenderer = this.CurrencyCellRendererPEN
+                          }
+                       })
+                      }
+                    })
+                    this.rows16 = this.data.tabla_expedientes_pendientes_aseguradora
+
+                    this.columns17 = this.data.cabeceras_expedientes_facturado_alta_lista
+                    this.rows17 = this.data.tabla_expedientes_facturado_alta_lista
+                    // this.resumenMes = response.data;
                     
-                     this.porcMedico =  ( this.resumenMes.medico / this.resumenMes.ausentismo) * 100;
-                      this.porcPaciente = (this.resumenMes.paciente / this.resumenMes.ausentismo) * 100;
-                      this.porcAnuladas = (this.resumenMes.anuladas / this.resumenMes.ausentismo) * 100;
+                    //  this.porcMedico =  ( this.resumenMes.medico / this.resumenMes.ausentismo) * 100;
+                    //   this.porcPaciente = (this.resumenMes.paciente / this.resumenMes.ausentismo) * 100;
+                    //   this.porcAnuladas = (this.resumenMes.anuladas / this.resumenMes.ausentismo) * 100;
                     
 
                      
@@ -441,7 +546,7 @@ export class ReporteExpedientesComponent implements OnInit {
   }
   public onLimitChange(limit: any, numberT): void {
     this.changePageLimit(limit, numberT);
-    this.setPage({ offset: 0 });
+    // this.setPage({ offset: 0 });
 
   }
 
@@ -686,17 +791,17 @@ export class ReporteExpedientesComponent implements OnInit {
         CheckF: 1
       }
       this.loading();
-      this.tableApiservice.getCeMedicosStatistics(parameters).subscribe(
-        (response) =>{
-          this.columnsMedicos = response.data.cabeceras;
-          this.rowsMedicos = response.data.tabla_medicos_anual;
-          this.tempRowsMedicos = this.rowsMedicos
-          Swal.close();
-        },
-        (error) => {
-            Swal.close();
-        }
-      );
+      // this.tableApiservice.getCeMedicosStatistics(parameters).subscribe(
+      //   (response) =>{
+      //     this.columnsMedicos = response.data.cabeceras;
+      //     this.rowsMedicos = response.data.tabla_medicos_anual;
+      //     this.tempRowsMedicos = this.rowsMedicos
+      //     Swal.close();
+      //   },
+      //   (error) => {
+      //       Swal.close();
+      //   }
+      // );
 
     }
     onActivate(event) {
@@ -717,14 +822,14 @@ export class ReporteExpedientesComponent implements OnInit {
           MesF: this.mes,
           SedeF: this.id_sede,
         }
-         this.tableApiservice.getCeMedicosRecord(parameters).subscribe(
-          (response) =>{ console.log(1155, response);
-            this.columnsMedicoRecord = response.data.cabeceras;
-            this.rowsMedicoRecord = response.data.tabla_medico_record;
-            this.rowsMedicoRecord.map(item=>{
-              console.log(item);
-            })
-        });
+        //  this.tableApiservice.getCeMedicosRecord(parameters).subscribe(
+        //   (response) =>{ console.log(1155, response);
+        //     this.columnsMedicoRecord = response.data.cabeceras;
+        //     this.rowsMedicoRecord = response.data.tabla_medico_record;
+        //     this.rowsMedicoRecord.map(item=>{
+        //       console.log(item);
+        //     })
+        // });
         
       }else{
         this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
@@ -743,6 +848,88 @@ export class ReporteExpedientesComponent implements OnInit {
       } else {
         return `with: ${reason}`;
       }
+    }
+    summaryForAmount(cells: any){
+      console.log(1215, cells);
+      let count: number = 0;
+      let re = /\,/gi;
+      let re1 = /\S\/./gi;
+      let re2 = /\S\//gi;
+          
+          cells.filter((cell) => {
+              cell = cell.toString();
+              if (cell != null && cell != undefined) {
+                
+                if (cell.indexOf('S/') > -1){  
+                  count = count + +cell.replace(re2, '').replace(',', '');
+                }else if (!(cell.indexOf('-') > -1 || cell.indexOf('(') > -1)) {
+                 
+                      count = count + +cell.replace(re, '');
+                      // console.log(722,cell, count)
+                }else if (cell.indexOf('-') > -1) {
+                  console.log(719, typeof cell, cell)
+                      count = count - -cell.replace(re, '');
+                }else if (cell.indexOf('(') > -1) {
+                  let number = cell.replace('(', '').replace(')', '');
+                  count = count - +number.replace(re, '');
+                }
+              }
+          });
+          
+          if(!count){
+            return count.toString().replace('NaN', 'Total');
+          }else if (count.toString().indexOf('.') > -1){
+  
+            return count.toString().indexOf('-') > -1 ? count.toLocaleString().replace('-', '(').concat(')') : 'S/ ' + count.toLocaleString();
+          }else{
+            // console.log(515, cells);
+            return count.toString().indexOf('-') > -1 ? count.toLocaleString().replace('-', '(').concat(')') : count.toLocaleString();
+          }
+    }
+    summaryForAmount2(cells: any){
+      // console.log(cells);
+      let count: number = 0;
+      let re = /\,/gi;
+      let re1 = /\S\/./gi;
+      let re2 = /\S\//gi;
+          
+          cells.filter((cell) => {
+              cell = cell.toString();
+              if (cell != null && cell != undefined) {
+                
+                if (cell.indexOf('S/') > -1){  
+                  count = count + +cell.replace(re2, '').replace(',', '');
+                }else if (!(cell.indexOf('-') > -1 || cell.indexOf('(') > -1)) {
+                //  console.log(719, typeof cell, count)
+                      count = count + +cell.replace(re, '');
+                      // console.log(722,cell, count)
+                }else if (cell.indexOf('-') > -1) {
+                      // count = count + 0;
+                      count = count - -cell.replace(re, '');
+                }else if (cell.indexOf('(') > -1) {
+                  let number = cell.replace('(', '').replace(')', '');
+                  count = count - +number.replace(re, '');
+                }
+              }
+          });
+          
+          if(!count){
+            return count.toString().replace('NaN', 'Total');
+          }else if (count.toString().indexOf('.') > -1){
+            
+              return count.toString().indexOf('-') > -1 ? count.toLocaleString().replace('-', '(').concat(')') : Math.round(count);
+            
+          }else{
+            // console.log(515, cells);
+            return count.toString().indexOf('-') > -1 ? count.toLocaleString().replace('-', '(').concat(')') : count;
+          }
+    }
+    private summaryNull(cells: any): string {
+      // if (cells[0] !== 'TODAS' && cells[0] !== 'LIMA' && cells[0] !== 'CHORRILLOS' && cells[0] !== 'SURCO'){
+      //   console.log(739, cells.cell)
+      //     return 'TOTAL';
+      // }
+      return 'TOTAL';
     }
 }
 

@@ -2200,7 +2200,8 @@ private getPagedData(page: Page, data: any[]) {
                 }else if (!(cell.indexOf('-') > -1 || cell.indexOf('(') > -1)) {
                       count = count + +cell.replace(re, '');
                 }else if (cell.indexOf('-') > -1) {
-                      count = count + 0;
+                      // count = count + 0;
+                      count = count - -cell.replace(re, '');
                 }else if (cell.indexOf('(') > -1) {
                   let number = cell.replace('(', '').replace(')', '');
                   count = count - +number.replace(re, '');
