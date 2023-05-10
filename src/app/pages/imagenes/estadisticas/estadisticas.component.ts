@@ -699,7 +699,24 @@ export class EstadisticasComponent implements OnInit {
     this.tableApiservice.imgsEstadisticasGetResumen(this.parameters).subscribe(
       (response) => {
         this.rows = [];
-        
+        this.barChartLabels1 = [];
+        this.barChartLabels2 = [];
+        this.barChartData1 = [];
+        this.barChartData2 = [];
+        this.barChartData3 = [];
+        this.barChartData4 = [];
+      
+        this.barChartData5 = [];
+        this.barChartData6 = [];
+        this.barChartData7 = [];
+        this.barChartData8 = [];
+      
+        this.barChartData9 = [];
+        this.barChartData10 = [];
+        this.barChartData11 = [];
+        this.barChartData12 = [];
+        this.barChartData13 = [];
+        this.barChartData14 = [];
         if(response.data.success){
           this.data = response.data ? response.data : [];
           this.title = this.data.titulo;
@@ -1835,7 +1852,8 @@ export class EstadisticasComponent implements OnInit {
                     count = count + +cell.replace(re, '');
                     // console.log(722,cell, count)
               }else if (cell.indexOf('-') > -1) {
-                    count = count + 0;
+                    // count = count + 0;
+                    count = count - -cell.replace(re, '');
               }else if (cell.indexOf('(') > -1) {
                 let number = cell.replace('(', '').replace(')', '');
                 count = count - +number.replace(re, '');
@@ -1871,7 +1889,8 @@ export class EstadisticasComponent implements OnInit {
                     count = count + +cell.replace(re, '');
                     // console.log(722,cell, count)
               }else if (cell.indexOf('-') > -1) {
-                    count = count + 0;
+                    // count = count + 0;
+                    count = count - -cell.replace(re, '');
               }else if (cell.indexOf('(') > -1) {
                 let number = cell.replace('(', '').replace(')', '');
                 count = count - +number.replace(re, '');
