@@ -105,10 +105,10 @@
                     </div>
                     </form>
                     <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs" style="justify-content: end;">
-                        <li [ngbNavItem]="1">
+                        <li [ngbNavItem]="1" >
                             <a ngbNavLink>FACTURADO</a>
-                            <ng-template ngbNavContent>
-                                <div class="card">
+                            <ng-template ngbNavContent >
+                                <div class="card" *ngIf="action">
                                     <div class="card-header">
                                       <h4 class="card-title" style="bottom:13px;">{{title}}</h4>
                                       <p>{{message}}</p>
@@ -831,10 +831,10 @@
                                 </div>
                             </ng-template>
                         </li>
-                        <li [ngbNavItem]="2">
+                        <li [ngbNavItem]="2" >
                             <a ngbNavLink>FACTURADO POR EMPRESA</a>
-                            <ng-template ngbNavContent>
-                                <div class="card">
+                            <ng-template ngbNavContent >
+                                <div class="card" *ngIf="action">
                                     <div class="card-header">
                                       <h4 class="card-title" style="bottom:13px;">Atenciones por Consulta Externa</h4>
                                       <p>{{message}}</p>
@@ -871,7 +871,7 @@
                                                           >
                                                             {{ option.value }} Registros
                                                           </option>
-                                                          <option value="0" *ngIf="this.page1.totalElements">Todos los Registros</option>
+                                                          <!-- <option value="0" *ngIf="this.page1.totalElements">Todos los Registros</option> -->
                                                         </select>
                                                       </li>
                                                       <li class="list-group-item border-0 pl-0">
@@ -918,13 +918,13 @@
                                                   
                                                   <ag-grid-angular
                                                 #agGrid
-                                                style="width: 100%; height: 400px;"
+                                                style="width: 100%; height: 450px;"
                                                 id="myTable11"
                                                 ag-grid="gridOptions"
                                                 class="ag-theme-balham"
                                                 [columnDefs]="columns11"
                                                 [pagination]="true"
-                                                [paginationPageSize]="paginationPageSize"
+                                                [paginationPageSize]="page1.size"
                                                 [groupSelectsChildren]="true"
                                                 [groupDefaultExpanded]="groupDefaultExpanded"
                                                 [autoGroupColumnDef]="autoGroupColumnDef"
@@ -933,7 +933,8 @@
                                                 [rowSelection]="rowSelection"
                                                 [rowClassRules]="rowClassRules"
                                                 [frameworkComponents]="frameworkComponents"
-                                                (gridReady)="onGridReady($event)"
+                                                (gridReady)="onGridReady1($event)"
+                                                [onPaginationChanged]= "onPaginationChanged(1)"
                                                 ></ag-grid-angular>
                                                 
                                                 </div>
@@ -946,10 +947,10 @@
                                 </div>
                             </ng-template>
                         </li>
-                        <li [ngbNavItem]="3">
+                        <li [ngbNavItem]="3" >
                             <a ngbNavLink>RESUMEN DE PENDIENTES A LA ACTUALIDAD</a>
-                            <ng-template ngbNavContent>
-                                <div class="card">
+                            <ng-template ngbNavContent >
+                                <div class="card" *ngIf="action">
                                     <div class="card-header">
                                       <h4 class="card-title" style="bottom:13px;">{{title}}</h4>
                                       <p>{{message}}</p>
@@ -1322,7 +1323,7 @@
                                                           >
                                                             {{ option.value }} Registros
                                                           </option>
-                                                          <option value="0" *ngIf="this.page2.totalElements">Todos los Registros</option>
+                                                          <!-- <option value="0" *ngIf="this.page2.totalElements">Todos los Registros</option> -->
                                                         </select>
                                                       </li>
                                                       <li class="list-group-item border-0 pl-0">
@@ -1368,7 +1369,7 @@
                                                   </div> -->
                                                   <ag-grid-angular
                                                   #agGrid
-                                                  style="width: 100%; height: 400px;"
+                                                  style="width: 100%; height: 450px;"
                                                   id="myTable16"
                                                   ag-grid="gridOptions"
                                                   class="ag-theme-balham"
@@ -1383,7 +1384,8 @@
                                                   [rowSelection]="rowSelection"
                                                   [rowClassRules]="rowClassRules"
                                                   [frameworkComponents]="frameworkComponents"
-                                                  (gridReady)="onGridReady($event)"
+                                                  (gridReady)="onGridReady2($event)"
+                                                  [onPaginationChanged]= "onPaginationChanged(2)"
                                                   ></ag-grid-angular>
                                                   
                                                 </div>
@@ -1432,10 +1434,10 @@
                                 </div>
                             </ng-template>
                         </li>
-                        <li [ngbNavItem]="4">
+                        <li [ngbNavItem]="4" >
                             <a ngbNavLink>ALTAS FACTURADAS</a>
-                            <ng-template ngbNavContent>
-                              <div class="col-md-12 div_panel_cabecera">
+                            <ng-template ngbNavContent >
+                              <div class="col-md-12 div_panel_cabecera" *ngIf="action">
                                         <div class="col-md-3 col-sm-6 col-xs-12" id="div_mostrar_ptable_i">
                                             <div class="info-box">
                                                 <span style="background:#3c8dbc !important; color:#fff !important;" class="info-box-icon">
@@ -1473,7 +1475,7 @@
                                                 </div>
                                         </div>
                               </div>
-                              <div class="card">
+                              <div class="card" *ngIf="action">
                                   <div class="card-header">
                                     <h4 class="card-title" style="bottom:13px;">{{title}}</h4>
                                     <p>{{message}}</p>
