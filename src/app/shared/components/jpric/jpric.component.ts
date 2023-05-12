@@ -853,19 +853,25 @@ export class JPRICComponent implements OnInit {
         estado: 'PENDIENTE',
         sede: this.id_sede,
       }
-      this.loading();
-       this.tableApiservice.GpricGetExpedientesPendiemtesDetalle(parameters).subscribe(
-        (response) =>{ console.log(1155, response);
-          this.columnsPendientes = response.data.cabeceras;
-          this.rowsPendientes = response.data.tabla_expediente_detalle;
-          this.tempPendientes = this.rowsPendientes
-          this.sede = this.rowsPendientes[0].sucursalNombre;
-          // this.rowsPendientes.map(item=>{
-           
-          // })
-          // console.log(584, this.rowsPendientes);
-          Swal.close();
-      });
+      if(parameters.sede !== null && parameters.sede !== undefined){
+        this.loading();
+        this.tableApiservice.GpricGetExpedientesPendiemtesDetalle(parameters).subscribe(
+          (response) =>{ console.log(1155, response);
+            if(response.data.success){
+              this.columnsPendientes = response.data.cabeceras;
+              this.rowsPendientes = response.data.tabla_expediente_detalle;
+              this.tempPendientes = this.rowsPendientes
+              this.sede = this.rowsPendientes[0].sucursalNombre;
+            }
+            
+            // this.rowsPendientes.map(item=>{
+            
+            // })
+            // console.log(584, this.rowsPendientes);
+            Swal.close();
+        });
+      }
+
       
     }else{
       this.modalService.open(content, {size: <any>"xl", ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {

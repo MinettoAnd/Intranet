@@ -1,8 +1,11 @@
+import { CurrencyPipe, DecimalPipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ColumnMode, SelectionType, NgxDatatableModule, DatatableComponent  } from '@swimlane/ngx-datatable';
 import { ExportService } from 'src/app/_services/export.service';
 import { Page } from 'src/app/models/forms-data/page';
+import { CustomNumberPipe } from 'src/app/pipes/customNumber.pipe';
+import { PorcentajePipe } from 'src/app/pipes/porcentaje.pipe';
 import Swal from 'sweetalert2';
 @Component({
   selector: 'app-row-detalle',
@@ -12,7 +15,7 @@ import Swal from 'sweetalert2';
 
 export class RowDetalleComponent implements OnInit {
   @Input() dato;
-  columns: [];
+  columns:any= [];
   rows: any;
   temp: [];
   page = new Page()
@@ -23,14 +26,27 @@ export class RowDetalleComponent implements OnInit {
     {value: 50},
     {value: 100},
   ];
-  constructor(public activeModal: NgbActiveModal, private exportService: ExportService,) { 
+  constructor(public activeModal: NgbActiveModal, private exportService: ExportService,private _cnp:CustomNumberPipe,
+    private _cp: CurrencyPipe, private _pp:PorcentajePipe, private _dp: DecimalPipe,) { 
     this.page.size = 10;
   }
 
   ngOnInit(){
     console.log(11, this.dato);
     this.columns = this.dato.data.cabeceras;
+    this.columns.map(item =>{
+      if(item.pipe === 'currency'){
+        item.pipe = this._cp;
+      }else if(item.pipe === 'porcentaje'){
+        item.pipe = this._pp;
+      }else if(item.pipe === 'cantidad'){
+        item.pipe = this._cnp;
+      }else if(item.pipe === 'decimal'){
+        item.pipe = this._dp;
+      }
+    }); 
     this.rows = this.dato.data.tabla_expediente_detalle
+
     this.temp = this.rows;
     console.log(this.rows)
   }
