@@ -46,6 +46,9 @@ export class FacturacionService {
     this.loadTableApiDataURL = `${environment.api_url}getFacReporteExpedientes`;
     return this.http.post(this.loadTableApiDataURL, data);
   }
-  
+  getFacExpedientesDetalle(data): Observable<any> {
+    this.loadTableApiDataURL = `${environment.api_url}getFacExpedientesDetalle`;
+    return this.http.post(this.loadTableApiDataURL, data);
+  }
 }
 

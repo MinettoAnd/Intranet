@@ -105,10 +105,10 @@
                     </div>
                     </form>
                     <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs" style="justify-content: end;">
-                        <li [ngbNavItem]="1">
+                        <li [ngbNavItem]="1" >
                             <a ngbNavLink>FACTURADO</a>
-                            <ng-template ngbNavContent>
-                                <div class="card">
+                            <ng-template ngbNavContent >
+                                <div class="card" *ngIf="action">
                                     <div class="card-header">
                                       <h4 class="card-title" style="bottom:13px;">{{title}}</h4>
                                       <p>{{message}}</p>
@@ -151,7 +151,22 @@
                                                     </div>
                                                   </div>
                                                   <div #collapse1="ngbCollapse" [(ngbCollapse)]="isCollapsed1">
-
+                                                    <div class="row" style="align-items: center;justify-content: space-between;">
+                                                      <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
+                                                      <li class="list-group-item border-0 pl-0">
+                                                          <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(1)">
+                                                          <i class="fa fa-external-link"></i>
+                                                          Copiar tabla
+                                                          </button>
+                                                      </li>
+                                                      <li class="list-group-item border-0 pl-0">
+                                                          <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(1)">
+                                                          <i class="fa fa-external-link"></i>
+                                                          Exportar tabla a Excel
+                                                          </button>
+                                                      </li>
+                                                      </ul>
+                                                    </div>
                                                     <ngx-datatable #myTable1
                                                     class="bootstrap table table-striped"
                                                     id="datatablele"
@@ -206,7 +221,22 @@
                                                     </div>
                                                   </div>
                                                   <div #collapse2="ngbCollapse" [(ngbCollapse)]="isCollapsed2">
-                                                    
+                                                    <div class="row" style="align-items: center;justify-content: space-between;">
+                                                      <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
+                                                      <li class="list-group-item border-0 pl-0">
+                                                          <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(2)">
+                                                          <i class="fa fa-external-link"></i>
+                                                          Copiar tabla
+                                                          </button>
+                                                      </li>
+                                                      <li class="list-group-item border-0 pl-0">
+                                                          <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(2)">
+                                                          <i class="fa fa-external-link"></i>
+                                                          Exportar tabla a Excel
+                                                          </button>
+                                                      </li>
+                                                      </ul>
+                                                    </div>
                                                     <ngx-datatable #myTable2
                                                     class="bootstrap table table-striped"
                                                     id="datatablele"
@@ -261,6 +291,22 @@
                                                     </div>
                                                   </div>
                                                   <div #collapse3="ngbCollapse" [(ngbCollapse)]="isCollapsed3">
+                                                    <div class="row" style="align-items: center;justify-content: space-between;">
+                                                      <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
+                                                      <li class="list-group-item border-0 pl-0">
+                                                          <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(3)">
+                                                          <i class="fa fa-external-link"></i>
+                                                          Copiar tabla
+                                                          </button>
+                                                      </li>
+                                                      <li class="list-group-item border-0 pl-0">
+                                                          <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(3)">
+                                                          <i class="fa fa-external-link"></i>
+                                                          Exportar tabla a Excel
+                                                          </button>
+                                                      </li>
+                                                      </ul>
+                                                    </div>
                                                     <ngx-datatable #myTable3
                                                     class="bootstrap table table-striped"
                                                     id="datatablele"
@@ -316,7 +362,22 @@
                                                     </div>
                                                   </div>
                                                   <div #collapse4="ngbCollapse" [(ngbCollapse)]="isCollapsed4">
-                                                    
+                                                    <div class="row" style="align-items: center;justify-content: space-between;">
+                                                      <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
+                                                      <li class="list-group-item border-0 pl-0">
+                                                          <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(4)">
+                                                          <i class="fa fa-external-link"></i>
+                                                          Copiar tabla
+                                                          </button>
+                                                      </li>
+                                                      <li class="list-group-item border-0 pl-0">
+                                                          <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(4)">
+                                                          <i class="fa fa-external-link"></i>
+                                                          Exportar tabla a Excel
+                                                          </button>
+                                                      </li>
+                                                      </ul>
+                                                    </div>
                                                     <ngx-datatable #myTable4
                                                     class="bootstrap table table-striped"
                                                     id="datatablele"
@@ -372,7 +433,22 @@
                                                     </div>
                                                   </div>
                                                   <div #collapse5="ngbCollapse" [(ngbCollapse)]="isCollapsed5">
-                                                    
+                                                    <div class="row" style="align-items: center;justify-content: space-between;">
+                                                      <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
+                                                      <li class="list-group-item border-0 pl-0">
+                                                          <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(5)">
+                                                          <i class="fa fa-external-link"></i>
+                                                          Copiar tabla
+                                                          </button>
+                                                      </li>
+                                                      <li class="list-group-item border-0 pl-0">
+                                                          <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(5)">
+                                                          <i class="fa fa-external-link"></i>
+                                                          Exportar tabla a Excel
+                                                          </button>
+                                                      </li>
+                                                      </ul>
+                                                    </div>
                                                     <ngx-datatable #myTable5
                                                     class="bootstrap table table-striped"
                                                     id="datatablele"
@@ -425,7 +501,22 @@
                                                     </div>
                                                   </div>
                                                   <div #collapse6="ngbCollapse" [(ngbCollapse)]="isCollapsed6">
-                                                    
+                                                    <div class="row" style="align-items: center;justify-content: space-between;">
+                                                      <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
+                                                      <li class="list-group-item border-0 pl-0">
+                                                          <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(6)">
+                                                          <i class="fa fa-external-link"></i>
+                                                          Copiar tabla
+                                                          </button>
+                                                      </li>
+                                                      <li class="list-group-item border-0 pl-0">
+                                                          <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(6)">
+                                                          <i class="fa fa-external-link"></i>
+                                                          Exportar tabla a Excel
+                                                          </button>
+                                                      </li>
+                                                      </ul>
+                                                   </div>
                                                     <ngx-datatable #myTable6
                                                     class="bootstrap table table-striped"
                                                     id="datatablele"
@@ -479,7 +570,22 @@
                                                     </div>
                                                   </div>
                                                   <div #collapse7="ngbCollapse" [(ngbCollapse)]="isCollapsed7">
-                                                    
+                                                    <div class="row" style="align-items: center;justify-content: space-between;">
+                                                      <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
+                                                      <li class="list-group-item border-0 pl-0">
+                                                          <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(7)">
+                                                          <i class="fa fa-external-link"></i>
+                                                          Copiar tabla
+                                                          </button>
+                                                      </li>
+                                                      <li class="list-group-item border-0 pl-0">
+                                                          <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(7)">
+                                                          <i class="fa fa-external-link"></i>
+                                                          Exportar tabla a Excel
+                                                          </button>
+                                                      </li>
+                                                      </ul>
+                                                    </div>
                                                     <ngx-datatable #myTable7
                                                     class="bootstrap table table-striped"
                                                     id="datatablele"
@@ -531,7 +637,22 @@
                                                     </div>
                                                   </div>
                                                   <div #collapse8="ngbCollapse" [(ngbCollapse)]="isCollapsed8">
-                                                    
+                                                    <div class="row" style="align-items: center;justify-content: space-between;">
+                                                      <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
+                                                      <li class="list-group-item border-0 pl-0">
+                                                          <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(8)">
+                                                          <i class="fa fa-external-link"></i>
+                                                          Copiar tabla
+                                                          </button>
+                                                      </li>
+                                                      <li class="list-group-item border-0 pl-0">
+                                                          <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(8)">
+                                                          <i class="fa fa-external-link"></i>
+                                                          Exportar tabla a Excel
+                                                          </button>
+                                                      </li>
+                                                      </ul>
+                                                    </div>
                                                     <ngx-datatable #myTable8
                                                     class="bootstrap table table-striped"
                                                     id="datatablele"
@@ -584,7 +705,22 @@
                                                     </div>
                                                   </div>
                                                   <div #collapse9="ngbCollapse" [(ngbCollapse)]="isCollapsed9">
-                                                    
+                                                    <div class="row" style="align-items: center;justify-content: space-between;">
+                                                      <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
+                                                      <li class="list-group-item border-0 pl-0">
+                                                          <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(9)">
+                                                          <i class="fa fa-external-link"></i>
+                                                          Copiar tabla
+                                                          </button>
+                                                      </li>
+                                                      <li class="list-group-item border-0 pl-0">
+                                                          <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(9)">
+                                                          <i class="fa fa-external-link"></i>
+                                                          Exportar tabla a Excel
+                                                          </button>
+                                                      </li>
+                                                      </ul>
+                                                    </div>
                                                     <ngx-datatable #myTable9
                                                     class="bootstrap table table-striped"
                                                     id="datatablele"
@@ -636,6 +772,22 @@
                                                     </div>
                                                   </div>
                                                   <div #collapse10="ngbCollapse" [(ngbCollapse)]="isCollapsed10">
+                                                    <div class="row" style="align-items: center;justify-content: space-between;">
+                                                      <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
+                                                      <li class="list-group-item border-0 pl-0">
+                                                          <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(10)">
+                                                          <i class="fa fa-external-link"></i>
+                                                          Copiar tabla
+                                                          </button>
+                                                      </li>
+                                                      <li class="list-group-item border-0 pl-0">
+                                                          <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(10)">
+                                                          <i class="fa fa-external-link"></i>
+                                                          Exportar tabla a Excel
+                                                          </button>
+                                                      </li>
+                                                      </ul>
+                                                    </div>
                                                     <ngx-datatable #myTable10
                                                     class="bootstrap table table-striped"
                                                     id="datatablele"
@@ -679,10 +831,10 @@
                                 </div>
                             </ng-template>
                         </li>
-                        <li [ngbNavItem]="2">
+                        <li [ngbNavItem]="2" >
                             <a ngbNavLink>FACTURADO POR EMPRESA</a>
-                            <ng-template ngbNavContent>
-                                <div class="card">
+                            <ng-template ngbNavContent >
+                                <div class="card" *ngIf="action">
                                     <div class="card-header">
                                       <h4 class="card-title" style="bottom:13px;">Atenciones por Consulta Externa</h4>
                                       <p>{{message}}</p>
@@ -709,6 +861,38 @@
                                                 </div>
                                                 <div #collapse11="ngbCollapse" [(ngbCollapse)]="isCollapsed11">
                                                   <div class="row" style="align-items: center;justify-content: space-between;">
+                                                    <ul class="list-group list-group-horizontal list-group-flush">
+                                                      <li class="list-group-item border-0 pl-0">
+                                                        <select class="form-control form-select" (change)="onLimitChange($event.target.value, '1')">
+                                                          <option
+                                                            *ngFor="let option of pageLimitOptions"
+                                                            [value]="option.value"
+                                    
+                                                          >
+                                                            {{ option.value }} Registros
+                                                          </option>
+                                                          <!-- <option value="0" *ngIf="this.page1.totalElements">Todos los Registros</option> -->
+                                                        </select>
+                                                      </li>
+                                                      <li class="list-group-item border-0 pl-0">
+                                                        <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(11)">
+                                                          <i class="fa fa-external-link"></i>
+                                                          Copiar tabla
+                                                        </button>
+                                                      </li>
+                                                      <li class="list-group-item border-0 pl-0">
+                                                        <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(11)">
+                                                          <i class="fa fa-external-link"></i>
+                                                          Exportar tabla a Excel
+                                                        </button>
+                                                      </li>
+                                                    </ul>
+                                                    <div class="" style="display:flex;margin:15px;align-items: center;">
+                                                      <span>Buscar</span>&nbsp;&nbsp;
+                                                        <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter1($event)'>
+                                                    </div>
+                                                  </div>
+                                                  <!-- <div class="row" style="align-items: center;justify-content: space-between;">
 
                                                     <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
                                                       <li class="list-group-item border-0 pl-0">
@@ -730,17 +914,17 @@
                                                             <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter1($event)'>
                                                         </div>
                                                     </div>                               
-                                                  </div>
+                                                  </div> -->
                                                   
                                                   <ag-grid-angular
                                                 #agGrid
-                                                style="width: 100%; height: 300px;"
+                                                style="width: 100%; height: 450px;"
                                                 id="myTable11"
                                                 ag-grid="gridOptions"
                                                 class="ag-theme-balham"
                                                 [columnDefs]="columns11"
                                                 [pagination]="true"
-                                                [paginationPageSize]="10"
+                                                [paginationPageSize]="page1.size"
                                                 [groupSelectsChildren]="true"
                                                 [groupDefaultExpanded]="groupDefaultExpanded"
                                                 [autoGroupColumnDef]="autoGroupColumnDef"
@@ -749,6 +933,8 @@
                                                 [rowSelection]="rowSelection"
                                                 [rowClassRules]="rowClassRules"
                                                 [frameworkComponents]="frameworkComponents"
+                                                (gridReady)="onGridReady1($event)"
+                                                [onPaginationChanged]= "onPaginationChanged(1)"
                                                 ></ag-grid-angular>
                                                 
                                                 </div>
@@ -761,10 +947,10 @@
                                 </div>
                             </ng-template>
                         </li>
-                        <li [ngbNavItem]="3">
+                        <li [ngbNavItem]="3" >
                             <a ngbNavLink>RESUMEN DE PENDIENTES A LA ACTUALIDAD</a>
-                            <ng-template ngbNavContent>
-                                <div class="card">
+                            <ng-template ngbNavContent >
+                                <div class="card" *ngIf="action">
                                     <div class="card-header">
                                       <h4 class="card-title" style="bottom:13px;">{{title}}</h4>
                                       <p>{{message}}</p>
@@ -807,7 +993,22 @@
                                                     </div>
                                                   </div>
                                                   <div #collapse12="ngbCollapse" [(ngbCollapse)]="isCollapsed12">
-
+                                                    <div class="row" style="align-items: center;justify-content: space-between;">
+                                                      <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
+                                                      <li class="list-group-item border-0 pl-0">
+                                                          <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(12)">
+                                                          <i class="fa fa-external-link"></i>
+                                                          Copiar tabla
+                                                          </button>
+                                                      </li>
+                                                      <li class="list-group-item border-0 pl-0">
+                                                          <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(12)">
+                                                          <i class="fa fa-external-link"></i>
+                                                          Exportar tabla a Excel
+                                                          </button>
+                                                      </li>
+                                                      </ul>
+                                                    </div>
                                                     <ngx-datatable #myTable12
                                                     class="bootstrap table table-striped"
                                                     id="datatablele"
@@ -819,6 +1020,9 @@
                                                       [rowHeight]="$any('auto')"
                                                       [scrollbarH]="true"
                                                       (page)="setPage($event)"
+                                                      [selected]="selected"
+                                                      [selectionType]="SelectionType.single"
+                                                      (select)='open($event)'
                                                       [summaryRow]="enableSummary"
                                                       [summaryPosition]="summaryPosition"
                                                       [summaryHeight]="35"
@@ -826,9 +1030,17 @@
                                                       <ngx-datatable-column [flexGrow]="1" [summaryFunc]="column.prop == 'PeriodoTXT' ? summaryNull:summaryForAmount" [minWidth]="90" [headerClass]="column.headerClass" [cellClass]="column.cellClass" *ngFor="let column of columns12; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                                           let-row="row">
-                                                          <div >
+                                                          <!-- <div >
                                                             <span *ngIf=" column.prop === 'PeriodoTXT'" [title]="value">{{value}}</span>
                                                             <span *ngIf=" column.prop !== 'PeriodoTXT'" [title]="value">{{value | currency }}</span>
+                                                          </div> -->
+                                                          <div *ngIf="column.prop == 'PeriodoTXT'">
+                                                            <span  [title]="value">{{value}}</span>
+
+                                                          </div>
+                                                          <div *ngIf="column.prop !== 'PeriodoTXT'">
+                                                            <span  *ngIf="value > 0" [title]="value"><a href="javascript:;" (click)="open($event, column.prop, content)" style="color: #4B9FDE;">{{value | currency }}</a></span>
+                                                            <span *ngIf="value == 0" [title]="value">{{value | currency }}</span>
                                                           </div>
                                                           <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
                                                             <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
@@ -861,7 +1073,22 @@
                                                     </div>
                                                   </div>
                                                   <div #collapse13="ngbCollapse" [(ngbCollapse)]="isCollapsed13">
-                                                    
+                                                    <div class="row" style="align-items: center;justify-content: space-between;">
+                                                      <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
+                                                      <li class="list-group-item border-0 pl-0">
+                                                          <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(13)">
+                                                          <i class="fa fa-external-link"></i>
+                                                          Copiar tabla
+                                                          </button>
+                                                      </li>
+                                                      <li class="list-group-item border-0 pl-0">
+                                                          <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(13)">
+                                                          <i class="fa fa-external-link"></i>
+                                                          Exportar tabla a Excel
+                                                          </button>
+                                                      </li>
+                                                      </ul>
+                                                    </div>
                                                     <ngx-datatable #myTable13
                                                     class="bootstrap table table-striped"
                                                     id="datatablele"
@@ -873,6 +1100,9 @@
                                                       [rowHeight]="$any('auto')"
                                                       [scrollbarH]="true"
                                                       (page)="setPage($event)"
+                                                      [selected]="selected"
+                                                      [selectionType]="SelectionType.single"
+                                                      (select)='open($event)'
                                                       [summaryRow]="enableSummary"
                                                       [summaryPosition]="summaryPosition"
                                                       [summaryHeight]="35"
@@ -880,8 +1110,16 @@
                                                       <ngx-datatable-column [flexGrow]="1" [summaryFunc]="column.prop == 'PeriodoTXT' ? summaryNull:summaryForAmount" [minWidth]="90" [headerClass]="column.headerClass" [cellClass]="column.cellClass" *ngFor="let column of columns13; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                                           let-row="row">
-                                                          <div>
+                                                          <!-- <div>
                                                             <span  [title]="value">{{value}}</span>
+                                                          </div> -->
+                                                          <div *ngIf="column.prop == 'PeriodoTXT'">
+                                                            <span  [title]="value">{{value}}</span>
+
+                                                          </div>
+                                                          <div *ngIf="column.prop !== 'PeriodoTXT'">
+                                                            <span  *ngIf="value > 0" [title]="value"><a href="javascript:;" (click)="open($event, column.prop, content)" style="color: #4B9FDE;">{{value }}</a></span>
+                                                            <span *ngIf="value == 0" [title]="value">{{value }}</span>
                                                           </div>
                                                           <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
                                                             <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
@@ -916,6 +1154,22 @@
                                                     </div>
                                                   </div>
                                                   <div #collapse14="ngbCollapse" [(ngbCollapse)]="isCollapsed14">
+                                                    <div class="row" style="align-items: center;justify-content: space-between;">
+                                                      <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
+                                                      <li class="list-group-item border-0 pl-0">
+                                                          <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(14)">
+                                                          <i class="fa fa-external-link"></i>
+                                                          Copiar tabla
+                                                          </button>
+                                                      </li>
+                                                      <li class="list-group-item border-0 pl-0">
+                                                          <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(14)">
+                                                          <i class="fa fa-external-link"></i>
+                                                          Exportar tabla a Excel
+                                                          </button>
+                                                      </li>
+                                                      </ul>
+                                                    </div>
                                                     <ngx-datatable #myTable14
                                                     class="bootstrap table table-striped"
                                                     id="datatablele"
@@ -929,15 +1183,24 @@
                                                       [summaryRow]="enableSummary"
                                                       [selected]="selected"
                                                       [selectionType]="SelectionType.single"
+                                                      (select)='open($event)'
                                                       [summaryPosition]="summaryPosition"
                                                       [summaryHeight]="35"
                                                       >
                                                       <ngx-datatable-column [flexGrow]="1" [summaryFunc]="column.prop == 'CodigoEstado' ? summaryNull:summaryForAmount" [minWidth]="90" [headerClass]="column.headerClass" [cellClass]="column.cellClass" *ngFor="let column of columns14; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                                           let-row="row">
-                                                          <div>
+                                                          <!-- <div>
                                                             <span *ngIf=" column.prop === 'CodigoEstado'" [title]="value">{{value}}</span>
                                                             <span *ngIf=" column.prop !== 'CodigoEstado'" [title]="value">{{value | currency }}</span>
+                                                          </div> -->
+                                                          <div *ngIf="column.prop == 'CodigoEstado'">
+                                                            <span  [title]="value">{{value}}</span>
+
+                                                          </div>
+                                                          <div *ngIf="column.prop !== 'CodigoEstado'">
+                                                            <span  *ngIf="value > 0" [title]="value"><a href="javascript:;" (click)="open($event, column.prop, content)" style="color: #4B9FDE;">{{value  | currency }}</a></span>
+                                                            <span *ngIf="value == 0" [title]="value">{{value  | currency }}</span>
                                                           </div>
                                                           <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
                                                             <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
@@ -971,7 +1234,22 @@
                                                     </div>
                                                   </div>
                                                   <div #collapse15="ngbCollapse" [(ngbCollapse)]="isCollapsed15">
-                                                    
+                                                    <div class="row" style="align-items: center;justify-content: space-between;">
+                                                      <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
+                                                      <li class="list-group-item border-0 pl-0">
+                                                          <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(15)">
+                                                          <i class="fa fa-external-link"></i>
+                                                          Copiar tabla
+                                                          </button>
+                                                      </li>
+                                                      <li class="list-group-item border-0 pl-0">
+                                                          <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(15)">
+                                                          <i class="fa fa-external-link"></i>
+                                                          Exportar tabla a Excel
+                                                          </button>
+                                                      </li>
+                                                      </ul>
+                                                    </div>
                                                     <ngx-datatable #myTable15
                                                     class="bootstrap table table-striped"
                                                     id="datatablele"
@@ -984,15 +1262,22 @@
                                                       [scrollbarH]="true"
                                                       [selected]="selected"
                                                       [selectionType]="SelectionType.single"
+                                                      (select)='open($event)'
                                                       [summaryRow]="enableSummary"
                                                       [summaryPosition]="summaryPosition"
                                                       [summaryHeight]="35"
+
                                                       >
                                                       <ngx-datatable-column [flexGrow]="1" [summaryFunc]="column.prop == 'CodigoEstado' ? summaryNull:summaryForAmount" [minWidth]="90" [headerClass]="column.headerClass" [cellClass]="column.cellClass" *ngFor="let column of columns15; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                                           let-row="row">
-                                                          <div>
+                                                          <div *ngIf="column.prop == 'CodigoEstado'">
                                                             <span  [title]="value">{{value}}</span>
+
+                                                          </div>
+                                                          <div *ngIf="column.prop !== 'CodigoEstado'">
+                                                            <span *ngIf="value > 0" [title]="value"><a href="javascript:;" (click)="open($event, column.prop, content)" style="color: #4B9FDE;">{{value}}</a></span>
+                                                            <span *ngIf="value === '0'" [title]="value">{{value }}</span>
                                                           </div>
                                                           <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
                                                             <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
@@ -1028,6 +1313,38 @@
                                                 </div>
                                                 <div #collapse16="ngbCollapse" [(ngbCollapse)]="isCollapsed16">
                                                   <div class="row" style="align-items: center;justify-content: space-between;">
+                                                    <ul class="list-group list-group-horizontal list-group-flush">
+                                                      <li class="list-group-item border-0 pl-0">
+                                                        <select class="form-control form-select" (change)="onLimitChange($event.target.value, '2')">
+                                                          <option
+                                                            *ngFor="let option of pageLimitOptions"
+                                                            [value]="option.value"
+                                    
+                                                          >
+                                                            {{ option.value }} Registros
+                                                          </option>
+                                                          <!-- <option value="0" *ngIf="this.page2.totalElements">Todos los Registros</option> -->
+                                                        </select>
+                                                      </li>
+                                                      <li class="list-group-item border-0 pl-0">
+                                                        <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(16)">
+                                                          <i class="fa fa-external-link"></i>
+                                                          Copiar tabla
+                                                        </button>
+                                                      </li>
+                                                      <li class="list-group-item border-0 pl-0">
+                                                        <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(16)">
+                                                          <i class="fa fa-external-link"></i>
+                                                          Exportar tabla a Excel
+                                                        </button>
+                                                      </li>
+                                                    </ul>
+                                                    <div class="" style="display:flex;margin:15px;align-items: center;">
+                                                      <span>Buscar</span>&nbsp;&nbsp;
+                                                        <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter2($event)'>
+                                                    </div>
+                                                  </div>
+                                                  <!-- <div class="row" style="align-items: center;justify-content: space-between;">
 
                                                     <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
                                                       <li class="list-group-item border-0 pl-0">
@@ -1049,16 +1366,16 @@
                                                             <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter2($event)'>
                                                         </div>
                                                     </div>                               
-                                                  </div>
+                                                  </div> -->
                                                   <ag-grid-angular
                                                   #agGrid
-                                                  style="width: 100%; height: 300px;"
+                                                  style="width: 100%; height: 450px;"
                                                   id="myTable16"
                                                   ag-grid="gridOptions"
                                                   class="ag-theme-balham"
                                                   [columnDefs]="columns16"
                                                   [pagination]="true"
-                                                  [paginationPageSize]="10"
+                                                  [paginationPageSize]="page2.size"
                                                   [groupSelectsChildren]="true"
                                                   [groupDefaultExpanded]="groupDefaultExpanded"
                                                   [autoGroupColumnDef]="autoGroupColumnDef"
@@ -1067,6 +1384,8 @@
                                                   [rowSelection]="rowSelection"
                                                   [rowClassRules]="rowClassRules"
                                                   [frameworkComponents]="frameworkComponents"
+                                                  (gridReady)="onGridReady2($event)"
+                                                  [onPaginationChanged]= "onPaginationChanged(2)"
                                                   ></ag-grid-angular>
                                                   
                                                 </div>
@@ -1074,35 +1393,34 @@
                                               <!-- tabla modal -->
                                               <ng-template #content let-modal>
                                                   <div class="modal-header">
-                                                    <p class="modal-title" id="modal-basic-title"><b>MÉDICO:</b> {{Medico}} -  <b>CMP:</b> {{CMP}}</p>
+                                                    <p class="modal-title" id="modal-basic-title">Pendientes de :<b> {{CodigoEstado}} - </b>( {{sucursal}} )</p>
                                                     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
                                                       <span aria-hidden="true">&times;</span>
                                                     </button>
                                                   </div>
                                                   <div class="modal-body">
                                                     <ngx-datatable #myTable11
-                                                class="bootstrap table table-striped"
-                                                id="datatablele"
-                                                  [columns]="columnsMedicoRecord"
-                                                  [loadingIndicator]="loading"
-                                                  [rows]="rowsMedicoRecord"
-                                                  [columnMode]="ColumnMode.flex"
-                                                  [headerHeight]="50"
-                                                  [footerHeight]="50"
-                                                  [rowHeight]="$any('auto')"
-                                                  [scrollbarH]="true"
-                                                  [limit]="5"
-                                                  >
-                                                  <ngx-datatable-column [flexGrow]="1" [minWidth]="90" [headerClass]="column.headerClass" [cellClass]="column.cellClass" *ngFor="let column of columnsMedicoRecord; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
-                                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
-                                                      let-row="row">
-                                                      <div>
-                                                        <span  [title]="value">{{value}}</span>
-                                                      </div>
-                                                    </ng-template>
-                                                  </ngx-datatable-column>
-                                                </ngx-datatable>
-                                                
+                                                    class="bootstrap table table-striped"
+                                                    id="datatablele"
+                                                    [columns]="columnsModal"
+                                                    [loadingIndicator]="loading"
+                                                    [rows]="rowsModal"
+                                                    [columnMode]="ColumnMode.flex"
+                                                    [headerHeight]="50"
+                                                    [footerHeight]="50"
+                                                    [rowHeight]="$any('auto')"
+                                                    [scrollbarH]="true"
+                                                    [limit]="5"
+                                                    >
+                                                      <ngx-datatable-column [flexGrow]="1" [minWidth]="90" [headerClass]="column.headerClass" [cellClass]="column.cellClass" *ngFor="let column of columnsModal; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                                                          let-row="row">
+                                                          <div>
+                                                            <span  [title]="value">{{value}}</span>
+                                                          </div>
+                                                        </ng-template>
+                                                      </ngx-datatable-column>
+                                                    </ngx-datatable>
                                                   </div>
                                                   <div class="modal-footer">
                                                     <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cerrar</button>
@@ -1116,10 +1434,10 @@
                                 </div>
                             </ng-template>
                         </li>
-                        <li [ngbNavItem]="4">
+                        <li [ngbNavItem]="4" >
                             <a ngbNavLink>ALTAS FACTURADAS</a>
-                            <ng-template ngbNavContent>
-                              <div class="col-md-12 div_panel_cabecera">
+                            <ng-template ngbNavContent >
+                              <div class="col-md-12 div_panel_cabecera" *ngIf="action">
                                         <div class="col-md-3 col-sm-6 col-xs-12" id="div_mostrar_ptable_i">
                                             <div class="info-box">
                                                 <span style="background:#3c8dbc !important; color:#fff !important;" class="info-box-icon">
@@ -1157,7 +1475,7 @@
                                                 </div>
                                         </div>
                               </div>
-                              <div class="card">
+                              <div class="card" *ngIf="action">
                                   <div class="card-header">
                                     <h4 class="card-title" style="bottom:13px;">{{title}}</h4>
                                     <p>{{message}}</p>
@@ -1201,6 +1519,38 @@
                                               </div>
                                               <div #collapse17="ngbCollapse" [(ngbCollapse)]="isCollapsed17">
                                                 <div class="row" style="align-items: center;justify-content: space-between;">
+                                                  <ul class="list-group list-group-horizontal list-group-flush">
+                                                    <li class="list-group-item border-0 pl-0">
+                                                      <select class="form-control form-select" (change)="onLimitChange($event.target.value, '3')">
+                                                        <option
+                                                          *ngFor="let option of pageLimitOptions"
+                                                          [value]="option.value"
+                                  
+                                                        >
+                                                          {{ option.value }} Registros
+                                                        </option>
+                                                        <option value="0" *ngIf="this.page3.totalElements">Todos los Registros</option>
+                                                      </select>
+                                                    </li>
+                                                    <li class="list-group-item border-0 pl-0">
+                                                      <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(17)">
+                                                        <i class="fa fa-external-link"></i>
+                                                        Copiar tabla
+                                                      </button>
+                                                    </li>
+                                                    <li class="list-group-item border-0 pl-0">
+                                                      <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(17)">
+                                                        <i class="fa fa-external-link"></i>
+                                                        Exportar tabla a Excel
+                                                      </button>
+                                                    </li>
+                                                  </ul>
+                                                  <div class="" style="display:flex;margin:15px;align-items: center;">
+                                                    <span>Buscar</span>&nbsp;&nbsp;
+                                                      <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter3($event)'>
+                                                  </div>
+                                                </div>
+                                                <!-- <div class="row" style="align-items: center;justify-content: space-between;">
 
                                                   <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
                                                     <li class="list-group-item border-0 pl-0">
@@ -1222,7 +1572,7 @@
                                                           <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter3($event)'>
                                                       </div>
                                                   </div>                               
-                                                </div>
+                                                </div> -->
                                                 <ngx-datatable #myTable17
                                                   class="bootstrap table table-striped"
                                                   id="datatablele"

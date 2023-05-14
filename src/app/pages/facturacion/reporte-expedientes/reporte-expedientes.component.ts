@@ -1,4 +1,4 @@
-import { map } from 'rxjs/operators';
+import { delay, map } from 'rxjs/operators';
 import { Component, ElementRef, OnInit, PipeTransform, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { NgBlockUI, BlockUI } from 'ng-block-ui';
@@ -14,17 +14,27 @@ import * as XLSX from 'xlsx';
 import { ExcelJson } from '../../../interfaces/excel-json.interface';
 import { ExportService } from '../../../_services/export.service';
 import { CurrencyPipe } from '@angular/common';
-
+import { Observable, of } from 'rxjs';
 import ResizeObserver from 'resize-observer-polyfill';
-import {GridOptions} from "ag-grid-community";
+import {FirstDataRenderedEvent, GridApi, GridOptions, GridReadyEvent, PaginationChangedEvent} from "ag-grid-community";
 import { AgGridAngular } from "ag-grid-angular";
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { RowDetalleComponent } from 'src/app/modals/jpric/row-detalle/row-detalle.component';
+import { LinkRendererComponent } from 'src/app/shared/components/renderer/link-renderer.component';
+import { PagedData } from '../../../models/forms-data/paged-data';
 
+interface PageInfo {
+  offset: number;
+  pageSize: number;
+  limit: number;
+  count: number;
+}
 @Component({
   selector: 'app-reporte-expedientes',
   templateUrl: './reporte-expedientes.component.html',
   styleUrls: ['./reporte-expedientes.component.scss']
 })
+
 export class ReporteExpedientesComponent implements OnInit {
   active = 1;
   closeResult = '';
@@ -46,6 +56,7 @@ export class ReporteExpedientesComponent implements OnInit {
   ];
   optionsAnio = [];
   private isLoading: boolean = true;
+  action: boolean = false;
   private baseChart: ElementRef;
   // private baseChart2: ElementRef;
   color = [ 'graph-primary', 'primary','graph-tertiary', 'graph-quaternary '];
@@ -76,8 +87,9 @@ export class ReporteExpedientesComponent implements OnInit {
   monto_prom_alta_dia;
   totales;
   id_sede = '0000';
-  CMP;
-  Medico;
+ sede;
+ sucursal;
+ CodigoEstado;
   filtroForm: FormGroup;
   mes = moment(new Date()).format('MM');
   anio = moment(new Date()).format('YYYY');
@@ -113,6 +125,7 @@ export class ReporteExpedientesComponent implements OnInit {
     montoTotal: '',
   };
   private rowClassRules;
+  private aggfunc;
   columns1: any;
   rows1: any[];
   rows1filtered: any;
@@ -120,10 +133,10 @@ export class ReporteExpedientesComponent implements OnInit {
   columns2: any[];
   rows2: any[];
   especialidades: any;
+  temp1: any[];
   temp2: any[];
-  temp4: any[];
-  temp5: any[];
-  temp6: any[];
+  temp3: any[];
+
   tempRowsMedicos: any[];
   rowsFilter: any[];
   columns3: any[];
@@ -162,10 +175,9 @@ export class ReporteExpedientesComponent implements OnInit {
   rows17: any[];
 
   medicos = false;
-  columnsMedicos: any[];
-  rowsMedicos: any[];
-  columnsMedicoRecord: any[];
-  rowsMedicoRecord: any[];
+  rowsModal: any[];
+  columnsModal: any[];
+  rowsTemp: any[];
   filtered: any;
   detalleAnual: any;
   especialidad: any;
@@ -198,6 +210,18 @@ export class ReporteExpedientesComponent implements OnInit {
   data:any;
   message;
   title;
+  isLoad = 0;
+  private gridApi1!: GridApi;
+  private gridApi2!: GridApi;
+  private gridColumnApi;
+  public paginationPageSize = 10;
+  totalElements1: number;
+  pageNumber1: number;
+  totalElements2: number;
+  pageNumber2: number;
+  rowsT1: any[];
+  rowsT2: any[];
+  
   constructor(private tableApiservice: FacturacionService, private exportService: ExportService,
     private _cp: CurrencyPipe, private modalService: NgbModal) { 
       this.page1.pageNumber = 0;
@@ -208,6 +232,7 @@ export class ReporteExpedientesComponent implements OnInit {
       this.page3.size = 10;
       this.page4.pageNumber = 0;
       this.page4.size = 10;
+      this.pageNumber1 = 0
     this.filtroForm = new FormGroup({
       id_sede: new FormControl(this.id_sede),
       mes: new FormControl(this.mes),
@@ -227,19 +252,62 @@ export class ReporteExpedientesComponent implements OnInit {
     }
     this.rowClassRules = {
       "totals": function(params) {
-         console.log(301, params); 
+        //  console.log(301, params); 
         var totales;
         if(params.data.aseguradora_Nombre !== undefined){
           totales = params.data.aseguradora_Nombre;
-        }else if(params.data.grupo !== undefined){
-          totales = params.data.grupo;
+        }else if(params.data.aseguradoraNombre !== undefined){
+          totales = params.data.aseguradoraNombre;
         }
         return totales === 'TOTAL';
       },
     };
+    // this.aggfunc = (params: any) => {
+    //   console.log(248, params)
+    //   var amtTotal = 0; 
+    //   params.values.forEach((value: { totalAmt: number }) =>
+    //   { 
+    //     if (value && value.totalAmt) {
+    //      amtTotal += value.totalAmt;
+    //   }
+    //   });
+    //   var total = (amtTotal / 100000);
+    //   return {
+    //   totalAmt: amtTotal,
+    //   toString: () => { return (amtTotal) ? (total).toFixed(2) : '' }
+      
+    //   } 
+    // }
+  //   const calcTotalCols = ['monto_total'];
+  //   const totalRow = function(api) {
+  //     let result = [{}];
+  //     // initialize all total columns to zero
+  //     calcTotalCols.forEach(function (params){
+  //         result[0][params] = 0
+  //     });
+  //    // calculate all total columns
+  //     calcTotalCols.forEach(function (params){
+  //         this.rows16.forEach(function (line) {
+  //             result[0][params] += line[params];
+  //         });
+  //     });
+  //     api.setPinnedBottomRowData(result);
+  // }
+  // const gridOptions = {
+  //   columnDefs: this.columns16,
+  //   rowData: this.rows16
+  // };
+    this.frameworkComponents = {
+      buttonRenderer: LinkRendererComponent,
+    }
     this.changeTable = false;
   }
+  ngOnInit(){
+
+    // this.setPage({ offset: 0 });
+  }
   CurrencyCellRendererPEN(params: any) {
+    // console.log(251, params)
     var inrFormat = new Intl.NumberFormat('es-PE', {
       style: 'currency',
       currency: 'PEN',
@@ -247,12 +315,208 @@ export class ReporteExpedientesComponent implements OnInit {
     });
     return inrFormat.format(params.value);
   }
-  ngOnInit(){
+async setPage1(pageInfo: PageInfo) {
+    this.pageNumber1 = pageInfo.offset;
+    const rowOffset = pageInfo.offset * pageInfo.pageSize;
+  
+    this.page1.pageNumber = Math.floor(rowOffset / this.page1.size);
+    this.isLoad++;
+    console.log(323, this.page1, rowOffset , this.page1.size);
+    // if (this.page1.pageNumber === 'NaN'){
 
-    // this.setPage({ offset: 0 });
+    // }
+   await this.getResults(this.page1, this.rows11).subscribe(  pagedData => {
+      console.log(1187, this.page1, this.rows11);
+      // this.rowsT1 = [];
+      this.totalElements1 = pagedData.page.totalElements;
+      if (pagedData.data.length < pagedData.page.size){
+        this.rowsT1 = pagedData.data
+        if(pagedData.data.length > 0){
+          this.totalRow1(this.gridApi1, this.rowsT1);
+        }
+        // for (let index = pagedData.data.length; index < pagedData.page.size; index++) {
+        //   this.rowsT1[(index)] = { id_esp: '', especialidad: ''};
+        // }
+      }else{
+        this.rowsT1 = pagedData.data;
+        if(this.gridApi1){
+          this.totalRow1(this.gridApi1, this.rowsT1);
+        }
+      }
+      this.isLoad--;
+    });
+  }
+  onPaginationChanged(table) {
+    if (table === 1){
+      // console.log(336, this.pageNumber1 )
+      if(this.gridApi1) {
+         
+        if (this.pageNumber1 === this.gridApi1.paginationGetCurrentPage()) {
+          
+          return;
+        }else{
+          
+          this.setPage1({
+            offset: this.gridApi1.paginationGetCurrentPage(),
+            pageSize: this.gridApi1.paginationGetPageSize(),
+            limit: 10,
+            count: 0
+          });
+          
+          
+        }
+        this.pageNumber1 = this.gridApi1.paginationGetCurrentPage()
+      }else{
+        return;
+      }
+    }else if (table === 2){
+      if(this.gridApi2) {
+        //  console.log(336, this.pageNumber1 , this.gridApi.paginationGetCurrentPage())
+        if (this.pageNumber2 === this.gridApi2.paginationGetCurrentPage()) {
+          
+          return;
+        }else{
+          
+          this.setPage2({
+            offset: this.gridApi2.paginationGetCurrentPage(),
+            pageSize: this.gridApi2.paginationGetPageSize(),
+            limit: 10,
+            count: 0
+          });
+          
+          
+        }
+        this.pageNumber2 = this.gridApi2.paginationGetCurrentPage()
+      }else{
+        return;
+      }
+    }
+    
+
+  }
+  async setPage2(pageInfo: PageInfo) {
+    console.log('object')
+    
+    this.pageNumber2 = pageInfo.offset;
+    const rowOffset = pageInfo.offset * pageInfo.pageSize;
+    this.page2.pageNumber = Math.floor(rowOffset / this.page2.size);
+    this.isLoad++;
+    console.log(323, this.page2, rowOffset , this.page2.size);
+    await this.getResults(this.page2, this.rows16).subscribe(pagedData => {
+      console.log(1188, this.page2, this.rows16);
+      // this.rowsT2 = [];
+      this.totalElements2 = pagedData.page.totalElements;
+      if (pagedData.data.length < pagedData.page.size){
+        this.rowsT2 = pagedData.data
+        console.log(413, this.rowsT2)
+        if(pagedData.data.length > 0){
+        this.totalRow2(this.gridApi2, this.rowsT2);
+        }
+        // for (let index = pagedData.data.length; index < pagedData.page.size; index++) {
+        //   this.rowsT2[(index)] = { CIE10: '', Diagnostico: '' };
+        // }
+      }else{
+        this.rowsT2 = pagedData.data;
+        console.log(415, this.rowsT2)
+        if(this.gridApi2){
+          this.totalRow2(this.gridApi2, this.rowsT2);
+        }
+        
+      }
+      this.isLoad--;
+    });
+  }
+  public getResults(page: Page, data: any[]) {
+    return of(data)
+      .pipe(map(d => this.getPagedData(page, data)))
+      .pipe(delay(1000 * Math.random()));
+  }
+  
+  private getPagedData(page: Page, data: any[]) {
+    // console.log(1151, page, data);
+    const pagedData = new PagedData();
+    page.totalElements = data.length;
+    page.totalPages = page.totalElements / page.size;
+    const start = page.pageNumber * page.size;
+    const end = Math.min(start + page.size, page.totalElements);
+    // console.log(1157, start, end);
+    for (let i = start; i < end; i++) {
+      const jsonObj = data[i];
+      pagedData.data.push(jsonObj);
+    }
+    pagedData.page = page;
+    console.log(1163, pagedData);
+    return pagedData;
+  }
+  onGridReady1(params: GridReadyEvent) {
+    this.gridApi1 = params.api;
+    this.gridColumnApi = params.columnApi;
+    this.totalRow1(this.gridApi1, this.rowsT1);
+    console.log(445, this.rowsT1);
+  }
+  onGridReady2(params: GridReadyEvent) {
+    this.gridApi2 = params.api;
+    this.gridColumnApi = params.columnApi;
+    this.totalRow2(this.gridApi2, this.rowsT2);
+    console.log(451, this.rowsT2);
+  }
+
+totalRow1(gridApi: GridApi, rows) {
+    let result = [{
+      aseguradoraNombre: 'TOTAL',
+      conteo_lima: 0,
+      monto_lima:0 ,
+      conteo_chorrillos: 0,
+      monto_chorrillos: 0,
+      conteo_surco: 0,
+      monto_surco: 0,
+      monto_total: 0,
+      conteo_total: 0
+    }];
+ console.log(572, rows)
+        rows.forEach(function (line) {
+          result[0].conteo_lima += Number(line.conteo_lima);
+          result[0].monto_lima += Number(line.monto_lima);
+          result[0].conteo_chorrillos += Number(line.conteo_chorrillos);
+          result[0].conteo_surco += Number(line.conteo_surco);
+          result[0].monto_surco += Number(line.monto_surco);
+          result[0].monto_total += Number(line.monto_total);
+          result[0].conteo_total += Number(line.conteo_total);
+        });
+  //   });
+  // console.log(572, result)
+  // gridApi.setPinnedBottomRowData(this.rows16)
+    gridApi.setPinnedBottomRowData(result as any);
+  }
+  totalRow2(gridApi: GridApi, rows) {
+    let result = [{
+      aseguradoraNombre: 'TOTAL',
+      conteo_lima: 0,
+      monto_lima:0 ,
+      conteo_chorrillos: 0,
+      monto_chorrillos: 0,
+      conteo_surco: 0,
+      monto_surco: 0,
+      monto_total: 0,
+      conteo_total: 0
+    }];
+ console.log(572, rows)
+        rows.forEach(function (line) {
+          result[0].conteo_lima += Number(line.conteo_lima);
+          result[0].monto_lima += Number(line.monto_lima);
+          result[0].conteo_chorrillos += Number(line.conteo_chorrillos);
+          result[0].conteo_surco += Number(line.conteo_surco);
+          result[0].monto_surco += Number(line.monto_surco);
+          result[0].monto_total += Number(line.monto_total);
+          result[0].conteo_total += Number(line.conteo_total);
+        });
+  //   });
+  // console.log(572, result)
+  // gridApi.setPinnedBottomRowData(this.rows16)
+    gridApi.setPinnedBottomRowData(result as any);
   }
   filter() {
-
+    this.action = true
     const form = this.filtroForm.value;
       this.id_sede = form.id_sede,
       this.mes = form.mes,
@@ -358,81 +622,6 @@ export class ReporteExpedientesComponent implements OnInit {
   }
 
 
-
-
-  
-  guardarImagen(chart, idDownload){
-    var canvas = document.getElementById(chart) as HTMLCanvasElement;
-    var downloadlink = document.getElementById(idDownload) as HTMLAnchorElement;
-    
-    // var ctx = canvas.getContext("2d");
-    // ctx.strokeStyle = "yellow";
-    // ctx.lineWidth = 4;
-    // ctx.beginPath();
-    // ctx.arc(100,75,50,0,Math.PI*2);
-    // ctx.stroke();
-    var imagedata = canvas.toDataURL("image/png");
-    // console.log(imagedata)
-    downloadlink.href = imagedata;
-  }
-  formatPipe2(rows1){
-    rows1.map(item => {
-      // console.log(item);
-          item.mEsp = item.mEsp + ' %';
-          item.mGas = item.mGas + ' %';
-          item.mUti = item.mUti + ' %';
-          item.porcUtilidad = typeof item.porcUtilidad === 'number' ? item.porcUtilidad.toFixed(2) + ' %' : Number(item.porcUtilidad).toFixed(2) + ' %';
-          item.cantidad = typeof item.cantidad === 'number' ? 'S/. ' + this.separadorDeMiles(item.cantidad.toFixed(2)) : 'S/. ' + this.separadorDeMiles(Number(item.cantidad).toFixed(2));
-          item.montoPaciente = typeof item.montoPaciente === 'number' ? 'S/. ' + this.separadorDeMiles(item.montoPaciente.toFixed(2)) : 'S/. ' + this.separadorDeMiles(Number(item.montoPaciente).toFixed(2));
-          item.montoSeguro = typeof item.montoSeguro === 'number' ? 'S/. ' + this.separadorDeMiles(item.montoSeguro.toFixed(2)) : 'S/. ' + this.separadorDeMiles(Number(item.montoSeguro).toFixed(2));
-          item.montoEsperado = typeof item.montoEsperado === 'number' ? 'S/. ' + this.separadorDeMiles(item.montoEsperado.toFixed(2)) : 'S/. ' + this.separadorDeMiles(Number(item.montoEsperado).toFixed(2));
-          item.montoPlanilla = typeof item.montoPlanilla === 'number' ? 'S/. ' + this.separadorDeMiles(item.montoPlanilla.toFixed(2)) : 'S/. ' + this.separadorDeMiles(Number(item.montoPlanilla).toFixed(2));
-          item.montoSuministro = typeof item.montoSuministro === 'number' ? 'S/. ' + this.separadorDeMiles(item.montoSuministro.toFixed(2)) : 'S/. ' + this.separadorDeMiles(Number(item.montoSuministro).toFixed(2));
-          item.montoHonorarios = typeof item.montoHonorarios === 'number' ? 'S/. ' + this.separadorDeMiles(item.montoHonorarios.toFixed(2)) : 'S/. ' + this.separadorDeMiles(Number(item.montoHonorarios).toFixed(2));
-          item.montoGastos = typeof item.montoGastos === 'number' ? 'S/. ' + this.separadorDeMiles(item.montoGastos.toFixed(2)) : 'S/. ' + this.separadorDeMiles(Number(item.montoGastos).toFixed(2));
-          item.montoUtilidad = typeof item.montoUtilidad === 'number' ? 'S/. ' + this.separadorDeMiles(item.montoUtilidad.toFixed(2)) : 'S/. ' + this.separadorDeMiles(Number(item.montoUtilidad).toFixed(2));
-          return item.mEsp, item.mGas, item.mUti, item.porcUtilidad, item.cantidad, item.montoPaciente, item.montoSeguro, item.montoEsperado, item.montoPlanilla, item.montoSuministro, item.montoHonorarios, item.montoGastos, item.montoUtilidad
-    });
-  }
-  formatPipe(rows1) {
-    // console.log(rows1);
-    // const editRowslPipe = ((rows1) =>{
-  rows1.map(item => {
-
-        if (item.GRUPO3 === 'SOLES' || item.GRUPOEM === 'SOLES' ){
-          item.MES2 = typeof item.MES2 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES2.toFixed(2) ):  'S/. ' + this.separadorDeMiles(Number(item.MES2).toFixed(2));
-          item.MES1 = typeof item.MES1 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES1.toFixed(2) ):  'S/. ' + this.separadorDeMiles(Number(item.MES1).toFixed(2));
-          item.MES3 = typeof item.MES3 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES3.toFixed(2) ):  'S/. ' + this.separadorDeMiles(Number(item.MES3).toFixed(2));
-          item.MES4 = typeof item.MES4 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES4.toFixed(2) ):  'S/. ' + this.separadorDeMiles(Number(item.MES4).toFixed(2));
-          item.MES5 = typeof item.MES5 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES5.toFixed(2) ):  'S/. ' + this.separadorDeMiles(Number(item.MES5).toFixed(2));
-          item.MES6 = typeof item.MES6 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES6.toFixed(2) ):  'S/. ' + this.separadorDeMiles(Number(item.MES6).toFixed(2));
-          item.MES7 = typeof item.MES7 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES7.toFixed(2) ):  'S/. ' + this.separadorDeMiles(Number(item.MES7).toFixed(2));
-          item.MES8 = typeof item.MES8 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES8.toFixed(2) ):  'S/. ' + this.separadorDeMiles(Number(item.MES8).toFixed(2));
-          item.MES9 = typeof item.MES9 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES9.toFixed(2) ):  'S/. ' + this.separadorDeMiles(Number(item.MES9).toFixed(2));
-          item.MES10 = typeof item.MES10 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES10.toFixed(2))  :'S/. ' + this.separadorDeMiles(Number(item.MES10).toFixed(2));
-          item.MES11 = typeof item.MES11 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES11.toFixed(2))  :'S/. ' + this.separadorDeMiles(Number(item.MES11).toFixed(2));
-          item.MES12 = typeof item.MES12 === 'number' ? 'S/. ' + this.separadorDeMiles(item.MES12.toFixed(2))  :'S/. ' + this.separadorDeMiles(Number(item.MES12).toFixed(2));
-          item.TOTAL = typeof item.TOTAL === 'number' ? 'S/. ' + this.separadorDeMiles(item.TOTAL.toFixed(2))  :'S/. ' + this.separadorDeMiles(Number(item.TOTAL).toFixed(2));
-        }else{
-          item.MES1 = typeof item.MES1 === 'number' ? this.separadorDeMiles(Math.round(item.MES1)) : this.separadorDeMiles(Math.round(Number(item.MES1)));
-          item.MES2 = typeof item.MES2 === 'number' ? this.separadorDeMiles(Math.round(item.MES2)) : this.separadorDeMiles(Math.round(Number(item.MES2)));
-          item.MES3 = typeof item.MES3 === 'number' ? this.separadorDeMiles(Math.round(item.MES3)) : this.separadorDeMiles(Math.round(Number(item.MES3)));
-          item.MES4 = typeof item.MES4 === 'number' ? this.separadorDeMiles(Math.round(item.MES4)) : this.separadorDeMiles(Math.round(Number(item.MES4)));
-          item.MES5 = typeof item.MES5 === 'number' ? this.separadorDeMiles(Math.round(item.MES5)) : this.separadorDeMiles(Math.round(Number(item.MES5)));
-          item.MES6 = typeof item.MES6 === 'number' ? this.separadorDeMiles(Math.round(item.MES6)) : this.separadorDeMiles(Math.round(Number(item.MES6)));
-          item.MES7 = typeof item.MES7 === 'number' ? this.separadorDeMiles(Math.round(item.MES7)) : this.separadorDeMiles(Math.round(Number(item.MES7)));
-          item.MES8 = typeof item.MES8 === 'number' ? this.separadorDeMiles(Math.round(item.MES8)) : this.separadorDeMiles(Math.round(Number(item.MES8)));
-          item.MES9 = typeof item.MES9 === 'number' ? this.separadorDeMiles(Math.round(item.MES9)) : this.separadorDeMiles(Math.round(Number(item.MES9)));
-          item.MES10 = typeof item.MES10 === 'number' ? this.separadorDeMiles(Math.round(item.MES10)) : this.separadorDeMiles(Math.round(Number(item.MES10)));
-          item.MES11 = typeof item.MES11 === 'number' ? this.separadorDeMiles(Math.round(item.MES11)) : this.separadorDeMiles(Math.round(Number(item.MES11)));
-          item.MES12 = typeof item.MES12 === 'number' ? this.separadorDeMiles(Math.round(item.MES12)) : this.separadorDeMiles(Math.round(Number(item.MES12)));
-          item.TOTAL = typeof item.TOTAL === 'number' ?  this.separadorDeMiles(Math.round(item.TOTAL)) : this.separadorDeMiles(Math.round(Number(item.TOTAL)));
-        }
-        return item.MES1,item.MES2,item.MES3,item.MES4,item.MES5,item.MES6,item.MES7,item.MES8,item.MES9,item.MES10,item.MES11,item.MES12, item.TOTAL;
-      });
-    // console.log(rows1);
-  // });
-}
  setPage(pageInfo) {
       console.log(pageInfo);
       // this.page.pageNumber = pageInfo.offset;
@@ -450,115 +639,181 @@ export class ReporteExpedientesComponent implements OnInit {
       };
 
       this.loading();
-            this.tableApiservice.getFacReporteExpedientes(this.parameters).subscribe(
-                (response) => {
-                  if(response.success){
-                    this.data = response.data ? response.data : [];
-                    this.title = this.data.titulo;
-                    this.total_monto = this.data.total_monto
-                    this.monto_prom_alta = this.data.monto_prom_alta
-                    this.monto_prom_alta_dia = this.data.monto_prom_alta_dia
-                    this.columns1 = this.data.cabeceras_expedientes_facturado_tdoc_soles
-                    this.rows1 = this.data.tabla_expedientes_facturado_tdoc_soles
+      this.tableApiservice.getFacReporteExpedientes(this.parameters).subscribe(
+          (response) => {
+            if(response.data.success){
+              // console.log(301, response.data.success)
+              this.data = response.data ? response.data : [];
+              this.title = this.data.titulo;
+              this.total_monto = this.data.total_monto
+              this.monto_prom_alta = this.data.monto_prom_alta
+              this.monto_prom_alta_dia = this.data.monto_prom_alta_dia
+              this.columns1 = this.data.cabeceras_expedientes_facturado_tdoc_soles
+              this.rows1 = this.data.tabla_expedientes_facturado_tdoc_soles
 
-                    this.columns2 = this.data.cabeceras_expedientes_facturado_tdoc_cantidad
-                    this.rows2 = this.data.tabla_expedientes_facturado_tdoc_cantidad
+              this.columns2 = this.data.cabeceras_expedientes_facturado_tdoc_cantidad
+              this.rows2 = this.data.tabla_expedientes_facturado_tdoc_cantidad
 
-                    this.columns3 = this.data.cabeceras_expedientes_facturado_soles
-                    this.rows3 = this.data.tabla_expedientes_facturado_soles
+              this.columns3 = this.data.cabeceras_expedientes_facturado_soles
+              this.rows3 = this.data.tabla_expedientes_facturado_soles
 
-                    this.columns4 = this.data.cabeceras_expedientes_facturado_cantidad
-                    this.rows4 = this.data.tabla_expedientes_facturado_cantidad
+              this.columns4 = this.data.cabeceras_expedientes_facturado_cantidad
+              this.rows4 = this.data.tabla_expedientes_facturado_cantidad
 
-                    this.columns5 = this.data.cabeceras_expedientes_facturado_tpac_soles
-                    this.rows5 = this.data.tabla_expedientes_facturado_tpac_soles
+              this.columns5 = this.data.cabeceras_expedientes_facturado_tpac_soles
+              this.rows5 = this.data.tabla_expedientes_facturado_tpac_soles
 
-                    this.columns6 = this.data.cabeceras_expedientes_facturado_tpac_cantidad
-                    this.rows6 = this.data.tabla_expedientes_facturado_tpac_cantidad
+              this.columns6 = this.data.cabeceras_expedientes_facturado_tpac_cantidad
+              this.rows6 = this.data.tabla_expedientes_facturado_tpac_cantidad
 
-                    this.columns7 = this.data.cabeceras_expedientes_HTServ_soles
-                    this.rows7 = this.data.tabla_expFacturado_HTServ_soles
+              this.columns7 = this.data.cabeceras_expedientes_HTServ_soles
+              this.rows7 = this.data.tabla_expFacturado_HTServ_soles
 
-                    this.columns8 = this.data.cabeceras_expedientes_HTServ_cantidad
-                    this.rows8 = this.data.tabla_expFacturado_HTServ_cantidad
+              this.columns8 = this.data.cabeceras_expedientes_HTServ_cantidad
+              this.rows8 = this.data.tabla_expFacturado_HTServ_cantidad
 
-                    this.columns9 = this.data.cabeceras_expedientes_HTServPromDiaPac_soles
-                    this.rows9 = this.data.tabla_expFacturado_HTServPromDiaPac_soles
+              this.columns9 = this.data.cabeceras_expedientes_HTServPromDiaPac_soles
+              this.rows9 = this.data.tabla_expFacturado_HTServPromDiaPac_soles
 
-                    this.columns10 = this.data.cabeceras_expedientes_HTServ_cantidadTotal
-                    this.rows10 = this.data.tabla_expFacturado_HTServ_cantidadTotal
-
-
-
-                    this.columns11 = this.data.cabeceras_expedientes_facturado_emp
-                    this.columns11.map(item => {
-                      // console.log(301, item)
-                      if(item.children){
-                        item.children.map(subitem =>{
-                          if(subitem.field !== 'tipoPaciente_Nombre' && subitem.field !== 'aseguradora_Nombre' && subitem.field !== 'conteo_lima' && subitem.field !== 'conteo_chorrillos' && subitem.field !== 'conteo_surco' && subitem.field !== 'conteo_total' ){
-                            subitem.cellRenderer = this.CurrencyCellRendererPEN
-                          }
-                       })
-                      }
-                    })
-                    this.rows11 = this.data.tabla_expedientes_facturado_emp
+              this.columns10 = this.data.cabeceras_expedientes_HTServ_cantidadTotal
+              this.rows10 = this.data.tabla_expFacturado_HTServ_cantidadTotal
 
 
-                    this.columns12 = this.data.cabeceras_expedientes_pendientes_soles
-                    this.rows12 = this.data.tabla_expedientes_pendientes_soles
-                    this.columns13 = this.data.cabeceras_expedientes_pendientes_cantidad
-                    this.rows13 = this.data.tabla_expedientes_pendientes_cantidad
-                    this.columns14 = this.data.cabeceras_expedientes_pendientes_estado_soles
-                    this.rows14 = this.data.tabla_expedientes_pendientes_estado_soles
-                    this.columns15 = this.data.cabeceras_expedientes_pendientes_estado_cantidad
-                    this.rows15 = this.data.tabla_expedientes_pendientes_estado_cantidad
-                    this.columns16 = this.data.cabeceras_expedientes_pendientes_aseguradora
-                    this.columns16.map(item => {
-                      // console.log(301, item)
-                      if(item.children){
-                        item.children.map(subitem =>{
-                          if(subitem.field !== 'idEmpresaAseguradora' && subitem.field !== 'aseguradoraNombre' && subitem.field !== 'conteo_lima' && subitem.field !== 'conteo_chorrillos' && subitem.field !== 'conteo_surco' && subitem.field !== 'conteo_total' ){
-                            subitem.cellRenderer = this.CurrencyCellRendererPEN
-                          }
-                       })
-                      }
-                    })
-                    this.rows16 = this.data.tabla_expedientes_pendientes_aseguradora
 
-                    this.columns17 = this.data.cabeceras_expedientes_facturado_alta_lista
-                    this.rows17 = this.data.tabla_expedientes_facturado_alta_lista
-                    // this.resumenMes = response.data;
-                    
-                    //  this.porcMedico =  ( this.resumenMes.medico / this.resumenMes.ausentismo) * 100;
-                    //   this.porcPaciente = (this.resumenMes.paciente / this.resumenMes.ausentismo) * 100;
-                    //   this.porcAnuladas = (this.resumenMes.anuladas / this.resumenMes.ausentismo) * 100;
-                    
-
-                     
-                  }
-                  Swal.close();
-                },
-                (error) => {
-                    Swal.close();
+              this.columns11 = this.data.cabeceras_expedientes_facturado_emp
+              this.columns11.map(item => {
+                
+                if(item.children){
+                  item.children.map(subitem =>{
+                    if(subitem.field !== 'tipoPaciente_Nombre' && subitem.field !== 'aseguradora_Nombre' && subitem.field !== 'conteo_lima' && subitem.field !== 'conteo_chorrillos' && subitem.field !== 'conteo_surco' && subitem.field !== 'conteo_total' ){
+                      subitem.cellRenderer = this.CurrencyCellRendererPEN
+                    }
+                  })
                 }
-              );
+              })
+              this.rows11 = this.data.tabla_expedientes_facturado_emp
+              this.setPage1({
+                offset: 0,
+                pageSize: 0,
+                limit: 10,
+                count: 0
+              });
+              this.temp1 = this.rows11;
+
+              this.columns12 = this.data.cabeceras_expedientes_pendientes_soles
+              this.rows12 = this.data.tabla_expedientes_pendientes_soles
+              this.columns13 = this.data.cabeceras_expedientes_pendientes_cantidad
+              this.rows13 = this.data.tabla_expedientes_pendientes_cantidad
+              this.columns14 = this.data.cabeceras_expedientes_pendientes_estado_soles
+              this.rows14 = this.data.tabla_expedientes_pendientes_estado_soles
+              this.columns15 = this.data.cabeceras_expedientes_pendientes_estado_cantidad
+              this.rows15 = this.data.tabla_expedientes_pendientes_estado_cantidad
+              this.columns16 = this.data.cabeceras_expedientes_pendientes_aseguradora
+              // this.columns16.map(item => {
+              //   // console.log(301, item)
+              //   if(item.children){
+              //     item.children.map(subitem =>{
+              //       if(subitem.field !== 'idEmpresaAseguradora' && subitem.field !== 'aseguradoraNombre' && subitem.field !== 'conteo_lima' && subitem.field !== 'conteo_chorrillos' && subitem.field !== 'conteo_surco' && subitem.field !== 'conteo_total' ){
+              //         subitem.cellRenderer = this.CurrencyCellRendererPEN
+              //       }
+              //     })
+              //   }
+              // })
+              this.rows16 = this.data.tabla_expedientes_pendientes_aseguradora
+              this.setPage2({
+                offset: 0,
+                pageSize: 0,
+                limit: 10,
+                count: 0
+              });
+              this.columns16.map(item => {
+                // console.log(301, item)
+                if(item.children){
+                  item.children.map(subitem =>{
+                    subitem.cellRenderer= 'buttonRenderer',
+                    subitem.cellRendererParams=  {
+                      onClick: this.openClicked.bind(this),
+                      sucursal: item.headerName,
+                      field: subitem.field
+                    }
+                    // if(subitem.aggFunc === 'sum'){
+                      // subitem.aggFunc = this.aggfunc
+                      // subitem.aggFunc = (params: any) => {
+                      //   console.log(476, params)
+                      //   var amtTotal = 0; 
+                      //   params.values.forEach((value: { totalAmt: number }) =>
+                      //   { 
+                      //     if (value && value.totalAmt) {
+                      //      amtTotal += value.totalAmt;
+                      //   }
+                      //   });
+                      //   var total = (amtTotal / 100000);
+                      //   return {
+                      //   totalAmt: amtTotal,
+                      //   toString: () => { return (amtTotal) ? (total).toFixed(2) : '' }
+                        
+                      //   } 
+                      // }
+                    // }
+                 })
+                 
+                }
+              })
+              
+              this.temp2 = this.rows16;
+              this.columns17 = this.data.cabeceras_expedientes_facturado_alta_lista
+              this.rows17 = this.data.tabla_expedientes_facturado_alta_lista
+              this.temp3 = this.rows17;
+              // this.resumenMes = response.data;
+              
+              //  this.porcMedico =  ( this.resumenMes.medico / this.resumenMes.ausentismo) * 100;
+              //   this.porcPaciente = (this.resumenMes.paciente / this.resumenMes.ausentismo) * 100;
+              //   this.porcAnuladas = (this.resumenMes.anuladas / this.resumenMes.ausentismo) * 100;
+              
+
+                
+            }
+            console.log('object')
+            Swal.close();
+          },
+          (error) => {
+              Swal.close();
+          }
+        );
 
   }
+
+  // onPageSizeChanged() {
+  //   var value = (document.getElementById('page-size') as HTMLInputElement)
+  //     .value;
+  //     console.log(497, this.gridApi);
+  //   this.gridApi.paginationSetPageSize(Number(value));
+
+  // }
   public onLimitChange(limit: any, numberT): void {
     this.changePageLimit(limit, numberT);
     // this.setPage({ offset: 0 });
-
+    
   }
+  
 
   private changePageLimit(limit: any, numberT): void {
     
-    if(numberT === '1'){console.log(numberT);
+    if(numberT === '1'){
       if (limit === '0'){
         this.page1.size = this.page1.totalElements;
-        // console.log(this.page.totalElements);
+        
         return
       }
       this.page1.size = parseInt(limit, 10);
+      this.setPage1({
+        offset: this.gridApi1.paginationGetCurrentPage(),
+        pageSize: this.gridApi1.paginationGetPageSize(),
+        limit: 10,
+        count: 0
+      });
+      this.gridApi1.paginationSetPageSize(Number(this.page1.size));
+      console.log(this.page1.size);
     }else if(numberT === '2'){
       if (limit === '0'){
         this.page2.size = this.page2.totalElements;
@@ -566,6 +821,13 @@ export class ReporteExpedientesComponent implements OnInit {
         return
       }
       this.page2.size = parseInt(limit, 10);
+      this.setPage2({
+        offset: this.gridApi2.paginationGetCurrentPage(),
+        pageSize: this.gridApi2.paginationGetPageSize(),
+        limit: 10,
+        count: 0
+      });
+      this.gridApi2.paginationSetPageSize(Number(this.page2.size));
     }if(numberT === '3'){
       if (limit === '0'){
         this.page3.size = this.page3.totalElements;
@@ -615,7 +877,7 @@ export class ReporteExpedientesComponent implements OnInit {
       }else if (numberTabla === 10){
         this.exportService.exportToClipboard(this.rows10, this.columns10);
       }else if (numberTabla === 11){
-        this.exportService.exportToClipboard(this.rowsMedicos, this.columnsMedicos);
+        this.exportService.exportToClipboard(this.rowsModal, this.columnsModal);
       }
       
     }
@@ -642,197 +904,185 @@ export class ReporteExpedientesComponent implements OnInit {
       }else if (numberTabla === 10){
         this.exportService.exportTableElmToExcel(this.rows10, 'ANUAL - INGRESOS POR CUOTAS-NÚMERO DE CONTRATOS PAGADOS');
       }else if (numberTabla === 11){
-        this.exportService.exportTableElmToExcel(this.rowsMedicos, 'ANUAL - INGRESOS POR CUOTAS-NÚMERO DE CONTRATOS PAGADOS');
+        this.exportService.exportTableElmToExcel(this.rowsModal, 'ANUAL - INGRESOS POR CUOTAS-NÚMERO DE CONTRATOS PAGADOS');
       }
       
     }
 
-    updateFilter(event, selectedOption) {
+    updateFilter1(event, selectedOption) {
       const input = event.target.value.toLowerCase();
       // console.log(838, input);
       // filter our data
       if (input.length > 0) {
-        const filtered = this.rows1filtered
+        const filtered = this.rows11
           .filter(el =>
             Object.values(el).find( val => val?.toString().toLowerCase().indexOf(input) !== -1 ) != undefined
           );
           // console.log(filtered);
-        this.rows1filtered = [...filtered]
-        
-      } else {
-        if(selectedOption === 'cantidad'){
-          this.rows1filtered = [...this.rows1.filter(item => item.GRUPO3 === 'CANTIDAD')]
-        }else if (selectedOption === 'soles'){
-          this.rows1filtered = [...this.rows1.filter(item => item.GRUPO3 === 'SOLES')]
-        }
-        // console.log(this.filtered);
-       
-      }
-    }
-    updateFilter3(event, selectedOption) {
-      const input = event.target.value.toLowerCase();
-      // console.log(838, input);
-      // filter our data
-      if (input.length > 0) {
-        const filtered = this.rows3filtered
-          .filter(el =>
-            Object.values(el).find( val => val?.toString().toLowerCase().indexOf(input) !== -1 ) != undefined
-          );
-          // console.log(filtered);
-        this.rows3filtered = [...filtered]
-        
-      } else {
-        if(selectedOption === 'cantidad'){
-          this.rows3filtered = [...this.rows3.filter(item => item.GRUPOEM === 'CANTIDAD')]
-        }else if (selectedOption === 'soles'){
-          this.rows3filtered = [...this.rows3.filter(item => item.GRUPOEM === 'SOLES')]
-        }
-        // console.log(this.filtered);
-       
-      }
-    }
-    updateFilter2(event) {
-      const input = event.target.value.toLowerCase();
-      // console.log(838, input);
-      // filter our data
-      if (input.length > 0) {
-        const filtered = this.rows2
-          .filter(el =>
-            Object.values(el).find( val => val?.toString().toLowerCase().indexOf(input) !== -1 ) != undefined
-          );
-          // console.log(filtered);
-        this.rows2 = [...filtered]
+        this.rows11 = [...filtered]
         
       } else {
         console.log(this.filtered);
-        this.rows2 = [...this.temp2]
+        this.rows11 = [...this.temp1]
        
       }
     }
-    updateFilter4(event) {
+    updateFilter2(event, selectedOption) {
       const input = event.target.value.toLowerCase();
       // console.log(838, input);
       // filter our data
       if (input.length > 0) {
-        const filtered = this.rows4
+        const filtered = this.rows16
           .filter(el =>
             Object.values(el).find( val => val?.toString().toLowerCase().indexOf(input) !== -1 ) != undefined
           );
           // console.log(filtered);
-        this.rows4 = [...filtered]
+        this.rows16 = [...filtered]
         
       } else {
         console.log(this.filtered);
-        this.rows4 = [...this.temp4]
+        this.rows16 = [...this.temp2]
        
       }
     }
-    updateFilter5(event) {
+    updateFilter3(event) {
       const input = event.target.value.toLowerCase();
       // console.log(838, input);
       // filter our data
       if (input.length > 0) {
-        const filtered = this.rows5
+        const filtered = this.rows17
           .filter(el =>
             Object.values(el).find( val => val?.toString().toLowerCase().indexOf(input) !== -1 ) != undefined
           );
           // console.log(filtered);
-        this.rows5 = [...filtered]
+        this.rows17 = [...filtered]
         
       } else {
         console.log(this.filtered);
-        this.rows5 = [...this.temp5]
+        this.rows17 = [...this.temp3]
        
       }
     }
-    updateFilter6(event) {
-      const input = event.target.value.toLowerCase();
-      // console.log(838, input);
-      // filter our data
-      if (input.length > 0) {
-        const filtered = this.rowsMedicos
-          .filter(el =>
-            Object.values(el).find( val => val?.toString().toLowerCase().indexOf(input) !== -1 ) != undefined
-          );
-          // console.log(filtered);
-        this.rowsMedicos = [...filtered]
-        
-      } else {
-        console.log(this.filtered);
-        this.rowsMedicos = [...this.tempRowsMedicos]
-       
-      }
-    }
-    updateFilter7(event) {
-      const input = event.target.value.toLowerCase();
-      // console.log(838, input);
-      // filter our data
-      if (input.length > 0) {
-        const filtered = this.rows6
-          .filter(el =>
-            Object.values(el).find( val => val?.toString().toLowerCase().indexOf(input) !== -1 ) != undefined
-          );
-          // console.log(filtered);
-        this.rows6 = [...filtered]
-        
-      } else {
-        console.log(this.filtered);
-        this.rows6 = [...this.temp6]
-       
-      }
-    }
-    onSelect({ selected }) {
-      this.medicos = true;
-      const parameters = {
-        idEspecialidad: selected[0].id_esp,
-        AnioF: this.anio,
-        MesF: this.mes,
-        SedeF: this.id_sede,
-        CheckF: 1
-      }
-      this.loading();
-      // this.tableApiservice.getCeMedicosStatistics(parameters).subscribe(
-      //   (response) =>{
-      //     this.columnsMedicos = response.data.cabeceras;
-      //     this.rowsMedicos = response.data.tabla_medicos_anual;
-      //     this.tempRowsMedicos = this.rowsMedicos
-      //     Swal.close();
-      //   },
-      //   (error) => {
-      //       Swal.close();
-      //   }
-      // );
 
-    }
+    // onSelect({ selected }) {
+    //   this.medicos = true;
+    //   const parameters = {
+    //     idEspecialidad: selected[0].id_esp,
+    //     AnioF: this.anio,
+    //     MesF: this.mes,
+    //     SedeF: this.id_sede,
+    //     CheckF: 1
+    //   }
+    //   this.loading();
+    //   this.tableApiservice.getFacExpedientesDetalle(parameters).subscribe(
+    //     (response) =>{
+    //       this.columnsModal = response.data.cabeceras;
+    //       this.rowsModal = response.data.tabla_medicos_anual;
+    //       this.tempRowsMedicos = this.rowsModal
+    //       Swal.close();
+    //     },
+    //     (error) => {
+    //         Swal.close();
+    //     }
+    //   );
+
+    // }
     onActivate(event) {
       // console.log('Activate Event', event);
     }
-    open({ selected }, content?: any){
-      
-      if (selected !== undefined){
-        this.CMP = selected[0].CMP;
-        this.Medico = selected[0].MEDICO;
-         console.log(1141, selected);
+    openClicked(e) {    
+      if ( e.rowData !== undefined){
          const parameters = {
-          Id: selected[0].Empleado,
-          CMP: selected[0].CMP,
-          Especialidad: selected[0].ESPECIALIDAD,
-          Medico: selected[0].MEDICO,
-          AnioF: this.anio,
-          MesF: this.mes,
-          SedeF: this.id_sede,
+          campo:'SS_SG_Expediente.IdAseguradora',
+          idCampo: e.rowData.idEmpresaAseguradora,
+          estado: 'PENDIENTE',
+          sede: e.idSede,
         }
-        //  this.tableApiservice.getCeMedicosRecord(parameters).subscribe(
-        //   (response) =>{ console.log(1155, response);
-        //     this.columnsMedicoRecord = response.data.cabeceras;
-        //     this.rowsMedicoRecord = response.data.tabla_medico_record;
-        //     this.rowsMedicoRecord.map(item=>{
-        //       console.log(item);
-        //     })
-        // });
+        console.log(361, e.rowData)
+          this.loading();
+          this.tableApiservice.getFacExpedientesDetalle(parameters).subscribe(
+            (response) =>{ console.log(1155, response);
+              if(response.data.success){
+                const data = {
+                  data: response.data,
+                  nombre:  e.rowData.aseguradoraNombre,
+                  sucursal:  e.sede
+                }
+                // this.columnsPendientes = response.data.cabeceras;
+                // this.rowsPendientes = response.data.tabla_expediente_detalle;
+                // this.sede = this.rowsPendientes[0].sucursalNombre;
+                // this.rowsPendientes.map(item=>{
+                
+                // })
+                // data.push(e.rowData.id_aseguradora)
+                // console.log(584, this.rowsPendientes);
+                const  modalRef =  this.modalService.open(RowDetalleComponent, {
+                  size: <any>"xl",
+                });
+                // console.log( 139, e)
+                modalRef.componentInstance.dato = data;
+              }
+              
+              Swal.close();
+          });
+          // this.modalService.open(this.rowsPendientes, {size: <any>"xl", ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+          
+          //   console.log(this.rowsPendientes);
+          //   this.closeResult = `Closed with: ${result}`;
+          // }, (reason) => {
+          //   this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+          // });
+  
+      }
+    }
+  open({ selected }, sucursal, content?: any){
+    
+       if (sucursal === 'Lima'){
+          this.sede = '0001';
+          this.sucursal = sucursal;
+        }else if (sucursal === 'Chorrillos'){
+          this.sede = '0002';
+          this.sucursal = sucursal;
+        }else if (sucursal === 'Surco'){
+          this.sede = '0004';
+          this.sucursal = sucursal;
+        }else if (sucursal === 'Total'){
+          this.sede = '0000';
+          this.sucursal = 'Todas las Sedes';
+        }
+      if (selected !== undefined){
+        console.log(732, selected)
+         this.CodigoEstado = selected[0].CodigoEstado ? selected[0].CodigoEstado : selected[0].Periodo;
+         
+         const parameters = {
+          campo: selected[0].CodigoEstado ? 'GE_EstadoDocumento.CodigoEstado' : 'SS_SG_Expediente.Periodo',
+          idCampo: selected[0].CodigoEstado ? selected[0].CodigoEstado : selected[0].Periodo,
+          estado: 'PENDIENTE',
+          sede:  this.sede,
+        }
+        if(parameters.sede !== null && parameters.sede !== undefined){
+          console.log(754, parameters.sede)
+          this.loading();
+          this.tableApiservice.getFacExpedientesDetalle(parameters).subscribe(
+            (response) =>{ console.log(1155, response);
+              if(response.data.success){
+                this.columnsModal = response.data.cabeceras;
+                this.rowsModal = response.data.tabla_expediente_detalle;
+                // this.rowsMedicoRecord.map(item=>{
+                //   console.log(item);
+                // })
+              }
+              Swal.close();
+          }),
+          (error) => {
+            console.log(error)
+                  Swal.close();
+          }
+        }
         
+        // Swal.close();
       }else{
-        this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+        this.modalService.open(content, {size: <any>"xl", ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
           console.log(content);
           this.closeResult = `Closed with: ${result}`;
         }, (reason) => {
@@ -849,8 +1099,35 @@ export class ReporteExpedientesComponent implements OnInit {
         return `with: ${reason}`;
       }
     }
+    myCustomSumFunction(values) {
+      // var sum = 0;
+      console.log(813, values)
+      // const cell = params.value;
+      // let count: number = 0;
+      // let re = /\,/gi;
+      // let re1 = /\S\/./gi;
+      // let re2 = /\S\//gi;
+      // if (cell != null && cell != undefined) {
+                  
+      //   if (cell.indexOf('S/') > -1){  
+      //     count = count + +cell.replace(re2, '').replace(',', '');
+      //   }else if (!(cell.indexOf('-') > -1 || cell.indexOf('(') > -1)) {
+         
+      //         count = count + +cell.replace(re, '');
+      //         // console.log(722,cell, count)
+      //   }else if (cell.indexOf('-') > -1) {
+      //     console.log(719, typeof cell, cell)
+      //         count = count - -cell.replace(re, '');
+      //   }else if (cell.indexOf('(') > -1) {
+      //     let number = cell.replace('(', '').replace(')', '');
+      //     count = count - +number.replace(re, '');
+      //   }
+      // }
+      // // values.forEach( function(value) {sum += Number(value);} );
+      // return count;
+    }
     summaryForAmount(cells: any){
-      console.log(1215, cells);
+      // console.log(1215, cells);
       let count: number = 0;
       let re = /\,/gi;
       let re1 = /\S\/./gi;
@@ -867,7 +1144,7 @@ export class ReporteExpedientesComponent implements OnInit {
                       count = count + +cell.replace(re, '');
                       // console.log(722,cell, count)
                 }else if (cell.indexOf('-') > -1) {
-                  console.log(719, typeof cell, cell)
+                  // console.log(719, typeof cell, cell)
                       count = count - -cell.replace(re, '');
                 }else if (cell.indexOf('(') > -1) {
                   let number = cell.replace('(', '').replace(')', '');
@@ -886,44 +1163,44 @@ export class ReporteExpedientesComponent implements OnInit {
             return count.toString().indexOf('-') > -1 ? count.toLocaleString().replace('-', '(').concat(')') : count.toLocaleString();
           }
     }
-    summaryForAmount2(cells: any){
-      // console.log(cells);
-      let count: number = 0;
-      let re = /\,/gi;
-      let re1 = /\S\/./gi;
-      let re2 = /\S\//gi;
+    // summaryForAmount2(cells: any){
+    //   // console.log(cells);
+    //   let count: number = 0;
+    //   let re = /\,/gi;
+    //   let re1 = /\S\/./gi;
+    //   let re2 = /\S\//gi;
           
-          cells.filter((cell) => {
-              cell = cell.toString();
-              if (cell != null && cell != undefined) {
+    //       cells.filter((cell) => {
+    //           cell = cell.toString();
+    //           if (cell != null && cell != undefined) {
                 
-                if (cell.indexOf('S/') > -1){  
-                  count = count + +cell.replace(re2, '').replace(',', '');
-                }else if (!(cell.indexOf('-') > -1 || cell.indexOf('(') > -1)) {
-                //  console.log(719, typeof cell, count)
-                      count = count + +cell.replace(re, '');
-                      // console.log(722,cell, count)
-                }else if (cell.indexOf('-') > -1) {
-                      // count = count + 0;
-                      count = count - -cell.replace(re, '');
-                }else if (cell.indexOf('(') > -1) {
-                  let number = cell.replace('(', '').replace(')', '');
-                  count = count - +number.replace(re, '');
-                }
-              }
-          });
+    //             if (cell.indexOf('S/') > -1){  
+    //               count = count + +cell.replace(re2, '').replace(',', '');
+    //             }else if (!(cell.indexOf('-') > -1 || cell.indexOf('(') > -1)) {
+    //             //  console.log(719, typeof cell, count)
+    //                   count = count + +cell.replace(re, '');
+    //                   // console.log(722,cell, count)
+    //             }else if (cell.indexOf('-') > -1) {
+    //                   // count = count + 0;
+    //                   count = count - -cell.replace(re, '');
+    //             }else if (cell.indexOf('(') > -1) {
+    //               let number = cell.replace('(', '').replace(')', '');
+    //               count = count - +number.replace(re, '');
+    //             }
+    //           }
+    //       });
           
-          if(!count){
-            return count.toString().replace('NaN', 'Total');
-          }else if (count.toString().indexOf('.') > -1){
+    //       if(!count){
+    //         return count.toString().replace('NaN', 'Total');
+    //       }else if (count.toString().indexOf('.') > -1){
             
-              return count.toString().indexOf('-') > -1 ? count.toLocaleString().replace('-', '(').concat(')') : Math.round(count);
+    //           return count.toString().indexOf('-') > -1 ? count.toLocaleString().replace('-', '(').concat(')') : Math.round(count);
             
-          }else{
-            // console.log(515, cells);
-            return count.toString().indexOf('-') > -1 ? count.toLocaleString().replace('-', '(').concat(')') : count;
-          }
-    }
+    //       }else{
+    //         // console.log(515, cells);
+    //         return count.toString().indexOf('-') > -1 ? count.toLocaleString().replace('-', '(').concat(')') : count;
+    //       }
+    // }
     private summaryNull(cells: any): string {
       // if (cells[0] !== 'TODAS' && cells[0] !== 'LIMA' && cells[0] !== 'CHORRILLOS' && cells[0] !== 'SURCO'){
       //   console.log(739, cells.cell)
@@ -932,4 +1209,5 @@ export class ReporteExpedientesComponent implements OnInit {
       return 'TOTAL';
     }
 }
+
 
