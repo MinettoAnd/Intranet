@@ -198,7 +198,7 @@
                                       
                                       *ngIf="isTable1"
                                       >
-                                      <ngx-datatable-column [sortable]="false" [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                      <ngx-datatable-column [headerClass]="column.headerClass"  [cellClass]="column.cellClass" [sortable]="false" [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                           let-row="row">
                                           <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
@@ -216,14 +216,6 @@
                                         </ngx-datatable-column> -->
                                       </ngx-datatable-column>
                                     </ngx-datatable>
-                                    
-                                      <!-- <div class="card-body" *ngIf="isTable1">
-                                        <loading *ngIf="isLoading">{{ isLoading }}</loading>
-                                        <div class="d-block" *ngIf="!isLoading">
-                                          <canvas #baseChart id="chart-1">
-                                          </canvas>
-                                        </div>
-                                      </div> -->
                                   </div>
                                 </div>
                                 
@@ -269,10 +261,6 @@
                                           </button>
                                         </li>
                                       </ul>
-                                      <!-- <div class="" style="display:flex;margin:15px;align-items: center;">
-                                        <span>Buscar</span>&nbsp;&nbsp;
-                                          <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter($event)'>
-                                      </div> -->
                                     
                                     </div>
                                     <div class="card-body" *ngIf="isGrafico2">
@@ -294,18 +282,12 @@
                                       [rowClass]="getRowClass"
                                       *ngIf="isTable2"
                                       >
-                                      <ngx-datatable-column [sortable]="false" [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                      <ngx-datatable-column [headerClass]="column.headerClass" [cellClass]="column.cellClass" [sortable]="false" [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                           let-row="row">
                                           <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
                                             <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
                                           </div>
-                                          <!-- <span title="Double click to edit" (dblclick)="editing[rowIndex + '-{{column.name}}'] = true"
-                                            *ngIf="!editing[rowIndex + '-{{column.name}}']">
-                                            {{value}}
-                                          </span>
-                                          <input autofocus (blur)="updateValue($event, '{{column.name}}', rowIndex)"
-                                            *ngIf="editing[rowIndex+ '-{{column.name}}']" type="text" [value]="value" /> -->
                                         </ng-template>
                                       </ngx-datatable-column>
                                     </ngx-datatable>
@@ -354,10 +336,6 @@
                                           </button>
                                         </li>
                                       </ul>
-                                      <!-- <div class="" style="display:flex;margin:15px;align-items: center;">
-                                        <span>Buscar</span>&nbsp;&nbsp;
-                                          <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter($event)'>
-                                      </div> -->
                                     
                                     </div>
                                     <div class="card-body" *ngIf="isGrafico3">
@@ -379,18 +357,12 @@
                                       [rowClass]="getRowClass"
                                       *ngIf="isTable3"
                                       >
-                                      <ngx-datatable-column [sortable]="false" [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                      <ngx-datatable-column [headerClass]="column.headerClass" [cellClass]="column.cellClass" [sortable]="false" [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                           let-row="row">
                                           <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
                                             <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
                                           </div>
-                                          <!-- <span title="Double click to edit" (dblclick)="editing[rowIndex + '-{{column.name}}'] = true"
-                                            *ngIf="!editing[rowIndex + '-{{column.name}}']">
-                                            {{value}}
-                                          </span>
-                                          <input autofocus (blur)="updateValue($event, '{{column.name}}', rowIndex)"
-                                            *ngIf="editing[rowIndex+ '-{{column.name}}']" type="text" [value]="value" /> -->
                                         </ng-template>
                                       </ngx-datatable-column>
                                     </ngx-datatable>
@@ -495,7 +467,7 @@
                                     class="bootstrap table table-striped"
                                       [columns]="columns3"
                                       [rows]="rows4"
-                                      [columnMode]="ColumnMode.flex"
+                                      [columnMode]="ColumnMode.force"
                                       [headerHeight]="50"
                                       [scrollbarH]="true"
                                       (page)="setPage($event)"
@@ -503,11 +475,11 @@
                                       [rowHeight]="$any('auto')"
                                       *ngIf="isTable4"
                                       >
-                                      <ngx-datatable-column [sortable]="false" [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns3; let i = index;" name="{{column.name}}" prop="{{column.prop}}" >
+                                      <ngx-datatable-column [headerClass]="column.headerClass" [cellClass]="column.cellClass" [sortable]="false" [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns3; let i = index;" name="{{column.name}}" prop="{{column.prop}}" >
                                         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                           let-row="row">
-                                          <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM'}">
-                                            <span  [ngClass]="{'row-paddin': row.item.includes('-') || row.item.includes('TRABAJADORES') || row.item.includes('SOCIOS') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
+                                          <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-paddin': row.item.includes('-') || row.item.includes('TRABAJADORES') || row.item.includes('SOCIOS') && column.name === 'ITEM'}">
+                                            <span  [title]="value">{{value}}</span>
                                           </div>
                                           
                                           <!-- <span title="Double click to edit" (dblclick)="editing[rowIndex + '-{{column.name}}'] = true"
@@ -580,7 +552,7 @@
                                     class="bootstrap table table-striped"
                                       [columns]="columns3"
                                       [rows]="rows5"
-                                      [columnMode]="ColumnMode.flex"
+                                      [columnMode]="ColumnMode.force"
                                       [headerHeight]="50"
                                       [scrollbarH]="true"
                                       (page)="setPage($event)"
@@ -588,11 +560,11 @@
                                       [rowHeight]="$any('auto')"
                                       *ngIf="isTable5"
                                       >
-                                      <ngx-datatable-column [sortable]="false" [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns3; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                      <ngx-datatable-column [headerClass]="column.headerClass" [cellClass]="column.cellClass" [sortable]="false" [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns3; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                           let-row="row">
-                                          <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM'}">
-                                            <span  [ngClass]="{'row-paddin': row.item.includes('-') || row.item.includes('TRABAJADORES') || row.item.includes('SOCIOS') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
+                                          <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-paddin': row.item.includes('-') || row.item.includes('TRABAJADORES') || row.item.includes('SOCIOS') && column.name === 'ITEM'}">
+                                            <span  [title]="value">{{value}}</span>
                                           </div>
                                           <!-- <span title="Double click to edit" (dblclick)="editing[rowIndex + '-{{column.name}}'] = true"
                                             *ngIf="!editing[rowIndex + '-{{column.name}}']">
@@ -665,7 +637,7 @@
                                     class="bootstrap table table-striped"
                                       [columns]="columns4"
                                       [rows]="rows6"
-                                      [columnMode]="ColumnMode.flex"
+                                      [columnMode]="ColumnMode.force"
                                       [headerHeight]="50"
                                       [scrollbarH]="true"
                                       (page)="setPage($event)"
@@ -673,11 +645,11 @@
                                       [rowHeight]="$any('auto')"
                                       *ngIf="isTable6"
                                       >
-                                      <ngx-datatable-column [sortable]="false" [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns4; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                      <ngx-datatable-column [headerClass]="column.headerClass" [cellClass]="column.cellClass" [sortable]="false" [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns4; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                           let-row="row">
-                                          <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM'}">
-                                            <span  [ngClass]="{'row-paddin': row.item.includes('-') || row.item.includes('TRABAJADORES') || row.item.includes('SOCIOS') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
+                                          <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-paddin': row.item.includes('-') || row.item.includes('TRABAJADORES') || row.item.includes('SOCIOS') && column.name === 'ITEM'}">
+                                            <span  [title]="value">{{value}}</span>
                                           </div>
                                           <!-- <span title="Double click to edit" (dblclick)="editing[rowIndex + '-{{column.name}}'] = true"
                                             *ngIf="!editing[rowIndex + '-{{column.name}}']">

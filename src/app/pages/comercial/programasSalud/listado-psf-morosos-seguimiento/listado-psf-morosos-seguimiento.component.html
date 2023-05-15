@@ -32,7 +32,7 @@
                                 formControlName="contacto"
                                 id="inputGroupSelect05"
                         >	
-                          <option value="TE" selected>Telefónico</option>
+                          <option value="TE">Telefónico</option>
                           <option value="CO">Correo</option>
                           <option value="TC">Telefónico y Correo</option>
                           <option value="NI">Ninguno</option>
@@ -290,11 +290,11 @@
                                         (page)="setPage($event)"
                                         [rowClass] = "getRowClass"
                                         >
-                                        <ngx-datatable-column [flexGrow]="1" 
+                                        <ngx-datatable-column [flexGrow]="1" [headerClass]="column.headerClass" [cellClass]="column.cellClass"
                                         [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns1; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                           <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                             let-row="row">
-                                            <div>
+                                            <div [ngClass]="{'row-center': value === 'TOTAL'}">
                                               <span  [title]="value">{{value}}</span>
                                             </div>
                                             <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
@@ -355,10 +355,10 @@
                                           (page)="setPage($event)"
                                           [rowClass] = "getRowClass1"
                                           >
-                                          <ngx-datatable-column [flexGrow]="1" [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns2; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                          <ngx-datatable-column [headerClass]="column.headerClass" [cellClass]="column.cellClass" [flexGrow]="1" [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns2; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                             <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                               let-row="row">
-                                              <div>
+                                              <div [ngClass]="{'row-center': value === 'TOTAL'}">
                                                 <span  [title]="value">{{value}}</span>
                                               </div>
                                               <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">

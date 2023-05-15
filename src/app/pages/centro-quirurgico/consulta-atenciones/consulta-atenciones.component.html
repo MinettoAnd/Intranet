@@ -195,7 +195,7 @@
                         [offset]="page.pageNumber"
                         [limit]="page.size"
                         >
-                        <ngx-datatable-column  [flexGrow]="1" [minWidth]="10" [width]="column.width" *ngFor="let column of columns; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                        <ngx-datatable-column [headerClass]="column.headerClass" [flexGrow]="1" [minWidth]="10" [width]="column.width" *ngFor="let column of columns; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                           <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                             let-row="row">
                             <span [title]="value">{{value}}</span>

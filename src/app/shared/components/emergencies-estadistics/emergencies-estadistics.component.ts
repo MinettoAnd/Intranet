@@ -1207,6 +1207,7 @@ private getPagedData(page: Page, data: any[]) {
                   })
                   this.formatPipe(this.rows1);
                   this.rows1filtered = this.rows1.filter(item => item.GRUPO3 === 'CANTIDAD');
+                  console.log(1210, this.rows1filtered)
                   this.columns2 = response.data.cabeceras_rangoetareo;
                   this.rows2 = response.data.tabla_rangoetareo;
                   const totalRango = {
@@ -1350,7 +1351,7 @@ private getPagedData(page: Page, data: any[]) {
                   this.rows6filtered = this.rows6.filter(item => item.GRUPO3 === 'CANTIDAD');
                   this.columns7 = response.data.cabeceras_rangoetareo_anual;
                   this.rows7 = response.data.tabla_rangoetareo_anual;
-                  // console.log(1153, this.rows7);
+                  console.log(1153, this.rows6filtered);
                   const totalRango7 = {
                     RANGO: '',
                     PER1: 0,
@@ -1668,7 +1669,7 @@ private getPagedData(page: Page, data: any[]) {
   
     exportToExcel(numberTabla): void {
       if(numberTabla === 1){
-        this.exportService.exportTableElmToExcel(this.rows1, 'MENSUAL - INGRESOS POR CUOTAS-INGRESO SIN IGV');
+        this.exportService.exportTableElmToExcel(this.rows1filtered, 'MENSUAL - INGRESOS POR CUOTAS-INGRESO SIN IGV');
       }else if (numberTabla === 2){
         this.exportService.exportTableElmToExcel(this.rows2, 'MENSUAL - INGRESOS POR CUOTAS-INGRESO SIN IGV');
       }else if (numberTabla === 3){
@@ -1934,7 +1935,8 @@ private getPagedData(page: Page, data: any[]) {
                 }else if (!(cell.indexOf('-') > -1 || cell.indexOf('(') > -1)) {
                       count = count + +cell.replace(re, '');
                 }else if (cell.indexOf('-') > -1) {
-                      count = count + 0;
+                      // count = count + 0;
+                      count = count - -cell.replace(re, '');
                 }else if (cell.indexOf('(') > -1) {
                   let number = cell.replace('(', '').replace(')', '');
                   count = count - +number.replace(re, '');

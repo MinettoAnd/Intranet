@@ -1,13 +1,26 @@
-
-// #datatablele5 {
-//     font-family: "Arial Narrow", "Roboto", "Helvetica Neue", Arial, "Noto Color Emoji" !important;
-//     font-size: 10px !important;
-// }
-
-.card-body {
-    padding: 0.8rem 1.25rem !important;
+.input-group {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    float:left; 
+    padding:5px 10px;
+    vertical-align: middle;
+    width:350px;
 }
-
+.fecha {
+    width:250px;
+}
+.input-group-btn{
+    float:left; 
+    padding:5px 10px;
+    vertical-align: middle;
+}
+.btn-primary {
+    width: 150px;
+    color: #10004C;
+    font-weight: 600;
+}
 
 .toggle-table{
     display: flex;
@@ -19,6 +32,8 @@
     font-size: 1rem!important;
     font-weight: 600;
 }
+
+
 .info-box-content{
     display: flex;
     flex-direction: column;
@@ -85,6 +100,42 @@ margin: 0.5rem 0;
 .text-red{
     color: red !important;
 }
+
+.card-header-info {
+    height: 35px;
+    border-color: #FFAA00;
+//    border-width: 40px;
+    border-radius: 5px;
+    background-color: #FFAA00 !important;
+//    margin: 0 0 10px 0;
+//    padding: 5px;
+  }
+
+  .callout.callout-info {
+    height: 36px;
+    padding: 6px 15px;
+    color: white;
+    background-color: #10004C !important;
+    margin-left: 10px;
+    width: 100%;
+}
+
+.btn-outline-primary {
+    color: #10004C;
+    border-color: #10004C;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+.btn-outline-primary:hover {
+    //color: #FFAA00;
+    //border-color: #FFAA00;
+    //background: #10004C;
+    background: #FFF;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
 ::ng-deep .accordion {
     .card {
     //   margin-bottom: 0 !important;
@@ -105,6 +156,10 @@ margin: 0.5rem 0;
           }
         }
       }
+  
+    //   .card-body {
+    //     padding: 1rem;
+    //   }
     }
   }
   :host ::ng-deep .datatable-body-row.active .datatable-row-group {
@@ -114,19 +169,43 @@ margin: 0.5rem 0;
         color: red!important;
     }
     // .ag-header-row ag-header-row-column-group
-#ausentismo:hover .div_ocultar_ptable_a{
+#div_mostrar_ptable_i:hover .div_ocultar_ptable_a, #div_mostrar_ptable_a:hover .div_ocultar_ptable_a{
     display: block!important;
 }
-#ausentismo{
+#div_mostrar_ptable_i, #div_mostrar_ptable_a{
     display: flex;
 }
+
 @media (min-width: 1024px) {
-    #ausentismo{
+    #div_mostrar_ptable_i, #div_mostrar_ptable_a{
         max-width: 50%!important;
     }
 }
+.tipoPacienteNombre{
+    padding-left: 1rem;
+}
 
-
-
-
-
+::ng-deep .ag-cell {
+    // text-overflow: clip !important;
+    // overflow: visible !important;
+    white-space: normal !important;
+    justify-content: center!important;
+}
+:host ::ng-deep #datatablele13 .datatable-body {
+    font-size: 11px!important;
+}
+:host ::ng-deep #datatablele13 .datatable-summary-row {
+    font-size: 09px!important;
+}
+:host ::ng-deep #datatablele14 .datatable-body {
+    font-size: 11px!important;
+}
+:host ::ng-deep #datatablele14 .datatable-summary-row {
+    font-size: 09px!important;
+}
+:host ::ng-deep #datatablele15 .datatable-body {
+    font-size: 11px!important;
+}
+:host ::ng-deep #datatablele15 .datatable-summary-row {
+    font-size: 09px!important;
+}

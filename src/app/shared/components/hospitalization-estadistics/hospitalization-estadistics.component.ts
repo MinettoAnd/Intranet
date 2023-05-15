@@ -1449,8 +1449,10 @@ private getPagedData(page: Page, data: any[]) {
                   })
                   this.formatPipe(this.rows1);
                   this.rows1filtered = this.rows1.filter(item => item.GRUPO3 === 'CANTIDAD');
+                  console.log(1452, this.rows1filtered)
                   this.columns2 = response.data.cabeceras_rangoetareo;
                   this.rows2 = response.data.tabla_rangoetareo;
+                  console.log(1455, this.rows2)
                   const totalRango = {
                     RANGO:'',
                     MES1:0,
@@ -2198,7 +2200,8 @@ private getPagedData(page: Page, data: any[]) {
                 }else if (!(cell.indexOf('-') > -1 || cell.indexOf('(') > -1)) {
                       count = count + +cell.replace(re, '');
                 }else if (cell.indexOf('-') > -1) {
-                      count = count + 0;
+                      // count = count + 0;
+                      count = count - -cell.replace(re, '');
                 }else if (cell.indexOf('(') > -1) {
                   let number = cell.replace('(', '').replace(')', '');
                   count = count - +number.replace(re, '');

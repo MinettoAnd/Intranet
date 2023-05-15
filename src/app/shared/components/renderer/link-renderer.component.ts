@@ -28,7 +28,15 @@ export class LinkRendererComponent implements ICellRendererAngularComp {
   agInit(params): void {
     let re2 = /\S\//gi;
     this.params = params;
-    this.label = this.params.value.replace(re2, '').replace(',', '');
+    
+    if(this.params.value !== undefined){
+      // console.log(31, this.params)
+      if(typeof(this.params.value)  === 'string'){
+        this.label = this.params.value.replace(re2, '').replace(',', '');
+      }else{
+        this.label = 0
+      }
+    }
     this.sucursal = this.params.sucursal;
     this.field = this.params.field;
   }

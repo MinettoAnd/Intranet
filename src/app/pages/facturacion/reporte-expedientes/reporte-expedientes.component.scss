@@ -1,14 +1,7 @@
 
-// #datatablele5 {
-//     font-family: "Arial Narrow", "Roboto", "Helvetica Neue", Arial, "Noto Color Emoji" !important;
-//     font-size: 10px !important;
+// .row-background{
+//     background:red;
 // }
-
-.card-body {
-    padding: 0.8rem 1.25rem !important;
-}
-
-
 .toggle-table{
     display: flex;
     /* position: relative; */
@@ -17,8 +10,9 @@
 }
 .box-title{
     font-size: 1rem!important;
-    font-weight: 600;
 }
+
+
 .info-box-content{
     display: flex;
     flex-direction: column;
@@ -105,6 +99,10 @@ margin: 0.5rem 0;
           }
         }
       }
+  
+    //   .card-body {
+    //     padding: 1rem;
+    //   }
     }
   }
   :host ::ng-deep .datatable-body-row.active .datatable-row-group {
@@ -126,7 +124,26 @@ margin: 0.5rem 0;
     }
 }
 
-
-
-
-
+.input-group {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    float:left; 
+    padding:5px 10px;
+    vertical-align: middle;
+    width:350px;
+}
+.fecha {
+    width:250px;
+}
+.input-group-btn{
+    float:left; 
+    padding:5px 10px;
+    vertical-align: middle;
+}
+.btn-primary {
+    width: 150px;
+    color: #10004C;
+    font-weight: 600;
+}

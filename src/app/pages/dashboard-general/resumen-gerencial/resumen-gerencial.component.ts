@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SharedService } from '../../../layout/shared.service';
+import { SharedService } from '../../../Layout/shared.service';
 @Component({
   selector: 'app-resumen-gerencial',
   templateUrl: './resumen-gerencial.component.html',
@@ -13,7 +13,7 @@ export class ResumenGerencialComponent implements OnInit {
   public hospitalizacionEstadisticas = false;
   public emergenciasEstadisticas = false;
   public consultaExternaEstadisticas = false;
-  public jpric = false;
+  // public jpric = false;
   public menuItems: any = [];
   public subMenuItems: any = [];
   public categories: any = [];
@@ -57,7 +57,7 @@ export class ResumenGerencialComponent implements OnInit {
       case 1:
         this.comercialEstadisticas = true;
         this.ingresosEstadisticas = false;
-        this.jpric = false;
+        // this.jpric = false;
         this.emergenciasEstadisticas = false;
         this.hospitalizacionEstadisticas = false;
         this.consultaExternaEstadisticas = false;
@@ -65,7 +65,7 @@ export class ResumenGerencialComponent implements OnInit {
       case 2:
         this.comercialEstadisticas = false;
         this.ingresosEstadisticas = true;
-        this.jpric = false;
+        // this.jpric = false;
         this.emergenciasEstadisticas = false;
         this.hospitalizacionEstadisticas = false;
         this.consultaExternaEstadisticas = false;
@@ -73,35 +73,35 @@ export class ResumenGerencialComponent implements OnInit {
       case 3:
         this.comercialEstadisticas = false;
         this.ingresosEstadisticas = false;
-        this.jpric = true;
-        this.emergenciasEstadisticas = false;
+        // this.jpric = true;
+        this.emergenciasEstadisticas = true;
         this.hospitalizacionEstadisticas = false;
         this.consultaExternaEstadisticas = false;
         break;
       case 4:
         this.comercialEstadisticas = false;
         this.ingresosEstadisticas = false;
-        this.jpric = false;
-        this.emergenciasEstadisticas = true;
-        this.hospitalizacionEstadisticas = false;
+        // this.jpric = false;
+        this.emergenciasEstadisticas = false;
+        this.hospitalizacionEstadisticas = true;
         this.consultaExternaEstadisticas = false;
         break;
       case 5:
         this.comercialEstadisticas = false;
         this.ingresosEstadisticas = false;
-        this.jpric = false;
-        this.emergenciasEstadisticas = false;
-        this.hospitalizacionEstadisticas = true;
-        this.consultaExternaEstadisticas = false;
-        break;
-      case 6:
-        this.comercialEstadisticas = false;
-        this.ingresosEstadisticas = false;
-        this.jpric = false;
+        // this.jpric = false;
         this.emergenciasEstadisticas = false;
         this.hospitalizacionEstadisticas = false;
         this.consultaExternaEstadisticas = true;
         break;
+      // case 6:
+      //   this.comercialEstadisticas = false;
+      //   this.ingresosEstadisticas = false;
+      //   this.jpric = false;
+      //   this.emergenciasEstadisticas = false;
+      //   this.hospitalizacionEstadisticas = false;
+      //   this.consultaExternaEstadisticas = true;
+      //   break;
     }
   }
   getModelsAdmin() {

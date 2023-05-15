@@ -13,6 +13,7 @@ import * as XLSX from 'xlsx';
 import { ExcelJson } from '../../../../interfaces/excel-json.interface';
 import { ExportService } from '../../../../_services/export.service';
 import ResizeObserver from 'resize-observer-polyfill';
+import { NumberDecimalPipe } from '../../../../pipes/numberDecimal.pipe';
 
 
 @Component({
@@ -69,7 +70,7 @@ export class ListadoContratosVigentesComponent implements OnInit {
     {value: 50},
     {value: 100},
   ];
-  constructor(private tableApiservice: ComercialService, private exportService: ExportService) {
+  constructor(private tableApiservice: ComercialService, private exportService: ExportService, private _ndp: NumberDecimalPipe) {
     this.page.pageNumber = 0;
     this.page.size = 10;
 
@@ -173,6 +174,11 @@ export class ListadoContratosVigentesComponent implements OnInit {
           this.data = response.data ? response : [];
       console.log(168, this.data);   
           this.columns = this.data.data.cabeceras;
+          this.columns.map(item =>{
+            if(item.pipe === 'decimal'){
+              item.pipe = this._ndp;
+            }
+          });
           this.rows = this.data.data.data;
           console.log(response.data.page);
           this.page = (response as any).data.page;
