@@ -97,8 +97,9 @@ const routes: Routes = [
             },                     
 
             {
-                path: "rrhh/collaborators",
-                component: CollaboratorsComponent,
+                path: "rrhh",
+                loadChildren: () => import('../app/pages/rrhh/rrhh.module').then(m => m.RrhhModule),
+                // component: CollaboratorsComponent,
                 data: { extraParameter: "recursosMenu" },
             },
             {

@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 export class RrhhService {
   response: Observable<any>;
   baseURL: string = environment.baseURL;
+  loadTableApiDataURL = null;
   constructor(private http: HttpClient) {
     //this.baseURL = '/api';
   }
@@ -38,6 +39,4 @@ export class RrhhService {
   getCargoService() {
     return this.http.get(`${this.baseURL}/filtrosms/cargo_colaborador`).toPromise();
   }
-
-
 }
