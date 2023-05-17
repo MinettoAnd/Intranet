@@ -13,6 +13,8 @@ import { AgGridModule } from 'ag-grid-angular';
 import { IngresosEstadisticasComponent } from './components/ingresos-estadisticas/ingresos-estadisticas.component';
 import { JPRICComponent } from './components/jpric/jpric.component';
 import { LinkRendererComponent } from './components/renderer/link-renderer.component';
+import { EstadisticaPlanillaIndicadoresComponent } from './components/rrhh/estadistica-planilla-indicadores/estadistica-planilla-indicadores.component';
+import { EstadisticaPlanillaResumenPagosComponent } from './components/rrhh/estadistica-planilla-resumen-pagos/estadistica-planilla-resumen-pagos.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { LinkRendererComponent } from './components/renderer/link-renderer.compo
     ExternalConsultationEstadisticsComponent,
     HospitalizationEstadisticsComponent,
     IngresosEstadisticasComponent,
-    JPRICComponent
+    JPRICComponent,
+    EstadisticaPlanillaIndicadoresComponent,
+    EstadisticaPlanillaResumenPagosComponent
   ],
   imports: [
     AgGridModule.withComponents([LinkRendererComponent]),
@@ -39,7 +43,9 @@ import { LinkRendererComponent } from './components/renderer/link-renderer.compo
     ExternalConsultationEstadisticsComponent,
     HospitalizationEstadisticsComponent,
     IngresosEstadisticasComponent,
-    JPRICComponent
+    JPRICComponent,
+    EstadisticaPlanillaIndicadoresComponent,
+    EstadisticaPlanillaResumenPagosComponent
   ],
 })
 export class SharedModule { }
