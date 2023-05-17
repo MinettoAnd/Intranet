@@ -155,7 +155,7 @@ export class EstadisticaPlanillaIndicadoresComponent implements OnInit {
   }
   getRowClass(row) {
     return {
-      'totals': row.tipoPacienteNombre.includes('TOTAL'), 'sub-totals': row.tipoPacienteNombre === 'PROGRAMAS DE SALUD' || row.tipoPacienteNombre === 'CONVENIOS' || row.tipoPacienteNombre === 'SEGUROS' || row.tipoPacienteNombre === 'OTROS' };
+      'sub-totals': row.concepto === 'Nro.de Colaboradores' || row.concepto === 'Nro.de Colaboradores Nuevos' || row.concepto === 'Nro.de Colaboradores Cesados' || row.concepto === 'Planilla Mensual - Ingresos' || row.concepto === 'Planilla Mensual - Descuentos' || row.concepto === 'Planilla Mensual - Total a Pagar' || row.concepto === 'Pago de PROVIS en Soles' || row.concepto === 'Por Maternidad' || row.concepto === 'Por Descanso Medico Prolongado' || row.concepto === 'Total Subsidiado' || row.concepto === 'Nro. de dias Por Maternidad' || row.concepto === 'Nro. de dias Por Descanso Medico Prolongado' || row.concepto === 'Nro. Total de dias subsidiados' || row.concepto === 'Dscto. por Permisos en Soles' || row.concepto === 'Dscto. por Tardanzas' || row.concepto === 'Tiempo total de tardanzas descontadas' || row.concepto === 'Administrativo' || row.concepto === 'Clínica' || row.concepto === 'Farmacia' || row.concepto === 'Hospitalización' || row.concepto === 'Total Dscto.Por Prestación' || row.concepto === 'Total Dscto.Por Prestación' || row.concepto === 'Pago por Reintegros' || row.concepto === 'Pago por Dias Feriados' || row.concepto === 'Pago por Guardia Nocturna' || row.concepto === 'Tiempo total de Feriados Pagados' || row.concepto === 'Tiempo total de Guardia Nocturna Pagadas'};
   }
   getRowClass1(row) {
 
@@ -714,21 +714,22 @@ export class EstadisticaPlanillaIndicadoresComponent implements OnInit {
         //   }
         // ]
           console.log(446, this.rows1);
-console.log(447, this.columns1);
-          // this.columns2 = this.data.cabeceras_kpi_planillas;
-          // this.rows2 = this.data.tabla_kpi_planillas;
+
+          this.columns2 = this.data.cabeceras_kpi_planillas;
+          this.rows2 = this.data.tabla_kpi_planillas;
           
-          // this.columns3 = this.data.cabeceras_kpi_planillas_subsidio;
-          // this.rows3 = this.data.tabla_kpi_planillas_subsidio;
+          this.columns3 = this.data.cabeceras_kpi_planillas_subsidio;
+          this.rows3 = this.data.tabla_kpi_planillas_subsidio;
 
-          // this.columns4 = this.data.cabeceras_kpi_planillas_dscto;
-          // this.rows4 = this.data.tabla_kpi_planillas_dscto;
+          this.columns4 = this.data.cabeceras_kpi_planillas_dscto;
 
-          // this.columns5 = this.data.cabeceras_kpi_planillas_prestacion;
-          // this.rows5 = this.data.tabla_kpi_planillas_prestacion;
+          this.rows4 = this.data.tabla_kpi_planillas_dscto;
 
-          // this.columns6 = this.data.cabeceras_kpi_planillas_ingresos;
-          // this.rows6 = this.data.tabla_kpi_planillas_ingresos;
+          this.columns5 = this.data.cabeceras_kpi_planillas_prestacion;
+          this.rows5 = this.data.tabla_kpi_planillas_prestacion;
+
+          this.columns6 = this.data.cabeceras_kpi_planillas_ingresos;
+          this.rows6 = this.data.tabla_kpi_planillas_ingresos;
 
 
           // this.rows4filtered = this.rows4.filter(item => item.sucursal === 'TODAS');
