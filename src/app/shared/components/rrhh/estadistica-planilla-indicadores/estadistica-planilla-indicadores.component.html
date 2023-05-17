@@ -102,12 +102,20 @@
                                           [headerHeight]="$any('auto')"
                                           [rowHeight]="$any('auto')"
                                           [scrollbarH]="true"
+                                          [rowClass] = "getRowClass"
                                           >
                                           <ngx-datatable-column  [headerClass]="column.headerClass" [cellClass]="column.cellClass" [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns1; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                             <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                               let-row="row">
-                                              <span *ngIf="column.prop == 'concepto'">{{value}}</span>
-                                              <span *ngIf="column.prop !== 'concepto'">{{value }}</span>
+                                              <div [ngClass]="{'row-paddin': row.concepto.includes('LIMA') || row.concepto.includes('CHORRILLOS') || row.concepto.includes('SURCO') }">
+                                                <span *ngIf="column.prop == 'concepto'">{{value}}</span>
+                                                  <i class="fa fa-arrow-down text-blue" *ngIf="row.concepto === 'Colaboradores Respecto Mes Anterior' && value < 0"></i>
+                                                  <i class="fa fa-arrow-down text-red" *ngIf="row.concepto === 'Colaboradores Respecto Mes Anterior' && value > 0"></i>
+                                                  <i class="fa fa-arrow-up text-blue" *ngIf="row.concepto === 'Proporcion de Cesados / Nuevos' && value > 0"></i>
+                                                  <i class="fa fa-arrow-up text-red" *ngIf="row.concepto === 'Proporcion de Cesados / Nuevos' && value < 0"></i>
+                                                <span *ngIf="column.prop !== 'concepto' && rowIndex < 14">{{value }}</span>
+                                                <span *ngIf="column.prop !== 'concepto' && rowIndex > 13">{{value }} %</span>
+                                              </div>
                                             </ng-template>
                                           </ngx-datatable-column>
                                         </ngx-datatable>
@@ -160,15 +168,16 @@
                                           [headerHeight]="$any('auto')"
                                           [rowHeight]="$any('auto')"
                                           [scrollbarH]="true"
-                                          [summaryRow]="enableSummary"
-                                          [summaryPosition]="summaryPosition"
-                                          [summaryHeight]="35"
+                                          [rowClass] = "getRowClass"
                                           >
-                                          <ngx-datatable-column [sortable]="false" [headerClass]="column.headerClass" [cellClass]="column.cellClass" [summaryFunc]="column.prop == 'montoLima' || column.prop == 'montoChorrillos' || column.prop == 'montoSurco' || column.prop == 'montoTotal'? summaryForAmount:summaryNull" [flexGrow]="1" [minWidth]="90" [width]="column.width" *ngFor="let column of columns2; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                          <ngx-datatable-column [sortable]="false" [headerClass]="column.headerClass" [cellClass]="column.cellClass"  [flexGrow]="1" [minWidth]="90" [width]="column.width" *ngFor="let column of columns2; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                             <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                               let-row="row">
-                                              <span *ngIf="column.prop == 'empresa'">{{value}}</span>
-                                              <span *ngIf="column.prop !== 'empresa'">{{value  | currency }}</span>
+                                              <div [ngClass]="{'row-paddin': row.concepto.includes('LIMA') || row.concepto.includes('CHORRILLOS') || row.concepto.includes('SURCO') }">
+                                                <span *ngIf="column.prop == 'concepto'">{{value}}</span>
+                                                <span *ngIf="column.prop !== 'concepto' && rowIndex < 16">{{value  | currency }}</span>
+                                                <span *ngIf="column.prop !== 'concepto' && rowIndex > 15">{{value }}</span>
+                                              </div>
                                             </ng-template>
                                           </ngx-datatable-column>
                                         </ngx-datatable>
@@ -216,15 +225,16 @@
                                           [headerHeight]="$any('auto')"
                                           [rowHeight]="$any('auto')"
                                           [scrollbarH]="true"
-                                          [summaryRow]="enableSummary"
-                                          [summaryPosition]="summaryPosition"
-                                          [summaryHeight]="35"
+                                          [rowClass] = "getRowClass"
                                           >
-                                          <ngx-datatable-column [sortable]="false" [headerClass]="column.headerClass" [cellClass]="column.cellClass" [summaryFunc]="column.prop == 'montoLima' || column.prop == 'montoChorrillos' || column.prop == 'montoSurco' || column.prop == 'montoTotal'? summaryForAmount:summaryNull" [flexGrow]="1" [minWidth]="90" [width]="column.width" *ngFor="let column of columns3; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                          <ngx-datatable-column [sortable]="false" [headerClass]="column.headerClass" [cellClass]="column.cellClass" [flexGrow]="1" [minWidth]="90" [width]="column.width" *ngFor="let column of columns3; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                             <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                               let-row="row">
-                                              <span *ngIf="column.prop == 'empresa'">{{value}}</span>
-                                              <span *ngIf="column.prop !== 'empresa'">{{value  | currency }}</span>
+                                              <div [ngClass]="{'row-paddin': row.concepto.includes('LIMA') || row.concepto.includes('CHORRILLOS') || row.concepto.includes('SURCO') }">
+                                                <span *ngIf="column.prop == 'concepto'">{{value}}</span>
+                                                <span *ngIf="column.prop !== 'concepto' && rowIndex < 12">{{value  | currency }}</span>
+                                                <span *ngIf="column.prop !== 'concepto' && rowIndex > 11">{{value }}</span>
+                                              </div>
                                             </ng-template>
                                           </ngx-datatable-column>
                                         </ngx-datatable>
@@ -272,15 +282,16 @@
                                           [headerHeight]="$any('auto')"
                                           [rowHeight]="$any('auto')"
                                           [scrollbarH]="true"
-                                          [summaryRow]="enableSummary"
-                                          [summaryPosition]="summaryPosition"
-                                          [summaryHeight]="35"
+                                          [rowClass] = "getRowClass"
                                           >
-                                          <ngx-datatable-column [sortable]="false" [headerClass]="column.headerClass" [cellClass]="column.cellClass" [summaryFunc]="column.prop == 'montoLima' || column.prop == 'montoChorrillos' || column.prop == 'montoSurco' || column.prop == 'montoTotal'? summaryForAmount:summaryNull" [flexGrow]="1" [minWidth]="90" [width]="column.width" *ngFor="let column of columns4; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                          <ngx-datatable-column [sortable]="false" [headerClass]="column.headerClass" [cellClass]="column.cellClass" [flexGrow]="1" [minWidth]="90" [width]="column.width" *ngFor="let column of columns4; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                             <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                               let-row="row">
-                                              <span *ngIf="column.prop == 'empresa'">{{value}}</span>
-                                              <span *ngIf="column.prop !== 'empresa'">{{value  | currency }}</span>
+                                              <div [ngClass]="{'row-paddin': row.concepto.includes('LIMA') || row.concepto.includes('CHORRILLOS') || row.concepto.includes('SURCO') }">
+                                                <span *ngIf="column.prop == 'concepto'">{{value}}</span>
+                                                <span *ngIf="column.prop !== 'concepto' && rowIndex < 9">{{ value | currency  }}</span>
+                                                <span *ngIf="column.prop !== 'concepto' && rowIndex > 8">{{ value  }}</span>
+                                              </div>
                                             </ng-template>
                                           </ngx-datatable-column>
                                         </ngx-datatable>
@@ -328,15 +339,15 @@
                                           [headerHeight]="$any('auto')"
                                           [rowHeight]="$any('auto')"
                                           [scrollbarH]="true"
-                                          [summaryRow]="enableSummary"
-                                          [summaryPosition]="summaryPosition"
-                                          [summaryHeight]="35"
+                                          [rowClass] = "getRowClass"
                                           >
-                                          <ngx-datatable-column [sortable]="false" [headerClass]="column.headerClass" [cellClass]="column.cellClass" [summaryFunc]="column.prop == 'montoLima' || column.prop == 'montoChorrillos' || column.prop == 'montoSurco' || column.prop == 'montoTotal'? summaryForAmount:summaryNull" [flexGrow]="1" [minWidth]="90" [width]="column.width" *ngFor="let column of columns5; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                          <ngx-datatable-column [sortable]="false" [headerClass]="column.headerClass" [cellClass]="column.cellClass"  [flexGrow]="1" [minWidth]="90" [width]="column.width" *ngFor="let column of columns5; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                             <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                               let-row="row">
-                                              <span *ngIf="column.prop == 'empresa'">{{value}}</span>
-                                              <span *ngIf="column.prop !== 'empresa'">{{value  | currency }}</span>
+                                              <div [ngClass]="{'row-paddin': row.concepto.includes('LIMA') || row.concepto.includes('CHORRILLOS') || row.concepto.includes('SURCO') }">
+                                                <span *ngIf="column.prop == 'concepto'">{{value}}</span>
+                                                <span *ngIf="column.prop !== 'concepto'">{{value  | currency }}</span>
+                                              </div>
                                             </ng-template>
                                           </ngx-datatable-column>
                                         </ngx-datatable>
@@ -384,15 +395,17 @@
                                           [headerHeight]="$any('auto')"
                                           [rowHeight]="$any('auto')"
                                           [scrollbarH]="true"
-                                          [summaryRow]="enableSummary"
-                                          [summaryPosition]="summaryPosition"
-                                          [summaryHeight]="35"
+                                          [rowClass] = "getRowClass"
                                           >
-                                          <ngx-datatable-column [sortable]="false" [headerClass]="column.headerClass" [cellClass]="column.cellClass" [summaryFunc]="column.prop == 'montoLima' || column.prop == 'montoChorrillos' || column.prop == 'montoSurco' || column.prop == 'montoTotal'? summaryForAmount:summaryNull" [flexGrow]="1" [minWidth]="90" [width]="column.width" *ngFor="let column of columns6; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                          <ngx-datatable-column [sortable]="false" [headerClass]="column.headerClass" [cellClass]="column.cellClass"  [flexGrow]="1" [minWidth]="90" [width]="column.width" *ngFor="let column of columns6; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                             <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                               let-row="row">
-                                              <span *ngIf="column.prop == 'empresa'">{{value}}</span>
-                                              <span *ngIf="column.prop !== 'empresa'">{{value  | currency }}</span>
+                                              <div [ngClass]="{'row-paddin': row.concepto.includes('LIMA') || row.concepto.includes('CHORRILLOS') || row.concepto.includes('SURCO') }">
+                                                <span *ngIf="column.prop == 'concepto'">{{value}}</span>
+                                                <span *ngIf="column.prop !== 'concepto' && rowIndex < 12">{{ value | currency  }}</span>
+                                                <span *ngIf="column.prop !== 'concepto' && rowIndex > 11">{{ value  }}</span>
+                                              </div>
+                                              
                                             </ng-template>
                                           </ngx-datatable-column>
                                         </ngx-datatable>

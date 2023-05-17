@@ -175,6 +175,20 @@ export class EstadisticaPlanillaResumenPagosComponent implements OnInit {
     console.log(imagedata)
     downloadlink.href = imagedata;
   }
+  guardarImagen1(){
+    var canvas = document.getElementById("chart-2") as HTMLCanvasElement;
+    var downloadlink = document.getElementById("downloadlink1") as HTMLAnchorElement;
+    
+    // var ctx = canvas.getContext("2d");
+    // ctx.strokeStyle = "yellow";
+    // ctx.lineWidth = 4;
+    // ctx.beginPath();
+    // ctx.arc(100,75,50,0,Math.PI*2);
+    // ctx.stroke();
+    var imagedata = canvas.toDataURL("image/png");
+    console.log(imagedata)
+    downloadlink.href = imagedata;
+  }
   getBarChart(chartLabels1, chartData1, chartData2,chartData3,chartData4,scaleLabel1,scaleLabel2, chartNum, title, title2, title3, title4,typeChart) {
     const data = {
       labels: chartLabels1,
