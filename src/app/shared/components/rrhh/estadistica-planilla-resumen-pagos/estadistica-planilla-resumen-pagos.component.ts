@@ -15,7 +15,7 @@ import ResizeObserver from 'resize-observer-polyfill';
 import { CurrencyPipe } from '@angular/common';
 import { CustomNumberPipe } from 'src/app/pipes/customNumber.pipe';
 import { PhonePipe } from 'src/app/pipes/phone.pipe';
-import { TesoreriaService } from 'src/app/_services/tesoreria.service';
+import { RecursosHumanosService } from 'src/app/_services/recursos-humanos.service';
 import { NumberDecimalPipe } from 'src/app/pipes/numberDecimal.pipe';
 import * as Chart from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
@@ -48,7 +48,9 @@ export class EstadisticaPlanillaResumenPagosComponent implements OnInit {
     if (content) {
       // initially setter gets called with undefined
       this.baseChart = content;
-      this.grafico1 = this.getBarChart(this.barChartLabels, this.barChartData1, this.barChartData2,this.barChartData3,this.barChartData4,'', '','chart-1', 'Lima', 'Chorrillos','Surco','Total', 'line');
+      this.grafico1 = this.getBarChart(this.barChartLabels1, this.barChartData1, this.barChartData2,'', '','chart-1', this.anioAnterior, this.anio, 'line');
+      this.grafico2 = this.getBarChart(this.barChartLabels2, this.barChartData3, this.barChartData4,'', '','chart-2', this.anioAnterior, this.anio, 'line');
+
   } }
   options = {
     close: true,
@@ -65,7 +67,12 @@ export class EstadisticaPlanillaResumenPagosComponent implements OnInit {
   rows2: any;
   rows3: any;
   rows4: any;
-  rows4filtered = [];
+  rows5: any;
+  rows6: any;
+  rows7: any;
+  rows8: any;
+  rows9: any;
+  rows9filtered: any;
   editing = {};
   row: any;
   public breadcrumb: any;
@@ -73,11 +80,21 @@ export class EstadisticaPlanillaResumenPagosComponent implements OnInit {
   parameters:any;
   message;
   title;
-  columns:any;
   columns1:any;
   columns2:any;
   columns3:any;
   columns4:any;
+  columns5:any;
+  columns6:any;
+  columns7:any;
+  columns8:any;
+  columns9:any;
+  periodos:any;
+  periodo_emp:any;
+  banco_bcp_f:any;
+  banco_bcp_m:any;
+  banco_con_f:any;
+  banco_con_m:any;
   optionsWithCaption = {};
   datePipe: any;
         // f_inicio: '2022-11-01',
@@ -117,14 +134,17 @@ export class EstadisticaPlanillaResumenPagosComponent implements OnInit {
   optionsAnio = [];
   mes = moment(new Date()).format('MM');
   anio = moment(new Date()).format('YYYY');
+  anioAnterior = moment(new Date()).subtract(1, 'years').format('YYYY');
   periodo = this.anio + this.mes;
-  barChartLabels = [];
+  barChartLabels1 = [];
+  barChartLabels2 = [];
   barChartData1 = [];
   barChartData2 = [];
   barChartData3 = [];
   barChartData4 = [];
-  selectedOptionTipo='TODAS'; 
-  constructor(private tableApiservice: TesoreriaService, private exportService: ExportService, private _cnp:CustomNumberPipe,
+  selectedOptionTipo='EMPLEADOS'; 
+  selectedOptionPeriodo = this.periodo;
+  constructor(private tableApiservice: RecursosHumanosService, private exportService: ExportService, private _cnp:CustomNumberPipe,
     private _cp: CurrencyPipe, private _phone: PhonePipe, private _ndp:NumberDecimalPipe) {
     this.page.pageNumber = 0;
     this.page.size = 10;
@@ -189,7 +209,7 @@ export class EstadisticaPlanillaResumenPagosComponent implements OnInit {
     console.log(imagedata)
     downloadlink.href = imagedata;
   }
-  getBarChart(chartLabels1, chartData1, chartData2,chartData3,chartData4,scaleLabel1,scaleLabel2, chartNum, title, title2, title3, title4,typeChart) {
+  getBarChart(chartLabels1, chartData1, chartData2,scaleLabel1,scaleLabel2, chartNum, title, title2,typeChart) {
     const data = {
       labels: chartLabels1,
       datasets: [
@@ -216,24 +236,24 @@ export class EstadisticaPlanillaResumenPagosComponent implements OnInit {
           // hoverBackgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14','#adb5bd', '#ffc107', '#28a745', '#6610f2', '#20c997']
           type                : 'line',
         },
-        {
-          label: title3,
-          // borderColor: 'rgba(99, 255, 132, 1)',
-          borderWidth: 1,
-          data: chartData3,
-          backgroundColor: '#ffa40859'
-          // backgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#adb5bd','#ffc107', '#28a745', '#6610f2','#20c997'],
-          // hoverBackgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14','#adb5bd', '#ffc107', '#28a745', '#6610f2', '#20c997']
-        },
-        {
-          label: title4,
-          // borderColor: 'rgba(99, 255, 132, 1)',
-          borderWidth: 1,
-          data: chartData4,
-          backgroundColor: '#eb445a59'
-          // backgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#adb5bd','#ffc107', '#28a745', '#6610f2','#20c997'],
-          // hoverBackgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14','#adb5bd', '#ffc107', '#28a745', '#6610f2', '#20c997']
-        }
+        // {
+        //   label: title3,
+        //   // borderColor: 'rgba(99, 255, 132, 1)',
+        //   borderWidth: 1,
+        //   data: chartData3,
+        //   backgroundColor: '#ffa40859'
+        //   // backgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#adb5bd','#ffc107', '#28a745', '#6610f2','#20c997'],
+        //   // hoverBackgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14','#adb5bd', '#ffc107', '#28a745', '#6610f2', '#20c997']
+        // },
+        // {
+        //   label: title4,
+        //   // borderColor: 'rgba(99, 255, 132, 1)',
+        //   borderWidth: 1,
+        //   data: chartData4,
+        //   backgroundColor: '#eb445a59'
+        //   // backgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#adb5bd','#ffc107', '#28a745', '#6610f2','#20c997'],
+        //   // hoverBackgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14','#adb5bd', '#ffc107', '#28a745', '#6610f2', '#20c997']
+        // }
       ]
     };
     const options = {
@@ -433,6 +453,7 @@ export class EstadisticaPlanillaResumenPagosComponent implements OnInit {
   }
   setPage(pageInfo) {
     console.log(pageInfo);
+    this.selectedOptionPeriodo = this.periodo;
     this.page.pageNumber = pageInfo.offset;
     this.parameters = {
       anio: this.anio,
@@ -443,39 +464,73 @@ export class EstadisticaPlanillaResumenPagosComponent implements OnInit {
     };
 
     this.loading();
-    this.tableApiservice.IngGetIngresosResumen(this.parameters).subscribe(
+    this.tableApiservice.RRhhGetPlanillaEstadisticaResumen(this.parameters).subscribe(
       (response) => {
         this.rows = [];
-        console.log(response);
+        console.log(449, response);
         if(response.data.success){
           this.data = response.data ? response.data : [];
           this.message = this.data.titulo;
           this.title = response.data.title;
-  
-          this.columns = this.data.cabeceras_ingresos_TPac;
-          this.rows = this.data.tabla_ingresos_TPac;
-          // this.temp = this.rows;
-          this.columns1 = this.data.cabeceras_ingresos_empresa;
-          this.rows1 = this.data.tabla_ingresos_empresa;
-          this.columns2 = this.data.cabeceras_ingresos_sede_anual;
-          this.rows2 = this.data.tabla_ingresos_sede_anual;
+          this.periodo_emp = response.data.periodo_emp
+          this.banco_bcp_f = response.data.banco_bcp_f
+          this.banco_bcp_m = response.data.banco_bcp_m
+          this.banco_con_f = response.data.banco_con_f
+          this.banco_con_m = response.data.banco_con_m
 
-          this.columns3 = this.data.cabeceras_ingresos_tPaciente_anual;
-          this.rows3 = this.data.tabla_ingresos_tPaciente_anual;
-          this.columns4 = this.data.cabeceras_ingresos_empresa_anual;
-          this.rows4 = this.data.tabla_ingresos_empresa_anual;
-          this.rows4filtered = this.rows4.filter(item => item.sucursal === 'TODAS');
-          this.barChartLabels = [];
+          // this.temp = this.rows;
+          this.columns1 = this.data.cabeceras_planilla_pago_soles;
+          this.rows1 = this.data.tabla_planilla_pago_soles;
+          this.columns2 = this.data.cabeceras_planilla_pago_cantidad;
+          this.rows2 = this.data.tabla_planilla_pago_cantidad;
+
+          this.columns3 = this.data.cabeceras_planilla_pendientes_soles;
+          this.rows3 = this.data.tabla_planilla_pendientes_soles;
+
+          let hash = {};
+          const array = this.rows3.filter(o => hash[o.Periodo.trim()] ? false : hash[o.Periodo.trim()] = true);
+          this.periodos = []
+          array.map(item => {
+            const periodo = { value: item.Periodo.trim() };
+            this.periodos.push(periodo);
+          });
+          console.log(489, this.periodos);
+
+          this.columns4 = this.data.cabeceras_planilla_pendientes_cantidad;
+          this.rows4 = this.data.tabla_planilla_pendientes_cantidad;
+          this.columns5 = this.data.cabeceras_planilla_pendientes_activos_soles;
+          this.rows5 = this.data.tabla_planilla_pendientes_activos_soles;
+          this.columns6 = this.data.cabeceras_planilla_pendientes_activos_cantidad;
+          this.rows6 = this.data.tabla_planilla_pendientes_activos_cantidad;
+          
+          this.columns7 = this.data.cabeceras_planilla_pendiente_soles;
+          this.rows7 = this.data.tabla_planilla_pendiente_soles;
+          this.columns8 = this.data.cabeceras_planilla_pendiente_cantidad;
+          this.rows8 = this.data.tabla_planilla_pendiente_cantidad;
+
+          this.columns9 = this.data.cabeceras_planilla_pagado_fechas;
+          this.rows9 = this.data.tabla_planilla_pagado_fechas;
+          this.rows9filtered = this.rows9.filter(item => item.Descripcion.trim() === 'EMPLEADOS');
+          console.log(477, this.rows9);
+          this.barChartLabels1 = [];
+          this.barChartLabels2 = [];
           this.barChartData1 = [];
           this.barChartData2 = [];
           this.barChartData3 = [];
           this.barChartData4 = [];
-          this.data.hist_mensual.map(item => {
-            this.barChartLabels.push(item.name);
+          this.data.hist_total.map(item => {
+            this.barChartLabels1.push(item.name);
             this.barChartData1.push(item.item_1);
             this.barChartData2.push(item.item_2);
-            this.barChartData3.push(item.item_3)
-            this.barChartData4.push(item.item_4)
+            // this.barChartData3.push(item.item_3)
+            // this.barChartData4.push(item.item_4)
+          });
+          this.data.hist_canti.map(item => {
+            this.barChartLabels2.push(item.name);
+            this.barChartData3.push(item.item_1);
+            this.barChartData4.push(item.item_2);
+            // this.barChartData3.push(item.item_3)
+            // this.barChartData4.push(item.item_4)
           })
           // var data = [];
           // data.push(this.barChartData1, this.barChartData2);
@@ -501,7 +556,7 @@ export class EstadisticaPlanillaResumenPagosComponent implements OnInit {
          item.montoSurco = typeof item.montoSurco === 'number' ? item.montoSurco : Number(item.montoSurco);
          item.montoTotal = typeof item.montoTotal === 'number' ? item.montoTotal : Number(item.montoTotal);
       });
-      this.exportService.exportToClipboard(this.rows, this.columns);
+      this.exportService.exportToClipboard(this.rows, this.columns1);
     }else if (numberTabla === 1){
       this.rows1.map(item=>{
         item.montoLima = typeof item.montoLima === 'number' ? item.montoLima : Number(item.montoLima);
@@ -677,14 +732,14 @@ export class EstadisticaPlanillaResumenPagosComponent implements OnInit {
     const input = event;
     // this.especialidad = input;
     // this.temp = this.rows1;rows2filtered
-      if (input === 'TODAS') {
-        this.rows4filtered = this.rows4.filter(item => item.sucursal === 'TODAS');
-       } else if (input === 'LIMA'){
-        this.rows4filtered = this.rows4.filter(item =>item.sucursal === 'LIMA');
-       } else if (input === 'CHORRILLOS'){
-        this.rows4filtered = this.rows4.filter(item =>item.sucursal === 'CHORRILLOS');
-       } else if (input === 'SURCO'){
-        this.rows4filtered = this.rows4.filter(item =>item.sucursal === 'SURCO');
+      if (input === 'EMPLEADOS') {
+        this.rows9filtered = this.rows9.filter(item => item.Descripcion.trim() === 'EMPLEADOS');
+       } else if (input === 'FUNCIONARIOS'){
+        this.rows9filtered = this.rows9.filter(item =>item.Descripcion.trim() === 'FUNCIONARIOS');
+       } else if (input === 'OBREROS'){
+        this.rows9filtered = this.rows9.filter(item =>item.Descripcion.trim() === 'OBREROS');
+       } else if (input === 'PRACTICANTE'){
+        this.rows9filtered = this.rows9.filter(item =>item.Descripcion.trim() === 'PRACTICANTE');
        }
 
     
@@ -694,23 +749,23 @@ export class EstadisticaPlanillaResumenPagosComponent implements OnInit {
     // console.log(838, input);
     // filter our data
     if (input.length > 0) {
-      const filtered = this.rows4filtered
+      const filtered = this.rows9filtered
         .filter(el =>
           Object.values(el).find( val => val?.toString().toLowerCase().includes(input) ) != undefined
         );
         // console.log(filtered);
-      this.rows4filtered = [...filtered]
+      this.rows9filtered = [...filtered]
       
     } else {
 
       if(selectedOption === 'TODAS'){
-        this.rows4filtered = [...this.rows4.filter(item => item.sucursal === 'TODAS')]
+        this.rows9filtered = [...this.rows9.filter(item => item.Descripcion === 'TODAS')]
       }else if (selectedOption === 'LIMA'){
-        this.rows4filtered = [...this.rows4.filter(item => item.sucursal === 'LIMA')]
+        this.rows9filtered = [...this.rows9.filter(item => item.Descripcion === 'LIMA')]
       }else if (selectedOption === 'CHORRILLOS'){
-        this.rows4filtered = [...this.rows4.filter(item => item.sucursal === 'CHORRILLOS')]
+        this.rows9filtered = [...this.rows9.filter(item => item.Descripcion === 'CHORRILLOS')]
       }else if (selectedOption === 'SURCO'){
-        this.rows4filtered = [...this.rows4.filter(item => item.sucursal === 'SURCO')]
+        this.rows9filtered = [...this.rows9.filter(item => item.Descripcion === 'SURCO')]
       }
     }
   }
