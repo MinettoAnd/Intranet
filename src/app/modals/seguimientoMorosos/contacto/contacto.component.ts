@@ -115,9 +115,9 @@ console.log(60, this.dato);
                 }
                 if(item.medio_comunicacion){
                     if(item.medio_comunicacion === '1'){
-                        item.medio_comunicacion = 'Teléfono'
-                    }else if(item.medio_comunicacion === '2'){
                         item.medio_comunicacion = 'Correo'
+                    }else if(item.medio_comunicacion === '2'){
+                        item.medio_comunicacion = 'Teléfono'
                     }else if(item.medio_comunicacion === '3'){
                         item.medio_comunicacion = 'SMS'
                     }else if(item.medio_comunicacion === '4'){
