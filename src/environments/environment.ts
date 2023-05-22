@@ -7,7 +7,7 @@ export const environment = {
     // baseURL: "http://localhost:3000/api",
     // api_url: 'http://127.0.0.1:8000/api/v1/',
     // apiImage: 'http://localhost:8000/',
-    baseURL: 'http://servicios.maisondesante.org.pe/api',
+    baseURL: 'https://servicios.maisondesante.org.pe/api',
     api_url: 'https://api.maisondesante.org.pe/api/v1/',
     apiImage: 'https://api.maisondesante.org.pe/',
     
