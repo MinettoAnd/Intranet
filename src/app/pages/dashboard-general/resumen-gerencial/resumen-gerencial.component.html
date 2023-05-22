@@ -9,7 +9,7 @@
                     <div *ngIf="menu.isDropDownMenu" [id]="menu.dropDownTarget">
                         <ul class=" list-unstyled border-left border-primary border-thick">
                             <li *ngFor="let subMenu of menu.subMenuList; let i=index">
-                                <a class='text-muted ml-3 nav-link' (click)="$event.preventDefault()" role="button" (click)="showComponent(i+3)"><span>{{ subMenu.description}}</span></a>
+                                <a class='text-muted ml-3 nav-link' (click)="$event.preventDefault()" role="button" (click)="showComponent(i+4)"><span>{{ subMenu.description}}</span></a>
                             </li>
                         </ul>
                     </div>
@@ -18,10 +18,10 @@
 		</li>
 	</ul>
 
-  <app-ingresos-estadisticas *ngIf="ingresosEstadisticas" style="flex-grow: 1;"></app-ingresos-estadisticas>
-
+  
   <app-comercial-estadisticas *ngIf="comercialEstadisticas" style="flex-grow: 1;"></app-comercial-estadisticas>
-  <!-- <app-jpric *ngIf="jpric" style="flex-grow: 1;"></app-jpric> -->
+  <app-estadistica-planilla-resumen-indicadores *ngIf="planillaEstadistica" style="flex-grow: 1;"></app-estadistica-planilla-resumen-indicadores>
+  <app-ingresos-estadisticas *ngIf="ingresosEstadisticas" style="flex-grow: 1;"></app-ingresos-estadisticas>
   <app-hospitalization-estadistics *ngIf="hospitalizacionEstadisticas" style="flex-grow: 1;"></app-hospitalization-estadistics>
   <app-emergencies-estadistics *ngIf="emergenciasEstadisticas" style="flex-grow: 1;"></app-emergencies-estadistics>
   <app-external-consultation-estadistics *ngIf="consultaExternaEstadisticas" style="flex-grow: 1;"></app-external-consultation-estadistics>
