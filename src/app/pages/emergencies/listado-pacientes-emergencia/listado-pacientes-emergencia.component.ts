@@ -66,6 +66,7 @@ export class ListadoPacientesEmergenciaComponent implements OnInit {
     {value: 50},
     {value: 100},
   ];
+  action: boolean = false;
   constructor(private tableApiservice: EmergenciesService, private exportService: ExportService) {
     this.page.pageNumber = 0;
     this.page.size = 10;
@@ -195,6 +196,7 @@ export class ListadoPacientesEmergenciaComponent implements OnInit {
 
 
   filter() {
+    this.action = true;
   //console.log(217);
         const form = this.filtroForm.value;
           this.filtro_fecha = moment(form.filtro_fecha).format('YYYY-MM-DD'),

@@ -97,7 +97,7 @@
                         <li [ngbNavItem]="1">
                             <a ngbNavLink>Gráfico</a>
                             <ng-template ngbNavContent>
-                                <div class="card atencionesConsultaExterna">
+                                <div class="card atencionesConsultaExterna" *ngIf="action">
                                     <div class="card-header">
                                       <h4 class="card-title" style="bottom:13px;">Atenciones por Hospitalización</h4>
                                       <p>{{message}}</p> 
@@ -426,7 +426,7 @@
                         <li [ngbNavItem]="2">
                             <a ngbNavLink>Anual</a>
                             <ng-template ngbNavContent>
-                                <div class="card">
+                                <div class="card" *ngIf="action">
                                     <div class="card-header">
                                       <h4 class="card-title" style="bottom:13px;">Atenciones por Hospitalización</h4>
                                       <p>{{message}}</p>

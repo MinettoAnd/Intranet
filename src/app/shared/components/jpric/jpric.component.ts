@@ -1,3 +1,5 @@
+import { delay, map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { NgBlockUI, BlockUI } from 'ng-block-ui';
@@ -23,7 +25,15 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { LinkRendererComponent } from '../renderer/link-renderer.component';
 import { RowDetalleComponent } from 'src/app/modals/jpric/row-detalle/row-detalle.component';
 import { AgGridAngular } from 'ag-grid-angular';
+import { GridApi, GridReadyEvent} from 'ag-grid-community';
+import { PagedData } from 'src/app/models/forms-data/paged-data';
 
+interface PageInfo {
+  offset: number;
+  pageSize: number;
+  limit: number;
+  count: number;
+}
 @Component({
   selector: 'app-jpric',
   templateUrl: './jpric.component.html',
@@ -95,6 +105,9 @@ export class JPRICComponent implements OnInit {
   rows14: any;
   rows15: any;
   rows16: any;
+  page1 = new Page();
+  page2 = new Page();
+  page3 = new Page();
   columnsPendientes: any;
   rowsPendientes: any;
   editing = {};
@@ -149,10 +162,35 @@ export class JPRICComponent implements OnInit {
   frameworkComponents: any;
   SelectionType = SelectionType;
   id_sede: any;
+  pageNumber1: number;
+  pageNumber2: number;
+  pageNumber3: number;
+  isLoad = 0;
+  private gridApi1!: GridApi;
+  private gridApi2!: GridApi;
+  private gridApi3!: GridApi;
+  private gridColumnApi;
+  public paginationPageSize = 10;
+  totalElements1: number;
+
+  totalElements2: number;
+  totalElements3: number;
+  rowsT1: any[];
+  rowsT2: any[];
+  rowsT3: any[];
+  action: boolean = false;
+  private rowClassRules;
   constructor(private tableApiservice: TesoreriaService, private exportService: ExportService, private _cnp:CustomNumberPipe,
     private _cp: CurrencyPipe, private _phone: PhonePipe, private _ndp:NumberDecimalPipe, private modalService: NgbModal) {
     this.page.pageNumber = 0;
     this.page.size = 10;
+    this.page1.pageNumber = 0;
+    this.page1.size = 10;
+    this.page2.pageNumber = 0;
+    this.page2.size = 10;
+    this.page3.pageNumber = 0;
+    this.page3.size = 10;
+    this.pageNumber1 = 0
     this.filtroForm = new FormGroup({
       anio: new FormControl(this.anio),
       mes: new FormControl(this.mes),
@@ -171,6 +209,29 @@ export class JPRICComponent implements OnInit {
     this.optionsAnio.push(anioNew);
     anioOp--;
   }
+  this.rowClassRules = {
+    "totals": function(params) {
+      console.log(213, params);
+      var totales;
+      if(params.data.aseguradora_nombre !== undefined){
+        totales = params.data.aseguradora_nombre; 
+      }else if(params.data.aseguradora_Nombre !== undefined){
+        totales = params.data.aseguradora_Nombre;
+      }else if(params.data.aseguradoraNombre !== undefined){
+        totales = params.data.aseguradoraNombre;
+      }
+      return totales === 'TOTAL';
+    },
+    "separator": function(params) {
+      
+     var totales;
+     if(params.data.Linea_Unica === ''){
+      // console.log(226, params); 
+       totales = params.data.Linea_Unica;
+     }
+     return totales === '';
+   },
+  };
    }
 
   ngOnInit() {
@@ -203,24 +264,347 @@ export class JPRICComponent implements OnInit {
     this.periodo = this.anio + this.mes;
     // this.setPage({ offset: 0 });
   }
-  public onLimitChange(limit: any): void {
-    this.changePageLimit(limit);
-    this.setPage({ offset: 0 });
+  public onLimitChange(limit: any, numberT): void {
+    this.changePageLimit(limit, numberT);
+    // this.setPage({ offset: 0 });
 
   }
 
-  private changePageLimit(limit: any): void {
-    this.loading();
-    if (limit === '0'){
-      
-      this.page.size = this.page.totalElements;
-      console.log(this.page.totalElements);
-      return
+  private changePageLimit(limit: any, numberT): void {
+    
+    if(numberT === '1'){
+      if (limit === '0'){
+        this.page1.size = this.page1.totalElements;
+        
+        return
+      }
+      this.page1.size = parseInt(limit, 10);
+      this.setPage1({
+        offset: this.gridApi1.paginationGetCurrentPage(),
+        pageSize: this.gridApi1.paginationGetPageSize(),
+        limit: 10,
+        count: 0
+      });
+      this.gridApi1.paginationSetPageSize(Number(this.page1.size));
+      console.log(this.page1.size);
+    }else if(numberT === '2'){
+      if (limit === '0'){
+        this.page2.size = this.page2.totalElements;
+        // console.log(this.page.totalElements);
+        return
+      }
+      this.page2.size = parseInt(limit, 10);
+      this.setPage2({
+        offset: this.gridApi2.paginationGetCurrentPage(),
+        pageSize: this.gridApi2.paginationGetPageSize(),
+        limit: 10,
+        count: 0
+      });
+      this.gridApi2.paginationSetPageSize(Number(this.page2.size));
+    }if(numberT === '3'){
+      if (limit === '0'){
+        this.page3.size = this.page3.totalElements;
+        // console.log(this.page.totalElements);
+        return
+      }
+      this.page3.size = parseInt(limit, 10);
+      this.setPage3({
+        offset: this.gridApi3.paginationGetCurrentPage(),
+        pageSize: this.gridApi3.paginationGetPageSize(),
+        limit: 10,
+        count: 0
+      });
+      this.gridApi3.paginationSetPageSize(Number(this.page3.size));
     }
-    this.page.size = parseInt(limit, 10);
-    setTimeout(() => {
-      Swal.close();
-    }, 1000)
+    
+
+  }
+
+  async setPage1(pageInfo: PageInfo) {
+    this.pageNumber1 = pageInfo.offset;
+    const rowOffset = pageInfo.offset * pageInfo.pageSize;
+  
+    this.page1.pageNumber = Math.floor(rowOffset / this.page1.size);
+    this.isLoad++;
+    console.log(323, this.page1, rowOffset , this.page1.size);
+    // if (this.page1.pageNumber === 'NaN'){
+
+    // }
+   await this.getResults(this.page1, this.rows5).subscribe(  pagedData => {
+      console.log(1187, this.page1, this.rows5);
+      // this.rowsT1 = [];
+      this.totalElements1 = pagedData.page.totalElements;
+      if (pagedData.data.length < pagedData.page.size){
+        this.rowsT1 = pagedData.data
+        if(pagedData.data.length > 0){
+          this.totalRow1(this.gridApi1, this.rowsT1);
+        }
+        // for (let index = pagedData.data.length; index < pagedData.page.size; index++) {
+        //   this.rowsT1[(index)] = { id_esp: '', especialidad: ''};
+        // }
+      }else{
+        this.rowsT1 = pagedData.data;
+        if(this.gridApi1){
+          this.totalRow1(this.gridApi1, this.rowsT1);
+        }
+      }
+      this.isLoad--;
+    });
+  }
+  onPaginationChanged(table) {
+    console.log(' hola')
+    if (table === 1){
+      // console.log(336, this.pageNumber1 )
+      if(this.gridApi1) {
+         
+        if (this.pageNumber1 === this.gridApi1.paginationGetCurrentPage()) {
+          
+          return;
+        }else{
+          
+          this.setPage1({
+            offset: this.gridApi1.paginationGetCurrentPage(),
+            pageSize: this.gridApi1.paginationGetPageSize(),
+            limit: 10,
+            count: 0
+          });
+          
+          
+        }
+        this.pageNumber1 = this.gridApi1.paginationGetCurrentPage()
+      }else{
+        return;
+      }
+    }else if (table === 2){
+      if(this.gridApi2) {
+        //  console.log(336, this.pageNumber1 , this.gridApi.paginationGetCurrentPage())
+        if (this.pageNumber2 === this.gridApi2.paginationGetCurrentPage()) {
+          
+          return;
+        }else{
+          
+          this.setPage2({
+            offset: this.gridApi2.paginationGetCurrentPage(),
+            pageSize: this.gridApi2.paginationGetPageSize(),
+            limit: 10,
+            count: 0
+          });
+          
+          
+        }
+        this.pageNumber2 = this.gridApi2.paginationGetCurrentPage()
+    }else{
+        return;
+      }
+    }else if (table === 3){
+      if(this.gridApi3) {
+         console.log(385, this.pageNumber3 , this.gridApi3.paginationGetCurrentPage())
+        if (this.pageNumber3 === this.gridApi3.paginationGetCurrentPage()) {
+          
+          return;
+        }else{
+          
+          this.setPage3({
+            offset: this.gridApi3.paginationGetCurrentPage(),
+            pageSize: this.gridApi3.paginationGetPageSize(),
+            limit: 10,
+            count: 0
+          });
+          
+          
+        }
+        this.pageNumber3 = this.gridApi3.paginationGetCurrentPage()
+      }else{
+        return;
+      }
+    }
+    
+
+  }
+  async setPage2(pageInfo: PageInfo) {
+    console.log('object')
+    
+    this.pageNumber2 = pageInfo.offset;
+    const rowOffset = pageInfo.offset * pageInfo.pageSize;
+    this.page2.pageNumber = Math.floor(rowOffset / this.page2.size);
+    this.isLoad++;
+    console.log(323, this.page2, rowOffset , this.page2.size);
+    await this.getResults(this.page2, this.rows8).subscribe(pagedData => {
+      console.log(1188, this.page2, this.rows8);
+      // this.rowsT2 = [];
+      this.totalElements2 = pagedData.page.totalElements;
+      if (pagedData.data.length < pagedData.page.size){
+        this.rowsT2 = pagedData.data
+        console.log(413, this.rowsT2)
+        if(pagedData.data.length > 0){
+        this.totalRow2(this.gridApi2, this.rowsT2);
+        }
+        // for (let index = pagedData.data.length; index < pagedData.page.size; index++) {
+        //   this.rowsT2[(index)] = { CIE10: '', Diagnostico: '' };
+        // }
+      }else{
+        this.rowsT2 = pagedData.data;
+        console.log(415, this.rowsT2)
+        if(this.gridApi2){
+          this.totalRow2(this.gridApi2, this.rowsT2);
+        }
+        
+      }
+      this.isLoad--;
+    });
+  }
+  async setPage3(pageInfo: PageInfo) {
+    console.log('object')
+    
+    this.pageNumber3 = pageInfo.offset;
+    const rowOffset = pageInfo.offset * pageInfo.pageSize;
+    this.page3.pageNumber = Math.floor(rowOffset / this.page3.size);
+    this.isLoad++;
+    console.log(323, this.page3, rowOffset , this.page3.size);
+    await this.getResults(this.page3, this.rows11).subscribe(pagedData => {
+      console.log(1188, this.page3, this.rows11);
+      // this.rowsT2 = [];
+      this.totalElements3 = pagedData.page.totalElements;
+      if (pagedData.data.length < pagedData.page.size){
+        this.rowsT3 = pagedData.data
+        console.log(413, this.rowsT3)
+        if(pagedData.data.length > 0){
+        this.totalRow3(this.gridApi3, this.rowsT3);
+        }
+        // for (let index = pagedData.data.length; index < pagedData.page.size; index++) {
+        //   this.rowsT2[(index)] = { CIE10: '', Diagnostico: '' };
+        // }
+      }else{
+        this.rowsT3 = pagedData.data;
+        console.log(415, this.rowsT3)
+        if(this.gridApi3){
+          this.totalRow3(this.gridApi3, this.rowsT3);
+        }
+        
+      }
+      this.isLoad--;
+    });
+  }
+  public getResults(page: Page, data: any[]) {
+    return of(data)
+      .pipe(map(d => this.getPagedData(page, data)))
+      .pipe(delay(1000 * Math.random()));
+  }
+  
+  private getPagedData(page: Page, data: any[]) {
+    // console.log(1151, page, data);
+    const pagedData = new PagedData();
+    page.totalElements = data.length;
+    page.totalPages = page.totalElements / page.size;
+    const start = page.pageNumber * page.size;
+    const end = Math.min(start + page.size, page.totalElements);
+    // console.log(1157, start, end);
+    for (let i = start; i < end; i++) {
+      const jsonObj = data[i];
+      pagedData.data.push(jsonObj);
+    }
+    pagedData.page = page;
+    console.log(1163, pagedData);
+    return pagedData;
+  }
+  onGridReady1(params: GridReadyEvent) {
+    this.gridApi1 = params.api;
+    this.gridColumnApi = params.columnApi;
+    this.totalRow1(this.gridApi1, this.rowsT1);
+    console.log(445, this.rowsT1);
+  }
+  onGridReady2(params: GridReadyEvent) {
+    this.gridApi2 = params.api;
+    this.gridColumnApi = params.columnApi;
+    this.totalRow2(this.gridApi2, this.rowsT2);
+    console.log(451, this.rowsT2);
+  }
+  onGridReady3(params: GridReadyEvent) {
+    this.gridApi3 = params.api;
+    this.gridColumnApi = params.columnApi;
+    this.totalRow3(this.gridApi3, this.rowsT3);
+    console.log(451, this.rowsT3);
+  }
+totalRow1(gridApi: GridApi, rows) {
+    let result = [{
+      aseguradora_nombre: 'TOTAL',
+      conteo_lima: 0,
+      monto_lima:0 ,
+      conteo_chorrillos: 0,
+      monto_chorrillos: 0,
+      conteo_surco: 0,
+      monto_surco: 0,
+      monto_total: 0,
+      conteo_total: 0
+    }];
+ console.log(572, rows)
+        rows.forEach(function (line) {
+          result[0].conteo_lima += Number(line.conteo_lima);
+          result[0].monto_lima += Number(line.monto_lima);
+          result[0].conteo_chorrillos += Number(line.conteo_chorrillos);
+          result[0].conteo_surco += Number(line.conteo_surco);
+          result[0].monto_surco += Number(line.monto_surco);
+          result[0].monto_total += Number(line.monto_total);
+          result[0].conteo_total += Number(line.conteo_total);
+        });
+  //   });
+  // console.log(572, result)
+  // gridApi.setPinnedBottomRowData(this.rows16)
+    gridApi.setPinnedBottomRowData(result as any);
+  }
+  totalRow2(gridApi: GridApi, rows) {
+    let result = [{
+      aseguradora_nombre: 'TOTAL',
+      conteo_lima: 0,
+      monto_lima:0 ,
+      conteo_chorrillos: 0,
+      monto_chorrillos: 0,
+      conteo_surco: 0,
+      monto_surco: 0,
+      monto_total: 0,
+      conteo_total: 0
+    }];
+ console.log(566, rows)
+        rows.forEach(function (line) {
+          result[0].conteo_lima += Number(line.conteo_lima);
+          result[0].monto_lima += Number(line.monto_lima);
+          result[0].conteo_chorrillos += Number(line.conteo_chorrillos);
+          result[0].conteo_surco += Number(line.conteo_surco);
+          result[0].monto_surco += Number(line.monto_surco);
+          result[0].monto_total += Number(line.monto_total);
+          result[0].conteo_total += Number(line.conteo_total);
+        });
+  //   });
+  // console.log(572, result)
+  // gridApi.setPinnedBottomRowData(this.rows16)
+    gridApi.setPinnedBottomRowData(result as any);
+  }
+  totalRow3(gridApi: GridApi, rows) {
+    let result = [{
+      aseguradora_nombre: 'TOTAL',
+      conteo_lima: 0,
+      monto_lima:0 ,
+      conteo_chorrillos: 0,
+      monto_chorrillos: 0,
+      conteo_surco: 0,
+      monto_surco: 0,
+      monto_total: 0,
+      conteo_total: 0
+    }];
+ console.log(593, rows)
+        rows.forEach(function (line) {
+          result[0].conteo_lima += Number(line.conteo_lima);
+          result[0].monto_lima += Number(line.monto_lima);
+          result[0].conteo_chorrillos += Number(line.conteo_chorrillos);
+          result[0].conteo_surco += Number(line.conteo_surco);
+          result[0].monto_surco += Number(line.monto_surco);
+          result[0].monto_total += Number(line.monto_total);
+          result[0].conteo_total += Number(line.conteo_total);
+        });
+  //   });
+  // console.log(572, result)
+  // gridApi.setPinnedBottomRowData(this.rows16)
+    gridApi.setPinnedBottomRowData(result as any);
   }
   setPage(pageInfo) {
     console.log(pageInfo);
@@ -249,7 +633,7 @@ export class JPRICComponent implements OnInit {
           // // this.temp = this.rows;
           this.columns1 = this.data.tabla_KPI_RESUMEN_soles.cabeceras;
           this.columns1.map(item => {
-            // console.log(301, item)
+            console.log(301, this.columns1)
             if(item.children){
               item.children.map(subitem =>{
                 if(subitem.field === 'monto_lima' || subitem.field === 'monto_chorrillos' || subitem.field === 'monto_surco' || subitem.field === 'monto_total'){
@@ -300,6 +684,12 @@ export class JPRICComponent implements OnInit {
           }) 
           // console.log(301, this.columns5)
           this.rows5 = this.data.tabla_cobranzas_empresa_mixto.tabla;
+          this.setPage1({
+            offset: 0,
+            pageSize: 0,
+            limit: 10,
+            count: 0
+          });
           this.temp5 = this.rows5;
 
           this.columns6 = this.data.tabla_expedientes_facturados_periodo_soles.cabeceras;
@@ -320,6 +710,12 @@ export class JPRICComponent implements OnInit {
             }
           })
           this.rows8 = this.data.tabla_expedientes_facturados_empresa_mixto.tabla;
+          this.setPage2({
+            offset: 0,
+            pageSize: 0,
+            limit: 10,
+            count: 0
+          });
           this.temp8 = this.rows8;
           this.columns9 = this.data.tabla_expedientes_pendientes_periodo_soles.cabeceras;
           this.rows9 = this.data.tabla_expedientes_pendientes_periodo_soles.tabla;
@@ -342,6 +738,12 @@ export class JPRICComponent implements OnInit {
           })
           console.log(303, this.columns11)
           this.rows11 = this.data.tabla_expedientes_pendientes_empresa_mixto.tabla;
+          this.setPage3({
+            offset: 0,
+            pageSize: 0,
+            limit: 10,
+            count: 0
+          });
           this.temp11 = this.rows11;
           this.columns12 = this.data.tabla_expedientes_facturados_SP_periodo_soles.cabeceras;
           this.rows12 = this.data.tabla_expedientes_facturados_SP_periodo_soles.tabla;
@@ -745,7 +1147,7 @@ export class JPRICComponent implements OnInit {
   }
 
   filter() {
-
+    this.action = true;
         const form = this.filtroForm.value;
           this.anio = form.anio;
           this.mes = form.mes;

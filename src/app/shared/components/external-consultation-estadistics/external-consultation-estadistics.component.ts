@@ -192,7 +192,7 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
       flex: "1 1 auto",
   };
   changeTable: boolean;
-
+  action: boolean = false;
   constructor(private tableApiservice: ExternalConsultationService, private exportService: ExportService,
     private _cp: CurrencyPipe, private modalService: NgbModal) { 
       this.page1.pageNumber = 0;
@@ -239,6 +239,7 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
     // this.setPage({ offset: 0 });
   }
   filter() {
+    this.action = true;
     this.removeData(this.grafico1);
     this.removeData(this.grafico2)
     const form = this.filtroForm.value;

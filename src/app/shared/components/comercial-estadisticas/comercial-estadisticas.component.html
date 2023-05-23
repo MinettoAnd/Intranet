@@ -55,7 +55,7 @@
                         <li [ngbNavItem]="1">
                             <a ngbNavLink>Resumen</a>
                             <ng-template ngbNavContent>
-                                <div class="card ">
+                                <div class="card " *ngIf="action">
                                     <div class="card-header">
                                       <p>{{message}}</p> 
                                     </div>
@@ -252,7 +252,7 @@
                         <li [ngbNavItem]="2">
                             <a ngbNavLink>Contratos y Afiliados</a>
                             <ng-template ngbNavContent>
-                                <div class="card">
+                                <div class="card" *ngIf="action">
                                     <div class="card-header">
                                       <h4 class="card-title" style="bottom:13px;">Atenciones por Consulta Externa</h4>
                                       <p>{{message}}</p>
@@ -432,7 +432,7 @@
                             <a ngbNavLink>Ingresos por cuota del mes</a>
                             <ng-template ngbNavContent>
                              
-                              <div class="card">
+                              <div class="card" *ngIf="action">
                                
                                 <div class="card-header">
                                   <h4 class="card-title" style="bottom:13px;">INGRESOS POR CUOTAS E INSCRIPCIONES DE PLAN SALUD FAMILIAR</h4>
@@ -656,7 +656,7 @@
                         <li [ngbNavItem]="4">
                             <a ngbNavLink>Ingresos por cuota anual</a>
                             <ng-template ngbNavContent>
-                                <div class="card">
+                                <div class="card" *ngIf="action">
                                     <div class="card-header">
                                       <h4 class="card-title" style="bottom:13px;">Atenciones por Consulta Externa</h4>
                                       <p>{{message}}</p>

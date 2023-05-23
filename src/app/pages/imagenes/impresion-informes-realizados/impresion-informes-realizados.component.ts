@@ -59,6 +59,7 @@ export class ImpresionInformesRealizadosComponent implements OnInit {
     message: string;
   data: any;
   optionSize=10;
+  action: boolean = false;
   // imagen_logo: any;
   // tipo_examen: any;
   // id_sedeRegistro: any;
@@ -193,7 +194,7 @@ export class ImpresionInformesRealizadosComponent implements OnInit {
     this.page.size = parseInt(limit, 10);
   }
   filter() {
-    //console.log(217);
+    this.action = true;
           const form = this.formSearch.value;
             this.condFiltro = form.condFiltro;
             this.condExamen = form.condExamen;
@@ -208,7 +209,14 @@ export class ImpresionInformesRealizadosComponent implements OnInit {
               this.page.size = 25;
               this.optionSize = this.page.size;
             }
-            if((diff/(1000*60*60*24)) < 31){
+            if(diff.toString().indexOf('-') > -1){
+              Swal.fire({
+                title: "Problema",
+                text: "La Fecha Inicio no puede ser mayor a la Fecha Final!",
+                icon: "error"
+              })
+              return;
+            }else if((diff/(1000*60*60*24)) < 31){
               this.setPage({ offset: 0 });
             }else{
               Swal.fire({

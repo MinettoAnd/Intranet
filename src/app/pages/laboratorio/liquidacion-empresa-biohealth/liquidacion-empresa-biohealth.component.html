@@ -83,7 +83,7 @@
                         <li [ngbNavItem]="1">
                             <a ngbNavLink>Resumen</a>
                             <ng-template ngbNavContent>
-                                <div class="card atencionesConsultaExterna">
+                                <div class="card atencionesConsultaExterna" *ngIf="action">
                                     <div class="card-header">
                                       <h4 class="card-title" style="bottom:13px;">Examenes Realizados ( NO incluye IGV )   -   Periodo del {{f_inicio}} al {{f_fin}}
                                         Empresa BIOHEALTH</h4>
@@ -323,7 +323,7 @@
                         <li [ngbNavItem]="2">
                             <a ngbNavLink>Examenes</a>
                             <ng-template ngbNavContent>
-                                <div class="card">
+                                <div class="card" *ngIf="action">
                                     <div class="card-header">
                                       <h4 class="card-title" style="bottom:13px;">Examenes Realizados ( NO incluye IGV )   -   Periodo del {{f_inicio}} al {{f_fin}}
                                         Empresa BIOHEALTH</h4>
@@ -450,7 +450,7 @@
                         <li [ngbNavItem]="3">
                             <a ngbNavLink>Pago Empresa</a>
                             <ng-template ngbNavContent>
-                                <div class="card">
+                                <div class="card" *ngIf="action">
                                     <div class="card-header">
                                       <h4 class="card-title" style="bottom:13px;">Examenes Realizados   -   Periodo del {{f_inicio}} al {{f_fin}}
                                         Empresa BIOHEALTH</h4>
@@ -563,7 +563,7 @@
                         <li [ngbNavItem]="4">
                             <a ngbNavLink>Condiciones</a>
                             <ng-template ngbNavContent>
-                                <div class="card">
+                                <div class="card" *ngIf="action">
                                     <!--
                                     <div class="card-header">
                                       <h4 class="card-title" style="bottom:13px;">Periodo del {{f_inicio}} al {{f_fin}}

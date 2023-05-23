@@ -202,6 +202,7 @@ export class EstadisticasComponent implements OnInit {
   isLoading3 = false;
   isLoading4 = false;
   private rowClassRules;
+  action: boolean = false;
   constructor(private tableApiservice: ImagenesService, private exportService: ExportService, private _cnp:CustomNumberPipe,
     private _cp: CurrencyPipe, private _phone: PhonePipe, private _ndp:NumberDecimalPipe, private _pp:PorcentajePipe, private modalService: NgbModal) {
     this.page.pageNumber = 0;
@@ -1724,7 +1725,7 @@ export class EstadisticasComponent implements OnInit {
     } 
   }
   filter() {
-
+    this.action = true;
         const form = this.filtroForm.value;
           this.anio = form.anio;
           this.mes = form.mes;

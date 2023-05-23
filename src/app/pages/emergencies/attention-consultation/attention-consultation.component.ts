@@ -73,6 +73,7 @@ export class AttentionConsultationComponent implements OnInit {
     {value: 50},
     {value: 100},
   ];
+  action: boolean = false;
   constructor(private tableApiservice: EmergenciesService, private exportService: ExportService) {
     this.page.pageNumber = 0;
     this.page.size = 10;
@@ -214,7 +215,7 @@ console.log(this.parameters);
 
 
   filter() {
-  
+    this.action = true;
         const form = this.filtroForm.value;
           this.f_inicio = moment(form.f_inicio).format('YYYY-MM-DD');
           this.f_fin = moment(form.f_fin).format('YYYY-MM-DD');
@@ -229,7 +230,14 @@ console.log(this.parameters);
             this.page.size = 25;
             this.optionSize = this.page.size;
           }
-          if((diff/(1000*60*60*24)) < 31){
+          if(diff.toString().indexOf('-') > -1){
+            Swal.fire({
+              title: "Problema",
+              text: "La Fecha Inicio no puede ser mayor a la Fecha Final!",
+              icon: "error"
+            })
+            return;
+          }else if((diff/(1000*60*60*24)) < 31){
             this.setPage({ offset: 0 });
           }else{
             Swal.fire({

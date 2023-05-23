@@ -82,7 +82,7 @@
                         <li [ngbNavItem]="1">
                             <a ngbNavLink>Resumen Gráfico</a>
                             <ng-template ngbNavContent>
-                                <div class="card atencionesConsultaExterna">
+                                <div class="card atencionesConsultaExterna" *ngIf="action">
                                     <div class="card-header">
                                       <h4 class="card-title" style="bottom:13px;">Atenciones por Consulta Externa</h4>
                                       <p>{{message}}</p> 

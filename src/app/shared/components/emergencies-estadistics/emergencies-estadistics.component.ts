@@ -231,6 +231,7 @@ isLoad = 0;
 isLoading = 0;
 selectedOptionGraph1 = 'ingresos_emergencia';
 selectedOptionGraph2 = 'ingresos_emergencia';
+action: boolean = false;
   constructor(private tableApiservice: EmergenciesService, private exportService: ExportService,
     private _cp: CurrencyPipe, private modalService: NgbModal) { 
       this.pageNumber1 = 0;
@@ -280,7 +281,7 @@ selectedOptionGraph2 = 'ingresos_emergencia';
     // this.setPage({ offset: 0 });
   }
   filter() {
-  
+    this.action = true;
     const form = this.filtroForm.value;
       this.id_sede = form.id_sede,
       this.mes = form.mes,

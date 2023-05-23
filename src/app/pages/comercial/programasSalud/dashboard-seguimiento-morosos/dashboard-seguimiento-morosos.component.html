@@ -77,7 +77,7 @@
                     <a ngbNavLink>RESUMEN DEL MES SELECCIONADO</a>
                       <ng-template ngbNavContent>
                         
-                        <div class="card atencionesConsultaExterna">
+                        <div class="card atencionesConsultaExterna" *ngIf="action">
                           <div class="card-header">
                             <h4 class="card-title" style="bottom:13px;">Resumen de Morosos </h4>
                             <p>{{message}}</p>
@@ -321,7 +321,7 @@
                 <li [ngbNavItem]="2">
                     <a ngbNavLink>RESUMEN ANUAL</a>
                     <ng-template ngbNavContent>
-                      <div class="card">
+                      <div class="card" *ngIf="action">
                         <div class="card-header">
                           <h4 class="card-title">{{title}}</h4>
                           <p>{{message}}</p>

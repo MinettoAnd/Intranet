@@ -86,7 +86,7 @@
                   <a ngbNavLink>MES SELECCIONADO</a>
                   <ng-template ngbNavContent>
                    
-                    <div class="card">
+                    <div class="card" *ngIf="action">
                      
                       <div class="card-header">
                         <h4 class="card-title" style="bottom:13px;">OCUPABILIDAD DE CONSULTORIOS POR CITAS AMBULATORIAS (No Incluyen Procedimientos)</h4>
@@ -391,7 +391,7 @@
                 <li [ngbNavItem]="2">
                   <a ngbNavLink>RESUMEN ANUAL</a>
                   <ng-template ngbNavContent>
-                    <div class="card">
+                    <div class="card" *ngIf="action">
                       <div class="card-header">
                         <h4 class="card-title" style="bottom:13px;">OCUPABILIDAD DE CONSULTORIOS POR CITAS AMBULATORIAS (No Incluyen Procedimientos)</h4>
                         <p>{{message}}</p>
@@ -549,7 +549,7 @@
                 <li [ngbNavItem]="3">
                     <a ngbNavLink>DETALLE ANUAL</a>
                     <ng-template ngbNavContent>
-                      <div class="card">
+                      <div class="card" *ngIf="action">
                         <div class="card-header">
                           <h4 class="card-title" style="bottom:13px;">OCUPABILIDAD DE CONSULTORIOS POR CITAS AMBULATORIAS (No Incluyen Procedimientos)</h4>
                           <p>{{message}}</p>

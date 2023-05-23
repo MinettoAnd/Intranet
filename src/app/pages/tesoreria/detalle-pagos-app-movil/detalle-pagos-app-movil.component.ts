@@ -122,7 +122,7 @@ export class DetallePagosAppMovilComponent implements OnInit {
   barChartData1 = [];
   barChartData2 = [];
   rowHeight = 38;
-
+  action: boolean = false;
   constructor(private tableApiservice: TesoreriaService, private exportService: ExportService, private _cnp:CustomNumberPipe,
     private _cp: CurrencyPipe, private _phone: PhonePipe, private datePipe: DatePipe,private modalService: NgbModal) {
     this.page.pageNumber = 0;
@@ -595,6 +595,7 @@ export class DetallePagosAppMovilComponent implements OnInit {
   }
 
   filter() {
+    this.action = true;
     this.removeData(this.grafico1);
         const form = this.filtroForm.value;
           this.f_inicio = moment(form.f_inicio).format('YYYY-MM-DD');
@@ -603,7 +604,16 @@ export class DetallePagosAppMovilComponent implements OnInit {
           this.estado_pago = form.estado_pago;
           this.origen = form.origen;
           var diff = moment(this.f_fin).diff(moment(this.f_inicio));
-          if((diff/(1000*60*60*24)) < 31){
+          
+          console.log(606, diff.toString().indexOf('-'))
+          if(diff.toString().indexOf('-') > -1){
+            Swal.fire({
+              title: "Problema",
+              text: "La Fecha Inicio no puede ser mayor a la Fecha Final!",
+              icon: "error"
+            })
+            return;
+          }else if((diff/(1000*60*60*24)) < 31){
             this.setPage({ offset: 0 });
           }else{
             Swal.fire({

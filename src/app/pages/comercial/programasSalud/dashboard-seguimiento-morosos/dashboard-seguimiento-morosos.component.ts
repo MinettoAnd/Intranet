@@ -141,6 +141,7 @@ export class DashboardSeguimientoMorososComponent implements OnInit {
   totalAfiliados:any;
   totalPeriodos:any;
   totalDeuda:any;
+  action: boolean = false;
   constructor(private tableApiservice: ComercialService, private exportService: ExportService, private _cnp:CustomNumberPipe,
     private _cp: CurrencyPipe, private _pp:PorcentajePipe, private _dp: DecimalPipe,  private modalService: NgbModal) {
     this.page.pageNumber = 0;
@@ -745,6 +746,7 @@ export class DashboardSeguimientoMorososComponent implements OnInit {
   }
 
   filter() {
+    this.action = true;
     this.removeData(this.grafico);
         const form = this.filtroForm.value;
         this.mes = form.mes,

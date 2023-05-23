@@ -85,7 +85,7 @@ export class PsfMorososContactadosComponent implements OnInit {
   totalAfiliados:any;
   totalPeriodos:any;
   totalDeuda:any;
-
+  action: boolean = false;
   constructor(private tableApiservice: ComercialService, private exportService: ExportService, private _cnp:CustomNumberPipe, private datePipe: DatePipe,
     private _cp: CurrencyPipe, private _phone: PhonePipe, private modalService: NgbModal) {
     this.page.pageNumber = 0;
@@ -200,7 +200,7 @@ export class PsfMorososContactadosComponent implements OnInit {
   }
 
   filter() {
-  
+    this.action = true;
         const form = this.filtroForm.value;
           this.fecha_inicio = moment(form.fecha_inicio).format('YYYY-MM-DD'),
           this.fecha_fin = moment(form.fecha_fin).format('YYYY-MM-DD');
@@ -212,7 +212,15 @@ export class PsfMorososContactadosComponent implements OnInit {
             this.page.size = 25;
             this.optionSize = this.page.size;
           }
-          if((diff/(1000*60*60*24)) < 31){
+          
+          if(diff.toString().indexOf('-') > -1){
+            Swal.fire({
+              title: "Problema",
+              text: "La Fecha Inicio no puede ser mayor a la Fecha Final!",
+              icon: "error"
+            })
+            return;
+          }else if((diff/(1000*60*60*24)) < 31){
             this.setPage({ offset: 0 });
           }else{
             Swal.fire({
