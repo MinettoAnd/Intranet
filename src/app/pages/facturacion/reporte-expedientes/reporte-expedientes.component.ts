@@ -252,7 +252,7 @@ export class ReporteExpedientesComponent implements OnInit {
     }
     this.rowClassRules = {
       "totals": function(params) {
-        //  console.log(301, params); 
+         console.log(301, params); 
         var totales;
         if(params.data.aseguradora_Nombre !== undefined){
           totales = params.data.aseguradora_Nombre;
@@ -463,7 +463,7 @@ async setPage1(pageInfo: PageInfo) {
 
 totalRow1(gridApi: GridApi, rows) {
     let result = [{
-      aseguradoraNombre: 'TOTAL',
+      aseguradora_Nombre: 'TOTAL',
       conteo_lima: 0,
       monto_lima:0 ,
       conteo_chorrillos: 0,

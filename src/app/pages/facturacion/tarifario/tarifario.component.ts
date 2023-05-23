@@ -76,6 +76,7 @@ export class TarifarioComponent implements OnInit {
     {value: 50},
     {value: 100},
   ];
+  action: boolean = false;
   constructor(private tableApiservice: FacturacionService, private exportService: ExportService,
     private _cp: CurrencyPipe, private _dp: DecimalPipe, private _pp:PorcentajePipe, private _cnp:CustomNumberPipe, private _ndp:NumberDecimalPipe) {
     this.page.pageNumber = 0;
@@ -231,7 +232,7 @@ console.log(this.parameters);
 
 
   filter() {
-  
+    this.action = true;
         const form = this.filtroForm.value;
           this.sede = form.sede,
           this.tipoLista = form.tipoLista,

@@ -236,6 +236,7 @@ isLoad = 0;
 isLoading = 0;
 selectedOptionGraph1 = 'pacientes_hospitalizados';
 selectedOptionGraph2 = 'ingresos_hospitalizacion';
+action: boolean = false;
   constructor(private tableApiservice: HospitalizationService, private exportService: ExportService,
     private _cp: CurrencyPipe, private modalService: NgbModal) { 
       this.pageNumber1 = 0;
@@ -286,7 +287,7 @@ selectedOptionGraph2 = 'ingresos_hospitalizacion';
     // this.setPage({ offset: 0 });
   }
   filter() {
-  
+    this.action = true;
     const form = this.filtroForm.value;
       this.id_sede = form.id_sede,
       this.mes = form.mes,

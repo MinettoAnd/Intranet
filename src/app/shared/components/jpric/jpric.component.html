@@ -90,7 +90,7 @@
                     <a ngbNavLink>RESUMEN</a>
                       <ng-template ngbNavContent>
                         
-                        <div class="card">
+                        <div class="card" *ngIf="action">
                             <div class="card-header">
                               <h4 class="card-title">{{title}}</h4>
                               <p>{{message}}</p>
@@ -221,7 +221,7 @@
                 <li [ngbNavItem]="2">
                     <a ngbNavLink>COBRANZA</a>
                     <ng-template ngbNavContent>
-                      <div class="card">
+                      <div class="card" *ngIf="action">
                         <div class="card-header">
                           <h4 class="card-title">{{title}}</h4>
                           <p>{{message}}</p>
@@ -395,18 +395,30 @@
                                             <div *ngIf="rows5">
                                                 <div class="row" style="align-items: center;justify-content: space-between;">
                                                     <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
-                                                    <li class="list-group-item border-0 pl-0">
-                                                        <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(5)">
-                                                        <i class="fa fa-external-link"></i>
-                                                        Copiar tabla
-                                                        </button>
-                                                    </li>
-                                                    <li class="list-group-item border-0 pl-0">
-                                                        <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(5)">
-                                                        <i class="fa fa-external-link"></i>
-                                                        Exportar tabla a Excel
-                                                        </button>
-                                                    </li>
+                                                        <li class="list-group-item border-0 pl-0">
+                                                            <select class="form-control form-select" (change)="onLimitChange($event.target.value, '1')">
+                                                              <option
+                                                                *ngFor="let option of pageLimitOptions"
+                                                                [value]="option.value"
+                                        
+                                                              >
+                                                                {{ option.value }} Registros
+                                                              </option>
+                                                              <!-- <option value="0" *ngIf="this.page1.totalElements">Todos los Registros</option> -->
+                                                            </select>
+                                                        </li>
+                                                        <li class="list-group-item border-0 pl-0">
+                                                            <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(5)">
+                                                            <i class="fa fa-external-link"></i>
+                                                            Copiar tabla
+                                                            </button>
+                                                        </li>
+                                                        <li class="list-group-item border-0 pl-0">
+                                                            <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(5)">
+                                                            <i class="fa fa-external-link"></i>
+                                                            Exportar tabla a Excel
+                                                            </button>
+                                                        </li>
                                                     </ul>
                                                     <div style="display:flex;align-items: center; justify-content:flex-end">
                                                     <div class="" style="display:flex;margin:15px;align-items: center;">
@@ -417,13 +429,13 @@
                                                 </div>
                                                 <ag-grid-angular
                                                 #agGrid
-                                                style="width: 100%; height: 400px;"
+                                                style="width: 100%; height: 450px;"
                                                 id="myTable5"
                                                 ag-grid="gridOptions"
                                                 class="ag-theme-balham"
                                                 [columnDefs]="columns5"
                                                 [pagination]="true"
-                                                [paginationPageSize]="10"
+                                                [paginationPageSize]="page1.size"
                                                 [groupSelectsChildren]="true"
                                                 [groupDefaultExpanded]="groupDefaultExpanded"
                                                 [autoGroupColumnDef]="autoGroupColumnDef"
@@ -432,6 +444,8 @@
                                                 [rowSelection]="rowSelection"
                                                 [rowClassRules]="rowClassRules"
                                                 [frameworkComponents]="frameworkComponents"
+                                                (gridReady)="onGridReady1($event)"
+                                                [onPaginationChanged]= "onPaginationChanged(1)"
                                                 ></ag-grid-angular>
                                             </div>
                                         </div>
@@ -448,7 +462,7 @@
                 <li [ngbNavItem]="3">
                     <a ngbNavLink>FACTURACIÓN EXPEDIENTES</a>
                     <ng-template ngbNavContent>
-                      <div class="card">
+                      <div class="card" *ngIf="action">
                         <div class="card-header">
                           <h4 class="card-title">{{title}}</h4>
                           <p>{{message}}</p>
@@ -624,18 +638,30 @@
                                             <div *ngIf="rows8">
                                                 <div class="row" style="align-items: center;justify-content: space-between;">
                                                     <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
-                                                    <li class="list-group-item border-0 pl-0">
-                                                        <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(8)">
-                                                        <i class="fa fa-external-link"></i>
-                                                        Copiar tabla
-                                                        </button>
-                                                    </li>
-                                                    <li class="list-group-item border-0 pl-0">
-                                                        <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(8)">
-                                                        <i class="fa fa-external-link"></i>
-                                                        Exportar tabla a Excel
-                                                        </button>
-                                                    </li>
+                                                        <li class="list-group-item border-0 pl-0">
+                                                            <select class="form-control form-select" (change)="onLimitChange($event.target.value, '2')">
+                                                              <option
+                                                                *ngFor="let option of pageLimitOptions"
+                                                                [value]="option.value"
+                                        
+                                                              >
+                                                                {{ option.value }} Registros
+                                                              </option>
+                                                              <!-- <option value="0" *ngIf="this.page2.totalElements">Todos los Registros</option> -->
+                                                            </select>
+                                                        </li>
+                                                        <li class="list-group-item border-0 pl-0">
+                                                            <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(8)">
+                                                            <i class="fa fa-external-link"></i>
+                                                            Copiar tabla
+                                                            </button>
+                                                        </li>
+                                                        <li class="list-group-item border-0 pl-0">
+                                                            <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(8)">
+                                                            <i class="fa fa-external-link"></i>
+                                                            Exportar tabla a Excel
+                                                            </button>
+                                                        </li>
                                                     </ul>
                                                     <div style="display:flex;align-items: center; justify-content:flex-end">
                                                     <div class="" style="display:flex;margin:15px;align-items: center;">
@@ -646,13 +672,13 @@
                                                 </div>
                                                 <ag-grid-angular
                                                 #agGrid
-                                                style="width: 100%; height: 400px;"
+                                                style="width: 100%; height: 450px;"
                                                 id="myTable8"
                                                 ag-grid="gridOptions"
                                                 class="ag-theme-balham"
                                                 [columnDefs]="columns8"
                                                 [pagination]="true"
-                                                [paginationPageSize]="10"
+                                                [paginationPageSize]="page2.size"
                                                 [groupSelectsChildren]="true"
                                                 [groupDefaultExpanded]="groupDefaultExpanded"
                                                 [autoGroupColumnDef]="autoGroupColumnDef"
@@ -661,6 +687,8 @@
                                                 [rowSelection]="rowSelection"
                                                 [rowClassRules]="rowClassRules"
                                                 [frameworkComponents]="frameworkComponents"
+                                                (gridReady)="onGridReady2($event)"
+                                                [onPaginationChanged]= "onPaginationChanged(2)"
                                                 ></ag-grid-angular>
                                             </div>
                                         </div>
@@ -894,6 +922,18 @@
                                                 <div class="row" style="align-items: center;justify-content: space-between;">
                                                     <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
                                                         <li class="list-group-item border-0 pl-0">
+                                                            <select class="form-control form-select" (change)="onLimitChange($event.target.value, '3')">
+                                                              <option
+                                                                *ngFor="let option of pageLimitOptions"
+                                                                [value]="option.value"
+                                        
+                                                              >
+                                                                {{ option.value }} Registros
+                                                              </option>
+                                                              <!-- <option value="0" *ngIf="this.page3.totalElements">Todos los Registros</option> -->
+                                                            </select>
+                                                        </li>
+                                                        <li class="list-group-item border-0 pl-0">
                                                             <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(11)">
                                                                 <i class="fa fa-external-link"></i>
                                                                 Copiar tabla
@@ -915,13 +955,13 @@
                                                 </div>
                                                 <ag-grid-angular
                                             #agGrid
-                                            style="width: 100%; height: 400px;"
+                                            style="width: 100%; height: 450px;"
                                             id="myTable11"
                                             ag-grid="gridOptions"
                                             class="ag-theme-balham"
                                             [columnDefs]="columns11"
                                             [pagination]="true"
-                                            [paginationPageSize]="10"
+                                            [paginationPageSize]="page3.size"
                                             [groupSelectsChildren]="true"
                                             [groupDefaultExpanded]="groupDefaultExpanded"
                                             [autoGroupColumnDef]="autoGroupColumnDef"
@@ -930,6 +970,8 @@
                                             [rowSelection]="rowSelection"
                                             [rowClassRules]="rowClassRules"
                                             [frameworkComponents]="frameworkComponents"
+                                            (gridReady)="onGridReady3($event)"
+                                            [onPaginationChanged]= "onPaginationChanged(3)"
                                                 ></ag-grid-angular>
                                             </div>
                                         </div>
@@ -945,7 +987,7 @@
                 <li [ngbNavItem]="4">
                   <a ngbNavLink>FACTURACIÓN-SALUDPOL</a>
                   <ng-template ngbNavContent>
-                      <div class="card">
+                      <div class="card" *ngIf="action">
                           <div class="card-header">
                               <h4 class="card-title">{{title}}</h4>
                               <p>{{message}}</p>
@@ -1188,7 +1230,7 @@
               <li [ngbNavItem]="5">
                 <a ngbNavLink>INGRESOS</a>
                 <ng-template ngbNavContent>
-                    <div class="card">
+                    <div class="card" *ngIf="action">
                         <div class="card-header">
                             <h4 class="card-title">{{title}}</h4>
                             <p>{{message}}</p>

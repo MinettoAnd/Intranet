@@ -219,6 +219,7 @@ sum_ocup_ca_mt;
   archivo_atenciones_matriz;
   archivo_especialidades_mes;
   archivo_medico_mes;
+  action: boolean = false;
   constructor(private tableApiservice: ExternalConsultationService, private exportService: ExportService,
     private _cp: CurrencyPipe
      ) {
@@ -798,7 +799,7 @@ separadorDeMiles(numero) {
   //   this.exportService.exportToCsv(this.rows, 'Atenciones-Realizadas-por-Emergencia', this.columns);
   // }
   filter() {
-  
+    this.action = true;
         const form = this.filtroForm.value;
           this.id_sede = form.id_sede,
           this.mes = moment(form.mes).format('MM'),

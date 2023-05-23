@@ -85,6 +85,7 @@ export class PacientesHospitalizadosComponent implements OnInit {
   totalAfiliados:any;
   totalPeriodos:any;
   totalDeuda:any;
+  action: boolean = false;
   constructor(private tableApiservice: HospitalizationService, private exportService: ExportService, private _cnp:CustomNumberPipe,
     private _cp: CurrencyPipe, private _phone: PhonePipe) {
     this.page.pageNumber = 0;
@@ -213,7 +214,7 @@ export class PacientesHospitalizadosComponent implements OnInit {
   }
 
   filter() {
-  
+    this.action = true;
         const form = this.filtroForm.value;
           this.fecha = moment(form.fecha).format('YYYY-MM-DD');
           this.sede = form.sede;

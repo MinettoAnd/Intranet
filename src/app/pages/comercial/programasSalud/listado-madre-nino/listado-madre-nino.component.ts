@@ -69,6 +69,7 @@ export class ListadoMadreNinoComponent implements OnInit {
     {value: 50},
     {value: 100},
   ];
+  action: boolean = false;
   constructor(private tableApiservice: ComercialService, private exportService: ExportService) {
     this.page.pageNumber = 0;
     this.page.size = 10;
@@ -202,7 +203,7 @@ export class ListadoMadreNinoComponent implements OnInit {
 
 
   filter() {
-  
+    this.action = true;
         const form = this.filtroForm.value;
           this.fecha = moment(form.fecha).format('YYYY-MM-DD'),
           this.meses = form.meses,

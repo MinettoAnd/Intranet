@@ -68,6 +68,7 @@ export class CirugiasProgramadasComponent implements OnInit {
     {value: 50},
     {value: 100},
   ];
+  action: boolean = false;
   constructor(private tableApiservice: CentroQuirurgicoService, private exportService: ExportService) {
     this.page.pageNumber = 0;
     this.page.size = 10;
@@ -202,7 +203,7 @@ console.log(this.parameters);
 
 
   filter() {
-  
+    this.action = true;
         const form = this.filtroForm.value;
           this.f_inicio = moment(form.f_inicio).format('YYYY-MM-DD'),
           this.f_fin = moment(form.f_fin).format('YYYY-MM-DD'),

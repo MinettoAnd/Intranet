@@ -50,7 +50,7 @@
                     <a ngbNavLink>Resumen</a>
                       <ng-template ngbNavContent>
                         
-                        <div class="card atencionesConsultaExterna">
+                        <div class="card atencionesConsultaExterna" *ngIf="action">
                           <div class="card-header">
                             <h5 class="card-title" style="bottom:13px;">{{message}}</h5>
                             <!-- <p>{{message}}</p> -->
@@ -133,7 +133,7 @@
                     <a ngbNavLink>Empresa</a>
                       <ng-template ngbNavContent>
                         
-                        <div class="card atencionesConsultaExterna">
+                        <div class="card atencionesConsultaExterna" *ngIf="action">
                           <div class="card-header">
                             <h5 class="card-title" style="bottom:13px;">{{message}}</h5>
                             <!-- <p>{{message}}</p> -->
@@ -213,7 +213,7 @@
                 <li [ngbNavItem]="3">
                     <a ngbNavLink>Anual</a>
                     <ng-template ngbNavContent>
-                      <div class="card">
+                      <div class="card" *ngIf="action">
                         <div class="card-header">
                           <h4 class="card-title">{{message}}</h4>
                           <!-- <p>{{message}}</p> -->

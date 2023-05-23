@@ -152,7 +152,7 @@ export class LiquidacionEmpresaBiohealthComponent implements OnInit {
       height: "100%",
       flex: "1 1 auto",
   };
-
+  action: boolean = false;
   constructor(private tableApiservice: LaboratorioService, private exportService: ExportService,
     private _cp: CurrencyPipe, private _dp: DecimalPipe, private _pp:PorcentajePipe, private _cnp:CustomNumberPipe, private modalService: NgbModal) { 
       this.page1.pageNumber = 0;
@@ -199,7 +199,7 @@ export class LiquidacionEmpresaBiohealthComponent implements OnInit {
     // this.setPage({ offset: 0 });
   }
   filter() {
-  
+    this.action = true;
     const form = this.filtroForm.value;
       this.sede = form.sede;
       this.f_inicio = form.f_inicio;
@@ -207,7 +207,14 @@ export class LiquidacionEmpresaBiohealthComponent implements OnInit {
       this.sede = form.sede;
       this.origen = form.origen;
       var diff = moment(this.f_fin).diff(moment(this.f_inicio));
-      if((diff/(1000*60*60*24)) < 31){
+      if(diff.toString().indexOf('-') > -1){
+        Swal.fire({
+          title: "Problema",
+          text: "La Fecha Inicio no puede ser mayor a la Fecha Final!",
+          icon: "error"
+        })
+        return;
+      }else if((diff/(1000*60*60*24)) < 31){
         this.setPage({ offset: 0 });
       }else{
         Swal.fire({

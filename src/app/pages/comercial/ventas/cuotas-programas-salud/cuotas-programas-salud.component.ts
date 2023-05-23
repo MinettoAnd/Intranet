@@ -170,6 +170,7 @@ export class CuotasProgramasSaludComponent implements OnInit {
   isLoading4 = false;
   isLoading5 = false;
   isLoading6 = false;
+  action: boolean = false;
   constructor(private tableApiservice: ComercialService, private exportService: ExportService,
     private _cp: CurrencyPipe
      ) {
@@ -955,7 +956,7 @@ console.log(this.parameters);
   //   this.exportService.exportToCsv(this.rows, 'Atenciones-Realizadas-por-Emergencia', this.columns);
   // }
   filter() {
-  
+    this.action = true;
         const form = this.filtroForm.value;
           this.mes = form.mes,
           this.anio = form.anio,

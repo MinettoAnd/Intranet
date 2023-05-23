@@ -114,7 +114,7 @@ export class SeguimientoAltaHospitalariaComponent implements OnInit {
   audMax: any;
   audMin: any;
   rowHeight = 38;
-
+  action: boolean = false;
   constructor(private tableApiservice: HospitalizationService, private exportService: ExportService, private _cnp:CustomNumberPipe,
     private _cp: CurrencyPipe, private _phone: PhonePipe, private datePipe: DatePipe,private modalService: NgbModal) {
     this.page.pageNumber = 0;
@@ -512,13 +512,20 @@ export class SeguimientoAltaHospitalariaComponent implements OnInit {
   }
 
   filter() {
-  
+    this.action = true;
         const form = this.filtroForm.value;
           this.f_inicio = moment(form.f_inicio).format('YYYY-MM-DD');
           this.f_fin = moment(form.f_fin).format('YYYY-MM-DD');
           this.sede = form.sede;
           var diff = moment(this.f_fin).diff(moment(this.f_inicio));
-          if((diff/(1000*60*60*24)) < 31){
+          if(diff.toString().indexOf('-') > -1){
+            Swal.fire({
+              title: "Problema",
+              text: "La Fecha Inicio no puede ser mayor a la Fecha Final!",
+              icon: "error"
+            })
+            return;
+          }else if((diff/(1000*60*60*24)) < 31){
             this.setPage({ offset: 0 });
           }else{
             Swal.fire({

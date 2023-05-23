@@ -184,7 +184,10 @@ margin: 0.5rem 0;
 .tipoPacienteNombre{
     padding-left: 1rem;
 }
-
+::ng-deep .ag-row.separator{
+    background: var(--primary)!important;
+    height: 12px!important;
+}
 // ::ng-deep .ag-cell {
 //     // text-overflow: clip !important;
 //     // overflow: visible !important;

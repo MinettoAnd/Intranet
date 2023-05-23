@@ -80,7 +80,7 @@
                 <li [ngbNavItem]="1">
                     <a ngbNavLink>Listado</a>
                     <ng-template ngbNavContent>
-                      <div class="card">
+                      <div class="card" *ngIf="action">
                         <div class="card-header">
                           <h4 class="card-title">{{title}}</h4>
                           <p>{{message}}</p>
@@ -378,7 +378,7 @@
                   <a ngbNavLink>Resumen</a>
                     <ng-template ngbNavContent>
                       
-                      <div class="card atencionesConsultaExterna">
+                      <div class="card atencionesConsultaExterna" *ngIf="action">
                         <div class="card-header">
                           <h4 class="card-title" style="bottom:13px;">Resumen de Morosos (Mientras mas antigua es la fecha procesada, menos consistente podría ser la información)</h4>
                           <p>{{message}}</p>

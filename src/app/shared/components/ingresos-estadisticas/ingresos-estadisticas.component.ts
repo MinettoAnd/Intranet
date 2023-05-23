@@ -123,6 +123,7 @@ export class IngresosEstadisticasComponent implements OnInit {
   barChartData3 = [];
   barChartData4 = [];
   selectedOptionTipo='TODAS'; 
+  action: boolean = false;
   constructor(private tableApiservice: TesoreriaService, private exportService: ExportService, private _cnp:CustomNumberPipe,
     private _cp: CurrencyPipe, private _phone: PhonePipe, private _ndp:NumberDecimalPipe) {
     this.page.pageNumber = 0;
@@ -639,6 +640,7 @@ export class IngresosEstadisticasComponent implements OnInit {
   }
 
   filter() {
+    this.action = true;
   // this.removeData(this.grafico1);
         const form = this.filtroForm.value;
           this.anio = form.anio;

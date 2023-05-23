@@ -179,7 +179,7 @@ export class ComercialEstadisticasComponent implements OnInit {
       height: "100%",
       flex: "1 1 auto",
   };
-
+  action: boolean = false;
 
   constructor(private tableApiservice: ComercialService, private exportService: ExportService,
     private _cp: CurrencyPipe, private  _cnp: CustomNumberPipe, private modalService: NgbModal) { 
@@ -240,7 +240,7 @@ export class ComercialEstadisticasComponent implements OnInit {
     // this.setPage({ offset: 0 });
   }
   filter() {
-  
+    this.action = true;
     const form = this.filtroForm.value;
       this.mes = form.mes,
       this.anio = form.anio,

@@ -87,7 +87,7 @@
                     <a ngbNavLink>POR SEDE</a>
                       <ng-template ngbNavContent>
                         
-                        <div class="card">
+                        <div class="card" *ngIf="action">
                             <div class="card-header">
                               <h4 class="card-title">{{title}}</h4>
                               <p>{{message}}</p>
@@ -309,7 +309,7 @@
                 <li [ngbNavItem]="2">
                     <a ngbNavLink>POR TIPO DE PACIENTE</a>
                     <ng-template ngbNavContent>
-                      <div class="card">
+                      <div class="card" *ngIf="action">
                         <div class="card-header">
                           <h4 class="card-title">{{title}}</h4>
                           <p>{{message}}</p>
@@ -481,7 +481,7 @@
                 <li [ngbNavItem]="3">
                     <a ngbNavLink>GRUPO DE EXAMEN</a>
                     <ng-template ngbNavContent>
-                      <div class="card">
+                      <div class="card" *ngIf="action">
                         <div class="card-header">
                           <h4 class="card-title">{{title}}</h4>
                           <p>{{message}}</p>
@@ -577,7 +577,7 @@
                 <li [ngbNavItem]="4">
                   <a ngbNavLink>DETALLE</a>
                   <ng-template ngbNavContent>
-                      <div class="card">
+                      <div class="card" *ngIf="action">
                           <div class="card-header">
                               <h4 class="card-title">{{title}}</h4>
                               <p>{{message}}</p>
@@ -655,7 +655,7 @@
               <li [ngbNavItem]="5">
                 <a ngbNavLink>EMPRESA</a>
                 <ng-template ngbNavContent>
-                    <div class="card">
+                    <div class="card" *ngIf="action">
                         <div class="card-header">
                             <h4 class="card-title">{{title}}</h4>
                             <p>{{message}}</p>
@@ -738,7 +738,7 @@
               <li [ngbNavItem]="6">
                 <a ngbNavLink>ANUAL</a>
                 <ng-template ngbNavContent>
-                    <div class="card">
+                    <div class="card" *ngIf="action">
                         <div class="card-header">
                             <h4 class="card-title">{{title}}</h4>
                             <p>{{message}}</p>
@@ -1033,7 +1033,7 @@
               <li [ngbNavItem]="7">
                 <a ngbNavLink>DIARIA</a>
                 <ng-template ngbNavContent>
-                    <div class="card">
+                    <div class="card" *ngIf="action">
                         <div class="card-header">
                             <h4 class="card-title">{{title}}</h4>
                             <p>{{message}}</p>

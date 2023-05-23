@@ -186,7 +186,7 @@ export class EstadisticasComponent implements OnInit {
       height: "100%",
       flex: "1 1 auto",
   };
-
+  action: boolean = false;
 
   constructor(private tableApiservice: CentroQuirurgicoService, private exportService: ExportService,
     private _cp: CurrencyPipe, private modalService: NgbModal) { 
@@ -244,7 +244,7 @@ export class EstadisticasComponent implements OnInit {
   }
   
   filter() {
-  
+    this.action = true;
     const form = this.filtroForm.value;
       this.id_sede = form.id_sede,
       this.mes = moment(form.mes).format('MM'),

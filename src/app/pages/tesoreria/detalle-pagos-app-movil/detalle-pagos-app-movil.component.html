@@ -84,7 +84,7 @@
                 <li [ngbNavItem]="1">
                     <a ngbNavLink>Resumen</a>
                     <ng-template ngbNavContent>
-                        <div class="card atencionesConsultaExterna">
+                        <div class="card atencionesConsultaExterna" *ngIf="action">
                             <div class="card-header">
                                 <h4 class="card-title" style="bottom:13px;">Pagos por APP Móvil</h4>
                                 
@@ -193,7 +193,7 @@
                 <li [ngbNavItem]="2">
                     <a ngbNavLink>Detalle</a>
                     <ng-template ngbNavContent>
-                    <div class="card">
+                    <div class="card" *ngIf="action">
                         <div class="card-header">
                         <h4 class="card-title">Pagos por APP M&oacute;vil</h4>
                         <p>{{message}}</p>
