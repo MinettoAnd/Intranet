@@ -13,7 +13,7 @@ export class ResumenGerencialComponent implements OnInit {
   public hospitalizacionEstadisticas = false;
   public emergenciasEstadisticas = false;
   public consultaExternaEstadisticas = false;
-  // public jpric = false;
+  public planillaEstadistica = false;
   public menuItems: any = [];
   public subMenuItems: any = [];
   public categories: any = [];
@@ -56,52 +56,52 @@ export class ResumenGerencialComponent implements OnInit {
     switch (id) {
       case 1:
         this.comercialEstadisticas = true;
+        this.planillaEstadistica = false;
         this.ingresosEstadisticas = false;
-        // this.jpric = false;
         this.emergenciasEstadisticas = false;
         this.hospitalizacionEstadisticas = false;
         this.consultaExternaEstadisticas = false;
         break;
       case 2:
         this.comercialEstadisticas = false;
-        this.ingresosEstadisticas = true;
-        // this.jpric = false;
+        this.planillaEstadistica = true;
+        this.ingresosEstadisticas = false;
         this.emergenciasEstadisticas = false;
         this.hospitalizacionEstadisticas = false;
         this.consultaExternaEstadisticas = false;
         break;
       case 3:
         this.comercialEstadisticas = false;
-        this.ingresosEstadisticas = false;
-        // this.jpric = true;
-        this.emergenciasEstadisticas = true;
+        this.planillaEstadistica = false;
+        this.ingresosEstadisticas = true;
+        this.emergenciasEstadisticas = false;
         this.hospitalizacionEstadisticas = false;
         this.consultaExternaEstadisticas = false;
         break;
       case 4:
         this.comercialEstadisticas = false;
+        this.planillaEstadistica = false;
         this.ingresosEstadisticas = false;
-        // this.jpric = false;
-        this.emergenciasEstadisticas = false;
-        this.hospitalizacionEstadisticas = true;
+        this.emergenciasEstadisticas = true;
+        this.hospitalizacionEstadisticas = false;
         this.consultaExternaEstadisticas = false;
         break;
       case 5:
         this.comercialEstadisticas = false;
+        this.planillaEstadistica = false;
         this.ingresosEstadisticas = false;
-        // this.jpric = false;
+        this.emergenciasEstadisticas = false;
+        this.hospitalizacionEstadisticas = true;
+        this.consultaExternaEstadisticas = false;
+        break;
+      case 6:
+        this.comercialEstadisticas = false;
+        this.planillaEstadistica = false;
+        this.ingresosEstadisticas = false;
         this.emergenciasEstadisticas = false;
         this.hospitalizacionEstadisticas = false;
         this.consultaExternaEstadisticas = true;
         break;
-      // case 6:
-      //   this.comercialEstadisticas = false;
-      //   this.ingresosEstadisticas = false;
-      //   this.jpric = false;
-      //   this.emergenciasEstadisticas = false;
-      //   this.hospitalizacionEstadisticas = false;
-      //   this.consultaExternaEstadisticas = true;
-      //   break;
     }
   }
   getModelsAdmin() {
@@ -112,7 +112,7 @@ export class ResumenGerencialComponent implements OnInit {
       this.subMenuItems = [];
        this.menuItems = response.data.length > 0 ? response.data : [];
        this.menuItems.map(item => {
-          if(item.name_model === 'Comercial' || item.name_model === 'Tesoreria' || item.name_model === 'Emergencia' || item.name_model === 'Hospitalización' || item.name_model === 'Consultorios'){
+          if(item.name_model === 'Comercial' || item.name_model === 'Tesoreria' || item.name_model === 'Emergencia' || item.name_model === 'Hospitalización' || item.name_model === 'Consultorios' || item.name_model === 'RRHH'){
             item.rides.map(submenu =>{
               if(submenu.name === 'CO-Estadisticas'){
                 const menuItem1 = {
@@ -123,14 +123,23 @@ export class ResumenGerencialComponent implements OnInit {
                 }
                 this.categories.push(menuItem1);
               }
-              if(submenu.name === 'ING-Estadisticas'){
+              if(submenu.name === 'Estad. Planilla - Resumen de pagos'){
                 const menuItem2 = {
                   id: 2,
+                  isDropDownMenu: false,
+                  description: "Planilla",
+                  subMenuList: []
+                }
+                 this.categories.push(menuItem2);
+              }
+              if(submenu.name === 'ING-Estadisticas'){
+                const menuItem3 = {
+                  id: 3,
                   isDropDownMenu: false,
                   description: "Ingresos",
                   subMenuList: []
                 }
-                this.categories.push(menuItem2);
+                this.categories.push(menuItem3);
                 // this.categories.push(menuItem1);
               }
               if( submenu.name === 'EM-Estadísticas'){
@@ -158,7 +167,7 @@ export class ResumenGerencialComponent implements OnInit {
       // const menuItem3 = {
       //   id: 3,
       //   isDropDownMenu: false,
-      //   description: "JPRIC",
+      //   description: "Planilla Estadistica",
       //   subMenuList: []
       // }
       //  this.categories.push(menuItem3);
@@ -182,7 +191,7 @@ export class ResumenGerencialComponent implements OnInit {
       this.subMenuItems = [];
        this.menuItems = response.data.length > 0 ? response.data : [];
        this.menuItems.map(item => {
-          if(item.name_model === 'Comercial' || item.name_model === 'Tesoreria' || item.name_model === 'Emergencia' || item.name_model === 'Hospitalización' || item.name_model === 'Consultorios'){
+          if(item.name_model === 'Comercial' || item.name_model === 'Tesoreria' || item.name_model === 'Emergencia' || item.name_model === 'Hospitalización' || item.name_model === 'Consultorios' || item.name_model === 'RRHH'){
             item.rides.map(submenu =>{
               if(submenu.name === 'CO-Estadisticas'){
                 const menuItem1 = {
@@ -194,14 +203,23 @@ export class ResumenGerencialComponent implements OnInit {
                 this.categories.push(menuItem1);
                 // this.categories.push(menuItem1);
               }
-              if(submenu.name === 'ING-Estadisticas'){
+              if(submenu.name === 'Estad. Planilla - Resumen de pagos'){
                 const menuItem2 = {
                   id: 2,
+                  isDropDownMenu: false,
+                  description: "Planilla",
+                  subMenuList: []
+                }
+                 this.categories.push(menuItem2);
+              }
+              if(submenu.name === 'ING-Estadisticas'){
+                const menuItem3 = {
+                  id: 3,
                   isDropDownMenu: false,
                   description: "Ingresos",
                   subMenuList: []
                 }
-                this.categories.push(menuItem2);
+                this.categories.push(menuItem3);
                 // this.categories.push(menuItem1);
               }
               if( submenu.name === 'EM-Estadísticas'){
@@ -229,7 +247,7 @@ export class ResumenGerencialComponent implements OnInit {
       //  const menuItem3 = {
       //   id: 3,
       //   isDropDownMenu: false,
-      //   description: "JPRIC",
+      //   description: "Planilla Estadistica",
       //   subMenuList: []
       // }
       //  this.categories.push(menuItem3);

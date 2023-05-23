@@ -127,6 +127,7 @@ export class EstadisticaPlanillaIndicadoresComponent implements OnInit {
   barChartData3 = [];
   barChartData4 = [];
   selectedOptionTipo='TODAS'; 
+  action: boolean = false;
   constructor(private tableApiservice: RecursosHumanosService, private exportService: ExportService, private _cnp:CustomNumberPipe,
     private _cp: CurrencyPipe, private _phone: PhonePipe, private _ndp:NumberDecimalPipe) {
     this.page.pageNumber = 0;
@@ -922,7 +923,7 @@ export class EstadisticaPlanillaIndicadoresComponent implements OnInit {
   }
 
   filter() {
-  // this.removeData(this.grafico1);
+    this.action = true;
         const form = this.filtroForm.value;
           this.anio = form.anio;
           this.mes = form.mes;

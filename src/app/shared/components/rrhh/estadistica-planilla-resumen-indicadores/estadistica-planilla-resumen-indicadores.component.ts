@@ -22,11 +22,11 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'app-estadistica-planilla-resumen-pagos',
-  templateUrl: './estadistica-planilla-resumen-pagos.component.html',
-  styleUrls: ['./estadistica-planilla-resumen-pagos.component.scss']
+  selector: 'app-estadistica-planilla-resumen-indicadores',
+  templateUrl: './estadistica-planilla-resumen-indicadores.component.html',
+  styleUrls: ['./estadistica-planilla-resumen-indicadores.component.scss']
 })
-export class EstadisticaPlanillaResumenPagosComponent implements OnInit {
+export class EstadisticaPlanillaResumenIndicadoresComponent implements OnInit {
   initialSize = 0;
   active = 1;
   enableSummary = true;
@@ -75,6 +75,12 @@ export class EstadisticaPlanillaResumenPagosComponent implements OnInit {
   rows7: any;
   rows8: any;
   rows9: any;
+  rows10: any;
+  rows11: any;
+  rows12: any;
+  rows13: any;
+  rows14: any;
+  rows15: any;
   rowsModal: any;
   rows9filtered: any;
   rows3filtered: any;
@@ -102,6 +108,12 @@ export class EstadisticaPlanillaResumenPagosComponent implements OnInit {
   columns7:any;
   columns8:any;
   columns9:any;
+  columns10:any;
+  columns11:any;
+  columns12:any;
+  columns13:any;
+  columns14:any;
+  columns15:any;
   columnsModal:any;
   periodos:any;
   periodo_emp:any;
@@ -191,7 +203,7 @@ export class EstadisticaPlanillaResumenPagosComponent implements OnInit {
   }
   getRowClass(row) {
     return {
-      'totals': row.tipoPacienteNombre.includes('TOTAL'), 'sub-totals': row.tipoPacienteNombre === 'PROGRAMAS DE SALUD' || row.tipoPacienteNombre === 'CONVENIOS' || row.tipoPacienteNombre === 'SEGUROS' || row.tipoPacienteNombre === 'OTROS' };
+      'sub-totals': row.concepto === 'Nro.de Colaboradores' || row.concepto === 'Nro.de Colaboradores Nuevos' || row.concepto === 'Nro.de Colaboradores Cesados' || row.concepto === 'Planilla Mensual - Ingresos' || row.concepto === 'Planilla Mensual - Descuentos' || row.concepto === 'Planilla Mensual - Total a Pagar' || row.concepto === 'Pago de PROVIS en Soles' || row.concepto === 'Por Maternidad' || row.concepto === 'Por Descanso Medico Prolongado' || row.concepto === 'Total Subsidiado' || row.concepto === 'Nro. de dias Por Maternidad' || row.concepto === 'Nro. de dias Por Descanso Medico Prolongado' || row.concepto === 'Nro. Total de dias subsidiados' || row.concepto === 'Dscto. por Permisos en Soles' || row.concepto === 'Dscto. por Tardanzas' || row.concepto === 'Tiempo total de tardanzas descontadas' || row.concepto === 'Administrativo' || row.concepto === 'Clínica' || row.concepto === 'Farmacia' || row.concepto === 'Hospitalización' || row.concepto === 'Total Dscto.Por Prestación' || row.concepto === 'Total Dscto.Por Prestación' || row.concepto === 'Pago por Reintegros' || row.concepto === 'Pago por Dias Feriados' || row.concepto === 'Pago por Guardia Nocturna' || row.concepto === 'Tiempo total de Feriados Pagados' || row.concepto === 'Tiempo total de Guardia Nocturna Pagadas'};
   }
   getRowClass1(row) {
 
@@ -679,6 +691,65 @@ async  open({ selected }, TipoPago?, EstadoDeposito?, TipoPlanilla?, content?: a
             // this.barChartData3.push(item.item_3)
             // this.barChartData4.push(item.item_4)
           })
+          // var data = [];
+          // data.push(this.barChartData1, this.barChartData2);
+          // this.addData(this.grafico1, this.barChartLabels, data)
+
+            // Swal.close();
+        }else{
+          Swal.close();
+        }
+        
+      },
+      (error) => {
+          Swal.close();
+      }
+    );
+    this.tableApiservice.RRhhGetPlanillaEstadisticaKPI(this.parameters).subscribe(
+      (response) => {
+        // this.rows = [];
+        
+        if(response.data.success){
+          this.data = response.data ? response.data : [];
+          this.message = this.data.titulo;
+          this.title = response.data.title;
+  
+          // this.temp = this.rows;
+          this.columns10 = this.data.cabeceras_kpi_colaboradores;
+          this.rows10 = this.data.tabla_kpi_colaboradores;
+
+          console.log(446, this.rows1);
+
+          this.columns11 = this.data.cabeceras_kpi_planillas;
+          this.rows11 = this.data.tabla_kpi_planillas;
+          
+          this.columns12 = this.data.cabeceras_kpi_planillas_subsidio;
+          this.rows12 = this.data.tabla_kpi_planillas_subsidio;
+
+          this.columns13 = this.data.cabeceras_kpi_planillas_dscto;
+
+          this.rows13 = this.data.tabla_kpi_planillas_dscto;
+
+          this.columns14 = this.data.cabeceras_kpi_planillas_prestacion;
+          this.rows14 = this.data.tabla_kpi_planillas_prestacion;
+
+          this.columns15 = this.data.cabeceras_kpi_planillas_ingresos;
+          this.rows15 = this.data.tabla_kpi_planillas_ingresos;
+
+
+          // this.rows4filtered = this.rows4.filter(item => item.sucursal === 'TODAS');
+          // this.barChartLabels = [];
+          // this.barChartData1 = [];
+          // this.barChartData2 = [];
+          // this.barChartData3 = [];
+          // this.barChartData4 = [];
+          // this.data.hist_mensual.map(item => {
+          //   this.barChartLabels.push(item.name);
+          //   this.barChartData1.push(item.item_1);
+          //   this.barChartData2.push(item.item_2);
+          //   this.barChartData3.push(item.item_3)
+          //   this.barChartData4.push(item.item_4)
+          // })
           // var data = [];
           // data.push(this.barChartData1, this.barChartData2);
           // this.addData(this.grafico1, this.barChartLabels, data)

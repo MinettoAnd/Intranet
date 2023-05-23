@@ -50,7 +50,7 @@
                   <a ngbNavLink>INDICADORES</a>
                     <ng-template ngbNavContent>
                       
-                      <div class="card atencionesConsultaExterna">
+                      <div class="card" *ngIf="action">
                         <div class="card-header">
                           <h5 class="card-title" style="bottom:13px;">{{message}}</h5>
                           <!-- <p>{{message}}</p> -->
