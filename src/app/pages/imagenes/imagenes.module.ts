@@ -7,12 +7,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { EstadisticasComponent } from './estadisticas/estadisticas.component';
 import { AgGridModule } from 'ag-grid-angular';
+import { IndicadoresImgComponent } from './indicadores/indicadoresImg.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
   declarations: [
     ImpresionInformesRealizadosComponent,
-    EstadisticasComponent
+    EstadisticasComponent,
+    IndicadoresImgComponent,
   ],
   imports: [
     AgGridModule.withComponents([]),
@@ -21,6 +24,7 @@ import { AgGridModule } from 'ag-grid-angular';
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
+    SharedModule,
     RouterModule.forChild([
       {
         path: 'impresion-informes-realizados',
@@ -29,6 +33,10 @@ import { AgGridModule } from 'ag-grid-angular';
       {
         path: 'estadisticas',
         component: EstadisticasComponent
+      },
+      {
+        path: 'indicadores',
+        component: IndicadoresImgComponent
       },
     ])
   ],
