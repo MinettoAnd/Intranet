@@ -16,7 +16,7 @@ export class FilterIndicadoresComponent implements OnInit {
   anioAnterior = moment(new Date()).subtract(1, 'years').format('YYYY');
   periodo = this.anio + this.mes;
   origen_atencion: string = '0';
-  id_sede:string = '001'
+  id_sede:string = '0001'
   optionsMes = [
     { value: '01', label: 'Enero' },
     { value: '02', label: 'Febrero' },
@@ -32,8 +32,8 @@ export class FilterIndicadoresComponent implements OnInit {
     { value: '12', label: 'Diciembre' },
   ];
   optionsAnio = [];
-  @Output() parameters = new EventEmitter();
   @Input() filtro_grupo:string;
+  @Output() parameters = new EventEmitter();
   constructor() { 
     this.filtroForm = new FormGroup({
       id_sede: new FormControl(this.id_sede),

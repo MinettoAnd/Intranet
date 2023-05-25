@@ -1,0 +1,73 @@
+
+.box-title{
+    font-size: 1rem!important;
+    font-weight: 600;
+}
+
+
+.info-box-content{
+    display: flex;
+    flex-direction: column;
+    padding:5px 10px;
+}
+
+ .info-box-icon{
+    // border-top-left-radius:2px;
+    // border-top-right-radius:0;
+    // border-bottom-right-radius:0;
+    // border-bottom-left-radius:2px;
+    display:block;float:left!important;;
+    height:80px;width:90px!important;;
+    text-align:center!important;;
+    font-size:45px!important;;
+    line-height:80px!important;;
+    // background:rgba(0, 0, 0, 0.2)!important;;
+    border-radius: 8px!important;;
+    color:#fff !important;
+}
+.info-box-number{
+    display:block;
+    font-weight:bold;
+    font-size:18px;
+    height:10px;
+}
+.info-box-text{
+    display:block;
+    font-size:14px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    text-transform:uppercase;
+}
+.label-success{
+    color:#fff!important;
+    position: relative; top: 13px; font-size: 12px;
+    background-color:#00a65a!important;
+    padding: 5px;
+    border-radius: 5px;
+}
+.info-box{
+clear: both;
+margin: 0.5rem 0;
+}
+.infoBoxAzul{
+    background: #10004C !important; 
+}
+.infoBoxVerde{
+    background: #57AA50  !important; 
+}
+.infoBoxRojo{
+    background: #FF3636  !important; 
+}
+.infoBoxAzulino{
+    background: #2F50F1 !important; 
+}
+.info-box-number-small{
+    font-size: 0.9rem!important;
+}
+.text-blue{
+    color: #10004C;
+}
+.text-red{
+    color: #FF3636;
+}

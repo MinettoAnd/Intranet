@@ -8,46 +8,9 @@
           <div class="row">
   
             <div class="col-12">
-              <form [formGroup]="filtroForm">
-                <div class="row" style="margin-bottom: -0.5rem;">
-                  <div class="form-group col-sm-12">
-                    <div class="input-group input-group-sm fecha">
-                      <div class="input-group-prepend">
-                      <span class="input-group-text">Año</span>
-                      </div>
-                      <select formControlName="anio" class="form-control form-select" (change)="onAnioChange($event.target.value)">
-                      <option
-                          *ngFor="let option of optionsAnio"
-                          [value]="option.value"
-                      >
-                          {{ option.label }}
-                      </option>
-                    </select>
-                  </div>
-                    <div class="input-group input-group-sm fecha">
-                      <div class="input-group-prepend">
-                      <span class="input-group-text">Mes</span>
-                      </div>
-                      <select formControlName="mes" class="form-control form-select" (change)="onMesChange($event.target.value)">
-                      <option
-                          *ngFor="let option of optionsMes"
-                          [value]="option.value"
-                      >
-                          {{ option.label }}
-                      </option>
-                  </select>
-                  </div>
-                    <div class="input-group-btn">
-                    <button (click)="filter()" class="btn btn-sm btn-primary">
-                        <i class="fa fa-search"></i> Filtrar
-                    </button>
-                    </div>
-                  </div>
-                </div>
-              </form>
               <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs" style="justify-content: end;">
                 <li [ngbNavItem]="1">
-                    <a ngbNavLink>PAGADO EN PERIODO</a>
+                    <a ngbNavLink>RESUMEN DEL MES SELECCIONADO</a>
                       <ng-template ngbNavContent>
                         
                         <div class="card " *ngIf="action">
@@ -58,6 +21,39 @@
                           </div>
                           <div class="card-content collapse show">
                             <div class="card-body">
+                              <app-panel-cabecera [panelCabecera] = "panelOptions"></app-panel-cabecera>
+                              <!-- <div class="col-md-12" id="div_panel_01_cabecera1">
+                                <div class="col-md-3 col-sm-6 col-xs-12" id="div_panel_01_cabecera1_0">
+                                   <div class="info-box">
+                                      <span style="background: #10004C !important; color:#fff !important;" class="info-box-icon">
+                                        <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+                                      </span>		
+                                      <div class="info-box-content">
+                                        <span style="font-family:arial; font-size:15px; " class="info-box-text" id="box_titulo_01">ATENCIONES</span>
+                                          <span class="info-box-number" id="imp_total_01">{{ingresoTotal | currency }}</span>
+                                            <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success" id="porc_imp_total_01"> {{ingresoTotalNumComtratos}} Mes anterior</label>
+                                      </div>
+                                   </div>
+                                </div>
+                                <div class="col-md-3 col-sm-6 col-xs-12" id="div_panel_01_cabecera1_1">
+                                   <div class="info-box">
+                                      <span style="background: #57AA50  !important; color:#fff !important;" class="info-box-icon">			<i class="fa fa-users" aria-hidden="true"></i>		</span>		
+                                      <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text" id="box_titulo_02">ATENDIDOS</span>			<span class="info-box-number" id="imp_total_02">{{ingresoFamil | currency}}</span>			<label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success" id="porc_imp_total_02"> {{ingresoFamilNumComtratos}} Mes anterior</label>		</div>
+                                   </div>
+                                </div>
+                                <div class="col-md-3 col-sm-6 col-xs-12" id="div_panel_01_cabecera1_2">
+                                   <div class="info-box">
+                                      <span style="background: #FF3636 !important; color:#fff !important;" class="info-box-icon">			<i class="fa fa-medkit" aria-hidden="true"></i>		</span>		
+                                      <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text" id="box_titulo_03">ORDENES EMITIDAS</span>			<span class="info-box-number" id="imp_total_03">{{ingresoColec | currency}}</span>			<label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success" id="porc_imp_total_03"> {{ingresoColecNumComtratos}} Mes anterior</label>		</div>
+                                   </div>
+                                </div>
+                                <div class="col-md-3 col-sm-6 col-xs-12" id="div_panel_01_cabecera1_3">
+                                   <div class="info-box">
+                                      <span style="background: #2F50F1 !important; color:#fff !important;" class="info-box-icon">			<i class="fa fa-plus-circle" aria-hidden="true"></i>		</span>		
+                                      <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text" id="box_titulo_04">ORDENES PAGADAS</span>			<span class="info-box-number" id="imp_total_04">{{ingresoInscr | currency}}</span>			<label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success" id="porc_imp_total_04"> {{ingresoInscrNumComtratos}} Mes anterior</label>		</div>
+                                   </div>
+                                </div>
+                              </div> -->
                               <div class="table table-striped table-bordered selection-deletion-row">
                                 <div class="box box-solid">    
                                   <div id="accordion1">
@@ -209,7 +205,7 @@
                       </ng-template>
                 </li>
                 <li [ngbNavItem]="2">
-                    <a ngbNavLink>PLANILLA MENSUAL</a>
+                    <a ngbNavLink>RESUMEN ANUAL</a>
                       <ng-template ngbNavContent>
                         
                         <div class="card " *ngIf="action">
@@ -615,7 +611,7 @@
                       </ng-template>
                 </li>
                 <li [ngbNavItem]="3">
-                    <a ngbNavLink>PENDIENTES DE PAGO A LA ACTUALIDAD</a>
+                    <a ngbNavLink>POR MÉDICO</a>
                     <ng-template ngbNavContent>
                       <div class="card" *ngIf="action">
                         <div class="card-header">
@@ -764,110 +760,6 @@
                         </div>
                       </div>
                     </ng-template>
-                </li>
-                <li [ngbNavItem]="4">
-                  <a ngbNavLink>FECHA DE PAGOS</a>
-                  <ng-template ngbNavContent>
-                    <div class="card" *ngIf="action">
-                      <div class="card-header">
-                        <h4 class="card-title">{{message}}</h4>
-                        <!-- <p>{{message}}</p> -->
-                      </div>
-                      <div class="card-content collapse show">
-                        <div class="card-body">
-                          <div class="table table-striped table-bordered selection-deletion-row">
-                            <div class="box box-solid">
-                              <div id="accordion4">
-                                <div class="card">
-                                  <div class="card-header-info" >
-                                    <div class="box-header">
-                                      <div class="toggle-table">
-                                        <div class="callout callout-info">
-                                          <h3 class="box-title">RANGO DE FECHAS POR PAGOS (PLANILLA MENSUAL)</h3>
-                                        </div>
-                                        <button type="button" class="btn btn-outline-primary" (click)="collapse9.toggle()" [attr.aria-expanded]="!isCollapsed9"
-                                        aria-controls="collapseExample">
-                                        <i class="fa fa-minus" *ngIf="!isCollapsed9"> </i>
-                                        <i class="fa fa-plus" *ngIf="isCollapsed9"> </i> 
-                                        </button>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div #collapse9="ngbCollapse" [(ngbCollapse)]="isCollapsed9">
-                                      <div class="row" style="align-items: center;justify-content: space-between;">
-                                        <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
-                                          <li class="list-group-item border-0 pl-0">
-                                            <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(9)">
-                                              <i class="fa fa-external-link"></i>
-                                              Copiar tabla
-                                            </button>
-                                          </li>
-                                          <li class="list-group-item border-0 pl-0">
-                                            <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(9)">
-                                              <i class="fa fa-external-link"></i>
-                                              Exportar tabla a Excel
-                                            </button>
-                                          </li>
-                                        </ul>
-                                        <div style="display:flex;align-items: center; justify-content:flex-end">
-                                          <select class="form-control form-select" style="width: auto!important;" (change)="tipoChange($event.target.value)" [(ngModel)]="selectedOptionTipo">
-                                            <option value="EMPLEADOS">EMPLEADOS</option>
-                                            <option value="FUNCIONARIOS">FUNCIONARIOS</option>
-                                            <option value="OBREROS">OBREROS</option>
-                                            <option value="PRACTICANTE">PRACTICANTE</option>
-                                          </select>
-                                          <div class="" style="display:flex;margin:15px;align-items: center;">
-                                            <span>Buscar</span>&nbsp;&nbsp;
-                                              <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter($event, selectedOptionTipo)'>
-                                          </div>
-                                        </div> 
-                                      </div>
-                                      <ngx-datatable #myTable9
-                                        class="bootstrap table table-striped "
-                                        id="datatablele"
-                                          [columns]="columns9"
-                                          [rows]="rows9filtered"
-                                          [columnMode]="ColumnMode.flex"
-                                          [headerHeight]="50"
-                                          [rowHeight]="$any('auto')"
-                                          [scrollbarH]="true"
-                                          (page)="setPage($event)"
-                                          [rowClass] = "getRowClass1"
-
-                                          >
-                                          <ngx-datatable-column [headerClass]="column.headerClass" [cellClass]="column.cellClass" 
-                                          [flexGrow]="1" [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns9; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
-                                            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
-                                              let-row="row">
-                                              <div>
-                                                <span *ngIf="column.prop !== 'PagadoSoles' && column.prop !== 'PorcPagado'">{{value}}</span>
-                                                <span *ngIf="column.prop == 'PagadoSoles'">{{value | currency }}</span>
-                                                <span *ngIf="column.prop == 'PorcPagado'">{{value | number: '1.2-2'}} %</span>
-                                                <!-- <span *ngIf="column.prop !== 'PeriodoTXT' && column.prop !== 'Descripcion' &&  column.prop == 'FechaInicio' && column.prop == 'FechaFin'">{{value  | currency }}</span> -->
-                                              </div>
-                                            </ng-template>
-                                          </ngx-datatable-column>
-                                      </ngx-datatable>
-                                      <div class="ml-3">
-                                        <p>
-                                          <b>* PAGADO NRO: </b>Cantidad de colaboradores pagados bajo el concepto de Planilla Mensual.<br>
-                                          <b>* PAGADO SOLES: </b>Sumatoria de Planilla Mensual Pagada.<br>
-                                          <b>* FECHA INICIO: </b>Fecha de pago del primer colaborador de la Planilla Mensual del periodo correspondiente.<br>
-                                          <b>* FECHA FINAL: </b>Fecha de pago del último colaborador de la Planilla Mensual del periodo correspondiente.<br>
-                                          <b>* DIAS: </b>Intervalo en dias desde la primera hasta la última fecha de pago de planilla mensual del periodo correspondiente.<br>
-                                          <b>* %PAGADO: </b>Porcentaje de avance de pago de planilla mensual del periodo correspondiente.
-                                        </p>
-                                      </div>                                 
-                                  </div>
-                                </div>
-                              </div>                       
-                            </div>
-                          </div>
-                          
-                        </div>
-                      </div>
-                    </div>
-                  </ng-template>
                 </li>
                 <!-- tabla modal -->
                 <ng-template #content let-modal>
