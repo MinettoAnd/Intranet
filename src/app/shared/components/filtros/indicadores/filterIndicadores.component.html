@@ -1,0 +1,69 @@
+<form [formGroup]="filtroForm">
+    <div class="row" style="margin-bottom: -0.5rem;">
+      <div class="form-group col-sm-12">
+        <div class="input-group input-group-sm fecha">
+            <div class="input-group-prepend">
+            <span class="input-group-text">Sedes</span>
+            </div>
+            <select
+              class="form-control form-select"
+              formControlName="id_sede"
+              id="inputGroupSelect04"
+              >
+              <option value="000">Todos</option>
+              <option value="001">Lima</option>
+              <option value="002">Chorrillos</option>
+              <option value="004">Surco</option>
+            </select>
+        </div>
+       
+        <div class="input-group input-group-sm fecha">
+          <div class="input-group-prepend">
+          <span class="input-group-text">Año</span>
+          </div>
+          <select formControlName="anio" class="form-control form-select" (change)="onAnioChange($event.target.value)">
+            <option
+              *ngFor="let option of optionsAnio"
+              [value]="option.value"
+            >
+              {{ option.label }}
+            </option>
+          </select>
+        </div>
+        <div class="input-group input-group-sm fecha">
+          <div class="input-group-prepend">
+          <span class="input-group-text">Mes</span>
+          </div>
+          <select formControlName="mes" class="form-control form-select" (change)="onMesChange($event.target.value)">
+            <option
+                *ngFor="let option of optionsMes"
+                [value]="option.value"
+            >
+                {{ option.label }}
+            </option>
+          </select>
+        </div>
+        <div class="input-group input-group-sm">
+            <div class="input-group-append">
+            <span class="input-group-text">Origen de Atención:</span>
+            </div>
+            <select
+            class="form-control form-select"
+            formControlName="origen_atencion"
+            id="origen_atencion"
+            >
+            <option value="0" >TODOS</option>
+            <option value="1">AMBULATORIO</option>
+            <option value="2">EMERGENCIA</option>
+            <option value="3">HOSPITALIZACIÓN</option>
+            </select>
+        </div>
+        <div class="input-group-btn">
+        <button (click)="filter()" class="btn btn-sm btn-primary">
+            <i class="fa fa-search"></i> Filtrar
+        </button>
+        </div>
+      </div>
+    </div>
+  </form>
+  <!-- {{filtro_grupo}} -->

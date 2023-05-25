@@ -5,20 +5,28 @@ import { RouterModule } from '@angular/router';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { IndicadoresLabComponent } from './indicadores/indicadoresLab.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
   declarations: [
-    LiquidacionEmpresaBiohealthComponent
+    LiquidacionEmpresaBiohealthComponent,
+    IndicadoresLabComponent
   ],
   imports: [
     CommonModule,NgxDatatableModule,NgbModule, 
     FormsModule,
     ReactiveFormsModule,
+    SharedModule,
     RouterModule.forChild([
       {
         path: 'liquidacionEmpresaBiohealth',
         component: LiquidacionEmpresaBiohealthComponent
+      },
+      {
+        path: 'indicadores',
+        component: IndicadoresLabComponent
       },
     ])
   ],

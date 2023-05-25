@@ -16,6 +16,8 @@ import { LinkRendererComponent } from './components/renderer/link-renderer.compo
 import { EstadisticaPlanillaIndicadoresComponent } from './components/rrhh/estadistica-planilla-indicadores/estadistica-planilla-indicadores.component';
 import { EstadisticaPlanillaResumenPagosComponent } from './components/rrhh/estadistica-planilla-resumen-pagos/estadistica-planilla-resumen-pagos.component';
 import { EstadisticaPlanillaResumenIndicadoresComponent } from './components/rrhh/estadistica-planilla-resumen-indicadores/estadistica-planilla-resumen-indicadores.component';
+import { FilterIndicadoresComponent } from './components/filtros/indicadores/filterIndicadores.component';
+import { DashIndicadoresComponent } from './components/dashboards/dash-indicadores/dash-indicadores.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,8 @@ import { EstadisticaPlanillaResumenIndicadoresComponent } from './components/rrh
     EstadisticaPlanillaIndicadoresComponent,
     EstadisticaPlanillaResumenPagosComponent,
     EstadisticaPlanillaResumenIndicadoresComponent,
+    FilterIndicadoresComponent,
+    DashIndicadoresComponent,
   ],
   imports: [
     AgGridModule.withComponents([LinkRendererComponent]),
@@ -48,7 +52,9 @@ import { EstadisticaPlanillaResumenIndicadoresComponent } from './components/rrh
     JPRICComponent,
     EstadisticaPlanillaIndicadoresComponent,
     EstadisticaPlanillaResumenPagosComponent,
-    EstadisticaPlanillaResumenIndicadoresComponent
+    EstadisticaPlanillaResumenIndicadoresComponent,
+    FilterIndicadoresComponent,
+    DashIndicadoresComponent
   ],
 })
 export class SharedModule { }
