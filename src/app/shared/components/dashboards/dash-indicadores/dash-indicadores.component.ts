@@ -45,6 +45,7 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
   @ViewChild(DatatableComponent) private table: DatatableComponent;
   grafico1: Chart;
   grafico2: Chart;
+  grafico3: Chart;
   private baseChart: ElementRef;
   periodoSeleccionado: any;
   @ViewChild("baseChart", { static: false }) set content(
@@ -53,9 +54,9 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
     if (content) {
       // initially setter gets called with undefined
       this.baseChart = content;
-      this.grafico1 = this.getBarChart(this.barChartLabels1, this.barChartData1, this.barChartData2,'', '','chart-1', this.anioAnterior, this.anio, 'line');
-      this.grafico2 = this.getBarChart(this.barChartLabels2, this.barChartData3, this.barChartData4,'', '','chart-2', this.anioAnterior, this.anio, 'line');
-
+      this.grafico1 = this.getBarChart(this.barChartLabels1, this.barChartData1, this.barChartData2, this.barChartData3,'', '','chart-1', 'Atenciones', 'Emitidas', 'Compradas','line');
+      this.grafico2 = this.getBarChart(this.barChartLabels2, this.barChartData4, this.barChartData5, this.barChartData6, '', '','chart-2', 'Lima', 'Chorrillos', 'Surco','line');
+      this.grafico3 = this.getBarChart(this.barChartLabels3, this.barChartData7, this.barChartData8, this.barChartData9, '', '','chart-3', 'Lima', 'Chorrillos', 'Surco','line');
   } }
   options = {
     close: true,
@@ -64,11 +65,12 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
     reload: true
   };
   temp = [];
+  temp1 = [];
+  temp2 = [];
   selected = [];
   SelectionType = SelectionType;
   id: number;
   loadingIndicator: true;
-  rows: any;
   rows1: any;
   rows2: any;
   rows3: any;
@@ -78,9 +80,10 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
   rows7: any;
   rows8: any;
   rows9: any;
+  rows10: any;
   rowsModal: any;
   rows9filtered: any;
-  rows3filtered: any;
+  rows10filtered: any;
   rows4filtered: any;
   rows5filtered: any;
   rows6filtered: any;
@@ -105,6 +108,11 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
   columns7:any;
   columns8:any;
   columns9:any;
+  columns10:any;
+  especialidad;
+  especialidades = [];
+  grupo;
+  grupos = [];
   columnsModal:any;
   periodos:any;
   periodo_emp:any;
@@ -155,20 +163,30 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
   periodo = this.anio + this.mes;
   barChartLabels1 = [];
   barChartLabels2 = [];
+  barChartLabels3 = [];
   barChartData1 = [];
   barChartData2 = [];
   barChartData3 = [];
   barChartData4 = [];
+  barChartData5 = [];
+  barChartData6 = [];
+  barChartData7 = [];
+  barChartData8 = [];
+  barChartData9 = [];
   totalPlanilla: number;
   totalEmpleados: number;
   closeResult = '';
   color = ['secondary','success','primary', 'warning', 'info', 'secondary','secondary', 'secondary', 'secondary', 'secondary', 'secondary'];
   // action: boolean = false;
-  selectedOptionTipo='EMPLEADOS'; 
+  selectedOptionTipo='Porcentaje';
+  selectedOptionTipo1 ='CARDIOLOGIA';
   selectedOptionPeriodo = this.periodo;
   @Input() action: boolean = false;
+  @Input() filtro_grupo: string;
   listObservers$: Array<Subscription> = [];
   panelOptions;
+  panelOptions2;
+  isLoading: Boolean = false;
   constructor(private tableApiservice: IndicadoresService, private exportService: ExportService, private _cnp:CustomNumberPipe,
     private _cp: CurrencyPipe, private _phone: PhonePipe, private _ndp:NumberDecimalPipe, private modalService: NgbModal, public dataService: DataService) {
     this.page.pageNumber = 0;
@@ -247,7 +265,7 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
     console.log(imagedata)
     downloadlink.href = imagedata;
   }
-  getBarChart(chartLabels1, chartData1, chartData2,scaleLabel1,scaleLabel2, chartNum, title, title2,typeChart) {
+  getBarChart(chartLabels1, chartData1, chartData2, chartData3, scaleLabel1,scaleLabel2, chartNum, title, title2, title3,typeChart) {
     const data = {
       labels: chartLabels1,
       datasets: [
@@ -274,15 +292,15 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
           // hoverBackgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14','#adb5bd', '#ffc107', '#28a745', '#6610f2', '#20c997']
           type                : 'line',
         },
-        // {
-        //   label: title3,
-        //   // borderColor: 'rgba(99, 255, 132, 1)',
-        //   borderWidth: 1,
-        //   data: chartData3,
-        //   backgroundColor: '#ffa40859'
-        //   // backgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#adb5bd','#ffc107', '#28a745', '#6610f2','#20c997'],
-        //   // hoverBackgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14','#adb5bd', '#ffc107', '#28a745', '#6610f2', '#20c997']
-        // },
+        {
+          label: title3,
+          // borderColor: 'rgba(99, 255, 132, 1)',
+          borderWidth: 1,
+          data: chartData3,
+          backgroundColor: '#ffa40859'
+          // backgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#adb5bd','#ffc107', '#28a745', '#6610f2','#20c997'],
+          // hoverBackgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14','#adb5bd', '#ffc107', '#28a745', '#6610f2', '#20c997']
+        },
         // {
         //   label: title4,
         //   // borderColor: 'rgba(99, 255, 132, 1)',
@@ -489,85 +507,7 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
       Swal.close();
     }, 1000)
   }
-async  open({ selected }, TipoPago?, EstadoDeposito?, TipoPlanilla?, content?: any){
 
-  let periodo = this.periodo;
-    if(TipoPago === 'Planilla'){
-      this.tipoPago = 'NO0'
-      this.tipoDePago = 'Planilla Mensual'
-    }if(TipoPago === 'Gratificacion'){
-      this.tipoPago = 'GR0'
-      this.tipoDePago = 'Gratificación'
-    }if(TipoPago === 'Liquidacion'){
-      this.tipoPago = 'LI0'
-      this.tipoDePago = 'Liquidación'
-    }if(TipoPago === 'CTS'){
-      this.tipoPago = 'CTS'
-      this.tipoDePago = 'CTS'
-    }if(TipoPago === ''){
-      console.log(488, TipoPago)
-      this.tipoPago = 'NO0'
-      
-    }
-
-      if(EstadoDeposito !== undefined){
-        this.EstadoDeposito = EstadoDeposito;
-      }
-      if(TipoPlanilla !== undefined){
-        this.TipoPlanilla = TipoPlanilla;
-      }
-      
-      if (selected !== undefined){ 
-
-        if(selected[0].Periodo !== undefined){
-          this.periodoSeleccionado = selected[0].Periodo;
-        }
-        if(selected[0].Descripcion){
-          this.TipoPlanilla = selected[0].Descripcion;
-          periodo= '';
-          this.tipoDePago = this.TipoPlanilla
-        }
-        console.log(754,  selected[0])
-        const  parameters = {
-          Periodo: this.periodoSeleccionado.trim(),
-          PeriodoDeposito: selected[0].Descripcion ? periodo : this.periodo,
-          TipoPago: this.tipoPago.trim(),
-          EstadoDeposito: this.EstadoDeposito.toUpperCase(),
-          TipoPlanilla: this.TipoPlanilla.trim()
-       }
-      if(parameters.EstadoDeposito !== null && parameters.EstadoDeposito !== undefined){
-       
-       this.loading();
-      //  this.tableApiservice.RRhhGetPlanilla(parameters).subscribe(
-      //    (response) =>{ 
-      //     console.log(1155, response);
-      //      if(response.data.success){
-      //        this.columnsModal = response.data.cabeceras;
-      //        this.rowsModal = response.data.tabla_planilla;
-      //        this.temp = this.rowsModal;
-      //        // this.rowsMedicoRecord.map(item=>{
-      //        //   console.log(item);
-      //        // })
-      //      }
-      //      console.log(this.rowsModal);
-      //      Swal.close();
-      //  }),
-      //  (error) => {
-      //    console.log(error)
-      //          Swal.close();
-      //  }
-     }
-     
-     // Swal.close();
-   }else{
-     this.modalService.open(content, {size: <any>"xl", ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-       console.log(content);
-       this.closeResult = `Closed with: ${result}`;
-     }, (reason) => {
-       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-     });
-   }
- }
  private getDismissReason(reason: any): string {
    if (reason === ModalDismissReasons.ESC) {
      return 'by pressing ESC';
@@ -591,9 +531,36 @@ async  open({ selected }, TipoPago?, EstadoDeposito?, TipoPlanilla?, content?: a
 
     this.loading();
     console.log(this.parameters)
+    this.tableApiservice.getTablaResumenMensual(this.parameters).subscribe(
+      (response) => {
+        // this.rows = [];
+        if(response.data.success){
+          this.data = response.data ? response.data : [];
+          this.message = this.data.titulo;
+          this.title = response.data.title;
+          this.columns1 = this.data.cabecera_resumen_mes_1;
+          this.rows1 = this.data.tabla_resumen_mes_1;
+          this.columns2 = this.data.cabecera_resumen_mes_2;
+          this.rows2 = this.data.tabla_resumen_mes_2;
+          this.columns3 = this.data.cabecera_resumen_mes_3;
+          this.rows3 = this.data.tabla_resumen_mes_3;
+          console.log(449, this.columns3);
+          console.log(449, this.rows3);
+          this.columns4 = this.data.cabecera_resumen_mes_4;
+          this.rows4 = this.data.tabla_resumen_mes_4;
+
+        }else{
+          Swal.close();
+        }
+        
+      },
+      (error) => {
+          Swal.close();
+      }
+    );
     this.tableApiservice.getTablaResumen1Pag1(this.parameters).subscribe(
       (response) => {
-        this.rows = [];
+        // this.rows = [];
         console.log(449, response);
         if(response.data.success){
           this.data = response.data ? response.data : [];
@@ -661,109 +628,197 @@ async  open({ selected }, TipoPago?, EstadoDeposito?, TipoPlanilla?, content?: a
               subSubtitle: 'Por atención realizada',
             }
           ]
-          // this.periodo_emp = response.data.periodo_emp
-          // this.banco_bcp_f = response.data.banco_bcp_f
-          // this.banco_bcp_m = response.data.banco_bcp_m
-          // this.banco_con_f = response.data.banco_con_f
-          // this.banco_con_m = response.data.banco_con_m
 
-          // // this.temp = this.rows;
-          // this.columns1 = this.data.cabeceras_planilla_pago_soles;
-          // this.rows1 = this.data.tabla_planilla_pago_soles;
-          // this.columns2 = this.data.cabeceras_planilla_pago_cantidad;
-          // this.rows2 = this.data.tabla_planilla_pago_cantidad;
+          this.columns5 = this.data.cabecera_resumen_pag1_1;
+          this.rows5 = this.data.tabla_resumen_pag1_1;
+          this.columns6 = this.data.cabecera_resumen_pag2_1;
+          this.rows6 = this.data.tabla_resumen_pag2_1;
+          this.columns7 = this.data.cabecera_resumen_pag2_2;
+          this.rows7 = this.data.tabla_resumen_pag2_2;
+          console.log(449, this.columns3);
+          console.log(449, this.rows3);
+          this.columns8 = this.data.cabecera_resumen_pag2_3;
+          this.rows8 = this.data.tabla_resumen_pag2_3;
 
-          // this.columns3 = this.data.cabeceras_planilla_pendientes_soles;
-          // this.rows3 = this.data.tabla_planilla_pendientes_soles;
-          
-          // this.rows3filtered = this.rows3.filter(item => item.Periodo.trim() === this.selectedOptionPeriodo);
-          // this.barData = [];
-          // this.totalPlanilla = 0;
-          // this.rows3filtered.map(item => {
-          //   this.totalPlanilla += Number(item.Pagado);
-          //   const data = {
-          //     tipo: item.Descripcion,
-          //     value: this._cp.transform(item.Pendiente),
-          //     percented: this._ndp.transform(item.PorcPend)
-          //   }
-          //   this.barData.push(data)
-          // });
-          // console.log(495, this.totalPlanilla )
-          // let hash = {};
-          // const array = this.rows3.filter(o => hash[o.Periodo.trim()] ? false : hash[o.Periodo.trim()] = true);
-          // this.periodos = []
-          // array.map(item => {
-          //   const periodo = { value: item.Periodo.trim() };
-          //   this.periodos.push(periodo);
-          // });
-          // console.log(489, this.periodos);
 
-          // this.columns4 = this.data.cabeceras_planilla_pendientes_cantidad;
-          // this.rows4 = this.data.tabla_planilla_pendientes_cantidad;
-          // this.rows4filtered = this.rows4.filter(item => item.Periodo.trim() === this.selectedOptionPeriodo);
-          // this.totalEmpleados = 0;
-          // this.rows4filtered.map(item => {
-          //   // console.log(524, Number(item.Pagado))
-          //   this.totalEmpleados += Number(item.Pagado);
-          // });
-          
-          // this.columns5 = this.data.cabeceras_planilla_pendientes_activos_soles;
-          // this.rows5 = this.data.tabla_planilla_pendientes_activos_soles;
-          // this.rows5filtered = this.rows5.filter(item => item.Periodo.trim() === this.selectedOptionPeriodo);
-          // this.columns6 = this.data.cabeceras_planilla_pendientes_activos_cantidad;
-          // this.rows6 = this.data.tabla_planilla_pendientes_activos_cantidad;
-          // this.rows6filtered = this.rows6.filter(item => item.Periodo.trim() === this.selectedOptionPeriodo);
 
-          // this.columns7 = this.data.cabeceras_planilla_pendiente_soles;
-          // this.rows7 = this.data.tabla_planilla_pendiente_soles;
-          // this.columns8 = this.data.cabeceras_planilla_pendiente_cantidad;
-          // this.rows8 = this.data.tabla_planilla_pendiente_cantidad;
+          this.panelOptions2 = [
+            {
+              infoBox: 'infoBoxAzul ',
+              iconClass: 'fa fa-calendar-check-o',
+              title: 'ATENCIONES',
+              arrow: false,
+              iconArrow: '',
+              totalSubtitle: this._cnp.transform(this.data.nro_atenciones_total),
+              subtitle: 'Total',
+              totalSubSubtitle: this._cnp.transform(this.data.nro_atenciones_prom),
+              subSubtitle: 'Promedio Mensual',
+            },
+            {
+              infoBox: 'infoBoxVerde ',
+              iconClass: 'fa fa-users',
+              title: 'ATENDIDOS',
+              arrow: false,
+              iconArrow: '',
+              totalSubtitle: this._cnp.transform(this.data.nro_atendidos_total),
+              subtitle: 'Total',
+              totalSubSubtitle: this._cnp.transform(this.data.nro_atendidos_prom),
+              subSubtitle: 'Promedio Mensual',
+            },
+            {
+              infoBox: 'infoBoxRojo ',
+              iconClass: 'fa fa-medkit',
+              title: 'ORDENES EMITIDAS',
+              arrow: false,
+              iconArrow: '',
+              totalSubtitle: this._ndp.transform(this.data.recetas_solicitadas_total),
+              subtitle: '%',
+              totalSubSubtitle: '',
+              subSubtitle: 'Por atención realizada',
+            },
+            {
+              infoBox: 'infoBoxAzulino',
+              iconClass: 'fa fa-plus-circle',
+              title: 'ORDENES PAGADAS',
+              arrow: false,
+              iconArrow: '',
+              totalSubtitle: this._ndp.transform(this.data.recetas_compradas_total),
+              subtitle: '%',
+              totalSubSubtitle: '',
+              subSubtitle: 'Por atención realizada',
+            }
+          ]
 
-          // this.columns9 = this.data.cabeceras_planilla_pagado_fechas;
-          // this.rows9 = this.data.tabla_planilla_pagado_fechas;
-          // this.rows9filtered = this.rows9.filter(item => item.Descripcion.trim() === 'EMPLEADOS');
-          // console.log(477, this.rows9);
-          // this.barChartLabels1 = [];
-          // this.barChartLabels2 = [];
-          // this.barChartData1 = [];
-          // this.barChartData2 = [];
-          // this.barChartData3 = [];
-          // this.barChartData4 = [];
-          // this.data.hist_total.map(item => {
-          //   if(item.name === 'JAN'){
-          //     item.name = 'ENE';
-          //   }else if(item.name === 'APR'){
-          //     item.name = 'ABR';
-          //   }else if(item.name === 'AUG'){
-          //     item.name = 'AGO';
-          //   }else if(item.name === 'DEC'){
-          //     item.name = 'DIC';
-          //   }
-          //   this.barChartLabels1.push(item.name);
-          //   this.barChartData1.push(item.item_1);
-          //   this.barChartData2.push(item.item_2);
-          //   // this.barChartData3.push(item.item_3)
-          //   // this.barChartData4.push(item.item_4)
-          // });
-          // this.data.hist_canti.map(item => {
-          //   if(item.name === 'JAN'){
-          //     item.name = 'ENE';
-          //   }else if(item.name === 'APR'){
-          //     item.name = 'ABR';
-          //   }else if(item.name === 'AUG'){
-          //     item.name = 'AGO';
-          //   }else if(item.name === 'DEC'){
-          //     item.name = 'DIC';
-          //   }
-          //   this.barChartLabels2.push(item.name);
-          //   this.barChartData3.push(item.item_1);
-          //   this.barChartData4.push(item.item_2);
-          //   // this.barChartData3.push(item.item_3)
-          //   // this.barChartData4.push(item.item_4)
-          // })
-          // var data = [];
-          // data.push(this.barChartData1, this.barChartData2);
-          // this.addData(this.grafico1, this.barChartLabels, data)
+        }else{
+          Swal.close();
+        }
+        
+      },
+      (error) => {
+          Swal.close();
+      }
+    );
+
+    this.tableApiservice.getResumenEspecialidadMensual1(this.parameters).subscribe(
+      (response) => {
+        // this.rows = [];
+        if(response.data.success){
+          this.data = response.data ? response.data : [];
+          this.message = this.data.titulo;
+          this.title = response.data.title;
+          this.columns9 = this.data.cabecera_resumen_especialidad_mensual_01;
+          this.rows9 = this.data.tabla_resumen_especialidad_mensual_01;
+          console.log(778, this.rows9)
+          this.grupos = [];
+          this.rows9.map( item => {
+                    
+            if (!this.grupos.includes(item.grupo)){
+              this.grupos.push(item.grupo);
+            }
+          });
+          console.log(707, this.grupos)
+          this.temp1 = this.rows9;
+          this.rows9filtered = this.rows9.filter(item => item.grupo === 'Porcentaje');
+
+        }else{
+          Swal.close();
+        }
+        
+      },
+      (error) => {
+          Swal.close();
+      }
+    );
+    this.tableApiservice.getResumenMedicoMensual1(this.parameters).subscribe(
+      (response) => {
+        // this.rows = [];
+        if(response.data.success){
+          this.data = response.data ? response.data : [];
+          this.message = this.data.titulo;
+          this.title = response.data.title;
+          this.columns10 = this.data.cabecera_resumen_medico_mensual_01;
+          this.rows10 = this.data.tabla_resumen_medico_mensual_01;
+          this.especialidades = [];
+          this.rows10.map( item => {
+                    
+            if (!this.especialidades.includes(item.especialidad)){
+              this.especialidades.push(item.especialidad);
+            }
+          });
+          console.log(707, this.especialidades)
+          this.temp2 = this.rows10;
+          this.rows10filtered = this.rows10.filter(item => item.especialidad === 'CARDIOLOGIA');
+            Swal.close();
+        }else{
+          Swal.close();
+        }
+        
+      },
+      (error) => {
+          Swal.close();
+      }
+    );
+
+    this.tableApiservice.getResumenRecetaGrafica1(this.parameters).subscribe(
+      (response) => {
+        // this.rows = [];
+        if(response.data.success){
+          this.data = response.data ? response.data : [];
+          this.message = this.data.titulo;
+          this.title = response.data.title;
+          this.barChartLabels1 = [];
+          this.barChartData1 = [];
+          this.barChartData2 = [];
+          this.barChartData3 = [];
+          this.data.grafica1.map( item => {
+              this.barChartLabels1.push(item.name) 
+              this.barChartData1.push(item.item_1)      
+              this.barChartData2.push(item.item_2) 
+              this.barChartData3.push(item.item_3) 
+
+          });
+
+            Swal.close();
+        }else{
+          Swal.close();
+        }
+        
+      },
+      (error) => {
+          Swal.close();
+      }
+    );
+
+    this.tableApiservice.getResumenGraficaSedes1(this.parameters).subscribe(
+      (response) => {
+        // this.rows = [];
+        if(response.data.success){
+          this.data = response.data ? response.data : [];
+          this.message = this.data.titulo;
+          this.title = response.data.title;
+          this.barChartLabels2 = [];
+          this.barChartData4 = [];
+          this.barChartData5 = [];
+          this.barChartData6 = [];
+          this.data.grafica1.map( item => {
+              this.barChartLabels2.push(item.name) 
+              this.barChartData4.push(item.item_1)      
+              this.barChartData5.push(item.item_2) 
+              this.barChartData6.push(item.item_3) 
+
+          });
+
+          this.barChartLabels3 = [];
+          this.barChartData7 = [];
+          this.barChartData8 = [];
+          this.barChartData9 = [];
+          this.data.grafica2.map( item => {
+              this.barChartLabels3.push(item.name) 
+              this.barChartData7.push(item.item_1)      
+              this.barChartData8.push(item.item_2) 
+              this.barChartData9.push(item.item_3) 
+
+          });
 
             Swal.close();
         }else{
@@ -779,13 +834,13 @@ async  open({ selected }, TipoPago?, EstadoDeposito?, TipoPlanilla?, content?: a
 
   copyTableToClipboard(numberTabla){
     if(numberTabla === 0){
-      this.rows.map(item=>{
+      this.rows10.map(item=>{
          item.montoLima = typeof item.montoLima === 'number' ? item.montoLima : Number(item.montoLima);
          item.montoChorrillos = typeof item.montoChorrillos === 'number' ? item.montoChorrillos : Number(item.montoChorrillos);
          item.montoSurco = typeof item.montoSurco === 'number' ? item.montoSurco : Number(item.montoSurco);
          item.montoTotal = typeof item.montoTotal === 'number' ? item.montoTotal : Number(item.montoTotal);
       });
-      this.exportService.exportToClipboard(this.rows, this.columns1);
+      this.exportService.exportToClipboard(this.rows10, this.columns1);
     }else if (numberTabla === 1){
       this.rows1.map(item=>{
         item.montoLima = typeof item.montoLima === 'number' ? item.montoLima : Number(item.montoLima);
@@ -859,13 +914,13 @@ async  open({ selected }, TipoPago?, EstadoDeposito?, TipoPlanilla?, content?: a
 
   exportToExcel(numberTabla): void {
     if(numberTabla === 0){
-      this.rows.map(item=>{
+      this.rows10.map(item=>{
         item.montoLima = typeof item.montoLima === 'number' ? item.montoLima : Number(item.montoLima);
         item.montoChorrillos = typeof item.montoChorrillos === 'number' ? item.montoChorrillos : Number(item.montoChorrillos);
         item.montoSurco = typeof item.montoSurco === 'number' ? item.montoSurco : Number(item.montoSurco);
         item.montoTotal = typeof item.montoTotal === 'number' ? item.montoTotal : Number(item.montoTotal);
      });
-      this.exportService.exportTableElmToExcel(this.rows, '');
+      this.exportService.exportTableElmToExcel(this.rows10, '');
     }else if (numberTabla === 1){
       this.rows1.map(item=>{
         item.montoLima = typeof item.montoLima === 'number' ? item.montoLima : Number(item.montoLima);
@@ -957,68 +1012,65 @@ async  open({ selected }, TipoPago?, EstadoDeposito?, TipoPlanilla?, content?: a
           },
       });
   }
-  tipoChange(event){
-    console.log(751, event);
+  grupoChange(event){
+    console.log(834, event);
     const input = event;
-    // this.especialidad = input;
-    // this.temp = this.rows1;rows2filtered
-      if (input === 'EMPLEADOS') {
-        this.rows9filtered = this.rows9.filter(item => item.Descripcion.trim() === 'EMPLEADOS');
-       } else if (input === 'FUNCIONARIOS'){
-        this.rows9filtered = this.rows9.filter(item =>item.Descripcion.trim() === 'FUNCIONARIOS');
-       } else if (input === 'OBREROS'){
-        this.rows9filtered = this.rows9.filter(item =>item.Descripcion.trim() === 'OBREROS');
-       } else if (input === 'PRACTICANTE'){
-        this.rows9filtered = this.rows9.filter(item =>item.Descripcion.trim() === 'PRACTICANTE');
-       }
-
-    
+    this.grupo = input;
+    if (input.length > 0) {
+      const filtered = this.rows9filtered = this.rows9.filter(item => item.grupo === input);
+        // console.log(filtered);
+      this.rows9filtered = [...filtered]
+      
+     } //else {
+    //   console.log(this.filtered);
+    //   this.rowsFilter = [...this.temp]
+    // }
   }
-  tipoChangePer(event){
-    console.log(751, event);
+  especialityChange(event){
+    console.log(834, event);
     const input = event;
-    // this.especialidad = input;
-    // this.temp = this.rows1;rows2filtered
-    this.rows3filtered = this.rows3.filter(item => item.Periodo.trim() === input);
-    this.barData = []
-    this.rows3filtered.map(item => {
-      const data = {
-        tipo: item.Descripcion,
-        value: this._cp.transform(item.Pendiente),
-        percented: this._ndp.transform(item.PorcPend)
-      }
-      this.barData.push(data)
-    });
-    this.rows4filtered = this.rows4.filter(item => item.Periodo.trim() === input);
-    this.rows5filtered = this.rows5.filter(item => item.Periodo.trim() === input);
-    this.rows6filtered = this.rows6.filter(item => item.Periodo.trim() === input);
-      // if (input === 'EMPLEADOS') {
-      //   this.rows9filtered = this.rows9.filter(item => item.Descripcion.trim() === 'EMPLEADOS');
-      //  } else if (input === 'FUNCIONARIOS'){
-      //   this.rows9filtered = this.rows9.filter(item =>item.Descripcion.trim() === 'FUNCIONARIOS');
-      //  } else if (input === 'OBREROS'){
-      //   this.rows9filtered = this.rows9.filter(item =>item.Descripcion.trim() === 'OBREROS');
-      //  } else if (input === 'PRACTICANTE'){
-      //   this.rows9filtered = this.rows9.filter(item =>item.Descripcion.trim() === 'PRACTICANTE');
-      //  }
+    this.especialidad = input;
+    if (input.length > 0 && input !== 'null') {
+      const filtered = this.rows10filtered = this.rows10.filter(item => item.especialidad === input);
+        // console.log(filtered);
+      this.rows10filtered = [...filtered]
+      
+     } else {
 
-    
+      this.rows10filtered = [...this.rows10]
+    }
   }
-  updateFilter(event) {
+
+  updateFilter(event, selectedOption) {
     const input = event.target.value.toLowerCase();
     // console.log(838, input);
     // filter our data
     if (input.length > 0) {
-      const filtered = this.rowsModal
+      const filtered = this.rows9filtered
         .filter(el =>
           Object.values(el).find( val => val?.toString().toLowerCase().includes(input) ) != undefined
         );
         // console.log(filtered);
-      this.rowsModal = [...filtered]
+      this.rows9filtered = [...filtered]
       
     } else {
-
-      this.rowsModal = [...this.temp]
+      this.rows9filtered = [...this.rows9.filter(item => item.grupo === selectedOption)]
+    }
+  }
+  updateFilter2(event, selectedOption) {
+    const input = event.target.value.toLowerCase();
+    // console.log(838, input);
+    // filter our data
+    if (input.length > 0) {
+      const filtered = this.rows10filtered
+        .filter(el =>
+          Object.values(el).find( val => val?.toString().toLowerCase().includes(input) ) != undefined
+        );
+        // console.log(filtered);
+      this.rows10filtered = [...filtered]
+      
+    } else {
+      this.rows10filtered = [...this.rows10.filter(item => item.especialidad === selectedOption)]
     }
   }
   
