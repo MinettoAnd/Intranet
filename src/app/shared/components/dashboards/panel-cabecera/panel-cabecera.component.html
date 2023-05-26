@@ -1,0 +1,17 @@
+<div class="col-md-12" id="div_panel_01_cabecera1">
+    <div class="col-md-3 col-sm-6 col-xs-12" *ngFor="let item of panelCabecera">
+        <div class="info-box">
+            <span class="{{item.infoBox}} info-box-icon">
+                <i class="{{item.iconClass}}" aria-hidden="true"></i>
+            </span>
+            <div class="info-box-content">
+                <span style="font-family:arial; font-size:15px; " class="info-box-text"
+                    id="box_titulo_01">{{item.title}}</span>
+                <span class="info-box-number" *ngIf="!item.arrow">{{item.totalSubtitle}} {{item.subtitle}}</span>
+                <span class="info-box-number" *ngIf="item.arrow"> {{item.totalSubtitle}} <span class="info-box-number-small">( <i class="{{item.iconArrow}}" aria-hidden="true"></i>  {{item.subtitle}} )</span></span>
+                <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success"
+                    id="porc_imp_total_01"> {{item.totalSubSubtitle}} {{item.subSubtitle}}</label>
+            </div>
+        </div>
+    </div>
+</div>

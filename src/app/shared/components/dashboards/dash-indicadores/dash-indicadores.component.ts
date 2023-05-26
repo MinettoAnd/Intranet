@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { NgBlockUI, BlockUI } from 'ng-block-ui';
 import { PerfectScrollbarDirective, PerfectScrollbarComponent, PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
@@ -15,18 +15,21 @@ import ResizeObserver from 'resize-observer-polyfill';
 import { CurrencyPipe } from '@angular/common';
 import { CustomNumberPipe } from 'src/app/pipes/customNumber.pipe';
 import { PhonePipe } from 'src/app/pipes/phone.pipe';
-import { RecursosHumanosService } from 'src/app/_services/recursos-humanos.service';
+
 import { NumberDecimalPipe } from 'src/app/pipes/numberDecimal.pipe';
 import * as Chart from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { DataService } from 'src/app/_services/data.service';
+import { Subscription } from 'rxjs';
+import { IndicadoresService } from 'src/app/_services/indicadores.service';
 
 @Component({
   selector: 'app-dash-indicadores',
   templateUrl: './dash-indicadores.component.html',
   styleUrls: ['./dash-indicadores.component.scss']
 })
-export class DashIndicadoresComponent implements OnInit {
+export class DashIndicadoresComponent implements OnInit, OnDestroy {
   initialSize = 0;
   active = 1;
   enableSummary = true;
@@ -160,34 +163,50 @@ export class DashIndicadoresComponent implements OnInit {
   totalEmpleados: number;
   closeResult = '';
   color = ['secondary','success','primary', 'warning', 'info', 'secondary','secondary', 'secondary', 'secondary', 'secondary', 'secondary'];
-  action: boolean = false;
+  // action: boolean = false;
   selectedOptionTipo='EMPLEADOS'; 
   selectedOptionPeriodo = this.periodo;
-  constructor(private tableApiservice: RecursosHumanosService, private exportService: ExportService, private _cnp:CustomNumberPipe,
-    private _cp: CurrencyPipe, private _phone: PhonePipe, private _ndp:NumberDecimalPipe, private modalService: NgbModal) {
+  @Input() action: boolean = false;
+  listObservers$: Array<Subscription> = [];
+  panelOptions;
+  constructor(private tableApiservice: IndicadoresService, private exportService: ExportService, private _cnp:CustomNumberPipe,
+    private _cp: CurrencyPipe, private _phone: PhonePipe, private _ndp:NumberDecimalPipe, private modalService: NgbModal, public dataService: DataService) {
     this.page.pageNumber = 0;
     this.page.size = 10;
+    // console.log(171, this.dataService.parametersFilters)
 
-    this.filtroForm = new FormGroup({
-      anio: new FormControl(this.anio),
-      mes: new FormControl(this.mes),
 
-  });
-  var anioOp = Number(this.anio);
-  while ( Number(anioOp) > 2017 ) {
-    console.log(275, anioOp);
     
-    const anioNew = {
-       value: anioOp.toString(), label: anioOp.toString() 
-    }
-    this.optionsAnio.push(anioNew);
-    anioOp--;
-  }
+  //   this.filtroForm = new FormGroup({
+  //     anio: new FormControl(this.anio),
+  //     mes: new FormControl(this.mes),
+
+  // });
+  // var anioOp = Number(this.anio);
+  // while ( Number(anioOp) > 2017 ) {
+  //   console.log(275, anioOp);
+    
+  //   const anioNew = {
+  //      value: anioOp.toString(), label: anioOp.toString() 
+  //   }
+  //   this.optionsAnio.push(anioNew);
+  //   anioOp--;
+  // }
    }
 
   ngOnInit() {
-  
-    // this.setPage({ offset: 0 });
+    const observer1$: Subscription = this.dataService.callback.subscribe(
+      (data) => {
+        this.parameters = data;
+        console.log(193, this.parameters)
+        this.setPage({ offset: 0 });
+      }
+      );
+      this.listObservers$ = [observer1$]
+      // this.setPage({ offset: 0 });
+    }
+  ngOnDestroy(): void {
+    this.listObservers$.forEach(u => u.unsubscribe())
   }
   getRowClass(row) {
     return {
@@ -519,24 +538,24 @@ async  open({ selected }, TipoPago?, EstadoDeposito?, TipoPlanilla?, content?: a
       if(parameters.EstadoDeposito !== null && parameters.EstadoDeposito !== undefined){
        
        this.loading();
-       this.tableApiservice.RRhhGetPlanilla(parameters).subscribe(
-         (response) =>{ 
-          console.log(1155, response);
-           if(response.data.success){
-             this.columnsModal = response.data.cabeceras;
-             this.rowsModal = response.data.tabla_planilla;
-             this.temp = this.rowsModal;
-             // this.rowsMedicoRecord.map(item=>{
-             //   console.log(item);
-             // })
-           }
-           console.log(this.rowsModal);
-           Swal.close();
-       }),
-       (error) => {
-         console.log(error)
-               Swal.close();
-       }
+      //  this.tableApiservice.RRhhGetPlanilla(parameters).subscribe(
+      //    (response) =>{ 
+      //     console.log(1155, response);
+      //      if(response.data.success){
+      //        this.columnsModal = response.data.cabeceras;
+      //        this.rowsModal = response.data.tabla_planilla;
+      //        this.temp = this.rowsModal;
+      //        // this.rowsMedicoRecord.map(item=>{
+      //        //   console.log(item);
+      //        // })
+      //      }
+      //      console.log(this.rowsModal);
+      //      Swal.close();
+      //  }),
+      //  (error) => {
+      //    console.log(error)
+      //          Swal.close();
+      //  }
      }
      
      // Swal.close();
@@ -561,17 +580,18 @@ async  open({ selected }, TipoPago?, EstadoDeposito?, TipoPlanilla?, content?: a
   setPage(pageInfo) {
     console.log(pageInfo);
     this.selectedOptionPeriodo = this.periodo;
-    this.page.pageNumber = pageInfo.offset;
-    this.parameters = {
-      anio: this.anio,
-      mes: this.mes,
-      periodo:this.periodo,
-      pageNumber: this.page.pageNumber,
-      size: this.page.size
-    };
+    // this.page.pageNumber = pageInfo.offset;
+    // this.parameters = {
+    //   anio: this.anio,
+    //   mes: this.mes,
+    //   periodo:this.periodo,
+    //   pageNumber: this.page.pageNumber,
+    //   size: this.page.size
+    // };
 
     this.loading();
-    this.tableApiservice.RRhhGetPlanillaEstadisticaResumen(this.parameters).subscribe(
+    console.log(this.parameters)
+    this.tableApiservice.getTablaResumen1Pag1(this.parameters).subscribe(
       (response) => {
         this.rows = [];
         console.log(449, response);
@@ -579,106 +599,168 @@ async  open({ selected }, TipoPago?, EstadoDeposito?, TipoPlanilla?, content?: a
           this.data = response.data ? response.data : [];
           this.message = this.data.titulo;
           this.title = response.data.title;
-          this.periodo_emp = response.data.periodo_emp
-          this.banco_bcp_f = response.data.banco_bcp_f
-          this.banco_bcp_m = response.data.banco_bcp_m
-          this.banco_con_f = response.data.banco_con_f
-          this.banco_con_m = response.data.banco_con_m
+          const kpiAtenciones = this._ndp.transform((this.data.kpi_mes_atenciones_ma - this.data.kpi_mes_atenciones) / this.data.kpi_mes_atenciones_ma * 100);
+          const iconArrow = kpiAtenciones.toString().indexOf('-') > -1 ? 'fa fa-arrow-up text-blue' : 'fa fa-arrow-down text-red';
+          const kpiAtencionesFormat = kpiAtenciones.toString().indexOf('-') > -1 ? kpiAtenciones.toString().replace('-','') + ' %': kpiAtenciones + ' %';
 
-          // this.temp = this.rows;
-          this.columns1 = this.data.cabeceras_planilla_pago_soles;
-          this.rows1 = this.data.tabla_planilla_pago_soles;
-          this.columns2 = this.data.cabeceras_planilla_pago_cantidad;
-          this.rows2 = this.data.tabla_planilla_pago_cantidad;
+          const kpiAtendidos =  this._ndp.transform((this.data.kpi_mes_atendidos_ma - this.data.kpi_mes_atendidos) / this.data.kpi_mes_atendidos_ma * 100);
+          const iconArrow1 = kpiAtendidos.toString().indexOf('-') > -1 ? 'fa fa-arrow-up text-blue' : 'fa fa-arrow-down text-red';
+          const kpiAtendidosFormat = kpiAtendidos.toString().indexOf('-') > -1 ? kpiAtendidos.toString().replace('-','') + ' %': kpiAtendidos + ' %';
 
-          this.columns3 = this.data.cabeceras_planilla_pendientes_soles;
-          this.rows3 = this.data.tabla_planilla_pendientes_soles;
+          const kpiOrdEmitidas =  this._ndp.transform((this.data.kpi_mes_ord_solicitados_ma - this.data.kpi_mes_ord_solicitados) / this.data.kpi_mes_ord_solicitados_ma * 100);
+          const iconArrow2 = kpiOrdEmitidas.toString().indexOf('-') > -1 ? 'fa fa-arrow-up text-blue' : 'fa fa-arrow-down text-red';
+          const kpiOrdEmitidasFormat = kpiOrdEmitidas.toString().indexOf('-') > -1 ? kpiOrdEmitidas.toString().replace('-','') + ' %': kpiOrdEmitidas + ' %';
+
+          const kpiOrdPagadas =  this._ndp.transform((this.data.kpi_mes_ord_comprados_ma - this.data.kpi_mes_ord_comprados) / this.data.kpi_mes_ord_comprados_ma * 100);
+          const iconArrow3 = kpiOrdPagadas.toString().indexOf('-') > -1 ? 'fa fa-arrow-up text-blue' : 'fa fa-arrow-down text-red';
+          const kpiOrdPagadasFormat = kpiOrdPagadas.toString().indexOf('-') > -1 ? kpiOrdPagadas.toString().replace('-','') + ' %': kpiOrdPagadas + ' %';
+
+          this.panelOptions = [
+            {
+              infoBox: 'infoBoxAzul ',
+              iconClass: 'fa fa-calendar-check-o',
+              title: 'ATENCIONES',
+              arrow: true,
+              iconArrow: iconArrow,
+              totalSubtitle: this._cnp.transform(this.data.kpi_mes_atenciones),
+              subtitle: kpiAtencionesFormat,
+              totalSubSubtitle: this._cnp.transform(this.data.kpi_mes_atenciones_ma),
+              subSubtitle: 'Promedio Mensual',
+            },
+            {
+              infoBox: 'infoBoxVerde ',
+              iconClass: 'fa fa-users',
+              title: 'ATENDIDOS',
+              arrow: true,
+              iconArrow: iconArrow1,
+              totalSubtitle: this._cnp.transform(this.data.kpi_mes_atendidos),
+              subtitle: kpiAtendidosFormat,
+              totalSubSubtitle: this._cnp.transform(this.data.kpi_mes_atendidos_ma),
+              subSubtitle: 'Promedio Mensual',
+            },
+            {
+              infoBox: 'infoBoxRojo ',
+              iconClass: 'fa fa-medkit',
+              title: 'ORDENES EMITIDAS',
+              arrow: true,
+              iconArrow: iconArrow2,
+              totalSubtitle: this._cnp.transform(this.data.kpi_mes_ord_solicitados),
+              subtitle: kpiOrdEmitidasFormat,
+              totalSubSubtitle: this._cnp.transform(this.data.kpi_mes_ord_solicitados_ma),
+              subSubtitle: 'Por atención realizada',
+            },
+            {
+              infoBox: 'infoBoxAzulino',
+              iconClass: 'fa fa-plus-circle',
+              title: 'ORDENES PAGADAS',
+              arrow: true,
+              iconArrow: iconArrow3,
+              totalSubtitle: this._cnp.transform(this.data.kpi_mes_ord_comprados),
+              subtitle: kpiOrdPagadasFormat,
+              totalSubSubtitle: this._cnp.transform(this.data.kpi_mes_ord_comprados_ma),
+              subSubtitle: 'Por atención realizada',
+            }
+          ]
+          // this.periodo_emp = response.data.periodo_emp
+          // this.banco_bcp_f = response.data.banco_bcp_f
+          // this.banco_bcp_m = response.data.banco_bcp_m
+          // this.banco_con_f = response.data.banco_con_f
+          // this.banco_con_m = response.data.banco_con_m
+
+          // // this.temp = this.rows;
+          // this.columns1 = this.data.cabeceras_planilla_pago_soles;
+          // this.rows1 = this.data.tabla_planilla_pago_soles;
+          // this.columns2 = this.data.cabeceras_planilla_pago_cantidad;
+          // this.rows2 = this.data.tabla_planilla_pago_cantidad;
+
+          // this.columns3 = this.data.cabeceras_planilla_pendientes_soles;
+          // this.rows3 = this.data.tabla_planilla_pendientes_soles;
           
-          this.rows3filtered = this.rows3.filter(item => item.Periodo.trim() === this.selectedOptionPeriodo);
-          this.barData = [];
-          this.totalPlanilla = 0;
-          this.rows3filtered.map(item => {
-            this.totalPlanilla += Number(item.Pagado);
-            const data = {
-              tipo: item.Descripcion,
-              value: this._cp.transform(item.Pendiente),
-              percented: this._ndp.transform(item.PorcPend)
-            }
-            this.barData.push(data)
-          });
-          console.log(495, this.totalPlanilla )
-          let hash = {};
-          const array = this.rows3.filter(o => hash[o.Periodo.trim()] ? false : hash[o.Periodo.trim()] = true);
-          this.periodos = []
-          array.map(item => {
-            const periodo = { value: item.Periodo.trim() };
-            this.periodos.push(periodo);
-          });
-          console.log(489, this.periodos);
+          // this.rows3filtered = this.rows3.filter(item => item.Periodo.trim() === this.selectedOptionPeriodo);
+          // this.barData = [];
+          // this.totalPlanilla = 0;
+          // this.rows3filtered.map(item => {
+          //   this.totalPlanilla += Number(item.Pagado);
+          //   const data = {
+          //     tipo: item.Descripcion,
+          //     value: this._cp.transform(item.Pendiente),
+          //     percented: this._ndp.transform(item.PorcPend)
+          //   }
+          //   this.barData.push(data)
+          // });
+          // console.log(495, this.totalPlanilla )
+          // let hash = {};
+          // const array = this.rows3.filter(o => hash[o.Periodo.trim()] ? false : hash[o.Periodo.trim()] = true);
+          // this.periodos = []
+          // array.map(item => {
+          //   const periodo = { value: item.Periodo.trim() };
+          //   this.periodos.push(periodo);
+          // });
+          // console.log(489, this.periodos);
 
-          this.columns4 = this.data.cabeceras_planilla_pendientes_cantidad;
-          this.rows4 = this.data.tabla_planilla_pendientes_cantidad;
-          this.rows4filtered = this.rows4.filter(item => item.Periodo.trim() === this.selectedOptionPeriodo);
-          this.totalEmpleados = 0;
-          this.rows4filtered.map(item => {
-            // console.log(524, Number(item.Pagado))
-            this.totalEmpleados += Number(item.Pagado);
-          });
+          // this.columns4 = this.data.cabeceras_planilla_pendientes_cantidad;
+          // this.rows4 = this.data.tabla_planilla_pendientes_cantidad;
+          // this.rows4filtered = this.rows4.filter(item => item.Periodo.trim() === this.selectedOptionPeriodo);
+          // this.totalEmpleados = 0;
+          // this.rows4filtered.map(item => {
+          //   // console.log(524, Number(item.Pagado))
+          //   this.totalEmpleados += Number(item.Pagado);
+          // });
           
-          this.columns5 = this.data.cabeceras_planilla_pendientes_activos_soles;
-          this.rows5 = this.data.tabla_planilla_pendientes_activos_soles;
-          this.rows5filtered = this.rows5.filter(item => item.Periodo.trim() === this.selectedOptionPeriodo);
-          this.columns6 = this.data.cabeceras_planilla_pendientes_activos_cantidad;
-          this.rows6 = this.data.tabla_planilla_pendientes_activos_cantidad;
-          this.rows6filtered = this.rows6.filter(item => item.Periodo.trim() === this.selectedOptionPeriodo);
+          // this.columns5 = this.data.cabeceras_planilla_pendientes_activos_soles;
+          // this.rows5 = this.data.tabla_planilla_pendientes_activos_soles;
+          // this.rows5filtered = this.rows5.filter(item => item.Periodo.trim() === this.selectedOptionPeriodo);
+          // this.columns6 = this.data.cabeceras_planilla_pendientes_activos_cantidad;
+          // this.rows6 = this.data.tabla_planilla_pendientes_activos_cantidad;
+          // this.rows6filtered = this.rows6.filter(item => item.Periodo.trim() === this.selectedOptionPeriodo);
 
-          this.columns7 = this.data.cabeceras_planilla_pendiente_soles;
-          this.rows7 = this.data.tabla_planilla_pendiente_soles;
-          this.columns8 = this.data.cabeceras_planilla_pendiente_cantidad;
-          this.rows8 = this.data.tabla_planilla_pendiente_cantidad;
+          // this.columns7 = this.data.cabeceras_planilla_pendiente_soles;
+          // this.rows7 = this.data.tabla_planilla_pendiente_soles;
+          // this.columns8 = this.data.cabeceras_planilla_pendiente_cantidad;
+          // this.rows8 = this.data.tabla_planilla_pendiente_cantidad;
 
-          this.columns9 = this.data.cabeceras_planilla_pagado_fechas;
-          this.rows9 = this.data.tabla_planilla_pagado_fechas;
-          this.rows9filtered = this.rows9.filter(item => item.Descripcion.trim() === 'EMPLEADOS');
-          console.log(477, this.rows9);
-          this.barChartLabels1 = [];
-          this.barChartLabels2 = [];
-          this.barChartData1 = [];
-          this.barChartData2 = [];
-          this.barChartData3 = [];
-          this.barChartData4 = [];
-          this.data.hist_total.map(item => {
-            if(item.name === 'JAN'){
-              item.name = 'ENE';
-            }else if(item.name === 'APR'){
-              item.name = 'ABR';
-            }else if(item.name === 'AUG'){
-              item.name = 'AGO';
-            }else if(item.name === 'DEC'){
-              item.name = 'DIC';
-            }
-            this.barChartLabels1.push(item.name);
-            this.barChartData1.push(item.item_1);
-            this.barChartData2.push(item.item_2);
-            // this.barChartData3.push(item.item_3)
-            // this.barChartData4.push(item.item_4)
-          });
-          this.data.hist_canti.map(item => {
-            if(item.name === 'JAN'){
-              item.name = 'ENE';
-            }else if(item.name === 'APR'){
-              item.name = 'ABR';
-            }else if(item.name === 'AUG'){
-              item.name = 'AGO';
-            }else if(item.name === 'DEC'){
-              item.name = 'DIC';
-            }
-            this.barChartLabels2.push(item.name);
-            this.barChartData3.push(item.item_1);
-            this.barChartData4.push(item.item_2);
-            // this.barChartData3.push(item.item_3)
-            // this.barChartData4.push(item.item_4)
-          })
+          // this.columns9 = this.data.cabeceras_planilla_pagado_fechas;
+          // this.rows9 = this.data.tabla_planilla_pagado_fechas;
+          // this.rows9filtered = this.rows9.filter(item => item.Descripcion.trim() === 'EMPLEADOS');
+          // console.log(477, this.rows9);
+          // this.barChartLabels1 = [];
+          // this.barChartLabels2 = [];
+          // this.barChartData1 = [];
+          // this.barChartData2 = [];
+          // this.barChartData3 = [];
+          // this.barChartData4 = [];
+          // this.data.hist_total.map(item => {
+          //   if(item.name === 'JAN'){
+          //     item.name = 'ENE';
+          //   }else if(item.name === 'APR'){
+          //     item.name = 'ABR';
+          //   }else if(item.name === 'AUG'){
+          //     item.name = 'AGO';
+          //   }else if(item.name === 'DEC'){
+          //     item.name = 'DIC';
+          //   }
+          //   this.barChartLabels1.push(item.name);
+          //   this.barChartData1.push(item.item_1);
+          //   this.barChartData2.push(item.item_2);
+          //   // this.barChartData3.push(item.item_3)
+          //   // this.barChartData4.push(item.item_4)
+          // });
+          // this.data.hist_canti.map(item => {
+          //   if(item.name === 'JAN'){
+          //     item.name = 'ENE';
+          //   }else if(item.name === 'APR'){
+          //     item.name = 'ABR';
+          //   }else if(item.name === 'AUG'){
+          //     item.name = 'AGO';
+          //   }else if(item.name === 'DEC'){
+          //     item.name = 'DIC';
+          //   }
+          //   this.barChartLabels2.push(item.name);
+          //   this.barChartData3.push(item.item_1);
+          //   this.barChartData4.push(item.item_2);
+          //   // this.barChartData3.push(item.item_3)
+          //   // this.barChartData4.push(item.item_4)
+          // })
           // var data = [];
           // data.push(this.barChartData1, this.barChartData2);
           // this.addData(this.grafico1, this.barChartLabels, data)

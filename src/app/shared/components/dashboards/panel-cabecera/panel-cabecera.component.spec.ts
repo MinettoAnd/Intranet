@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { IndicadoresImgComponent } from './indicadoresImg.component';
+import { PanelCabeceraComponent } from './panel-cabecera.component';
 
-describe('IndicadoresImgComponent', () => {
-  let component: IndicadoresImgComponent;
-  let fixture: ComponentFixture<IndicadoresImgComponent>;
+describe('PanelCabeceraComponent', () => {
+  let component: PanelCabeceraComponent;
+  let fixture: ComponentFixture<PanelCabeceraComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ IndicadoresImgComponent ]
+      declarations: [ PanelCabeceraComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(IndicadoresImgComponent);
+    fixture = TestBed.createComponent(PanelCabeceraComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { DataService } from 'src/app/_services/data.service';
 
 @Component({
   selector: 'app-indicadores-img',
@@ -6,14 +7,21 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./indicadoresImg.component.scss']
 })
 export class IndicadoresImgComponent implements OnInit {
-  @Input() parameters;
+  parameters;
+  action = false;
   filtro_grupo = 'IMAG';
-  constructor() { }
+  constructor(private dataService:DataService) { }
 
   ngOnInit(): void {
-    
+
   }
+
   getParameters(parameters){
-console.log(10, parameters)
+    this.parameters = parameters;
+    if(parameters !== undefined){
+      this.dataService.callback.emit(parameters);
+      this.action = true;
+    }
+// console.log(10, parameters)
   }
 }
