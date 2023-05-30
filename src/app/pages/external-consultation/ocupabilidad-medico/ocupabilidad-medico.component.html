@@ -325,7 +325,7 @@
                                       </ul>                                   -->
                                     <!-- </div> -->
                                     <div style="display:flex;align-items: center; justify-content:flex-end">
-                                      <select formcontrolname="especialidadNombre" class="form-control form-select" style="width: auto!important;" (change)="especialityChange($event.target.value)" [(ngModel)]="selectedOption">
+                                      <select class="form-control form-select" style="width: auto!important;" (change)="especialityChange($event.target.value)" [(ngModel)]="selectedOption">
                                         <option 
                                         *ngFor="let especialidad of especialidades; let i=index"
                                         [value]="especialidad"
