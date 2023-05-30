@@ -284,6 +284,7 @@ export class EstadisticaPlanillaResumenPagosComponent implements OnInit {
       //   }
       // },
       responsive: true,
+      maintainAspectRatio: false,
       // We use these empty structures as placeholders for dynamic theming.
       // scales: {
       //   yAxes: [{
@@ -331,7 +332,7 @@ export class EstadisticaPlanillaResumenPagosComponent implements OnInit {
       },
       plugins: {
         datalabels: {
-          
+          display: false,
           /* anchor puede ser "start", "center" o "end" */
           anchor: 'center',
           backgroundColor: function(context) {
@@ -393,7 +394,15 @@ export class EstadisticaPlanillaResumenPagosComponent implements OnInit {
               if (label) {
                   label += ': ';
               }
-              label += Math.round(tooltipItem.yLabel * 100) / 100;
+              if(tooltipItem.yLabel.toString().indexOf('.') > -1){
+                let numero;
+                numero = Math.round(tooltipItem.yLabel * 100) / 100;
+                let partesNumero = numero.toString().split('.');
+                partesNumero[0] = partesNumero[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                label += 'S/. ' + partesNumero.join('.');
+              }else{
+                label += Math.round(tooltipItem.yLabel * 100) / 100;
+              }
               // tooltipItem.xLabel = 'Día: ' + tooltipItem.xLabel + '   ' ;
               // tooltipItem.label = 'Día: ' + tooltipItem.Label + '   ' ;
               
@@ -587,6 +596,7 @@ async  open({ selected }, TipoPago?, EstadoDeposito?, TipoPlanilla?, content?: a
 
           // this.temp = this.rows;
           this.columns1 = this.data.cabeceras_planilla_pago_soles;
+          console.log(599, this.columns1)
           this.rows1 = this.data.tabla_planilla_pago_soles;
           this.columns2 = this.data.cabeceras_planilla_pago_cantidad;
           this.rows2 = this.data.tabla_planilla_pago_cantidad;
@@ -776,82 +786,83 @@ async  open({ selected }, TipoPago?, EstadoDeposito?, TipoPlanilla?, content?: a
   }
 
   exportToExcel(numberTabla): void {
-    if(numberTabla === 0){
-      this.rows.map(item=>{
-        item.montoLima = typeof item.montoLima === 'number' ? item.montoLima : Number(item.montoLima);
-        item.montoChorrillos = typeof item.montoChorrillos === 'number' ? item.montoChorrillos : Number(item.montoChorrillos);
-        item.montoSurco = typeof item.montoSurco === 'number' ? item.montoSurco : Number(item.montoSurco);
-        item.montoTotal = typeof item.montoTotal === 'number' ? item.montoTotal : Number(item.montoTotal);
-     });
-      this.exportService.exportTableElmToExcel(this.rows, '');
-    }else if (numberTabla === 1){
+if (numberTabla === 1){
       this.rows1.map(item=>{
-        item.montoLima = typeof item.montoLima === 'number' ? item.montoLima : Number(item.montoLima);
-        item.montoChorrillos = typeof item.montoChorrillos === 'number' ? item.montoChorrillos : Number(item.montoChorrillos);
-        item.montoSurco = typeof item.montoSurco === 'number' ? item.montoSurco : Number(item.montoSurco);
-        item.montoTotal = typeof item.montoTotal === 'number' ? item.montoTotal : Number(item.montoTotal);
+        item.Planilla = typeof item.Planilla === 'number' ? item.Planilla : Number(item.Planilla);
+        item.Liquidacion = typeof item.Liquidacion === 'number' ? item.Liquidacion : Number(item.Liquidacion);
+        item.Gratificacion = typeof item.Gratificacion === 'number' ? item.Gratificacion : Number(item.Gratificacion);
+        item.CTS = typeof item.CTS === 'number' ? item.CTS : Number(item.CTS);
+        item.Total = typeof item.Total === 'number' ? item.Total : Number(item.Total);
      });
       this.exportService.exportTableElmToExcel(this.rows1, '');
     }else if (numberTabla === 2){
       this.rows2.map(item=>{
-        item.total01 = typeof item.total01 === 'number' ? item.total01 : Number(item.total01);
-        item.total02 = typeof item.total02 === 'number' ? item.total02 : Number(item.total02);
-        item.total03 = typeof item.total03 === 'number' ? item.total03 : Number(item.total03);
-        item.total04 = typeof item.total04 === 'number' ? item.total04 : Number(item.total04);
-
-        item.total05 = typeof item.total05 === 'number' ? item.total05 : Number(item.total05);
-        item.total06 = typeof item.total06 === 'number' ? item.total06 : Number(item.total06);
-        item.total07 = typeof item.total07 === 'number' ? item.total07 : Number(item.total07);
-        item.total08 = typeof item.total08 === 'number' ? item.total08 : Number(item.total08);
-
-        item.total09 = typeof item.total09 === 'number' ? item.total09 : Number(item.total09);
-        item.total10 = typeof item.total10 === 'number' ? item.total10 : Number(item.total10);
-        item.total11 = typeof item.total11 === 'number' ? item.total11 : Number(item.total11);
-        item.total12 = typeof item.total12 === 'number' ? item.total12 : Number(item.total12);
-
-        item.total = typeof item.total === 'number' ? item.total : Number(item.total);
+        item.Planilla = typeof item.Planilla === 'number' ? item.Planilla : Number(item.Planilla);
+        item.Liquidacion = typeof item.Liquidacion === 'number' ? item.Liquidacion : Number(item.Liquidacion);
+        item.Gratificacion = typeof item.Gratificacion === 'number' ? item.Gratificacion : Number(item.Gratificacion);
+        item.CTS = typeof item.CTS === 'number' ? item.CTS : Number(item.CTS);
+        item.Total = typeof item.Total === 'number' ? item.Total : Number(item.Total);
        });
       this.exportService.exportTableElmToExcel(this.rows2, '');
     }else if (numberTabla === 3){
       this.rows3.map(item=>{
-        item.total01 = typeof item.total01 === 'number' ? item.total01 : Number(item.total01);
-        item.total02 = typeof item.total02 === 'number' ? item.total02 : Number(item.total02);
-        item.total03 = typeof item.total03 === 'number' ? item.total03 : Number(item.total03);
-        item.total04 = typeof item.total04 === 'number' ? item.total04 : Number(item.total04);
-
-        item.total05 = typeof item.total05 === 'number' ? item.total05 : Number(item.total05);
-        item.total06 = typeof item.total06 === 'number' ? item.total06 : Number(item.total06);
-        item.total07 = typeof item.total07 === 'number' ? item.total07 : Number(item.total07);
-        item.total08 = typeof item.total08 === 'number' ? item.total08 : Number(item.total08);
-
-        item.total09 = typeof item.total09 === 'number' ? item.total09 : Number(item.total09);
-        item.total10 = typeof item.total10 === 'number' ? item.total10 : Number(item.total10);
-        item.total11 = typeof item.total11 === 'number' ? item.total11 : Number(item.total11);
-        item.total12 = typeof item.total12 === 'number' ? item.total12 : Number(item.total12);
-
-        item.total = typeof item.total === 'number' ? item.total : Number(item.total);
+        item.Pagado = typeof item.Pagado === 'number' ? item.Pagado : Number(item.Pagado);
+        item.Pendiente = typeof item.Pendiente === 'number' ? item.Pendiente : Number(item.Pendiente);
+        item.Total = typeof item.Total === 'number' ? item.Total : Number(item.Total);
+        item.PorcPend = typeof item.PorcPend === 'number' ? item.PorcPend : Number(item.PorcPend);
        });
       this.exportService.exportTableElmToExcel(this.rows3, '');
     }else if (numberTabla === 4){
       this.rows4.map(item=>{
-        item.total01 = typeof item.total01 === 'number' ? item.total01 : Number(item.total01);
-        item.total02 = typeof item.total02 === 'number' ? item.total02 : Number(item.total02);
-        item.total03 = typeof item.total03 === 'number' ? item.total03 : Number(item.total03);
-        item.total04 = typeof item.total04 === 'number' ? item.total04 : Number(item.total04);
-
-        item.total05 = typeof item.total05 === 'number' ? item.total05 : Number(item.total05);
-        item.total06 = typeof item.total06 === 'number' ? item.total06 : Number(item.total06);
-        item.total07 = typeof item.total07 === 'number' ? item.total07 : Number(item.total07);
-        item.total08 = typeof item.total08 === 'number' ? item.total08 : Number(item.total08);
-
-        item.total09 = typeof item.total09 === 'number' ? item.total09 : Number(item.total09);
-        item.total10 = typeof item.total10 === 'number' ? item.total10 : Number(item.total10);
-        item.total11 = typeof item.total11 === 'number' ? item.total11 : Number(item.total11);
-        item.total12 = typeof item.total12 === 'number' ? item.total12 : Number(item.total12);
-
-        item.total = typeof item.total === 'number' ? item.total : Number(item.total);
+        item.Pagado = typeof item.Pagado === 'number' ? item.Pagado : Number(item.Pagado);
+        item.Pendiente = typeof item.Pendiente === 'number' ? item.Pendiente : Number(item.Pendiente);
+        item.Total = typeof item.Total === 'number' ? item.Total : Number(item.Total);
+        item.PorcPend = typeof item.PorcPend === 'number' ? item.PorcPend : Number(item.PorcPend);
        });
       this.exportService.exportTableElmToExcel(this.rows4, '');
+    }else if (numberTabla === 5){
+      this.rows5.map(item=>{
+        item.Pagado = typeof item.Pagado === 'number' ? item.Pagado : Number(item.Pagado);
+        item.Pendiente = typeof item.Pendiente === 'number' ? item.Pendiente : Number(item.Pendiente);
+        item.Total = typeof item.Total === 'number' ? item.Total : Number(item.Total);
+        item.PorcPend = typeof item.PorcPend === 'number' ? item.PorcPend : Number(item.PorcPend);
+       });
+      this.exportService.exportTableElmToExcel(this.rows5, '');
+    }else if (numberTabla === 6){
+      this.rows6.map(item=>{
+        item.Pagado = typeof item.Pagado === 'number' ? item.Pagado : Number(item.Pagado);
+        item.Pendiente = typeof item.Pendiente === 'number' ? item.Pendiente : Number(item.Pendiente);
+        item.Total = typeof item.Total === 'number' ? item.Total : Number(item.Total);
+        item.PorcPend = typeof item.PorcPend === 'number' ? item.PorcPend : Number(item.PorcPend);
+       });
+      this.exportService.exportTableElmToExcel(this.rows6, '');
+    }else if (numberTabla === 7){
+      this.rows7.map(item=>{
+        item.Planilla = typeof item.Planilla === 'number' ? item.Planilla : Number(item.Planilla);
+        item.Liquidacion = typeof item.Liquidacion === 'number' ? item.Liquidacion : Number(item.Liquidacion);
+        item.Gratificacion = typeof item.Gratificacion === 'number' ? item.Gratificacion : Number(item.Gratificacion);
+        item.CTS = typeof item.CTS === 'number' ? item.CTS : Number(item.CTS);
+        item.Total = typeof item.Total === 'number' ? item.Total : Number(item.Total);
+     });
+      this.exportService.exportTableElmToExcel(this.rows7, '');
+    }else if (numberTabla === 8){
+      this.rows8.map(item=>{
+        item.Planilla = typeof item.Planilla === 'number' ? item.Planilla : Number(item.Planilla);
+        item.Liquidacion = typeof item.Liquidacion === 'number' ? item.Liquidacion : Number(item.Liquidacion);
+        item.Gratificacion = typeof item.Gratificacion === 'number' ? item.Gratificacion : Number(item.Gratificacion);
+        item.CTS = typeof item.CTS === 'number' ? item.CTS : Number(item.CTS);
+        item.Total = typeof item.Total === 'number' ? item.Total : Number(item.Total);
+     });
+      this.exportService.exportTableElmToExcel(this.rows8, '');
+    }else if (numberTabla === 9){
+      this.rows9.map(item=>{
+        item.PagadoNro = typeof item.PagadoNro === 'number' ? item.PagadoNro : Number(item.PagadoNro);
+        item.PagadoSoles = typeof item.PagadoSoles === 'number' ? item.PagadoSoles : Number(item.PagadoSoles);
+        item.Dias = typeof item.Dias === 'number' ? item.Dias : Number(item.Dias);
+        item.PorcPagado = typeof item.PorcPagado === 'number' ? item.PorcPagado : Number(item.PorcPagado);
+
+     });
+      this.exportService.exportTableElmToExcel(this.rows9, '');
     }
   }
 
