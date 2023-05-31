@@ -26,11 +26,11 @@ import { AgGridAngular } from 'ag-grid-angular';
 import { PorcentajePipe } from 'src/app/pipes/porcentaje.pipe';
 
 @Component({
-  selector: 'app-estadisticas',
-  templateUrl: './estadisticas.component.html',
-  styleUrls: ['./estadisticas.component.scss']
+  selector: 'app-estadistica',
+  templateUrl: './estadistica.component.html',
+  styleUrls: ['./estadistica.component.scss']
 })
-export class EstadisticasComponent implements OnInit {
+export class EstadisticaComponent implements OnInit {
   initialSize = 0;
   active = 1;
   enableSummary = true;
@@ -690,7 +690,7 @@ export class EstadisticasComponent implements OnInit {
       mes: this.mes,
       periodo:this.periodo,
       sede:this.id_sede,
-      area: 'Imagenes',
+      area: 'BSangre',
       tipo: 0,
       pageNumber: this.page.pageNumber,
       size: this.page.size
@@ -761,9 +761,7 @@ export class EstadisticasComponent implements OnInit {
             suministros += Number(item.suministros)
             costos += Number(item.costos)
             utilidad += Number(item.utilidad)
-            // item.pUtilidad = this._pp.transform(item.pUtilidad)
           })
-          console.log(763, this.rows1)
           const total = {
             grupo: 'TOTAL',
             ingreso: ingreso,

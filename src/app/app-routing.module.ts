@@ -192,6 +192,11 @@ const routes: Routes = [
                 loadChildren: () => import('../app/pages/documentos-gestion/documentos-gestion.module').then(m => m.DocumentosGestionModule),
                 data: { extraParameter: "facturacionMenu" },
             },
+            {
+                path: "bancoSangre",
+                loadChildren: () => import('../app/pages/banco-sangre/banco-sangre.module').then(m => m.BancoSangreModule),
+                data: { extraParameter: "bancoSangreMenu" },
+            },
         ],
     },
 
