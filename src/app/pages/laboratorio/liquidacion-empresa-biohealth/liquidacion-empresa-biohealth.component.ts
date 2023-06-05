@@ -23,6 +23,7 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 import { PorcentajePipe } from '../../../pipes/porcentaje.pipe';
 import { CustomNumberPipe } from '../../../pipes/customNumber.pipe';
+import { CustomCurrencyPipe } from 'src/app/pipes/customCurrency.pipe';
 @Component({
   selector: 'app-liquidacion-empresa-biohealth',
   templateUrl: './liquidacion-empresa-biohealth.component.html',
@@ -154,7 +155,7 @@ export class LiquidacionEmpresaBiohealthComponent implements OnInit {
   };
   action: boolean = false;
   constructor(private tableApiservice: LaboratorioService, private exportService: ExportService,
-    private _cp: CurrencyPipe, private _dp: DecimalPipe, private _pp:PorcentajePipe, private _cnp:CustomNumberPipe, private modalService: NgbModal) { 
+    private _cp: CurrencyPipe, private _ccp: CustomCurrencyPipe, private _dp: DecimalPipe, private _pp:PorcentajePipe, private _cnp:CustomNumberPipe, private modalService: NgbModal) { 
       this.page1.pageNumber = 0;
       this.page1.size = 10;
       this.page2.pageNumber = 0;
@@ -336,6 +337,8 @@ export class LiquidacionEmpresaBiohealthComponent implements OnInit {
                     this.columns1.map(item =>{
                       if(item.pipe === 'currency'){
                         item.pipe = this._cp;
+                      }else if(item.pipe === 'customCurrency'){
+                        item.pipe = this._ccp;
                       }else if(item.pipe === 'porcentaje'){
                         item.pipe = this._pp;
                       }else if(item.pipe === 'cantidad'){
@@ -377,6 +380,8 @@ export class LiquidacionEmpresaBiohealthComponent implements OnInit {
                     this.columns2.map(item =>{
                       if(item.pipe === 'currency'){
                         item.pipe = this._cp;
+                      }else if(item.pipe === 'customCurrency'){
+                        item.pipe = this._ccp;
                       }else if(item.pipe === 'porcentaje'){
                         item.pipe = this._pp;
                       }else if(item.pipe === 'cantidad'){
@@ -413,6 +418,8 @@ export class LiquidacionEmpresaBiohealthComponent implements OnInit {
                     this.columns3.map(item =>{
                       if(item.pipe === 'currency'){
                         item.pipe = this._cp;
+                      }else if(item.pipe === 'customCurrency'){
+                        item.pipe = this._ccp;
                       }else if(item.pipe === 'porcentaje'){
                         item.pipe = this._pp;
                       }else if(item.pipe === 'cantidad'){
@@ -426,6 +433,8 @@ export class LiquidacionEmpresaBiohealthComponent implements OnInit {
                     this.columns4.map(item =>{
                       if(item.pipe === 'currency'){
                         item.pipe = this._cp;
+                      }else if(item.pipe === 'customCurrency'){
+                        item.pipe = this._ccp;
                       }else if(item.pipe === 'porcentaje'){
                         item.pipe = this._pp;
                       }else if(item.pipe === 'cantidad'){
@@ -458,8 +467,11 @@ export class LiquidacionEmpresaBiohealthComponent implements OnInit {
                     this.columns5.map(item =>{
                       if(item.pipe === 'currency'){
                         item.pipe = this._cp;
-                      }
-                      if(item.pipe === 'cantidad'){
+                      }else if(item.pipe === 'customCurrency'){
+                        item.pipe = this._ccp;
+                      }else if(item.pipe === 'porcentaje'){
+                        item.pipe = this._pp;
+                      }else if(item.pipe === 'cantidad'){
                         item.pipe = this._cnp;
                       }
                     });
@@ -470,6 +482,12 @@ export class LiquidacionEmpresaBiohealthComponent implements OnInit {
                     this.columns6.map(item =>{
                       if(item.pipe === 'currency'){
                         item.pipe = this._cp;
+                      }else if(item.pipe === 'customCurrency'){
+                        item.pipe = this._ccp;
+                      }else if(item.pipe === 'porcentaje'){
+                        item.pipe = this._pp;
+                      }else if(item.pipe === 'cantidad'){
+                        item.pipe = this._cnp;
                       }
                     });
                     this.rows6 = response.data.tabla_resumenPago;
