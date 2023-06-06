@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EstadisticaComponent } from './estadistica/estadistica.component';
 import { LiquidacionEmpresaYmunolabComponent } from './liquidacion-empresa-ymunolab/liquidacion-empresa-ymunolab.component';
 import { AgGridModule } from 'ag-grid-angular';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 
@@ -16,6 +17,7 @@ import { AgGridModule } from 'ag-grid-angular';
     LiquidacionEmpresaYmunolabComponent
   ],
   imports: [
+    SharedModule,
     AgGridModule.withComponents([]),
     CommonModule,NgxDatatableModule,NgbModule, 
     FormsModule,
