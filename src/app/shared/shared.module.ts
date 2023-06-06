@@ -19,6 +19,7 @@ import { EstadisticaPlanillaResumenIndicadoresComponent } from './components/rrh
 import { FilterIndicadoresComponent } from './components/filtros/indicadores/filterIndicadores.component';
 import { DashIndicadoresComponent } from './components/dashboards/dash-indicadores/dash-indicadores.component';
 import { PanelCabeceraComponent } from './components/dashboards/panel-cabecera/panel-cabecera.component';
+import { LiquidacionEmpresasComponent } from './components/liquidacion-empresas/liquidacion-empresas.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { PanelCabeceraComponent } from './components/dashboards/panel-cabecera/p
     FilterIndicadoresComponent,
     DashIndicadoresComponent,
     PanelCabeceraComponent,
+    LiquidacionEmpresasComponent,
   ],
   imports: [
     AgGridModule.withComponents([LinkRendererComponent]),
@@ -58,6 +60,7 @@ import { PanelCabeceraComponent } from './components/dashboards/panel-cabecera/p
     FilterIndicadoresComponent,
     DashIndicadoresComponent,
     PanelCabeceraComponent,
+    LiquidacionEmpresasComponent,
   ],
 })
 export class SharedModule { }
