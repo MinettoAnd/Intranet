@@ -445,7 +445,7 @@ export class EstadisticaPlanillaIndicadoresComponent implements OnInit {
           // this.temp = this.rows;
           this.columns1 = this.data.cabeceras_kpi_colaboradores;
           this.rows1 = this.data.tabla_kpi_colaboradores;
-          // console.log(446, response);
+          console.log(446, response);
 
           this.columns2 = this.data.cabeceras_kpi_planillas;
           this.rows2 = this.data.tabla_kpi_planillas;

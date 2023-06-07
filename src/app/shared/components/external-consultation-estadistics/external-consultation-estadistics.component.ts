@@ -240,8 +240,12 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
   }
   filter() {
     this.action = true;
+    if(this.grafico1){
     this.removeData(this.grafico1);
+    }
+    if(this.grafico2){
     this.removeData(this.grafico2)
+    }
     const form = this.filtroForm.value;
       this.id_sede = form.id_sede,
       this.mes = form.mes,
