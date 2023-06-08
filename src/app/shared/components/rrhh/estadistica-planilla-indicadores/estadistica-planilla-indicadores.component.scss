@@ -185,3 +185,10 @@ margin: 0.5rem 0;
     // padding-left: 1rem;
 }
 
+@media screen and (min-width: 1024px) {
+
+    :host ::ng-deep ngx-datatable datatable-body-cell{ 
+        // margin:0%!important;
+        width:226px!important;
+     }
+}

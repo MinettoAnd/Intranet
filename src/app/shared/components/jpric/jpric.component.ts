@@ -251,7 +251,7 @@ export class JPRICComponent implements OnInit {
   // getCellClass({ row, column, value }): any {
   //   console.log(178, column);
   //   return {
-  //     'text-rigth': column.prop !== 'PeriodoTXT'
+  //     'text-right': column.prop !== 'PeriodoTXT'
   //   };
   // }
   public onAnioChange(anio: any): void {

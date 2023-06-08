@@ -442,7 +442,36 @@ export class DetallePagosAppMovilComponent implements OnInit {
  this.tableApiservice.TsGeneraArchivos(this.parameters).subscribe(
       async (response) => {
         if(response.data.success){
-            
+          this.tableApiservice.TsGetResumenTipoTarjeta(this.parameters).subscribe(
+            (response) => {
+              this.progressBar1 = [];
+              this.progressBarLabels1 = [];
+              this.progressBarLabels2 = [];
+              if(response.data.success){
+                // this.rows1      = response.data.grupo_porc
+                this.progressBarLabels1 = response.data.grupo_detalle
+                this.progressBarLabels2 = response.data.grupo
+                let table: any;
+                for (const [key, value] of Object.entries(response.data.grupo_porc)) {
+                  console.log(key, '=>', value)
+                  let porcentaje:any = value;
+
+                  const datos = {
+                      porcentaje : porcentaje.toFixed(2),
+                      // value: porcentaje[0],
+
+                  }
+                  this.progressBar1.push(datos);
+                }
+                console.log(265, this.progressBar1)
+
+              }
+              
+            },
+            (error) => {
+                Swal.close();
+            }
+          );
             this.tableApiservice.TsGetResumenCabecera(this.parameters).subscribe(
               (response) => {
                 this.rows = [];
@@ -479,36 +508,7 @@ export class DetallePagosAppMovilComponent implements OnInit {
                   Swal.close();
               }
             );
-            this.tableApiservice.TsGetResumenTipoTarjeta(this.parameters).subscribe(
-              (response) => {
-                this.progressBar1 = [];
-                this.progressBarLabels1 = [];
-                this.progressBarLabels2 = [];
-                if(response.data.success){
-                  // this.rows1      = response.data.grupo_porc
-                  this.progressBarLabels1 = response.data.grupo_detalle
-                  this.progressBarLabels2 = response.data.grupo
-                  let table: any;
-                  for (const [key, value] of Object.entries(response.data.grupo_porc)) {
-                    console.log(key, '=>', value)
-                    let porcentaje:any = value;
-
-                    const datos = {
-                        porcentaje : porcentaje.toFixed(2),
-                        // value: porcentaje[0],
-
-                    }
-                    this.progressBar1.push(datos);
-                  }
-                  console.log(265, this.progressBar1)
-
-                }
-                
-              },
-              (error) => {
-                  Swal.close();
-              }
-            );
+            
             this.tableApiservice.TsListaPagosDetalleCitas(this.parameters).subscribe(
               (response) => {
                 this.rows = [];
@@ -541,9 +541,9 @@ export class DetallePagosAppMovilComponent implements OnInit {
             );
 
           await  this.tableApiservice.TsEliminaTabla(this.parameters).subscribe(
-              (response) => {
+             async (response) => {
                 if(response.data.success){
-            Swal.close();
+                  await Swal.close();
         
                 }
                 
@@ -596,7 +596,9 @@ export class DetallePagosAppMovilComponent implements OnInit {
 
   filter() {
     this.action = true;
-    this.removeData(this.grafico1);
+    if(this.grafico1){
+      this.removeData(this.grafico1);
+    }
         const form = this.filtroForm.value;
           this.f_inicio = moment(form.f_inicio).format('YYYY-MM-DD');
           this.f_fin = moment(form.f_fin).format('YYYY-MM-DD');
