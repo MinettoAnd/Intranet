@@ -126,7 +126,7 @@
                                               </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-3 col-sm-6 col-xs-12" style="display: flex;">
+                                    <div class="col-md-3 col-sm-6 col-xs-12" style="display: flex;" (mouseover)="changeTable1=true" (mouseout)="changeTable1=false">
                                         <div class="info-box">
                                             <span style="background: #63B6DE !important; color:#fff !important;" class="info-box-icon">			
                                             <i class="fa fa-users" aria-hidden="true"></i>		</span>		
@@ -137,7 +137,7 @@
                                           </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-3 col-sm-6 col-xs-12 div_ocultar_ptable_a" *ngIf="changeTable">
+                                      <div class="col-md-3 col-sm-6 col-xs-12 div_ocultar_ptable_a" *ngIf="changeTable">
                                         <div class="info-box">
                                           <table class="table table-bordered">
                                               <tbody>
@@ -156,6 +156,34 @@
                                                     <th style="padding: 2px 8px!important; line-height: inherit;"><span id="ptable_anul_paci">{{resumenMes.anuladas}}</span></th>
                                                     <th style="width: 40px; padding: 2px 8px!important; line-height: inherit;"><span class="badge bg-red" id="ptable_anul_paci_por">{{porcAnuladas  | number : '1.2-2' }} %</span></th>
                                                 </tr>
+                                              </tbody>
+                                          </table>
+                                        </div>
+                                      </div>
+                                      <div class="col-md-3 col-sm-6 col-xs-12 div_ocultar_ptable_a" *ngIf="changeTable1">
+                                        <div class="info-box">
+                                          <table class="table table-bordered">
+                                              <tbody>
+                                                <tr>
+                                                    <th style="padding: 2px 4px!important; line-height: inherit; font-size: 14px!important;">Central de Citas</th>
+                                                    <th style="padding: 2px 8px!important; line-height: inherit;"><span id="ptable_anul">{{resumenMes.CC}}</span></th>
+                                                    <th style="width: 40px; padding: 2px 8px!important; line-height: inherit;"><span class="badge bg-blue" id="ptable_anul_por">{{porcCC  | number : '1.2-2' }} %</span></th>
+                                                </tr>
+                                                <tr>
+                                                    <th style="padding: 2px 4px!important; line-height: inherit; font-size: 14px!important;">Admisión</th>
+                                                    <th style="padding: 2px 8px!important; line-height: inherit;"><span id="ptable_inas">{{resumenMes.AD}}</span></th>
+                                                    <th style="width: 40px; padding: 2px 8px!important; line-height: inherit;"><span class="badge bg-green" id="ptable_inas_por">{{porcAD  | number : '1.2-2' }} %</span></th>
+                                                </tr>
+                                                <tr>
+                                                    <th style="padding: 2px 4px!important; line-height: inherit; font-size: 14px!important;">WhatsApp</th>
+                                                    <th style="padding: 2px 8px!important; line-height: inherit;"><span id="ptable_anul_paci">{{resumenMes.WA}}</span></th>
+                                                    <th style="width: 40px; padding: 2px 8px!important; line-height: inherit;"><span class="badge bg-red" id="ptable_anul_paci_por">{{porcWA  | number : '1.2-2' }} %</span></th>
+                                                </tr>
+                                                <tr>
+                                                  <th style="padding: 2px 4px!important; line-height: inherit; font-size: 14px!important;">APP y Web</th>
+                                                  <th style="padding: 2px 8px!important; line-height: inherit;"><span id="ptable_anul_paci">{{resumenMes.AP + resumenMes.CW}}</span></th>
+                                                  <th style="width: 40px; padding: 2px 8px!important; line-height: inherit;"><span class="badge bg-red" id="ptable_anul_paci_por">{{porcAPCW  | number : '1.2-2' }} %</span></th>
+                                              </tr>
                                               </tbody>
                                           </table>
                                         </div>
@@ -1025,10 +1053,10 @@
                                                       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                                         let-row="row">
                                                          
-                                                        <div *ngIf="column.prop !== 'MEDICO'">
+                                                        <div *ngIf="column.prop !== 'NomMedico'">
                                                           <span  [title]="value">{{value}}</span>
                                                         </div>
-                                                        <div *ngIf="column.prop === 'MEDICO'">
+                                                        <div *ngIf="column.prop === 'NomMedico'">
                                                           <span  [title]="value"><a href="javascript:;" (click)="open($event, content)" style="color: #4B9FDE;">{{value}}</a></span>
                                                         </div>
                                                         <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">

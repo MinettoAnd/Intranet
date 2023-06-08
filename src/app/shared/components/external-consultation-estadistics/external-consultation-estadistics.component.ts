@@ -108,7 +108,12 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
     medico: '',
     paciente: '',
     anuladas: '',
-    reservadas: ''
+    reservadas: '',
+    CC:'',
+    AD:'',
+    WA:'',
+    AP:'',
+    CW:''
   };
   resumenMesAnterior:any = {
     success: '',
@@ -183,6 +188,10 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
   porcMedico;
   porcPaciente;
   porcAnuladas;
+  porcCC;
+  porcAD;
+  porcWA;
+  porcAPCW;
   frameworkComponents;
   tooltipShowDelay;
   defaultColDef;
@@ -192,6 +201,7 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
       flex: "1 1 auto",
   };
   changeTable: boolean;
+  changeTable1: boolean = false;
   action: boolean = false;
   constructor(private tableApiservice: ExternalConsultationService, private exportService: ExportService,
     private _cp: CurrencyPipe, private modalService: NgbModal) { 
@@ -801,11 +811,22 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
                   
                   if(response.success){
                     this.resumenMes = response.data;
-                    
+                    console.log(804, this.resumenMes)
                      this.porcMedico =  ( this.resumenMes.medico / this.resumenMes.ausentismo) * 100;
                       this.porcPaciente = (this.resumenMes.paciente / this.resumenMes.ausentismo) * 100;
                       this.porcAnuladas = (this.resumenMes.anuladas / this.resumenMes.ausentismo) * 100;
-                    
+                      this.resumenMes.CC =  Number(this.resumenMes.CC);
+                      this.resumenMes.AD = Number(this.resumenMes.AD);
+                      this.resumenMes.WA = Number(this.resumenMes.WA);
+                      this.resumenMes.AP = Number(this.resumenMes.AP);
+                      this.resumenMes.CW = Number(this.resumenMes.CW);
+                      const totalReservas = this.resumenMes.CC + this.resumenMes.AD + this.resumenMes.WA + this.resumenMes.AP +this.resumenMes.CW;
+                      const appWeb = this.resumenMes.AP + this.resumenMes.CW;
+                      console.log(820, totalReservas , appWeb)
+                      this.porcCC =  ( this.resumenMes.CC / totalReservas) * 100;
+                      this.porcAD = (this.resumenMes.AD / totalReservas) * 100;
+                      this.porcWA = (this.resumenMes.WA / totalReservas) * 100;
+                      this.porcAPCW = (appWeb / totalReservas) * 100;
 
                      
                   }
@@ -816,7 +837,7 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
               );
               this.tableApiservice.getCeAtencionesResumenAnual(this.parameters).subscribe(
                 (response) => { 
-                  if(response.success){
+                  if(response.data.success){
                     this.columns1 = response.data.cabeceras_tpacientes;
                     this.rows1 = response.data.tabla_tpacientes;
                     this.formatPipe(this.rows1);
@@ -1376,16 +1397,17 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
       // console.log('Activate Event', event);
     }
     open({ selected }, content?: any){
-      
+      this.columnsMedicoRecord = [];
+      this.rowsMedicoRecord = [];
       if (selected !== undefined){
         this.CMP = selected[0].CMP;
-        this.Medico = selected[0].MEDICO;
+        this.Medico = selected[0].NomMedico;
          console.log(1141, selected);
          const parameters = {
-          Id: selected[0].Empleado,
+          Id: selected[0].IdMedico,
           CMP: selected[0].CMP,
-          Especialidad: selected[0].ESPECIALIDAD,
-          Medico: selected[0].MEDICO,
+          Especialidad: selected[0].NomEspecialidad,
+          Medico: selected[0].NomMedico,
           AnioF: this.anio,
           MesF: this.mes,
           SedeF: this.id_sede,
