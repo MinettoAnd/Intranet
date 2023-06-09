@@ -50,7 +50,7 @@ export class DetallePagosAppMovilComponent implements OnInit {
     if (content) {
       // initially setter gets called with undefined
       this.baseChart = content;
-      this.grafico1 = this.getBarChart(this.barChartLabels, this.barChartData1, this.barChartData2,'', '','chart-1', '', '', 'bar');
+      this.grafico1 = this.getBarChart(this.barChartLabels, this.barChartData1, this.barChartData2,'', '','chart-1', 'Soles', 'Cantidad', 'bar');
 }
   }
   options = {
@@ -298,9 +298,13 @@ export class DetallePagosAppMovilComponent implements OnInit {
             
           // },
           /* Podemos modificar el texto a mostrar */
-          // formatter: function (dato, ctx) {
-          //   return ((dato * 100) / total).toFixed(2) + '%'; 
-          // },
+          formatter: function (dato, ctx) {
+            console.log(302, dato, ctx)
+            if(dato.indexOf('.') > -1){
+              return 'S/ ' + dato;
+            }
+            // return ((dato * 100) / total).toFixed(2) + '%'; 
+          },
           // formatter: (dato) => ((dato * 100) / total).toFixed(2) + '%',
           // formatter: function (value, ctx) {
           //   return ((value * 100) / this.total(ctx)).toFixed(2) + '%';

@@ -86,7 +86,7 @@
                     <ng-template ngbNavContent>
                         <div class="card atencionesConsultaExterna" *ngIf="action">
                             <div class="card-header">
-                                <h4 class="card-title" style="bottom:13px;">Pagos por APP Móvil</h4>
+                                <h4 class="card-title" style="bottom:13px;">Recaudación por APP Móvil y Citas Web</h4>
                                 
                             </div>
                             <div class="card-content collapse show">
@@ -110,8 +110,8 @@
                                             <div class="info-box">
                                                 <span style="background: #f56954 !important; color:#fff !important;" class="info-box-icon">			
                                                     <i class="fa fa-street-view" aria-hidden="true"></i>		</span>		
-                                                    <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">RECHAZADAS</span>			<span class="info-box-number" *ngIf="efectivas">{{efectivas}}</span>			
-                                                        <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success"> {{ (efectivas/transacciones) * 100 | number: '1.2-2' }} %
+                                                    <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">RECHAZADAS</span>			<span class="info-box-number" *ngIf="efectivas">{{rechazadas}}</span>			
+                                                        <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success"> {{ (rechazadas/transacciones) * 100 | number: '1.2-2' }} %
                                                         </label>		
                                                     </div>
                                                 </div>
@@ -122,8 +122,8 @@
                                                 <span style="background: #00c0ef !important; color:#fff !important;" class="info-box-icon">			
                                                     <i class="fa fa-crosshairs" aria-hidden="true"></i>		</span>		
                                                     <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">EFECTIVAS</span>			
-                                                        <span  class="info-box-number" *ngIf="rechazadas">{{rechazadas }}</span>			
-                                                        <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success" > {{ (rechazadas/transacciones) * 100 | number: '1.2-2' }} %
+                                                        <span  class="info-box-number" *ngIf="rechazadas">{{efectivas }}</span>			
+                                                        <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success" > {{ (efectivas/transacciones) * 100 | number: '1.2-2' }} %
                                                         </label>		
                                                     </div>
                                                 </div>

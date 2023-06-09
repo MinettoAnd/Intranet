@@ -32,6 +32,7 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
   @ViewChild("agGrid") agGrid: AgGridAngular;
   grafico1: Chart;
   grafico2: Chart;
+  yAxesMax: any;
   @ViewChild("baseChart", { static: false }) set content(
     content: ElementRef
   ) {
@@ -39,7 +40,7 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
       // initially setter gets called with undefined
       this.baseChart = content;
       this.grafico1 = this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del mes seleccionado', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
-      this.grafico2 = this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'pie');
+      this.grafico2 = this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'doughnut');
       // this.getBarChart(this.chartLabels, this.chartData3, this.chartData4, 'chart-2', 'MENSUAL-INGRESO CON IGV - TOTAL CUOTAS', 'MENSUAL-INGRESO CON IGV - TOTAL RECAUDADO', 'bar');
       // this.getBarChart(this.chartLabels2, this.chartData5, this.chartData6, 'chart-3', 'MENSUAL-NÚMERO DE CONTRATOS PAGADOS-TOTAL CUOTAS', 'MENSUAL-NÚMERO DE CONTRATOS PAGADOS-TOTAL RECAUDADO', 'bar');
       // this.getBarChart(this.chartLabels3, this.chartData7, this.chartData8, 'chart-4', 'ANUAL-INGRESO SIN IGV - TOTAL CUOTAS', 'ANUAL-INGRESO SIN IGV - TOTAL RECAUDADO', 'bar');
@@ -362,7 +363,7 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
           },
           ticks: {
             beginAtZero: true,
-            max: 300,
+            max: this.id_sede === '0000' ? 700 : 300,
             min: 0
           }
         }]
@@ -371,7 +372,7 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
         datalabels: {
           
           /* anchor puede ser "start", "center" o "end" */
-          anchor: 'center',
+          anchor: 'end',
           backgroundColor: function(context) {
             return context.dataset.backgroundColor;
           },
@@ -809,7 +810,7 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
             this.tableApiservice.getCeResumenGeneralProcesar(this.parameters).subscribe(
                 (response) => {
                   
-                  if(response.success){
+                  if(response.data.success){
                     this.resumenMes = response.data;
                     console.log(804, this.resumenMes)
                      this.porcMedico =  ( this.resumenMes.medico / this.resumenMes.ausentismo) * 100;
@@ -921,8 +922,8 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
                   this.progressBarLabels = [];
                   this.progressBar1 = [];
                   let total = response.data.total_prog;
-                  
-                  if(response.success){
+                  console.log(925, response)
+                  if(response.data.success){
                     for (let value of Object.values(response.data.tipo_prog)) {
                       let porcentaje:any = Object.values(value);
                       
@@ -1046,7 +1047,7 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
                   
                     this.resumenMontos.ciasegcon =  typeof this.resumenMontos.ciasegcon === 'number' ? this.separadorDeMiles(this.resumenMontos.ciasegcon) : this.separadorDeMiles(Number(this.resumenMontos.ciasegcon));
                     this.resumenMontos.instipriva = typeof this.resumenMontos.instipriva === 'number' ? this.separadorDeMiles(this.resumenMontos.instipriva) : this.separadorDeMiles(Number(this.resumenMontos.instipriva));
-                    this.resumenMontos.otros = typeof this.resumenMontos.otros === 'number' ? this.separadorDeMiles(this.resumenMontos.otros) : this.separadorDeMiles(Number(this.resumenMontos.otros));
+                    // this.resumenMontos.otros = typeof this.resumenMontos.otros === 'number' ? this.separadorDeMiles(this.resumenMontos.otros) : this.separadorDeMiles(Number(this.resumenMontos.otros));
                     this.resumenMontos.tarjeta = typeof this.resumenMontos.tarjeta === 'number' ? this.separadorDeMiles(this.resumenMontos.tarjeta) : this.separadorDeMiles(Number(this.resumenMontos.tarjeta));
                     // this.resumenMontos.montoTotal = typeof this.resumenMontos.montoTotal === 'number' ? this.resumenMontos.montoTotal.toFixed(2) : this.separadorDeMiles(Number(this.resumenMontos.montoTotal));
 
@@ -1059,7 +1060,7 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
 
               this.tableApiservice.getCeProcesarAnterior(this.parameters).subscribe(
                 (response) => {
-                  if(response.success){ 
+                  if(response.data.success){ 
                       this.resumenMesAnterior = response.data;
                       this.porcCompaMesAntRealizas =  (((this.resumenMes.total - this.resumenMesAnterior.total) / this.resumenMesAnterior.total) * 100).toFixed(2)
                       this.porcCompaMesAntAusentismo = (((this.resumenMes.ausentismo - this.resumenMesAnterior.ausentismo) / this.resumenMesAnterior.ausentismo) * 100).toFixed(2)
@@ -1085,7 +1086,7 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
                    this.chartData1 = [];   
                    this.chartData2 = [];
                    this.chartData3 = [];    
-                  if(response.success){
+                  if(response.data.success){
                     
                     response.data.data.map(item =>{
                       this.chartLabels1.push(item.dia);
@@ -1107,10 +1108,10 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
               );
               this.tableApiservice.getCePieIndex(this.parameters).subscribe(
                 (response) => {        
-                  if(response.success){
+                  if(response.data.success){
                    this.chartLabels2 = [];
                    this.chartData3 = [];    
-                  if(response.success){
+                  // if(response.data.success){
                     
                     response.data.data.map(item =>{
                       this.chartLabels2.push(item.grupo);
@@ -1118,7 +1119,7 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
                     });
                     // this.resumenMontos = response.data;
                     
-                  }
+                  // }
                   // this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'pie');
                   var data = [];
                   data.push(this.chartData3);
