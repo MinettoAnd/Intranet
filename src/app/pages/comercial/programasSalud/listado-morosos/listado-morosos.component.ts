@@ -152,17 +152,17 @@ export class ListadoMorososComponent implements OnInit {
           this.columns = this.data.data.cabeceras;
           this.columns1 = [
             {prop: 'Programa', name: 'Programa', headerClass: 'text-center'},
-            {prop: 'TotalContratos', name: 'Contratos', headerClass: 'text-center', cellClass: 'text-rigth', pipe: this._cnp},
-            {prop: 'TotalMiembros', name: 'Afiliados', headerClass: 'text-center', cellClass: 'text-rigth', pipe: this._cnp},
-            {prop: 'CuotasVencidas', name: 'Periodos', headerClass: 'text-center', cellClass: 'text-rigth', pipe: this._cnp},
-            {prop: 'ImpCuotasVencidas', name: 'Deuda', headerClass: 'text-center', cellClass: 'text-rigth', pipe: this._cp},
+            {prop: 'TotalContratos', name: 'Contratos', headerClass: 'text-center', cellClass: 'text-right', pipe: this._cnp},
+            {prop: 'TotalMiembros', name: 'Afiliados', headerClass: 'text-center', cellClass: 'text-right', pipe: this._cnp},
+            {prop: 'CuotasVencidas', name: 'Periodos', headerClass: 'text-center', cellClass: 'text-right', pipe: this._cnp},
+            {prop: 'ImpCuotasVencidas', name: 'Deuda', headerClass: 'text-center', cellClass: 'text-right', pipe: this._cp},
           ]
           this.columns2 = [
             {prop: 'periodo', name: 'Periodos', headerClass: 'text-center'},
-            {prop: 'nuContratos', name: 'Contratos', headerClass: 'text-center', cellClass: 'text-rigth', pipe: this._cnp},
-            {prop: 'nuAfiliados', name: 'Afiliados', headerClass: 'text-center', cellClass: 'text-rigth', pipe: this._cnp},
-            {prop: 'nuCuotasVencidas', name: 'Periodos', headerClass: 'text-center', cellClass: 'text-rigth', pipe: this._cnp},
-            {prop: 'totalImpCuotasVencidas', name: 'Deuda', headerClass: 'text-center', cellClass: 'text-rigth', pipe: this._cp},
+            {prop: 'nuContratos', name: 'Contratos', headerClass: 'text-center', cellClass: 'text-right', pipe: this._cnp},
+            {prop: 'nuAfiliados', name: 'Afiliados', headerClass: 'text-center', cellClass: 'text-right', pipe: this._cnp},
+            {prop: 'nuCuotasVencidas', name: 'Periodos', headerClass: 'text-center', cellClass: 'text-right', pipe: this._cnp},
+            {prop: 'totalImpCuotasVencidas', name: 'Deuda', headerClass: 'text-center', cellClass: 'text-right', pipe: this._cp},
           ]
           this.rows = this.data.data.data;
           this.rows1 = [];
