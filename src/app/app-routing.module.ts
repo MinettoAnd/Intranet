@@ -197,6 +197,16 @@ const routes: Routes = [
                 loadChildren: () => import('../app/pages/banco-sangre/banco-sangre.module').then(m => m.BancoSangreModule),
                 data: { extraParameter: "bancoSangreMenu" },
             },
+            {
+                path: "dental",
+                loadChildren: () => import('../app/pages/dental/dental.module').then(m => m.DentalModule),
+                data: { extraParameter: "dentalMenu" },
+            },
+            {
+                path: "farmacia",
+                loadChildren: () => import('../app/pages/farmacia/farmacia.module').then(m => m.FarmaciaModule),
+                data: { extraParameter: "farmaciaMenu" },
+            },
         ],
     },
 
