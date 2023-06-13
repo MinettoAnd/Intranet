@@ -15,7 +15,7 @@
                         
                         <div class="card " *ngIf="action">
                           <div class="card-header">
-                            <h5 class="card-title" style="bottom:13px;">{{filtro_grupo === 'IMAG' ? 'ATENCIÓN DE EXAMENES DE IMAGENES' : 'ATENCIÓN DE EXAMENES DE LABORATORIO'}}</h5>
+                            <h5 class="card-title" style="bottom:13px;">{{filtro_grupo === 'IMAG' ? 'ATENCIÓN DE EXAMENES DE IMAGENES' : filtro_grupo === 'LABO' ? 'ATENCIÓN DE EXAMENES DE LABORATORIO': 'ATENCIÓN DE RECETAS'}}</h5>
                             <!-- <p>{{message}}</p> -->
                             
                           </div>
@@ -205,7 +205,7 @@
                         
                         <div class="card " *ngIf="action">
                           <div class="card-header">
-                            <h5 class="card-title" style="bottom:13px;">{{filtro_grupo === 'IMAG' ? 'ATENCIÓN DE EXAMENES DE IMAGENES' : 'ATENCIÓN DE EXAMENES DE LABORATORIO'}}</h5>
+                            <h5 class="card-title" style="bottom:13px;">{{filtro_grupo === 'IMAG' ? 'ATENCIÓN DE EXAMENES DE IMAGENES' : filtro_grupo === 'LABO' ? 'ATENCIÓN DE EXAMENES DE LABORATORIO': 'ATENCIÓN DE RECETAS'}}</h5>
                             <!-- <p>{{message}}</p> -->
                             
                           </div>
@@ -476,7 +476,7 @@
                     <ng-template ngbNavContent>
                       <div class="card" *ngIf="action">
                         <div class="card-header">
-                          <h4 class="card-title">{{filtro_grupo === 'IMAG' ? 'ATENCIÓN DE EXAMENES DE IMAGENES' : 'ATENCIÓN DE EXAMENES DE LABORATORIO'}}</h4>
+                          <h4 class="card-title">{{filtro_grupo === 'IMAG' ? 'ATENCIÓN DE EXAMENES DE IMAGENES' : filtro_grupo === 'LABO' ? 'ATENCIÓN DE EXAMENES DE LABORATORIO': 'ATENCIÓN DE RECETAS'}}</h4>
                           <!-- <p>{{message}}</p> -->
                         </div>
                         <div class="card-content collapse show">

@@ -10,6 +10,9 @@ export class IndicadoresImgComponent implements OnInit {
   parameters;
   action = false;
   filtro_grupo = 'IMAG';
+  tabla_cms = 'CMS_TOTEXA_ATENCION';
+  campo_solicitado = 'totExaSolicitado';
+  campo_comprado = 'totExaRealizado';
   constructor(private dataService:DataService) { }
 
   ngOnInit(): void {

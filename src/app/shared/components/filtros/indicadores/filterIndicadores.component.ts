@@ -33,6 +33,10 @@ export class FilterIndicadoresComponent implements OnInit {
   ];
   optionsAnio = [];
   @Input() filtro_grupo:string;
+  @Input() tabla_cms:string;
+  @Input() campo_solicitado:string;
+  @Input() campo_comprado:string;
+
   @Output() parameters = new EventEmitter();
   constructor() { 
     this.filtroForm = new FormGroup({
@@ -55,7 +59,7 @@ export class FilterIndicadoresComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('hola filtro',this.filtro_grupo)
+    console.log('hola filtro',this.filtro_grupo, this.tabla_cms, this.campo_solicitado, this.campo_comprado)
   }
   public onAnioChange(anio: any): void {
     this.anio = anio;
@@ -68,6 +72,8 @@ export class FilterIndicadoresComponent implements OnInit {
     // this.setPage({ offset: 0 });
   }
   filter() {
+    console.log('hola filtro',this.filtro_grupo, this.tabla_cms, this.campo_solicitado, this.campo_comprado)
+
     // this.removeData(this.grafico1);
     // this.action = true;
     const form = this.filtroForm.value;
@@ -77,11 +83,12 @@ export class FilterIndicadoresComponent implements OnInit {
       anio : form.anio,
       sede : form.id_sede,
       origen_atencion : form.origen_atencion,
-      tabla_cms: 'CMS_TOTEXA_ATENCION',
       filtro_grupo: this.filtro_grupo,
-      campo_solicitado: 'totExaSolicitado',
-      campo_comprado: 'totExaRealizado',
+      tabla_cms: this.tabla_cms,
+      campo_solicitado: this.campo_solicitado,
+      campo_comprado: this.campo_comprado,
     }
+    console.log(89, parameters)
     this.parameters.emit(parameters);
           // this.setPage({ offset: 0 });
   }

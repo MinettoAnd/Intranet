@@ -608,7 +608,7 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
             {
               infoBox: 'infoBoxRojo ',
               iconClass: 'fa fa-medkit',
-              title: 'ORDENES EMITIDAS',
+              title: this.filtro_grupo === 'RECE' ? 'RECETAS SOLICITADAS' :  'ORDENES EMITIDAS',
               arrow: true,
               iconArrow: iconArrow2,
               totalSubtitle: this._cnp.transform(this.data.kpi_mes_ord_solicitados),
@@ -619,7 +619,7 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
             {
               infoBox: 'infoBoxAzulino',
               iconClass: 'fa fa-plus-circle',
-              title: 'ORDENES PAGADAS',
+              title: this.filtro_grupo === 'RECE' ? 'RECETAS COMPRADAS' :  'ORDENES PAGADAS',
               arrow: true,
               iconArrow: iconArrow3,
               totalSubtitle: this._cnp.transform(this.data.kpi_mes_ord_comprados),
@@ -668,7 +668,7 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
             {
               infoBox: 'infoBoxRojo ',
               iconClass: 'fa fa-medkit',
-              title: 'ORDENES EMITIDAS',
+              title: this.filtro_grupo === 'RECE' ? 'RECETAS SOLICITADAS' :  'ORDENES EMITIDAS',
               arrow: false,
               iconArrow: '',
               totalSubtitle: this._ndp.transform(this.data.recetas_solicitadas_total),
@@ -679,7 +679,7 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
             {
               infoBox: 'infoBoxAzulino',
               iconClass: 'fa fa-plus-circle',
-              title: 'ORDENES PAGADAS',
+              title: this.filtro_grupo === 'RECE' ? 'RECETAS COMPRADAS' :  'ORDENES PAGADAS',
               arrow: false,
               iconArrow: '',
               totalSubtitle: this._ndp.transform(this.data.recetas_compradas_total),
