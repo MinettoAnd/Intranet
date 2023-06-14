@@ -41,6 +41,7 @@ export class EstadisticaPlanillaIndicadoresComponent implements OnInit {
   grafico1: Chart;
   grafico2: Chart;
   private baseChart: ElementRef;
+  subRows1: any;
   @ViewChild("baseChart", { static: false }) set content(
     content: ElementRef
   ) {
@@ -156,7 +157,7 @@ export class EstadisticaPlanillaIndicadoresComponent implements OnInit {
   }
   getRowClass(row) {
     return {
-      'sub-totals': row.concepto === 'Nro.de Colaboradores' || row.concepto === 'Nro.de Colaboradores Nuevos' || row.concepto === 'Nro.de Colaboradores Cesados' || row.concepto === 'Planilla Mensual - Ingresos' || row.concepto === 'Planilla Mensual - Descuentos' || row.concepto === 'Planilla Mensual - Total a Pagar' || row.concepto === 'Pago de PROVIS en Soles' || row.concepto === 'Por Maternidad' || row.concepto === 'Por Descanso Medico Prolongado' || row.concepto === 'Total Subsidiado' || row.concepto === 'Nro. de dias Por Maternidad' || row.concepto === 'Nro. de dias Por Descanso Medico Prolongado' || row.concepto === 'Nro. Total de dias subsidiados' || row.concepto === 'Dscto. por Permisos en Soles' || row.concepto === 'Dscto. por Tardanzas' || row.concepto === 'Tiempo total de tardanzas descontadas' || row.concepto === 'Administrativo' || row.concepto === 'Clínica' || row.concepto === 'Farmacia' || row.concepto === 'Hospitalización' || row.concepto === 'Total Dscto.Por Prestación' || row.concepto === 'Total Dscto.Por Prestación' || row.concepto === 'Pago por Reintegros' || row.concepto === 'Pago por Dias Feriados' || row.concepto === 'Pago por Guardia Nocturna' || row.concepto === 'Tiempo total de Feriados Pagados' || row.concepto === 'Tiempo total de Guardia Nocturna Pagadas'};
+      'sub-totals': row.concepto === 'Total' || row.concepto === 'Nuevos' || row.concepto === 'Cesados' || row.concepto === 'Ingresos' || row.concepto === 'Descuentos' || row.concepto === 'Total a Pagar' || row.concepto === 'Prestación Alimentaria' || row.concepto === 'Por Maternidad' || row.concepto === 'Por Descanso Medico Prolongado' || row.concepto === 'Total Subsidiado' || row.concepto === 'Nro. de dias Por Maternidad' || row.concepto === 'Nro. de dias Por Descanso Medico Prolongado' || row.concepto === 'Nro. Total de dias subsidiados' || row.concepto === 'Dscto. por Permisos' || row.concepto === 'Dscto. por Tardanzas' || row.concepto === 'Tiempo total de tardanzas descontadas' || row.concepto === 'Administrativo' || row.concepto === 'Clínica' || row.concepto === 'Farmacia' || row.concepto === 'Hospitalización' || row.concepto === 'Total Dscto.Por Prestación' || row.concepto === 'Total Dscto.Por Prestación' || row.concepto === 'Pago por Reintegros' || row.concepto === 'Pago por Dias Feriados' || row.concepto === 'Pago por Guardia Nocturna' || row.concepto === 'Tiempo total de Feriados Pagados' || row.concepto === 'Tiempo total de Guardia Nocturna Pagadas'};
   }
   getRowClass1(row) {
 
@@ -445,6 +446,7 @@ export class EstadisticaPlanillaIndicadoresComponent implements OnInit {
           // this.temp = this.rows;
           this.columns1 = this.data.cabeceras_kpi_colaboradores;
           this.rows1 = this.data.tabla_kpi_colaboradores;
+          this.subRows1 = this.data.sub_tabla_kpi_colaboradores;
           console.log(446, response);
 
           this.columns2 = this.data.cabeceras_kpi_planillas;
