@@ -18,7 +18,7 @@ import ResizeObserver from 'resize-observer-polyfill';
 @Component({
   selector: 'app-referencia-precios',
   templateUrl: './referencia-precios.component.html',
-  styleUrls: ['./referencia-precios.component.sass']
+  styleUrls: ['./referencia-precios.component.scss']
 })
 export class ReferenciaPreciosComponent implements OnInit {
   initialSize = 0;
@@ -27,7 +27,7 @@ export class ReferenciaPreciosComponent implements OnInit {
   filtroForm: FormGroup;
   @BlockUI('addRows') blockUIAddRows: NgBlockUI;
   @BlockUI('rowSelection') blockUIRowSelection: NgBlockUI;
-
+  active = 1;
   public config: PerfectScrollbarConfigInterface = { wheelPropagation: true };
   @ViewChild(PerfectScrollbarComponent) componentRef?: PerfectScrollbarComponent;
   @ViewChild(PerfectScrollbarDirective, { static: true }) directiveRef?: PerfectScrollbarDirective;
@@ -85,7 +85,16 @@ export class ReferenciaPreciosComponent implements OnInit {
 
     // this.setPage({ offset: 0 });
   }
-
+  CellRendererDecimal(params: any) {
+    var inrFormat = new Intl.NumberFormat('es-PE', 
+    {
+      // style: 'currency',
+      // currency: 'PEN',
+      maximumFractionDigits: 2,
+    }
+    );
+    return inrFormat.format(params.value);
+  }
   public onLimitChange(limit: any): void {
     this.changePageLimit(limit);
     // this.setPage({ offset: 0 });
@@ -128,6 +137,16 @@ export class ReferenciaPreciosComponent implements OnInit {
           this.data = response.data ? response : [];
       console.log(168, this.data);   
           this.columns = this.data.data.cabeceras;
+          this.columns.map(item => {
+            console.log(301, item)
+            if(item.children){
+              item.children.map(subitem =>{
+                if(subitem.field == 'tcl30' || subitem.field == 'tdo50' || subitem.field == 'tdi50' || subitem.field == 'tdi80'){
+                  subitem.cellRenderer = this.CellRendererDecimal;
+                }
+             })
+            }
+          })
           this.rows = this.data.data.tabla_precio;
           console.log(response.data.page);
           // this.page = (response as any).data.page;

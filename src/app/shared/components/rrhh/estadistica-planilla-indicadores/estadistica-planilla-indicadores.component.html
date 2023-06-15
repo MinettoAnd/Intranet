@@ -121,6 +121,34 @@
                                             </ng-template>
                                           </ngx-datatable-column>
                                         </ngx-datatable>
+                                        <ngx-datatable #mySubTable1
+                                        class="bootstrap table table-striped"
+                                        id="datatablele"
+                                          [columns]="columns1"
+                                          [rows]="subRows1"
+                                          [columnMode]="ColumnMode.force"
+                                          [headerHeight]="50"
+                                          [rowHeight]="$any('auto')"
+                                          [scrollbarH]="true"
+                                          [rowClass] = "getRowClass"
+                                          >
+                                          <ngx-datatable-column  [headerClass]="column.headerClass" [cellClass]="column.cellClass" [flexGrow]="1" [width]="column.width" *ngFor="let column of columns1; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                                              let-row="row">
+                                              <div [ngClass]="{'row-paddin': row.concepto.includes('LIMA') || row.concepto.includes('CHORRILLOS') || row.concepto.includes('SURCO') }">
+                                                <span *ngIf="column.prop == 'concepto'">{{value}}</span>
+                                                  <i class="fa fa-arrow-down text-blue" *ngIf="row.concepto === 'Colaboradores Respecto Mes Anterior' && value < 0"></i>
+                                                  <i class="fa fa-arrow-up text-red" *ngIf="row.concepto === 'Colaboradores Respecto Mes Anterior' && value > 0"></i>
+
+
+                                                  <i class="fa fa-arrow-up text-blue" *ngIf="row.concepto === 'Proporcion de Cesados / Nuevos' && value > 0"></i>
+                                                  <i class="fa fa-arrow-up text-red" *ngIf="row.concepto === 'Proporcion de Cesados / Nuevos' && value < 0"></i>
+                                                <span *ngIf="column.prop !== 'concepto' && rowIndex < 14">{{value }}</span>
+                                                <span *ngIf="column.prop !== 'concepto' && rowIndex > 13">{{value }} %</span>
+                                              </div>
+                                            </ng-template>
+                                          </ngx-datatable-column>
+                                        </ngx-datatable>
                                         <div class="ml-3">
                                           <p>(*) No se incluyen los colaboradores nuevos en el periodo.<br>
                                           (**) ((Nro.Cesados + Nro.Nuevos)/2 ) / Nro.Colaboradores</p>
@@ -177,8 +205,8 @@
                                               let-row="row">
                                               <div [ngClass]="{'row-paddin': row.concepto.includes('LIMA') || row.concepto.includes('CHORRILLOS') || row.concepto.includes('SURCO') }">
                                                 <span *ngIf="column.prop == 'concepto'">{{value}}</span>
-                                                <span *ngIf="column.prop !== 'concepto' && rowIndex < 16">{{value  | currency }}</span>
-                                                <span *ngIf="column.prop !== 'concepto' && rowIndex > 15">{{value }}</span>
+                                                <span *ngIf="column.prop !== 'concepto' && row.concepto == 'Nro. de dias no laborados y no subsidiados'">{{value | number: '1.0-0'}}</span>
+                                                <span *ngIf="column.prop !== 'concepto' && row.concepto !== 'Nro. de dias no laborados y no subsidiados'">{{value | currency }}</span>
                                               </div>
                                             </ng-template>
                                           </ngx-datatable-column>

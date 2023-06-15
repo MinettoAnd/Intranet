@@ -10,6 +10,9 @@ export class IndicadoresLabComponent implements OnInit {
   parameters;
   action = false;
   filtro_grupo = 'LABO';
+  tabla_cms = 'CMS_TOTEXA_ATENCION';
+  campo_solicitado = 'totExaSolicitado';
+  campo_comprado = 'totExaRealizado';
   constructor(private dataService:DataService) { }
 
   ngOnInit(): void {
@@ -22,6 +25,6 @@ export class IndicadoresLabComponent implements OnInit {
       this.dataService.callback.emit(parameters);
       this.action = true;
     }
-// console.log(10, parameters)
+console.log(10, parameters)
   }
 }
