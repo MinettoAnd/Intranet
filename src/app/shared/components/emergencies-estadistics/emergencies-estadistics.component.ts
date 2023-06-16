@@ -49,10 +49,10 @@ export class EmergenciesEstadisticsComponent implements OnInit {
       this.baseChart = content;
       if (this.baseChart.nativeElement.id === 'chart-1'){
         this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del Mes' , 'N° Pacientes','chart-1', 'Ingresos x Emer', 'Hospitalizados', 'bar');
-         this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'pie');
+         this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'doughnut');
       }else if (this.baseChart.nativeElement.id === 'chart-3'){
         this.getBarChart(this.chartLabels3, this.chartData4, this.chartData5,'Día del Mes' , 'N° Pacientes','chart-3', 'Ingresos x Emer', 'Hospitalizados', 'bar');
-        this.getPieChart(this.chartLabels4, this.chartData6,'chart-4', 'pie');
+        this.getPieChart(this.chartLabels4, this.chartData6,'chart-4', 'doughnut');
       }
     }
   }
@@ -386,6 +386,11 @@ action: boolean = false;
             labelString: scaleLabel2,
             fontSize: 18,
             fontColor: '#000',
+          },
+          ticks: {
+            beginAtZero: true,
+            max: this.id_sede === '0000' ? 300 : 100,
+            min: 0
           }
         }]
       },
@@ -808,7 +813,7 @@ this.loading();
             }
           );
        }
-    } else if (graph === 'pie'){
+    } else if (graph === 'doughnut'){
       if (input === 'ingresos_emergencia') {
         this.tableApiservice.getEmPieIndex(this.parameters).subscribe(
           (response) => { 
@@ -821,7 +826,7 @@ this.loading();
                 this.chartData3.push(item.cantidad);
               });
             }
-            this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'pie');
+            this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'doughnut');
             }
             Swal.close();
           },
@@ -843,7 +848,7 @@ this.loading();
                 this.chartData6.push(item.cantidad);
               });
             }
-            this.getPieChart(this.chartLabels4, this.chartData6,'chart-4', 'pie');
+            this.getPieChart(this.chartLabels4, this.chartData6,'chart-4', 'doughnut');
             }
             Swal.close();
           },
@@ -1290,7 +1295,7 @@ private getPagedData(page: Page, data: any[]) {
 
 
                 }
-                Swal.close();
+                // Swal.close();
               },
               (error) => {
                   Swal.close();
@@ -1376,7 +1381,7 @@ private getPagedData(page: Page, data: any[]) {
                   this.formatPipe3(this.rows7);
                   this.temp7 = this.rows7;
                 }
-                Swal.close();
+                // Swal.close();
               },
               (error) => {
                   Swal.close();
@@ -1476,7 +1481,7 @@ private getPagedData(page: Page, data: any[]) {
                     }
                   }
                 }
-                Swal.close();
+                // Swal.close();
               },
               (error) => {
                   Swal.close();
@@ -1490,11 +1495,11 @@ private getPagedData(page: Page, data: any[]) {
                 
                   this.resumenMontos.ciasegcon =  typeof this.resumenMontos.ciasegcon === 'number' ? this.separadorDeMiles(this.resumenMontos.ciasegcon) : this.separadorDeMiles(Number(this.resumenMontos.ciasegcon));
                   this.resumenMontos.instipriva = typeof this.resumenMontos.instipriva === 'number' ? this.separadorDeMiles(this.resumenMontos.instipriva) : this.separadorDeMiles(Number(this.resumenMontos.instipriva));
-                  this.resumenMontos.Otros = typeof this.resumenMontos.Otros === 'number' ? this.separadorDeMiles(this.resumenMontos.Otros) : this.separadorDeMiles(Number(this.resumenMontos.Otros));
+                  // this.resumenMontos.Otros = typeof this.resumenMontos.Otros === 'number' ? this.separadorDeMiles(this.resumenMontos.Otros) : this.separadorDeMiles(Number(this.resumenMontos.Otros));
                   this.resumenMontos.tarjeta = typeof this.resumenMontos.tarjeta === 'number' ? this.separadorDeMiles(this.resumenMontos.tarjeta) : this.separadorDeMiles(Number(this.resumenMontos.tarjeta));
                   // this.resumenMontos.montoTotal = typeof this.resumenMontos.montoTotal === 'number' ? this.resumenMontos.montoTotal.toFixed(2) : this.separadorDeMiles(Number(this.resumenMontos.montoTotal));
 
-                  Swal.close();
+                  // Swal.close();
               },
               (error) => {
                   Swal.close();
@@ -1519,7 +1524,7 @@ private getPagedData(page: Page, data: any[]) {
                   
                 }
                 this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del mes seleccionado', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
-                Swal.close();
+                // Swal.close();
               },
               (error) => {
                   Swal.close();
@@ -1540,7 +1545,7 @@ private getPagedData(page: Page, data: any[]) {
                   // this.resumenMontos = response.data;
                   
                 }
-                this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'pie');
+                this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'doughnut');
                 // console.log(577, this.chartData1);
                   
                 }
