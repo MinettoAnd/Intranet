@@ -299,7 +299,7 @@
                                                   <i class="fa fa-caret-down" *ngIf="porcCompaMesAntRealizas < 0"></i>
                                                   <div>{{porcCompaMesAntRealizas}} %</div>
                                                 </span>
-                                                <h5 class="description-header" >{{resumenMesAnterior.total}}</h5>
+                                                <h5 class="description-header" >{{resumenMesAnterior.total | number: '1.0-0'}}</h5>
                                                 <span class="description-text">REALIZADAS</span>
                                             </div><!-- /.description-block -->
                                           </div><!-- /.col -->
@@ -310,7 +310,7 @@
                                                 <i class="fa fa-caret-down" *ngIf="porcCompaMesAntAusentismo < 0"></i>
                                                 <div>{{porcCompaMesAntAusentismo}} %</div>
                                               </span>
-                                                <h5 class="description-header" >{{resumenMesAnterior.ausentismo}}</h5>
+                                                <h5 class="description-header" >{{resumenMesAnterior.ausentismo | number: '1.0-0'}}</h5>
                                                 <span class="description-text">AUSENTISMO</span>
                                             </div><!-- /.description-block -->
                                           </div><!-- /.col -->
@@ -321,7 +321,7 @@
                                                 <i class="fa fa-caret-down" *ngIf="porcCompaMesAntReservadas < 0"></i>
                                                 <div>{{porcCompaMesAntReservadas}} %</div>
                                               </span>
-                                               <h5 class="description-header" >{{resumenMesAnterior.reservadas}}</h5>
+                                               <h5 class="description-header" >{{resumenMesAnterior.reservadas | number: '1.0-0'}}</h5>
                                                <span class="description-text">RESERVADAS</span>
                                             </div><!-- /.description-block -->
                                           </div><!-- /.col -->

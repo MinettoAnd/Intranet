@@ -69,7 +69,7 @@ export class PacientesHospitalizadosComponent implements OnInit {
       // f_fin: '2022-11-30',
   fecha = moment(new Date()).format('YYYY-MM-DD');
   sede = '0001';
-  estado = 'T';
+  estado = 'I';
   tipo_lista = 'E';
 
   page = new Page()
@@ -86,10 +86,11 @@ export class PacientesHospitalizadosComponent implements OnInit {
   totalPeriodos:any;
   totalDeuda:any;
   action: boolean = false;
+  optionSize=25;
   constructor(private tableApiservice: HospitalizationService, private exportService: ExportService, private _cnp:CustomNumberPipe,
     private _cp: CurrencyPipe, private _phone: PhonePipe) {
     this.page.pageNumber = 0;
-    this.page.size = 10;
+    this.page.size = 25;
 
     this.filtroForm = new FormGroup({
       fecha: new FormControl(this.fecha),

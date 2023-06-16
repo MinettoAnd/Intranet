@@ -78,12 +78,12 @@
               </form>
               <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs" style="justify-content: end;">
                 <li [ngbNavItem]="1">
-                    <a ngbNavLink>Listado</a>
+                    <a ngbNavLink>Resumen</a>
                     <ng-template ngbNavContent>
                       <div class="card" *ngIf="action">
                         <div class="card-header">
-                          <h4 class="card-title">{{title}}</h4>
-                          <p>{{message}}</p>
+                          <h4 class="card-title">{{message}}</h4>
+                          <p></p>
                         </div>
                         <div class="card-content collapse show">
                           <div class="card-body">
@@ -375,13 +375,13 @@
                     </ng-template>
                   </li>
                 <li [ngbNavItem]="2">
-                  <a ngbNavLink>Resumen</a>
+                  <a ngbNavLink>Listado</a>
                     <ng-template ngbNavContent>
                       
                       <div class="card atencionesConsultaExterna" *ngIf="action">
                         <div class="card-header">
-                          <h4 class="card-title" style="bottom:13px;">Resumen de Morosos (Mientras mas antigua es la fecha procesada, menos consistente podría ser la información)</h4>
-                          <p>{{message}}</p>
+                          <h4 class="card-title" style="bottom:13px;">{{message}}</h4>
+                          <p></p>
                           
                         </div>
                         <div class="card-content collapse show">
@@ -404,7 +404,7 @@
                                 <div class="row" style="align-items: center;justify-content: space-between;">
                                   <ul class="list-group list-group-horizontal list-group-flush">
                                     <li class="list-group-item border-0 pl-0">
-                                      <select class="form-control form-select" (change)="onLimitChange($event.target.value)">
+                                      <select class="form-control form-select" [ngModel]="optionSize" (change)="onLimitChange($event.target.value)">
                                         <option
                                           *ngFor="let option of pageLimitOptions"
                                           [value]="option.value"

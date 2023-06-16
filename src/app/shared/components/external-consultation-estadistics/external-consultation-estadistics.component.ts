@@ -1,4 +1,4 @@
-import { map } from 'rxjs/operators';
+import { map, delay } from 'rxjs/operators';
 import { Component, ElementRef, OnInit, PipeTransform, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { NgBlockUI, BlockUI } from 'ng-block-ui';
@@ -33,6 +33,7 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
   grafico1: Chart;
   grafico2: Chart;
   yAxesMax: any;
+  graficoX: Chart;
   @ViewChild("baseChart", { static: false }) set content(
     content: ElementRef
   ) {
@@ -249,13 +250,26 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
 
     // this.setPage({ offset: 0 });
   }
+  removeGrah(grafico){
+    grafico.destroy();
+    
+    console.log('grafico destruido', grafico)
+    delay(50000)
+  }
   filter() {
     this.action = true;
     if(this.grafico1){
-    this.removeData(this.grafico1);
+      console.log('grafico existe')
+      this.removeData(this.grafico1);
+      this.removeGrah(this.grafico1);
+      this.grafico1 = null;
+      // this.grafico1 = this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del mes seleccionado', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
     }
     if(this.grafico2){
-    this.removeData(this.grafico2)
+      this.removeData(this.grafico2);
+      this.removeGrah(this.grafico2);
+      // this.grafico2 = this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'doughnut');
+      this.grafico2 = null;
     }
     const form = this.filtroForm.value;
       this.id_sede = form.id_sede,
@@ -694,18 +708,20 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
     return graph;
   }
   addData(chart, label,  data) {
-    this.removeData(chart) 
-    chart.data.labels = label;
-    chart.data.datasets.forEach((dataset, index) => {
-        dataset.data = data[index];
-        if (index === 0){
-          // dataset.data = data1;
-        }else if (index === 1){
-          // dataset.data = data2;
-        }
-        // dataset.data = data;
-    });
-    chart.update();
+    if(chart){
+      this.removeData(chart) 
+      chart.data.labels = label;
+      chart.data.datasets.forEach((dataset, index) => {
+          dataset.data = data[index];
+          if (index === 0){
+            // dataset.data = data1;
+          }else if (index === 1){
+            // dataset.data = data2;
+          }
+          // dataset.data = data;
+      });
+      chart.update();
+    }
   }
 
   removeData(chart) {
@@ -1096,11 +1112,13 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
                     // this.resumenMontos = response.data;
                     
                   }
-                  // this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del mes seleccionado', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
-                  var data = [];
-                  data.push(this.chartData1, this.chartData2);
-                  this.addData(this.grafico1, this.chartLabels1, data)
-
+                  if(!this.grafico1){
+                    this.grafico1 = this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del mes seleccionado', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
+                  }else{
+                    var data = [];
+                    data.push(this.chartData1, this.chartData2);
+                    this.addData(this.grafico1, this.chartLabels1, data)
+                  }
                 },
                 (error) => {
                     Swal.close();
@@ -1120,12 +1138,15 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
                     // this.resumenMontos = response.data;
                     
                   // }
-                  // this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'pie');
-                  var data = [];
-                  data.push(this.chartData3);
-                  this.addData(this.grafico2, this.chartLabels2, data)
-                  // console.log(577, this.chartData1);
-                    
+                  if(!this.grafico2){
+                    this.grafico2 = this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'doughnut');
+
+                   }else{
+                    var data = [];
+                    data.push(this.chartData3);
+                    this.addData(this.grafico2, this.chartLabels2, data)
+                    // console.log(577, this.chartData1);
+                   } 
                   }
                   Swal.close();
                 },
@@ -1423,7 +1444,7 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
         });
         
       }else{
-        this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+        this.modalService.open(content, { size: 'xxl', ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
           console.log(content);
           this.closeResult = `Closed with: ${result}`;
         }, (reason) => {

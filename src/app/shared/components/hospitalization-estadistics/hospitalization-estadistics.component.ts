@@ -49,10 +49,10 @@ export class HospitalizationEstadisticsComponent implements OnInit {
       this.baseChart = content;
       if (this.baseChart.nativeElement.id === 'chart-1'){
         this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del Mes', 'N° Pacientes','chart-1', 'Internados', 'Internados Ingresados x Emer.', 'bar');
-        this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'pie');
+        this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'doughnut');
       }else if (this.baseChart.nativeElement.id === 'chart-3'){
         this.getBarChart(this.chartLabels3, this.chartData4, this.chartData5,'Día del Mes', 'N° Pacientes','chart-3', 'Ingresos x Hosp.', 'Ingresos x Emergencia.', 'bar');
-        this.getPieChart(this.chartLabels4, this.chartData6,'chart-4', 'pie');
+        this.getPieChart(this.chartLabels4, this.chartData6,'chart-4', 'doughnut');
       }else if (this.baseChart.nativeElement.id === 'chart-5'){
         this.getBarChart(this.chartLabels5, this.chartData7, this.chartData8,'Día del Mes', 'N° Pacientes','chart-5', 'Altas x Hosp.', 'Ingresos x Hosp.', 'bar');
       }
@@ -392,6 +392,11 @@ action: boolean = false;
             labelString: scaleLabel2,
             fontSize: 18,
             fontColor: '#000',
+          },
+          ticks: {
+            beginAtZero: true,
+            max: this.id_sede === '0000' ? 150 : 60,
+            min: 0
           }
         }]
       },
@@ -963,7 +968,7 @@ action: boolean = false;
                 this.chartData3.push(item.cantidad);
               });
             }
-            this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'pie');
+            this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'doughnut');
             }
             Swal.close();
           },
@@ -1085,7 +1090,7 @@ action: boolean = false;
                 this.chartData6.push(item.cantidad);
               });
             }
-            this.getPieChart(this.chartLabels4, this.chartData6,'chart-4', 'pie');
+            this.getPieChart(this.chartLabels4, this.chartData6,'chart-4', 'doughnut');
             }
             Swal.close();
           },
@@ -1805,7 +1810,7 @@ private getPagedData(page: Page, data: any[]) {
                   // this.resumenMontos = response.data;
                   
                 }
-                this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'pie');
+                this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'doughnut');
                 // console.log(577, this.chartData1);
                   
                 }
