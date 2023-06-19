@@ -40,6 +40,13 @@ export class EmergenciesEstadisticsComponent implements OnInit {
   closeResult = '';
   @ViewChild("agGrid") agGrid: AgGridAngular;
   totalProgs: any;
+  estanciaProm: string;
+  estanciaMax: string;
+  estanciaMin: string;
+  grafico1: Chart;
+  grafico2: Chart;
+  grafico3: Chart;
+  grafico4: Chart;
   @ViewChild("baseChart", { static: false }) set content(
     content: ElementRef
   ) {
@@ -48,14 +55,15 @@ export class EmergenciesEstadisticsComponent implements OnInit {
       // initially setter gets called with undefined
       this.baseChart = content;
       if (this.baseChart.nativeElement.id === 'chart-1'){
-        this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del Mes' , 'N° Pacientes','chart-1', 'Ingresos x Emer', 'Hospitalizados', 'bar');
-         this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'doughnut');
+        this.grafico1 = this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del Mes' , 'N° Pacientes','chart-1', 'Ingresos x Emer', 'Hospitalizados', 'bar');
+        this.grafico2 =  this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'doughnut');
       }else if (this.baseChart.nativeElement.id === 'chart-3'){
-        this.getBarChart(this.chartLabels3, this.chartData4, this.chartData5,'Día del Mes' , 'N° Pacientes','chart-3', 'Ingresos x Emer', 'Hospitalizados', 'bar');
-        this.getPieChart(this.chartLabels4, this.chartData6,'chart-4', 'doughnut');
+        this.grafico3 = this.getBarChart(this.chartLabels3, this.chartData4, this.chartData5,'Día del Mes' , 'N° Pacientes','chart-3', 'Ingresos x Emer', 'Hospitalizados', 'bar');
+        this.grafico4 = this.getPieChart(this.chartLabels4, this.chartData6,'chart-4', 'doughnut');
       }
     }
   }
+  changeTable: boolean;
   enableSummary = true;
   summaryPosition = 'bottom';
   optionsMes = [
@@ -280,7 +288,64 @@ action: boolean = false;
 
     // this.setPage({ offset: 0 });
   }
+  removeGrah(grafico){
+    grafico.destroy();
+    
+    console.log('grafico destruido', grafico)
+    // delay(50000)
+  }
+  addData(chart, label,  data) {
+    if(chart){
+      this.removeData(chart) 
+      chart.data.labels = label;
+      chart.data.datasets.forEach((dataset, index) => {
+          dataset.data = data[index];
+          if (index === 0){
+            // dataset.data = data1;
+          }else if (index === 1){
+            // dataset.data = data2;
+          }
+          // dataset.data = data;
+      });
+      chart.update();
+    }
+  }
+  removeData(chart) {
+      chart.data.labels = [];
+      chart.data.datasets.forEach((dataset) => {
+          dataset.data = [];
+          console.log(663, dataset.data);
+      });
+      chart.update();
+      
+  }
   filter() {
+    if(this.grafico1){
+      console.log('grafico existe')
+      this.removeData(this.grafico1);
+      this.removeGrah(this.grafico1);
+      this.grafico1 = null;
+      // this.grafico1 = this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del mes seleccionado', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
+    }
+    if(this.grafico2){
+      this.removeData(this.grafico2);
+      this.removeGrah(this.grafico2);
+      // this.grafico2 = this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'doughnut');
+      this.grafico2 = null;
+    }
+    if(this.grafico3){
+      console.log('grafico existe')
+      this.removeData(this.grafico3);
+      this.removeGrah(this.grafico3);
+      this.grafico3 = null;
+      // this.grafico1 = this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del mes seleccionado', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
+    }
+    if(this.grafico4){
+      this.removeData(this.grafico4);
+      this.removeGrah(this.grafico4);
+      // this.grafico2 = this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'doughnut');
+      this.grafico4 = null;
+    }
     this.action = true;
     const form = this.filtroForm.value;
       this.id_sede = form.id_sede,
@@ -740,7 +805,7 @@ action: boolean = false;
     
   }
   tipoChangeGraph(event, graph){
-console.log(827, this.selectedOptionGraph1);
+console.log(827, this.selectedOptionGraph1, graph);
 this.loading();
     this.parameters = {
       // periodo_consulta:this.periodo_consulta,
@@ -780,7 +845,14 @@ this.loading();
                 // this.resumenMontos = response.data;
                 
               }
-              this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del mes seleccionado', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
+              if(!this.grafico1){
+                this.grafico1 = this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del mes seleccionado', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
+              }else{
+                var data = [];
+                data.push(this.chartData1, this.chartData2);
+                this.addData(this.grafico1, this.chartLabels1, data)
+              }
+              
               Swal.close();
             },
             (error) => {
@@ -805,7 +877,14 @@ this.loading();
                 // this.resumenMontos = response.data;
                 
               }
-              this.getBarChart(this.chartLabels3, this.chartData4, this.chartData5,'Día del mes seleccionado', 'N° Pacientes','chart-3', 'C.E Reservada', 'C.E Realizada', 'bar');
+              if(!this.grafico3){
+                this.grafico3 = this.getBarChart(this.chartLabels3, this.chartData4, this.chartData5,'Día del mes seleccionado', 'N° Pacientes','chart-3', 'C.E Reservada', 'C.E Realizada', 'bar');
+              }else{
+                var data = [];
+                data.push(this.chartData4, this.chartData5);
+                this.addData(this.grafico3, this.chartLabels3, data)
+              }
+              
               Swal.close();
             },
             (error) => {
@@ -815,6 +894,7 @@ this.loading();
        }
     } else if (graph === 'doughnut'){
       if (input === 'ingresos_emergencia') {
+        console.log('hola grafico')
         this.tableApiservice.getEmPieIndex(this.parameters).subscribe(
           (response) => { 
             if(response.success){
@@ -826,7 +906,16 @@ this.loading();
                 this.chartData3.push(item.cantidad);
               });
             }
-            this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'doughnut');
+            if(!this.grafico2){
+              this.grafico2 = this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'doughnut');
+
+             }else{
+              var data = [];
+              data.push(this.chartData3);
+              this.addData(this.grafico2, this.chartLabels2, data)
+              // console.log(577, this.chartData1);
+             } 
+            
             }
             Swal.close();
           },
@@ -848,7 +937,16 @@ this.loading();
                 this.chartData6.push(item.cantidad);
               });
             }
-            this.getPieChart(this.chartLabels4, this.chartData6,'chart-4', 'doughnut');
+            if(!this.grafico4){
+              this.grafico4 = this.getPieChart(this.chartLabels4, this.chartData6,'chart-4', 'doughnut');
+
+             }else{
+              var data = [];
+              data.push(this.chartData6);
+              this.addData(this.grafico4, this.chartLabels4, data)
+              // console.log(577, this.chartData1);
+             } 
+            
             }
             Swal.close();
           },
@@ -1107,12 +1205,26 @@ private getPagedData(page: Page, data: any[]) {
         this.selectedOptionTipo3='cantidad';
         this.selectedOptionGraph1 = 'ingresos_emergencia';
         this.selectedOptionGraph2 = 'ingresos_emergencia';
+        
+        // console.log(1115, result); // Output: 7
             this.tableApiservice.getEmResumenGeneralProcesar(this.parameters).subscribe(
                 (response) => {
-                  // console.log(response);
+                  console.log(1118, response);
                   if(response.success){
                     this.resumenMes = response.data;
-                    
+
+                    let quotient = Math.trunc(response.data.estancia / 60);
+                    let remainder = response.data.estancia % 60;
+                    this.estanciaProm = quotient + ' H ' + remainder + ' m';
+
+                    let quotient1 = Math.trunc(response.data.estanciaMax / 60);
+                    let remainder1 = response.data.estanciaMax % 60;
+                    this.estanciaMax = quotient1 + ' H ' + remainder1 + ' m';
+
+                    let quotient2 = Math.trunc(response.data.estanciaMin / 60);
+                    let remainder2 = response.data.estanciaMin % 60;
+                    this.estanciaMin = quotient2 + ' H ' + remainder2 + ' m';
+
                     //  this.porcMedico =  ( this.resumenMes.medico / this.resumenMes.ausentismo) * 100;
                     //   this.porcPaciente = (this.resumenMes.paciente / this.resumenMes.ausentismo) * 100;
                     //   this.porcAnuladas = (this.resumenMes.anuladas / this.resumenMes.ausentismo) * 100;
@@ -1130,139 +1242,136 @@ private getPagedData(page: Page, data: any[]) {
                 if(response.success){
                   this.columns1 = response.data.cabeceras_tpacientes;
                   this.rows1 = response.data.tabla_tpacientes; 
-                      const totalCantidad1 = {
-                        GRUPO1:'',
-                        GRUPO2:'',
-                        GRUPO3:'',
-                        MES1:0,
-                        MES2:0,
-                        MES3:0,
-                        MES4:0,
-                        MES5:0,
-                        MES6:0,
-                        MES7:0,
-                        MES8:0,
-                        MES9:0,
-                        MES10:0,
-                        MES11:0,
-                        MES12:0,
-                        TOTAL:0,
-                      };
-                      const totalSoles1 = {
-                        GRUPO1:'',
-                        GRUPO2:'',
-                        GRUPO3:'',
-                        MES1:0,
-                        MES2:0,
-                        MES3:0,
-                        MES4:0,
-                        MES5:0,
-                        MES6:0,
-                        MES7:0,
-                        MES8:0,
-                        MES9:0,
-                        MES10:0,
-                        MES11:0,
-                        MES12:0,
-                        TOTAL:0,
-                      };
-                  this.rows1.map((item, index)=>{                 
-                    if(item.GRUPO3 === 'CANTIDAD'){
-                      totalCantidad1.MES1 += Number(item.MES1);
-                      totalCantidad1.MES2 += Number(item.MES2);
-                      totalCantidad1.MES3 += Number(item.MES3);
-                      totalCantidad1.MES4 += Number(item.MES4);
-                      totalCantidad1.MES5 += Number(item.MES5);
-                      totalCantidad1.MES6 += Number(item.MES6);
-                      totalCantidad1.MES7 += Number(item.MES7); 
-                      totalCantidad1.MES8 += Number(item.MES8);
-                      totalCantidad1.MES9 += Number(item.MES9);
-                      totalCantidad1.MES10 += Number(item.MES10);
-                      totalCantidad1.MES11 += Number(item.MES19);
-                      totalCantidad1.MES12 += Number(item.MES12);
-                      totalCantidad1.TOTAL += Number(item.TOTAL);
-                    }else if(item.GRUPO3 === 'SOLES'){
-                      totalSoles1.MES1 += Number(item.MES1);
-                      totalSoles1.MES2 += Number(item.MES2);
-                      totalSoles1.MES3 += Number(item.MES3);
-                      totalSoles1.MES4 += Number(item.MES4);
-                      totalSoles1.MES5 += Number(item.MES5);
-                      totalSoles1.MES6 += Number(item.MES6);
-                      totalSoles1.MES7 += Number(item.MES7); 
-                      totalSoles1.MES8 += Number(item.MES8);
-                      totalSoles1.MES9 += Number(item.MES9);
-                      totalSoles1.MES10 += Number(item.MES10);
-                      totalSoles1.MES11 += Number(item.MES19);
-                      totalSoles1.MES12 += Number(item.MES12);
-                      totalSoles1.TOTAL += Number(item.TOTAL);
-                    }
+                      // const totalCantidad1 = {
+                      //   GRUPO1:'',
+                      //   GRUPO2:'',
+                      //   GRUPO3:'',
+                      //   MES1:0,
+                      //   MES2:0,
+                      //   MES3:0,
+                      //   MES4:0,
+                      //   MES5:0,
+                      //   MES6:0,
+                      //   MES7:0,
+                      //   MES8:0,
+                      //   MES9:0,
+                      //   MES10:0,
+                      //   MES11:0,
+                      //   MES12:0,
+                      //   TOTAL:0,
+                      // };
+                      // const totalSoles1 = {
+                      //   GRUPO1:'',
+                      //   GRUPO2:'',
+                      //   GRUPO3:'',
+                      //   MES1:0,
+                      //   MES2:0,
+                      //   MES3:0,
+                      //   MES4:0,
+                      //   MES5:0,
+                      //   MES6:0,
+                      //   MES7:0,
+                      //   MES8:0,
+                      //   MES9:0,
+                      //   MES10:0,
+                      //   MES11:0,
+                      //   MES12:0,
+                      //   TOTAL:0,
+                      // };
+                  // this.rows1.map((item, index)=>{                 
+                  //   if(item.GRUPO3 === 'CANTIDAD'){
+                  //     totalCantidad1.MES1 += Number(item.MES1);
+                  //     totalCantidad1.MES2 += Number(item.MES2);
+                  //     totalCantidad1.MES3 += Number(item.MES3);
+                  //     totalCantidad1.MES4 += Number(item.MES4);
+                  //     totalCantidad1.MES5 += Number(item.MES5);
+                  //     totalCantidad1.MES6 += Number(item.MES6);
+                  //     totalCantidad1.MES7 += Number(item.MES7); 
+                  //     totalCantidad1.MES8 += Number(item.MES8);
+                  //     totalCantidad1.MES9 += Number(item.MES9);
+                  //     totalCantidad1.MES10 += Number(item.MES10);
+                  //     totalCantidad1.MES11 += Number(item.MES19);
+                  //     totalCantidad1.MES12 += Number(item.MES12);
+                  //     totalCantidad1.TOTAL += Number(item.TOTAL);
+                  //   }else if(item.GRUPO3 === 'SOLES'){
+                  //     totalSoles1.MES1 += Number(item.MES1);
+                  //     totalSoles1.MES2 += Number(item.MES2);
+                  //     totalSoles1.MES3 += Number(item.MES3);
+                  //     totalSoles1.MES4 += Number(item.MES4);
+                  //     totalSoles1.MES5 += Number(item.MES5);
+                  //     totalSoles1.MES6 += Number(item.MES6);
+                  //     totalSoles1.MES7 += Number(item.MES7); 
+                  //     totalSoles1.MES8 += Number(item.MES8);
+                  //     totalSoles1.MES9 += Number(item.MES9);
+                  //     totalSoles1.MES10 += Number(item.MES10);
+                  //     totalSoles1.MES11 += Number(item.MES19);
+                  //     totalSoles1.MES12 += Number(item.MES12);
+                  //     totalSoles1.TOTAL += Number(item.TOTAL);
+                  //   }
                     
-                    if(this.rows1.length === index+2 ){
+                  //   if(this.rows1.length === index+2 ){
 
-                      totalCantidad1.GRUPO1 ="";
-                      totalCantidad1.GRUPO2 = 'Total';
-                      totalCantidad1.GRUPO3 = 'CANTIDAD';
-                      this.rows1.push(totalCantidad1);
-                      totalSoles1.GRUPO1 ="";
-                      totalSoles1.GRUPO2 = 'Total';
-                      totalSoles1.GRUPO3 = 'SOLES';
+                  //     totalCantidad1.GRUPO1 ="";
+                  //     totalCantidad1.GRUPO2 = 'Total';
+                  //     totalCantidad1.GRUPO3 = 'CANTIDAD';
+                  //     // this.rows1.push(totalCantidad1);
+                  //     totalSoles1.GRUPO1 ="";
+                  //     totalSoles1.GRUPO2 = 'Total';
+                  //     totalSoles1.GRUPO3 = 'SOLES';
 
-                      this.rows1.push(totalSoles1);
-                      // console.log(909, totalSoles1);
-                    }
-                  })
-                  this.formatPipe(this.rows1);
+                  //     // this.rows1.push(totalSoles1);
+                  //     // console.log(909, totalSoles1);
+                  //   }
+                  // })
+                  // this.formatPipe(this.rows1);
                   this.rows1filtered = this.rows1.filter(item => item.GRUPO3 === 'CANTIDAD');
-                  console.log(1210, this.rows1filtered)
+                  console.log(this.rows1filtered);
                   this.columns2 = response.data.cabeceras_rangoetareo;
                   this.rows2 = response.data.tabla_rangoetareo;
-                  const totalRango = {
-                    RANGO:'',
-                    MES1:0,
-                    MES2:0,
-                    MES3:0,
-                    MES4:0,
-                    MES5:0,
-                    MES6:0,
-                    MES7:0,
-                    MES8:0,
-                    MES9:0,
-                    MES10:0,
-                    MES11:0,
-                    MES12:0,
-                    TOTAL:0,
-                  };
-                  this.rows2.map((item, index)=>{                 
-                      totalRango.MES1 += Number(item.MES1);
-                      totalRango.MES2 += Number(item.MES2);
-                      totalRango.MES3 += Number(item.MES3);
-                      totalRango.MES4 += Number(item.MES4);
-                      totalRango.MES5 += Number(item.MES5);
-                      totalRango.MES6 += Number(item.MES6);
-                      totalRango.MES7 += Number(item.MES7); 
-                      totalRango.MES8 += Number(item.MES8);
-                      totalRango.MES9 += Number(item.MES9);
-                      totalRango.MES10 += Number(item.MES10);
-                      totalRango.MES11 += Number(item.MES19);
-                      totalRango.MES12 += Number(item.MES12);
-                      totalRango.TOTAL += Number(item.TOTAL);
-                      if(this.rows2.length === index+1 ){
-                        totalRango.RANGO = 'Total';
-                        this.rows2.push(totalRango);
-                      }
-                    }
-                  );
-                  this.formatPipe(this.rows2);
-                  this.temp2 = this.rows2;
-                  this.columns3 = response.data.cabeceras_empresas;
-    this.rows3 = response.data.tabla_empresas;
-
-
-
-
-    this.formatPipe(this.rows3);
-    
-    // this.rowsT1 = this.rows3;
+                  // const totalRango = {
+                  //   RANGO:'',
+                  //   MES1:0,
+                  //   MES2:0,
+                  //   MES3:0,
+                  //   MES4:0,
+                  //   MES5:0,
+                  //   MES6:0,
+                  //   MES7:0,
+                  //   MES8:0,
+                  //   MES9:0,
+                  //   MES10:0,
+                  //   MES11:0,
+                  //   MES12:0,
+                  //   TOTAL:0,
+                  // };
+                  // this.rows2.map((item, index)=>{                 
+                  //   totalRango.MES1 += Number(item.MES1);
+                  //   totalRango.MES2 += Number(item.MES2);
+                  //   totalRango.MES3 += Number(item.MES3);
+                  //     totalRango.MES4 += Number(item.MES4);
+                  //     totalRango.MES5 += Number(item.MES5);
+                  //     totalRango.MES6 += Number(item.MES6);
+                  //     totalRango.MES7 += Number(item.MES7); 
+                  //     totalRango.MES8 += Number(item.MES8);
+                  //     totalRango.MES9 += Number(item.MES9);
+                  //     totalRango.MES10 += Number(item.MES10);
+                  //     totalRango.MES11 += Number(item.MES19);
+                  //     totalRango.MES12 += Number(item.MES12);
+                  //     totalRango.TOTAL += Number(item.TOTAL);
+                  //     if(this.rows2.length === index+1 ){
+                  //       totalRango.RANGO = 'Total';
+                  //       this.rows2.push(totalRango);
+                  //     }
+                  //   }
+                  //   );
+                    // this.formatPipe(this.rows2);
+                    console.log(1210, this.rows2)
+                    this.temp2 = this.rows2;
+                    this.columns3 = response.data.cabeceras_empresas;
+                    this.rows3 = response.data.tabla_empresas;
+                    this.formatPipe(this.rows3);
+                    
+                    // this.rowsT1 = this.rows3;
     this.rows3filtered1 = this.rows3.filter(item => item.GRUPOEM === 'CANTIDAD');
     this.setPage1({
       offset: 0,
@@ -1303,82 +1412,82 @@ private getPagedData(page: Page, data: any[]) {
             );
             this.tableApiservice.getEmAtencionesResumenAnual(this.parameters).subscribe(
               (response) => { 
-                // console.log(982, response);
+                console.log(982, response);
                 if(response.success){
                   this.columns6 = response.data.cabeceras_tpacientes_anual;
                   this.rows6 = response.data.tabla_tpacientes_anual; 
-                  const totalCantidad6 = {
-                    GRUPO1: '',
-                    GRUPO2: '',
-                    GRUPO3: '',
-                    PER1: 0,
-                    PER2: 0,
-                    PER3: 0,
-                    PER4: 0,
-                    PER5: 0,
-                  };
-                  const totalSoles6 = {
-                    GRUPO1: '',
-                    GRUPO2: '',
-                    GRUPO3: '',
-                    PER1: 0,
-                    PER2: 0,
-                    PER3: 0,
-                    PER4: 0,
-                    PER5: 0,
-                  };
-                  this.rows6.map((item, index)=>{
-                    if(item.GRUPO3 === 'CANTIDAD'){
-                      totalCantidad6.PER1 += Number(item.PER1);
-                      totalCantidad6.PER2 += Number(item.PER2);
-                      totalCantidad6.PER3 += Number(item.PER3);
-                      totalCantidad6.PER4 += Number(item.PER4);
-                      totalCantidad6.PER5 += Number(item.PER5);
-                    }else if(item.GRUPO3 === 'SOLES'){
-                      totalSoles6.PER1 += Number(item.PER1);
-                      totalSoles6.PER2 += Number(item.PER2);
-                      totalSoles6.PER3 += Number(item.PER3);
-                      totalSoles6.PER4 += Number(item.PER4);
-                      totalSoles6.PER5 += Number(item.PER5);
-                    }
-                    if(this.rows6.length === index+2 ){
-                      totalCantidad6.GRUPO1 ="";
-                      totalCantidad6.GRUPO2 = 'Total';
-                      totalCantidad6.GRUPO3 = 'CANTIDAD';
-                      this.rows6.push(totalCantidad6);
-                      totalSoles6.GRUPO1 ="";
-                      totalSoles6.GRUPO2 = 'Total';
-                      totalSoles6.GRUPO3 = 'SOLES';
-                      this.rows6.push(totalSoles6);
-                    }
-                  });
+                  // const totalCantidad6 = {
+                  //   GRUPO1: '',
+                  //   GRUPO2: '',
+                  //   GRUPO3: '',
+                  //   PER1: 0,
+                  //   PER2: 0,
+                  //   PER3: 0,
+                  //   PER4: 0,
+                  //   PER5: 0,
+                  // };
+                  // const totalSoles6 = {
+                  //   GRUPO1: '',
+                  //   GRUPO2: '',
+                  //   GRUPO3: '',
+                  //   PER1: 0,
+                  //   PER2: 0,
+                  //   PER3: 0,
+                  //   PER4: 0,
+                  //   PER5: 0,
+                  // };
+                  // this.rows6.map((item, index)=>{
+                  //   if(item.GRUPO3 === 'CANTIDAD'){
+                  //     totalCantidad6.PER1 += Number(item.PER1);
+                  //     totalCantidad6.PER2 += Number(item.PER2);
+                  //     totalCantidad6.PER3 += Number(item.PER3);
+                  //     totalCantidad6.PER4 += Number(item.PER4);
+                  //     totalCantidad6.PER5 += Number(item.PER5);
+                  //   }else if(item.GRUPO3 === 'SOLES'){
+                  //     totalSoles6.PER1 += Number(item.PER1);
+                  //     totalSoles6.PER2 += Number(item.PER2);
+                  //     totalSoles6.PER3 += Number(item.PER3);
+                  //     totalSoles6.PER4 += Number(item.PER4);
+                  //     totalSoles6.PER5 += Number(item.PER5);
+                  //   }
+                  //   if(this.rows6.length === index+2 ){
+                  //     totalCantidad6.GRUPO1 ="";
+                  //     totalCantidad6.GRUPO2 = 'Total';
+                  //     totalCantidad6.GRUPO3 = 'CANTIDAD';
+                  //     this.rows6.push(totalCantidad6);
+                  //     totalSoles6.GRUPO1 ="";
+                  //     totalSoles6.GRUPO2 = 'Total';
+                  //     totalSoles6.GRUPO3 = 'SOLES';
+                  //     this.rows6.push(totalSoles6);
+                  //   }
+                  // });
 
-                  this.formatPipe3(this.rows6);
+                  // this.formatPipe3(this.rows6);
                   this.rows6filtered = this.rows6.filter(item => item.GRUPO3 === 'CANTIDAD');
                   this.columns7 = response.data.cabeceras_rangoetareo_anual;
                   this.rows7 = response.data.tabla_rangoetareo_anual;
                   console.log(1153, this.rows6filtered);
-                  const totalRango7 = {
-                    RANGO: '',
-                    PER1: 0,
-                    PER2: 0,
-                    PER3: 0,
-                    PER4: 0,
-                    PER5: 0,
-                  };
-                  this.rows7.map((item, index)=>{
+                  // const totalRango7 = {
+                  //   RANGO: '',
+                  //   PER1: 0,
+                  //   PER2: 0,
+                  //   PER3: 0,
+                  //   PER4: 0,
+                  //   PER5: 0,
+                  // };
+                  // this.rows7.map((item, index)=>{
 
-                      totalRango7.PER1 += Number(item.PER1);
-                      totalRango7.PER2 += Number(item.PER2);
-                      totalRango7.PER3 += Number(item.PER3);
-                      totalRango7.PER4 += Number(item.PER4);
-                      totalRango7.PER5 += Number(item.PER5);
-                    if(this.rows7.length === index+1 ){
-                      totalRango7.RANGO = 'Total';
-                      this.rows7.push(totalRango7);
-                    }
-                  });
-                  this.formatPipe3(this.rows7);
+                  //     totalRango7.PER1 += Number(item.PER1);
+                  //     totalRango7.PER2 += Number(item.PER2);
+                  //     totalRango7.PER3 += Number(item.PER3);
+                  //     totalRango7.PER4 += Number(item.PER4);
+                  //     totalRango7.PER5 += Number(item.PER5);
+                  //   if(this.rows7.length === index+1 ){
+                  //     totalRango7.RANGO = 'Total';
+                  //     this.rows7.push(totalRango7);
+                  //   }
+                  // });
+                  // this.formatPipe3(this.rows7);
                   this.temp7 = this.rows7;
                 }
                 // Swal.close();
@@ -1523,7 +1632,14 @@ private getPagedData(page: Page, data: any[]) {
                   // this.resumenMontos = response.data;
                   
                 }
-                this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del mes seleccionado', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
+                if(!this.grafico1){
+                  this.grafico1 = this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del mes seleccionado', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
+                }else{
+                  var data = [];
+                  data.push(this.chartData1, this.chartData2);
+                  this.addData(this.grafico1, this.chartLabels1, data)
+                }
+                
                 // Swal.close();
               },
               (error) => {
@@ -1545,7 +1661,16 @@ private getPagedData(page: Page, data: any[]) {
                   // this.resumenMontos = response.data;
                   
                 }
-                this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'doughnut');
+                if(!this.grafico2){
+                  this.grafico2 = this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'doughnut');
+
+                 }else{
+                  var data = [];
+                  data.push(this.chartData3);
+                  this.addData(this.grafico2, this.chartLabels2, data)
+                  // console.log(577, this.chartData1);
+                 } 
+                
                 // console.log(577, this.chartData1);
                   
                 }
@@ -1960,5 +2085,12 @@ private getPagedData(page: Page, data: any[]) {
     private summaryNull(cells: any): null {
           return null;
     }
+    private summaryNull1(cells: any): string {
+      if (cells[0] !== 0){
+        return 'Total';
+      }
+          
+    }
+
 
 }

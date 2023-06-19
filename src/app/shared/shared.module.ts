@@ -20,6 +20,7 @@ import { FilterIndicadoresComponent } from './components/filtros/indicadores/fil
 import { DashIndicadoresComponent } from './components/dashboards/dash-indicadores/dash-indicadores.component';
 import { PanelCabeceraComponent } from './components/dashboards/panel-cabecera/panel-cabecera.component';
 import { LiquidacionEmpresasComponent } from './components/liquidacion-empresas/liquidacion-empresas.component';
+import { BancoTerapiaEstadisticasComponent } from './components/banco-terapia-estadisticas/banco-terapia-estadisticas.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { LiquidacionEmpresasComponent } from './components/liquidacion-empresas/
     DashIndicadoresComponent,
     PanelCabeceraComponent,
     LiquidacionEmpresasComponent,
+    BancoTerapiaEstadisticasComponent,
   ],
   imports: [
     AgGridModule.withComponents([LinkRendererComponent]),
@@ -61,6 +63,7 @@ import { LiquidacionEmpresasComponent } from './components/liquidacion-empresas/
     DashIndicadoresComponent,
     PanelCabeceraComponent,
     LiquidacionEmpresasComponent,
+    BancoTerapiaEstadisticasComponent
   ],
 })
 export class SharedModule { }

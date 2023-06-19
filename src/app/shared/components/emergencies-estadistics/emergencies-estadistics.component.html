@@ -129,34 +129,34 @@
                                         </div>
                                       
                                     </div>
-                                    <div class="col-md-3 col-sm-6 col-xs-12" id="estancia">
+                                    <div class="col-md-3 col-sm-6 col-xs-12" id="estancia" (mouseover)="changeTable=true" (mouseout)="changeTable=false">
                                         <div class="info-box">
                                             <span style="background: #00c0ef !important; color:#fff !important;" class="info-box-icon">			
                                             <i class="fa fa-clock-o" aria-hidden="true"></i>		</span>		
                                             <div class="info-box-content">			<span style="font-family:arial; font-size:15px; " class="info-box-text">ESTANCIA PROMEDIO</span>			
-                                            <span *ngIf="resumenMes.reservadas" class="info-box-number">...</span>			
+                                            <span class="info-box-number">{{estanciaProm}}</span>			
                                             <!-- <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success" >Tiempo de atención / tiempo programado
                                             </label>		 -->
                                           </div>
                                         </div>
-                                        <div class="col-md-3 col-sm-6 col-xs-12 div_ocultar_ptable_a" style="display: none;">
-                                          <div class="info-box">
-                                            <table class="table table-bordered">
-                                                <tbody>
-                                                  <tr>
-                                                      <th style="padding: 2px 4px!important; line-height: inherit; font-size: 14px!important;">Estancia Mínima</th>
-                                                      <th style="padding: 2px 8px!important; line-height: inherit;"><span id="ptable_anul">...</span></th>
-                                                  </tr>
-                                                  <tr>
-                                                      <th style="padding: 2px 4px!important; line-height: inherit; font-size: 14px!important;">Estancia Máxima</th>
-                                                      <th style="padding: 2px 8px!important; line-height: inherit;"><span id="ptable_inas">...</span></th>
-                                                  </tr>
-                                                </tbody>
-                                            </table>
-                                          </div>
-                                        </div>
+                                        
                                     </div>
-                                    
+                                    <div class="col-md-3 col-sm-6 col-xs-12 div_ocultar_ptable_a" *ngIf="changeTable">
+                                      <div class="info-box">
+                                        <table class="table table-bordered">
+                                            <tbody>
+                                              <tr>
+                                                  <th style="padding: 2px 4px!important; line-height: inherit; font-size: 14px!important;">Estancia Mínima</th>
+                                                  <th style="padding: 2px 8px!important; line-height: inherit;"><span id="ptable_anul">{{estanciaMax}}</span></th>
+                                              </tr>
+                                              <tr>
+                                                  <th style="padding: 2px 4px!important; line-height: inherit; font-size: 14px!important;">Estancia Máxima</th>
+                                                  <th style="padding: 2px 8px!important; line-height: inherit;"><span id="ptable_inas">{{estanciaMin}}</span></th>
+                                              </tr>
+                                            </tbody>
+                                        </table>
+                                      </div>
+                                    </div>
                                     </div>
                                     <div class="card-content collapse show">
                                       <div class="row" style="align-items: center;justify-content: space-between;">
@@ -204,7 +204,7 @@
                                         </div>
                                         <div class="col-md-4">
                                           <p class="text-center">
-                                            <i class="fa fa-pie-chart" aria-hidden="true"></i>
+                                            <i class="fa fa-doughnut-chart" aria-hidden="true"></i>
                                             <strong>Tipos de Pacientes TOTAL: [<label id="TOTAL_RE">{{totalProgs}}</label>]-[100%]</strong>
                                           </p>
                                           <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
@@ -221,7 +221,7 @@
                                               </a>
                                             </li>
                                             <li class="list-group-item border-0 pl-0">
-                                              <select class="form-control" style="width: auto!important;height: 2.2rem;" (change)="tipoChangeGraph($event.target.value, 'pie')" [(ngModel)]="selectedOptionGraph2">
+                                              <select class="form-control" style="width: auto!important;height: 2.2rem;" (change)="tipoChangeGraph($event.target.value, 'doughnut')" [(ngModel)]="selectedOptionGraph2">
                                                 <option value="ingresos_emergencia">Nro de Ingresos por emergencia</option>
                                                 <option value="altas_emergencia">Altas por emergencia</option>
                                               </select>
@@ -487,12 +487,18 @@
                                                     [scrollbarH]="true"
                                                     (page)="setPage($event)"
                                                     [rowClass]="getRowClass1"
+                                                    [summaryRow]="enableSummary"
+                                                    [summaryPosition]="summaryPosition"
+                                                    [summaryHeight]="55"
                                                     >
-                                                    <ngx-datatable-column [flexGrow]="1" [minWidth]="90" [headerClass]="column.headerClass" [cellClass]="column.cellClass" *ngFor="let column of columns1; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                                    <ngx-datatable-column [flexGrow]="1" [minWidth]="90" [summaryFunc]="column.prop == 'GRUPO1' || column.prop == 'GRUPO2' || column.prop == 'GRUPO3' ? summaryNull1:summaryForAmount"
+                                                    [headerClass]="column.headerClass" [cellClass]="column.cellClass" *ngFor="let column of columns1; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                                         let-row="row">
                                                         <div [ngClass]="{'text-center': row.GRUPO2.includes('Total')}">
-                                                          <span  [title]="value">{{value}}</span>
+                                                          <span  [title]="value" *ngIf="column.prop === 'GRUPO1' || column.prop === 'GRUPO2' || column.prop === 'GRUPO3'">{{value}}</span>
+                                                          <span  [title]="value" *ngIf="column.prop !== 'GRUPO1' && column.prop !== 'GRUPO2' && column.prop !== 'GRUPO3' && row.GRUPO3 === 'SOLES'">{{value | currency }}</span>
+                                                          <span  [title]="value" *ngIf="column.prop !== 'GRUPO1' && column.prop !== 'GRUPO2' && column.prop !== 'GRUPO3' && row.GRUPO3 === 'CANTIDAD'">{{value | number: '1.0-0' }}</span>
                                                         </div>
                                                         <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
                                                           <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
@@ -567,8 +573,12 @@
                                                     [scrollbarH]="true"
                                                     (page)="setPage($event)"
                                                     [rowClass] = "getRowClass2"
+                                                    [summaryRow]="enableSummary"
+                                                    [summaryPosition]="summaryPosition"
+                                                    [summaryHeight]="55"
                                                     >
-                                                    <ngx-datatable-column [flexGrow]="1" [minWidth]="90" [headerClass]="column.headerClass" [cellClass]="column.cellClass" *ngFor="let column of columns2; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                                    <ngx-datatable-column [flexGrow]="1" [minWidth]="90" [summaryFunc]="column.prop == 'RANGO' ? summaryNull1:summaryForAmount"
+                                                    [headerClass]="column.headerClass" [cellClass]="column.cellClass" *ngFor="let column of columns2; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                                         let-row="row">
                                                         <div [ngClass]="{'text-center': row.RANGO.includes('Total')}">
@@ -1094,13 +1104,19 @@
                                                     [selectionType]="SelectionType.single"
                                                     (select)='open($event)'
                                                     [rowClass] = "getRowClass1"
+                                                    [summaryRow]="enableSummary"
+                                                    [summaryPosition]="summaryPosition"
+                                                    [summaryHeight]="55"
                                                     >
-                                                    <ngx-datatable-column [flexGrow]="1" [headerClass]="column.headerClass" [cellClass]="column.cellClass" [minWidth]="90" *ngFor="let column of columns6; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                                    <ngx-datatable-column [flexGrow]="1" [summaryFunc]="column.prop == 'GRUPO1' || column.prop == 'GRUPO2' || column.prop == 'GRUPO3' ? summaryNull1:summaryForAmount" 
+                                                    [headerClass]="column.headerClass" [cellClass]="column.cellClass" [minWidth]="90" *ngFor="let column of columns6; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                                         let-row="row">
                                                          
                                                         <div [ngClass]="{'text-center': row.GRUPO2.includes('Total')}">
-                                                          <span  [title]="value">{{value}}</span>
+                                                          <span  [title]="value" *ngIf="column.prop === 'GRUPO1' || column.prop === 'GRUPO2' || column.prop === 'GRUPO3'">{{value}}</span>
+                                                          <span  [title]="value" *ngIf="column.prop !== 'GRUPO1' && column.prop !== 'GRUPO2' && column.prop !== 'GRUPO3' && row.GRUPO3 === 'SOLES'">{{value | currency }}</span>
+                                                          <span  [title]="value" *ngIf="column.prop !== 'GRUPO1' && column.prop !== 'GRUPO2' && column.prop !== 'GRUPO3' && row.GRUPO3 === 'CANTIDAD'">{{value | number: '1.0-0' }}</span>
                                                         </div>
                                                         <!-- <div *ngIf="column.prop === 'MEDICO'">
                                                           <span  [title]="value"><a href="javascript:;" (click)="open($event, content)" style="color: #4B9FDE;">{{value}}</a></span>
@@ -1199,8 +1215,12 @@
                                                     [scrollbarH]="true"
                                                     (page)="setPage($event)"
                                                     [rowClass] = "getRowClass2"
+                                                    [summaryRow]="enableSummary"
+                                                    [summaryPosition]="summaryPosition"
+                                                    [summaryHeight]="55"
                                                     >
-                                                    <ngx-datatable-column [flexGrow]="1" [minWidth]="90" [headerClass]="column.headerClass" [cellClass]="column.cellClass" *ngFor="let column of columns7; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                                    <ngx-datatable-column [flexGrow]="1" [minWidth]="90" [summaryFunc]="column.prop == 'RANGO' ? summaryNull1:summaryForAmount"
+                                                    [headerClass]="column.headerClass" [cellClass]="column.cellClass" *ngFor="let column of columns7; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                                         let-row="row">
                                                         <div [ngClass]="{'text-center': row.RANGO.includes('Total')}">
