@@ -9,11 +9,13 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PlanillaResumenPagosComponent } from './estadistica/planilla-resumen-pagos/planilla-resumen-pagos.component';
 import { PlanillaIndicadoresComponent } from './estadistica/planilla-indicadores/planilla-indicadores.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { ResumenColaboradoresComponent } from './estadistica/resumen-colaboradores/resumen-colaboradores.component';
 
 @NgModule({
   declarations: [
     PlanillaResumenPagosComponent,
-    PlanillaIndicadoresComponent
+    PlanillaIndicadoresComponent,
+    ResumenColaboradoresComponent
   ],
   imports: [
     AgGridModule.withComponents([]),
@@ -35,6 +37,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
       {
         path: 'estadisticaIndicadores',
         component: PlanillaIndicadoresComponent
+      },
+      {
+        path: 'resumenColaboradores',
+        component: ResumenColaboradoresComponent
       },
     ])
   ],

@@ -34,6 +34,9 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
   grafico2: Chart;
   yAxesMax: any;
   graficoX: Chart;
+  porcNR: number;
+  porcSistema: number;
+  porcAplicativo: number;
   @ViewChild("baseChart", { static: false }) set content(
     content: ElementRef
   ) {
@@ -832,19 +835,22 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
                      this.porcMedico =  ( this.resumenMes.medico / this.resumenMes.ausentismo) * 100;
                       this.porcPaciente = (this.resumenMes.paciente / this.resumenMes.ausentismo) * 100;
                       this.porcAnuladas = (this.resumenMes.anuladas / this.resumenMes.ausentismo) * 100;
+                      this.porcSistema = (this.resumenMes.sistema / this.resumenMes.ausentismo) * 100;
+                      this.porcAplicativo = (this.resumenMes.app / this.resumenMes.ausentismo) * 100;
                       this.resumenMes.CC =  Number(this.resumenMes.CC);
                       this.resumenMes.AD = Number(this.resumenMes.AD);
                       this.resumenMes.WA = Number(this.resumenMes.WA);
                       this.resumenMes.AP = Number(this.resumenMes.AP);
                       this.resumenMes.CW = Number(this.resumenMes.CW);
-                      const totalReservas = this.resumenMes.CC + this.resumenMes.AD + this.resumenMes.WA + this.resumenMes.AP +this.resumenMes.CW;
+                      this.resumenMes.NR = Number(this.resumenMes.NR);
+                      const totalReservas = this.resumenMes.CC + this.resumenMes.AD + this.resumenMes.WA + this.resumenMes.AP +this.resumenMes.CW + this.resumenMes.NR;
                       const appWeb = this.resumenMes.AP + this.resumenMes.CW;
                       console.log(820, totalReservas , appWeb)
                       this.porcCC =  ( this.resumenMes.CC / totalReservas) * 100;
                       this.porcAD = (this.resumenMes.AD / totalReservas) * 100;
                       this.porcWA = (this.resumenMes.WA / totalReservas) * 100;
                       this.porcAPCW = (appWeb / totalReservas) * 100;
-
+                      this.porcNR = (this.resumenMes.NR / totalReservas) * 100;
                      
                   }
                 },

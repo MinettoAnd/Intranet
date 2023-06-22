@@ -18,7 +18,7 @@ import { NgxDocViewerModule } from 'ngx-doc-viewer';
 // BOOTSTRAP COMPONENTS
 
 //import {AngularFontAwesomeModule} from 'angular-font-awesome';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
@@ -123,6 +123,8 @@ import { AltaHospitalariaComponent } from './modals/hospitalization/alta-hospita
 import { PagosAppMovilComponent } from './modals/tesoreria/pagos-app-movil/pagos-app-movil.component';
 import { LinkRendererComponent } from './shared/components/renderer/link-renderer.component';
 import { RowDetalleComponent } from './modals/jpric/row-detalle/row-detalle.component';
+
+import { ResumenColaboradoresComponent } from './shared/components/dashboards/resumen-colaboradores/resumen-colaboradores.component';
 registerLocaleData(localePe);
 // import { CuotasProgramasSaludComponent } from './pages/comercial/ventas/cuotas-programas-salud/cuotas-programas-salud.component';
 // import { BsDatepickerModule, BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
@@ -133,7 +135,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 @NgModule({
   declarations: [
     // LAYOUT
-
+    // ResumenColaboradoresComponent,
+    // NavigationMenuComponent,
+    // TabComponent,
     AppComponent,
     BaseLayoutComponent,
     PagesLayoutComponent,
@@ -223,6 +227,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     // Angular Bootstrap Components
     PerfectScrollbarModule,
     NgbModule,
+    // NgbNavModule,
     //AngularFontAwesomeModule,
     FormsModule,
     ReactiveFormsModule,
