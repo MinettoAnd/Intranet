@@ -99,7 +99,7 @@
                             <ng-template ngbNavContent>
                                 <div class="card atencionesConsultaExterna" *ngIf="action">
                                     <div class="card-header">
-                                      <h4 class="card-title" style="bottom:13px;">Atenciones por Consulta Externa</h4>
+                                      <h4 class="card-title" style="bottom:13px;">Reservas en Consultorios Externos - Sede: {{id_sede === '0001' ? 'Lima' : id_sede === '0002' ? 'Surco' : 'Chorrillos'}}, Periodo: {{periodo_consulta}}</h4>
                                       <p>{{message}}</p> 
                                     </div>
                                     <div class="col-md-12 div_panel_cabecera">
@@ -143,18 +143,28 @@
                                               <tbody>
                                                 <tr>
                                                     <th style="padding: 2px 4px!important; line-height: inherit; font-size: 14px!important;">Inasistencia de Paciente</th>
-                                                    <th style="padding: 2px 8px!important; line-height: inherit;"><span id="ptable_anul">{{resumenMes.paciente}}</span></th>
-                                                    <th style="width: 40px; padding: 2px 8px!important; line-height: inherit;"><span class="badge bg-blue" id="ptable_anul_por">{{porcPaciente  | number : '1.2-2' }} %</span></th>
+                                                    <th style="padding: 2px 8px!important; line-height: inherit;" class="text-center"><span id="ptable_anul">{{resumenMes.paciente}}</span></th>
+                                                    <th style="width: 40px; padding: 2px 8px!important; line-height: inherit;" class="text-center"><span class="badge bg-blue" id="ptable_anul_por">{{porcPaciente  | number : '1.2-2' }} %</span></th>
                                                 </tr>
                                                 <tr>
                                                     <th style="padding: 2px 4px!important; line-height: inherit; font-size: 14px!important;">Por Inasistencia Medico</th>
-                                                    <th style="padding: 2px 8px!important; line-height: inherit;"><span id="ptable_inas">{{resumenMes.medico}}</span></th>
-                                                    <th style="width: 40px; padding: 2px 8px!important; line-height: inherit;"><span class="badge bg-green" id="ptable_inas_por">{{porcMedico  | number : '1.2-2' }} %</span></th>
+                                                    <th style="padding: 2px 8px!important; line-height: inherit;" class="text-center"><span id="ptable_inas">{{resumenMes.medico}}</span></th>
+                                                    <th style="width: 40px; padding: 2px 8px!important; line-height: inherit;" class="text-center"><span class="badge bg-green" id="ptable_inas_por">{{porcMedico  | number : '1.2-2' }} %</span></th>
                                                 </tr>
                                                 <tr>
                                                     <th style="padding: 2px 4px!important; line-height: inherit; font-size: 14px!important;">Anulacion de Cita Por Paciente</th>
-                                                    <th style="padding: 2px 8px!important; line-height: inherit;"><span id="ptable_anul_paci">{{resumenMes.anuladas}}</span></th>
-                                                    <th style="width: 40px; padding: 2px 8px!important; line-height: inherit;"><span class="badge bg-red" id="ptable_anul_paci_por">{{porcAnuladas  | number : '1.2-2' }} %</span></th>
+                                                    <th style="padding: 2px 8px!important; line-height: inherit;" class="text-center"><span id="ptable_anul_paci">{{resumenMes.anuladas}}</span></th>
+                                                    <th style="width: 40px; padding: 2px 8px!important; line-height: inherit;" class="text-center"><span class="badge bg-red" id="ptable_anul_paci_por">{{porcAnuladas  | number : '1.2-2' }} %</span></th>
+                                                </tr>
+                                                <tr>
+                                                  <th style="padding: 2px 4px!important; line-height: inherit; font-size: 14px!important;">Anulacion de Cita Por Sistema</th>
+                                                  <th style="padding: 2px 8px!important; line-height: inherit;" class="text-center"><span id="ptable_anul_paci">{{resumenMes.sistema}}</span></th>
+                                                  <th style="width: 40px; padding: 2px 8px!important; line-height: inherit;" class="text-center"><span class="badge bg-red" id="ptable_anul_paci_por">{{porcSistema  | number : '1.2-2' }} %</span></th>
+                                                </tr>
+                                                <tr *ngIf="resumenMes.app > 0">
+                                                  <th style="padding: 2px 4px!important; line-height: inherit; font-size: 14px!important;">Anulacion de Cita Por APP</th>
+                                                  <th style="padding: 2px 8px!important; line-height: inherit;" class="text-center"><span id="ptable_anul_paci">{{resumenMes.app}}</span></th>
+                                                  <th style="width: 40px; padding: 2px 8px!important; line-height: inherit;" class="text-center"><span class="badge bg-red" id="ptable_anul_paci_por">{{porcApp  | number : '1.2-2' }} %</span></th>
                                                 </tr>
                                               </tbody>
                                           </table>
@@ -166,24 +176,29 @@
                                               <tbody>
                                                 <tr>
                                                     <th style="padding: 2px 4px!important; line-height: inherit; font-size: 14px!important;">Central de Citas</th>
-                                                    <th style="padding: 2px 8px!important; line-height: inherit;"><span id="ptable_anul">{{resumenMes.CC}}</span></th>
-                                                    <th style="width: 40px; padding: 2px 8px!important; line-height: inherit;"><span class="badge bg-blue" id="ptable_anul_por">{{porcCC  | number : '1.2-2' }} %</span></th>
+                                                    <th style="padding: 2px 8px!important; line-height: inherit;" class="text-center"><span id="ptable_anul">{{resumenMes.CC | number: '1.0-0'}}</span></th>
+                                                    <th style="width: 40px; padding: 2px 8px!important; line-height: inherit;" class="text-center"><span class="badge bg-blue" id="ptable_anul_por">{{porcCC  | number : '1.2-2' }} %</span></th>
                                                 </tr>
                                                 <tr>
                                                     <th style="padding: 2px 4px!important; line-height: inherit; font-size: 14px!important;">Admisión</th>
-                                                    <th style="padding: 2px 8px!important; line-height: inherit;"><span id="ptable_inas">{{resumenMes.AD}}</span></th>
-                                                    <th style="width: 40px; padding: 2px 8px!important; line-height: inherit;"><span class="badge bg-green" id="ptable_inas_por">{{porcAD  | number : '1.2-2' }} %</span></th>
+                                                    <th style="padding: 2px 8px!important; line-height: inherit;" class="text-center"><span id="ptable_inas">{{resumenMes.AD | number: '1.0-0'}}</span></th>
+                                                    <th style="width: 40px; padding: 2px 8px!important; line-height: inherit;" class="text-center"><span class="badge bg-green" id="ptable_inas_por">{{porcAD  | number : '1.2-2' }} %</span></th>
                                                 </tr>
                                                 <tr>
                                                     <th style="padding: 2px 4px!important; line-height: inherit; font-size: 14px!important;">WhatsApp</th>
-                                                    <th style="padding: 2px 8px!important; line-height: inherit;"><span id="ptable_anul_paci">{{resumenMes.WA}}</span></th>
-                                                    <th style="width: 40px; padding: 2px 8px!important; line-height: inherit;"><span class="badge bg-red" id="ptable_anul_paci_por">{{porcWA  | number : '1.2-2' }} %</span></th>
+                                                    <th style="padding: 2px 8px!important; line-height: inherit;" class="text-center"><span id="ptable_anul_paci">{{resumenMes.WA | number: '1.0-0'}}</span></th>
+                                                    <th style="width: 40px; padding: 2px 8px!important; line-height: inherit;" class="text-center"><span class="badge bg-red" id="ptable_anul_paci_por">{{porcWA  | number : '1.2-2' }} %</span></th>
                                                 </tr>
                                                 <tr>
                                                   <th style="padding: 2px 4px!important; line-height: inherit; font-size: 14px!important;">APP y Web</th>
-                                                  <th style="padding: 2px 8px!important; line-height: inherit;"><span id="ptable_anul_paci">{{resumenMes.AP + resumenMes.CW}}</span></th>
-                                                  <th style="width: 40px; padding: 2px 8px!important; line-height: inherit;"><span class="badge bg-red" id="ptable_anul_paci_por">{{porcAPCW  | number : '1.2-2' }} %</span></th>
-                                              </tr>
+                                                  <th style="padding: 2px 8px!important; line-height: inherit;" class="text-center"><span id="ptable_anul_paci">{{(resumenMes.AP + resumenMes.CW) | number: '1.0-0'}}</span></th>
+                                                  <th style="width: 40px; padding: 2px 8px!important; line-height: inherit;" class="text-center"><span class="badge bg-red" id="ptable_anul_paci_por">{{porcAPCW  | number : '1.2-2' }} %</span></th>
+                                                </tr>
+                                                <tr *ngIf="resumenMes.NR > 0">
+                                                  <th style="padding: 2px 4px!important; line-height: inherit; font-size: 14px!important;" >No Registradas</th>
+                                                  <th style="padding: 2px 8px!important; line-height: inherit;" class="text-center"><span id="ptable_anul_paci">{{(resumenMes.NR  | number: '1.0-0' ) | number: '1.0-0'}}</span></th>
+                                                  <th style="width: 40px; padding: 2px 8px!important; line-height: inherit;" class="text-center"><span class="badge bg-red" id="ptable_anul_paci_por">{{porcNR  | number : '1.2-2' }} %</span></th>
+                                                </tr>
                                               </tbody>
                                           </table>
                                         </div>
@@ -192,20 +207,72 @@
                                     <div class="card-content collapse show">
                                       <div class="row" style="align-items: center;justify-content: space-between;">
                                         <div class="col-md-8">
-                                          <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
-                                            <li class="list-group-item border-0 pl-0">
-                                              <a  id="downloadlink1" href="#" 
-                                                class="btn btn-sm font-weight-bold btn-link" (click)="guardarImagen('chart-1', 'downloadlink1')" download>
-                                                <i class="fa fa-external-link"></i>
-                                                Guardar Imagen
-                                              </a>
-                                            </li>
-                                          </ul>
+                                          <!-- <div class="row" style="align-items: center; "> -->
+                                            
+                                            <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
+                                              <li class="list-group-item border-0 pl-0">
+                                                <a  id="downloadlink1" href="#" 
+                                                  class="btn btn-sm font-weight-bold btn-link" (click)="guardarImagen('chart-1', 'downloadlink1')" download>
+                                                  <i class="fa fa-external-link"></i>
+                                                  Guardar Imagen
+                                                </a>
+                                              </li>
+                                            </ul>
+                                            <p class="text-center">
+                                              <i class="fa fa-line-chart"></i>
+                                              <strong >Citas Reservadas VS Realizadas por Día</strong>
+                                            </p>
+                                            <!-- <div class="flex-grow-1 d-flex justify-content-center">
+                                              <div class="font-weight-bold text-center">Citas Reservadas VS Realizadas por Día</div>
+                                              <div></div>
+                                            </div> -->
+                                          <!-- </div> -->
                                           <div class="card-body">
                                             <div class="d-block" >
                                               <canvas #baseChart id="chart-1">
                                               </canvas>
                                             </div>
+                                          </div>
+                                          <div class="card-body mb-3">
+                                            <div class="box-header with-border" style="margin:1rem; ">
+                                              <h5 class="box-title">Comparativo del mes anterior</h5>
+                                            </div> 
+                                            <div class="col-md-12 div_panel_cabecera">
+                                                  <div class="col-md-4 col-sm-6 col-xs-12">
+                                                    <div class="description-block border-right">
+                                                        <span class="description-percentage text-green" [ngClass]="{'text-red': porcCompaMesAntRealizas < 0 }">
+                                                          <i class="fa fa-caret-up" *ngIf="porcCompaMesAntRealizas > 0"></i>
+                                                          <i class="fa fa-caret-down" *ngIf="porcCompaMesAntRealizas < 0"></i>
+                                                          <div>{{porcCompaMesAntRealizas}} %</div>
+                                                        </span>
+                                                        <h5 class="description-header" >{{resumenMesAnterior.total | number: '1.0-0'}}</h5>
+                                                        <span class="description-text">REALIZADAS</span>
+                                                    </div><!-- /.description-block -->
+                                                  </div><!-- /.col -->
+                                                  <div class="col-md-4 col-sm-6 col-xs-12">
+                                                    <div class="description-block border-right">
+                                                      <span class="description-percentage text-green" [ngClass]="{'text-red': porcCompaMesAntAusentismo < 0 }">
+                                                        <i class="fa fa-caret-up" *ngIf="porcCompaMesAntAusentismo > 0"></i>
+                                                        <i class="fa fa-caret-down" *ngIf="porcCompaMesAntAusentismo < 0"></i>
+                                                        <div>{{porcCompaMesAntAusentismo}} %</div>
+                                                      </span>
+                                                        <h5 class="description-header" >{{resumenMesAnterior.ausentismo | number: '1.0-0'}}</h5>
+                                                        <span class="description-text">AUSENTISMO</span>
+                                                    </div><!-- /.description-block -->
+                                                  </div><!-- /.col -->
+                                                  <div class="col-md-4 col-sm-6 col-xs-12">
+                                                    <div class="description-block border-right">
+                                                      <span class="description-percentage text-green" [ngClass]="{'text-red': porcCompaMesAntReservadas < 0 }">
+                                                        <i class="fa fa-caret-up" *ngIf="porcCompaMesAntReservadas > 0"></i>
+                                                        <i class="fa fa-caret-down" *ngIf="porcCompaMesAntReservadas < 0"></i>
+                                                        <div>{{porcCompaMesAntReservadas}} %</div>
+                                                      </span>
+                                                      <h5 class="description-header" >{{resumenMesAnterior.reservadas | number: '1.0-0'}}</h5>
+                                                      <span class="description-text">RESERVADAS</span>
+                                                    </div><!-- /.description-block -->
+                                                  </div><!-- /.col -->
+                                            </div>
+                                            <hr>
                                           </div>
                                         </div>
                                         <div class="col-md-4">
@@ -286,47 +353,10 @@
                                             </div> -->
                                           </div>
                                         </div>
+                                        
                                       </div>
                                     </div>
-                                    <div class="box-header with-border" style="margin:1rem; ">
-                                      <h5 class="box-title">Comparativo del mes anterior</h5>
-                                    </div> 
-                                    <div class="col-md-12 div_panel_cabecera">
-                                          <div class="col-md-3 col-sm-6 col-xs-12">
-                                            <div class="description-block border-right">
-                                                <span class="description-percentage text-green" [ngClass]="{'text-red': porcCompaMesAntRealizas < 0 }">
-                                                  <i class="fa fa-caret-up" *ngIf="porcCompaMesAntRealizas > 0"></i>
-                                                  <i class="fa fa-caret-down" *ngIf="porcCompaMesAntRealizas < 0"></i>
-                                                  <div>{{porcCompaMesAntRealizas}} %</div>
-                                                </span>
-                                                <h5 class="description-header" >{{resumenMesAnterior.total | number: '1.0-0'}}</h5>
-                                                <span class="description-text">REALIZADAS</span>
-                                            </div><!-- /.description-block -->
-                                          </div><!-- /.col -->
-                                          <div class="col-md-3 col-sm-6 col-xs-12">
-                                            <div class="description-block border-right">
-                                              <span class="description-percentage text-green" [ngClass]="{'text-red': porcCompaMesAntAusentismo < 0 }">
-                                                <i class="fa fa-caret-up" *ngIf="porcCompaMesAntAusentismo > 0"></i>
-                                                <i class="fa fa-caret-down" *ngIf="porcCompaMesAntAusentismo < 0"></i>
-                                                <div>{{porcCompaMesAntAusentismo}} %</div>
-                                              </span>
-                                                <h5 class="description-header" >{{resumenMesAnterior.ausentismo | number: '1.0-0'}}</h5>
-                                                <span class="description-text">AUSENTISMO</span>
-                                            </div><!-- /.description-block -->
-                                          </div><!-- /.col -->
-                                          <div class="col-md-3 col-sm-6 col-xs-12">
-                                            <div class="description-block border-right">
-                                              <span class="description-percentage text-green" [ngClass]="{'text-red': porcCompaMesAntReservadas < 0 }">
-                                                <i class="fa fa-caret-up" *ngIf="porcCompaMesAntReservadas > 0"></i>
-                                                <i class="fa fa-caret-down" *ngIf="porcCompaMesAntReservadas < 0"></i>
-                                                <div>{{porcCompaMesAntReservadas}} %</div>
-                                              </span>
-                                               <h5 class="description-header" >{{resumenMesAnterior.reservadas | number: '1.0-0'}}</h5>
-                                               <span class="description-text">RESERVADAS</span>
-                                            </div><!-- /.description-block -->
-                                          </div><!-- /.col -->
-                                      
-                                    </div>
+
                                     <div class="box-header with-border" style="margin:1rem; ">
                                       <h5 class="box-title">Costo por atenciones realizadas: <b> S/ {{resumenMontos.montoTotal | number : '1.2-2' }}</b>
                                       </h5>
@@ -388,7 +418,7 @@
                             <ng-template ngbNavContent>
                                 <div class="card" *ngIf="action">
                                     <div class="card-header">
-                                      <h4 class="card-title" style="bottom:13px;">Atenciones por Consulta Externa</h4>
+                                      <h4 class="card-title" style="bottom:13px;">Distribución de Atenciones en Consultorios Externos - Sede: {{id_sede === '0001' ? 'Lima' : id_sede === '0002' ? 'Surco' : 'Chorrillos'}}, Periodo: {{periodo_consulta}}</h4>
                                       <p>{{message}}</p>
                                     </div>
                                     <div class="card-content collapse show">
@@ -413,7 +443,7 @@
                                           <div class="box box-solid">
                                             <div id="accordion1">
                                               <div class="card">
-                                                <div class="card-header" >
+                                                <div class="card-header-info" >
                                                   <div class="box-header">
                                                     <div class="toggle-table">
                                                       <div class="callout callout-info">
@@ -470,7 +500,6 @@
                                                     [rows]="rows1filtered"
                                                     [columnMode]="ColumnMode.flex"
                                                     [headerHeight]="50"
-                                                    [footerHeight]="65"
                                                     [rowHeight]="$any('auto')"
                                                     [scrollbarH]="true"
                                                     (page)="setPage($event)"
@@ -498,7 +527,7 @@
                                                 </div>
                                               </div>
                                               <div class="card">
-                                                <div class="card-header" >
+                                                <div class="card-header-info" >
                                                   <div class="box-header">
                                                     <div class="toggle-table">
                                                       <div class="callout callout-info">
@@ -551,7 +580,6 @@
                                                     [rows]="rows2"
                                                     [columnMode]="ColumnMode.flex"
                                                     [headerHeight]="50"
-                                                    [footerHeight]="65"
                                                     [rowHeight]="$any('auto')"
                                                     [scrollbarH]="true"
                                                     (page)="setPage($event)"
@@ -578,7 +606,7 @@
                                                 </div>
                                               </div>
                                               <div class="card">
-                                                <div class="card-header" >
+                                                <div class="card-header-info" >
                                                   <div class="box-header">
                                                     <div class="toggle-table">
                                                       <div class="callout callout-info">
@@ -672,7 +700,7 @@
                                                 </div>
                                               </div>
                                               <div class="card">
-                                                <div class="card-header" >
+                                                <div class="card-header-info" >
                                                   <div class="box-header">
                                                     <div class="toggle-table">
                                                       <div class="callout callout-info">
@@ -764,7 +792,7 @@
                                                 </div>
                                               </div>
                                               <div class="card">
-                                                <div class="card-header" >
+                                                <div class="card-header-info" >
                                                   <div class="box-header">
                                                     <div class="toggle-table">
                                                       <div class="callout callout-info">
@@ -859,7 +887,7 @@
                                                 </div>
                                               </div>
                                               <div class="card" *ngIf="medicos">
-                                                <div class="card-header" *ngIf="medicos">
+                                                <div class="card-header-info" *ngIf="medicos">
                                                   <div class="box-header">
                                                     <div class="toggle-table">
                                                       <div class="callout callout-info">
@@ -963,7 +991,7 @@
                             <ng-template ngbNavContent>
                                 <div class="card" *ngIf="action">
                                     <div class="card-header">
-                                      <h4 class="card-title" style="bottom:13px;">Atenciones por Consulta Externa</h4>
+                                      <h4 class="card-title" style="bottom:13px;">Resumen de Inasistencia Médica - Sede: {{id_sede === '0001' ? 'Lima' : id_sede === '0002' ? 'Surco' : 'Chorrillos'}}, Periodo: {{periodo_consulta}}</h4>
                                       <p>{{message}}</p>
                                     </div>
                                     <div class="card-content collapse show">
@@ -988,7 +1016,7 @@
                                           <div class="box box-solid">
                                             <div id="accordion2">
                                               <div class="card">
-                                                <div class="card-header" >
+                                                <div class="card-header-info" >
                                                   <div class="box-header">
                                                     <div class="toggle-table">
                                                       <div class="callout callout-info">
@@ -1118,11 +1146,11 @@
                             </ng-template>
                         </li>
                         <li [ngbNavItem]="4">
-                            <a ngbNavLink>Indicadores</a>
+                            <a ngbNavLink>Resumen</a>
                             <ng-template ngbNavContent>
                                 <div class="card" *ngIf="action">
                                     <div class="card-header">
-                                      <h4 class="card-title" style="bottom:13px;">Atenciones por Consulta Externa</h4>
+                                      <h4 class="card-title" style="bottom:13px;">Resumen para Reservas en Consultorios Externos - Sede: {{id_sede === '0001' ? 'Lima' : id_sede === '0002' ? 'Surco' : 'Chorrillos'}}, Periodo: {{periodo_consulta}}</h4>
                                       <p>{{message}}</p>
                                     </div>
                                     <div class="card-content collapse show">
@@ -1147,11 +1175,11 @@
                                           <div class="box box-solid">
                                             <div id="accordion3">
                                               <div class="card">
-                                                <div class="card-header" >
+                                                <div class="card-header-info" >
                                                   <div class="box-header">
                                                     <div class="toggle-table">
                                                       <div class="callout callout-info">
-                                                        <h3 class="box-title">INDICADORES</h3>
+                                                        <h3 class="box-title">RESUMEN</h3>
                                                       </div>
                                                       <button type="button" class="btn btn-outline-primary" (click)="collapse7.toggle()" [attr.aria-expanded]="!isCollapsed7"
                                                       aria-controls="collapseExample">
@@ -1225,7 +1253,7 @@
                             <ng-template ngbNavContent>
                                 <div class="card" *ngIf="action">
                                     <div class="card-header">
-                                      <h4 class="card-title" style="bottom:13px;">Atenciones por Consulta Externa</h4>
+                                      <h4 class="card-title" style="bottom:13px;">Margen de Utilidad de Atenciones Realizadas en Consultorios Externos - Sede: {{id_sede === '0001' ? 'Lima' : id_sede === '0002' ? 'Surco' : 'Chorrillos'}}, Periodo: {{periodo_consulta}}</h4>
                                       <p>{{message}}</p>
                                     </div>
                                     <div class="card-content collapse show">
@@ -1250,7 +1278,7 @@
                                           <div class="box box-solid">
                                             <div id="accordion4">
                                               <div class="card">
-                                                <div class="card-header" >
+                                                <div class="card-header-info" >
                                                   <div class="box-header">
                                                     <div class="toggle-table">
                                                       <div class="callout callout-info">
@@ -1337,7 +1365,7 @@
                                                 </div>
                                               </div>
                                               <div class="card">
-                                                <div class="card-header" >
+                                                <div class="card-header-info" >
                                                   <div class="box-header">
                                                     <div class="toggle-table">
                                                       <div class="callout callout-info">
@@ -1414,7 +1442,7 @@
                                                 </div>
                                               </div>
                                               <div class="card">
-                                                <div class="card-header" >
+                                                <div class="card-header-info" >
                                                   <div class="box-header">
                                                     <div class="toggle-table">
                                                       <div class="callout callout-info">

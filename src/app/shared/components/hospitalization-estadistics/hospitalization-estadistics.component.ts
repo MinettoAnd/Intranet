@@ -48,13 +48,13 @@ export class HospitalizationEstadisticsComponent implements OnInit {
       // initially setter gets called with undefined
       this.baseChart = content;
       if (this.baseChart.nativeElement.id === 'chart-1'){
-        this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del Mes', 'N° Pacientes','chart-1', 'Internados', 'Internados Ingresados x Emer.', 'bar');
+        this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día', 'N° Pacientes','chart-1', 'Internados', 'Internados Ingresados x Emer.', 'bar');
         this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'doughnut');
       }else if (this.baseChart.nativeElement.id === 'chart-3'){
-        this.getBarChart(this.chartLabels3, this.chartData4, this.chartData5,'Día del Mes', 'N° Pacientes','chart-3', 'Ingresos x Hosp.', 'Ingresos x Emergencia.', 'bar');
+        this.getBarChart(this.chartLabels3, this.chartData4, this.chartData5,'Día', 'N° Pacientes','chart-3', 'Ingresos x Hosp.', 'Ingresos x Emergencia.', 'bar');
         this.getPieChart(this.chartLabels4, this.chartData6,'chart-4', 'doughnut');
       }else if (this.baseChart.nativeElement.id === 'chart-5'){
-        this.getBarChart(this.chartLabels5, this.chartData7, this.chartData8,'Día del Mes', 'N° Pacientes','chart-5', 'Altas x Hosp.', 'Ingresos x Hosp.', 'bar');
+        this.getBarChart(this.chartLabels5, this.chartData7, this.chartData8,'Día', 'N° Pacientes','chart-5', 'Altas x Hosp.', 'Ingresos x Hosp.', 'bar');
       }
     }
   }
@@ -789,7 +789,7 @@ action: boolean = false;
                 // this.resumenMontos = response.data;
                 
               }
-              this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del Mes', 'N° Pacientes','chart-1', 'Internados', 'Internados Ingresados x Emer.', 'bar');
+              this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día', 'N° Pacientes','chart-1', 'Internados', 'Internados Ingresados x Emer.', 'bar');
               Swal.close();
             },
             (error) => {
@@ -818,7 +818,7 @@ action: boolean = false;
                 // this.resumenMontos = response.data;
                 
               }
-              this.getBarChart(this.chartLabels3, this.chartData4, this.chartData5,'Día del Mes', 'N° Pacientes','chart-3', 'Ingresos x Hosp.', 'Ingresos x Emergencia.', 'bar');
+              this.getBarChart(this.chartLabels3, this.chartData4, this.chartData5,'Día', 'N° Pacientes','chart-3', 'Ingresos x Hosp.', 'Ingresos x Emergencia.', 'bar');
               Swal.close();
             },
             (error) => {
@@ -847,7 +847,7 @@ action: boolean = false;
               // this.resumenMontos = response.data;
               
             }
-            this.getBarChart(this.chartLabels5, this.chartData7, this.chartData8,'Día del mes seleccionado', 'N° Pacientes','chart-5', 'Altas x Hosp.', 'Ingresos x Hosp.', 'bar');
+            this.getBarChart(this.chartLabels5, this.chartData7, this.chartData8,'Día', 'N° Pacientes','chart-5', 'Altas x Hosp.', 'Ingresos x Hosp.', 'bar');
             Swal.close();
           },
           (error) => {
@@ -1787,7 +1787,7 @@ private getPagedData(page: Page, data: any[]) {
                   // this.resumenMontos = response.data;
                   
                 }
-                this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del Mes', 'N° Pacientes','chart-1', 'Internados', 'Internados Ingresados x Emer.', 'bar');
+                this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día', 'N° Pacientes','chart-1', 'Internados', 'Internados Ingresados x Emer.', 'bar');
                 Swal.close();
               },
               (error) => {

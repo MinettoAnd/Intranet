@@ -67,10 +67,10 @@ export class DashboardSeguimientoMorososComponent implements OnInit {
       // initially setter gets called with undefined
       this.baseChart = content;
       if (this.baseChart.nativeElement.id === 'chart-1'){
-        this.grafico = this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del mes seleccionado', 'N° Contratos','chart-1','Contratos Gestionados', 'Contratos con Compromiso de Pago', 'bar');
+        this.grafico = this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día', 'N° Contratos','chart-1','Contratos Gestionados', 'Contratos con Compromiso de Pago', 'bar');
         
       }else if (this.baseChart.nativeElement.id === 'chart-2'){
-        this.getBarChart(this.chartLabels2, this.chartData3, this.chartData4,'Día del mes seleccionado', 'N° Contratos','chart-3', 'C.E Reservada', 'C.E Realizada', 'bar');
+        this.getBarChart(this.chartLabels2, this.chartData3, this.chartData4,'Día', 'N° Contratos','chart-3', 'C.E Reservada', 'C.E Realizada', 'bar');
         
       }
     }

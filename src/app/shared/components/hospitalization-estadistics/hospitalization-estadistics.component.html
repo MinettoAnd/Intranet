@@ -225,11 +225,47 @@
                                               </canvas>
                                             </div>
                                           </div>
-                                          <!-- <div class="card-body" *ngIf="selectedOptionGraph1 !== 'ingresos_emergencia'">
-                                            <div class="d-block" >
-                                              
-                                            </div>
-                                          </div> -->
+                                          <div class="card-body mb-3">
+                                            <div class="box-header with-border" style="margin:1rem; ">
+                                              <h5 class="box-title">Comparativo del mes anterior</h5>
+                                            </div> 
+                                            <div class="col-md-12 div_panel_cabecera">
+                                                  <div class="col-md-4 col-sm-6 col-xs-12">
+                                                    <div class="description-block border-right">
+                                                        <span class="description-percentage text-green" [ngClass]="{'text-red': porcCompaMesAntIngr < 0 }">
+                                                          <i class="fa fa-caret-up" *ngIf="porcCompaMesAntIngr > 0"></i>
+                                                          <i class="fa fa-caret-down" *ngIf="porcCompaMesAntIngr < 0"></i>
+                                                          <div>{{porcCompaMesAntIngr}} %</div>
+                                                        </span>
+                                                        <h5 class="description-header" >{{resumenMesAnterior.total}}</h5>
+                                                        <span class="description-text">INGRESOS</span>
+                                                    </div>
+                                                  </div>
+                                                  <div class="col-md-4 col-sm-6 col-xs-12">
+                                                    <div class="description-block border-right">
+                                                      <span class="description-percentage text-green" [ngClass]="{'text-red': porcCompaMesAntAltas < 0 }">
+                                                        <i class="fa fa-caret-up" *ngIf="porcCompaMesAntAltas > 0"></i>
+                                                        <i class="fa fa-caret-down" *ngIf="porcCompaMesAntAltas < 0"></i>
+                                                        <div>{{porcCompaMesAntAltas}} %</div>
+                                                      </span>
+                                                        <h5 class="description-header" >{{resumenMesAnterior.altas}}</h5>
+                                                        <span class="description-text">ALTAS</span>
+                                                    </div>
+                                                  </div>
+                                                  <div class="col-md-4 col-sm-6 col-xs-12">
+                                                    <div class="description-block border-right">
+                                                      <span class="description-percentage text-green" [ngClass]="{'text-red': porcCompaMesAntIngrEmerg < 0 }">
+                                                        <i class="fa fa-caret-up" *ngIf="porcCompaMesAntIngrEmerg > 0"></i>
+                                                        <i class="fa fa-caret-down" *ngIf="porcCompaMesAntIngrEmerg < 0"></i>
+                                                        <div>{{porcCompaMesAntIngrEmerg}} %</div>
+                                                      </span>
+                                                       <h5 class="description-header" >{{resumenMesAnterior.emergencia}}</h5>
+                                                       <span class="description-text">ING X EMERGENCIA</span>
+                                                    </div>
+                                                  </div>
+                                              </div>
+                                            <hr>
+                                          </div>
                                         </div>
                                         <div class="col-md-4">
                                           <p class="text-center">
@@ -296,77 +332,11 @@
                                                 </ng-template>
                                               </ngb-panel>
                                             </ngb-accordion>
-                                            <!-- <div class="d-block" *ngFor="let percentageCompleted of progressBar1; let i = index;">
-                                              <span style="display:flex; justify-content: space-between;"><i><b>{{progressBarLabels[i]}}</b></i><i>{{percentageCompleted.value}} - [{{percentageCompleted.porcentaje}}] %</i></span>
-                                                <ngb-progressbar
-                                                    [type]="color[i]"
-                                                    [value]="percentageCompleted.porcentaje"
-                                                    [striped]="false"
-                                                    [animated]="false">
-                                                </ngb-progressbar>
-                                                <p></p>
-                                                <div id="div_ocultar_tarjetas" style="margin-bottom: 15px; display: block;">
-                                                  <table class="table table-bordered">
-                                                     <thead>
-                                                        <tr>
-                                                           <th></th>
-                                                           <th>Cantidad</th>
-                                                           <th>Porcentaje</th>
-                                                        </tr>
-                                                     </thead>
-                                                       <tbody *ngFor="let rowTable of percentageCompleted.table; let i = index;">
-                                                        <tr style="font-size:16px;">
-                                                           <td>{{rowTable.programa }}</td>
-                                                           <td><strong><span>{{rowTable.cantidad}}</span></strong></td>
-                                                           <td><strong><span>{{rowTable.porcentaje}}</span></strong></td>
-                                                        </tr>
-                                                      </tbody>
-                                                  </table>
-                                               </div>
-                                            </div> -->
                                           </div>
                                         </div>
                                       </div>
                                     </div>
-                                    <div class="box-header with-border" style="margin:1rem; ">
-                                      <h5 class="box-title">Comparativo del mes anterior</h5>
-                                    </div> 
-                                    <div class="col-md-12 div_panel_cabecera">
-                                          <div class="col-md-3 col-sm-6 col-xs-12">
-                                            <div class="description-block border-right">
-                                                <span class="description-percentage text-green" [ngClass]="{'text-red': porcCompaMesAntIngr < 0 }">
-                                                  <i class="fa fa-caret-up" *ngIf="porcCompaMesAntIngr > 0"></i>
-                                                  <i class="fa fa-caret-down" *ngIf="porcCompaMesAntIngr < 0"></i>
-                                                  <div>{{porcCompaMesAntIngr}} %</div>
-                                                </span>
-                                                <h5 class="description-header" >{{resumenMesAnterior.total}}</h5>
-                                                <span class="description-text">INGRESOS</span>
-                                            </div>
-                                          </div>
-                                          <div class="col-md-3 col-sm-6 col-xs-12">
-                                            <div class="description-block border-right">
-                                              <span class="description-percentage text-green" [ngClass]="{'text-red': porcCompaMesAntAltas < 0 }">
-                                                <i class="fa fa-caret-up" *ngIf="porcCompaMesAntAltas > 0"></i>
-                                                <i class="fa fa-caret-down" *ngIf="porcCompaMesAntAltas < 0"></i>
-                                                <div>{{porcCompaMesAntAltas}} %</div>
-                                              </span>
-                                                <h5 class="description-header" >{{resumenMesAnterior.altas}}</h5>
-                                                <span class="description-text">ALTAS</span>
-                                            </div>
-                                          </div>
-                                          <div class="col-md-3 col-sm-6 col-xs-12">
-                                            <div class="description-block border-right">
-                                              <span class="description-percentage text-green" [ngClass]="{'text-red': porcCompaMesAntIngrEmerg < 0 }">
-                                                <i class="fa fa-caret-up" *ngIf="porcCompaMesAntIngrEmerg > 0"></i>
-                                                <i class="fa fa-caret-down" *ngIf="porcCompaMesAntIngrEmerg < 0"></i>
-                                                <div>{{porcCompaMesAntIngrEmerg}} %</div>
-                                              </span>
-                                               <h5 class="description-header" >{{resumenMesAnterior.emergencia}}</h5>
-                                               <span class="description-text">ING X EMERGENCIA</span>
-                                            </div>
-                                          </div>
-                                      
-                                    </div>
+                                    
                                     <div class="box-header with-border" style="margin:1rem; ">
                                       <h5 class="box-title">Ingreso de Efectivo por Caja: <b> S/ {{resumenMontos.montoTotal | number : '1.2-2' }}</b>
                                       </h5>

@@ -4,7 +4,7 @@ import { PiecharComponent } from './components/piechar/piechar.component';
 import { BarcharComponent } from './components/barchar/barchar.component';
 import { ComercialEstadisticasComponent } from './components/comercial-estadisticas/comercial-estadisticas.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { NgbModule, NgbNavModule } from "@ng-bootstrap/ng-bootstrap";
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { EmergenciesEstadisticsComponent } from './components/emergencies-estadistics/emergencies-estadistics.component';
 import { ExternalConsultationEstadisticsComponent } from './components/external-consultation-estadistics/external-consultation-estadistics.component';
@@ -21,6 +21,11 @@ import { DashIndicadoresComponent } from './components/dashboards/dash-indicador
 import { PanelCabeceraComponent } from './components/dashboards/panel-cabecera/panel-cabecera.component';
 import { LiquidacionEmpresasComponent } from './components/liquidacion-empresas/liquidacion-empresas.component';
 import { BancoTerapiaEstadisticasComponent } from './components/banco-terapia-estadisticas/banco-terapia-estadisticas.component';
+import { EstadisticaResumenColaboradoresComponent } from './components/rrhh/estadistica-resumen-colaboradores/estadistica-resumen-colaboradores.component';
+import { PeriodoComponent } from './components/filtros/periodo/periodo.component';
+import { ResumenColaboradoresComponent } from './components/dashboards/resumen-colaboradores/resumen-colaboradores.component';
+import { HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
@@ -40,6 +45,10 @@ import { BancoTerapiaEstadisticasComponent } from './components/banco-terapia-es
     PanelCabeceraComponent,
     LiquidacionEmpresasComponent,
     BancoTerapiaEstadisticasComponent,
+    EstadisticaResumenColaboradoresComponent,
+    PeriodoComponent,
+    ResumenColaboradoresComponent,
+
   ],
   imports: [
     AgGridModule.withComponents([LinkRendererComponent]),
@@ -47,6 +56,10 @@ import { BancoTerapiaEstadisticasComponent } from './components/banco-terapia-es
     CommonModule,
     NgxDatatableModule,
     NgbModule,
+    // NgbNavModule,
+    // HttpClientModule,
+    // NavigationMenuComponent,
+    // TabComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   exports: [
@@ -63,7 +76,11 @@ import { BancoTerapiaEstadisticasComponent } from './components/banco-terapia-es
     DashIndicadoresComponent,
     PanelCabeceraComponent,
     LiquidacionEmpresasComponent,
-    BancoTerapiaEstadisticasComponent
+    BancoTerapiaEstadisticasComponent,
+    EstadisticaResumenColaboradoresComponent,
+    PeriodoComponent,
+    ResumenColaboradoresComponent,
+
   ],
 })
 export class SharedModule { }

@@ -846,7 +846,7 @@ this.loading();
                 
               }
               if(!this.grafico1){
-                this.grafico1 = this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del mes seleccionado', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
+                this.grafico1 = this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
               }else{
                 var data = [];
                 data.push(this.chartData1, this.chartData2);
@@ -878,7 +878,7 @@ this.loading();
                 
               }
               if(!this.grafico3){
-                this.grafico3 = this.getBarChart(this.chartLabels3, this.chartData4, this.chartData5,'Día del mes seleccionado', 'N° Pacientes','chart-3', 'C.E Reservada', 'C.E Realizada', 'bar');
+                this.grafico3 = this.getBarChart(this.chartLabels3, this.chartData4, this.chartData5,'Día', 'N° Pacientes','chart-3', 'C.E Reservada', 'C.E Realizada', 'bar');
               }else{
                 var data = [];
                 data.push(this.chartData4, this.chartData5);
@@ -1633,7 +1633,7 @@ private getPagedData(page: Page, data: any[]) {
                   
                 }
                 if(!this.grafico1){
-                  this.grafico1 = this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del mes seleccionado', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
+                  this.grafico1 = this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
                 }else{
                   var data = [];
                   data.push(this.chartData1, this.chartData2);
