@@ -36,6 +36,19 @@ export class ResumenColaboradoresComponent implements OnInit {
   enableSummary = true;
   summaryPosition = 'bottom';
   filtroForm: FormGroup;
+  tabs = [
+    {
+      id: 1,
+      label: 'Cantidades',
+      template: null,
+    },
+    {
+      id: 2,
+      label: 'Indicadores',
+      template: null,
+    },
+  ];
+
   @BlockUI('addRows') blockUIAddRows: NgBlockUI;
   @BlockUI('rowSelection') blockUIRowSelection: NgBlockUI;
 
@@ -190,6 +203,10 @@ export class ResumenColaboradoresComponent implements OnInit {
   panelOptions;
   panelOptions2;
   isLoading: Boolean = false;
+  masDeDiez;
+  nuevos;
+  cesados;
+  continuadores;
   constructor(private tableApiservice: RecursosHumanosService, private exportService: ExportService, private _cnp:CustomNumberPipe,
     private _cp: CurrencyPipe, private _phone: PhonePipe, private _ndp:NumberDecimalPipe, private modalService: NgbModal, public dataService: DataService) {
     this.page.pageNumber = 0;
@@ -220,6 +237,7 @@ export class ResumenColaboradoresComponent implements OnInit {
       (data) => {
         this.parameters = data;
         console.log(193, this.parameters)
+        this.action = true;
         this.setPage({ offset: 0 });
       }
       );
@@ -522,7 +540,7 @@ export class ResumenColaboradoresComponent implements OnInit {
  }
   setPage(pageInfo) {
     console.log(pageInfo);
-    this.selectedOptionPeriodo = this.periodo;
+    this.selectedOptionPeriodo = this.parameters.periodo;
     // this.page.pageNumber = pageInfo.offset;
     // this.parameters = {
     //   anio: this.anio,
@@ -544,44 +562,107 @@ export class ResumenColaboradoresComponent implements OnInit {
           this.title = response.data.title;
   
           // this.temp = this.rows;
-          this.columns1 = this.data.cabeceras_kpi_colaboradores;
-          this.rows1 = this.data.tabla_kpi_colaboradores;
-          this.subRows1 = this.data.sub_tabla_kpi_colaboradores;
-          console.log(446, response);
+          this.columns1 = this.data.cabeceras_colaboradores_sede;
+          this.rows1 = this.data.tabla_colaboradores_sede;
 
-          this.columns2 = this.data.cabeceras_kpi_planillas;
-          this.rows2 = this.data.tabla_kpi_planillas;
+          this.columns2 = this.data.cabeceras_colaboradores_estado;
+          this.rows2 = this.data.tabla_colaboradores_estado;
+
+          this.rows2.map(item =>{
+            const mItem = 'Mes'+ item.mesActual;
+              if (item.concepto.trim() === 'NUEVO'){
+                this.nuevos = item[mItem];
+                // console.log(nuevos)
+              }else if (item.concepto.trim() === 'CESADO'){
+                this.cesados = item[mItem];
+              }else if (item.concepto.trim() === 'CONTINUADOR'){
+                this.continuadores = item[mItem];
+              }
+            this.totalEmpleados = Number(this.nuevos) + Number(this.cesados) + Number(this.continuadores)
+          })
+          this.columns3 = this.data.cabeceras_colaboradores_tipo_planilla;
+          this.rows3 = this.data.tabla_colaboradores_tipo_planilla;
+
+          this.columns4 = this.data.cabeceras_colaboradores_sexo;
+          this.rows4 = this.data.tabla_colaboradores_sexo;
+
+          this.columns5 = this.data.cabeceras_colaboradores_tiempo_laborado;
+          this.rows5 = this.data.tabla_colaboradores_tiempo_laborado;
           
-          this.columns3 = this.data.cabeceras_kpi_planillas_subsidio;
-          this.rows3 = this.data.tabla_kpi_planillas_subsidio;
+          this.columns6 = this.data.cabeceras_kpi_colaboradores;
+          this.rows6 = this.data.sub_tabla_kpi_colaboradores;
+          this.rows6.map(item =>{
+            if (item.concepto.trim() === 'Promedio de Permanencia Laboral (*)'){
+              const minutosPorAnio = 365 * 24 * 60;
+              const mesesPorAnio = 12;
+              for (var i = 1; i <= 13; i++) {
+                const mesItem = 'Mes'+ i;
+                var anios = Math.floor(Number(item[mesItem]) / minutosPorAnio);
+                console.log(591, item[mesItem], (Number(item[mesItem]) / minutosPorAnio))
+                  var mesesRestantes = Math.floor((Number(item[mesItem]) % minutosPorAnio) / (minutosPorAnio / mesesPorAnio));
+                 item[mesItem] = anios + " A " + mesesRestantes + " m";
+                }
+              }
+          })
 
-          this.columns4 = this.data.cabeceras_kpi_planillas_dscto;
+          this.data.tabla_mas_10_anios.map(item =>{
+            const myItem = 'Mes'+ item.mesActual;
+              if (item.concepto.trim() === 'Más de 10 años'){
+                this.masDeDiez = item[myItem];
+                // console.log(masDeDiez)
+              }
+          })
+          const pocNuevos = Number(this.nuevos)/Number(this.totalEmpleados) * 100
+          const pocCesados = Number(this.cesados)/Number(this.totalEmpleados) * 100
+          const pocContinuadores = Number(this.continuadores)/Number(this.totalEmpleados) * 100
+          const pocMasDeDiez = Number(this.masDeDiez)/Number(this.totalEmpleados) * 100
+          this.panelOptions = [
+            {
+              infoBox: 'infoBoxAzul ',
+              iconClass: 'fa fa-plus-square-o',
+              title: 'NUEVOS',
+              arrow: true,
+              iconArrow: 'iconArrow',
+              totalSubtitle: this._cnp.transform(this.nuevos),
+              subtitle: '',
+              totalSubSubtitle: this._cnp.transform(pocNuevos),
+              subSubtitle: '%',
+            },
+            {
+              infoBox: 'infoBoxRojo ',
+              iconClass: 'fa fa-thumbs-down',
+              title: 'CESADOS',
+              arrow: true,
+              iconArrow: 'iconArrow1',
+              totalSubtitle: this._cnp.transform(this.cesados),
+              subtitle: '',
+              totalSubSubtitle: this._cnp.transform(pocCesados),
+              subSubtitle: '%',
+            },
+            {
+              infoBox: 'infoBoxVerde',
+              iconClass: 'fa fa-thumbs-up',
+              title: 'CONTINUADORES',
+              arrow: true,
+              iconArrow: 'iconArrow2',
+              totalSubtitle: this._cnp.transform(this.continuadores),
+              subtitle: '',
+              totalSubSubtitle: this._cnp.transform(pocContinuadores),
+              subSubtitle: '%',
+            },
+            {
+              infoBox: 'infoBoxAzulino',
+              iconClass: 'fa fa-clock-o',
+              title: 'CON MÁS DE 10 AÑOS',
+              arrow: true,
+              iconArrow: 'iconArrow3',
+              totalSubtitle: this._cnp.transform(this.masDeDiez),
+              subtitle: '',
+              totalSubSubtitle: this._cnp.transform(pocMasDeDiez),
+              subSubtitle: '%',
+            }
+          ]
 
-          this.rows4 = this.data.tabla_kpi_planillas_dscto;
-
-          this.columns5 = this.data.cabeceras_kpi_planillas_prestacion;
-          this.rows5 = this.data.tabla_kpi_planillas_prestacion;
-
-          this.columns6 = this.data.cabeceras_kpi_planillas_ingresos;
-          this.rows6 = this.data.tabla_kpi_planillas_ingresos;
-
-
-          // this.rows4filtered = this.rows4.filter(item => item.sucursal === 'TODAS');
-          // this.barChartLabels = [];
-          // this.barChartData1 = [];
-          // this.barChartData2 = [];
-          // this.barChartData3 = [];
-          // this.barChartData4 = [];
-          // this.data.hist_mensual.map(item => {
-          //   this.barChartLabels.push(item.name);
-          //   this.barChartData1.push(item.item_1);
-          //   this.barChartData2.push(item.item_2);
-          //   this.barChartData3.push(item.item_3)
-          //   this.barChartData4.push(item.item_4)
-          // })
-          // var data = [];
-          // data.push(this.barChartData1, this.barChartData2);
-          // this.addData(this.grafico1, this.barChartLabels, data)
 
             Swal.close();
         }else{

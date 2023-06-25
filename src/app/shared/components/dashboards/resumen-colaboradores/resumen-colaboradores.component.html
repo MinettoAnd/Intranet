@@ -1,4 +1,6 @@
-<div class="app-content content">
+<h4 class="card-title" *ngIf="action">PRODUCCIÓN DE GTH - Al Periodo {{selectedOptionPeriodo}}</h4>
+<app-panel-cabecera [panelCabecera] = "panelOptions" *ngIf="action"></app-panel-cabecera>
+<div class="app-content content" *ngIf="action">
     <div class="content-wrapper">
       <div class="content-header row mb-1">
         <app-breadcrumb class="col-12" [breadcrumb]="breadcrumb"></app-breadcrumb>
@@ -7,148 +9,29 @@
         <section id="selection-n-deletion">
           <div class="row">
             <div class="col-12">
-              <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs" style="justify-content: end;">
-                <ng-container>
-                  <li [ngbNavItem]="1">
-                    <a ngbNavLink>Cantidades</a>
-                    <ng-template ngbNavContent>
-                      <p>parafo</p>
-                    </ng-template>
-                  </li>
-                  <li [ngbNavItem]="2">
-                    <a ngbNavLink>Indicadores</a>
-                    <ng-template ngbNavContent>
-                      <div class="card">
-                        <div class="card-header">
-                          <h5 class="card-title" style="bottom:13px;">{{message}}</h5>
-                          <!-- <p>{{message}}</p> -->
-                          
-                        </div>
-                        <div class="card-content collapse show">
-                          <div class="card-body">
-                            <div class="table table-striped table-bordered selection-deletion-row">
-                              <div class="box box-solid">
-                                <div id="accordion1">
-                                  <div class="card">
-                                    <div class="card-header-info" >
-                                      <div class="box-header">
-                                        <div class="toggle-table">
-                                          <div class="callout callout-info">
-                                            <h3 class="box-title">COLABORADORES</h3>
-                                          </div>
-                                          <button type="button" class="btn btn-outline-primary" (click)="collapse1.toggle()" [attr.aria-expanded]="!isCollapsed1"
-                                          aria-controls="collapseExample">
-                                          <i class="fa fa-minus" *ngIf="!isCollapsed1"> </i>
-                                          <i class="fa fa-plus" *ngIf="isCollapsed1"> </i> 
-                                          </button>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div #collapse1="ngbCollapse" [(ngbCollapse)]="isCollapsed1">
-                                        <div class="row" style="align-items: center;justify-content: space-between;">
-                                          <ul class="list-group list-group-horizontal list-group-flush">
-                                            <li class="list-group-item border-0 pl-0">
-                                              <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(1)">
-                                                <i class="fa fa-external-link"></i>
-                                                Copiar tabla
-                                              </button>
-                                            </li>
-                                            <li class="list-group-item border-0 pl-0">
-                                              <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(1)">
-                                                <i class="fa fa-external-link"></i>
-                                                Exportar tabla a Excel
-                                              </button>
-                                            </li>
-                                          </ul>
-                                        </div>
-                                        <ngx-datatable #myTable1
-                                        class="bootstrap table table-striped"
-                                        id="datatablele"
-                                          [columns]="columns1"
-                                          [rows]="rows1"
-                                          [columnMode]="ColumnMode.force"
-                                          [headerHeight]="50"
-                                          [rowHeight]="$any('auto')"
-                                          [scrollbarH]="true"
-                                          [rowClass] = "getRowClass"
-                                          >
-                                          <ngx-datatable-column  [headerClass]="column.headerClass" [cellClass]="column.cellClass" [flexGrow]="1" [width]="column.width" *ngFor="let column of columns1; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
-                                            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
-                                              let-row="row">
-                                              <div [ngClass]="{'row-paddin': row.concepto.includes('LIMA') || row.concepto.includes('CHORRILLOS') || row.concepto.includes('SURCO') }">
-                                                <span *ngIf="column.prop == 'concepto'">{{value}}</span>
-                                                  <i class="fa fa-arrow-down text-blue" *ngIf="row.concepto === 'Colaboradores Respecto Mes Anterior' && value < 0"></i>
-                                                  <i class="fa fa-arrow-up text-red" *ngIf="row.concepto === 'Colaboradores Respecto Mes Anterior' && value > 0"></i>
+              <div class="app-content content">
+                <app-content-wrapper>
+                  <div class="app-content content">
+                    <app-content-wrapper>
+                      <app-content-section 
+                      [columns0]="columns1" [rows0]="rows1" 
+                      [columns1]="columns2" [rows1]="rows2"
+                      [columns2]="columns3" [rows2]="rows3"
+                      [columns3]="columns4" [rows3]="rows4"
+                      [columns4]="columns5" [rows4]="rows5"
 
-
-                                                  <i class="fa fa-arrow-up text-blue" *ngIf="row.concepto === 'Proporcion de Cesados / Nuevos' && value > 0"></i>
-                                                  <i class="fa fa-arrow-up text-red" *ngIf="row.concepto === 'Proporcion de Cesados / Nuevos' && value < 0"></i>
-                                                <span *ngIf="column.prop !== 'concepto' && rowIndex < 14">{{value }}</span>
-                                                <span *ngIf="column.prop !== 'concepto' && rowIndex > 13">{{value }} %</span>
-                                              </div>
-                                            </ng-template>
-                                          </ngx-datatable-column>
-                                        </ngx-datatable>
-                                        <ngx-datatable #mySubTable1
-                                        class="bootstrap table table-striped"
-                                        id="datatablele"
-                                          [columns]="columns1"
-                                          [rows]="subRows1"
-                                          [columnMode]="ColumnMode.force"
-                                          [headerHeight]="50"
-                                          [rowHeight]="$any('auto')"
-                                          [scrollbarH]="true"
-                                          [rowClass] = "getRowClass"
-                                          >
-                                          <ngx-datatable-column  [headerClass]="column.headerClass" [cellClass]="column.cellClass" [flexGrow]="1" [width]="column.width" *ngFor="let column of columns1; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
-                                            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
-                                              let-row="row">
-                                              <div [ngClass]="{'row-paddin': row.concepto.includes('LIMA') || row.concepto.includes('CHORRILLOS') || row.concepto.includes('SURCO') }">
-                                                <span *ngIf="column.prop == 'concepto'">{{value}}</span>
-                                                  <i class="fa fa-arrow-down text-blue" *ngIf="row.concepto === 'Colaboradores Respecto Mes Anterior' && value < 0"></i>
-                                                  <i class="fa fa-arrow-up text-red" *ngIf="row.concepto === 'Colaboradores Respecto Mes Anterior' && value > 0"></i>
-
-
-                                                  <i class="fa fa-arrow-up text-blue" *ngIf="row.concepto === 'Proporcion de Cesados / Nuevos' && value > 0"></i>
-                                                  <i class="fa fa-arrow-up text-red" *ngIf="row.concepto === 'Proporcion de Cesados / Nuevos' && value < 0"></i>
-                                                <span *ngIf="column.prop !== 'concepto' && rowIndex < 14">{{value }}</span>
-                                                <span *ngIf="column.prop !== 'concepto' && rowIndex > 13">{{value }} %</span>
-                                              </div>
-                                            </ng-template>
-                                          </ngx-datatable-column>
-                                        </ngx-datatable>
-                                        <div class="ml-3">
-                                          <p>(*) No se incluyen los colaboradores nuevos en el periodo.<br>
-                                          (**) ((Nro.Cesados + Nro.Nuevos)/2 ) / Nro.Colaboradores</p>
-                                        </div>
-                                        
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                    </div>
-                    </ng-template>
-                  </li>
-                  
-                  <!-- <li [ngbNavItem]="3">
-                    <a ngbNavLink>tres</a>
-                    <ng-template ngbNavContent>
-                      <p>parafo</p>
-                    </ng-template>
-                  </li> -->
-                </ng-container>
-              </ul>
-              <div [ngbNavOutlet]="nav" class="mt-2"></div>
+                      [columns5]="columns6" [rows5]="rows6" 
+                      [tabs]="tabs">
+                      </app-content-section>
+                    </app-content-wrapper>
+                  </div>
+                </app-content-wrapper>
+              </div>
             </div>
           </div>
         </section>
       </div>
     </div>
   </div>
-
-
 
   

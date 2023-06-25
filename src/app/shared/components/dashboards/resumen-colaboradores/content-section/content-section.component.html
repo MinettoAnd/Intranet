@@ -1,0 +1,324 @@
+<ul ngbNav #nav="ngbNav" [(activeId)]="activeTabId" class="nav-tabs" style="justify-content: end;">
+  <li *ngFor="let tab of tabs" [ngbNavItem]="tab.id">
+    <a ngbNavLink>{{ tab.label }}</a>
+    <ng-template ngbNavContent>
+      <ng-container *ngIf="isActiveTab(tab.id)">
+        <ng-container [ngTemplateOutlet]="tab.template"></ng-container>
+      </ng-container>
+    </ng-template>
+  </li>
+</ul>
+
+<div [ngbNavOutlet]="nav" class="mt-2"></div>
+
+<ng-template #cantidadesTemplate>
+  <app-card [message]="message">
+    <app-accordion title="COLABORADORES">
+      <div class="row" style="align-items: center;justify-content: space-between;">
+        <ul class="list-group list-group-horizontal list-group-flush">
+          <li class="list-group-item border-0 pl-0">
+            <button type="button" (click)="showTableDasboard(0, 0)"
+              class="btn-shadow mr-3 btn btn-info">
+              <i class="pe-7s-credit"></i>
+            </button>
+            <button type="button" (click)="showTableDasboard(0, 1)" class="btn-shadow btn btn-info float-right">
+              <i class="pe-7s-graph3"></i>
+            </button>
+          </li>
+        </ul>
+      </div>
+      <div class="card-body" *ngIf="isGrafico0">
+        <loading *ngIf="isLoading0">{{ isLoading0 }}</loading>
+        <div class="d-block" *ngIf="!isLoading0">
+          <app-barchar 
+          [chartData]="data" [chartOptions]="options"
+          ></app-barchar>
+          <!-- <canvas #baseChart id="chart-0">
+          </canvas> -->
+        </div>
+      </div>
+      <ngx-datatable *ngIf="isTable0" #myTable0 class="bootstrap table table-striped" id="datatablele" 
+        [columns]="columns0"
+        [rows]="rows0" 
+        [columnMode]="ColumnMode.force" 
+        [headerHeight]="50" 
+        [rowHeight]="$any('auto')"
+        [scrollbarH]="true" 
+        [rowClass]="getRowClass"
+        [summaryRow]="enableSummary"
+        [summaryPosition]="summaryPosition"
+        [summaryHeight]="35"
+        >
+        <ngx-datatable-column [headerClass]="column.headerClass"
+        [summaryFunc]="column.prop == 'concepto' ? summaryNull:summaryForAmount"
+        [cellClass]="column.cellClass" [flexGrow]="1"
+          [width]="column.width" *ngFor="let column of columns0; let i = index;" name="{{column.name}}"
+          prop="{{column.prop}}">
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+            <div
+              [ngClass]="{'row-paddin': row.concepto.includes('LIMA') || row.concepto.includes('CHORRILLOS') || row.concepto.includes('SURCO') }">
+              <span *ngIf="column.prop == 'concepto'">{{value}}</span>
+              <span *ngIf="column.prop !== 'concepto' && rowIndex < 14">{{value }}</span>
+              <span *ngIf="column.prop !== 'concepto' && rowIndex > 13">{{value }} %</span>
+            </div>
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
+
+      <!-- tabla 1 -->
+      <div class="row" style="align-items: center;justify-content: space-between;">
+        <ul class="list-group list-group-horizontal list-group-flush">
+          <li class="list-group-item border-0 pl-0">
+            <button type="button" (click)="showTableDasboard(1, 0)"
+              class="btn-shadow mr-3 btn btn-info">
+              <i class="pe-7s-credit"></i>
+            </button>
+            <button type="button" (click)="showTableDasboard(1, 1)" class="btn-shadow btn btn-info float-right">
+              <i class="pe-7s-graph3"></i>
+            </button>
+          </li>
+        </ul>
+      </div>
+      <div class="card-body" *ngIf="isGrafico1">
+        <loading *ngIf="isLoading1">{{ isLoading1 }}</loading>
+        <div class="d-block" *ngIf="!isLoading1">
+          <app-barchar 
+          [chartData]="data" [chartOptions]="options"
+          ></app-barchar>
+        </div>
+      </div>
+      <ngx-datatable *ngIf="isTable1" #myTable1 class="bootstrap table table-striped" id="datatablele" 
+        [columns]="columns1"
+        [rows]="rows1" 
+        [columnMode]="ColumnMode.force" 
+        [headerHeight]="50" 
+        [rowHeight]="$any('auto')"
+        [scrollbarH]="true" 
+        [rowClass]="getRowClass"
+        [summaryRow]="enableSummary"
+        [summaryPosition]="summaryPosition"
+        [summaryHeight]="35"
+        >
+        <ngx-datatable-column [headerClass]="column.headerClass"
+        [summaryFunc]="column.prop == 'concepto' ? summaryNull:summaryForAmount"
+        [cellClass]="column.cellClass" [flexGrow]="1"
+          [width]="column.width" *ngFor="let column of columns1; let i = index;" name="{{column.name}}"
+          prop="{{column.prop}}">
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+            <div
+              [ngClass]="{'row-paddin': row.concepto.includes('LIMA') || row.concepto.includes('CHORRILLOS') || row.concepto.includes('SURCO') }">
+              <span *ngIf="column.prop == 'concepto'">{{value}}</span>
+              <span *ngIf="column.prop !== 'concepto' && rowIndex < 14">{{value }}</span>
+              <span *ngIf="column.prop !== 'concepto' && rowIndex > 13">{{value }} %</span>
+            </div>
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
+      <!-- fin tabla 1 -->
+      <!-- tabla 2 -->
+      <div class="row" style="align-items: center;justify-content: space-between;">
+        <ul class="list-group list-group-horizontal list-group-flush">
+          <li class="list-group-item border-0 pl-0">
+            <button type="button" (click)="showTableDasboard(2, 0)"
+              class="btn-shadow mr-3 btn btn-info">
+              <i class="pe-7s-credit"></i>
+            </button>
+            <button type="button" (click)="showTableDasboard(2, 1)" class="btn-shadow btn btn-info float-right">
+              <i class="pe-7s-graph3"></i>
+            </button>
+          </li>
+        </ul>
+      </div>
+      <div class="card-body" *ngIf="isGrafico2">
+        <loading *ngIf="isLoading2">{{ isLoading2 }}</loading>
+        <div class="d-block" *ngIf="!isLoading2">
+          <app-barchar 
+          [chartData]="data" [chartOptions]="options"
+          ></app-barchar>
+        </div>
+      </div>
+      <ngx-datatable *ngIf="isTable2" #myTable1 class="bootstrap table table-striped" id="datatablele" 
+        [columns]="columns2"
+        [rows]="rows2" 
+        [columnMode]="ColumnMode.force" 
+        [headerHeight]="50" 
+        [rowHeight]="$any('auto')"
+        [scrollbarH]="true" 
+        [rowClass]="getRowClass"
+        [summaryRow]="enableSummary"
+        [summaryPosition]="summaryPosition"
+        [summaryHeight]="35"
+        >
+        <ngx-datatable-column [headerClass]="column.headerClass"
+        [summaryFunc]="column.prop == 'concepto' ? summaryNull:summaryForAmount"
+        [cellClass]="column.cellClass" [flexGrow]="1"
+          [width]="column.width" *ngFor="let column of columns2; let i = index;" name="{{column.name}}"
+          prop="{{column.prop}}">
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+            <div
+              [ngClass]="{'row-paddin': row.concepto.includes('LIMA') || row.concepto.includes('CHORRILLOS') || row.concepto.includes('SURCO') }">
+              <span *ngIf="column.prop == 'concepto'">{{value}}</span>
+              <span *ngIf="column.prop !== 'concepto' && rowIndex < 14">{{value }}</span>
+              <span *ngIf="column.prop !== 'concepto' && rowIndex > 13">{{value }} %</span>
+            </div>
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
+      <!-- fin tabla 2 -->
+      <!-- tabla 3 -->
+      <div class="row" style="align-items: center;justify-content: space-between;">
+        <ul class="list-group list-group-horizontal list-group-flush">
+          <li class="list-group-item border-0 pl-0">
+            <button type="button" (click)="showTableDasboard(3, 0)"
+              class="btn-shadow mr-3 btn btn-info">
+              <i class="pe-7s-credit"></i>
+            </button>
+            <button type="button" (click)="showTableDasboard(3, 1)" class="btn-shadow btn btn-info float-right">
+              <i class="pe-7s-graph3"></i>
+            </button>
+          </li>
+        </ul>
+      </div>
+      <div class="card-body" *ngIf="isGrafico3">
+        <loading *ngIf="isLoading3">{{ isLoading3 }}</loading>
+        <div class="d-block" *ngIf="!isLoading3">
+          <app-barchar 
+          [chartData]="data" [chartOptions]="options"
+          ></app-barchar>
+        </div>
+      </div>
+      <ngx-datatable *ngIf="isTable3" #myTable1 class="bootstrap table table-striped" id="datatablele" 
+        [columns]="columns3"
+        [rows]="rows3" 
+        [columnMode]="ColumnMode.force" 
+        [headerHeight]="50" 
+        [rowHeight]="$any('auto')"
+        [scrollbarH]="true" 
+        [rowClass]="getRowClass"
+        [summaryRow]="enableSummary"
+        [summaryPosition]="summaryPosition"
+        [summaryHeight]="35"
+        >
+        <ngx-datatable-column [headerClass]="column.headerClass"
+        [summaryFunc]="column.prop == 'concepto' ? summaryNull:summaryForAmount"
+        [cellClass]="column.cellClass" [flexGrow]="1"
+          [width]="column.width" *ngFor="let column of columns3; let i = index;" name="{{column.name}}"
+          prop="{{column.prop}}">
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+            <div
+              [ngClass]="{'row-paddin': row.concepto.includes('LIMA') || row.concepto.includes('CHORRILLOS') || row.concepto.includes('SURCO') }">
+              <span *ngIf="column.prop == 'concepto'">{{value === 'F' ? 'Mujer' : 'Hombre'}}</span>
+              <span *ngIf="column.prop !== 'concepto' && rowIndex < 14">{{value }}</span>
+              <span *ngIf="column.prop !== 'concepto' && rowIndex > 13">{{value }} %</span>
+            </div>
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
+      <!-- fin tabla 3 -->
+      <!-- tabla 4 -->
+      <div class="row" style="align-items: center;justify-content: space-between;">
+        <ul class="list-group list-group-horizontal list-group-flush">
+          <li class="list-group-item border-0 pl-0">
+            <button type="button" (click)="showTableDasboard(4, 0)"
+              class="btn-shadow mr-3 btn btn-info">
+              <i class="pe-7s-credit"></i>
+            </button>
+            <button type="button" (click)="showTableDasboard(4, 1)" class="btn-shadow btn btn-info float-right">
+              <i class="pe-7s-graph3"></i>
+            </button>
+          </li>
+        </ul>
+      </div>
+      <div class="card-body" *ngIf="isGrafico4">
+        <loading *ngIf="isLoading4">{{ isLoading4 }}</loading>
+        <div class="d-block" *ngIf="!isLoading4">
+          <app-barchar 
+          [chartData]="data" [chartOptions]="options"
+          ></app-barchar>
+        </div>
+      </div>
+      <ngx-datatable *ngIf="isTable4" #myTable1 class="bootstrap table table-striped" id="datatablele" 
+        [columns]="columns4"
+        [rows]="rows4" 
+        [columnMode]="ColumnMode.force" 
+        [headerHeight]="50" 
+        [rowHeight]="$any('auto')"
+        [scrollbarH]="true" 
+        [rowClass]="getRowClass"
+        [summaryRow]="enableSummary"
+        [summaryPosition]="summaryPosition"
+        [summaryHeight]="35"
+        >
+        <ngx-datatable-column [headerClass]="column.headerClass"
+        [summaryFunc]="column.prop == 'concepto' ? summaryNull:summaryForAmount"
+        [cellClass]="column.cellClass" [flexGrow]="1"
+          [width]="column.width" *ngFor="let column of columns4; let i = index;" name="{{column.name}}"
+          prop="{{column.prop}}">
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+            <div
+              [ngClass]="{'row-paddin': row.concepto.includes('LIMA') || row.concepto.includes('CHORRILLOS') || row.concepto.includes('SURCO') }">
+              <span *ngIf="column.prop == 'concepto'">{{value}}</span>
+              <span *ngIf="column.prop !== 'concepto' && rowIndex < 14">{{value }}</span>
+              <span *ngIf="column.prop !== 'concepto' && rowIndex > 13">{{value }} %</span>
+            </div>
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
+      <!-- fin tabla 4 -->
+    </app-accordion>
+  </app-card>
+</ng-template>
+
+<ng-template #indicadoresTemplate>
+  <app-card [message]="message">
+    <app-accordion title="COLABORADORES">
+      <div class="row" style="align-items: center;justify-content: space-between;">
+        <ul class="list-group list-group-horizontal list-group-flush">
+          <li class="list-group-item border-0 pl-0">
+            <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(6)">
+              <i class="fa fa-external-link"></i>
+              Copiar tabla
+            </button>
+          </li>
+          <li class="list-group-item border-0 pl-0">
+            <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(6)">
+              <i class="fa fa-external-link"></i>
+              Exportar tabla a Excel
+            </button>
+          </li>
+        </ul>
+      </div>
+      <ngx-datatable #mySubTable1 class="bootstrap table table-striped" id="datatablele" [columns]="columns5"
+        [rows]="rows5" [columnMode]="ColumnMode.force" [headerHeight]="50" [rowHeight]="$any('auto')"
+        [scrollbarH]="true" [rowClass]="getRowClass">
+        <ngx-datatable-column [headerClass]="column.headerClass" [cellClass]="column.cellClass" [flexGrow]="1"
+          [width]="column.width" *ngFor="let column of columns5; let i = index;" name="{{column.name}}"
+          prop="{{column.prop}}">
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+            <div
+              [ngClass]="{'row-paddin': row.concepto.includes('LIMA') || row.concepto.includes('CHORRILLOS') || row.concepto.includes('SURCO') }">
+              <span *ngIf="column.prop == 'concepto'">{{value}}</span>
+              <i class="fa fa-arrow-up text-blue"
+                *ngIf="row.concepto === 'Colaboradores Respecto Mes Anterior' && value > 0"></i>
+              <i class="fa fa-arrow-down text-red"
+                *ngIf="row.concepto === 'Colaboradores Respecto Mes Anterior' && value < 0"></i>
+
+
+              <i class="fa fa-arrow-up text-blue"
+                *ngIf="row.concepto === 'Proporcion de Cesados / Nuevos' && value > 0"></i>
+              <i class="fa fa-arrow-down text-red"
+                *ngIf="row.concepto === 'Proporcion de Cesados / Nuevos' && value < 0"></i>
+              <span *ngIf="column.prop !== 'concepto' && rowIndex < 14">{{value }}</span>
+              <span *ngIf="column.prop !== 'concepto' && rowIndex > 13">{{value }} %</span>
+            </div>
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
+      <div class="ml-3">
+        <p>(*) No se incluyen los colaboradores nuevos en el periodo.<br>
+          (**) ((Nro.Cesados + Nro.Nuevos)/2 ) / Nro.Colaboradores</p>
+      </div>
+    </app-accordion>
+  </app-card>
+
+</ng-template>

@@ -46,6 +46,10 @@ export class RecursosHumanosService {
     this.loadTableApiDataURL = `${environment.api_url}RRhhGetPlanillaEstadisticaKPI`;
     return this.http.post(this.loadTableApiDataURL, data);
   }
+  // RRhhGetResumenColaboradores(data): Observable<any> {
+  //   this.loadTableApiDataURL = `${environment.api_url}RRhhGetResumenColaboradores`;
+  //   return this.http.post(this.loadTableApiDataURL, data);
+  // }
   RRhhGetPlanilla(data): Observable<any> {
     this.loadTableApiDataURL = `${environment.api_url}RRhhGetPlanilla`;
     return this.http.post(this.loadTableApiDataURL, data);

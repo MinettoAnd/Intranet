@@ -18,7 +18,7 @@ import { NgxDocViewerModule } from 'ngx-doc-viewer';
 // BOOTSTRAP COMPONENTS
 
 //import {AngularFontAwesomeModule} from 'angular-font-awesome';
-import { NgbModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbNav, NgbNavItem, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
@@ -227,7 +227,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     // Angular Bootstrap Components
     PerfectScrollbarModule,
     NgbModule,
-    // NgbNavModule,
+    NgbNavModule,
     //AngularFontAwesomeModule,
     FormsModule,
     ReactiveFormsModule,
@@ -268,6 +268,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     CustomCurrencyPipe,
     CustomNumberPipe,
     PhonePipe,
+    NgbNav
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

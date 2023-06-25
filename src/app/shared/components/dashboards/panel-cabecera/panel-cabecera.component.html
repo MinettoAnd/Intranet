@@ -8,7 +8,8 @@
                 <span style="font-family:arial; font-size:15px; " class="info-box-text"
                     id="box_titulo_01">{{item.title}}</span>
                 <span class="info-box-number" *ngIf="!item.arrow">{{item.totalSubtitle}} {{item.subtitle}}</span>
-                <span class="info-box-number" *ngIf="item.arrow"> {{item.totalSubtitle}} <span class="info-box-number-small">( <i class="{{item.iconArrow}}" aria-hidden="true"></i>  {{item.subtitle}} )</span></span>
+                <span class="info-box-number" *ngIf="item.arrow"> {{item.totalSubtitle}} <span class="info-box-number-small" *ngIf="item.subtitle
+                    ">( <i class="{{item.iconArrow}}" aria-hidden="true"></i>  {{item.subtitle}} )</span></span>
                 <label style="position:relative; top:13px; font-size:12px;" class="label label-pill label-success"
                     id="porc_imp_total_01"> {{item.totalSubSubtitle}} {{item.subSubtitle}}</label>
             </div>
