@@ -35,7 +35,7 @@ export class EstadisticasComponent implements OnInit {
     if (content) {
       // initially setter gets called with undefined
       this.baseChart = content;
-      this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'', '','chart-1', 'Prgramado', 'Atendido', 'bar');
+      this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'', '','chart-1', 'Programado', 'Atendido', 'bar');
       // this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'pie');
       // this.getBarChart(this.chartLabels, this.chartData3, this.chartData4, 'chart-2', 'MENSUAL-INGRESO CON IGV - TOTAL CUOTAS', 'MENSUAL-INGRESO CON IGV - TOTAL RECAUDADO', 'bar');
       // this.getBarChart(this.chartLabels2, this.chartData5, this.chartData6, 'chart-3', 'MENSUAL-NÚMERO DE CONTRATOS PAGADOS-TOTAL CUOTAS', 'MENSUAL-NÚMERO DE CONTRATOS PAGADOS-TOTAL RECAUDADO', 'bar');

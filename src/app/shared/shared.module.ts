@@ -4,7 +4,7 @@ import { PiecharComponent } from './components/piechar/piechar.component';
 import { BarcharComponent } from './components/barchar/barchar.component';
 import { ComercialEstadisticasComponent } from './components/comercial-estadisticas/comercial-estadisticas.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgbModule, NgbNavModule } from "@ng-bootstrap/ng-bootstrap";
+import { NgbModule, NgbNav, NgbNavItem, NgbNavModule } from "@ng-bootstrap/ng-bootstrap";
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { EmergenciesEstadisticsComponent } from './components/emergencies-estadistics/emergencies-estadistics.component';
 import { ExternalConsultationEstadisticsComponent } from './components/external-consultation-estadistics/external-consultation-estadistics.component';
@@ -25,6 +25,11 @@ import { EstadisticaResumenColaboradoresComponent } from './components/rrhh/esta
 import { PeriodoComponent } from './components/filtros/periodo/periodo.component';
 import { ResumenColaboradoresComponent } from './components/dashboards/resumen-colaboradores/resumen-colaboradores.component';
 import { HttpClientModule } from '@angular/common/http';
+import { AccordionComponent } from './components/dashboards/accordion/accordion.component';
+import { CardComponent } from './components/dashboards/card/card.component';
+import { ContentWrapperComponent } from './components/dashboards/content-wrapper/content-wrapper.component';
+import { ContentSectionComponent } from './components/dashboards/resumen-colaboradores/content-section/content-section.component';
+import { TabContentDirective } from './components/dashboards/resumen-colaboradores/content-section/tab-content.directive';
 
 
 @NgModule({
@@ -48,6 +53,11 @@ import { HttpClientModule } from '@angular/common/http';
     EstadisticaResumenColaboradoresComponent,
     PeriodoComponent,
     ResumenColaboradoresComponent,
+    AccordionComponent,
+    CardComponent,
+    ContentWrapperComponent,
+    ContentSectionComponent,
+    TabContentDirective,
 
   ],
   imports: [
@@ -56,13 +66,15 @@ import { HttpClientModule } from '@angular/common/http';
     CommonModule,
     NgxDatatableModule,
     NgbModule,
-    // NgbNavModule,
+    NgbNavModule,
     // HttpClientModule,
     // NavigationMenuComponent,
     // TabComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   exports: [
+    PiecharComponent, 
+    BarcharComponent,
     ComercialEstadisticasComponent,
     EmergenciesEstadisticsComponent,
     ExternalConsultationEstadisticsComponent,
@@ -80,7 +92,13 @@ import { HttpClientModule } from '@angular/common/http';
     EstadisticaResumenColaboradoresComponent,
     PeriodoComponent,
     ResumenColaboradoresComponent,
+    AccordionComponent,
+    CardComponent,
+    ContentWrapperComponent,
+    ContentSectionComponent,
 
   ],
+  providers: [NgbNav],
+  // bootstrap: [ResumenColaboradoresComponent],
 })
 export class SharedModule { }

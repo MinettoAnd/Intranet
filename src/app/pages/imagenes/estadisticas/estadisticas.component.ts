@@ -68,18 +68,9 @@ export class EstadisticasComponent implements OnInit {
   barChartData14 = [];
   barChartData15 = [];
   barChartData16 = [];
-  private baseChart: ElementRef;
-  @ViewChild("baseChart", { static: false }) set content(
-    content: ElementRef
-  ) {
-    if (content) {
-      // initially setter gets called with undefined
-      this.baseChart = content;
-      this.grafico1 = this.getBarChart1(this.barChartLabels1, this.barChartData1, this.barChartData2,this.barChartData3,'', '','chart-1', 'Lima', 'Chorrillos','Surco', 'line');
-      this.grafico2 = this.getBarChart(this.barChartLabels1, this.barChartData4, this.barChartData5,this.barChartData6,this.barChartData7,'', '','chart-2', 'Cia. Seguros/Convenios', 'Madre Niño','Institucional/Privado','Programas de Salud','line');
-      this.grafico3 = this.getBarChart1(this.barChartLabels2, this.barChartData8, this.barChartData9,this.barChartData10,'', '','chart-3', 'Lima', 'Chorrillos','Surco','line');
-      this.grafico4 = this.getBarChart(this.barChartLabels2,this.barChartData11, this.barChartData12, this.barChartData13,this.barChartData14,'', '','chart-4', 'Cia. Seguros/Convenios', 'Madre Niño','Institucional/Privado','Programas de Salud', 'line');
-  } }
+
+  
+  
   closeResult = '';
   options = {
     close: true,
@@ -241,7 +232,6 @@ export class EstadisticasComponent implements OnInit {
    }
 
   ngOnInit() {
-  
     // this.setPage({ offset: 0 });
   }
   getRowClass(row) {
@@ -1022,6 +1012,7 @@ export class EstadisticasComponent implements OnInit {
               this.barChartData7.push(item.mes_12);
             }
           })
+          console.log(1016,this.barChartData4)
           this.columns11 = this.data.cabecera_anual;
           // this.columns11.map(item => {
           //   // console.log(301, item)

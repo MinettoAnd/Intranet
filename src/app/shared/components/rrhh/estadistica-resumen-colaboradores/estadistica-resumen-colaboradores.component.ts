@@ -45,7 +45,7 @@ export class EstadisticaResumenColaboradoresComponent implements OnInit {
       (data) => {
         this.parameters = data;
         console.log(193, this.parameters)
-        this.setPage({ offset: 0 });
+        // this.setPage({ offset: 0 });
       }
       );
       this.listObservers$ = [observer1$]
