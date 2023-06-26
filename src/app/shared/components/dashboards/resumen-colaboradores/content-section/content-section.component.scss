@@ -1,0 +1,9 @@
+.text-green{
+    color: #00a65a !important;
+}
+:host ::ng-deep .text-red{
+    color: red !important;
+}
+:host ::ng-deep .text-blue{
+    color: #212874;
+}

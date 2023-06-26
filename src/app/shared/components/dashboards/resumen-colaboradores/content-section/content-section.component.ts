@@ -10,7 +10,7 @@ import { ChartService } from '../../../barchar/chart.service';
 @Component({
   selector: 'app-content-section',
   templateUrl: './content-section.component.html',
-  styleUrls: ['./content-section.component.sass'],
+  styleUrls: ['./content-section.component.scss'],
 
 })
 export class ContentSectionComponent implements AfterViewInit, OnInit {

@@ -591,19 +591,19 @@ export class ResumenColaboradoresComponent implements OnInit {
           
           this.columns6 = this.data.cabeceras_kpi_colaboradores;
           this.rows6 = this.data.sub_tabla_kpi_colaboradores;
-          this.rows6.map(item =>{
-            if (item.concepto.trim() === 'Promedio de Permanencia Laboral (*)'){
-              const minutosPorAnio = 365 * 24 * 60;
-              const mesesPorAnio = 12;
-              for (var i = 1; i <= 13; i++) {
-                const mesItem = 'Mes'+ i;
-                var anios = Math.floor(Number(item[mesItem]) / minutosPorAnio);
-                console.log(591, item[mesItem], (Number(item[mesItem]) / minutosPorAnio))
-                  var mesesRestantes = Math.floor((Number(item[mesItem]) % minutosPorAnio) / (minutosPorAnio / mesesPorAnio));
-                 item[mesItem] = anios + " A " + mesesRestantes + " m";
-                }
-              }
-          })
+          // this.rows6.map(item =>{
+          //   if (item.concepto.trim() === 'Promedio de Permanencia Laboral (*)'){
+          //     const minutosPorAnio = 365 * 24 * 60;
+          //     const mesesPorAnio = 12;
+          //     for (var i = 1; i <= 13; i++) {
+          //       const mesItem = 'Mes'+ i;
+          //       var anios = Math.floor(Number(item[mesItem]) / minutosPorAnio);
+          //       console.log(591, item[mesItem], (Number(item[mesItem]) / minutosPorAnio))
+          //         var mesesRestantes = Math.floor((Number(item[mesItem]) % minutosPorAnio) / (minutosPorAnio / mesesPorAnio));
+          //        item[mesItem] = anios + " A " + mesesRestantes + " m";
+          //       }
+          //     }
+          // })
 
           this.data.tabla_mas_10_anios.map(item =>{
             // const myItem = 'Mes'+ item.mesActual;
