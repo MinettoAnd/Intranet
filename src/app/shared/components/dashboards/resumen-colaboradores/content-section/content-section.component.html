@@ -13,7 +13,7 @@
 
 <ng-template #cantidadesTemplate>
   <app-card [message]="message">
-    <app-accordion title="COLABORADORES">
+    <app-accordion>
       <div class="row" style="align-items: center;justify-content: space-between;">
         <ul class="list-group list-group-horizontal list-group-flush">
           <li class="list-group-item border-0 pl-0">
@@ -31,7 +31,7 @@
         <loading *ngIf="isLoading0">{{ isLoading0 }}</loading>
         <div class="d-block" *ngIf="!isLoading0">
           <app-barchar 
-          [chartData]="data" [chartOptions]="options"
+          [chartData]="data" [chartOptions]="options"  [context]="context0"
           ></app-barchar>
           <!-- <canvas #baseChart id="chart-0">
           </canvas> -->
@@ -83,7 +83,7 @@
         <loading *ngIf="isLoading1">{{ isLoading1 }}</loading>
         <div class="d-block" *ngIf="!isLoading1">
           <app-barchar 
-          [chartData]="data" [chartOptions]="options"
+          [chartData]="data" [chartOptions]="options" [context]="context1"
           ></app-barchar>
         </div>
       </div>
@@ -133,7 +133,7 @@
         <loading *ngIf="isLoading2">{{ isLoading2 }}</loading>
         <div class="d-block" *ngIf="!isLoading2">
           <app-barchar 
-          [chartData]="data" [chartOptions]="options"
+          [chartData]="data" [chartOptions]="options" [context]="context2"
           ></app-barchar>
         </div>
       </div>
@@ -183,7 +183,7 @@
         <loading *ngIf="isLoading3">{{ isLoading3 }}</loading>
         <div class="d-block" *ngIf="!isLoading3">
           <app-barchar 
-          [chartData]="data" [chartOptions]="options"
+          [chartData]="data" [chartOptions]="options" [context]="context3"
           ></app-barchar>
         </div>
       </div>
@@ -233,7 +233,7 @@
         <loading *ngIf="isLoading4">{{ isLoading4 }}</loading>
         <div class="d-block" *ngIf="!isLoading4">
           <app-barchar 
-          [chartData]="data" [chartOptions]="options"
+          [chartData]="data" [chartOptions]="options" [context]="context4"
           ></app-barchar>
         </div>
       </div>
