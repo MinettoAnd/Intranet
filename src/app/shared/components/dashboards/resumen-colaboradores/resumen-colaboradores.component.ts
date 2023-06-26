@@ -578,7 +578,7 @@ export class ResumenColaboradoresComponent implements OnInit {
               }else if (item.concepto.trim() === 'CONTINUADOR'){
                 this.continuadores = item[mItem];
               }
-            this.totalEmpleados = Number(this.nuevos) + Number(this.cesados) + Number(this.continuadores)
+            // this.totalEmpleados = Number(this.nuevos) + Number(this.cesados) + Number(this.continuadores)
           })
           this.columns3 = this.data.cabeceras_colaboradores_tipo_planilla;
           this.rows3 = this.data.tabla_colaboradores_tipo_planilla;
@@ -606,11 +606,12 @@ export class ResumenColaboradoresComponent implements OnInit {
           })
 
           this.data.tabla_mas_10_anios.map(item =>{
-            const myItem = 'Mes'+ item.mesActual;
-              if (item.concepto.trim() === 'Más de 10 años'){
-                this.masDeDiez = item[myItem];
+            // const myItem = 'Mes'+ item.mesActual;
+              // if (item.concepto.trim() === 'Más de 10 años'){
+                this.masDeDiez = item.mesActual;
+                this.totalEmpleados = item.total;
                 // console.log(masDeDiez)
-              }
+              // }
           })
           const pocNuevos = Number(this.nuevos)/Number(this.totalEmpleados) * 100
           const pocCesados = Number(this.cesados)/Number(this.totalEmpleados) * 100
@@ -625,7 +626,7 @@ export class ResumenColaboradoresComponent implements OnInit {
               iconArrow: 'iconArrow',
               totalSubtitle: this._cnp.transform(this.nuevos),
               subtitle: '',
-              totalSubSubtitle: this._cnp.transform(pocNuevos),
+              totalSubSubtitle: this._ndp.transform(pocNuevos),
               subSubtitle: '%',
             },
             {
@@ -636,7 +637,7 @@ export class ResumenColaboradoresComponent implements OnInit {
               iconArrow: 'iconArrow1',
               totalSubtitle: this._cnp.transform(this.cesados),
               subtitle: '',
-              totalSubSubtitle: this._cnp.transform(pocCesados),
+              totalSubSubtitle: this._ndp.transform(pocCesados),
               subSubtitle: '%',
             },
             {
@@ -647,7 +648,7 @@ export class ResumenColaboradoresComponent implements OnInit {
               iconArrow: 'iconArrow2',
               totalSubtitle: this._cnp.transform(this.continuadores),
               subtitle: '',
-              totalSubSubtitle: this._cnp.transform(pocContinuadores),
+              totalSubSubtitle: this._ndp.transform(pocContinuadores),
               subSubtitle: '%',
             },
             {
@@ -658,7 +659,7 @@ export class ResumenColaboradoresComponent implements OnInit {
               iconArrow: 'iconArrow3',
               totalSubtitle: this._cnp.transform(this.masDeDiez),
               subtitle: '',
-              totalSubSubtitle: this._cnp.transform(pocMasDeDiez),
+              totalSubSubtitle: this._ndp.transform(pocMasDeDiez),
               subSubtitle: '%',
             }
           ]

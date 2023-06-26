@@ -3,7 +3,7 @@ import { Component,ElementRef, ViewChild, TemplateRef, AfterViewInit, Input, OnI
 import { ColumnMode, NgxDatatableModule, SelectionType, DatatableComponent  } from '@swimlane/ngx-datatable';
 import { ExportService } from '../../../../../_services/export.service';
 import * as Chart from 'chart.js';
-import {  ChartOptions, Scriptable } from 'chart.js';
+import {  ChartOptions } from 'chart.js';
 import 'chartjs-plugin-datalabels';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { ChartService } from '../../../barchar/chart.service';
@@ -83,8 +83,13 @@ export class ContentSectionComponent implements AfterViewInit, OnInit {
 
 
   options;
+
   // options;
-  chartType: Chart.ChartType = 'bar';
+  context0;
+  context1;
+  context2;
+  context3;
+  context4;
   // Templates definidos como @ViewChild
   @ViewChild('cantidadesTemplate', { static: false }) cantidadesTemplate: TemplateRef<any>;
   @ViewChild('indicadoresTemplate', { static: false }) indicadoresTemplate: TemplateRef<any>;
@@ -343,7 +348,8 @@ showTableDasboard(id: number, position: number) {
             this.dataChart3.push(item.Mes12);
           }
         })
-      }                                       
+      }   
+    this.context0 = 'chart-0';                                    
     this.data = this.chartService.getChartData3(this.labels, this.dataChart1, this.dataChart2, this.dataChart3,'Lima', 'Chorrillos','Surco','line')
     this.options = this.chartService.getChartOptions('', '',)
     // this.getBarChart1(this.labels, this.dataChart1, this.dataChart2, this.dataChart3,'', '','chart-1', 'Lima', 'Chorrillos', 'Surco','line');
@@ -412,6 +418,7 @@ showTableDasboard(id: number, position: number) {
           }
         })
       }
+      this.context1 = 'chart-1'; 
       this.data = this.chartService.getChartData3(this.labels, this.dataChart4, this.dataChart5, this.dataChart6,'CESADO', 'CONTINUADOR','NUEVO','line')
       this.options = this.chartService.getChartOptions('', '',)
       // this.getBarChart1(this.labels, this.dataChart4, this.dataChart5, this.dataChart6,'', '','chart-1', 'CESADO', 'CONTINUADOR', 'NUEVO','line');
@@ -492,6 +499,7 @@ showTableDasboard(id: number, position: number) {
           }
         })
       }
+      this.context2 = 'chart-2'; 
       this.data = this.chartService.getChartData4(this.labels, this.dataChart7, this.dataChart8, this.dataChart9, this.dataChart10,'EMPLEADOS', 'FUNCIONARIOS','OBREROS', 'PRACTICANTE','line')
       this.options = this.chartService.getChartOptions('', '',)
       // this.getBarChart1(this.labels, this.dataChart1, this.dataChart2, this.dataChart3,'', '','chart-1', 'Limaxxx', 'Chorrillosxxx', 'Surcoxxx','line');
@@ -546,6 +554,7 @@ showTableDasboard(id: number, position: number) {
           }
         })
       }
+      this.context3 = 'chart-3'; 
       this.data = this.chartService.getChartData2(this.labels, this.dataChart11, this.dataChart12, 'Mujer', 'Hombre','line')
       this.options = this.chartService.getChartOptions('', '',)
       // this.getBarChart1(this.labels, this.dataChart1, this.dataChart2, this.dataChart3,'', '','chart-1', 'Limaxxx', 'Chorrillosxxx', 'Surcoxxx','line');
@@ -669,6 +678,7 @@ showTableDasboard(id: number, position: number) {
           }
         })
       }
+      this.context4 = 'chart-4'; 
       this.data = this.chartService.getChartData7(this.labels, this.dataChart10, this.dataChart11, this.dataChart12, this.dataChart13,this.dataChart14,this.dataChart15,this.dataChart16,'Menos de 6 meses', 'Entre 1 y 5 años','Entre 6 y 10 años', 'Entre 11 y 20 años','Entre 21 y 25 años','Entre 26 y 30 años','Más de 30 años','line')
       this.options = this.chartService.getChartOptions('', '',)
 
