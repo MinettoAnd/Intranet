@@ -6,7 +6,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./accordion.component.scss']
 })
 export class AccordionComponent implements OnInit {
-  @Input() title: string;
+  @Input() titulo: string;
   isCollapsed: boolean = false;
   constructor() { }
 

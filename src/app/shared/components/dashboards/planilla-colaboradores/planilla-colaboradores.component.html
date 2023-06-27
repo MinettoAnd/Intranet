@@ -1,0 +1,43 @@
+<h4 class="card-title" *ngIf="action">PLANILLA - Al Periodo {{selectedOptionPeriodo}}</h4>
+<app-panel-cabecera [panelCabecera] = "panelOptions" *ngIf="action"></app-panel-cabecera>
+<div class="app-content content" *ngIf="action">
+    <div class="content-wrapper">
+      <div class="content-header row mb-1">
+        <app-breadcrumb class="col-12" [breadcrumb]="breadcrumb"></app-breadcrumb>
+      </div>
+      <div class="content-body">
+        <section id="selection-n-deletion">
+          <div class="row">
+            <div class="col-12">
+              <div class="app-content content">
+                <app-content-wrapper>
+                  <div class="app-content content">
+                    <app-content-wrapper>
+                      <app-content-section-planilla 
+                      [columns0]="columns0" [rows0]="rows0" 
+                      [columns1]="columns1" [rows1]="rows1"
+                      [columns2]="columns2" [rows2]="rows2"
+                      [columns3]="columns3" [rows3]="rows3"
+                      [columns4]="columns4" [rows4]="rows4"
+                      [columns5]="columns5" [rows5]="rows5" 
+                      [columns6]="columns6" [rows6]="rows6" 
+                      [columns7]="columns7" [rows7]="rows7" 
+                      [columns8]="columns8" [rows8]="rows8" 
+                      [columns9]="columns9" [rows9]="rows9" 
+                      [columns10]="columns10" [rows10]="rows10"
+                      [columns11]="columns11" [rows11]="rows11" 
+                      [columns11]="columns12" [rows11]="rows12" 
+                      [tabs]="tabs">
+                      </app-content-section-planilla>
+                    </app-content-wrapper>
+                  </div>
+                </app-content-wrapper>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  
