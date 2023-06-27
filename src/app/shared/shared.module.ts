@@ -30,6 +30,8 @@ import { CardComponent } from './components/dashboards/card/card.component';
 import { ContentWrapperComponent } from './components/dashboards/content-wrapper/content-wrapper.component';
 import { ContentSectionComponent } from './components/dashboards/resumen-colaboradores/content-section/content-section.component';
 import { TabContentDirective } from './components/dashboards/resumen-colaboradores/content-section/tab-content.directive';
+import { PlanillaColaboradoresComponent } from './components/dashboards/planilla-colaboradores/planilla-colaboradores.component';
+import { ContentSectionPlanillaComponent } from './components/dashboards/planilla-colaboradores/content-section-planilla/content-section-planilla.component';
 
 
 @NgModule({
@@ -58,6 +60,8 @@ import { TabContentDirective } from './components/dashboards/resumen-colaborador
     ContentWrapperComponent,
     ContentSectionComponent,
     TabContentDirective,
+    PlanillaColaboradoresComponent,
+    ContentSectionPlanillaComponent,
 
   ],
   imports: [
