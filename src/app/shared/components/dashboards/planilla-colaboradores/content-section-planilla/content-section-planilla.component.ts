@@ -1,5 +1,5 @@
 
-import { Component,ElementRef, ViewChild, TemplateRef, AfterViewInit, Input, OnInit } from '@angular/core';
+import { Component,ElementRef, ViewChild, TemplateRef, AfterViewInit, Input, OnInit, SimpleChanges } from '@angular/core';
 import { ColumnMode, NgxDatatableModule, SelectionType, DatatableComponent  } from '@swimlane/ngx-datatable';
 import { ExportService } from '../../../../../_services/export.service';
 import * as Chart from 'chart.js';
@@ -100,21 +100,84 @@ export class ContentSectionPlanillaComponent implements OnInit {
   ];
   data: Chart.ChartData;
 
-  checkBoxesOps: any[] = [
+  checkBoxesOps1: any[] = [
     {
-      id: 1,
+      id: '1a',
       label: 'En Montos',
       template: null,
+      value: true
     },
     {
-      id: 2,
+      id: '2a',
       label: 'En Cantidad de Días',
       template: null,
+      value: false
     },
     {
-      id: 3,
+      id: '3a',
       label: 'En Número de Personas',
       template: null,
+      value: false
+    },
+  ];
+  checkBoxesOps2: any[] = [
+    {
+      id: '1b',
+      label: 'En Montos',
+      template: null,
+      value: true
+    },
+    {
+      id: '2b',
+      label: 'En Cantidad de Horas',
+      template: null,
+      value: false
+    },
+    {
+      id: '3b',
+      label: 'En Número de Personas',
+      template: null,
+      value: false
+    },
+  ];
+  checkBoxesOps3: any[] = [
+    {
+      id: '1c',
+      label: 'En Montos',
+      template: null,
+      value: true
+    },
+    {
+      id: '2c',
+      label: 'En Número de Personas',
+      template: null,
+      value: false
+    },
+    {
+      id: '3c',
+      label: 'En Promedio por Personas',
+      template: null,
+      value: false
+    },
+  ];
+  checkBoxesOps4: any[] = [
+    {
+      id: '1d',
+      label: 'En Montos',
+      template: null,
+      value: true
+    },
+    {
+      id: '2d',
+      label: 'En Cantidad de Horas',
+      template: null,
+      value: false
+    },
+    {
+      id: '3d',
+      label: 'En Número de Personas',
+      template: null,
+      value: false
     },
   ];
 
@@ -126,6 +189,7 @@ export class ContentSectionPlanillaComponent implements OnInit {
   context2;
   context3;
   context4;
+  rows3filtered: any[];
   // Templates definidos como @ViewChild
   @ViewChild('planillaTemplate', { static: false }) planillaTemplate: TemplateRef<any>;
   @ViewChild('planillaNetaTemplate', { static: false }) planillaNetaTemplate: TemplateRef<any>;
@@ -149,10 +213,23 @@ export class ContentSectionPlanillaComponent implements OnInit {
   //     // this.grafico3 = this.getBarChart1(this.barChartLabels3, this.barChartData7, this.barChartData8, this.barChartData9, '', '','chart-3', 'Lima', 'Chorrillos', 'Surco','line');
   // } }
   constructor(private exportService: ExportService, private chartService: ChartService) {
-    this.activeTabId = this.tabs[0].id; 
+    this.activeTabId = this.tabs[0].id; this.rows3;
   }
   ngOnInit() {
-     console.log(91, this.rows0)
+    // setTimeout(() => {
+    //   // Acceder a los datos y realizar las operaciones necesarias
+    //   if (this.rows3) {
+    //     this.rows3filtered = this.rows3.filter(item => item.GRUPO3 === 'SOLES');
+    //   }
+    // }, 1500); 
+    // this.rows3filtered();
+    
+  }
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.rows3) {
+      console.log(91, this.rows3)
+      this.rows3filtered = this.rows3?.filter(item => item.GRUPO3 === 'SOLES');
+    }
   }
   ngAfterViewInit() {
    
@@ -161,25 +238,74 @@ export class ContentSectionPlanillaComponent implements OnInit {
       this.tabs[0].template = this.planillaTemplate;
       this.tabs[1].template = this.planillaNetaTemplate;
       this.tabs[2].template = this.indicadoresTemplate;
+      // if (this.rows3) {
+      //   this.filtrarRows3();
+      // }
     });
+    // this.rows3filtered = this.rows3.filter(item => item.GRUPO3 === 'SOLES');
   }
-  selection(persona, id: string) {
-    this.checkBoxesOps.forEach(x => {
-      if (x.id === id) {
-        x.value = true;
-        // this.user = (this.user, persona);
-        // this.getBookedAppontments();
-      }else{
-        x.value = false;
-      }
-    });
+  filtrarRows3(): void {
+    // Realiza la operación de filtrado en this.rows3 aquí
+    // Por ejemplo:
+    this.rows3 = this.rows3.filter(item => item.GRUPO3 === 'SOLES');
+    console.log(227, this.rows3)
+  }
+  selection(option, id: string, tabla) {
+    if (tabla === 1){
+      this.checkBoxesOps1.forEach(x => {
+        if (x.id === id) {
+          x.value = true;
+          if(id === '1a'){
+            this.rows3filtered = this.rows3.filter(item => item.GRUPO3 === 'SOLES');
+          }else if(id === '2a'){
+            console.log(255, id)
+            this.rows3filtered = this.rows3.filter(item => item.GRUPO3 === 'DIAS');
+          }else if(id === '3a'){
+            this.rows3filtered = this.rows3.filter(item => item.GRUPO3 === 'PERSONAS');
+          }
+        }else{
+          x.value = false;
+        }
+      });
+    }else if (tabla === 2){
+      this.checkBoxesOps2.forEach(x => {
+        if (x.id === id) {
+          x.value = true;
+          // this.user = (this.user, persona);
+          // this.getBookedAppontments();
+        }else{
+          x.value = false;
+        }
+      });
+    }else if (tabla === 3){
+      this.checkBoxesOps3.forEach(x => {
+        if (x.id === id) {
+          x.value = true;
+          // this.user = (this.user, persona);
+          // this.getBookedAppontments();
+        }else{
+          x.value = false;
+        }
+      });
+    }else if (tabla === '4'){
+      
+      this.checkBoxesOps4.forEach(x => {
+        if (x.id === id) {
+          x.value = true;
+          // this.user = (this.user, persona);
+          // this.getBookedAppontments();
+        }else{
+          x.value = false;
+        }
+      });
+    }
   }
   isActiveTab(tabId: number): boolean {
     return this.activeTabId === tabId;
   }
   getRowClass(row) {
     return {
-      'sub-totals': row.concepto === 'Total' || row.concepto === 'Nuevos' || row.concepto === 'Cesados' || row.concepto === 'Ingresos' || row.concepto === 'Planilla Neta' || row.concepto === 'Prestación Alimentaria' || row.concepto === 'Por Maternidad' || row.concepto === 'Por Descanso Medico Prolongado' || row.concepto === 'Total Subsidiado' || row.concepto === 'Nro. de dias Por Maternidad' || row.concepto === 'Nro. de dias Por Descanso Medico Prolongado' || row.concepto === 'Nro. Total de dias subsidiados' || row.concepto === 'Dscto. por Permisos' || row.concepto === 'Dscto. por Tardanzas' || row.concepto === 'Tiempo total de tardanzas descontadas' || row.concepto === 'Administrativo' || row.concepto === 'Clínica' || row.concepto === 'Farmacia' || row.concepto === 'Hospitalización' || row.concepto === 'Total Dscto.Por Prestación' || row.concepto === 'Total Dscto.Por Prestación' || row.concepto === 'Pago por Reintegros' || row.concepto === 'Pago por Dias Feriados' || row.concepto === 'Pago por Guardia Nocturna' || row.concepto === 'Tiempo total de Feriados Pagados' || row.concepto === 'Tiempo total de Guardia Nocturna Pagadas'};
+      'sub-totals': row.concepto === 'Total' || row.concepto === 'Planilla Neta' || row.concepto === 'Prestación Alimentaria' || row.concepto === 'Por Maternidad' || row.concepto === 'Por Descanso Medico Prolongado' || row.concepto === 'Total Subsidiado' || row.concepto === 'Nro. de dias Por Maternidad' || row.concepto === 'Nro. de dias Por Descanso Medico Prolongado' || row.concepto === 'Nro. Total de dias subsidiados' || row.concepto === 'Personas Por Maternidad' || row.concepto === 'Personas Por Descanso Medico Prolongado' || row.concepto === 'Total Personas' };
   }
   copyTableToClipboard(numberTabla){
   if(numberTabla === 0){
@@ -336,26 +462,26 @@ summaryNull1(cells: any): string {
 }
 showTableDasboard(id: number, position: number) {
     
-  if (id == 0) {
+  if (id == 1) {
     if (position == 0) {
-      this.isTable0 = true;
-      this.isGrafico0 = false;
+      this.isTable1 = true;
+      this.isGrafico1 = false;
     } else {
       this.labels = [];
       this.dataChart1 = [];
       this.dataChart2 = [];
       this.dataChart3 = []; 
-      if(this.columns0){
-        this.columns0.map(item =>{
+      if(this.columns1){
+        this.columns1.map(item =>{
           if(item.prop !== 'concepto' && item.prop !== 'Mes13' ){
             this.labels.push(item.name);
           }
         });
       }
       console.log(this.rows1)
-      if(this.rows0){
-        this.rows0.map(item =>{
-          if(item.concepto.trim() === 'LIMA'){
+      if(this.rows1){
+        this.rows1.map(item =>{
+          if(item.concepto.trim() === 'Planilla Bruta'){
             this.dataChart1.push(item.Mes1);
             this.dataChart1.push(item.Mes2);
             this.dataChart1.push(item.Mes3);
@@ -368,7 +494,7 @@ showTableDasboard(id: number, position: number) {
             this.dataChart1.push(item.Mes10);
             this.dataChart1.push(item.Mes11);
             this.dataChart1.push(item.Mes12);
-          }else  if(item.concepto.trim() === 'CHORRILLOS'){
+          }else  if(item.concepto.trim() === 'Descuentos'){
             this.dataChart2.push(item.Mes1);
             this.dataChart2.push(item.Mes2);
             this.dataChart2.push(item.Mes3);
@@ -381,50 +507,37 @@ showTableDasboard(id: number, position: number) {
             this.dataChart2.push(item.Mes10);
             this.dataChart2.push(item.Mes11);
             this.dataChart2.push(item.Mes12);
-          }else  if(item.concepto.trim() === 'SURCO'){
-            this.dataChart3.push(item.Mes1);
-            this.dataChart3.push(item.Mes2);
-            this.dataChart3.push(item.Mes3);
-            this.dataChart3.push(item.Mes4);
-            this.dataChart3.push(item.Mes5);
-            this.dataChart3.push(item.Mes6);
-            this.dataChart3.push(item.Mes7);
-            this.dataChart3.push(item.Mes8);
-            this.dataChart3.push(item.Mes9);
-            this.dataChart3.push(item.Mes10);
-            this.dataChart3.push(item.Mes11);
-            this.dataChart3.push(item.Mes12);
           }
         })
       }   
-    this.context0 = 'chart-0';                                    
-    this.data = this.chartService.getChartData3(this.labels, this.dataChart1, this.dataChart2, this.dataChart3,'Lima', 'Chorrillos','Surco','line')
+    this.context1 = 'chart-1';                                    
+    this.data = this.chartService.getChartData2(this.labels, this.dataChart1, this.dataChart2,'Planilla Bruta', 'Descuentos','line')
     this.options = this.chartService.getChartOptions('', '',)
     // this.getBarChart1(this.labels, this.dataChart1, this.dataChart2, this.dataChart3,'', '','chart-1', 'Lima', 'Chorrillos', 'Surco','line');
 
-      this.isGrafico0 = true;
-      this.isTable0 = false;
+      this.isGrafico1 = true;
+      this.isTable1 = false;
     }
-  } else if (id == 1) {
+  } else if (id == 2) {
     if (position == 0) {
-      this.isTable1 = true;
-      this.isGrafico1 = false;
+      this.isTable2 = true;
+      this.isGrafico2 = false;
     } else {
       this.labels = [];
       this.dataChart4 = [];
       this.dataChart5 = [];
       this.dataChart6 = []; 
-      if(this.columns1){
-        this.columns1.map(item =>{
+      if(this.columns2){
+        this.columns2.map(item =>{
           if(item.prop !== 'concepto' && item.prop !== 'Mes13' && item.prop !== 'mesActual'){
             this.labels.push(item.name);
           }
         });
       }
       console.log(this.rows1)
-      if(this.rows1){
-        this.rows1.map(item =>{
-          if(item.concepto.trim() === 'CESADO'){
+      if(this.rows2){
+        this.rows2.map(item =>{
+          if(item.concepto.trim() === 'LIMA'){
             this.dataChart4.push(item.Mes1);
             this.dataChart4.push(item.Mes2);
             this.dataChart4.push(item.Mes3);
@@ -437,7 +550,7 @@ showTableDasboard(id: number, position: number) {
             this.dataChart4.push(item.Mes10);
             this.dataChart4.push(item.Mes11);
             this.dataChart4.push(item.Mes12);
-          }else  if(item.concepto.trim() === 'CONTINUADOR'){
+          }else  if(item.concepto.trim() === 'CHORRILLOS'){
             this.dataChart5.push(item.Mes1);
             this.dataChart5.push(item.Mes2);
             this.dataChart5.push(item.Mes3);
@@ -450,7 +563,7 @@ showTableDasboard(id: number, position: number) {
             this.dataChart5.push(item.Mes10);
             this.dataChart5.push(item.Mes11);
             this.dataChart5.push(item.Mes12);
-          }else  if(item.concepto.trim() === 'NUEVO'){
+          }else  if(item.concepto.trim() === 'SURCO'){
             this.dataChart6.push(item.Mes1);
             this.dataChart6.push(item.Mes2);
             this.dataChart6.push(item.Mes3);
@@ -466,13 +579,13 @@ showTableDasboard(id: number, position: number) {
           }
         })
       }
-      this.context1 = 'chart-1'; 
-      this.data = this.chartService.getChartData3(this.labels, this.dataChart4, this.dataChart5, this.dataChart6,'CESADO', 'CONTINUADOR','NUEVO','line')
+      this.context2 = 'chart-2'; 
+      this.data = this.chartService.getChartData3(this.labels, this.dataChart4, this.dataChart5, this.dataChart6,'LIMA', 'CHORRILLOS','SURCO','line')
       this.options = this.chartService.getChartOptions('', '',)
       // this.getBarChart1(this.labels, this.dataChart4, this.dataChart5, this.dataChart6,'', '','chart-1', 'CESADO', 'CONTINUADOR', 'NUEVO','line');
 
-      this.isGrafico1 = true;
-      this.isTable1 = false;
+      this.isGrafico2 = true;
+      this.isTable2 = false;
     }
   } else if (id == 2) {
     if (position == 0) {

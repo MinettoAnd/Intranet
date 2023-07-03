@@ -123,10 +123,10 @@
               </li>
 
             </ul>              
-            <div *ngFor="let checkBoxesOp of checkBoxesOps; let i = index" class="col-lg-2 checkbox">
+            <div *ngFor="let checkBoxesOp of checkBoxesOps1; let i = index" class="col-lg-2 checkbox">
                 <input type="checkbox" id="{{checkBoxesOp.id}}"
-                [checked]="checkBoxesOps[i].value"
-                (click)="selection(checkBoxesOp, checkBoxesOp.id);"/>
+                [checked]="checkBoxesOps1[i].value"
+                (click)="selection(checkBoxesOp, checkBoxesOp.id, 1);"/>
                 <label for="{{checkBoxesOp.id}}"><span>{{checkBoxesOp.label}}</span></label>
             </div> 
 
@@ -135,7 +135,7 @@
           class="bootstrap table table-striped"
           id="datatablele"
             [columns]="columns3"
-            [rows]="rows3"
+            [rows]="rows3filtered"
             [columnMode]="ColumnMode.force"
             [headerHeight]="$any('auto')"
             [rowHeight]="$any('auto')"
@@ -147,7 +147,8 @@
                 let-row="row">
                 <div [ngClass]="{'row-paddin': row.concepto.includes('LIMA') || row.concepto.includes('CHORRILLOS') || row.concepto.includes('SURCO') }">
                   <span *ngIf="column.prop == 'concepto'">{{value}}</span>
-                  <span *ngIf="column.prop !== 'concepto' && rowIndex < 12">{{value  | currency }}</span>
+                  <span *ngIf="column.prop !== 'concepto' && row.GRUPO3 === 'SOLES'">{{value  | currency }}</span>
+                  <span *ngIf="column.prop !== 'concepto' && row.GRUPO3 !== 'SOLES'">{{value | number: '1.0-0' }}</span>
                   <span *ngIf="column.prop !== 'concepto' && rowIndex > 11">{{value }}</span>
                 </div>
               </ng-template>
@@ -158,7 +159,7 @@
     <app-card [message]="message">
         <app-accordion titulo="PLANILLAS - DESCUENTOS">
           <div class="row" style="align-items: center;justify-content: space-between;">
-            <ul class="list-group list-group-horizontal list-group-flush">
+            <ul class="list-group list-group-horizontal list-group-flush col-lg-5">
               <li class="list-group-item border-0 pl-0">
                 <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(4)">
                   <i class="fa fa-external-link"></i>
@@ -172,6 +173,12 @@
                 </button>
               </li>
             </ul>
+            <div *ngFor="let checkBoxesOp of checkBoxesOps2; let i = index" class="col-lg-2 checkbox">
+              <input type="checkbox" id="{{checkBoxesOp.id}}"
+              [checked]="checkBoxesOps2[i].value"
+              (click)="selection(checkBoxesOp, checkBoxesOp.id, 2);"/>
+              <label for="{{checkBoxesOp.id}}"><span>{{checkBoxesOp.label}}</span></label>
+            </div>
           </div>
           <ngx-datatable #myTable4
           class="bootstrap table table-striped"
@@ -200,7 +207,7 @@
     <app-card [message]="message">
         <app-accordion titulo="PLANILLAS - DESCUENTOS POR PRESTACIONES">
           <div class="row" style="align-items: center;justify-content: space-between;">
-            <ul class="list-group list-group-horizontal list-group-flush">
+            <ul class="list-group list-group-horizontal list-group-flush col-lg-5">
               <li class="list-group-item border-0 pl-0">
                 <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(5)">
                   <i class="fa fa-external-link"></i>
@@ -214,6 +221,12 @@
                 </button>
               </li>
             </ul>
+            <div *ngFor="let checkBoxesOp of checkBoxesOps3; let i = index" class="col-lg-2 checkbox">
+              <input type="checkbox" id="{{checkBoxesOp.id}}"
+              [checked]="checkBoxesOps3[i].value"
+              (click)="selection(checkBoxesOp, checkBoxesOp.id, 3);"/>
+              <label for="{{checkBoxesOp.id}}"><span>{{checkBoxesOp.label}}</span></label>
+            </div>
           </div>
           <ngx-datatable #myTable5
           class="bootstrap table table-striped"
@@ -241,7 +254,7 @@
     <app-card [message]="message">
         <app-accordion titulo="PLANILLAS - PAGOS ADICIONALES">
           <div class="row" style="align-items: center;justify-content: space-between;">
-            <ul class="list-group list-group-horizontal list-group-flush">
+            <ul class="list-group list-group-horizontal list-group-flush col-lg-5">
               <li class="list-group-item border-0 pl-0">
                 <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(6)">
                   <i class="fa fa-external-link"></i>
@@ -255,6 +268,12 @@
                 </button>
               </li>
             </ul>
+            <div *ngFor="let checkBoxesOp of checkBoxesOps4; let i = index" class="col-lg-2 checkbox">
+              <input type="checkbox" id="{{checkBoxesOp.id}}"
+              [checked]="checkBoxesOps4[i].value"
+              (click)="selection(checkBoxesOp, checkBoxesOp.id, 4);"/>
+              <label for="{{checkBoxesOp.id}}"><span>{{checkBoxesOp.label}}</span></label>
+            </div>
           </div>
           <ngx-datatable #myTable6
           class="bootstrap table table-striped"

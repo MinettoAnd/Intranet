@@ -37,16 +37,16 @@
             height: 22px;
             transition: transform 0.28s ease;
             border-radius: 3px;
-            border: 2px solid #00a65a;
-  
+            // border: 2px solid #00a65a;
+            border: 2px solid var(--primary)
         }
         &:after {
             content: '';
             display: block;
             width: 10px;
             height: 5px;
-            border-bottom: 2px solid #00a65a;
-            border-left: 2px solid #00a65a;
+            border-bottom: 2px solid var(--primary);
+            border-left: 2px solid var(--primary);
             transform: rotate(-45deg) scale(0);
             transition: transform ease 0.25s;
             position: absolute;
@@ -65,7 +65,7 @@
           background-color: transparent;
           border-radius: 5px;
             &:before {
-                border: 2px solid #00a65a;
+                border: 2px solid var(--secondary);
             }
             &:after {
               transform: rotate(-45deg) scale(1);
