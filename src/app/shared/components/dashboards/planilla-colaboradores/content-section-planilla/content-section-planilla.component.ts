@@ -190,6 +190,9 @@ export class ContentSectionPlanillaComponent implements OnInit {
   context3;
   context4;
   rows3filtered: any[];
+  rows4filtered: any[];
+  rows5filtered: any[];
+  rows6filtered: any[];
   // Templates definidos como @ViewChild
   @ViewChild('planillaTemplate', { static: false }) planillaTemplate: TemplateRef<any>;
   @ViewChild('planillaNetaTemplate', { static: false }) planillaNetaTemplate: TemplateRef<any>;
@@ -227,8 +230,11 @@ export class ContentSectionPlanillaComponent implements OnInit {
   }
   ngOnChanges(changes: SimpleChanges) {
     if (changes.rows3) {
-      console.log(91, this.rows3)
+      console.log(91, this.rows4)
       this.rows3filtered = this.rows3?.filter(item => item.GRUPO3 === 'SOLES');
+      this.rows4filtered = this.rows4?.filter(item => item.GRUPO3 === 'SOLES');
+      this.rows5filtered = this.rows5?.filter(item => item.GRUPO3 === 'SOLES');
+      this.rows6filtered = this.rows6?.filter(item => item.GRUPO3 === 'SOLES');
     }
   }
   ngAfterViewInit() {
@@ -244,13 +250,9 @@ export class ContentSectionPlanillaComponent implements OnInit {
     });
     // this.rows3filtered = this.rows3.filter(item => item.GRUPO3 === 'SOLES');
   }
-  filtrarRows3(): void {
-    // Realiza la operación de filtrado en this.rows3 aquí
-    // Por ejemplo:
-    this.rows3 = this.rows3.filter(item => item.GRUPO3 === 'SOLES');
-    console.log(227, this.rows3)
-  }
+
   selection(option, id: string, tabla) {
+    console.log('=>',this.rows6)
     if (tabla === 1){
       this.checkBoxesOps1.forEach(x => {
         if (x.id === id) {
@@ -268,11 +270,18 @@ export class ContentSectionPlanillaComponent implements OnInit {
         }
       });
     }else if (tabla === 2){
+      
       this.checkBoxesOps2.forEach(x => {
         if (x.id === id) {
           x.value = true;
-          // this.user = (this.user, persona);
-          // this.getBookedAppontments();
+          if(id === '1b'){
+            this.rows4filtered = this.rows4.filter(item => item.GRUPO3 === 'SOLES');
+          }else if(id === '2b'){
+            console.log(255, id)
+            this.rows4filtered = this.rows4.filter(item => item.GRUPO3 === 'HORAS');
+          }else if(id === '3b'){
+            this.rows4filtered = this.rows4.filter(item => item.GRUPO3 === 'PERSONAS');
+          }
         }else{
           x.value = false;
         }
@@ -281,19 +290,31 @@ export class ContentSectionPlanillaComponent implements OnInit {
       this.checkBoxesOps3.forEach(x => {
         if (x.id === id) {
           x.value = true;
-          // this.user = (this.user, persona);
-          // this.getBookedAppontments();
+          if(id === '1c'){
+            this.rows5filtered = this.rows5.filter(item => item.GRUPO3 === 'SOLES');
+          }else if(id === '2c'){
+            console.log(255, id)
+            this.rows5filtered = this.rows5.filter(item => item.GRUPO3 === 'PERSONAS');
+          }else if(id === '3c'){
+            this.rows5filtered = this.rows5.filter(item => item.GRUPO3 === 'PROMEDIO');
+          }
         }else{
           x.value = false;
         }
       });
-    }else if (tabla === '4'){
+    }else if (tabla === 4){
       
       this.checkBoxesOps4.forEach(x => {
         if (x.id === id) {
           x.value = true;
-          // this.user = (this.user, persona);
-          // this.getBookedAppontments();
+          if(id === '1d'){
+            this.rows6filtered = this.rows6.filter(item => item.GRUPO3 === 'SOLES');
+          }else if(id === '2d'){
+            console.log(255, id)
+            this.rows6filtered = this.rows6.filter(item => item.GRUPO3 === 'HORAS');
+          }else if(id === '3d'){
+            this.rows6filtered = this.rows6.filter(item => item.GRUPO3 === 'PERSONAS');
+          }
         }else{
           x.value = false;
         }
@@ -305,7 +326,24 @@ export class ContentSectionPlanillaComponent implements OnInit {
   }
   getRowClass(row) {
     return {
-      'sub-totals': row.concepto === 'Total' || row.concepto === 'Planilla Neta' || row.concepto === 'Prestación Alimentaria' || row.concepto === 'Por Maternidad' || row.concepto === 'Por Descanso Medico Prolongado' || row.concepto === 'Total Subsidiado' || row.concepto === 'Nro. de dias Por Maternidad' || row.concepto === 'Nro. de dias Por Descanso Medico Prolongado' || row.concepto === 'Nro. Total de dias subsidiados' || row.concepto === 'Personas Por Maternidad' || row.concepto === 'Personas Por Descanso Medico Prolongado' || row.concepto === 'Total Personas' };
+      'sub-totals': 
+      row.concepto === 'Planilla Neta' 
+      || row.concepto === 'Por Maternidad' || row.concepto === 'Por Descanso Medico Prolongado' || row.concepto === 'Total Subsidiado' 
+      || row.concepto === 'Nro. de dias Por Maternidad' || row.concepto === 'Nro. de dias Por Descanso Medico Prolongado' || row.concepto === 'Nro. Total de dias subsidiados' 
+      || row.concepto === 'Personas Por Maternidad' || row.concepto === 'Personas Por Descanso Medico Prolongado' || row.concepto === 'Personas Total Subsidiado'
+
+      || row.concepto === 'Dscto. por Club de la Salud' || row.concepto === 'Dscto. por Permisos' || row.concepto === 'Dscto. por Tardanzas' 
+      || row.concepto === 'Tiempo total de tardanzas descontadas' || row.concepto === 'Tiempo total de permisos descontados' 
+      || row.concepto === 'Personas Dscto. por Club de la Salud' || row.concepto === 'Personas Dscto. por Permisos' || row.concepto === 'Personas Dscto. por Tardanzas' 
+
+      || row.concepto === 'Administrativo' || row.concepto === 'Clínica' || row.concepto === 'Farmacia' || row.concepto === 'Hospitalización' || row.concepto === 'Total Dscto.Por Prestación' 
+      || row.concepto === 'Personas Administrativo' || row.concepto === 'Personas Clínica' || row.concepto === 'Personas Farmacia' || row.concepto === 'Personas Hospitalización' || row.concepto === 'Personas Total Dscto.Por Prestación'
+      || row.concepto === 'Promedio Administrativo' || row.concepto === 'Promedio Clínica' || row.concepto === 'Promedio Farmacia' || row.concepto === 'Promedio Hospitalización' || row.concepto === 'Promedio Total Dscto.Por Prestación'
+
+      || row.concepto === 'Pago por Reintegros' || row.concepto === 'Pago por Dias Feriados' || row.concepto === 'Pago por Guardia Nocturna' || row.concepto === 'Hospitalización'  
+      || row.concepto === 'Tiempo total de Feriados Pagados' || row.concepto === 'Tiempo total de Guardia Nocturna Pagadas' 
+      || row.concepto === 'Personas Pago por Reintegros' || row.concepto === 'Personas Pago por Dias Feriados' || row.concepto === 'Personas Pago por Guardia Nocturna' 
+    };
   }
   copyTableToClipboard(numberTabla){
   if(numberTabla === 0){
@@ -330,85 +368,59 @@ export class ContentSectionPlanillaComponent implements OnInit {
 
 
 exportToExcel(numberTabla): void {
-  if(numberTabla === 0){
-    this.rows0.map(item=>{
-      item.montoLima = typeof item.montoLima === 'number' ? item.montoLima : Number(item.montoLima);
-      item.montoChorrillos = typeof item.montoChorrillos === 'number' ? item.montoChorrillos : Number(item.montoChorrillos);
-      item.montoSurco = typeof item.montoSurco === 'number' ? item.montoSurco : Number(item.montoSurco);
-      item.montoTotal = typeof item.montoTotal === 'number' ? item.montoTotal : Number(item.montoTotal);
-    });
-    this.exportService.exportTableElmToExcel(this.rows0, '');
+  if(numberTabla === 3){
+    for (let i = 0; i < this.rows3filtered.length; i++) {
+      for (let j = 1; j <= 13; j++) {
+        const mes = 'Mes' + j;
+        const valor = this.rows3filtered[i][mes];
+        
+        if (typeof valor !== 'number') {
+          this.rows3filtered[i][mes] = Number(valor);
+        }
+      }
+    }
+    this.exportService.exportTableElmToExcel(this.rows3filtered, '');
+  }
+  else if (numberTabla === 4){
+    for (let i = 0; i < this.rows3filtered.length; i++) {
+      for (let j = 1; j <= 13; j++) {
+        const mes = 'Mes' + j;
+        const valor = this.rows3filtered[i][mes];
+        
+        if (typeof valor !== 'number') {
+          this.rows3filtered[i][mes] = Number(valor);
+        }
+      }
+    }
+    this.exportService.exportTableElmToExcel(this.rows4filtered, '');
   }
   else if (numberTabla === 5){
-    this.rows5.map(item=>{
-      item.montoLima = typeof item.montoLima === 'number' ? item.montoLima : Number(item.montoLima);
-      item.montoChorrillos = typeof item.montoChorrillos === 'number' ? item.montoChorrillos : Number(item.montoChorrillos);
-      item.montoSurco = typeof item.montoSurco === 'number' ? item.montoSurco : Number(item.montoSurco);
-      item.montoTotal = typeof item.montoTotal === 'number' ? item.montoTotal : Number(item.montoTotal);
-    });
-    this.exportService.exportTableElmToExcel(this.rows5, '');
+    for (let i = 0; i < this.rows3filtered.length; i++) {
+      for (let j = 1; j <= 13; j++) {
+        const mes = 'Mes' + j;
+        const valor = this.rows3filtered[i][mes];
+        
+        if (typeof valor !== 'number') {
+          this.rows3filtered[i][mes] = Number(valor);
+        }
+      }
+    }
+    this.exportService.exportTableElmToExcel(this.rows5filtered, '');
   }
-  // else if (numberTabla === 2){
-  //   this.rows2.map(item=>{
-  //     item.total01 = typeof item.total01 === 'number' ? item.total01 : Number(item.total01);
-  //     item.total02 = typeof item.total02 === 'number' ? item.total02 : Number(item.total02);
-  //     item.total03 = typeof item.total03 === 'number' ? item.total03 : Number(item.total03);
-  //     item.total04 = typeof item.total04 === 'number' ? item.total04 : Number(item.total04);
+  else if (numberTabla === 6){
+    for (let i = 0; i < this.rows3filtered.length; i++) {
+      for (let j = 1; j <= 13; j++) {
+        const mes = 'Mes' + j;
+        const valor = this.rows3filtered[i][mes];
+        
+        if (typeof valor !== 'number') {
+          this.rows3filtered[i][mes] = Number(valor);
+        }
+      }
+    }
+    this.exportService.exportTableElmToExcel(this.rows6filtered, '');
+  }
 
-  //     item.total05 = typeof item.total05 === 'number' ? item.total05 : Number(item.total05);
-  //     item.total06 = typeof item.total06 === 'number' ? item.total06 : Number(item.total06);
-  //     item.total07 = typeof item.total07 === 'number' ? item.total07 : Number(item.total07);
-  //     item.total08 = typeof item.total08 === 'number' ? item.total08 : Number(item.total08);
-
-  //     item.total09 = typeof item.total09 === 'number' ? item.total09 : Number(item.total09);
-  //     item.total10 = typeof item.total10 === 'number' ? item.total10 : Number(item.total10);
-  //     item.total11 = typeof item.total11 === 'number' ? item.total11 : Number(item.total11);
-  //     item.total12 = typeof item.total12 === 'number' ? item.total12 : Number(item.total12);
-
-  //     item.total = typeof item.total === 'number' ? item.total : Number(item.total);
-  //     });
-  //   this.exportService.exportTableElmToExcel(this.rows2, '');
-  // }else if (numberTabla === 3){
-  //   this.rows3.map(item=>{
-  //     item.total01 = typeof item.total01 === 'number' ? item.total01 : Number(item.total01);
-  //     item.total02 = typeof item.total02 === 'number' ? item.total02 : Number(item.total02);
-  //     item.total03 = typeof item.total03 === 'number' ? item.total03 : Number(item.total03);
-  //     item.total04 = typeof item.total04 === 'number' ? item.total04 : Number(item.total04);
-
-  //     item.total05 = typeof item.total05 === 'number' ? item.total05 : Number(item.total05);
-  //     item.total06 = typeof item.total06 === 'number' ? item.total06 : Number(item.total06);
-  //     item.total07 = typeof item.total07 === 'number' ? item.total07 : Number(item.total07);
-  //     item.total08 = typeof item.total08 === 'number' ? item.total08 : Number(item.total08);
-
-  //     item.total09 = typeof item.total09 === 'number' ? item.total09 : Number(item.total09);
-  //     item.total10 = typeof item.total10 === 'number' ? item.total10 : Number(item.total10);
-  //     item.total11 = typeof item.total11 === 'number' ? item.total11 : Number(item.total11);
-  //     item.total12 = typeof item.total12 === 'number' ? item.total12 : Number(item.total12);
-
-  //     item.total = typeof item.total === 'number' ? item.total : Number(item.total);
-  //     });
-  //   this.exportService.exportTableElmToExcel(this.rows3, '');
-  // }else if (numberTabla === 4){
-  //   this.rows4.map(item=>{
-  //     item.total01 = typeof item.total01 === 'number' ? item.total01 : Number(item.total01);
-  //     item.total02 = typeof item.total02 === 'number' ? item.total02 : Number(item.total02);
-  //     item.total03 = typeof item.total03 === 'number' ? item.total03 : Number(item.total03);
-  //     item.total04 = typeof item.total04 === 'number' ? item.total04 : Number(item.total04);
-
-  //     item.total05 = typeof item.total05 === 'number' ? item.total05 : Number(item.total05);
-  //     item.total06 = typeof item.total06 === 'number' ? item.total06 : Number(item.total06);
-  //     item.total07 = typeof item.total07 === 'number' ? item.total07 : Number(item.total07);
-  //     item.total08 = typeof item.total08 === 'number' ? item.total08 : Number(item.total08);
-
-  //     item.total09 = typeof item.total09 === 'number' ? item.total09 : Number(item.total09);
-  //     item.total10 = typeof item.total10 === 'number' ? item.total10 : Number(item.total10);
-  //     item.total11 = typeof item.total11 === 'number' ? item.total11 : Number(item.total11);
-  //     item.total12 = typeof item.total12 === 'number' ? item.total12 : Number(item.total12);
-
-  //     item.total = typeof item.total === 'number' ? item.total : Number(item.total);
-  //     });
-  //   this.exportService.exportTableElmToExcel(this.rows4, '');
-  // }
 }
 summaryForAmount(cells: any, column){
   // console.log(cells);

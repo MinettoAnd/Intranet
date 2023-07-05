@@ -555,9 +555,16 @@ export class PlanillaColaboradoresComponent implements OnInit {
           this.title = response.data.title;
   
           // this.temp = this.rows;
-          this.columns1 = this.data.cabeceras_kpi_planillas;
+          this.columns1 = JSON.parse(JSON.stringify(this.data.cabeceras_kpi_planillas));
+          this.columns1.forEach(item => {
+            if (item.name.trim() === 'PLANILLA') {
+              item.name = 'Resumen';
+            }
+          });
+          
+          
           this.rows1 = [];
-          console.log(560, this.data.tabla_kpi_planillas)
+          console.log(560, this.data.cabeceras_kpi_planillas)
           this.data.tabla_kpi_planillas.map(item =>{
             if (item.concepto.trim() === 'Ingresos'){
               const itemResumen = {
@@ -622,7 +629,12 @@ export class PlanillaColaboradoresComponent implements OnInit {
               this.rows2.push(item)
             }
           })
-          this.columns2 = this.data.cabeceras_kpi_planillas;
+          this.columns2 = JSON.parse(JSON.stringify(this.data.cabeceras_kpi_planillas));
+          this.columns2.forEach(item => {
+            if (item.name.trim() === 'PLANILLA') {
+              item.name = 'PRESTACIÓN ALIMENTARIA';
+            }
+          });
           // this.rows2 = this.data.tabla_kpi_planillas;
 
           this.rows2.map(item =>{

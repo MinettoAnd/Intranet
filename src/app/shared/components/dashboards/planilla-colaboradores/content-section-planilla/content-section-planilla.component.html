@@ -184,7 +184,7 @@
           class="bootstrap table table-striped"
           id="datatablele"
             [columns]="columns4"
-            [rows]="rows4"
+            [rows]="rows4filtered"
             [columnMode]="ColumnMode.force"
             [headerHeight]="$any('auto')"
             [rowHeight]="$any('auto')"
@@ -196,8 +196,9 @@
                 let-row="row">
                 <div [ngClass]="{'row-paddin': row.concepto.includes('LIMA') || row.concepto.includes('CHORRILLOS') || row.concepto.includes('SURCO') }">
                   <span *ngIf="column.prop == 'concepto'">{{value}}</span>
-                  <span *ngIf="column.prop !== 'concepto' && rowIndex < 9">{{ value | currency  }}</span>
-                  <span *ngIf="column.prop !== 'concepto' && rowIndex > 8">{{ value  }}</span>
+                  <span *ngIf="column.prop !== 'concepto' && row.GRUPO3 === 'SOLES'">{{value  | currency }}</span>
+                  <span *ngIf="column.prop !== 'concepto' && row.GRUPO3 === 'HORAS'">{{value }}</span>
+                  <span *ngIf="column.prop !== 'concepto' && row.GRUPO3 === 'PERSONAS'">{{value | number: '1.0-0' }}</span>
                 </div>
               </ng-template>
             </ngx-datatable-column>
@@ -232,7 +233,7 @@
           class="bootstrap table table-striped"
           id="datatablele"
             [columns]="columns5"
-            [rows]="rows5"
+            [rows]="rows5filtered"
             [columnMode]="ColumnMode.force"
             [headerHeight]="$any('auto')"
             [rowHeight]="$any('auto')"
@@ -244,7 +245,9 @@
                 let-row="row">
                 <div [ngClass]="{'row-paddin': row.concepto.includes('LIMA') || row.concepto.includes('CHORRILLOS') || row.concepto.includes('SURCO') }">
                   <span *ngIf="column.prop == 'concepto'">{{value}}</span>
-                  <span *ngIf="column.prop !== 'concepto'">{{value  | currency }}</span>
+                  <span *ngIf="column.prop !== 'concepto' && row.GRUPO3 === 'SOLES'">{{value  | currency }}</span>
+                  <span *ngIf="column.prop !== 'concepto' && row.GRUPO3 == 'PERSONAS'">{{value | number: '1.0-0' }}</span>
+                  <span *ngIf="column.prop !== 'concepto' && row.GRUPO3 == 'PROMEDIO'">{{value | number: '1.2-2' }}</span>
                 </div>
               </ng-template>
             </ngx-datatable-column>
@@ -279,7 +282,7 @@
           class="bootstrap table table-striped"
           id="datatablele"
             [columns]="columns6"
-            [rows]="rows6"
+            [rows]="rows6filtered"
             [columnMode]="ColumnMode.force"
             [headerHeight]="$any('auto')"
             [rowHeight]="$any('auto')"
@@ -291,8 +294,10 @@
                 let-row="row">
                 <div [ngClass]="{'row-paddin': row.concepto.includes('LIMA') || row.concepto.includes('CHORRILLOS') || row.concepto.includes('SURCO') }">
                   <span *ngIf="column.prop == 'concepto'">{{value}}</span>
-                  <span *ngIf="column.prop !== 'concepto' && rowIndex < 12">{{ value | currency  }}</span>
-                  <span *ngIf="column.prop !== 'concepto' && rowIndex > 11">{{ value  }}</span>
+                  <span *ngIf="column.prop !== 'concepto' && row.GRUPO3 === 'SOLES'">{{value  | currency }}</span>
+                  <span *ngIf="column.prop !== 'concepto' && row.GRUPO3 == 'HORAS'">{{value }}</span>
+                  <span *ngIf="column.prop !== 'concepto' && row.GRUPO3 == 'PERSONAS'">{{value | number: '1.0-0' }}</span>
+                  <!-- <span *ngIf="column.prop !== 'concepto'">{{value }}</span> -->
                 </div>
                 
               </ng-template>
