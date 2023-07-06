@@ -564,7 +564,7 @@ export class PlanillaColaboradoresComponent implements OnInit {
           
           
           this.rows1 = [];
-          console.log(560, this.data.cabeceras_kpi_planillas)
+          console.log(560, this.data.tabla_kpi_planillas)
           this.data.tabla_kpi_planillas.map(item =>{
             if (item.concepto.trim() === 'Ingresos'){
               const itemResumen = {
@@ -637,18 +637,18 @@ export class PlanillaColaboradoresComponent implements OnInit {
           });
           // this.rows2 = this.data.tabla_kpi_planillas;
 
-          this.rows2.map(item =>{
-            const mItem = 'Mes'+ item.mesActual;
-              if (item.concepto.trim() === 'NUEVO'){
-                this.nuevos = item[mItem];
-                // console.log(nuevos)
-              }else if (item.concepto.trim() === 'CESADO'){
-                this.cesados = item[mItem];
-              }else if (item.concepto.trim() === 'CONTINUADOR'){
-                this.continuadores = item[mItem];
-              }
-            // this.totalEmpleados = Number(this.nuevos) + Number(this.cesados) + Number(this.continuadores)
-          })
+          // this.rows2.map(item =>{
+          //   const mItem = 'Mes'+ item.mesActual;
+          //     if (item.concepto.trim() === 'NUEVO'){
+          //       this.nuevos = item[mItem];
+          //       // console.log(nuevos)
+          //     }else if (item.concepto.trim() === 'CESADO'){
+          //       this.cesados = item[mItem];
+          //     }else if (item.concepto.trim() === 'CONTINUADOR'){
+          //       this.continuadores = item[mItem];
+          //     }
+          //   // this.totalEmpleados = Number(this.nuevos) + Number(this.cesados) + Number(this.continuadores)
+          // })
           this.columns3 = this.data.cabeceras_kpi_planillas_subsidio;
           this.rows3 = this.data.tabla_kpi_planillas_subsidio;
           console.log(578, this.rows3)
@@ -661,6 +661,20 @@ export class PlanillaColaboradoresComponent implements OnInit {
           this.columns6 = this.data.cabeceras_kpi_planillas_ingresos;
           this.rows6 = this.data.tabla_kpi_planillas_ingresos;
           console.log(587, this.rows6)
+
+
+          this.columns7 = this.data.cabeceras_planilla_sede;
+          this.rows7 = this.data.tabla_planilla_sede;
+          this.columns8 = this.data.cabeceras_planilla_estado;
+          this.rows8 = this.data.tabla_planilla_estado;
+          this.columns9 = this.data.cabeceras_planilla_tipo_planilla;
+          this.rows9 = this.data.tabla_planilla_tipo_planilla;
+          this.columns10 = this.data.cabeceras_planilla_sexo;
+          this.rows10 = this.data.tabla_planilla_sexo;
+          this.columns11 = this.data.cabeceras_planilla_tiempo_laborado;
+          this.rows11 = this.data.tabla_planilla_tiempo_laborado;
+          // this.columns12 = this.data.cabeceras_kpi_planillas_ingresos;
+          // this.rows12 = this.data.tabla_kpi_planillas_ingresos;
           // this.rows6.map(item =>{
           //   if (item.concepto.trim() === 'Promedio de Permanencia Laboral (*)'){
           //     const minutosPorAnio = 365 * 24 * 60;
@@ -675,14 +689,14 @@ export class PlanillaColaboradoresComponent implements OnInit {
           //     }
           // })
 
-          this.data.tabla_mas_10_anios.map(item =>{
-            // const myItem = 'Mes'+ item.mesActual;
-              // if (item.concepto.trim() === 'Más de 10 años'){
-                this.masDeDiez = item.mesActual;
-                this.totalEmpleados = item.total;
-                // console.log(masDeDiez)
-              // }
-          })
+          // this.data.tabla_mas_10_anios.map(item =>{
+          //   // const myItem = 'Mes'+ item.mesActual;
+          //     // if (item.concepto.trim() === 'Más de 10 años'){
+          //       this.masDeDiez = item.mesActual;
+          //       this.totalEmpleados = item.total;
+          //       // console.log(masDeDiez)
+          //     // }
+          // })
           const pocNuevos = Number(this.nuevos)/Number(this.totalEmpleados) * 100
           const pocCesados = Number(this.cesados)/Number(this.totalEmpleados) * 100
           const pocContinuadores = Number(this.continuadores)/Number(this.totalEmpleados) * 100

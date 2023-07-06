@@ -435,6 +435,7 @@ showTableDasboard(id: number, position: number) {
       this.dataChart7 = [];
       this.dataChart8 = [];
       this.dataChart9 = []; 
+      this.dataChart10 = []; 
       if(this.columns2){
         this.columns2.map(item =>{
           if(item.prop !== 'concepto' && item.prop !== 'Mes13' && item.prop !== 'mesActual'){

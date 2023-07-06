@@ -351,8 +351,7 @@
               <div
                 [ngClass]="{'row-paddin': row.concepto.includes('LIMA') || row.concepto.includes('CHORRILLOS') || row.concepto.includes('SURCO') }">
                 <span *ngIf="column.prop == 'concepto'">{{value}}</span>
-                <span *ngIf="column.prop !== 'concepto' && rowIndex < 14">{{value }}</span>
-                <span *ngIf="column.prop !== 'concepto' && rowIndex > 13">{{value }} %</span>
+                <span *ngIf="column.prop !== 'concepto'">{{value | currency }}</span>
               </div>
             </ng-template>
           </ngx-datatable-column>
@@ -401,8 +400,7 @@
               <div
                 [ngClass]="{'row-paddin': row.concepto.includes('LIMA') || row.concepto.includes('CHORRILLOS') || row.concepto.includes('SURCO') }">
                 <span *ngIf="column.prop == 'concepto'">{{value}}</span>
-                <span *ngIf="column.prop !== 'concepto' && rowIndex < 14">{{value }}</span>
-                <span *ngIf="column.prop !== 'concepto' && rowIndex > 13">{{value }} %</span>
+                <span *ngIf="column.prop !== 'concepto'">{{value | currency }}</span>
               </div>
             </ng-template>
           </ngx-datatable-column>
@@ -451,8 +449,8 @@
               <div
                 [ngClass]="{'row-paddin': row.concepto.includes('LIMA') || row.concepto.includes('CHORRILLOS') || row.concepto.includes('SURCO') }">
                 <span *ngIf="column.prop == 'concepto'">{{value}}</span>
-                <span *ngIf="column.prop !== 'concepto' && rowIndex < 14">{{value }}</span>
-                <span *ngIf="column.prop !== 'concepto' && rowIndex > 13">{{value }} %</span>
+                <span *ngIf="column.prop !== 'concepto'">{{value | currency }}</span>
+                <!-- <span *ngIf="column.prop !== 'concepto' && rowIndex > 13">{{value }} %</span> -->
               </div>
             </ng-template>
           </ngx-datatable-column>
@@ -501,8 +499,7 @@
               <div
                 [ngClass]="{'row-paddin': row.concepto.includes('LIMA') || row.concepto.includes('CHORRILLOS') || row.concepto.includes('SURCO') }">
                 <span *ngIf="column.prop == 'concepto'">{{value === 'F' ? 'Mujer' : 'Hombre'}}</span>
-                <span *ngIf="column.prop !== 'concepto' && rowIndex < 14">{{value }}</span>
-                <span *ngIf="column.prop !== 'concepto' && rowIndex > 13">{{value }} %</span>
+                <span *ngIf="column.prop !== 'concepto'">{{value | currency }}</span>
               </div>
             </ng-template>
           </ngx-datatable-column>
@@ -551,8 +548,7 @@
               <div
                 [ngClass]="{'row-paddin': row.concepto.includes('LIMA') || row.concepto.includes('CHORRILLOS') || row.concepto.includes('SURCO') }">
                 <span *ngIf="column.prop == 'concepto'">{{value}}</span>
-                <span *ngIf="column.prop !== 'concepto' && rowIndex < 14">{{value }}</span>
-                <span *ngIf="column.prop !== 'concepto' && rowIndex > 13">{{value }} %</span>
+                <span *ngIf="column.prop !== 'concepto'">{{value | currency }}</span>
               </div>
             </ng-template>
           </ngx-datatable-column>
