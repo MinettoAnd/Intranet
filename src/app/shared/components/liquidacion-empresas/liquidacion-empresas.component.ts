@@ -157,6 +157,7 @@ export class LiquidacionEmpresasComponent implements OnInit {
   };
   action: boolean = false;
   titulo: any;
+  tituloSigv: any;
   empresa: any;
   innerHtml: any;
   empresaMonto: any;
@@ -342,6 +343,7 @@ export class LiquidacionEmpresasComponent implements OnInit {
                  
                   if(response.data.success){
                     this.titulo = response.data.titulo;
+                    this.tituloSigv = response.data.tituloSigv;
                     this.empresa = response.data.empresa;
                     this.innerHtml = response.data.condPago;
                     this.columns1 = response.data.cabeceras_Sucursal;
