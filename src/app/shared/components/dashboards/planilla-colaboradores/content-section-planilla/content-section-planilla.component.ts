@@ -31,6 +31,7 @@ export class ContentSectionPlanillaComponent implements OnInit {
   isGrafico5 = false;
   isGrafico6 = false;
   isGrafico7 = false;
+  isGrafico8 = false;
   isLoading0 = false;
   isLoading1 = false;
   isLoading2 = false;
@@ -93,6 +94,13 @@ export class ContentSectionPlanillaComponent implements OnInit {
   dataChart23: number[] = [];
   dataChart24: number[] = [];
   dataChart25: number[] = [];
+  dataChart26: number[] = [];
+  dataChart27: number[] = [];
+  dataChart28: number[] = [];
+  dataChart29: number[] = [];
+  dataChart30: number[] = [];
+  dataChart31: number[] = [];
+  dataChart32: number[] = [];
   ColumnMode = ColumnMode;
   tabs = [
     {
@@ -205,6 +213,7 @@ export class ContentSectionPlanillaComponent implements OnInit {
   context5;
   context6;
   context7;
+  context8;
   rows3filtered: any[];
   rows4filtered: any[];
   rows5filtered: any[];
@@ -1040,6 +1049,129 @@ showTableDasboard(id: number, position: number) {
 
       this.isGrafico7 = true;
       this.isTable7 = false;
+    }
+  }  else if (id == 8) {
+    if (position == 0) {
+      this.isTable8 = true;
+      this.isGrafico8 = false;
+    } else {
+      this.labels = [];
+      this.dataChart26 = [];
+      this.dataChart27 = [];
+      this.dataChart28 = []; 
+      this.dataChart29 = []; 
+      this.dataChart30 = []; 
+      this.dataChart31 = []; 
+      this.dataChart32 = []; 
+      if(this.columns12){
+        this.columns12.map(item =>{
+          if(item.prop !== 'concepto' && item.prop !== 'Mes13' && item.prop !== 'mesActual'){
+            this.labels.push(item.name);
+          }
+        });
+      }
+      if(this.rows12){
+        this.rows12.map(item =>{
+          if(item.concepto.trim() === 'Planilla Bruta Respecto al mes Anterior'){
+            this.dataChart26.push(item.Mes1);
+            this.dataChart26.push(item.Mes2);
+            this.dataChart26.push(item.Mes3);
+            this.dataChart26.push(item.Mes4);
+            this.dataChart26.push(item.Mes5);
+            this.dataChart26.push(item.Mes6);
+            this.dataChart26.push(item.Mes7);
+            this.dataChart26.push(item.Mes8);
+            this.dataChart26.push(item.Mes9);
+            this.dataChart26.push(item.Mes10);
+            this.dataChart26.push(item.Mes11);
+            this.dataChart26.push(item.Mes12);
+          }else  if(item.concepto.trim() === 'Planilla Neta Respecto al mes Anterior'){
+            this.dataChart27.push(item.Mes1);
+            this.dataChart27.push(item.Mes2);
+            this.dataChart27.push(item.Mes3);
+            this.dataChart27.push(item.Mes4);
+            this.dataChart27.push(item.Mes5);
+            this.dataChart27.push(item.Mes6);
+            this.dataChart27.push(item.Mes7);
+            this.dataChart27.push(item.Mes8);
+            this.dataChart27.push(item.Mes9);
+            this.dataChart27.push(item.Mes10);
+            this.dataChart27.push(item.Mes11);
+            this.dataChart27.push(item.Mes12);
+          }else  if(item.concepto.trim() === 'Subsidios Respecto al mes Anterior'){
+            this.dataChart28.push(item.Mes1);
+            this.dataChart28.push(item.Mes2);
+            this.dataChart28.push(item.Mes3);
+            this.dataChart28.push(item.Mes4);
+            this.dataChart28.push(item.Mes5);
+            this.dataChart28.push(item.Mes6);
+            this.dataChart28.push(item.Mes7);
+            this.dataChart28.push(item.Mes8);
+            this.dataChart28.push(item.Mes9);
+            this.dataChart28.push(item.Mes10);
+            this.dataChart28.push(item.Mes11);
+            this.dataChart28.push(item.Mes12);
+          }else  if(item.concepto.trim() === 'Prestaciones Respecto al mes Anterior'){
+            this.dataChart29.push(item.Mes1);
+            this.dataChart29.push(item.Mes2);
+            this.dataChart29.push(item.Mes3);
+            this.dataChart29.push(item.Mes4);
+            this.dataChart29.push(item.Mes5);
+            this.dataChart29.push(item.Mes6);
+            this.dataChart29.push(item.Mes7);
+            this.dataChart29.push(item.Mes8);
+            this.dataChart29.push(item.Mes9);
+            this.dataChart29.push(item.Mes10);
+            this.dataChart29.push(item.Mes11);
+            this.dataChart29.push(item.Mes12);
+          }else  if(item.concepto.trim() === 'Descuentos Respecto al mes Anterior'){
+            this.dataChart30.push(item.Mes1);
+            this.dataChart30.push(item.Mes2);
+            this.dataChart30.push(item.Mes3);
+            this.dataChart30.push(item.Mes4);
+            this.dataChart30.push(item.Mes5);
+            this.dataChart30.push(item.Mes6);
+            this.dataChart30.push(item.Mes7);
+            this.dataChart30.push(item.Mes8);
+            this.dataChart30.push(item.Mes9);
+            this.dataChart30.push(item.Mes10);
+            this.dataChart30.push(item.Mes11);
+            this.dataChart30.push(item.Mes12);
+          }else  if(item.concepto.trim() === '% Planilla Neta sobre Planilla Bruta'){
+            this.dataChart31.push(item.Mes1);
+            this.dataChart31.push(item.Mes2);
+            this.dataChart31.push(item.Mes3);
+            this.dataChart31.push(item.Mes4);
+            this.dataChart31.push(item.Mes5);
+            this.dataChart31.push(item.Mes6);
+            this.dataChart31.push(item.Mes7);
+            this.dataChart31.push(item.Mes8);
+            this.dataChart31.push(item.Mes9);
+            this.dataChart31.push(item.Mes10);
+            this.dataChart31.push(item.Mes11);
+            this.dataChart31.push(item.Mes12);
+          }else  if(item.concepto.trim() === '% Descuento sobre Planilla Bruta'){
+            this.dataChart32.push(item.Mes1);
+            this.dataChart32.push(item.Mes2);
+            this.dataChart32.push(item.Mes3);
+            this.dataChart32.push(item.Mes4);
+            this.dataChart32.push(item.Mes5);
+            this.dataChart32.push(item.Mes6);
+            this.dataChart32.push(item.Mes7);
+            this.dataChart32.push(item.Mes8);
+            this.dataChart32.push(item.Mes9);
+            this.dataChart32.push(item.Mes10);
+            this.dataChart32.push(item.Mes11);
+            this.dataChart32.push(item.Mes12);
+          }
+        })
+      }
+      this.context8 = 'chart-8'; 
+      this.data = this.chartService.getChartData7(this.labels, this.dataChart26, this.dataChart27, this.dataChart28, this.dataChart29,this.dataChart30,this.dataChart31,this.dataChart32,'Planilla Bruta Respecto al mes Anterior', 'Planilla Neta Respecto al mes Anterior','Subsidios Respecto al mes Anterior', 'Prestaciones Respecto al mes Anterior','Descuentos Respecto al mes Anterior','% Planilla Neta sobre Planilla Bruta','% Descuento sobre Planilla Bruta','line')
+      this.options = this.chartService.getChartOptions('', '',)
+
+      this.isGrafico8 = true;
+      this.isTable8 = false;
     }
   } 
 }

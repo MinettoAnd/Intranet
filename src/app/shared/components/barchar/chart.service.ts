@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
+import { CustomNumberPipe } from 'src/app/pipes/customNumber.pipe';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChartService {
 
-  constructor() { }
+  constructor(private  _cnp: CustomNumberPipe) { }
   getChartData2(chartLabels1, chartData1, chartData2, title, title2, typeChart) {
     const data = {
       labels: chartLabels1,
@@ -320,7 +321,10 @@ export class ChartService {
           font: {
             size: '12',
             weight: 'bold'
-          }
+          },
+          formatter: function (dato, ctx) {
+              return Math.round(dato * 100) / 100; 
+            },
         }
       },
       tooltips: {
