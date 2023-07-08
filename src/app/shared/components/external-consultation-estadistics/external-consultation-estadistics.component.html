@@ -229,7 +229,7 @@
                                           <!-- </div> -->
                                           <div class="card-body">
                                             <div class="d-block" >
-                                              <canvas #baseChart id="chart-1">
+                                              <canvas #baseChart id="chart-1" *ngIf="selectedOptionGraph1">
                                               </canvas>
                                             </div>
                                           </div>
@@ -287,7 +287,7 @@
                                           </ul>
                                           <div class="card-body">
                                             <div class="d-block" >
-                                              <canvas #baseChart id="chart-2">
+                                              <canvas #baseChart id="chart-2" *ngIf="selectedOptionGraph1">
                                               </canvas>
                                             </div>
                                           </div>

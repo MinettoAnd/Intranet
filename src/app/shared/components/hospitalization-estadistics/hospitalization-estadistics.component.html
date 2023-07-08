@@ -215,13 +215,13 @@
                                           </p>
                                           <div class="card-body">
                                             <div class="d-block" >
-                                              <canvas #baseChart id="chart-1" *ngIf="selectedOptionGraph1 == 'pacientes_hospitalizados'">
+                                              <canvas #chart1 id="chart-1" *ngIf="selectedOptionGraph1 === 'pacientes_hospitalizados'">
                                               </canvas>
                                               
-                                              <canvas #baseChart id="chart-3" *ngIf="selectedOptionGraph1 == 'ingresos_hospitalizacion'">
+                                              <canvas #chart3 id="chart-3" *ngIf="selectedOptionGraph1 === 'ingresos_hospitalizacion'">
                                               </canvas>
 
-                                              <canvas #baseChart id="chart-5" *ngIf="selectedOptionGraph1 == 'altas_hospitalizacion'">
+                                              <canvas #chart5 id="chart-5" *ngIf="selectedOptionGraph1 === 'altas_hospitalizacion'">
                                               </canvas>
                                             </div>
                                           </div>
@@ -275,12 +275,12 @@
                                           <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
                                             <li class="list-group-item border-0 pl-0">
                                               <a  id="downloadlink2" href="#" 
-                                                class="btn btn-sm font-weight-bold btn-link" (click)="guardarImagen('chart-2', 'downloadlink2')" download *ngIf="selectedOptionGraph2 == 'ingresos_hospitalizacion'">
+                                                class="btn btn-sm font-weight-bold btn-link" (click)="guardarImagen('chart-2', 'downloadlink2')" download *ngIf="selectedOptionGraph2 === 'ingresos_hospitalizacion'">
                                                 <i class="fa fa-external-link"></i>
                                                 Guardar Imagen
                                               </a>
                                               <a  id="downloadlink2" href="#" 
-                                                class="btn btn-sm font-weight-bold btn-link" (click)="guardarImagen('chart-4', 'downloadlink2')" download *ngIf="selectedOptionGraph2 !== 'altas_hospitalizacion'">
+                                                class="btn btn-sm font-weight-bold btn-link" (click)="guardarImagen('chart-4', 'downloadlink2')" download *ngIf="selectedOptionGraph2 === 'altas_hospitalizacion'">
                                                 <i class="fa fa-external-link"></i>
                                                 Guardar Imagen
                                               </a>
@@ -294,13 +294,13 @@
                                           </ul>
                                           <div class="card-body">
                                             <div class="d-block" >
-                                              <canvas #baseChart id="chart-2" *ngIf="selectedOptionGraph2 == 'ingresos_hospitalizacion'">
+                                              <canvas #chart2 id="chart-2" *ngIf="selectedOptionGraph2 === 'ingresos_hospitalizacion'">
                                               </canvas>
-                                              <canvas #baseChart id="chart-4" *ngIf="selectedOptionGraph2 == 'altas_hospitalizacion'">
+                                              <canvas #chart4 id="chart-4" *ngIf="selectedOptionGraph2 === 'altas_hospitalizacion'">
                                               </canvas>
                                             </div>
                                           </div>
-                                          <div class="card-body" *ngIf="selectedOptionGraph2 == 'ingresos_hospitalizacion'">
+                                          <div class="card-body" >
                                             <ngb-accordion [destroyOnHide]="false" [closeOthers]="true" #acc="ngbAccordion" activeIds="ngb-panel-0">
                                               <ngb-panel *ngFor="let percentageCompleted of progressBar1; let i = index;">
                                                 <ng-template ngbPanelTitle style="width:100%!important;">

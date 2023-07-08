@@ -76,6 +76,7 @@ export class PeriodoComponent implements OnInit {
       periodo: this.periodo,
       mes : form.mes,
       anio : form.anio,
+      option : 'planilla',
     }
     console.log(89, parameters)
     this.parameters.emit(parameters);

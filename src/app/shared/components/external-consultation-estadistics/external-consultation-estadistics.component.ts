@@ -43,9 +43,10 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
     if (content) {
       // initially setter gets called with undefined
       this.baseChart = content;
-      this.grafico1 = this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
-      this.grafico2 = this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'doughnut');
-      // this.getBarChart(this.chartLabels, this.chartData3, this.chartData4, 'chart-2', 'MENSUAL-INGRESO CON IGV - TOTAL CUOTAS', 'MENSUAL-INGRESO CON IGV - TOTAL RECAUDADO', 'bar');
+      if (this.baseChart.nativeElement.id === 'chart-1'){
+        this.grafico1 = this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
+        this.grafico2 = this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'doughnut');
+      }// this.getBarChart(this.chartLabels, this.chartData3, this.chartData4, 'chart-2', 'MENSUAL-INGRESO CON IGV - TOTAL CUOTAS', 'MENSUAL-INGRESO CON IGV - TOTAL RECAUDADO', 'bar');
       // this.getBarChart(this.chartLabels2, this.chartData5, this.chartData6, 'chart-3', 'MENSUAL-NÚMERO DE CONTRATOS PAGADOS-TOTAL CUOTAS', 'MENSUAL-NÚMERO DE CONTRATOS PAGADOS-TOTAL RECAUDADO', 'bar');
       // this.getBarChart(this.chartLabels3, this.chartData7, this.chartData8, 'chart-4', 'ANUAL-INGRESO SIN IGV - TOTAL CUOTAS', 'ANUAL-INGRESO SIN IGV - TOTAL RECAUDADO', 'bar');
       // this.getBarChart(this.chartLabels3, this.chartData9, this.chartData10, 'chart-5', 'ANUAL-INGRESO CON IGV - TOTAL CUOTAS', 'ANUAL-INGRESO CON IGV - TOTAL RECAUDADO', 'bar');
@@ -208,6 +209,7 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
   changeTable: boolean;
   changeTable1: boolean = false;
   action: boolean = false;
+  selectedOptionGraph1 = false;
   constructor(private tableApiservice: ExternalConsultationService, private exportService: ExportService,
     private _cp: CurrencyPipe, private modalService: NgbModal) { 
       this.page1.pageNumber = 0;
@@ -253,22 +255,19 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
 
     // this.setPage({ offset: 0 });
   }
-  removeGrah(grafico){
-    grafico.destroy();
-    
-    console.log('grafico destruido', grafico)
-    delay(50000)
-  }
   filter() {
     this.action = true;
+    this.selectedOptionGraph1 = true;
     if(this.grafico1){
-      console.log('grafico existe')
+      console.log('grafico 1 existe')
       this.removeData(this.grafico1);
       this.removeGrah(this.grafico1);
       this.grafico1 = null;
+      console.log('=>>',this.grafico1)
       // this.grafico1 = this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del mes seleccionado', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
     }
     if(this.grafico2){
+      console.log('grafico 1 existe')
       this.removeData(this.grafico2);
       this.removeGrah(this.grafico2);
       // this.grafico2 = this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'doughnut');
@@ -608,7 +607,7 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
         }
       }
     };
-    return this.getChartPie(chartNum, typeChart, data, options);
+    return this.getChart(chartNum, typeChart, data, options);
     
   }
   // window.onload = function() {
@@ -701,14 +700,20 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
     
     return graph;
   }
-  getChartPie(context, chartType, data, options?) {
-    const graph = new Chart(context, {
-      data,
-      options,
-      type: chartType,
-      plugins: [ChartDataLabels]
-    });
-    return graph;
+  // getChartPie(context, chartType, data, options?) {
+  //   const graph = new Chart(context, {
+  //     data,
+  //     options,
+  //     type: chartType,
+  //     plugins: [ChartDataLabels]
+  //   });
+  //   return graph;
+  // }
+  removeGrah(grafico){
+    grafico.destroy();
+    
+    console.log('grafico destruido', grafico)
+    // delay(50000)
   }
   addData(chart, label,  data) {
     if(chart){
@@ -1107,34 +1112,36 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
                    this.chartLabels1 = [];
                    this.chartData1 = [];   
                    this.chartData2 = [];
-                   this.chartData3 = [];    
+                  //  this.chartData3 = [];    
                   if(response.data.success){
-                    
+                    console.log('grafico 11', this.chartData1)
                     response.data.data.map(item =>{
                       this.chartLabels1.push(item.dia);
                       this.chartData1.push(item.reservas);
                       this.chartData2.push(item.atendidos);
                     });
                     // this.resumenMontos = response.data;
+                  }
+                    if(!this.grafico1){
                     
-                  }
-                  if(!this.grafico1){
-                    this.grafico1 = this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
-                  }else{
-                    var data = [];
-                    data.push(this.chartData1, this.chartData2);
-                    this.addData(this.grafico1, this.chartLabels1, data)
-                  }
+                      this.grafico1 = this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
+                    }else{
+                      var data = [];
+                      data.push(this.chartData1, this.chartData2);
+                      this.addData(this.grafico1, this.chartLabels1, data)
+                    }
+                  
+                    Swal.close();
                 },
                 (error) => {
                     Swal.close();
                 }
               );
               this.tableApiservice.getCePieIndex(this.parameters).subscribe(
-                (response) => {        
+                (response) => {       
+                  this.chartLabels2 = [];
+                   this.chartData3 = [];   
                   if(response.data.success){
-                   this.chartLabels2 = [];
-                   this.chartData3 = [];    
                   // if(response.data.success){
                     
                     response.data.data.map(item =>{
@@ -1142,8 +1149,8 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
                       this.chartData3.push(item.cantidad);
                     });
                     // this.resumenMontos = response.data;
-                    
-                  // }
+                    // }
+                  }  
                   if(!this.grafico2){
                     this.grafico2 = this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'doughnut');
 
@@ -1153,7 +1160,7 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
                     this.addData(this.grafico2, this.chartLabels2, data)
                     // console.log(577, this.chartData1);
                    } 
-                  }
+                  
                   Swal.close();
                 },
                 (error) => {

@@ -197,9 +197,15 @@ export class PlanillaColaboradoresComponent implements OnInit {
   panelOptions2;
   isLoading: Boolean = false;
   masDeDiez;
-  nuevos;
-  cesados;
-  continuadores;
+  pNetaMes;
+  pBrutaMes;
+  tPrestacionesMes;
+  tSubsidiadoMes;
+
+  pNeta;
+  pBruta;
+  tPrestaciones;
+  tSubsidiado;
   constructor(private tableApiservice: RecursosHumanosService, private exportService: ExportService, private _cnp:CustomNumberPipe,
     private _cp: CurrencyPipe, private _phone: PhonePipe, private _ndp:NumberDecimalPipe, private modalService: NgbModal, public dataService: DataService) {
     this.page.pageNumber = 0;
@@ -555,9 +561,25 @@ export class PlanillaColaboradoresComponent implements OnInit {
           this.title = response.data.title;
   
           // this.temp = this.rows;
-          this.columns1 = this.data.cabeceras_kpi_planillas;
+          this.columns1 = JSON.parse(JSON.stringify(this.data.cabeceras_kpi_planillas));
+          this.columns1.forEach(item => {
+            if (item.name.trim() === 'PLANILLA') {
+              item.name = 'Resumen';
+            }
+          });
+          
+          
           this.rows1 = [];
           console.log(560, this.data.tabla_kpi_planillas)
+          // this.rows12.map(item =>{
+          //   const mItem = 'Mes'+ item.mesActual;
+          //     if (item.concepto.trim() === 'Planilla Bruta'){
+          //       this.pBrutaMes = item[mItem];
+          //     }else if (item.concepto.trim() === 'Planilla Neta'){
+          //       this.pNetaMes = item[mItem];
+          //     }
+          //   // this.totalEmpleados = Number(this.nuevos) + Number(this.cesados) + Number(this.continuadores)
+          // })
           this.data.tabla_kpi_planillas.map(item =>{
             if (item.concepto.trim() === 'Ingresos'){
               const itemResumen = {
@@ -595,6 +617,7 @@ export class PlanillaColaboradoresComponent implements OnInit {
                 Mes13: item.Mes13,
               }
               this.rows1.push(itemResumen)
+              
             }if (item.concepto.trim() === 'Total a Pagar'){
               const itemResumen = {
                 concepto: 'Planilla Neta',
@@ -613,7 +636,17 @@ export class PlanillaColaboradoresComponent implements OnInit {
                 Mes13: item.Mes13,
               }
               this.rows1.push(itemResumen)
+              
             }
+            const mItem = 'Mes'+ item.mesActual;
+              if (item.concepto.trim() === 'Ingresos'){
+                this.pBrutaMes = item[mItem];
+                this.pBruta = item.Mes13;
+              }else if (item.concepto.trim() === 'Total a Pagar'){
+                this.pNetaMes = item[mItem];
+                this.pNeta = item.Mes13;
+              }
+              
           });
           const nuevaMatriz = this.data.tabla_kpi_planillas.slice(12);
           this.rows2 = [];
@@ -622,33 +655,61 @@ export class PlanillaColaboradoresComponent implements OnInit {
               this.rows2.push(item)
             }
           })
-          this.columns2 = this.data.cabeceras_kpi_planillas;
+          this.columns2 = JSON.parse(JSON.stringify(this.data.cabeceras_kpi_planillas));
+          this.columns2.forEach(item => {
+            if (item.name.trim() === 'PLANILLA') {
+              item.name = 'PRESTACIÓN ALIMENTARIA';
+            }
+          });
           // this.rows2 = this.data.tabla_kpi_planillas;
 
-          this.rows2.map(item =>{
+
+          this.columns3 = this.data.cabeceras_kpi_planillas_subsidio;
+          this.rows3 = this.data.tabla_kpi_planillas_subsidio;
+          this.rows3.map(item =>{
             const mItem = 'Mes'+ item.mesActual;
-              if (item.concepto.trim() === 'NUEVO'){
-                this.nuevos = item[mItem];
-                // console.log(nuevos)
-              }else if (item.concepto.trim() === 'CESADO'){
-                this.cesados = item[mItem];
-              }else if (item.concepto.trim() === 'CONTINUADOR'){
-                this.continuadores = item[mItem];
+              if (item.concepto.trim() === 'Total Subsidiado'){
+                this.tSubsidiadoMes = item[mItem];
+                this.tSubsidiado = item.Mes13;
               }
             // this.totalEmpleados = Number(this.nuevos) + Number(this.cesados) + Number(this.continuadores)
           })
-          this.columns3 = this.data.cabeceras_kpi_planillas_subsidio;
-          this.rows3 = this.data.tabla_kpi_planillas_subsidio;
           console.log(578, this.rows3)
           this.columns4 = this.data.cabeceras_kpi_planillas_dscto;
           this.rows4 = this.data.tabla_kpi_planillas_dscto;
           console.log(581, this.rows4)
           this.columns5 = this.data.cabeceras_kpi_planillas_prestacion;
           this.rows5 = this.data.tabla_kpi_planillas_prestacion;
+          this.rows5.map(item =>{
+            const mItem = 'Mes'+ item.mesActual;
+              if (item.concepto.trim() === 'Total Dscto.Por Prestación'){
+                this.tPrestacionesMes = item[mItem];
+                this.tPrestaciones = item.Mes13;
+              }
+            // this.totalEmpleados = Number(this.nuevos) + Number(this.cesados) + Number(this.continuadores)
+          })
           console.log(584, this.rows5)
           this.columns6 = this.data.cabeceras_kpi_planillas_ingresos;
           this.rows6 = this.data.tabla_kpi_planillas_ingresos;
           console.log(587, this.rows6)
+
+
+          this.columns7 = this.data.cabeceras_planilla_sede;
+          this.rows7 = this.data.tabla_planilla_sede;
+          this.columns8 = this.data.cabeceras_planilla_estado;
+          this.rows8 = this.data.tabla_planilla_estado;
+          this.columns9 = this.data.cabeceras_planilla_tipo_planilla;
+          this.rows9 = this.data.tabla_planilla_tipo_planilla;
+          this.columns10 = this.data.cabeceras_planilla_sexo;
+          this.rows10 = this.data.tabla_planilla_sexo;
+          this.columns11 = this.data.cabeceras_planilla_tiempo_laborado;
+          this.rows11 = this.data.tabla_planilla_tiempo_laborado;
+          this.columns12 = this.data.cabecera_planilla_indicadores;
+          this.rows12 = this.data.tabla_planilla_indicadores;
+
+         
+
+
           // this.rows6.map(item =>{
           //   if (item.concepto.trim() === 'Promedio de Permanencia Laboral (*)'){
           //     const minutosPorAnio = 365 * 24 * 60;
@@ -663,40 +724,40 @@ export class PlanillaColaboradoresComponent implements OnInit {
           //     }
           // })
 
-          this.data.tabla_mas_10_anios.map(item =>{
-            // const myItem = 'Mes'+ item.mesActual;
-              // if (item.concepto.trim() === 'Más de 10 años'){
-                this.masDeDiez = item.mesActual;
-                this.totalEmpleados = item.total;
-                // console.log(masDeDiez)
-              // }
-          })
-          const pocNuevos = Number(this.nuevos)/Number(this.totalEmpleados) * 100
-          const pocCesados = Number(this.cesados)/Number(this.totalEmpleados) * 100
-          const pocContinuadores = Number(this.continuadores)/Number(this.totalEmpleados) * 100
-          const pocMasDeDiez = Number(this.masDeDiez)/Number(this.totalEmpleados) * 100
+          // this.data.tabla_mas_10_anios.map(item =>{
+          //   // const myItem = 'Mes'+ item.mesActual;
+          //     // if (item.concepto.trim() === 'Más de 10 años'){
+          //       this.masDeDiez = item.mesActual;
+          //       this.totalEmpleados = item.total;
+          //       // console.log(masDeDiez)
+          //     // }
+          // })
+          const proPBruta = Number(this.pBruta)/Number(this.mes)
+          const proPNeta = Number(this.pNeta)/Number(this.mes)
+          const proTSubsidiado = Number(this.tSubsidiado)/Number(this.mes)
+          const proTPrestaciones = Number(this.tPrestaciones)/Number(this.mes)
           this.panelOptions = [
             {
               infoBox: 'infoBoxAzul ',
-              iconClass: 'fa fa-plus-square-o',
+              iconClass: 'fa fa-usd',
               title: 'PLANILLA BRUTA',
               arrow: true,
               iconArrow: 'iconArrow',
-              totalSubtitle: this._cnp.transform(this.nuevos),
+              totalSubtitle: this._cnp.transform(this.pBrutaMes),
               subtitle: '',
-              totalSubSubtitle: this._ndp.transform(pocNuevos),
-              subSubtitle: '%',
+              totalSubSubtitle: this._ndp.transform(proPBruta),
+              subSubtitle: 'en Promedio',
             },
             {
               infoBox: 'infoBoxRojo ',
-              iconClass: 'fa fa-thumbs-down',
+              iconClass: 'fa fa-money',
               title: 'PLANILLA NETA',
               arrow: true,
               iconArrow: 'iconArrow1',
-              totalSubtitle: this._cnp.transform(this.cesados),
+              totalSubtitle: this._cnp.transform(this.pNetaMes),
               subtitle: '',
-              totalSubSubtitle: this._ndp.transform(pocCesados),
-              subSubtitle: '%',
+              totalSubSubtitle: this._ndp.transform(proPNeta),
+              subSubtitle: 'en Promedio',
             },
             {
               infoBox: 'infoBoxVerde',
@@ -704,21 +765,21 @@ export class PlanillaColaboradoresComponent implements OnInit {
               title: 'SUBSIDIOS',
               arrow: true,
               iconArrow: 'iconArrow2',
-              totalSubtitle: this._cnp.transform(this.continuadores),
+              totalSubtitle: this._cnp.transform(this.tSubsidiadoMes),
               subtitle: '',
-              totalSubSubtitle: this._ndp.transform(pocContinuadores),
-              subSubtitle: '%',
+              totalSubSubtitle: this._ndp.transform(proTSubsidiado),
+              subSubtitle: 'en Promedio',
             },
             {
               infoBox: 'infoBoxAzulino',
-              iconClass: 'fa fa-clock-o',
+              iconClass: 'fa fa-handshake-o',
               title: 'PRESTACIONES',
               arrow: true,
               iconArrow: 'iconArrow3',
-              totalSubtitle: this._cnp.transform(this.masDeDiez),
+              totalSubtitle: this._cnp.transform(this.tPrestacionesMes),
               subtitle: '',
-              totalSubSubtitle: this._ndp.transform(pocMasDeDiez),
-              subSubtitle: '%',
+              totalSubSubtitle: this._ndp.transform(proTPrestaciones),
+              subSubtitle: 'en Promedio',
             }
           ]
 

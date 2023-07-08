@@ -39,25 +39,77 @@ export class HospitalizationEstadisticsComponent implements OnInit {
   active = 1;
   closeResult = '';
   @ViewChild("agGrid") agGrid: AgGridAngular;
+  grafico1: Chart;
+  grafico2: Chart;
+  grafico3: Chart;
+  grafico4: Chart;
+  grafico5: Chart;
   totalProgs: any;
-  @ViewChild("baseChart", { static: false }) set content(
+  // @ViewChild('chart1') chart1Canvas: ElementRef;
+  // @ViewChild('chart2') chart2Canvas: ElementRef;
+  // @ViewChild('chart3') chart3Canvas: ElementRef;
+  // @ViewChild('chart4') chart4Canvas: ElementRef;
+  // @ViewChild('chart5') chart5Canvas: ElementRef;
+  @ViewChild("chart1", { static: false }) set content1(
     content: ElementRef
   ) {
     if (content) {
-      
-      // initially setter gets called with undefined
-      this.baseChart = content;
-      if (this.baseChart.nativeElement.id === 'chart-1'){
-        this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día', 'N° Pacientes','chart-1', 'Internados', 'Internados Ingresados x Emer.', 'bar');
-        this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'doughnut');
-      }else if (this.baseChart.nativeElement.id === 'chart-3'){
-        this.getBarChart(this.chartLabels3, this.chartData4, this.chartData5,'Día', 'N° Pacientes','chart-3', 'Ingresos x Hosp.', 'Ingresos x Emergencia.', 'bar');
-        this.getPieChart(this.chartLabels4, this.chartData6,'chart-4', 'doughnut');
-      }else if (this.baseChart.nativeElement.id === 'chart-5'){
-        this.getBarChart(this.chartLabels5, this.chartData7, this.chartData8,'Día', 'N° Pacientes','chart-5', 'Altas x Hosp.', 'Ingresos x Hosp.', 'bar');
-      }
+      // this.chart1Canvas = content;
+      this.grafico1 = this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día', 'N° Pacientes','chart-1', 'Internados', 'Internados Ingresados x Emer.', 'bar');
+      console.log(55, content)
+      // console.log(56, this.chart5Canvas)
     }
   }
+  @ViewChild("chart2", { static: false }) set content2(
+    content: ElementRef
+  ) {
+    if (content) {
+      this.grafico2 = this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'doughnut');
+    }
+  }
+  @ViewChild("chart3", { static: false }) set content3(
+    content: ElementRef
+  ) {
+    if (content) {
+      // this.chart1Canvas = content;
+      this.grafico3 = this.getBarChart(this.chartLabels3, this.chartData4, this.chartData5,'Día', 'N° Pacientes','chart-3', 'Ingresos x Hosp.', 'Ingresos x Emergencia.', 'bar');
+    }
+  }
+  @ViewChild("chart4", { static: false }) set content4(
+    content: ElementRef
+  ) {
+    if (content) {
+      // this.chart1Canvas = content;
+      this.grafico4 = this.getPieChart(this.chartLabels4, this.chartData6,'chart-4', 'doughnut');
+    }
+  }
+  @ViewChild("chart5", { static: false }) set content5(
+    content: ElementRef
+  ) {
+    if (content) {
+      // this.chart1Canvas = content;
+      this.grafico5 = this.getBarChart(this.chartLabels5, this.chartData7, this.chartData8,'Día', 'N° Pacientes','chart-5', 'Altas x Hosp.', 'Ingresos x Hosp.', 'bar');
+    }
+  }
+  // @ViewChild("baseChart", { static: false }) set content(
+  //   content: ElementRef
+  // ) {
+  //   if (content) {
+      
+  //     // initially setter gets called with undefined
+  //     this.baseChart = content;
+  //     console.log(55, this.baseChart)
+  //     if (this.baseChart.nativeElement.id === 'chart-1'){
+  //       this.grafico1 = this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día', 'N° Pacientes','chart-1', 'Internados', 'Internados Ingresados x Emer.', 'bar');
+  //       this.grafico2 = this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'doughnut');
+  //     }else if (this.baseChart.nativeElement.id === 'chart-3'){
+  //       this.grafico3 = this.getBarChart(this.chartLabels3, this.chartData4, this.chartData5,'Día', 'N° Pacientes','chart-3', 'Ingresos x Hosp.', 'Ingresos x Emergencia.', 'bar');
+  //       this.grafico4 = this.getPieChart(this.chartLabels4, this.chartData6,'chart-4', 'doughnut');
+  //     }else if (this.baseChart.nativeElement.id === 'chart-5'){
+  //       this.grafico5 = this.getBarChart(this.chartLabels5, this.chartData7, this.chartData8,'Día', 'N° Pacientes','chart-5', 'Altas x Hosp.', 'Ingresos x Hosp.', 'bar');
+  //     }
+  //   }
+  // }
   enableSummary = true;
   summaryPosition = 'bottom';
   optionsMes = [
@@ -286,8 +338,70 @@ action: boolean = false;
 
     // this.setPage({ offset: 0 });
   }
+
+  removeGrah(grafico){
+    grafico.destroy();
+    
+    console.log('grafico destruido', grafico)
+    // delay(50000)
+  }
+  addData(chart, label,  data) {
+    if(chart){
+      this.removeData(chart) 
+      chart.data.labels = label;
+      chart.data.datasets.forEach((dataset, index) => {
+          dataset.data = data[index];
+          if (index === 0){
+            // dataset.data = data1;
+          }else if (index === 1){
+            // dataset.data = data2;
+          }
+          // dataset.data = data;
+      });
+      chart.update();
+    }
+  }
+  removeData(chart) {
+      chart.data.labels = [];
+      chart.data.datasets.forEach((dataset) => {
+          dataset.data = [];
+          console.log(663, dataset.data);
+      });
+      chart.update();
+      
+  }
   filter() {
     this.action = true;
+    if(this.grafico1){
+      console.log('grafico 1 existe')
+      this.removeData(this.grafico1);
+      this.removeGrah(this.grafico1);
+      this.grafico1 = null;
+    }
+    if(this.grafico2){
+      console.log('grafico 2 existe')
+      this.removeData(this.grafico2);
+      this.removeGrah(this.grafico2);
+      this.grafico2 = null;
+    }
+    if(this.grafico3){
+      console.log('grafico 3 existe')
+      this.removeData(this.grafico3);
+      this.removeGrah(this.grafico3);
+      this.grafico3 = null;
+    }
+    if(this.grafico4){
+      console.log('grafico 4 existe')
+      this.removeData(this.grafico4);
+      this.removeGrah(this.grafico4);
+      this.grafico4 = null;
+    }
+    if(this.grafico5){
+      console.log('grafico 5 existe')
+      this.removeData(this.grafico5);
+      this.removeGrah(this.grafico5);
+      this.grafico5 = null;
+    }
     const form = this.filtroForm.value;
       this.id_sede = form.id_sede,
       this.mes = form.mes,
@@ -766,20 +880,26 @@ action: boolean = false;
     if (graph === 'bar'){
       // const lenght1 = this.rows1.length;
       if (input === 'pacientes_hospitalizados') {
+        if(this.grafico1){
+          console.log('grafico 1 existe')
+          this.removeData(this.grafico1);
+          this.removeGrah(this.grafico1);
+          this.grafico1 = null;
+        }
         this.parameters.tipo= 'INTE';
           this.tableApiservice.getHsChartIndex(this.parameters).subscribe(
             (response) => {  
-                this.chartData4 = [];   
-                this.chartData5 = [];   
-                this.chartData7 = [];   
-                this.chartData8 = [];   
+                // this.chartData4 = [];   
+                // this.chartData5 = [];   
+                // this.chartData7 = [];   
+                // this.chartData8 = [];   
 
                 this.chartLabels1 = [];
                 this.chartData1 = [];   
                 this.chartData2 = [];
 
                 
-              if(response.success){
+              if(response.data.success){
                 
                 response.data.data.map(item =>{
                   this.chartLabels1.push(item.dia);
@@ -789,7 +909,14 @@ action: boolean = false;
                 // this.resumenMontos = response.data;
                 
               }
-              this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día', 'N° Pacientes','chart-1', 'Internados', 'Internados Ingresados x Emer.', 'bar');
+              if(!this.grafico1){
+                this.grafico1 = this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día', 'N° Pacientes','chart-1', 'Internados', 'Internados Ingresados x Emer.', 'bar');
+
+              }else{
+                var data = [];
+                data.push(this.chartData1, this.chartData2);
+                this.addData(this.grafico1, this.chartLabels1, data)
+              }
               Swal.close();
             },
             (error) => {
@@ -797,18 +924,24 @@ action: boolean = false;
             }
           );
        } else if (input === 'ingresos_hospitalizacion'){
+          if(this.grafico3){
+            console.log('grafico 3 existe')
+            this.removeData(this.grafico3);
+            this.removeGrah(this.grafico3);
+            this.grafico3 = null;
+          }
           this.parameters.tipo= 'INGR';
           this.tableApiservice.getHsChartIndex(this.parameters).subscribe(
             (response) => {  
-                this.chartData1 = [];   
-                this.chartData2 = [];   
-                this.chartData7 = [];   
-                this.chartData8 = [];   
+                // this.chartData1 = [];   
+                // this.chartData2 = [];   
+                // this.chartData7 = [];   
+                // this.chartData8 = [];   
 
                 this.chartLabels3 = [];   
                 this.chartData4 = [];
                 this.chartData5 = [];    
-              if(response.success){
+              if(response.data.success){
                 
                 response.data.data.map(item =>{
                   this.chartLabels3.push(item.dia);
@@ -818,7 +951,15 @@ action: boolean = false;
                 // this.resumenMontos = response.data;
                 
               }
-              this.getBarChart(this.chartLabels3, this.chartData4, this.chartData5,'Día', 'N° Pacientes','chart-3', 'Ingresos x Hosp.', 'Ingresos x Emergencia.', 'bar');
+              if(!this.grafico3){
+                this.grafico3 = this.getBarChart(this.chartLabels3, this.chartData4, this.chartData5,'Día', 'N° Pacientes','chart-3', 'Ingresos x Hosp.', 'Ingresos x Emergencia.', 'bar');
+
+              }else{
+                var data = [];
+                data.push(this.chartData4, this.chartData5);
+                this.addData(this.grafico3, this.chartLabels3, data)
+              }
+              
               Swal.close();
             },
             (error) => {
@@ -826,18 +967,24 @@ action: boolean = false;
             }
           );
       } else if (input === 'altas_hospitalizacion'){
+        if(this.grafico5){
+          console.log('grafico 5 existe')
+          this.removeData(this.grafico5);
+          this.removeGrah(this.grafico5);
+          this.grafico5 = null;
+        }
         this.parameters.tipo= 'ALTA';
         this.tableApiservice.getHsChartIndex(this.parameters).subscribe(
           (response) => {  
-              this.chartData1 = [];   
-              this.chartData2 = [];   
-              this.chartData4 = [];   
-              this.chartData5 = [];
+              // this.chartData1 = [];   
+              // this.chartData2 = [];   
+              // this.chartData4 = [];   
+              // this.chartData5 = [];
 
               this.chartLabels5 = [];   
               this.chartData7 = [];
               this.chartData8 = [];    
-            if(response.success){
+            if(response.data.success){
               
               response.data.data.map(item =>{
                 this.chartLabels5.push(item.dia);
@@ -847,7 +994,15 @@ action: boolean = false;
               // this.resumenMontos = response.data;
               
             }
-            this.getBarChart(this.chartLabels5, this.chartData7, this.chartData8,'Día', 'N° Pacientes','chart-5', 'Altas x Hosp.', 'Ingresos x Hosp.', 'bar');
+            if(!this.grafico5){
+              this.grafico5 = this.getBarChart(this.chartLabels5, this.chartData7, this.chartData8,'Día', 'N° Pacientes','chart-5', 'Altas x Hosp.', 'Ingresos x Hosp.', 'bar');
+
+            }else{
+              var data = [];
+              data.push(this.chartData7, this.chartData8);
+              this.addData(this.grafico5, this.chartLabels5, data)
+            }
+            
             Swal.close();
           },
           (error) => {
@@ -857,6 +1012,7 @@ action: boolean = false;
       }
     } else if (graph === 'pie'){
       if (input === 'ingresos_hospitalizacion') {
+        this.selectedOptionGraph2 = 'ingresos_hospitalizacion';
         this.parameters.tipo= 'INGR';
         this.tableApiservice.getHsTiposPacientes(this.parameters).subscribe(
           (response) => { 
@@ -864,8 +1020,7 @@ action: boolean = false;
             this.progressBarLabels = [];
             this.progressBar1 = [];
             let total = response.data.total_prog;
-            console.log(1533, response);
-            if(response.success){
+            if(response.data.success){
               this.totalProgs =  response.data.total_prog;
               for (let value of Object.values(response.data.tipo_prog)) {
                 let porcentaje:any = Object.values(value);
@@ -873,7 +1028,8 @@ action: boolean = false;
                 // this.progressBar1.push(datos);
                 
                 let label = Object.keys(value)[0];
-                if ( label == 'seguros_conv'){
+                console.log('1533 => ', label);
+                if ( label === 'seguros_conv'){
                   this.progressBarLabels.push('CIA. Seguros / Convenios')
                   response.data.tipo_prog_d.seguros_conv.map(item=>{
                     if (item.cantidad){
@@ -959,16 +1115,28 @@ action: boolean = false;
         );
         this.tableApiservice.getHsPieIndex(this.parameters).subscribe(
           (response) => { 
-            if(response.success){
+            if(response.data.success){
               this.chartLabels2 = [];
               this.chartData3 = [];    
-            if(response.success){
+            // if(response.data.success){
               response.data.data.map(item =>{
+                if(item.grupo ===''){
+                  item.grupo = 'Otros'
+                }
                 this.chartLabels2.push(item.grupo);
                 this.chartData3.push(item.cantidad);
               });
-            }
-            this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'doughnut');
+            // }
+            if(!this.grafico2){
+              this.grafico2 = this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'doughnut');
+
+             }else{
+              var data = [];
+              data.push(this.chartData3);
+              this.addData(this.grafico2, this.chartLabels2, data)
+              // console.log(577, this.chartData1);
+             } 
+              
             }
             Swal.close();
           },
@@ -977,16 +1145,16 @@ action: boolean = false;
           }
         );
       } else if (input === 'altas_hospitalizacion'){
+        console.log(1097, this.selectedOptionGraph2)
         this.parameters.tipo= 'ALTA';
         this.parameters.typepie= 'AL';
         this.tableApiservice.getHsTiposPacientes(this.parameters).subscribe(
           (response) => { 
-            // console.log(1138,response);
+            console.log(1138,response);
             this.progressBarLabels = [];
             this.progressBar1 = [];
             let total = response.data.total_prog;
-            console.log(1533, response);
-            if(response.success){
+            if(response.data.success){
               this.totalProgs =  response.data.total_prog;
               for (let value of Object.values(response.data.tipo_prog)) {
                 let porcentaje:any = Object.values(value);
@@ -994,7 +1162,9 @@ action: boolean = false;
                 // this.progressBar1.push(datos);
                 
                 let label = Object.keys(value)[0];
-                if ( label == 'seguros_conv'){
+                
+
+                if ( label === 'seguros_conv'){
                   this.progressBarLabels.push('CIA. Seguros / Convenios')
                   response.data.tipo_prog_d.seguros_conv.map(item=>{
                     if (item.cantidad){
@@ -1008,6 +1178,7 @@ action: boolean = false;
                     value: porcentaje[0],
                     table:response.data.tipo_prog_d.seguros_conv
                   }
+                  console.log(153333, datos);
                   this.progressBar1.push(datos);
                 }else if (label === 'insti_priva'){
                   this.progressBarLabels.push('Institucional / Privados')
@@ -1080,17 +1251,42 @@ action: boolean = false;
         );
         this.tableApiservice.getHsPieIndex(this.parameters).subscribe(
           (response) => { 
-            if(response.success){
+            // if(this.grafico2){
+            //   console.log('grafico 2 existe')
+            //   this.removeData(this.grafico2);
+            //   this.removeGrah(this.grafico2);
+            //   this.grafico2 = null;
+            // }
+            // if(this.grafico4){
+            //   console.log('grafico 4 existe')
+            //   this.removeData(this.grafico4);
+            //   this.removeGrah(this.grafico4);
+            //   this.grafico4 = null;
+            // }
+            if(response.data.success){
               this.chartLabels4 = [];
               this.chartData6 = [];    
-            if(response.success){
+              // if(response.data.success){
+                
+                response.data.data.map(item =>{
+                  if(item.grupo ===''){
+                    item.grupo = 'Otros'
+                  }
+                  this.chartLabels4.push(item.grupo);
+                  this.chartData6.push(item.cantidad);
+                });
+              // }
+              if(!this.grafico4){
+                this.grafico4 = this.getPieChart(this.chartLabels4, this.chartData6,'chart-4', 'doughnut');
+                
+              }else{
+               console.log('hola =>' , response)
+              var data = [];
+              data.push(this.chartData6);
+              this.addData(this.grafico4, this.chartLabels4, data)
+              console.log(577, response.data.data);
+             }
               
-              response.data.data.map(item =>{
-                this.chartLabels4.push(item.grupo);
-                this.chartData6.push(item.cantidad);
-              });
-            }
-            this.getPieChart(this.chartLabels4, this.chartData6,'chart-4', 'doughnut');
             }
             Swal.close();
           },
@@ -1352,7 +1548,7 @@ private getPagedData(page: Page, data: any[]) {
             this.tableApiservice.getHsResumenGeneralProcesar(this.parameters).subscribe(
                 (response) => {
                   // console.log(response);
-                  if(response.success){
+                  if(response.data.success){
                     this.resumenMes = response.data;
                     
                     //  this.porcMedico =  ( this.resumenMes.medico / this.resumenMes.ausentismo) * 100;
@@ -1369,7 +1565,7 @@ private getPagedData(page: Page, data: any[]) {
               );
             this.tableApiservice.getHsAtencionesResumenAnual(this.parameters).subscribe(
               (response) => { 
-                if(response.success){
+                if(response.data.success){
                   this.columns1 = response.data.cabeceras_tpacientes;
                   this.rows1 = response.data.tabla_tpacientes; 
                       const totalCantidad1 = {
@@ -1547,7 +1743,7 @@ private getPagedData(page: Page, data: any[]) {
             // this.tableApiservice.getHsAtencionesResumenAnual(this.parameters).subscribe(
             //   (response) => { 
             //     // console.log(982, response);
-            //     if(response.success){
+            //     if(response.data.success){
             //       this.columns6 = response.data.cabeceras_tpacientes_anual;
             //       this.rows6 = response.data.tabla_tpacientes_anual; 
             //       const totalCantidad6 = {
@@ -1638,15 +1834,15 @@ private getPagedData(page: Page, data: any[]) {
                 this.progressBar1 = [];
                 let total = response.data.total_prog;
                 console.log(1533, response);
-                if(response.success){
+                if(response.data.success){
                   this.totalProgs =  response.data.total_prog;
                   for (let value of Object.values(response.data.tipo_prog)) {
                     let porcentaje:any = Object.values(value);
-                    
                     // this.progressBar1.push(datos);
                     
                     let label = Object.keys(value)[0];
-                    if ( label == 'seguros_conv'){
+                    console.log(1752, label)
+                    if ( label === 'seguros_conv'){
                       this.progressBarLabels.push('CIA. Seguros / Convenios')
                       response.data.tipo_prog_d.seguros_conv.map(item=>{
                         if (item.cantidad){
@@ -1751,7 +1947,7 @@ private getPagedData(page: Page, data: any[]) {
             this.tableApiservice.getHsProcesarAnterior(this.parameters).subscribe(
               (response) => {
                 console.log(1874, response);
-                if(response.success){ 
+                if(response.data.success){ 
                     this.resumenMesAnterior = response.data;
                     this.porcCompaMesAntIngr =  (((this.resumenMes.total - this.resumenMesAnterior.total) / this.resumenMesAnterior.total) * 100).toFixed(2)
                     this.porcCompaMesAntAltas = (((this.resumenMes.altas - this.resumenMesAnterior.altas) / this.resumenMesAnterior.altas) * 100).toFixed(2)
@@ -1777,7 +1973,7 @@ private getPagedData(page: Page, data: any[]) {
                   this.chartLabels1 = [];
                   this.chartData1 = [];   
                   this.chartData2 = [];  
-                if(response.success){
+                if(response.data.success){
                   
                   response.data.data.map(item =>{
                     this.chartLabels1.push(item.dia);
@@ -1787,7 +1983,15 @@ private getPagedData(page: Page, data: any[]) {
                   // this.resumenMontos = response.data;
                   
                 }
-                this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día', 'N° Pacientes','chart-1', 'Internados', 'Internados Ingresados x Emer.', 'bar');
+                if(!this.grafico1){
+                  this.grafico1 = this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día', 'N° Pacientes','chart-1', 'Internados', 'Internados Ingresados x Emer.', 'bar');
+  
+                }else{
+                  var data = [];
+                  data.push(this.chartData1, this.chartData2);
+                  this.addData(this.grafico1, this.chartLabels1, data)
+                }
+                
                 Swal.close();
               },
               (error) => {
@@ -1798,10 +2002,10 @@ private getPagedData(page: Page, data: any[]) {
             this.tableApiservice.getHsPieIndex(this.parameters).subscribe(
               (response) => { 
     
-                if(response.success){
+                if(response.data.success){
                   this.chartLabels2 = [];
                   this.chartData3 = [];    
-                if(response.success){
+                if(response.data.success){
                   
                   response.data.data.map(item =>{
                     this.chartLabels2.push(item.grupo);
@@ -1810,7 +2014,15 @@ private getPagedData(page: Page, data: any[]) {
                   // this.resumenMontos = response.data;
                   
                 }
-                this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'doughnut');
+                if(!this.grafico2){
+                  this.grafico2 = this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'doughnut');
+
+                 }else{
+                  var data = [];
+                  data.push(this.chartData3);
+                  this.addData(this.grafico2, this.chartLabels2, data)
+                  // console.log(577, this.chartData1);
+                 } 
                 // console.log(577, this.chartData1);
                   
                 }
