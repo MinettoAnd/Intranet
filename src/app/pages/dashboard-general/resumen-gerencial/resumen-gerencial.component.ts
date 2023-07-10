@@ -14,7 +14,7 @@ export class ResumenGerencialComponent implements OnInit {
   public emergenciasEstadisticas = false;
   public consultaExternaEstadisticas = false;
   public planillaEstadistica = false;
-  public colaboradoresEstadisticas = false;
+  // public colaboradoresEstadisticas = false;
   public menuItems: any = [];
   public subMenuItems: any = [];
   public categories: any = [];
@@ -57,7 +57,7 @@ export class ResumenGerencialComponent implements OnInit {
     switch (id) {
       case 1:
         this.comercialEstadisticas = true;
-        this.colaboradoresEstadisticas = false;
+        // this.colaboradoresEstadisticas = false;
         this.planillaEstadistica = false;
         this.ingresosEstadisticas = false;
         this.emergenciasEstadisticas = false;
@@ -66,8 +66,8 @@ export class ResumenGerencialComponent implements OnInit {
         break;
       case 2:
         this.comercialEstadisticas = false;
-        this.colaboradoresEstadisticas = true;
-        this.planillaEstadistica = false;
+        // this.colaboradoresEstadisticas = true;
+        this.planillaEstadistica = true;
         this.ingresosEstadisticas = false;
         this.emergenciasEstadisticas = false;
         this.hospitalizacionEstadisticas = false;
@@ -75,49 +75,49 @@ export class ResumenGerencialComponent implements OnInit {
         break;
       case 3:
         this.comercialEstadisticas = false;
-        this.colaboradoresEstadisticas = false;
-        this.planillaEstadistica = true;
-        this.ingresosEstadisticas = false;
-        this.emergenciasEstadisticas = false;
-        this.hospitalizacionEstadisticas = false;
-        this.consultaExternaEstadisticas = false;
-        break;
-      case 4:
-        this.comercialEstadisticas = false;
-        this.colaboradoresEstadisticas = false;
+        // this.colaboradoresEstadisticas = false;
         this.planillaEstadistica = false;
         this.ingresosEstadisticas = true;
         this.emergenciasEstadisticas = false;
         this.hospitalizacionEstadisticas = false;
         this.consultaExternaEstadisticas = false;
         break;
-      case 5:
+      case 4:
         this.comercialEstadisticas = false;
-        this.colaboradoresEstadisticas = false;
+        // this.colaboradoresEstadisticas = false;
         this.planillaEstadistica = false;
         this.ingresosEstadisticas = false;
         this.emergenciasEstadisticas = true;
         this.hospitalizacionEstadisticas = false;
         this.consultaExternaEstadisticas = false;
         break;
-      case 6:
+      case 5:
         this.comercialEstadisticas = false;
-        this.colaboradoresEstadisticas = false;
+        // this.colaboradoresEstadisticas = false;
         this.planillaEstadistica = false;
         this.ingresosEstadisticas = false;
         this.emergenciasEstadisticas = false;
         this.hospitalizacionEstadisticas = true;
         this.consultaExternaEstadisticas = false;
         break;
-      case 7:
+      case 6:
         this.comercialEstadisticas = false;
-        this.colaboradoresEstadisticas = false;
+        // this.colaboradoresEstadisticas = false;
         this.planillaEstadistica = false;
         this.ingresosEstadisticas = false;
         this.emergenciasEstadisticas = false;
         this.hospitalizacionEstadisticas = false;
         this.consultaExternaEstadisticas = true;
         break;
+      // case 7:
+      //   this.comercialEstadisticas = false;
+      //   // this.colaboradoresEstadisticas = false;
+      //   this.planillaEstadistica = false;
+      //   this.ingresosEstadisticas = false;
+      //   this.emergenciasEstadisticas = false;
+      //   this.hospitalizacionEstadisticas = false;
+      //   this.consultaExternaEstadisticas = true;
+      //   break;
     }
   }
   getModelsAdmin() {
@@ -139,15 +139,15 @@ export class ResumenGerencialComponent implements OnInit {
                 }
                 this.categories.push(menuItem1);
               }
-              if(submenu.name === 'Resumen de Colaboradores'){
-                const menuItem2 = {
-                  id: 2,
-                  isDropDownMenu: false,
-                  description: "Colaboradores",
-                  subMenuList: []
-                }
-                 this.categories.push(menuItem2);
-              }
+              // if(submenu.name === 'Resumen de Colaboradores'){
+              //   const menuItem2 = {
+              //     id: 2,
+              //     isDropDownMenu: false,
+              //     description: "Colaboradores",
+              //     subMenuList: []
+              //   }
+              //    this.categories.push(menuItem2);
+              // }
               if(submenu.name === 'Estad. Planilla - Resumen de pagos'){
                 const menuItem3 = {
                   id: 3,
@@ -220,15 +220,15 @@ export class ResumenGerencialComponent implements OnInit {
               }
               this.categories.push(menuItem1);
             }
-            if(submenu.name === 'Resumen de Colaboradores'){
-              const menuItem2 = {
-                id: 2,
-                isDropDownMenu: false,
-                description: "Colaboradores",
-                subMenuList: []
-              }
-               this.categories.push(menuItem2);
-            }
+            // if(submenu.name === 'Resumen de Colaboradores'){
+            //   const menuItem2 = {
+            //     id: 2,
+            //     isDropDownMenu: false,
+            //     description: "Colaboradores",
+            //     subMenuList: []
+            //   }
+            //    this.categories.push(menuItem2);
+            // }
             if(submenu.name === 'Estad. Planilla - Resumen de pagos'){
               const menuItem3 = {
                 id: 3,
