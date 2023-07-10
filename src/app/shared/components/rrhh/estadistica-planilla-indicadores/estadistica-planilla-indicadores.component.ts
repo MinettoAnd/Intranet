@@ -22,7 +22,7 @@ import { IndicadoresService } from 'src/app/_services/indicadores.service';
 export class EstadisticaPlanillaIndicadoresComponent implements OnInit {
   parameters;
   action = false;
-
+  option = 'planilla';
   constructor(private _cnp:CustomNumberPipe,
     private _cp: CurrencyPipe, private _phone: PhonePipe, private _ndp:NumberDecimalPipe, private modalService: NgbModal, public dataService: DataService) { }
   panelOptions;
