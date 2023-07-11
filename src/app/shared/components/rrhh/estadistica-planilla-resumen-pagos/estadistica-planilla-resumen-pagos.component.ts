@@ -44,6 +44,7 @@ export class EstadisticaPlanillaResumenPagosComponent implements OnInit {
   grafico2: Chart;
   private baseChart: ElementRef;
   periodoSeleccionado: any;
+  procesado: any;
   @ViewChild("baseChart", { static: false }) set content(
     content: ElementRef
   ) {
@@ -236,8 +237,9 @@ export class EstadisticaPlanillaResumenPagosComponent implements OnInit {
           barPercentage: 0.8,
           categoryPercentage: 1,
           label: title,
-          // borderColor: 'rgba(99, 255, 132, 1)',
-          borderWidth: 1,
+          borderColor: '#28a74559',
+          borderWidth: 4,
+          fill: false,
           data: chartData1,
           backgroundColor: '#28a74559'
           // backgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#adb5bd','#ffc107', '#28a745', '#6610f2','#20c997'],
@@ -245,8 +247,9 @@ export class EstadisticaPlanillaResumenPagosComponent implements OnInit {
         },
         {
           label: title2,
-          // borderColor: 'rgba(99, 255, 132, 1)',
-          borderWidth: 1,
+          borderColor: '#6610f259',
+          borderWidth: 4,
+          fill: false,
           data: chartData2,
           backgroundColor     : '#6610f259',
           // borderColor         : 'rgba(33,104,163,1)',
@@ -332,9 +335,9 @@ export class EstadisticaPlanillaResumenPagosComponent implements OnInit {
       },
       plugins: {
         datalabels: {
-          display: false,
+          // display: false,
           /* anchor puede ser "start", "center" o "end" */
-          anchor: 'center',
+          anchor: 'end',
           backgroundColor: function(context) {
             return context.dataset.backgroundColor;
           },
@@ -342,6 +345,7 @@ export class EstadisticaPlanillaResumenPagosComponent implements OnInit {
           clip: true,
           color: 'white',
           font: {
+            size: '12',
             weight: 'bold'
           },
           // formatter: function(value, context) {
@@ -362,7 +366,17 @@ export class EstadisticaPlanillaResumenPagosComponent implements OnInit {
           // },
           /* Podemos modificar el texto a mostrar */
           formatter: function (dato, ctx) {
-            return Math.round(dato * 100) / 100; 
+            var label = ''
+            if(dato.toString().indexOf('.') > -1){
+              let numero;
+              numero = Math.round(dato * 100) / 100;
+              let partesNumero = numero.toString().split('.');
+              partesNumero[0] = partesNumero[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+              label += 'S/. ' + partesNumero.join('.');
+            }else{
+              label += Math.round(dato * 100) / 100;
+            }
+            return label; 
           },
           // formatter: (dato) => ((dato * 100) / total).toFixed(2) + '%',
           // formatter: function (value, ctx) {
@@ -587,7 +601,7 @@ async  open({ selected }, TipoPago?, EstadoDeposito?, TipoPlanilla?, content?: a
         if(response.data.success){
           this.data = response.data ? response.data : [];
           this.message = this.data.titulo;
-          this.title = response.data.title;
+          this.procesado = response.data.fecha;
           this.periodo_emp = response.data.periodo_emp
           this.banco_bcp_f = response.data.banco_bcp_f
           this.banco_bcp_m = response.data.banco_bcp_m
@@ -694,6 +708,10 @@ async  open({ selected }, TipoPago?, EstadoDeposito?, TipoPlanilla?, content?: a
           // this.addData(this.grafico1, this.barChartLabels, data)
 
             Swal.close();
+            if (this.totalEmpleados < 10){
+              console.log(652, this.totalEmpleados)
+              this.showMessage('Aún la planilla no se ha abierto, por lo que los datos son incompletos');
+            }
         }else{
           Swal.close();
         }
@@ -704,7 +722,24 @@ async  open({ selected }, TipoPago?, EstadoDeposito?, TipoPlanilla?, content?: a
       }
     );
   }
+  async showMessage(msm) {
+    console.log(98, msm)
+      Swal.fire({
+        // position: 'center',
+        // icon: 'warning',
+        // title: msm,
+        // showConfirmButton: false,
+        // timer: 6000
+        title: 'Información!',
+        text: msm,
+        icon: 'success',
+        // showCancelButton: true,
+        confirmButtonColor: '#000064',
+        // cancelButtonColor: '#d33',
+        confirmButtonText: 'OK'
+      })
 
+  }
   copyTableToClipboard(numberTabla){
     if(numberTabla === 0){
       this.rows.map(item=>{

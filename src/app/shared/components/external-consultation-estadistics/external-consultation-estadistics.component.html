@@ -229,7 +229,7 @@
                                           <!-- </div> -->
                                           <div class="card-body">
                                             <div class="d-block" >
-                                              <canvas #baseChart id="chart-1" *ngIf="selectedOptionGraph1">
+                                              <canvas #chart1 id="chart-1">
                                               </canvas>
                                             </div>
                                           </div>
@@ -285,9 +285,13 @@
                                               </a>
                                             </li>
                                           </ul>
+                                          <p class="text-center">
+                                            <i class="fa fa-line-chart"></i>
+                                            <strong *ngIf="total_prog > 0">Atenciones Realizadas TOTAL: [ {{total_prog}} ]-[100%]</strong>
+                                          </p>
                                           <div class="card-body">
                                             <div class="d-block" >
-                                              <canvas #baseChart id="chart-2" *ngIf="selectedOptionGraph1">
+                                              <canvas #chart2 id="chart-2" *ngIf="selectedOptionGraph1">
                                               </canvas>
                                             </div>
                                           </div>

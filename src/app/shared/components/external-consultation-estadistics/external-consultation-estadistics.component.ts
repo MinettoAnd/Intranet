@@ -37,22 +37,41 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
   porcNR: number;
   porcSistema: number;
   porcAplicativo: number;
-  @ViewChild("baseChart", { static: false }) set content(
+  @ViewChild("chart1", { static: false }) set content1(
     content: ElementRef
   ) {
     if (content) {
-      // initially setter gets called with undefined
-      this.baseChart = content;
-      if (this.baseChart.nativeElement.id === 'chart-1'){
-        this.grafico1 = this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
-        this.grafico2 = this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'doughnut');
-      }// this.getBarChart(this.chartLabels, this.chartData3, this.chartData4, 'chart-2', 'MENSUAL-INGRESO CON IGV - TOTAL CUOTAS', 'MENSUAL-INGRESO CON IGV - TOTAL RECAUDADO', 'bar');
-      // this.getBarChart(this.chartLabels2, this.chartData5, this.chartData6, 'chart-3', 'MENSUAL-NÚMERO DE CONTRATOS PAGADOS-TOTAL CUOTAS', 'MENSUAL-NÚMERO DE CONTRATOS PAGADOS-TOTAL RECAUDADO', 'bar');
-      // this.getBarChart(this.chartLabels3, this.chartData7, this.chartData8, 'chart-4', 'ANUAL-INGRESO SIN IGV - TOTAL CUOTAS', 'ANUAL-INGRESO SIN IGV - TOTAL RECAUDADO', 'bar');
-      // this.getBarChart(this.chartLabels3, this.chartData9, this.chartData10, 'chart-5', 'ANUAL-INGRESO CON IGV - TOTAL CUOTAS', 'ANUAL-INGRESO CON IGV - TOTAL RECAUDADO', 'bar');
-      // this.getBarChart(this.chartLabels4, this.chartData11, this.chartData12, 'chart-6', 'ANUAL-NÚMERO DE CONTRATOS PAGADOS - TOTAL CUOTAS', 'ANUAL-NÚMERO DE CONTRATOS PAGADOS - TOTAL RECAUDADO', 'bar');
+      // this.chart1Canvas = content;
+      this.removeData(this.grafico1); //soluciona la superposición de datos
+      this.grafico1 = this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
+      // console.log(55, content)
+      // console.log(56, this.chart5Canvas)
     }
   }
+  @ViewChild("chart2", { static: false }) set content2(
+    content: ElementRef
+  ) {
+    if (content) {
+      this.removeData(this.grafico2);
+      this.grafico2 = this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'doughnut');
+    }
+  }
+  // @ViewChild("baseChart", { static: false }) set content(
+  //   content: ElementRef
+  // ) {
+  //   if (content) {
+  //     // initially setter gets called with undefined
+  //     this.baseChart = content;
+  //     if (this.baseChart.nativeElement.id === 'chart-1'){
+  //       this.grafico1 = this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
+  //       this.grafico2 = this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'doughnut');
+  //     }// this.getBarChart(this.chartLabels, this.chartData3, this.chartData4, 'chart-2', 'MENSUAL-INGRESO CON IGV - TOTAL CUOTAS', 'MENSUAL-INGRESO CON IGV - TOTAL RECAUDADO', 'bar');
+  //     // this.getBarChart(this.chartLabels2, this.chartData5, this.chartData6, 'chart-3', 'MENSUAL-NÚMERO DE CONTRATOS PAGADOS-TOTAL CUOTAS', 'MENSUAL-NÚMERO DE CONTRATOS PAGADOS-TOTAL RECAUDADO', 'bar');
+  //     // this.getBarChart(this.chartLabels3, this.chartData7, this.chartData8, 'chart-4', 'ANUAL-INGRESO SIN IGV - TOTAL CUOTAS', 'ANUAL-INGRESO SIN IGV - TOTAL RECAUDADO', 'bar');
+  //     // this.getBarChart(this.chartLabels3, this.chartData9, this.chartData10, 'chart-5', 'ANUAL-INGRESO CON IGV - TOTAL CUOTAS', 'ANUAL-INGRESO CON IGV - TOTAL RECAUDADO', 'bar');
+  //     // this.getBarChart(this.chartLabels4, this.chartData11, this.chartData12, 'chart-6', 'ANUAL-NÚMERO DE CONTRATOS PAGADOS - TOTAL CUOTAS', 'ANUAL-NÚMERO DE CONTRATOS PAGADOS - TOTAL RECAUDADO', 'bar');
+  //   }
+  // }
   optionsMes = [
     { value: '01', label: 'Enero' },
     { value: '02', label: 'Febrero' },
@@ -98,6 +117,7 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
   porcCompaMesAntAusentismo;
   porcCompaMesAntReservadas;
   totales;
+  total_prog;
   id_sede = '0001';
   CMP;
   Medico;
@@ -258,19 +278,17 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
   filter() {
     this.action = true;
     this.selectedOptionGraph1 = true;
+    console.log('grafico 1 existe', this.grafico1)
     if(this.grafico1){
-      console.log('grafico 1 existe')
       this.removeData(this.grafico1);
       this.removeGrah(this.grafico1);
       this.grafico1 = null;
       console.log('=>>',this.grafico1)
-      // this.grafico1 = this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día del mes seleccionado', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
     }
     if(this.grafico2){
       console.log('grafico 1 existe')
       this.removeData(this.grafico2);
       this.removeGrah(this.grafico2);
-      // this.grafico2 = this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'doughnut');
       this.grafico2 = null;
     }
     const form = this.filtroForm.value;
@@ -949,6 +967,7 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
                   this.progressBarLabels = [];
                   this.progressBar1 = [];
                   let total = response.data.total_prog;
+                  this.total_prog = response.data.total_prog;
                   console.log(925, response)
                   if(response.data.success){
                     for (let value of Object.values(response.data.tipo_prog)) {
@@ -1114,7 +1133,7 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
                    this.chartData2 = [];
                   //  this.chartData3 = [];    
                   if(response.data.success){
-                    console.log('grafico 11', this.chartData1)
+                    
                     response.data.data.map(item =>{
                       this.chartLabels1.push(item.dia);
                       this.chartData1.push(item.reservas);
@@ -1123,9 +1142,10 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
                     // this.resumenMontos = response.data;
                   }
                     if(!this.grafico1){
-                    
+                      this.grafico1 = null;
                       this.grafico1 = this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
                     }else{
+                      console.log('grafico 11', this.grafico1)
                       var data = [];
                       data.push(this.chartData1, this.chartData2);
                       this.addData(this.grafico1, this.chartLabels1, data)
