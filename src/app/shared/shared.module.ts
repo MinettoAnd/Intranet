@@ -32,6 +32,10 @@ import { ContentSectionComponent } from './components/dashboards/resumen-colabor
 import { TabContentDirective } from './components/dashboards/resumen-colaboradores/content-section/tab-content.directive';
 import { PlanillaColaboradoresComponent } from './components/dashboards/planilla-colaboradores/planilla-colaboradores.component';
 import { ContentSectionPlanillaComponent } from './components/dashboards/planilla-colaboradores/content-section-planilla/content-section-planilla.component';
+import { SedeComponent } from './components/filtros/sede/sede.component';
+import { InventarioComponent } from './components/listas/farmacia/inventario/inventario.component';
+import { FarmaciaComponent } from './components/listas/farmacia/farmacia.component';
+import { ContentInventarioComponent } from './components/listas/farmacia/inventario/content-inventario/content-inventario.component';
 
 
 @NgModule({
@@ -62,6 +66,10 @@ import { ContentSectionPlanillaComponent } from './components/dashboards/planill
     TabContentDirective,
     PlanillaColaboradoresComponent,
     ContentSectionPlanillaComponent,
+    SedeComponent,
+    InventarioComponent,
+    FarmaciaComponent,
+    ContentInventarioComponent,
 
   ],
   imports: [
@@ -100,7 +108,9 @@ import { ContentSectionPlanillaComponent } from './components/dashboards/planill
     CardComponent,
     ContentWrapperComponent,
     ContentSectionComponent,
-
+    SedeComponent,
+    InventarioComponent,
+    FarmaciaComponent,
   ],
   providers: [NgbNav],
   // bootstrap: [ResumenColaboradoresComponent],
