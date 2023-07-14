@@ -8,10 +8,11 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { InventarioComponent } from './inventario/inventario.component';
 
 
 @NgModule({
-  declarations: [IndicadorRecetasComponent, ReferenciaPreciosComponent],
+  declarations: [IndicadorRecetasComponent, ReferenciaPreciosComponent, InventarioComponent],
   imports: [
     CommonModule,NgxDatatableModule,NgbModule, 
     FormsModule,
@@ -26,6 +27,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
       {
         path: 'referencia-precios',
         component: ReferenciaPreciosComponent
+      },
+      {
+        path: 'inventario',
+        component: InventarioComponent
       },
     ])
   ],

@@ -42,6 +42,9 @@ export class FarmaciaService {
     this.loadTableApiDataURL = `${environment.api_url}getReferenciaPreciosLog`;
     return this.http.get(this.loadTableApiDataURL);
   }
-
+  getStock(data): Observable<any> {
+    this.loadTableApiDataURL = `${environment.api_url}getStock`;
+    return this.http.post(this.loadTableApiDataURL, data);
+  }
 }
 
