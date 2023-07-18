@@ -36,6 +36,10 @@ import { SedeComponent } from './components/filtros/sede/sede.component';
 import { InventarioComponent } from './components/listas/farmacia/inventario/inventario.component';
 import { FarmaciaComponent } from './components/listas/farmacia/farmacia.component';
 import { ContentInventarioComponent } from './components/listas/farmacia/inventario/content-inventario/content-inventario.component';
+import { EstadisticasComponent } from './components/procedimientos/estadisticas/estadisticas.component';
+import { ContentEstadisticasComponent } from './components/procedimientos/estadisticas/content-estadisticas/content-estadisticas.component';
+import { ProcedimientosComponent } from './components/procedimientos/procedimientos.component';
+import { FilterProcedimientosComponent } from './components/filtros/procedimientos/filterProcedimientos.component';
 
 
 @NgModule({
@@ -70,7 +74,10 @@ import { ContentInventarioComponent } from './components/listas/farmacia/inventa
     InventarioComponent,
     FarmaciaComponent,
     ContentInventarioComponent,
-
+    EstadisticasComponent,
+    ContentEstadisticasComponent,
+    ProcedimientosComponent,
+    FilterProcedimientosComponent
   ],
   imports: [
     AgGridModule.withComponents([LinkRendererComponent]),
@@ -111,6 +118,10 @@ import { ContentInventarioComponent } from './components/listas/farmacia/inventa
     SedeComponent,
     InventarioComponent,
     FarmaciaComponent,
+    EstadisticasComponent,
+    ContentEstadisticasComponent,
+    ProcedimientosComponent,
+    FilterProcedimientosComponent
   ],
   providers: [NgbNav],
   // bootstrap: [ResumenColaboradoresComponent],
