@@ -1,1 +1,291 @@
-<p>content-estadisticas works!</p>
+<ul ngbNav #nav="ngbNav" [(activeId)]="activeTabId" class="nav-tabs" style="justify-content: end;">
+    <li *ngFor="let tab of tabs" [ngbNavItem]="tab.id">
+      <a ngbNavLink>{{ tab.label }}</a>
+      <ng-template ngbNavContent>
+        <ng-container *ngIf="isActiveTab(tab.id)">
+          <ng-container [ngTemplateOutlet]="tab.template"></ng-container>
+        </ng-container>
+      </ng-template>
+    </li>
+  </ul>
+  
+  <div [ngbNavOutlet]="nav" class="mt-2"></div>
+  <ng-template #resumenTemplate>
+    <app-card [message]="message">
+        <app-accordion titulo="Distribución por Sucursal">
+          <div class="row" style="align-items: center;justify-content: space-between;">
+            <ul class="list-group list-group-horizontal list-group-flush col-lg-5">
+              <li class="list-group-item border-0 pl-0">
+                <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(1)">
+                  <i class="fa fa-external-link"></i>
+                  Copiar tabla
+                </button>
+              </li>
+              <li class="list-group-item border-0 pl-0">
+                <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(1)">
+                  <i class="fa fa-external-link"></i>
+                  Exportar tabla a Excel
+                </button>
+              </li>
+
+            </ul>              
+          </div>
+          <ngx-datatable #myTable1
+          class="bootstrap table table-striped"
+          id="datatablele"
+            [columns]="columns1"
+            [rows]="rows1"
+            [columnMode]="ColumnMode.force"
+            [headerHeight]="$any('auto')"
+            [rowHeight]="$any('auto')"
+            [scrollbarH]="true"
+            [rowClass] = "getRowClass"
+            >
+            <ngx-datatable-column  [sortable]="false" [headerClass]="column.headerClass" [cellClass]="column.cellClass" [flexGrow]="1"  [width]="column.width" *ngFor="let column of columns1; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                let-row="row">
+                <!-- <div [ngClass]="{'row-paddin': row.concepto.includes('LIMA') || row.concepto.includes('CHORRILLOS') || row.concepto.includes('SURCO') }"> -->
+                  <span *ngIf="column.prop == 'grupo'">{{value}}</span>
+                  <span *ngIf="column.prop == 'atendidos' || column.prop == 'orden' || column.prop == 'atenciones'">{{value | number: '1.0-0' }}</span>
+                  <span *ngIf="column.prop == 'ingreso' || column.prop == 'empresa' || column.prop == 'esperado'">{{value | currency }}</span>
+                
+                <!-- </div> -->
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+        </app-accordion>
+    </app-card>
+    <app-card [message]="message">
+        <app-accordion titulo="Distribución por Sede y Origen">
+          <div class="row" style="align-items: center;justify-content: space-between;">
+            <ul class="list-group list-group-horizontal list-group-flush col-lg-5">
+              <li class="list-group-item border-0 pl-0">
+                <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(2)">
+                  <i class="fa fa-external-link"></i>
+                  Copiar tabla
+                </button>
+              </li>
+              <li class="list-group-item border-0 pl-0">
+                <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(2)">
+                  <i class="fa fa-external-link"></i>
+                  Exportar tabla a Excel
+                </button>
+              </li>
+            </ul>
+          </div>
+          <ngx-datatable #myTable2
+          class="bootstrap table table-striped"
+          id="datatablele"
+            [columns]="columns2"
+            [rows]="rows2"
+            [columnMode]="ColumnMode.force"
+            [headerHeight]="$any('auto')"
+            [rowHeight]="$any('auto')"
+            [scrollbarH]="true"
+            [rowClass] = "getRowClass"
+            >
+            <ngx-datatable-column  [sortable]="false" [headerClass]="column.headerClass" [cellClass]="column.cellClass" [flexGrow]="1"  [width]="column.width" *ngFor="let column of columns2; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                let-row="row">
+                <!-- <div [ngClass]="{'row-paddin': row.concepto.includes('LIMA') || row.concepto.includes('CHORRILLOS') || row.concepto.includes('SURCO') }"> -->
+                    <span *ngIf="column.prop == 'Campo'">{{value}}</span>
+                    <span *ngIf="column.prop == 'atendidos' || column.prop == 'orden' || column.prop == 'atenciones'">{{value | number: '1.0-0' }}</span>
+                    <span *ngIf="column.prop == 'ingreso' || column.prop == 'empresa' || column.prop == 'esperado'">{{value | currency }}</span>
+                <!-- </div> -->
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+        </app-accordion>
+    </app-card>
+    <app-card [message]="message">
+        <app-accordion titulo="Distribución por Sede y Origen">
+          <div class="row" style="align-items: center;justify-content: space-between;">
+            <ul class="list-group list-group-horizontal list-group-flush col-lg-5">
+              <li class="list-group-item border-0 pl-0">
+                <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(3)">
+                  <i class="fa fa-external-link"></i>
+                  Copiar tabla
+                </button>
+              </li>
+              <li class="list-group-item border-0 pl-0">
+                <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(3)">
+                  <i class="fa fa-external-link"></i>
+                  Exportar tabla a Excel
+                </button>
+              </li>
+            </ul>
+          </div>
+          <ngx-datatable #myTable5
+          class="bootstrap table table-striped"
+          id="datatablele"
+            [columns]="columns3"
+            [rows]="rows3"
+            [columnMode]="ColumnMode.force"
+            [headerHeight]="$any('auto')"
+            [rowHeight]="$any('auto')"
+            [scrollbarH]="true"
+            [rowClass] = "getRowClass"
+            >
+            <ngx-datatable-column  [sortable]="false" [headerClass]="column.headerClass" [cellClass]="column.cellClass"  [flexGrow]="1"  [width]="column.width" *ngFor="let column of columns3; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                let-row="row">
+                <!-- <div [ngClass]="{'row-paddin': row.concepto.includes('LIMA') || row.concepto.includes('CHORRILLOS') || row.concepto.includes('SURCO') }"> -->
+                  <span *ngIf="column.prop == 'Campo'">{{value}}</span>
+                  <span *ngIf="column.prop == 'atendidos' || column.prop == 'orden' || column.prop == 'atenciones'">{{value | number: '1.0-0' }}</span>
+                  <span *ngIf="column.prop == 'ingreso' || column.prop == 'empresa' || column.prop == 'esperado'">{{value | currency }}</span>
+                <!-- </div> -->
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+        </app-accordion>
+    </app-card>
+    <app-card [message]="message">
+        <app-accordion titulo="Distribución por Sede y Origen">
+          <div class="row" style="align-items: center;justify-content: space-between;">
+            <ul class="list-group list-group-horizontal list-group-flush col-lg-5">
+              <li class="list-group-item border-0 pl-0">
+                <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(4)">
+                  <i class="fa fa-external-link"></i>
+                  Copiar tabla
+                </button>
+              </li>
+              <li class="list-group-item border-0 pl-0">
+                <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(4)">
+                  <i class="fa fa-external-link"></i>
+                  Exportar tabla a Excel
+                </button>
+              </li>
+            </ul>
+            
+          </div>
+          <ngx-datatable #myTable4
+          class="bootstrap table table-striped"
+          id="datatablele"
+            [columns]="columns4"
+            [rows]="rows4"
+            [columnMode]="ColumnMode.force"
+            [headerHeight]="$any('auto')"
+            [rowHeight]="$any('auto')"
+            [scrollbarH]="true"
+            [rowClass] = "getRowClass"
+            >
+            <ngx-datatable-column  [sortable]="false" [headerClass]="column.headerClass" [cellClass]="column.cellClass"  [flexGrow]="1"  [width]="column.width" *ngFor="let column of columns4; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                let-row="row">
+                <!-- <div [ngClass]="{'row-paddin': row.concepto.includes('LIMA') || row.concepto.includes('CHORRILLOS') || row.concepto.includes('SURCO') }"> -->
+                  <span *ngIf="column.prop == 'Campo'">{{value}}</span>
+                  <span *ngIf="column.prop == 'atendidos' || column.prop == 'orden' || column.prop == 'atenciones'">{{value | number: '1.0-0' }}</span>
+                  <span *ngIf="column.prop == 'ingreso' || column.prop == 'empresa' || column.prop == 'esperado'">{{value | currency }}</span>
+                <!-- </div> -->
+                
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+        </app-accordion>
+    </app-card>
+  </ng-template>
+  <ng-template #procedimientosTemplate>
+    <app-card [message]="message">
+      <app-accordion titulo="Procedimientos Realizados por Servicio">
+        <div style="display:flex;align-items: center; justify-content:flex-end">
+            <select class="form-control form-select" (change)="especialityChange1($event.target.value)" style="width:auto!important;" [(ngModel)]="selectedOptionTipo" >
+              <!-- <option [value]="selectedOptionTipo" selected>{{selectedOptionTipo}}</option> -->
+                <option 
+                *ngFor="let especialidad of especialidades1; let i=index"
+                [value]="especialidad"
+                >{{especialidad}}
+                </option>
+            </select>
+            <div class="" style="display:flex;margin:15px;align-items: center;">
+              <span>Buscar</span>&nbsp;&nbsp;
+                <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter1($event, selectedOptionTipo)'>
+            </div>
+        </div> 
+        <ngx-datatable #myTable5 class="bootstrap table table-striped" id="datatablele" 
+          [columns]="columns5"
+          [rows]="rows5filtered" 
+          [columnMode]="ColumnMode.force" 
+          [headerHeight]="50" 
+          [rowHeight]="$any('auto')"
+          [scrollbarH]="true" 
+          [rowClass]="getRowClass"
+          [summaryRow]="enableSummary"
+          [summaryPosition]="summaryPosition"
+          [summaryHeight]="35"
+          >
+          <ngx-datatable-column [headerClass]="column.headerClass"
+          [summaryFunc]="column.prop == 'TipoOA_Nombre' || column.prop == 'ExamenGrupo' ? summaryNull1 : column.prop == 'Componente_Nombre' ? summaryNull:summaryForAmount"
+          [cellClass]="column.cellClass" [flexGrow]="1"
+            [width]="column.width" *ngFor="let column of columns5; let i = index;" name="{{column.name}}"
+            prop="{{column.prop}}">
+            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+              <!-- <div [ngClass]="{'row-paddin': row.concepto.includes('LIMA') || row.concepto.includes('CHORRILLOS') || row.concepto.includes('SURCO') }"> -->
+                <span *ngIf="column.prop == 'TipoOA_Nombre' || column.prop == 'ExamenGrupo' ||column.prop == 'Componente_Nombre'">{{value}}</span>
+                <span *ngIf="column.prop == 'Cantidad'">{{value | number: '1.0-0' }}</span>
+                <span *ngIf="column.prop == 'ingreso' || column.prop == 'empresa' || column.prop == 'esperado'">{{value | currency }}</span>
+              <!-- </div> -->
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+      </app-accordion>
+    </app-card>
+  </ng-template>
+  <ng-template #medicosTemplate>
+    <app-card [message]="message">
+      <app-accordion titulo="Procedimientos Realizados por el Médico">
+        <div style="display:flex;align-items: center; justify-content:flex-end">
+            <!-- <select class="form-control form-select" style="width: auto!important;" (change)="tipoChange($event.target.value, 'pacientes')" [(ngModel)]="selectedOptionTipo">
+              <option value="cantidad">Cantidad</option>
+              <option value="soles">Soles</option>
+            </select> -->
+            <select class="form-control form-select" (change)="especialityChange2($event.target.value)" style="width:auto!important;" [(ngModel)]="selectedOptionTipo1" >
+              <!-- <option [value]="selectedOptionTipo" selected>{{selectedOptionTipo}}</option> -->
+                <option 
+                *ngFor="let especialidad of especialidades2; let i=index"
+                [value]="especialidad"
+                >{{especialidad}}
+                </option>
+            </select>
+            <div class="" style="display:flex;margin:15px;align-items: center;">
+              <span>Buscar</span>&nbsp;&nbsp;
+                <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter2($event, selectedOptionTipo1)'>
+            </div>
+        </div> 
+        <ngx-datatable #myTable6 class="bootstrap table table-striped" id="datatablele" 
+        [columns]="columns6"
+        [rows]="rows6filtered" 
+        [columnMode]="ColumnMode.force" 
+        [headerHeight]="50" 
+        [rowHeight]="$any('auto')"
+        [scrollbarH]="true" 
+        [rowClass]="getRowClass"
+        [summaryRow]="enableSummary"
+        [summaryPosition]="summaryPosition"
+        [summaryHeight]="35"
+        >
+          <ngx-datatable-column [headerClass]="column.headerClass" 
+          [summaryFunc]="column.prop == 'TipoOA_Nombre' || column.prop == 'Medico_Nombre' ? summaryNull1 : column.prop == 'Componente_Nombre' ? summaryNull:summaryForAmount"
+            [cellClass]="column.cellClass" [flexGrow]="1"
+            [width]="column.width" *ngFor="let column of columns6; let i = index;" name="{{column.name}}"
+            prop="{{column.prop}}">
+            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+              <!-- <div [ngClass]="{'row-paddin': row.concepto.includes('LIMA') || row.concepto.includes('CHORRILLOS') || row.concepto.includes('SURCO') }"> -->
+                <span *ngIf="column.prop == 'TipoOA_Nombre' || column.prop == 'ExamenGrupo' ||column.prop == 'Componente_Nombre'">{{value}}</span>
+                <span *ngIf="column.prop == 'Cantidad'">{{value | number: '1.0-0' }}</span>
+                <span *ngIf="column.prop == 'ingreso' || column.prop == 'empresa' || column.prop == 'esperado'">{{value | currency }}</span>
+                <!-- <span *ngIf="column.prop !== 'concepto'">{{value | number: '1.2-2'}}</span> -->
+                <!-- <i class="fa fa-arrow-up text-blue" *ngIf="row.concepto === 'Colaboradores Respecto Mes Anterior' && value > 0"></i>
+                <i class="fa fa-arrow-down text-red" *ngIf="row.concepto === 'Colaboradores Respecto Mes Anterior' && value < 0"></i>
+  
+                <i class="fa fa-arrow-up text-blue" *ngIf="row.concepto === 'Proporcion de Cesados / Nuevos' && value > 0"></i>
+                <i class="fa fa-arrow-down text-red" *ngIf="row.concepto === 'Proporcion de Cesados / Nuevos' && value < 0"></i>
+  
+                <span *ngIf="column.prop !== 'concepto' && rowIndex < 14">{{value }}</span>
+                <span *ngIf="column.prop !== 'concepto' && rowIndex > 13">{{value }} %</span> -->
+              <!-- </div> -->
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+      </app-accordion>
+    </app-card>
+  </ng-template>

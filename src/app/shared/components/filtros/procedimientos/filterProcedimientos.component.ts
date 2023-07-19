@@ -16,7 +16,7 @@ export class FilterProcedimientosComponent implements OnInit {
   periodo = this.anio + this.mes;
   origen_atencion: string = '0';
   filter_Tipo: string = '0';
-  id_sede:string = '0001'
+  id_sede:string = '0000'
   optionsMes = [
     { value: '01', label: 'Enero' },
     { value: '02', label: 'Febrero' },
@@ -79,16 +79,14 @@ export class FilterProcedimientosComponent implements OnInit {
     // this.action = true;
     const form = this.filtroForm.value;
     const parameters = {
-      periodo_consulta: this.periodo,
-      mes : form.mes,
       anio : form.anio,
+      mes : form.mes,
+      periodo: this.periodo,
       sede : form.id_sede,
-      origen_atencion : form.origen_atencion,
-      filter_Tipo : form.filter_Tipo,
-      filtro_grupo: this.filtro_grupo,
-      tabla_cms: this.tabla_cms,
-      campo_solicitado: this.campo_solicitado,
-      campo_comprado: this.campo_comprado,
+      area : 'Todo',
+      tipo: form.filter_Tipo,
+      origen : form.origen_atencion,
+
     }
     console.log(89, parameters)
     this.parameters.emit(parameters);
