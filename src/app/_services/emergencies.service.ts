@@ -78,4 +78,8 @@ export class EmergenciesService {
       this.loadTableApiDataURL = `${environment.api_url}getEmMedicosStatistics`;
       return this.http.post(this.loadTableApiDataURL, data);
     }
+    getInterConsultaEmergencia(data): Observable<any> {
+      this.loadTableApiDataURL = `${environment.api_url}getInterConsultaEmergencia`;
+      return this.http.post(this.loadTableApiDataURL, data);
+    }
 }

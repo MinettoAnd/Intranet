@@ -40,6 +40,9 @@ import { EstadisticasComponent } from './components/procedimientos/estadisticas/
 import { ContentEstadisticasComponent } from './components/procedimientos/estadisticas/content-estadisticas/content-estadisticas.component';
 import { ProcedimientosComponent } from './components/procedimientos/procedimientos.component';
 import { FilterProcedimientosComponent } from './components/filtros/procedimientos/filterProcedimientos.component';
+import { EmergenciaComponent } from './components/listas/emergencia/emergencia.component';
+import { ListadoInterconsultaComponent } from './components/listas/emergencia/listado-interconsulta/listado-interconsulta.component';
+import { ContentListadoComponent } from './components/listas/emergencia/listado-interconsulta/content-listado/content-listado.component';
 
 
 @NgModule({
@@ -77,7 +80,10 @@ import { FilterProcedimientosComponent } from './components/filtros/procedimient
     EstadisticasComponent,
     ContentEstadisticasComponent,
     ProcedimientosComponent,
-    FilterProcedimientosComponent
+    FilterProcedimientosComponent,
+    EmergenciaComponent,
+    ListadoInterconsultaComponent,
+    ContentListadoComponent,
   ],
   imports: [
     AgGridModule.withComponents([LinkRendererComponent]),
@@ -121,7 +127,10 @@ import { FilterProcedimientosComponent } from './components/filtros/procedimient
     EstadisticasComponent,
     ContentEstadisticasComponent,
     ProcedimientosComponent,
-    FilterProcedimientosComponent
+    FilterProcedimientosComponent,
+    EmergenciaComponent,
+    ListadoInterconsultaComponent,
+    ContentListadoComponent,
   ],
   providers: [NgbNav],
   // bootstrap: [ResumenColaboradoresComponent],

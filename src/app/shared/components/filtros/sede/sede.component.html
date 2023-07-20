@@ -16,7 +16,30 @@
               <option value="004">Surco</option>
             </select>
         </div>
-       
+        <div class="" *ngIf="isRangoFecha">
+          <div class="input-group input-group-sm fecha">
+            <div class="input-group-prepend">
+            <span class="input-group-text">Fecha Inicio</span>
+            </div>
+            <input
+                  name="password"
+                  type="date"
+                  formControlName="f_inicio"
+                  class="form-control form-control-sm"
+                />
+          </div>
+          <div class="input-group input-group-sm fecha">
+            <div class="input-group-prepend">
+            <span class="input-group-text">Fecha Final</span>
+            </div>
+            <input
+                  name="password"
+                  type="date"
+                  formControlName="f_fin"
+                  class="form-control form-control-sm"
+                />
+          </div>
+        </div>
         <!-- <div class="input-group input-group-sm fecha">
           <div class="input-group-prepend">
           <span class="input-group-text">Año</span>

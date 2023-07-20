@@ -1,0 +1,80 @@
+<ul ngbNav #nav="ngbNav" [(activeId)]="activeTabId" class="nav-tabs" style="justify-content: end;">
+    <li *ngFor="let tab of tabs" [ngbNavItem]="tab.id">
+      <a ngbNavLink>{{ tab.label }}</a>
+      <ng-template ngbNavContent>
+        <ng-container *ngIf="isActiveTab(tab.id)">
+          <ng-container [ngTemplateOutlet]="tab.template"></ng-container>
+        </ng-container>
+      </ng-template>
+    </li>
+  </ul>
+  
+  <div [ngbNavOutlet]="nav" class="mt-2"></div>
+  
+  <ng-template #cantidadesTemplate>
+    <app-card [message]="message">
+      <app-accordion>
+
+  
+        <!-- tabla 1 -->
+        <div class="row" style="align-items: center;justify-content: space-between;">
+            <ul class="list-group list-group-horizontal list-group-flush">
+                <li class="list-group-item border-0 pl-0">
+                    <select class="form-control form-select" (change)="onLimitChange($event.target.value)">
+                        <option
+                        *ngFor="let option of pageLimitOptions"
+                        [value]="option.value"
+
+                        >
+                        {{ option.value }} Registros
+                        </option>
+                        <option value="0" *ngIf="this.page.totalElements">Todos los Registros</option>
+                    </select>
+                </li>
+                <li class="list-group-item border-0 pl-0">
+                    <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(1)">
+                    <i class="fa fa-external-link"></i>
+                    Copiar tabla
+                    </button>
+                </li>
+                <li class="list-group-item border-0 pl-0">
+                    <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(1)">
+                    <i class="fa fa-external-link"></i>
+                    Exportar tabla a Excel
+                    </button>
+                </li>
+                
+            </ul>              
+            <div class="" style="display:flex;margin:15px;align-items: center;">
+                <span>Buscar</span>&nbsp;&nbsp;
+                <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter($event)'>
+            </div>
+        </div>
+        <ngx-datatable *ngIf="isTable1" #myTable1 class="bootstrap table table-striped" id="datatablele" 
+          [columns]="columns1"
+          [rows]="rows1" 
+          [columnMode]="ColumnMode.force" 
+          [headerHeight]="50" 
+          [footerHeight]="65"
+          [rowHeight]="$any('auto')"
+          [scrollbarH]="true" 
+          [limit]="page.size"
+          >
+          <ngx-datatable-column [headerClass]="column.headerClass"
+          [cellClass]="column.cellClass" [flexGrow]="1"
+            [width]="column.width" *ngFor="let column of columns1; let i = index;" name="{{column.name}}"
+            prop="{{column.prop}}">
+            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+              <!-- <div
+                [ngClass]="{'row-paddin': row.concepto.includes('LIMA') || row.concepto.includes('CHORRILLOS') || row.concepto.includes('SURCO') }"> -->
+                <span *ngIf="column.prop !== 'PrecioCompra' && column.prop !== 'StockActual' && column.prop !== 'StockActualEquiv' && column.prop !== 'StockComprometido'">{{value}}</span>
+                <span *ngIf="column.prop === 'PrecioCompra'">{{value | currency }}</span>
+                <span *ngIf="column.prop === 'StockActual' || column.prop === 'StockActualEquiv' || column.prop === 'StockComprometido' ">{{value | number: '1.0-0'}}</span>
+              <!-- </div> -->
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+        <!-- fin tabla 1 -->
+      </app-accordion>
+    </app-card>
+  </ng-template>
