@@ -1,6 +1,6 @@
 <ul ngbNav #nav="ngbNav" [(activeId)]="activeTabId" class="nav-tabs" style="justify-content: end;">
     <li *ngFor="let tab of tabs" [ngbNavItem]="tab.id">
-      <a ngbNavLink>{{ tab.label }}</a>
+      <a ngbNavLink>{{ option === 'interconsultas' ? tab.label : 'Atenciones' }}</a>
       <ng-template ngbNavContent>
         <ng-container *ngIf="isActiveTab(tab.id)">
           <ng-container [ngTemplateOutlet]="tab.template"></ng-container>
@@ -45,7 +45,7 @@
                 </li>
                 
             </ul>              
-            <div class="" style="display:flex;margin:15px;align-items: center;">
+            <div class="" style="display:flex;margin:15px;align-items: center;" *ngIf="option === 'interconsultas'">
                 <span>Buscar</span>&nbsp;&nbsp;
                 <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter($event)'>
             </div>

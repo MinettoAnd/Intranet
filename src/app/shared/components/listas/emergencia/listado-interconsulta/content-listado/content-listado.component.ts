@@ -43,6 +43,7 @@ export class ContentListadoComponent implements OnInit {
   @Input() columns4;
   @Input() rows5;
   @Input() columns5;
+  @Input() option;
   labels: string[] = [];
   dataChart1: number[] = [];
   dataChart2: number[] = [];
@@ -132,6 +133,7 @@ export class ContentListadoComponent implements OnInit {
       this.tabs[0].template = this.cantidadesTemplate;
     });
     console.log(91, this.rows1)
+    
      this.temp = this.rows1;
   }
   public onLimitChange(limit: any): void {
@@ -195,12 +197,11 @@ updateFilter(event) {
 }
   copyTableToClipboard(numberTabla){
   if(numberTabla === 1){
-    this.rows1.map(item=>{
-      item.TIEMPO_ESPERA = typeof item.TIEMPO_ESPERA === 'number' ? item.TIEMPO_ESPERA : Number(item.TIEMPO_ESPERA);
-      // item.StockActualEquiv = typeof item.StockActualEquiv === 'number' ? item.StockActualEquiv : Number(item.StockActualEquiv);
-      // item.StockComprometido = typeof item.StockComprometido === 'number' ? item.StockComprometido : Number(item.StockComprometido);
-      // item.PrecioCompra = typeof item.PrecioCompra === 'number' ? item.PrecioCompra : Number(item.PrecioCompra);
-    });
+    if (this.option === 'interconsultas'){
+      this.rows1.map(item=>{
+        item.TIEMPO_ESPERA = typeof item.TIEMPO_ESPERA === 'number' ? item.TIEMPO_ESPERA : Number(item.TIEMPO_ESPERA);
+      });
+    }
     this.exportService.exportToClipboard(this.rows1, this.columns1);
   }
   
@@ -209,12 +210,12 @@ updateFilter(event) {
 
 exportToExcel(numberTabla): void {
   if(numberTabla === 1){
-    this.rows1.map(item=>{
-      item.TIEMPO_ESPERA = typeof item.TIEMPO_ESPERA === 'number' ? item.TIEMPO_ESPERA : Number(item.TIEMPO_ESPERA);
-      // item.StockActualEquiv = typeof item.StockActualEquiv === 'number' ? item.StockActualEquiv : Number(item.StockActualEquiv);
-      // item.StockComprometido = typeof item.StockComprometido === 'number' ? item.StockComprometido : Number(item.StockComprometido);
-      // item.PrecioCompra = typeof item.PrecioCompra === 'number' ? item.PrecioCompra : Number(item.PrecioCompra);
-    });
+    if (this.option === 'interconsultas'){
+      this.rows1.map(item=>{
+        item.TIEMPO_ESPERA = typeof item.TIEMPO_ESPERA === 'number' ? item.TIEMPO_ESPERA : Number(item.TIEMPO_ESPERA);
+      });
+    }
+    
     this.exportService.exportTableElmToExcel(this.rows1, '');
   }
   

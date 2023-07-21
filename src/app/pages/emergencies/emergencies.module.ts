@@ -11,11 +11,12 @@ import { ListadoPacientesEmergenciaComponent } from './listado-pacientes-emergen
 import { EstadisticasComponent } from './estadisticas/estadisticas.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ListadoInterconsultasComponent } from './listado-interconsultas/listado-interconsultas.component';
+import { ListadoTrabajadoresScrtComponent } from './listado-trabajadores-scrt/listado-trabajadores-scrt.component';
 
 
 
 @NgModule({
-  declarations: [AttentionConsultationComponent, ListadoPacientesEmergenciaComponent, EstadisticasComponent, ListadoInterconsultasComponent],
+  declarations: [AttentionConsultationComponent, ListadoPacientesEmergenciaComponent, EstadisticasComponent, ListadoInterconsultasComponent, ListadoTrabajadoresScrtComponent],
   imports: [
     CommonModule,
     NgxDatatableModule,
@@ -39,6 +40,10 @@ import { ListadoInterconsultasComponent } from './listado-interconsultas/listado
       {
           path: 'listado-interconsultas',
           component: ListadoInterconsultasComponent
+      },
+      {
+          path: 'listado-trabajadores-sctr',
+          component: ListadoTrabajadoresScrtComponent
       }
     ])
   ],

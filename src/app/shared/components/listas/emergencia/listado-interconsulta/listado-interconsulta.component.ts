@@ -195,6 +195,7 @@ export class ListadoInterconsultaComponent implements OnInit {
   @Input() action: boolean = false;
   @Input() filtro_grupo: string;
   @Input() parameters;
+  @Input() option;
   listObservers$: Array<Subscription> = [];
   panelOptions;
   panelOptions2;
@@ -548,29 +549,55 @@ export class ListadoInterconsultaComponent implements OnInit {
 
     this.loading();
     console.log(this.parameters)
-    this.tableApiservice.getInterConsultaEmergencia(this.parameters).subscribe(
-      (response) => {
-        // this.rows = [];
-        
-        if(response.data.success){
-          this.data = response.data ? response.data : [];
-          this.message = this.data.titulo;
-          this.title = response.data.title;
-  
-          // this.temp = this.rows;
-          this.columns1 = this.data.cabeceras;
-          this.rows1 = this.data.tabla_atenciones;
+    if(this.option === 'interconsultas'){
+      this.tableApiservice.getInterConsultaEmergencia(this.parameters).subscribe(
+        (response) => {
+          // this.rows = [];
+          
+          if(response.data.success){
+            this.data = response.data ? response.data : [];
+            this.message = this.data.titulo;
+            this.title = response.data.title;
+    
+            // this.temp = this.rows;
+            this.columns1 = this.data.cabeceras;
+            this.rows1 = this.data.tabla_atenciones;
 
+              Swal.close();
+          }else{
             Swal.close();
-        }else{
-          Swal.close();
+          }
+          
+        },
+        (error) => {
+            Swal.close();
         }
-        
-      },
-      (error) => {
-          Swal.close();
-      }
-    );
+      );
+    }else{
+      this.tableApiservice.getAtencionesTrabajador(this.parameters).subscribe(
+        (response) => {
+          // this.rows = [];
+          
+          if(response.data.success){
+            this.data = response.data ? response.data : [];
+            this.message = this.data.titulo;
+            this.title = response.data.title;
+    
+            // this.temp = this.rows;
+            this.columns1 = this.data.cabeceras;
+            this.rows1 = this.data.tabla_atenciones;
+
+              Swal.close();
+          }else{
+            Swal.close();
+          }
+          
+        },
+        (error) => {
+            Swal.close();
+        }
+      );
+    }
   }
 
   copyTableToClipboard(numberTabla){

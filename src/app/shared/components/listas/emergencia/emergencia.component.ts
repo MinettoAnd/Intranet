@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import { DataService } from 'src/app/_services/data.service';
 import Swal from 'sweetalert2';
@@ -24,7 +24,7 @@ export class EmergenciaComponent implements OnInit {
   parameters;
   action = false;
   isRangoFecha = true;
-  option = 'colaboradores';
+  @Input() option: string;
   constructor(private _cnp:CustomNumberPipe,
     private _cp: CurrencyPipe, private _phone: PhonePipe, private _ndp:NumberDecimalPipe, private modalService: NgbModal, public dataService: DataService) { }
   panelOptions;
