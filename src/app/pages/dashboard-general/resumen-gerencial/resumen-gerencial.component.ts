@@ -87,27 +87,27 @@ export class ResumenGerencialComponent implements OnInit {
         // this.colaboradoresEstadisticas = false;
         this.planillaEstadistica = false;
         this.ingresosEstadisticas = false;
-        this.emergenciasEstadisticas = true;
+        this.consultaExternaEstadisticas = true;
+        this.emergenciasEstadisticas = false;
         this.hospitalizacionEstadisticas = false;
-        this.consultaExternaEstadisticas = false;
         break;
       case 5:
         this.comercialEstadisticas = false;
         // this.colaboradoresEstadisticas = false;
         this.planillaEstadistica = false;
         this.ingresosEstadisticas = false;
-        this.emergenciasEstadisticas = false;
-        this.hospitalizacionEstadisticas = true;
         this.consultaExternaEstadisticas = false;
+        this.emergenciasEstadisticas = true;
+        this.hospitalizacionEstadisticas = false;
         break;
       case 6:
         this.comercialEstadisticas = false;
         // this.colaboradoresEstadisticas = false;
         this.planillaEstadistica = false;
         this.ingresosEstadisticas = false;
+        this.consultaExternaEstadisticas = false;
         this.emergenciasEstadisticas = false;
-        this.hospitalizacionEstadisticas = false;
-        this.consultaExternaEstadisticas = true;
+        this.hospitalizacionEstadisticas = true;
         break;
       // case 7:
       //   this.comercialEstadisticas = false;
@@ -150,7 +150,7 @@ export class ResumenGerencialComponent implements OnInit {
               // }
               if(submenu.name === 'Estad. Planilla - Resumen de pagos'){
                 const menuItem3 = {
-                  id: 3,
+                  id: 2,
                   isDropDownMenu: false,
                   description: "Planilla",
                   subMenuList: []
@@ -159,7 +159,7 @@ export class ResumenGerencialComponent implements OnInit {
               }
               if(submenu.name === 'ING-Estadisticas'){
                 const menuItem4 = {
-                  id: 4,
+                  id: 3,
                   isDropDownMenu: false,
                   description: "Ingresos",
                   subMenuList: []
@@ -190,7 +190,7 @@ export class ResumenGerencialComponent implements OnInit {
        }) 
        if(this.subMenuItems.length > 0 ){
             const menuItem5 = {
-              id: 5,
+              id: 4,
               isDropDownMenu: true,
               description: "Producción",
               dropDownTarget: "",
@@ -231,7 +231,7 @@ export class ResumenGerencialComponent implements OnInit {
             // }
             if(submenu.name === 'Estad. Planilla - Resumen de pagos'){
               const menuItem3 = {
-                id: 3,
+                id: 2,
                 isDropDownMenu: false,
                 description: "Planilla",
                 subMenuList: []
@@ -240,7 +240,7 @@ export class ResumenGerencialComponent implements OnInit {
             }
             if(submenu.name === 'ING-Estadisticas'){
               const menuItem4 = {
-                id: 4,
+                id: 3,
                 isDropDownMenu: false,
                 description: "Ingresos",
                 subMenuList: []
@@ -271,7 +271,7 @@ export class ResumenGerencialComponent implements OnInit {
      }) 
      if(this.subMenuItems.length > 0 ){
           const menuItem5 = {
-            id: 5,
+            id: 4,
             isDropDownMenu: true,
             description: "Producción",
             dropDownTarget: "",

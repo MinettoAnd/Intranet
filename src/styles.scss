@@ -226,6 +226,7 @@
     ngx-datatable{
         margin-left:0.7%!important;
         width:98.5%!important;
+        zoom: 0.9!important;
      }
 }
 @media screen and ( max-height: 719px ){
@@ -380,15 +381,20 @@
 }
 ag-grid-angular{
     padding: 0 0.7%!important;
+    zoom: 0.9!important;
   }
 
-//   .ngx-datatable.bootstrap .datatable-header {
-//     border-bottom: 1px solid #ddd!important;
+//   .ag-cell {
+//     border-right-color: black!important;
+//     border-right-width: 1px!important;
+//     border-right-style: solid!important;
 //   }
   
-//   .ngx-datatable.bootstrap .datatable-body {
-//     border-right: 1px solid #ddd!important;
+//   .ag-header-cell,
+//   .ag-header-group-cell {
+//     border-right: 1px solid black!important;
 //   }
+  
 
   .ngx-datatable.bootstrap .datatable-header-cell {
     border-right: 0.25px solid #322953B3!important

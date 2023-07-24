@@ -22,6 +22,7 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { CurrencyPipe } from '@angular/common';
 import { CustomNumberPipe } from 'src/app/pipes/customNumber.pipe';
 import { PhonePipe } from 'src/app/pipes/phone.pipe';
+import { PorcentajePipe } from 'src/app/pipes/porcentaje.pipe';
 
 @Component({
   selector: 'app-comercial-estadisticas',
@@ -182,7 +183,7 @@ export class ComercialEstadisticasComponent implements OnInit {
   action: boolean = false;
 
   constructor(private tableApiservice: ComercialService, private exportService: ExportService,
-    private _cp: CurrencyPipe, private  _cnp: CustomNumberPipe, private modalService: NgbModal) { 
+    private _cp: CurrencyPipe, private  _cnp: CustomNumberPipe,private  _pp: PorcentajePipe,  private modalService: NgbModal) { 
       this.page1.pageNumber = 0;
       this.page1.size = 10;
       this.page2.pageNumber = 0;
@@ -364,18 +365,27 @@ export class ComercialEstadisticasComponent implements OnInit {
             let sum = 0;
             
             let dataArr = context.chart.data.datasets[context.datasetIndex].data;
-              
             dataArr.map((data) => {
-              return sum += parseFloat(data);
+              
+              if (data !== undefined){
+                return sum += parseFloat(data);
+              }
             });
-            // console.log(292,value , sum );
-            if (sum > 0 ){
-              return ((value * 100) / sum).toFixed(2) + '%';
+            // console.log(292,context.chart.canvas.id === 'chart-2');
+            if(context.chart.canvas.id === 'chart-1'){
+              if (sum > 0 ){
+                return ((value * 100) / sum).toFixed(2) + '%';
+              }else{
+                // console.log(367, value)
+                return (0 + '%');
+              }
             }else{
-              return (0 + '%');
+              return value.toFixed(2);
             }
             
+            
           },
+
           /* Podemos modificar el texto a mostrar */
           // formatter: function (dato, ctx) {
           //   return ((dato * 100) / total).toFixed(2) + '%'; 
@@ -399,6 +409,27 @@ export class ComercialEstadisticasComponent implements OnInit {
           // borderColor: 'darkblue',
           // borderRadius: 8,
           // backgroundColor: 'lightblue'
+        }
+      },
+      tooltips: {
+        enabled: true,
+        callbacks: {
+          label: function(tooltipItem:any, data) {
+              var label = data.datasets[tooltipItem.datasetIndex].label || '';
+            
+              if (label) {
+                  label += ': ';
+              }
+              label += Math.round(tooltipItem.yLabel * 100) / 100;
+              // tooltipItem.xLabel = 'Día: ' + tooltipItem.xLabel + '   ' ;
+              // tooltipItem.label = 'Día: ' + tooltipItem.Label + '   ' ;
+              
+              return label;
+          },
+          // title: function(tooltipItem, data) {
+          //  var title = 'Mes: ' + tooltipItem[0].xLabel + '   ' ;
+          //   return title;
+          // }
         }
       }
     };
@@ -632,6 +663,12 @@ export class ComercialEstadisticasComponent implements OnInit {
       };
 
       this.loading();
+      this.chartLabels1 = [];
+      this.chartData1= [];
+      this.chartData2= [];
+      this.chartLabels2 = [];
+      this.chartData3= [];
+      this.chartData4= [];
     this.tableApiservice.getPsContratosEstadistica(this.parameters).subscribe(      
                 (response) => {
                   // console.log(615, response)
@@ -639,24 +676,27 @@ export class ComercialEstadisticasComponent implements OnInit {
                     this.columns1 = response.data.cabeceras_resumen_afiliados_Tipo;
                     this.rows1 = response.data.tabla_resumen_afiliados_Tipo;
                     this.rows1.map((item, index) =>{
-                      if (item.Estado !== 'Contratos Vigentes' && item.Estado !== 'Afiliados Vigentes'){
-                        item.CTotal = this._cp.transform(item.CTotal, 'PEN', 'S/.');
-                        item.FTotal = this._cp.transform(item.FTotal, 'PEN', 'S/.');
-                        item.TOTAL = this._cp.transform(item.TOTAL, 'PEN', 'S/.');
-                        if (index === 3){
-                          item.Estado = 'Ingreso por cuotas'
-                        }
-                      }else{
-                        item.CTotal = this._cnp.transform(item.CTotal);
-                        item.FTotal = this._cnp.transform(item.FTotal);
-                        item.TOTAL = this._cnp.transform(item.TOTAL);
+                      if (index === 3){
+                        item.Estado = 'Ingreso por cuotas'
                       }
+                      // if (item.Estado !== 'Contratos Vigentes' && item.Estado !== 'Afiliados Vigentes'){
+                      //   item.CTotal = this._cp.transform(item.CTotal, 'PEN', 'S/.');
+                      //   item.FTotal = this._cp.transform(item.FTotal, 'PEN', 'S/.');
+                      //   item.TOTAL = this._cp.transform(item.TOTAL, 'PEN', 'S/.');
+                      //   if (index === 3){
+                      //     item.Estado = 'Ingreso por cuotas'
+                      //   }
+                      // }else{
+                      //   item.CTotal = this._cnp.transform(item.CTotal);
+                      //   item.FTotal = this._cnp.transform(item.FTotal);
+                      //   item.TOTAL = this._cnp.transform(item.TOTAL);
+                      // }
                     });
                     console.log(629, this.rows1)
                     this.columns2 = response.data.cabeceras_resumen_afiliados_Total;
                     this.rows2 = response.data.tabla_resumen_afiliados_Total;
                     this.rows2.map((item, index) =>{
-                      if (item.Estado !== 'Contratos Vigentes' && item.Estado !== 'Afiliados Vigentes'){
+                      if (item.Estado !== 'Contratos Vigentes' && item.Estado !== 'Afiliados Vigentes' && item.Estado !== 'Siniestralidad (Coberturado / Ingreso Cuotas)'){
                         item.CTCL = this._cp.transform(item.CTCL, 'PEN', 'S/.');
                         item.CTDO = this._cp.transform(item.CTDO, 'PEN', 'S/.');
                         item.CTotal = this._cp.transform(item.CTotal, 'PEN', 'S/.');
@@ -670,15 +710,28 @@ export class ComercialEstadisticasComponent implements OnInit {
                           item.Estado = 'Ingreso por cuotas'
                         }
                       }else{
-                         item.CTCL = this._cnp.transform(item.CTCL);
-                        item.CTDO = this._cnp.transform(item.CTDO);
-                        item.CTotal = this._cnp.transform(item.CTotal);
+                        if (item.Estado === 'Siniestralidad (Coberturado / Ingreso Cuotas)'){
+                          item.CTCL = this._pp.transform(item.CTCL);
+                          item.CTDO = this._pp.transform(item.CTDO);
+                          item.CTotal = this._pp.transform(item.CTotal);
 
-                        item.FCLTotal = this._cnp.transform(item.FCLTotal);
-                        item.FDOTotal = this._cnp.transform(item.FDOTotal);
-                        item.FDITotal = this._cnp.transform(item.FDITotal);
-                        item.FTotal = this._cnp.transform(item.FTotal);
-                        item.TOTAL = this._cnp.transform(item.TOTAL);
+                          item.FCLTotal = this._pp.transform(item.FCLTotal);
+                          item.FDOTotal = this._pp.transform(item.FDOTotal);
+                          item.FDITotal = this._pp.transform(item.FDITotal);
+                          item.FTotal = this._pp.transform(item.FTotal);
+                          item.TOTAL = this._pp.transform(item.TOTAL);
+                        }else{
+                          item.CTCL = this._cnp.transform(item.CTCL);
+                          item.CTDO = this._cnp.transform(item.CTDO);
+                          item.CTotal = this._cnp.transform(item.CTotal);
+
+                          item.FCLTotal = this._cnp.transform(item.FCLTotal);
+                          item.FDOTotal = this._cnp.transform(item.FDOTotal);
+                          item.FDITotal = this._cnp.transform(item.FDITotal);
+                          item.FTotal = this._cnp.transform(item.FTotal);
+                          item.TOTAL = this._cnp.transform(item.TOTAL);
+                        }
+                        
                       }
                     });
                     this.columns3 = response.data.cabeceras_contratos;
@@ -713,6 +766,7 @@ export class ComercialEstadisticasComponent implements OnInit {
                     });
 
                     response.data.hist_total.map(item => {
+                      
                       if(item.name === 'JAN'){
                         item.name = 'ENE';
                       }else if(item.name === 'APR'){
@@ -729,7 +783,7 @@ export class ComercialEstadisticasComponent implements OnInit {
                     });
                     
                     this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'', '','chart-1', this.anio, this.anioAnterior, 'line');
-                    
+
                     response.data.hist_siniestralidad.map(item => {
                       if(item.name === 'JAN'){
                         item.name = 'ENE';
