@@ -105,7 +105,9 @@
                                                         [rowHeight]="$any('auto')"
                                                         [rowClass]="myRowClass"
                                                         >
-                                                        <ngx-datatable-column [headerClass]="column.headerClass" [cellClass]="column.cellClass" [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns1; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                                        <ngx-datatable-column [headerClass]="column.headerClass" 
+                                                        [cellClass]="column.cellClass" [flexGrow]="1" 
+                                                        [minWidth]="90" *ngFor="let column of columns1; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                             <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                                             let-row="row">
                                                               <div >

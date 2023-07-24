@@ -16,7 +16,7 @@ export class FilterProcedimientosComponent implements OnInit {
   periodo = this.anio + this.mes;
   origen_atencion: string = '0';
   filter_Tipo: string = '0';
-  id_sede:string = '0000'
+  id_sede:string = '000'
   optionsMes = [
     { value: '01', label: 'Enero' },
     { value: '02', label: 'Febrero' },
