@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import * as moment from 'moment';
 import Swal from 'sweetalert2';
 import { SharedService } from '../../../../Layout/shared.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-sede',
@@ -30,6 +31,7 @@ export class SedeComponent implements OnInit {
   //   { value: '12', label: 'Diciembre' },
   // ];
   // optionsAnio = [];
+  @Input() isRangoFecha:boolean;
   @Input() filtro_grupo:string;
   @Input() tabla_cms:string;
   @Input() campo_solicitado:string;
@@ -40,10 +42,28 @@ export class SedeComponent implements OnInit {
   public menuItems: any = [];
   public subMenuItems: any = [];
   id_sede: string = '000';
-  constructor(private apiService:SharedService ) { 
+  f_inicio = moment(this.restarDias(new Date, -30)).format('YYYY-MM-DD');
+  f_fin = moment(new Date()).format('YYYY-MM-DD');
+  constructor(private apiService:SharedService , private datePipe: DatePipe) { 
+    // if(this.isRangoFecha){
+    //   console.log('hola rango fecha')
+    //   this.filtroForm = new FormGroup({
+    //     id_sede: new FormControl(this.id_sede),
+    //     f_inicio: new FormControl(this.f_inicio),
+    //     f_fin: new FormControl(this.f_fin),
+  
+    //   });
+    // }else {
+    //   this.filtroForm = new FormGroup({
+    //     id_sede: new FormControl(this.id_sede),
+    //     // mes: new FormControl(this.mes),
+  
+    //   });
+    // }
     this.filtroForm = new FormGroup({
       id_sede: new FormControl(this.id_sede),
-      // mes: new FormControl(this.mes),
+      f_inicio: new FormControl(this.f_inicio),
+      f_fin: new FormControl(this.f_fin),
 
     });
     // var anioOp = Number(this.anio);
@@ -61,6 +81,11 @@ export class SedeComponent implements OnInit {
   ngOnInit(): void {
     
 
+  }
+  restarDias(fecha, dias) {
+    var fechalim = fecha.setDate(fecha.getDate() + dias);
+    var fechas = this.datePipe.transform(fechalim, 'yyyy-MM-dd');
+    return fechas;
   }
   // public onAnioChange(anio: any): void {
   //   this.anio = anio;
@@ -123,14 +148,24 @@ export class SedeComponent implements OnInit {
     // this.removeData(this.grafico1);
     // this.action = true;
     const form = this.filtroForm.value;
-    const parameters = {
-      // periodo: this.periodo,
-      sede : form.id_sede,
-      sedeTXT : form.id_sede === '0000' ? 'Todos' : form.id_sede === '0001' ? 'Lima' :  form.id_sede === '0002' ? 'Choprrillos' : 'Surco'
-      // anio : form.anio,
+    if (this.isRangoFecha){
+      const parameters = {
+        // periodo: this.periodo,
+        id_sede : form.id_sede,
+        f_inicio : form.f_inicio,
+        f_fin : form.f_fin,
+      }
+      this.parameters.emit(parameters);
+    }else{
+      const parameters = {
+        // periodo: this.periodo,
+        sede : form.id_sede,
+        sedeTXT : form.id_sede === '0000' ? 'Todos' : form.id_sede === '0001' ? 'Lima' :  form.id_sede === '0002' ? 'Chorrillos' : 'Surco'
+        // anio : form.anio,
+      }
+      this.parameters.emit(parameters);
     }
-    console.log(89, parameters)
-    this.parameters.emit(parameters);
+    
     
           // this.setPage({ offset: 0 });
   }
