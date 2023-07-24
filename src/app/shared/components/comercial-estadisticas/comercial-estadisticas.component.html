@@ -65,7 +65,7 @@
                                                 <div class="box box-solid">
                                                 <div id="accordion1">
                                                     <div class="card">
-                                                    <div class="card-header" >
+                                                    <div class="card-header-info" >
                                                         <div class="box-header">
                                                         <div class="toggle-table">
                                                             <div class="callout callout-info">
@@ -105,12 +105,19 @@
                                                         [rowHeight]="$any('auto')"
                                                         [rowClass]="myRowClass"
                                                         >
-                                                        <ngx-datatable-column [headerClass]="column.headerClass" [cellClass]="column.cellClass" [flexGrow]="1" [minWidth]="90" *ngFor="let column of columns1; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                                        <ngx-datatable-column [headerClass]="column.headerClass" 
+                                                        [cellClass]="column.cellClass" [flexGrow]="1" 
+                                                        [minWidth]="90" *ngFor="let column of columns1; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                             <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
                                                             let-row="row">
                                                               <div >
-                                                                <span [ngClass]="{'row-paddin': row.Estado.includes('Cuotas Adelantadas') || row.Estado.includes('Cuotas Atrasadas') || row.Estado.includes('Cuotas Puntuales') && column.name === 'CONCEPTO'}
-                                                                                  " [title]="value" >{{value}}</span>
+                                                                <div [ngClass]="{'row-paddin': row.Estado.includes('Cuotas Adelantadas') || row.Estado.includes('Cuotas Atrasadas') || row.Estado.includes('Cuotas Puntuales') && column.name === 'CONCEPTO'}">
+                                                                      <span [title]="value" *ngIf="column.prop === 'Estado' ">{{value }} </span>   
+                                                                      <span [title]="value" *ngIf="column.prop !== 'Estado' && row.Estado === 'Contratos Vigentes' ">{{value | number: '1.0-0' }} </span>
+                                                                      <span [title]="value" *ngIf="column.prop !== 'Estado' && row.Estado === 'Afiliados Vigentes'   ">{{value | number: '1.0-0' }} </span> 
+                                                                      <span [title]="value" *ngIf="column.prop !== 'Estado' && row.Estado === 'Siniestralidad (Coberturado / Ingreso Cuotas)'  ">{{value  }} % </span>  
+                                                                      <span [title]="value" *ngIf="column.prop !== 'Estado' && row.Estado !=='Contratos Vigentes' && row.Estado !=='Afiliados Vigentes' && row.Estado !=='Siniestralidad (Coberturado / Ingreso Cuotas)'">{{value | currency}} </span>        
+                                                                </div>
                                                               </div>
                                                             </ng-template>
                                                         </ngx-datatable-column>
@@ -143,7 +150,7 @@
                                                 <div class="box box-solid">
                                                 <div id="accordion2">
                                                     <div class="card">
-                                                    <div class="card-header" >
+                                                    <div class="card-header-info" >
                                                         <div class="box-header">
                                                         <div class="toggle-table">
                                                             <div class="callout callout-info">
@@ -176,7 +183,7 @@
                                                         </div>
                                                         <ag-grid-angular
                                                     #agGrid
-                                                    style="width: 100%; height: 380px;"
+                                                    style="width: 100%; height: 400px;"
                                                     id="myTable2"
                                                     ag-grid="gridOptions"
                                                     class="ag-theme-balham"
@@ -255,7 +262,7 @@
                             <ng-template ngbNavContent>
                                 <div class="card" *ngIf="action">
                                     <div class="card-header">
-                                      <h4 class="card-title" style="bottom:13px;">Atenciones por Consulta Externa</h4>
+                                      <!-- <h4 class="card-title" style="bottom:13px;">Atenciones por Consulta Externa</h4> -->
                                       <p>{{message}}</p>
                                     </div>
                                     <div class="card-content collapse show">
@@ -265,7 +272,7 @@
                                             <div id="accordion2">
                                             <div class="row">
                                                 <div class="card col-md-6">
-                                                    <div class="card-header" >
+                                                    <div class="card-header-info" >
                                                     <div class="box-header">
                                                         <div class="toggle-table">
                                                         <div class="callout callout-info">
@@ -315,7 +322,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="card col-md-6">
-                                                    <div class="card-header" >
+                                                    <div class="card-header-info" >
                                                     <div class="box-header">
                                                         <div class="toggle-table">
                                                         <div class="callout callout-info">
@@ -368,7 +375,7 @@
                                                 </div> 
                                             </div>
                                             <div class="card">
-                                            <div class="card-header" >
+                                            <div class="card-header-info" >
                                                 <div class="box-header">
                                                 <div class="toggle-table">
                                                     <div class="callout callout-info">
@@ -477,7 +484,7 @@
                                         <div class="box box-solid">
                                           <div id="accordion3">
                                             <div class="card">
-                                              <div class="card-header" >
+                                              <div class="card-header-info" >
                                                 <div class="box-header">
                                                   <div class="toggle-table">
                                                     <div class="callout callout-info">
@@ -532,7 +539,7 @@
                                               </div>
                                             </div>
                                             <div class="card">
-                                              <div class="card-header" >
+                                              <div class="card-header-info" >
                                                 <div class="box-header">
                                                   <div class="toggle-table">
                                                     <div class="callout callout-info">
@@ -588,7 +595,7 @@
                                               </div>
                                             </div>
                                             <div class="card">
-                                              <div class="card-header" >
+                                              <div class="card-header-info" >
                                                 <div class="box-header">
                                                   <div class="toggle-table">
                                                     <div class="callout callout-info">
@@ -668,7 +675,7 @@
                                             <div class="box box-solid">
                                               <div id="accordion4">
                                                 <div class="card">
-                                                  <div class="card-header" >
+                                                  <div class="card-header-info" >
                                                     <div class="box-header">
                                                       <div class="toggle-table">
                                                         <div class="callout callout-info">
@@ -722,7 +729,7 @@
                                                   </div>
                                                 </div>
                                                 <div class="card">
-                                                  <div class="card-header" >
+                                                  <div class="card-header-info" >
                                                     <div class="box-header">
                                                       <div class="toggle-table">
                                                         <div class="callout callout-info">
@@ -781,7 +788,7 @@
                                                   </div>
                                                 </div>
                                                 <div class="card">
-                                                  <div class="card-header" >
+                                                  <div class="card-header-info" >
                                                     <div class="box-header">
                                                       <div class="toggle-table">
                                                         <div class="callout callout-info">
