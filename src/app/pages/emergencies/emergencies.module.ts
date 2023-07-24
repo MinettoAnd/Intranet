@@ -10,11 +10,13 @@ import { AttentionConsultationComponent } from './attention-consultation/attenti
 import { ListadoPacientesEmergenciaComponent } from './listado-pacientes-emergencia/listado-pacientes-emergencia.component';
 import { EstadisticasComponent } from './estadisticas/estadisticas.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { ListadoInterconsultasComponent } from './listado-interconsultas/listado-interconsultas.component';
+import { ListadoTrabajadoresScrtComponent } from './listado-trabajadores-scrt/listado-trabajadores-scrt.component';
 
 
 
 @NgModule({
-  declarations: [AttentionConsultationComponent, ListadoPacientesEmergenciaComponent, EstadisticasComponent],
+  declarations: [AttentionConsultationComponent, ListadoPacientesEmergenciaComponent, EstadisticasComponent, ListadoInterconsultasComponent, ListadoTrabajadoresScrtComponent],
   imports: [
     CommonModule,
     NgxDatatableModule,
@@ -34,7 +36,15 @@ import { SharedModule } from 'src/app/shared/shared.module';
       {
           path: 'estadisticas',
           component: EstadisticasComponent
-        }
+      },
+      {
+          path: 'listado-interconsultas',
+          component: ListadoInterconsultasComponent
+      },
+      {
+          path: 'listado-trabajadores-sctr',
+          component: ListadoTrabajadoresScrtComponent
+      }
     ])
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

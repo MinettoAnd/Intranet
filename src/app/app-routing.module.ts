@@ -212,6 +212,11 @@ const routes: Routes = [
                 loadChildren: () => import('../app/pages/terapia-fisica/terapia-fisica.module').then(m => m.TerapiaFisicaModule),
                 data: { extraParameter: "terapiaFisicaMenu" },
             },
+            {
+                path: "procedimientos",
+                loadChildren: () => import('../app/pages/procedimientos/procedimientos.module').then(m => m.ProcedimientosModule),
+                data: { extraParameter: "procedimientosMenu" },
+            },
         ],
     },
 

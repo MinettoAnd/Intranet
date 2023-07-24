@@ -1,0 +1,35 @@
+<h4 class="card-title" *ngIf="action">{{message}}</h4>
+<app-panel-cabecera [panelCabecera] = "panelOptions" *ngIf="action"></app-panel-cabecera>
+<div class="app-content content" *ngIf="action">
+    <div class="content-wrapper">
+      <div class="content-header row mb-1">
+        <app-breadcrumb class="col-12" [breadcrumb]="breadcrumb"></app-breadcrumb>
+      </div>
+      <div class="content-body">
+        <section id="selection-n-deletion">
+          <div class="row">
+            <div class="col-12">
+              <div class="app-content content">
+                <app-content-wrapper>
+                  <div class="app-content content">
+                    <app-content-wrapper>
+                      <app-content-listado 
+                      
+                      [columns1]="columns1" [rows1]="rows1"
+                      [temp]="rows1"
+                      [tabs]="tabs"
+                      [option]="option"
+                      >
+                      </app-content-listado>
+                    </app-content-wrapper>
+                  </div>
+                </app-content-wrapper>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  
