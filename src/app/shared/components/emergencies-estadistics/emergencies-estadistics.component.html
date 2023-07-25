@@ -147,11 +147,11 @@
                                             <tbody>
                                               <tr>
                                                   <th style="padding: 2px 4px!important; line-height: inherit; font-size: 14px!important;">Estancia Mínima</th>
-                                                  <th style="padding: 2px 8px!important; line-height: inherit;"><span id="ptable_anul">{{estanciaMax}}</span></th>
+                                                  <th style="padding: 2px 8px!important; line-height: inherit;"><span id="ptable_anul">{{estanciaMin}}</span></th>
                                               </tr>
                                               <tr>
                                                   <th style="padding: 2px 4px!important; line-height: inherit; font-size: 14px!important;">Estancia Máxima</th>
-                                                  <th style="padding: 2px 8px!important; line-height: inherit;"><span id="ptable_inas">{{estanciaMin}}</span></th>
+                                                  <th style="padding: 2px 8px!important; line-height: inherit;"><span id="ptable_inas">{{estanciaMax}}</span></th>
                                               </tr>
                                             </tbody>
                                         </table>
@@ -252,15 +252,15 @@
                                                     <thead>
                                                       <tr>
                                                           <th></th>
-                                                          <th>Cantidad</th>
-                                                          <th>Porcentaje</th>
+                                                          <th class="text-center">Cantidad</th>
+                                                          <th class="text-center">Porcentaje</th>
                                                       </tr>
                                                     </thead>
                                                       <tbody *ngFor="let rowTable of percentageCompleted.table; let i = index;">
                                                       <tr style="font-size:16px;">
-                                                          <td>{{rowTable.programa }}</td>
-                                                          <td><strong><span>{{rowTable.cantidad}}</span></strong></td>
-                                                          <td><strong><span>{{rowTable.porcentaje}}</span></strong></td>
+                                                          <td >{{rowTable.programa }}</td>
+                                                          <td class="text-center"><strong><span>{{rowTable.cantidad}}</span></strong></td>
+                                                          <td class="text-center"><strong><span>{{rowTable.porcentaje}} %</span></strong></td>
                                                       </tr>
                                                     </tbody>
                                                 </table>
@@ -426,7 +426,7 @@
                                           <div class="box box-solid">
                                             <div id="accordion1">
                                               <div class="card">
-                                                <div class="card-header" >
+                                                <div class="card-header-info" >
                                                   <div class="box-header">
                                                     <div class="toggle-table">
                                                       <div class="callout callout-info">
@@ -516,7 +516,7 @@
                                                 </div>
                                               </div>
                                               <div class="card">
-                                                <div class="card-header" >
+                                                <div class="card-header-info" >
                                                   <div class="box-header">
                                                     <div class="toggle-table">
                                                       <div class="callout callout-info">
@@ -600,7 +600,7 @@
                                                 </div>
                                               </div>
                                               <div class="card">
-                                                <div class="card-header" >
+                                                <div class="card-header-info" >
                                                   <div class="box-header">
                                                     <div class="toggle-table">
                                                       <div class="callout callout-info">
@@ -704,7 +704,7 @@
                                                 </div>
                                               </div>
                                               <div class="card">
-                                                <div class="card-header" >
+                                                <div class="card-header-info" >
                                                   <div class="box-header">
                                                     <div class="toggle-table">
                                                       <div class="callout callout-info">
@@ -806,7 +806,7 @@
                                                 </div>
                                               </div>
                                               <div class="card">
-                                                <div class="card-header" >
+                                                <div class="card-header-info" >
                                                   <div class="box-header">
                                                     <div class="toggle-table">
                                                       <div class="callout callout-info">
@@ -910,7 +910,7 @@
                                                 </div>
                                               </div>
                                               <div class="card" *ngIf="medicos">
-                                                <div class="card-header" *ngIf="medicos">
+                                                <div class="card-header-info" *ngIf="medicos">
                                                   <div class="box-header">
                                                     <div class="toggle-table">
                                                       <div class="callout callout-info">
@@ -1039,7 +1039,7 @@
                                           <div class="box box-solid">
                                             <div id="accordion2">
                                               <div class="card">
-                                                <div class="card-header" >
+                                                <div class="card-header-info" >
                                                   <div class="box-header">
                                                     <div class="toggle-table">
                                                       <div class="callout callout-info">
@@ -1172,7 +1172,7 @@
                                                 </div>
                                               </div>
                                               <div class="card">
-                                                <div class="card-header" >
+                                                <div class="card-header-info" >
                                                   <div class="box-header">
                                                     <div class="toggle-table">
                                                       <div class="callout callout-info">
