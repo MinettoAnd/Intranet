@@ -1,0 +1,75 @@
+<div class="modal-content">
+    <div class="modal-header">
+            <h5 class="modal-title">Filtrar Colaborador</h5>
+            <button
+              type="button"
+              class="close"
+              aria-label="Close"
+              (click)="activeModal.dismiss('Cross click')"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+    </div>
+    <form [formGroup]="filtroForm">
+        <div class="row" style="margin-bottom: -0.5rem;">
+        <div class="form-group col-sm-12">
+          
+          <div class="input-group input-group-sm">
+              <div class="input-group-prepend">
+              <span class="input-group-text">Filtro:</span>
+              </div>
+              <input
+              type="text"
+              formControlName="filtro"
+              class="form-control"
+              />
+          </div>
+          <div class="input-group-btn">
+              <button (click)="buscar()" class="btn btn-sm btn-primary buscar">
+                  <i class="fa fa-search"></i> Filtrar
+              </button>
+          </div>
+        </div>
+      </div>
+    </form>
+    
+    <div class="modal-body" id="modal-window-alert-body">
+        <ngx-datatable #myTablePendientes
+        class="bootstrap table table-striped"
+        id="datatablele"
+          [columns]="columns"
+          [loadingIndicator]="loading"
+          [rows]="rows"
+          [columnMode]="ColumnMode.force"
+          [headerHeight]="50"
+          [footerHeight]="50"
+          [rowHeight]="$any('auto')"
+          [scrollbarH]="true"
+          [limit]="page.size"
+          [selected]="selected"
+          [selectionType]="SelectionType.single"
+          (select)='onSelect($event)'
+          >
+        <ngx-datatable-column 
+          [headerClass]="column.headerClass" 
+          [cellClass]="column.cellClass" 
+          [pipe]="column.pipe" [flexGrow]="1" [width]="column.width"  *ngFor="let column of columns; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+            let-row="row">
+            <div>
+              <span  [title]="value">{{value}}</span>
+            </div>
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
+    </div>
+    <div class="modal-footer">
+        <button
+        type="button"
+        class="btn btn-outline-dark"
+        (click)="activeModal.close('Close click')"
+      >
+        <i class="pe-7s-less"></i> Cancelar
+      </button>
+    </div>
+</div>

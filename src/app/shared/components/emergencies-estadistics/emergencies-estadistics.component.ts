@@ -454,7 +454,7 @@ action: boolean = false;
           },
           ticks: {
             beginAtZero: true,
-            max: this.id_sede === '0000' ? 300 : 100,
+            max: this.id_sede === '0000' ? 180 : 80,
             min: 0
           }
         }]

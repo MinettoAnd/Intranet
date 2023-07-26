@@ -1,7 +1,27 @@
+.input-group {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    float:left; 
+    padding:5px 10px;
+    vertical-align: middle;
+    width:350px;
+}
+.fecha {
+    width:250px;
+}
+.input-group-btn{
+    float:left; 
+    padding:5px 10px;
+    vertical-align: middle;
+}
+.btn-primary {
+    width: 150px;
+    color: #10004C;
+    font-weight: 600;
+}
 
-// .row-background{
-//     background:red;
-// }
 .toggle-table{
     display: flex;
     /* position: relative; */
@@ -10,6 +30,7 @@
 }
 .box-title{
     font-size: 1rem!important;
+    font-weight: 600;
 }
 
 
@@ -79,6 +100,42 @@ margin: 0.5rem 0;
 .text-red{
     color: red !important;
 }
+
+.card-header-info {
+    height: 35px;
+    border-color: #FFAA00;
+//    border-width: 40px;
+    border-radius: 5px;
+    background-color: #FFAA00 !important;
+//    margin: 0 0 10px 0;
+//    padding: 5px;
+  }
+
+  .callout.callout-info {
+    height: 36px;
+    padding: 6px 15px;
+    color: white;
+    background-color: #10004C !important;
+    margin-left: 10px;
+    width: 100%;
+}
+
+.btn-outline-primary {
+    color: #10004C;
+    border-color: #10004C;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+.btn-outline-primary:hover {
+    //color: #FFAA00;
+    //border-color: #FFAA00;
+    //background: #10004C;
+    background: #FFF;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
 ::ng-deep .accordion {
     .card {
     //   margin-bottom: 0 !important;
@@ -112,27 +169,19 @@ margin: 0.5rem 0;
         color: red!important;
     }
     // .ag-header-row ag-header-row-column-group
-#estancia:hover .div_ocultar_ptable_a{
+#div_mostrar_ptable_i:hover .div_ocultar_ptable_a, #div_mostrar_ptable_a:hover .div_ocultar_ptable_a{
     display: block!important;
 }
-#estancia{
+#div_mostrar_ptable_i, #div_mostrar_ptable_a{
     display: flex;
 }
+
 @media (min-width: 1024px) {
-    #estancia{
+    #div_mostrar_ptable_i, #div_mostrar_ptable_a{
         max-width: 50%!important;
     }
 }
-:host ::ng-deep .card {
-    // border-radius: .25rem;
-    margin: 0!important;
+.buscar{
+    width: 50px!important;
 }
-.card-header-info {
-    height: 35px;
-    border-color: #FFAA00;
-//    border-width: 40px;
-    border-radius: 5px;
-    background-color: #FFAA00 !important;
-//    margin: 0 0 10px 0;
-//    padding: 5px;
-  }
+

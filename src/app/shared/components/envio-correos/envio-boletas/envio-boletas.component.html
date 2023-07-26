@@ -1,0 +1,54 @@
+<h4 class="card-title" *ngIf="action"></h4>
+<app-panel-cabecera [panelCabecera] = "panelOptions" *ngIf="action"></app-panel-cabecera>
+<div class="app-content content" *ngIf="action">
+    <div class="content-wrapper">
+      <div class="content-header row mb-1">
+        <app-breadcrumb class="col-12" [breadcrumb]="breadcrumb"></app-breadcrumb>
+      </div>
+      <div class="content-body">
+        <section id="selection-n-deletion">
+          <div class="row">
+            <div class="col-12">
+              <div class="app-content content">
+                <app-content-wrapper>
+                    <ngx-datatable #myTablePendientes
+                        class="bootstrap table table-striped"
+                        id="datatablele"
+                          [columns]="columns"
+                          [loadingIndicator]="loading"
+                          [rows]="rows"
+                          [columnMode]="ColumnMode.force"
+                          [headerHeight]="50"
+                          [footerHeight]="50"
+                          [rowHeight]="$any('auto')"
+                          [scrollbarH]="true"
+                          [limit]="page.size"
+                          [selected]="selected"
+                          [selectionType]="SelectionType.single"
+                          (select)='onSelect($event)'
+                          >
+                        <ngx-datatable-column 
+                          [headerClass]="column.headerClass" 
+                          [cellClass]="column.cellClass" 
+                          [pipe]="column.pipe" [flexGrow]="1" [width]="column.width"  *ngFor="let column of columns; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                            let-row="row">
+                            <div>
+                              <span  [title]="value" *ngIf="column.prop !== 'id_sede' && column.prop !== 'cod_empresa'">{{value}}</span>
+                              <span  [title]="value" *ngIf="column.prop === 'id_sede'">{{row.id_sede === '001' ? 'Lima': row.id_sede === '002' ? 'Chorrillos' : 'Surco'}}</span>
+                              <span  [title]="value" *ngIf="column.prop === 'cod_empresa'">{{row.cod_empresa === '0001' ? 'SBF': row.cod_empresa === '0002' ? 'CSalud' : ''}}</span>
+                            </div>
+                          </ng-template>
+                        </ngx-datatable-column>
+                    </ngx-datatable>
+                </app-content-wrapper>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  
+

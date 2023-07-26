@@ -54,5 +54,13 @@ export class RecursosHumanosService {
     this.loadTableApiDataURL = `${environment.api_url}RRhhGetPlanilla`;
     return this.http.post(this.loadTableApiDataURL, data);
   }
+  getColaboradoresBy(data): Observable<any> {
+    this.loadTableApiDataURL = `${environment.api_url}getColaboradoresBy`;
+    return this.http.post(this.loadTableApiDataURL, data);
+  }
+  boletasEnviadas(data): Observable<any> {
+    this.loadTableApiDataURL = `${environment.api_url}boletasEnviadas`;
+    return this.http.post(this.loadTableApiDataURL, data);
+  }
 }
 

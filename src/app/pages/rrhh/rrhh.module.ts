@@ -10,12 +10,14 @@ import { PlanillaResumenPagosComponent } from './estadistica/planilla-resumen-pa
 import { PlanillaIndicadoresComponent } from './estadistica/planilla-indicadores/planilla-indicadores.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ResumenColaboradoresComponent } from './estadistica/resumen-colaboradores/resumen-colaboradores.component';
+import { EnvioBoletasCorreoComponent } from './envio-boletas-correo/envio-boletas-correo.component';
 
 @NgModule({
   declarations: [
     PlanillaResumenPagosComponent,
     PlanillaIndicadoresComponent,
-    ResumenColaboradoresComponent
+    ResumenColaboradoresComponent,
+    EnvioBoletasCorreoComponent
   ],
   imports: [
     AgGridModule.withComponents([]),
@@ -41,6 +43,10 @@ import { ResumenColaboradoresComponent } from './estadistica/resumen-colaborador
       {
         path: 'resumenColaboradores',
         component: ResumenColaboradoresComponent
+      },
+      {
+        path: 'envioBoletasCorreo',
+        component: EnvioBoletasCorreoComponent
       },
     ])
   ],
