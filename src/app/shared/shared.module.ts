@@ -43,6 +43,9 @@ import { FilterProcedimientosComponent } from './components/filtros/procedimient
 import { EmergenciaComponent } from './components/listas/emergencia/emergencia.component';
 import { ListadoInterconsultaComponent } from './components/listas/emergencia/listado-interconsulta/listado-interconsulta.component';
 import { ContentListadoComponent } from './components/listas/emergencia/listado-interconsulta/content-listado/content-listado.component';
+import { FilterEnvioCorreosComponent } from './components/filtros/envio-correos/envio-correos.component';
+import { EnvioBoletasComponent } from './components/envio-correos/envio-boletas/envio-boletas.component';
+import { EnvioCorreosComponent } from './components/envio-correos/envio-correos.component';
 
 
 @NgModule({
@@ -84,6 +87,9 @@ import { ContentListadoComponent } from './components/listas/emergencia/listado-
     EmergenciaComponent,
     ListadoInterconsultaComponent,
     ContentListadoComponent,
+    FilterEnvioCorreosComponent,
+    EnvioBoletasComponent,
+    EnvioCorreosComponent
   ],
   imports: [
     AgGridModule.withComponents([LinkRendererComponent]),
@@ -131,6 +137,8 @@ import { ContentListadoComponent } from './components/listas/emergencia/listado-
     EmergenciaComponent,
     ListadoInterconsultaComponent,
     ContentListadoComponent,
+    FilterEnvioCorreosComponent,
+    EnvioCorreosComponent,
   ],
   providers: [NgbNav],
   // bootstrap: [ResumenColaboradoresComponent],

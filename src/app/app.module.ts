@@ -125,6 +125,7 @@ import { LinkRendererComponent } from './shared/components/renderer/link-rendere
 import { RowDetalleComponent } from './modals/jpric/row-detalle/row-detalle.component';
 
 import { ResumenColaboradoresComponent } from './shared/components/dashboards/resumen-colaboradores/resumen-colaboradores.component';
+import { BuscarColaboradorComponent } from './modals/rrhh/buscar-colaborador/buscar-colaborador.component';
 registerLocaleData(localePe);
 // import { CuotasProgramasSaludComponent } from './pages/comercial/ventas/cuotas-programas-salud/cuotas-programas-salud.component';
 // import { BsDatepickerModule, BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
@@ -213,6 +214,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     AltaHospitalariaComponent,
     LinkRendererComponent,
     RowDetalleComponent,
+    BuscarColaboradorComponent,
   ],
   imports: [
     BrowserModule,
