@@ -34,15 +34,12 @@ export class TblDetExamenesRealizadosComponent implements OnInit {
   }
 
   public filtrarDatos(nombreExamen: string): void {
-    console.log('filtrando', this.data)
     if (nombreExamen == 'todo') {
-      console.log('TODO!!!')
       this.lstGrupoDeExamen = this.data;
       return;
     }
-    
+
     this.lstGrupoDeExamen = this.data.filter(valor => nombreExamen == valor.id);
-    console.log('fin filtrando', this.lstGrupoDeExamen)
   }
 
   public copyTableToClipboard() {
