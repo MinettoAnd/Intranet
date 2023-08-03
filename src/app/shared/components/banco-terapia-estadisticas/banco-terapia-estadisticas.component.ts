@@ -204,6 +204,9 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
   private rowClassRules;
   action: boolean = false;
   @Input() area: string;
+
+  public lstDeExamenes: Array<any> = [];
+
   constructor(private tableApiservice: ImagenesService, private exportService: ExportService, private _cnp:CustomNumberPipe,
     private _cp: CurrencyPipe, private _phone: PhonePipe, private _ndp:NumberDecimalPipe, private _pp:PorcentajePipe, private modalService: NgbModal) {
     this.page.pageNumber = 0;
@@ -723,7 +726,8 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
           this.data = response.data ? response.data : [];
           this.title = this.data.titulo;
 
-  
+          this.asignarLstDeExamenes(this.data.tabla_examen_lista);
+
           // // this.columns = this.data.cabeceras_ingresos_TPac;
           // // this.rows = this.data.tabla_ingresos_TPac;
           // // // this.temp = this.rows;
@@ -1041,6 +1045,7 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
           this.columns12 = this.data.cabecera_anual_empresa;
           this.rows12 = this.data.tabla_anual_empresa;
           this.barChartLabels2 = [];
+
           this.columns13 = this.data.cabecera_diario_sede;
           this.columns13.map(item =>{
             if(item.prop !== 'Campo' && item.prop !== 'total' ){
@@ -1939,6 +1944,14 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
     partesNumero[0] = partesNumero[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   
     return partesNumero.join('.');
+  }
+
+  private asignarLstDeExamenes(data: Array<any>): void {
+    const tmpData: Set<any> = new Set();
+
+    data.forEach(valor => tmpData.add(valor.idServicio_Nombre));
+
+    this.lstDeExamenes = Array.from(tmpData);
   }
 }
 
