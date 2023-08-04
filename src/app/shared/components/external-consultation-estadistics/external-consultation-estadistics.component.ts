@@ -37,7 +37,7 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
   porcSistema: number;
   porcAplicativo: number;
 
-  public uptdGrafico: any = {
+  public uptdChartsTabGrafico: any = {
     'chart1': true,
     'chart2': true,
   };
@@ -47,8 +47,8 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
   @ViewChild("chart1", { static: false }) set content1 (
     content: ElementRef
   ) {
-    if (this.uptdGrafico.chart1 && content) {
-      this.uptdGrafico.chart1 = false;
+    if (this.uptdChartsTabGrafico.chart1 && content) {
+      this.uptdChartsTabGrafico.chart1 = false;
       // this.chart1Canvas = content;
       this.removeData(this.grafico1); //soluciona la superposición de datos
       this.grafico1 = this.getBarChart(
@@ -70,8 +70,8 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
   @ViewChild("chart2", { static: false }) set content2 (
     content: ElementRef
   ) {
-    if (this.uptdGrafico.chart2 && content) {
-      this.uptdGrafico.chart2 = false;
+    if (this.uptdChartsTabGrafico.chart2 && content) {
+      this.uptdChartsTabGrafico.chart2 = false;
       this.removeData(this.grafico2);
       this.grafico2 = this.getPieChart(
         this.chartLabels2,
@@ -314,8 +314,8 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
     // this.setPage({ offset: 0 });
   }
   filter() {
-    this.uptdGrafico.chart1 = true;
-    this.uptdGrafico.chart2 = true;
+    this.uptdChartsTabGrafico.chart1 = true;
+    this.uptdChartsTabGrafico.chart2 = true;
     this.action = true;
     this.selectedOptionGraph1 = true;
     console.log('grafico 1 existe', this.grafico1)
@@ -1534,4 +1534,9 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
         return `with: ${reason}`;
       }
     }
+
+  public setValUptdChartsTabGrafico(boolCh1, boolCh2): void {
+    this.uptdChartsTabGrafico.chart1 = boolCh1;
+    this.uptdChartsTabGrafico.chart2 = boolCh2;
+  }
 }

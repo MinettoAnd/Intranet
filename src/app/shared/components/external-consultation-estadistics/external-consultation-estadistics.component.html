@@ -94,7 +94,7 @@
                     </div>
                     </form>
                     <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs" style="justify-content: end;">
-                        <li [ngbNavItem]="1">
+                        <li [ngbNavItem]="1" (click)="setValUptdChartsTabGrafico(true, true)">
                             <a ngbNavLink>Gráfico</a>
                             <ng-template ngbNavContent>
                                 <div class="card atencionesConsultaExterna" *ngIf="action">
