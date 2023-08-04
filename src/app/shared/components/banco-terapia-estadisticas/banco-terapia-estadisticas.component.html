@@ -768,7 +768,7 @@
                                             <div #collapse9="ngbCollapse" [(ngbCollapse)]="isCollapsed9">
                                                 <div *ngIf="rows9">
                                                     <div class="row" style="align-items: center;justify-content: space-between;">
-                                                        <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
+                                                        <ul class="list-group list-group-horizontal list-group-flush col-lg-6" style="flex-wrap: wrap;">
                                                             <li class="list-group-item border-0 pl-0">
                                                                 <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(9)">
                                                                     <i class="fa fa-external-link"></i>
@@ -793,7 +793,16 @@
                                                             </li>
                                                             <!--  -->
                                                         </ul>
-                                                    </div>
+                                                        
+                                                            <div *ngFor="let checkBoxesOp of checkBoxesOps1; let i = index" class="col-lg-1 checkbox" >
+                                                                <div *ngIf="isTable9">
+                                                                    <input type="checkbox" id="{{checkBoxesOp.id}}"
+                                                                    [checked]="checkBoxesOps1[i].value"
+                                                                    (click)="selection(checkBoxesOp, checkBoxesOp.id, 1);"/>
+                                                                    <label for="{{checkBoxesOp.id}}"><span>{{checkBoxesOp.label}}</span></label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     <!--  -->
                                                     <div class="card-body" *ngIf="isGrafico1">
                                                         <loading *ngIf="isLoading1">{{ isLoading1 }}</loading>
@@ -803,14 +812,15 @@
                                                         </div>
                                                     </div>
                                                     <!--  -->
-                                                    <ngx-datatable *ngIf="isTable9" #myTable9 class="bootstrap table table-striped " id="datatablele" [columns]="columns9" [rows]="rows9" [columnMode]="ColumnMode.flex" [headerHeight]="50" [rowHeight]="$any('auto')" [scrollbarH]="true" (page)="setPage($event)" [summaryRow]="enableSummary"
+                                                    <ngx-datatable *ngIf="isTable9" #myTable9 class="bootstrap table table-striped " id="datatablele" [columns]="columns9" [rows]="rows9filtered" [columnMode]="ColumnMode.flex" [headerHeight]="50" [rowHeight]="$any('auto')" [scrollbarH]="true" (page)="setPage($event)" [summaryRow]="enableSummary"
                                                     [summaryPosition]="summaryPosition"
                                                     [summaryHeight]="35">
                                                         <ngx-datatable-column [headerClass]="column.headerClass" [cellClass]="column.cellClass" [flexGrow]="1" [minWidth]="90" [pipe]="column.pipe" [summaryFunc]="column.prop == 'Campo' ? summaryNull:summaryForAmount" *ngFor="let column of columns9; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                             <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
                                                                 <div>
                                                                     <span  *ngIf="column.prop === 'Campo'">{{value }}</span>
-                                                                    <span  *ngIf="column.prop !== 'Campo'">{{value  | currency }}</span>
+                                                                    <span  *ngIf="column.prop !== 'Campo' && row.solesCantidad === 'soles'">{{value  | currency }}</span>
+                                                                    <span  *ngIf="column.prop !== 'Campo' && row.solesCantidad === 'cantidad'">{{value | number: '1.0-0' }}</span>
                                                                 <!-- <span [ngClass]="{'row-paddin': row.tipoPacienteNombre.includes('Tarjeta') || row.tipoPacienteNombre.includes('Contado') || row.tipoPacienteNombre.includes('Credito') || row.tipoPacienteNombre.includes('EPS') || row.tipoPacienteNombre.includes('SCTR') || row.tipoPacienteNombre.includes('Seguros') || row.tipoPacienteNombre.includes('SOAT') || row.tipoPacienteNombre.includes('CAMPAÑA') || row.tipoPacienteNombre.includes('Institucional') || row.tipoPacienteNombre.includes('Madre Niño') || row.tipoPacienteNombre.includes('No Registrado') || row.tipoPacienteNombre.includes('Privado') }" *ngIf="column.prop == 'tipoPacienteNombre'">{{value}}</span>
                                                                 <span *ngIf="column.prop !== 'tipoPacienteNombre'">{{value  | currency }}</span> -->
                                                                 </div>
@@ -847,7 +857,7 @@
                                             <div #collapse10="ngbCollapse" [(ngbCollapse)]="isCollapsed10">
                                                 <div *ngIf="rows10">
                                                     <div class="row" style="align-items: center;justify-content: space-between;">
-                                                        <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
+                                                        <ul class="list-group list-group-horizontal list-group-flush col-lg-6" style="flex-wrap: wrap;">
                                                             <li class="list-group-item border-0 pl-0">
                                                                 <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(10)">
                                                                     <i class="fa fa-external-link"></i>
@@ -872,6 +882,16 @@
                                                             </li>
                                                             <!--  -->
                                                         </ul>
+                                                        
+                                                        <div *ngFor="let checkBoxesOp of checkBoxesOps2; let i = index" class="col-lg-1 checkbox" >
+                                                            <div *ngIf="isTable10">
+                                                                <input type="checkbox" id="{{checkBoxesOp.id}}"
+                                                                [checked]="checkBoxesOps2[i].value"
+                                                                (click)="selection(checkBoxesOp, checkBoxesOp.id, 2);"/>
+                                                                <label for="{{checkBoxesOp.id}}"><span>{{checkBoxesOp.label}}</span></label>
+                                                            </div>
+                                                            
+                                                        </div>
                                                     </div>
                                                     <!--  -->
                                                     <div class="card-body" *ngIf="isGrafico2">
@@ -882,14 +902,15 @@
                                                         </div>
                                                     </div>
                                                     <!--  -->
-                                                    <ngx-datatable *ngIf="isTable10" #myTable10 class="bootstrap table table-striped " id="datatablele" [columns]="columns10" [rows]="rows10" [columnMode]="ColumnMode.flex" [headerHeight]="50" [rowHeight]="$any('auto')" [scrollbarH]="true" (page)="setPage($event)" [summaryRow]="enableSummary"
+                                                    <ngx-datatable *ngIf="isTable10" #myTable10 class="bootstrap table table-striped " id="datatablele" [columns]="columns10" [rows]="rows10filtered" [columnMode]="ColumnMode.flex" [headerHeight]="50" [rowHeight]="$any('auto')" [scrollbarH]="true" (page)="setPage($event)" [summaryRow]="enableSummary"
                                                     [summaryPosition]="summaryPosition"
                                                     [summaryHeight]="35">
                                                         <ngx-datatable-column [headerClass]="column.headerClass" [cellClass]="column.cellClass" [flexGrow]="1" [minWidth]="90" [summaryFunc]="column.prop == 'Campo' ? summaryNull:summaryForAmount" *ngFor="let column of columns10; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                             <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
                                                                 <div>
                                                                     <span  *ngIf="column.prop === 'Campo'">{{value }}</span>
-                                                                    <span  *ngIf="column.prop !== 'Campo'">{{value  | currency }}</span>
+                                                                    <span  *ngIf="column.prop !== 'Campo' && row.solesCantidad === 'soles'">{{value  | currency }}</span>
+                                                                    <span  *ngIf="column.prop !== 'Campo' && row.solesCantidad === 'cantidad'">{{value | number: '1.0-0' }}</span>
                                                                 </div>
                                                                 <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
                                             <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
@@ -924,7 +945,7 @@
                                             <div #collapse11="ngbCollapse" [(ngbCollapse)]="isCollapsed11">
                                                 <div *ngIf="rows11">
                                                     <div class="row" style="align-items: center;justify-content: space-between;">
-                                                        <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
+                                                        <ul class="list-group list-group-horizontal list-group-flush col-lg-6" style="flex-wrap: wrap;">
                                                             <li class="list-group-item border-0 pl-0">
                                                                 <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(11)">
                                                                     <i class="fa fa-external-link"></i>
@@ -938,16 +959,23 @@
                                                                 </button>
                                                             </li>
                                                         </ul>
+                                                        <div *ngFor="let checkBoxesOp of checkBoxesOps3; let i = index" class="col-lg-1 checkbox">
+                                                            <input type="checkbox" id="{{checkBoxesOp.id}}"
+                                                            [checked]="checkBoxesOps3[i].value"
+                                                            (click)="selection(checkBoxesOp, checkBoxesOp.id, 3);"/>
+                                                            <label for="{{checkBoxesOp.id}}"><span>{{checkBoxesOp.label}}</span></label>
+                                                        </div>
                                                     </div>
                                                     
-                                                    <ngx-datatable #myTable11 class="bootstrap table table-striped " id="datatablele" [columns]="columns11" [rows]="rows11" [columnMode]="ColumnMode.flex" [headerHeight]="50" [rowHeight]="$any('auto')" [scrollbarH]="true" (page)="setPage($event)" [summaryRow]="enableSummary"
+                                                    <ngx-datatable #myTable11 class="bootstrap table table-striped " id="datatablele" [columns]="columns11" [rows]="rows11filtered" [columnMode]="ColumnMode.flex" [headerHeight]="50" [rowHeight]="$any('auto')" [scrollbarH]="true" (page)="setPage($event)" [summaryRow]="enableSummary"
                                                     [summaryPosition]="summaryPosition"
                                                     [summaryHeight]="35">
                                                         <ngx-datatable-column [headerClass]="column.headerClass" [cellClass]="column.cellClass" [flexGrow]="1" [minWidth]="90" [summaryFunc]="column.prop == 'Campo' ? summaryNull:summaryForAmount" *ngFor="let column of columns11; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                             <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
                                                                 <div>
                                                                     <span  *ngIf="column.prop === 'Campo'">{{value }}</span>
-                                                                    <span  *ngIf="column.prop !== 'Campo'">{{value  | currency }}</span>
+                                                                    <span  *ngIf="column.prop !== 'Campo' && row.solesCantidad === 'soles'">{{value  | currency }}</span>
+                                                                    <span  *ngIf="column.prop !== 'Campo' && row.solesCantidad === 'cantidad'">{{value | number: '1.0-0' }}</span>
                                                                 </div>
                                                                 <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
                                             <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
@@ -982,7 +1010,7 @@
                                             <div #collapse12="ngbCollapse" [(ngbCollapse)]="isCollapsed12">
                                                 <div *ngIf="rows12">
                                                     <div class="row" style="align-items: center;justify-content: space-between;">
-                                                        <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
+                                                        <ul class="list-group list-group-horizontal list-group-flush col-lg-6" style="flex-wrap: wrap;">
                                                             <li class="list-group-item border-0 pl-0">
                                                                 <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(12)">
                                                                     <i class="fa fa-external-link"></i>
@@ -996,16 +1024,23 @@
                                                                 </button>
                                                             </li>
                                                         </ul>
+                                                        <div *ngFor="let checkBoxesOp of checkBoxesOps4; let i = index" class="col-lg-1 checkbox">
+                                                            <input type="checkbox" id="{{checkBoxesOp.id}}"
+                                                            [checked]="checkBoxesOps4[i].value"
+                                                            (click)="selection(checkBoxesOp, checkBoxesOp.id, 4);"/>
+                                                            <label for="{{checkBoxesOp.id}}"><span>{{checkBoxesOp.label}}</span></label>
+                                                        </div>
                                                     </div>
                                                     
-                                                    <ngx-datatable #myTable12 class="bootstrap table table-striped " id="datatablele" [columns]="columns12" [rows]="rows12" [columnMode]="ColumnMode.flex" [headerHeight]="50" [rowHeight]="$any('auto')" [scrollbarH]="true" (page)="setPage($event)" [summaryRow]="enableSummary"
+                                                    <ngx-datatable #myTable12 class="bootstrap table table-striped " id="datatablele" [columns]="columns12" [rows]="rows12filtered" [columnMode]="ColumnMode.flex" [headerHeight]="50" [rowHeight]="$any('auto')" [scrollbarH]="true" (page)="setPage($event)" [summaryRow]="enableSummary"
                                                     [summaryPosition]="summaryPosition"
                                                     [summaryHeight]="35">
                                                         <ngx-datatable-column [headerClass]="column.headerClass" [cellClass]="column.cellClass" [flexGrow]="1" [minWidth]="90" [summaryFunc]="column.prop == 'Campo' ? summaryNull:summaryForAmount" *ngFor="let column of columns12; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                             <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
                                                                 <div>
                                                                     <span  *ngIf="column.prop === 'Campo'">{{value }}</span>
-                                                                    <span  *ngIf="column.prop !== 'Campo'">{{value  | currency }}</span>
+                                                                    <span  *ngIf="column.prop !== 'Campo' && row.solesCantidad === 'soles'">{{value  | currency }}</span>
+                                                                    <span  *ngIf="column.prop !== 'Campo' && row.solesCantidad === 'cantidad'">{{value | number: '1.0-0' }}</span>
                                                                 </div>
                                                                 <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
                                             <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>

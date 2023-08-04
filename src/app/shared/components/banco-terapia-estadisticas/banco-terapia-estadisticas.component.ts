@@ -53,11 +53,13 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
   barChartData1 = [];
   barChartData2 = [];
   barChartData3 = [];
+  barChartData3Total = [];
   barChartData4 = [];
 
   barChartData5 = [];
   barChartData6 = [];
   barChartData7 = [];
+  barChartData7Total = [];
   barChartData8 = [];
 
   barChartData9 = [];
@@ -75,8 +77,8 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
     if (content) {
       // initially setter gets called with undefined
       this.baseChart = content;
-      this.grafico1 = this.getBarChart1(this.barChartLabels1, this.barChartData1, this.barChartData2,this.barChartData3,'', '','chart-1', 'Lima', 'Chorrillos','Surco', 'line');
-      this.grafico2 = this.getBarChart(this.barChartLabels1, this.barChartData4, this.barChartData5,this.barChartData6,this.barChartData7,'', '','chart-2', 'Cia. Seguros/Convenios', 'Madre Niño','Institucional/Privado','Programas de Salud','line');
+      this.grafico1 = this.getBarChartA(this.barChartLabels1, this.barChartData1, this.barChartData2,this.barChartData3,this.barChartData3Total,'', '','chart-1', 'Lima', 'Chorrillos','Surco','Total', 'line');
+      this.grafico2 = this.getBarChartB(this.barChartLabels1, this.barChartData4, this.barChartData5,this.barChartData6,this.barChartData7,this.barChartData7Total,'', '','chart-2', 'Cia. Seguros/Convenios', 'Madre Niño','Institucional/Privado','Programas de Salud','Total','line');
       this.grafico3 = this.getBarChart1(this.barChartLabels2, this.barChartData8, this.barChartData9,this.barChartData10,'', '','chart-3', 'Lima', 'Chorrillos','Surco','line');
       this.grafico4 = this.getBarChart(this.barChartLabels2,this.barChartData11, this.barChartData12, this.barChartData13,this.barChartData14,'', '','chart-4', 'Cia. Seguros/Convenios', 'Madre Niño','Institucional/Privado','Programas de Salud', 'line');
   } }
@@ -119,7 +121,10 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
   rows2: any;
   rows3: any;
   rows4: any;
-  rows4filtered = [];
+  rows9filtered = [];
+  rows10filtered = [];
+  rows11filtered = [];
+  rows12filtered = [];
   rows5: any;
   rows6: any;
   rows7: any;
@@ -201,6 +206,62 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
   isLoading2 = false;
   isLoading3 = false;
   isLoading4 = false;
+  checkBoxesOps1: any[] = [
+    {
+      id: '1a',
+      label: 'En Montos',
+      template: null,
+      value: true
+    },
+    {
+      id: '2a',
+      label: 'En Cantidad',
+      template: null,
+      value: false
+    }
+  ];
+  checkBoxesOps2: any[] = [
+    {
+      id: '1b',
+      label: 'En Montos',
+      template: null,
+      value: true
+    },
+    {
+      id: '2b',
+      label: 'En Cantidad',
+      template: null,
+      value: false
+    }
+  ];
+  checkBoxesOps3: any[] = [
+    {
+      id: '1c',
+      label: 'En Montos',
+      template: null,
+      value: true
+    },
+    {
+      id: '2c',
+      label: 'En Cantidad',
+      template: null,
+      value: false
+    }
+  ];
+  checkBoxesOps4: any[] = [
+    {
+      id: '1d',
+      label: 'En Montos',
+      template: null,
+      value: true
+    },
+    {
+      id: '2d',
+      label: 'En Cantidad',
+      template: null,
+      value: false
+    }
+  ];
   private rowClassRules;
   action: boolean = false;
   @Input() area: string;
@@ -245,6 +306,68 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
   
     // this.setPage({ offset: 0 });
   }
+  selection(option, id: string, tabla) {
+    console.log('=>',this.rows6)
+    if (tabla === 1){
+      this.checkBoxesOps1.forEach(x => {
+        if (x.id === id) {
+          x.value = true;
+          if(id === '1a'){
+            this.rows9filtered = this.rows9.filter(item => item.solesCantidad === 'soles');
+          }else if(id === '2a'){
+            console.log(255, id)
+            this.rows9filtered = this.rows9.filter(item => item.solesCantidad === 'cantidad');
+          }
+        }else{
+          x.value = false;
+        }
+      });
+    }else if (tabla === 2){
+      
+      this.checkBoxesOps2.forEach(x => {
+        if (x.id === id) {
+          x.value = true;
+          if(id === '1b'){
+            this.rows10filtered = this.rows10.filter(item => item.solesCantidad === 'soles');
+          }else if(id === '2b'){
+            console.log(255, id)
+            this.rows10filtered = this.rows10.filter(item => item.solesCantidad === 'cantidad');
+          }
+        }else{
+          x.value = false;
+        }
+      });
+    }else if (tabla === 3){
+      this.checkBoxesOps3.forEach(x => {
+        if (x.id === id) {
+          x.value = true;
+          if(id === '1c'){
+            this.rows11filtered = this.rows11.filter(item => item.solesCantidad === 'soles');
+          }else if(id === '2c'){
+            console.log(255, id)
+            this.rows11filtered = this.rows11.filter(item => item.solesCantidad === 'cantidad');
+          }
+        }else{
+          x.value = false;
+        }
+      });
+    }else if (tabla === 4){
+      
+      this.checkBoxesOps4.forEach(x => {
+        if (x.id === id) {
+          x.value = true;
+          if(id === '1d'){
+            this.rows12filtered = this.rows12.filter(item => item.solesCantidad === 'soles');
+          }else if(id === '2d'){
+            console.log(255, id)
+            this.rows12filtered = this.rows12.filter(item => item.solesCantidad === 'cantidad');
+          }
+        }else{
+          x.value = false;
+        }
+      });
+    }
+  }
   getRowClass(row) {
     return {
       'totals': row.Campo.includes('TOTAL'), 'sub-totals': row.Campo === 'LIMA' || row.Campo === 'CHORRILLOS' || row.Campo === 'SURCO' 
@@ -285,8 +408,9 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
             barPercentage: 0.8,
             categoryPercentage: 1,
             label: title,
-            // borderColor: 'rgba(99, 255, 132, 1)',
-            borderWidth: 1,
+            borderColor: '#28a74559',
+            borderWidth: 4,
+            fill: false,
             data: chartData1,
             backgroundColor: '#28a74559'
             // backgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#adb5bd','#ffc107', '#28a745', '#6610f2','#20c997'],
@@ -294,8 +418,9 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
           },
           {
             label: title2,
-            // borderColor: 'rgba(99, 255, 132, 1)',
-            borderWidth: 1,
+            borderColor: '#6610f259',
+            borderWidth: 4,
+            fill: false,
             data: chartData2,
             backgroundColor     : '#6610f259',
             // borderColor         : 'rgba(33,104,163,1)',
@@ -306,8 +431,9 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
           },
           {
             label: title3,
-            // borderColor: 'rgba(99, 255, 132, 1)',
-            borderWidth: 1,
+            borderColor: '#ffa40859',
+            borderWidth: 4,
+            fill: false,
             data: chartData3,
             backgroundColor: '#ffa40859'
             // backgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#adb5bd','#ffc107', '#28a745', '#6610f2','#20c997'],
@@ -315,8 +441,9 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
           },
           {
             label: title4,
-            // borderColor: 'rgba(99, 255, 132, 1)',
-            borderWidth: 1,
+            borderColor: '#eb445a59',
+            borderWidth: 4,
+            fill: false,
             data: chartData4,
             backgroundColor: '#eb445a59'
             // backgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#adb5bd','#ffc107', '#28a745', '#6610f2','#20c997'],
@@ -477,8 +604,9 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
           barPercentage: 0.8,
           categoryPercentage: 1,
           label: title,
-          // borderColor: 'rgba(99, 255, 132, 1)',
-          borderWidth: 1,
+          borderColor: '#28a74559',
+          borderWidth: 4,
+          fill: false,
           data: chartData1,
           backgroundColor: '#28a74559'
           // backgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#adb5bd','#ffc107', '#28a745', '#6610f2','#20c997'],
@@ -486,8 +614,9 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
         },
         {
           label: title2,
-          // borderColor: 'rgba(99, 255, 132, 1)',
-          borderWidth: 1,
+          borderColor: '#6610f259',
+          borderWidth: 4,
+          fill: false,
           data: chartData2,
           backgroundColor     : '#6610f259',
           // borderColor         : 'rgba(33,104,163,1)',
@@ -498,8 +627,9 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
         },
         {
           label: title3,
-          // borderColor: 'rgba(99, 255, 132, 1)',
-          borderWidth: 1,
+          borderColor: '#ffa40859',
+          borderWidth: 4,
+          fill: false,
           data: chartData3,
           backgroundColor: '#ffa40859'
           // backgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#adb5bd','#ffc107', '#28a745', '#6610f2','#20c997'],
@@ -660,6 +790,400 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
   return this.getChart(chartNum, typeChart, data, options);
   
 }
+getBarChartA(chartLabels1, chartData1, chartData2,chartData3,chartData4,scaleLabel1,scaleLabel2, chartNum, title, title2, title3, title4,typeChart) {
+console.log('grafico',chartData4)
+  const data = {
+    labels: chartLabels1,
+    datasets: [
+      {
+        barPercentage: 0.8,
+        categoryPercentage: 1,
+        label: title,
+        borderColor: '#28a74559',
+        borderWidth: 4,
+        fill: false,
+        data: chartData1,
+        backgroundColor: '#28a74559'
+        // backgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#adb5bd','#ffc107', '#28a745', '#6610f2','#20c997'],
+        // hoverBackgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14','#adb5bd', '#ffc107', '#28a745', '#6610f2', '#20c997']
+      },
+      {
+        label: title2,
+        borderColor: '#6610f259',
+        borderWidth: 4,
+        fill: false,
+        data: chartData2,
+        backgroundColor     : '#6610f259',
+        // borderColor         : 'rgba(33,104,163,1)',
+        // backgroundColor: 'rgb(255, 164, 8, 0.7)',
+        // backgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#adb5bd','#ffc107', '#28a745', '#6610f2','#20c997'],
+        // hoverBackgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14','#adb5bd', '#ffc107', '#28a745', '#6610f2', '#20c997']
+        type                : 'line',
+      },
+      {
+        label: title3,
+        borderColor: '#ffa40859',
+        borderWidth: 4,
+        fill: false,
+        data: chartData3,
+        backgroundColor: '#ffa40859'
+        // backgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#adb5bd','#ffc107', '#28a745', '#6610f2','#20c997'],
+        // hoverBackgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14','#adb5bd', '#ffc107', '#28a745', '#6610f2', '#20c997']
+      },
+      {
+        label: title4,
+        // borderColor: 'rgba(99, 255, 132, 1)',
+        borderWidth: 1,
+        data: chartData4,
+        backgroundColor: '#20c99735',
+        // backgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#adb5bd','#ffc107', '#28a745', '#6610f2','#20c997'],
+        // hoverBackgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14','#adb5bd', '#ffc107', '#28a745', '#6610f2', '#20c997']
+        type                : 'bar',
+      },
+      // {
+      //   label: title5,
+      //   // borderColor: 'rgba(99, 255, 132, 1)',
+      //   borderWidth: 1,
+      //   data: chartData5,
+      //   backgroundColor: '#eb445a59'
+      //   // backgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#adb5bd','#ffc107', '#28a745', '#6610f2','#20c997'],
+      //   // hoverBackgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14','#adb5bd', '#ffc107', '#28a745', '#6610f2', '#20c997']
+      // }
+    ]
+  };
+
+const options = {
+  // callbacks: {
+  //   label: function (t, d) {
+  //     var xLabel = d.datasets[t.datasetIndex].label;
+  //     var yLabel = t.yLabel >= 1000 ? 'S/.' + t.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : '$' + t.yLabel;
+  //     return xLabel + ': ' + yLabel;
+  //   }
+  // },
+  responsive: true,
+  // We use these empty structures as placeholders for dynamic theming.
+  // scales: {
+  //   yAxes: [{
+  //     ticks: {
+  //       beginAtZero: true,
+  //       callback: function (value, index, values) {
+  //         // console.log(444,Number.isInteger(value), value,index,values);
+  //         if (chartNum = 'chart-3'){
+  //           return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  //         }else{
+  //           if (parseInt(value) >= 1000) {
+  //                           return 'S/.' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  //           } else { return 'S/.' + value; }
+  //         }
+          
+  //       }
+  //     }
+  //   }]
+  // },
+  // legend: {
+  //   display: false
+  // },
+  scales: {
+    xAxes: [{
+      scaleLabel: {
+        display: true,
+        labelString: scaleLabel1,
+        fontSize: 18,
+        fontColor: '#000',
+      }
+    }],
+    yAxes: [{
+      scaleLabel: {
+        display: true,
+        labelString: scaleLabel2,
+        fontSize: 18,
+        fontColor: '#000',
+      },
+      ticks: {
+        beginAtZero: true,
+        // max: 300,
+        // min: 0
+      }
+    }],
+  },
+  plugins: {
+    datalabels: {
+      
+      /* anchor puede ser "start", "center" o "end" */
+      anchor: 'end',
+      backgroundColor: function(context) {
+        return context.dataset.backgroundColor;
+      },
+      borderRadius: 4,
+      clip: true,
+      color: 'white',
+      font: {
+        weight: 'bold'
+      },
+      // formatter: function(value, context) {
+      //   let sum = 0;
+        
+      //   let dataArr = context.chart.data.datasets[context.datasetIndex].data;
+          
+      //   dataArr.map((data) => {
+      //     return sum += parseFloat(data);
+      //   });
+      //   // console.log(292,value , sum );
+      //   if (sum > 0 ){
+      //     return ((value * 100) / sum).toFixed(2) + '%';
+      //   }else{
+      //     return (0 + '%');
+      //   }
+        
+      // },
+      /* Podemos modificar el texto a mostrar */
+      formatter: function (dato, ctx) {
+        return Math.round(dato * 100) / 100; 
+      },
+      // formatter: (dato) => ((dato * 100) / total).toFixed(2) + '%',
+      // formatter: function (value, ctx) {
+      //   return ((value * 100) / this.total(ctx)).toFixed(2) + '%';
+      // },
+      // formatter: (dato) => Math.floor((dato / totales) * 100) + '%',
+      /* Color del texto */
+      // color: '#ffffff',
+      // /* Formato de la fuente */
+      // font: {
+      //   // family: '"Times New Roman", Times, serif',
+      //   size: '11',
+      //   weight: 'bold',
+      // },
+      /* Formato de la caja contenedora */
+      // padding: '4',
+      // borderWidth: 2,
+      // borderColor: 'darkblue',
+      // borderRadius: 8,
+      // backgroundColor: 'lightblue'
+    }
+  },
+  tooltips: {
+    enabled: true,
+    callbacks: {
+      label: function(tooltipItem, data) {
+          var label = data.datasets[tooltipItem.datasetIndex].label || '';
+        
+          if (label) {
+              label += ': ';
+          }
+          label += Math.round(tooltipItem.yLabel * 100) / 100;
+          // tooltipItem.xLabel = 'Día: ' + tooltipItem.xLabel + '   ' ;
+          // tooltipItem.label = 'Día: ' + tooltipItem.Label + '   ' ;
+          
+          return label;
+      },
+      title: function(tooltipItem, data) {
+       var title = 'Mes: ' + tooltipItem[0].xLabel + '   ' ;
+        return title;
+    }
+    }
+  }
+};
+return this.getChart(chartNum, typeChart, data, options);
+
+}
+getBarChartB(chartLabels1, chartData1, chartData2,chartData3,chartData4,chartData5,scaleLabel1,scaleLabel2, chartNum, title, title2, title3, title4,title5,typeChart) {
+  console.log('grafico',chartData4)
+    const data = {
+      labels: chartLabels1,
+      datasets: [
+        {
+          barPercentage: 0.8,
+          categoryPercentage: 1,
+          label: title,
+          borderColor: '#28a74559',
+          borderWidth: 4,
+          fill: false,
+          data: chartData1,
+          backgroundColor: '#28a74559'
+          // backgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#adb5bd','#ffc107', '#28a745', '#6610f2','#20c997'],
+          // hoverBackgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14','#adb5bd', '#ffc107', '#28a745', '#6610f2', '#20c997']
+        },
+        {
+          label: title2,
+          borderColor: '#6610f259',
+          borderWidth: 4,
+          fill: false,
+          data: chartData2,
+          backgroundColor     : '#6610f259',
+          // borderColor         : 'rgba(33,104,163,1)',
+          // backgroundColor: 'rgb(255, 164, 8, 0.7)',
+          // backgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#adb5bd','#ffc107', '#28a745', '#6610f2','#20c997'],
+          // hoverBackgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14','#adb5bd', '#ffc107', '#28a745', '#6610f2', '#20c997']
+          type                : 'line',
+        },
+        {
+          label: title3,
+          borderColor: '#ffa40859',
+          borderWidth: 4,
+          fill: false,
+          data: chartData3,
+          backgroundColor: '#ffa40859'
+          // backgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#adb5bd','#ffc107', '#28a745', '#6610f2','#20c997'],
+          // hoverBackgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14','#adb5bd', '#ffc107', '#28a745', '#6610f2', '#20c997']
+        },
+        {
+          label: title4,
+          borderColor: '#eb445a59',
+          borderWidth: 4,
+          fill: false,
+          data: chartData4,
+          backgroundColor: '#20c99759',
+          // backgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#adb5bd','#ffc107', '#28a745', '#6610f2','#20c997'],
+          // hoverBackgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14','#adb5bd', '#ffc107', '#28a745', '#6610f2', '#20c997']
+          
+        },
+        {
+          label: title5,
+          // borderColor: 'rgba(99, 255, 132, 1)',
+          borderWidth: 1,
+          data: chartData5,
+          backgroundColor: '#eb445a35',
+          // backgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#adb5bd','#ffc107', '#28a745', '#6610f2','#20c997'],
+          // hoverBackgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14','#adb5bd', '#ffc107', '#28a745', '#6610f2', '#20c997']
+          type                : 'bar',
+        }
+      ]
+    };
+  
+  const options = {
+    // callbacks: {
+    //   label: function (t, d) {
+    //     var xLabel = d.datasets[t.datasetIndex].label;
+    //     var yLabel = t.yLabel >= 1000 ? 'S/.' + t.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : '$' + t.yLabel;
+    //     return xLabel + ': ' + yLabel;
+    //   }
+    // },
+    responsive: true,
+    // We use these empty structures as placeholders for dynamic theming.
+    // scales: {
+    //   yAxes: [{
+    //     ticks: {
+    //       beginAtZero: true,
+    //       callback: function (value, index, values) {
+    //         // console.log(444,Number.isInteger(value), value,index,values);
+    //         if (chartNum = 'chart-3'){
+    //           return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    //         }else{
+    //           if (parseInt(value) >= 1000) {
+    //                           return 'S/.' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    //           } else { return 'S/.' + value; }
+    //         }
+            
+    //       }
+    //     }
+    //   }]
+    // },
+    // legend: {
+    //   display: false
+    // },
+    scales: {
+      xAxes: [{
+        scaleLabel: {
+          display: true,
+          labelString: scaleLabel1,
+          fontSize: 18,
+          fontColor: '#000',
+        }
+      }],
+      yAxes: [{
+        scaleLabel: {
+          display: true,
+          labelString: scaleLabel2,
+          fontSize: 18,
+          fontColor: '#000',
+        },
+        ticks: {
+          beginAtZero: true,
+          // max: 300,
+          // min: 0
+        }
+      }],
+    },
+    plugins: {
+      datalabels: {
+        
+        /* anchor puede ser "start", "center" o "end" */
+        anchor: 'end',
+        backgroundColor: function(context) {
+          return context.dataset.backgroundColor;
+        },
+        borderRadius: 4,
+        clip: true,
+        color: 'white',
+        font: {
+          weight: 'bold'
+        },
+        // formatter: function(value, context) {
+        //   let sum = 0;
+          
+        //   let dataArr = context.chart.data.datasets[context.datasetIndex].data;
+            
+        //   dataArr.map((data) => {
+        //     return sum += parseFloat(data);
+        //   });
+        //   // console.log(292,value , sum );
+        //   if (sum > 0 ){
+        //     return ((value * 100) / sum).toFixed(2) + '%';
+        //   }else{
+        //     return (0 + '%');
+        //   }
+          
+        // },
+        /* Podemos modificar el texto a mostrar */
+        formatter: function (dato, ctx) {
+          return Math.round(dato * 100) / 100; 
+        },
+        // formatter: (dato) => ((dato * 100) / total).toFixed(2) + '%',
+        // formatter: function (value, ctx) {
+        //   return ((value * 100) / this.total(ctx)).toFixed(2) + '%';
+        // },
+        // formatter: (dato) => Math.floor((dato / totales) * 100) + '%',
+        /* Color del texto */
+        // color: '#ffffff',
+        // /* Formato de la fuente */
+        // font: {
+        //   // family: '"Times New Roman", Times, serif',
+        //   size: '11',
+        //   weight: 'bold',
+        // },
+        /* Formato de la caja contenedora */
+        // padding: '4',
+        // borderWidth: 2,
+        // borderColor: 'darkblue',
+        // borderRadius: 8,
+        // backgroundColor: 'lightblue'
+      }
+    },
+    tooltips: {
+      enabled: true,
+      callbacks: {
+        label: function(tooltipItem, data) {
+            var label = data.datasets[tooltipItem.datasetIndex].label || '';
+          
+            if (label) {
+                label += ': ';
+            }
+            label += Math.round(tooltipItem.yLabel * 100) / 100;
+            // tooltipItem.xLabel = 'Día: ' + tooltipItem.xLabel + '   ' ;
+            // tooltipItem.label = 'Día: ' + tooltipItem.Label + '   ' ;
+            
+            return label;
+        },
+        title: function(tooltipItem, data) {
+         var title = 'Mes: ' + tooltipItem[0].xLabel + '   ' ;
+          return title;
+      }
+      }
+    }
+  };
+  return this.getChart(chartNum, typeChart, data, options);
+  
+  }
   getChart(context, chartType, data, options?) {
     const graph = new Chart(context, {
       data,
@@ -920,10 +1444,36 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
               this.barChartLabels1.push(item.name);
             }
           });
-          console.log(651, this.columns9)
           this.rows9 = this.data.tabla_anual_sede;
+          this.rows9filtered = this.rows9.filter(item => item.solesCantidad === 'soles');
+
+          console.log(651, this.rows9)
+          let aTotalMes1 = 0;
+          let aTotalMes2 = 0;
+          let aTotalMes3 = 0;
+          let aTotalMes4 = 0;
+          let aTotalMes5 = 0;
+          let aTotalMes6 = 0;
+          let aTotalMes7 = 0;
+          let aTotalMes8 = 0;
+          let aTotalMes9 = 0;
+          let aTotalMes10 = 0;
+          let aTotalMes11 = 0;
+          let aTotalMes12 = 0;
           this.rows9.map(item =>{
-            if(item.Campo === 'Lima'){
+            if(item.Campo === 'Lima' && item.solesCantidad === 'soles'){
+              aTotalMes1 += Number(item.mes_01)
+              aTotalMes2 += Number(item.mes_02)
+              aTotalMes3 += Number(item.mes_03)
+              aTotalMes4 += Number(item.mes_04)
+              aTotalMes5 += Number(item.mes_05)
+              aTotalMes6 += Number(item.mes_06)
+              aTotalMes7 += Number(item.mes_07)
+              aTotalMes8 += Number(item.mes_08)
+              aTotalMes9 += Number(item.mes_09)
+              aTotalMes10 += Number(item.mes_10)
+              aTotalMes11 += Number(item.mes_11)
+              aTotalMes12 += Number(item.mes_12)
               this.barChartData1.push(item.mes_01);
               this.barChartData1.push(item.mes_02);
               this.barChartData1.push(item.mes_03);
@@ -936,7 +1486,20 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
               this.barChartData1.push(item.mes_10);
               this.barChartData1.push(item.mes_11);
               this.barChartData1.push(item.mes_12);
-            }else  if(item.Campo === 'Chorrillos'){
+
+            }else  if(item.Campo === 'Chorrillos' && item.solesCantidad === 'soles'){
+              aTotalMes1 += Number(item.mes_01)
+              aTotalMes2 += Number(item.mes_02)
+              aTotalMes3 += Number(item.mes_03)
+              aTotalMes4 += Number(item.mes_04)
+              aTotalMes5 += Number(item.mes_05)
+              aTotalMes6 += Number(item.mes_06)
+              aTotalMes7 += Number(item.mes_07)
+              aTotalMes8 += Number(item.mes_08)
+              aTotalMes9 += Number(item.mes_09)
+              aTotalMes10 += Number(item.mes_10)
+              aTotalMes11 += Number(item.mes_11)
+              aTotalMes12 += Number(item.mes_12)
               this.barChartData2.push(item.mes_01);
               this.barChartData2.push(item.mes_02);
               this.barChartData2.push(item.mes_03);
@@ -949,7 +1512,21 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
               this.barChartData2.push(item.mes_10);
               this.barChartData2.push(item.mes_11);
               this.barChartData2.push(item.mes_12);
-            }else  if(item.Campo === 'Surco'){
+
+
+            }else  if(item.Campo === 'Surco' && item.solesCantidad === 'soles'){
+              aTotalMes1 += Number(item.mes_01)
+              aTotalMes2 += Number(item.mes_02)
+              aTotalMes3 += Number(item.mes_03)
+              aTotalMes4 += Number(item.mes_04)
+              aTotalMes5 += Number(item.mes_05)
+              aTotalMes6 += Number(item.mes_06)
+              aTotalMes7 += Number(item.mes_07)
+              aTotalMes8 += Number(item.mes_08)
+              aTotalMes9 += Number(item.mes_09)
+              aTotalMes10 += Number(item.mes_10)
+              aTotalMes11 += Number(item.mes_11)
+              aTotalMes12 += Number(item.mes_12)
               this.barChartData3.push(item.mes_01);
               this.barChartData3.push(item.mes_02);
               this.barChartData3.push(item.mes_03);
@@ -962,12 +1539,53 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
               this.barChartData3.push(item.mes_10);
               this.barChartData3.push(item.mes_11);
               this.barChartData3.push(item.mes_12);
+
             }
+            // console.log('1340 =>', totalMes1)
+
           })
+          
+          this.barChartData3Total.push(aTotalMes1);
+          this.barChartData3Total.push(aTotalMes2);
+          this.barChartData3Total.push(aTotalMes3);
+          this.barChartData3Total.push(aTotalMes4);
+          this.barChartData3Total.push(aTotalMes5);
+          this.barChartData3Total.push(aTotalMes6);
+          this.barChartData3Total.push(aTotalMes7);
+          this.barChartData3Total.push(aTotalMes8);
+          this.barChartData3Total.push(aTotalMes9);
+          this.barChartData3Total.push(aTotalMes10);
+          this.barChartData3Total.push(aTotalMes11);
+          this.barChartData3Total.push(aTotalMes12);
+          let bTotalMes1 = 0;
+          let bTotalMes2 = 0;
+          let bTotalMes3 = 0;
+          let bTotalMes4 = 0;
+          let bTotalMes5 = 0;
+          let bTotalMes6 = 0;
+          let bTotalMes7 = 0;
+          let bTotalMes8 = 0;
+          let bTotalMes9 = 0;
+          let bTotalMes10 = 0;
+          let bTotalMes11 = 0;
+          let bTotalMes12 = 0;
           this.columns10 = this.data.cabecera_anual_TPacGrupo;
           this.rows10 = this.data.tabla_anual_TPacGrupo;
+          this.rows10filtered = this.rows10.filter(item => item.solesCantidad === 'soles');
           this.rows10.map(item =>{
             if(item.Campo === 'Cia. Seguros/Convenios'){
+              bTotalMes1 += Number(item.mes_01)
+              bTotalMes2 += Number(item.mes_02)
+              bTotalMes3 += Number(item.mes_03)
+              bTotalMes4 += Number(item.mes_04)
+              bTotalMes5 += Number(item.mes_05)
+              bTotalMes6 += Number(item.mes_06)
+              bTotalMes7 += Number(item.mes_07)
+              bTotalMes8 += Number(item.mes_08)
+              bTotalMes9 += Number(item.mes_09)
+              bTotalMes10 += Number(item.mes_10)
+              bTotalMes11 += Number(item.mes_11)
+              bTotalMes12 += Number(item.mes_12)
               this.barChartData4.push(item.mes_01);
               this.barChartData4.push(item.mes_02);
               this.barChartData1.push(item.mes_03);
@@ -981,6 +1599,18 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
               this.barChartData4.push(item.mes_11);
               this.barChartData4.push(item.mes_12);
             }else  if(item.Campo === 'Madre Niño'){
+              bTotalMes1 += Number(item.mes_01)
+              bTotalMes2 += Number(item.mes_02)
+              bTotalMes3 += Number(item.mes_03)
+              bTotalMes4 += Number(item.mes_04)
+              bTotalMes5 += Number(item.mes_05)
+              bTotalMes6 += Number(item.mes_06)
+              bTotalMes7 += Number(item.mes_07)
+              bTotalMes8 += Number(item.mes_08)
+              bTotalMes9 += Number(item.mes_09)
+              bTotalMes10 += Number(item.mes_10)
+              bTotalMes11 += Number(item.mes_11)
+              bTotalMes12 += Number(item.mes_12)
               this.barChartData5.push(item.mes_01);
               this.barChartData5.push(item.mes_02);
               this.barChartData5.push(item.mes_03);
@@ -994,6 +1624,18 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
               this.barChartData5.push(item.mes_11);
               this.barChartData5.push(item.mes_12);
             }else  if(item.Campo === 'Institucional/Privado'){
+              bTotalMes1 += Number(item.mes_01)
+              bTotalMes2 += Number(item.mes_02)
+              bTotalMes3 += Number(item.mes_03)
+              bTotalMes4 += Number(item.mes_04)
+              bTotalMes5 += Number(item.mes_05)
+              bTotalMes6 += Number(item.mes_06)
+              bTotalMes7 += Number(item.mes_07)
+              bTotalMes8 += Number(item.mes_08)
+              bTotalMes9 += Number(item.mes_09)
+              bTotalMes10 += Number(item.mes_10)
+              bTotalMes11 += Number(item.mes_11)
+              bTotalMes12 += Number(item.mes_12)
               this.barChartData6.push(item.mes_01);
               this.barChartData6.push(item.mes_02);
               this.barChartData6.push(item.mes_03);
@@ -1007,6 +1649,18 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
               this.barChartData6.push(item.mes_11);
               this.barChartData6.push(item.mes_12);
             }else  if(item.Campo === 'Programas de Salud'){
+              bTotalMes1 += Number(item.mes_01)
+              bTotalMes2 += Number(item.mes_02)
+              bTotalMes3 += Number(item.mes_03)
+              bTotalMes4 += Number(item.mes_04)
+              bTotalMes5 += Number(item.mes_05)
+              bTotalMes6 += Number(item.mes_06)
+              bTotalMes7 += Number(item.mes_07)
+              bTotalMes8 += Number(item.mes_08)
+              bTotalMes9 += Number(item.mes_09)
+              bTotalMes10 += Number(item.mes_10)
+              bTotalMes11 += Number(item.mes_11)
+              bTotalMes12 += Number(item.mes_12)
               this.barChartData7.push(item.mes_01);
               this.barChartData7.push(item.mes_02);
               this.barChartData7.push(item.mes_03);
@@ -1021,6 +1675,19 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
               this.barChartData7.push(item.mes_12);
             }
           })
+          this.barChartData7Total.push(bTotalMes1);
+          this.barChartData7Total.push(bTotalMes2);
+          this.barChartData7Total.push(bTotalMes3);
+          this.barChartData7Total.push(bTotalMes4);
+          this.barChartData7Total.push(bTotalMes5);
+          this.barChartData7Total.push(bTotalMes6);
+          this.barChartData7Total.push(bTotalMes7);
+          this.barChartData7Total.push(bTotalMes8);
+          this.barChartData7Total.push(bTotalMes9);
+          this.barChartData7Total.push(bTotalMes10);
+          this.barChartData7Total.push(bTotalMes11);
+          this.barChartData7Total.push(bTotalMes12);
+
           this.columns11 = this.data.cabecera_anual;
           // this.columns11.map(item => {
           //   // console.log(301, item)
@@ -1035,11 +1702,13 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
           //    })
           //   }
           // })
-          // console.log(303, this.columns11)
           this.rows11 = this.data.tabla_anual;
-          // // this.temp11 = this.rows11;
+          console.log(303, this.data.tabla_anual)
+          // this.rows11filtered = this.rows11;
+          this.rows11filtered = this.rows11.filter(item => item.solesCantidad === 'soles');
           this.columns12 = this.data.cabecera_anual_empresa;
           this.rows12 = this.data.tabla_anual_empresa;
+          this.rows12filtered = this.rows12.filter(item => item.solesCantidad === 'soles');
           this.barChartLabels2 = [];
           this.columns13 = this.data.cabecera_diario_sede;
           this.columns13.map(item =>{
@@ -1758,23 +2427,23 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
           },
       });
   }
-  tipoChange(event){
-    console.log(751, event);
-    const input = event;
-    // this.especialidad = input;
-    // this.temp = this.rows1;rows2filtered
-      if (input === 'TODAS') {
-        this.rows4filtered = this.rows4.filter(item => item.sucursal === 'TODAS');
-       } else if (input === 'LIMA'){
-        this.rows4filtered = this.rows4.filter(item =>item.sucursal === 'LIMA');
-       } else if (input === 'CHORRILLOS'){
-        this.rows4filtered = this.rows4.filter(item =>item.sucursal === 'CHORRILLOS');
-       } else if (input === 'SURCO'){
-        this.rows4filtered = this.rows4.filter(item =>item.sucursal === 'SURCO');
-       }
+  // tipoChange(event){
+  //   console.log(751, event);
+  //   const input = event;
+  //   // this.especialidad = input;
+  //   // this.temp = this.rows1;rows2filtered
+  //     if (input === 'TODAS') {
+  //       this.rows4filtered = this.rows4.filter(item => item.sucursal === 'TODAS');
+  //      } else if (input === 'LIMA'){
+  //       this.rows4filtered = this.rows4.filter(item =>item.sucursal === 'LIMA');
+  //      } else if (input === 'CHORRILLOS'){
+  //       this.rows4filtered = this.rows4.filter(item =>item.sucursal === 'CHORRILLOS');
+  //      } else if (input === 'SURCO'){
+  //       this.rows4filtered = this.rows4.filter(item =>item.sucursal === 'SURCO');
+  //      }
 
     
-  }
+  // }
   updateFilter(event) {
     const input = event.target.value.toLowerCase();
 
