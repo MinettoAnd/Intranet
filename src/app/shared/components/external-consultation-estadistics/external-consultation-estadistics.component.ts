@@ -20,6 +20,9 @@ import ResizeObserver from 'resize-observer-polyfill';
 import {GridOptions} from "ag-grid-community";
 import { AgGridAngular } from "ag-grid-angular";
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { CalcTblTipPaciente, CalcTblDiagAlta } from './helpers/confg-tbls.helper';
+import { calcTotalesTblRangoEtareo } from './helpers/calc-totales-tbls.helper';
+import { calcCssClassTblRangoEtareo } from './helpers/calc-css-class-tbls.helper';
 
 @Component({
   selector: 'app-external-consultation-estadistics',
@@ -36,6 +39,10 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
   porcNR: number;
   porcSistema: number;
   porcAplicativo: number;
+
+  public calcTblTipPaciente = CalcTblTipPaciente;
+  public calcTblDiagAlta = CalcTblDiagAlta;
+  public calcCssClassTblRangoEtareo = calcCssClassTblRangoEtareo;
 
   public uptdChartsTabGrafico: any = {
     'chart1': true,
@@ -233,7 +240,6 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
   page1 = new Page();
   page2 = new Page();
   page3 = new Page();
-  page4 = new Page();
   selected = [];
   SelectionType = SelectionType;
   porcMedico;
@@ -268,8 +274,6 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
     this.page2.size = 10;
     this.page3.pageNumber = 0;
     this.page3.size = 10;
-    this.page4.pageNumber = 0;
-    this.page4.size = 10;
 
     this.filtroForm = new FormGroup({
       id_sede: new FormControl("0001"),
@@ -930,6 +934,7 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
                     this.rows1filtered = this.rows1.filter(item => item.GRUPO3 === 'CANTIDAD');
                     this.columns2 = response.data.cabeceras_rangoetareo;
                     this.rows2 = response.data.tabla_rangoetareo;
+                    this.rows2.push(calcTotalesTblRangoEtareo(response.data.tabla_rangoetareo));
                     this.temp2 = this.rows2;
                     this.columns3 = response.data.cabeceras_empresas;
                     this.rows3 = response.data.tabla_empresas;
@@ -1257,16 +1262,7 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
         return
       }
       this.page3.size = parseInt(limit, 10);
-    }if(numberT === '4'){
-      if (limit === '0'){
-        this.page4.size = this.page4.totalElements;
-        // console.log(this.page.totalElements);
-        return
-      }
-      this.page4.size = parseInt(limit, 10);
     }
-    
-
   }
 
   separadorDeMiles(numero) {
