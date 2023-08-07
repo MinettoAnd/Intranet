@@ -29,7 +29,6 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 export class ExternalConsultationEstadisticsComponent implements OnInit {
   active = 1;
   closeResult = '';
-  @ViewChild("agGrid") agGrid: AgGridAngular;
   grafico1: Chart;
   grafico2: Chart;
   yAxesMax: any;
@@ -37,23 +36,49 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
   porcNR: number;
   porcSistema: number;
   porcAplicativo: number;
-  @ViewChild("chart1", { static: false }) set content1(
+
+  public uptdChartsTabGrafico: any = {
+    'chart1': true,
+    'chart2': true,
+  };
+
+  @ViewChild("agGrid") agGrid: AgGridAngular;
+
+  @ViewChild("chart1", { static: false }) set content1 (
     content: ElementRef
   ) {
-    if (content) {
+    if (this.uptdChartsTabGrafico.chart1 && content) {
+      this.uptdChartsTabGrafico.chart1 = false;
       // this.chart1Canvas = content;
       this.removeData(this.grafico1); //soluciona la superposición de datos
-      this.grafico1 = this.getBarChart(this.chartLabels1, this.chartData1, this.chartData2,'Día', 'N° Pacientes','chart-1', 'C.E Reservada', 'C.E Realizada', 'bar');
+      this.grafico1 = this.getBarChart(
+        this.chartLabels1,
+        this.chartData1,
+        this.chartData2,
+        'Día',
+        'N° Pacientes',
+        'chart-1',
+        'C.E Reservada',
+        'C.E Realizada',
+        'bar'
+      );
       // console.log(55, content)
       // console.log(56, this.chart5Canvas)
     }
   }
-  @ViewChild("chart2", { static: false }) set content2(
+
+  @ViewChild("chart2", { static: false }) set content2 (
     content: ElementRef
   ) {
-    if (content) {
+    if (this.uptdChartsTabGrafico.chart2 && content) {
+      this.uptdChartsTabGrafico.chart2 = false;
       this.removeData(this.grafico2);
-      this.grafico2 = this.getPieChart(this.chartLabels2, this.chartData3,'chart-2', 'doughnut');
+      this.grafico2 = this.getPieChart(
+        this.chartLabels2,
+        this.chartData3,
+        'chart-2',
+        'doughnut'
+      );
     }
   }
   // @ViewChild("baseChart", { static: false }) set content(
@@ -230,44 +255,57 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
   changeTable1: boolean = false;
   action: boolean = false;
   selectedOptionGraph1 = false;
-  constructor(private tableApiservice: ExternalConsultationService, private exportService: ExportService,
-    private _cp: CurrencyPipe, private modalService: NgbModal) { 
-      this.page1.pageNumber = 0;
-      this.page1.size = 10;
-      this.page2.pageNumber = 0;
-      this.page2.size = 10;
-      this.page3.pageNumber = 0;
-      this.page3.size = 10;
-      this.page4.pageNumber = 0;
-      this.page4.size = 10;
+
+  constructor(
+    private tableApiservice: ExternalConsultationService,
+    private exportService: ExportService,
+    private _cp: CurrencyPipe,
+    private modalService: NgbModal)
+  {
+    this.page1.pageNumber = 0;
+    this.page1.size = 10;
+    this.page2.pageNumber = 0;
+    this.page2.size = 10;
+    this.page3.pageNumber = 0;
+    this.page3.size = 10;
+    this.page4.pageNumber = 0;
+    this.page4.size = 10;
+
     this.filtroForm = new FormGroup({
       id_sede: new FormControl("0001"),
       mes: new FormControl(this.mes),
       anio: new FormControl(this.anio),
     });
+
     var anioOp = Number(this.anio);
+
     while ( Number(anioOp) > 2017 ) {
       console.log(275, anioOp);
-      
+
       const anioNew = {
          value: anioOp.toString(), label: anioOp.toString() 
       }
+
       this.optionsAnio.push(anioNew);
+
       anioOp--;
     }
     this.rowClassRules = {
       "totals": function(params) {
-        //  console.log(301, params); 
+        //  console.log(301, params);
         var totales;
-        if(params.data.sucursal !== undefined){
+
+        if (params.data.sucursal !== undefined) {
           totales = params.data.sucursal;
-        }else if(params.data.grupo !== undefined){
+        } else if (params.data.grupo !== undefined) {
           totales = params.data.grupo;
         }
+
         return totales === 'TOTAL';
       },
       "sick-days-breach": "data.sickDays > 8"
     };
+
     this.changeTable = false;
   }
 
@@ -276,6 +314,8 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
     // this.setPage({ offset: 0 });
   }
   filter() {
+    this.uptdChartsTabGrafico.chart1 = true;
+    this.uptdChartsTabGrafico.chart2 = true;
     this.action = true;
     this.selectedOptionGraph1 = true;
     console.log('grafico 1 existe', this.grafico1)
@@ -1494,4 +1534,9 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
         return `with: ${reason}`;
       }
     }
+
+  public setValUptdChartsTabGrafico(boolCh1, boolCh2): void {
+    this.uptdChartsTabGrafico.chart1 = boolCh1;
+    this.uptdChartsTabGrafico.chart2 = boolCh2;
+  }
 }
