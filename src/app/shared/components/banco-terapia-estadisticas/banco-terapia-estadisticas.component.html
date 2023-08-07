@@ -513,18 +513,18 @@
                                             <div *ngIf="rows6">
                                                 <div class="row" style="align-items: center;justify-content: space-between;">
                                                     <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
-                                                    <li class="list-group-item border-0 pl-0">
-                                                        <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(6)">
-                                                        <i class="fa fa-external-link"></i>
-                                                        Copiar tabla
-                                                        </button>
-                                                    </li>
-                                                    <li class="list-group-item border-0 pl-0">
-                                                        <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(6)">
-                                                        <i class="fa fa-external-link"></i>
-                                                        Exportar tabla a Excel
-                                                        </button>
-                                                    </li>
+                                                        <li class="list-group-item border-0 pl-0">
+                                                            <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(6)">
+                                                            <i class="fa fa-external-link"></i>
+                                                            Copiar tabla
+                                                            </button>
+                                                        </li>
+                                                        <li class="list-group-item border-0 pl-0">
+                                                            <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(6)">
+                                                            <i class="fa fa-external-link"></i>
+                                                            Exportar tabla a Excel
+                                                            </button>
+                                                        </li>
                                                     </ul>
                                                 </div>
                                                 <ngx-datatable #myTable6
@@ -585,7 +585,7 @@
                           <div class="card-content collapse show">
                               <div class="card-body">
                                   <!-- <a class="btn btn-primary" id="downloadLink" (click)="exportexcel()">Exportar tabla a Excel</a>
-              <a class="btn btn-primary" id="downloadLink" (click)="copyTableToClipboard()">Copiar tabla</a> -->
+                                    <a class="btn btn-primary" id="downloadLink" (click)="copyTableToClipboard()">Copiar tabla</a> -->
                                   <div class="table table-striped table-bordered selection-deletion-row">
                                       <div class="box box-solid">
                                           <div id="accordion4">
@@ -1009,7 +1009,9 @@
                                             </div>
                                             <div #collapse12="ngbCollapse" [(ngbCollapse)]="isCollapsed12">
                                                 <div *ngIf="rows12">
+
                                                     <div class="row" style="align-items: center;justify-content: space-between;">
+
                                                         <ul class="list-group list-group-horizontal list-group-flush col-md-9" style="flex-wrap: wrap;">
                                                             <li class="list-group-item border-0 pl-0">
                                                                 <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(12)">
@@ -1031,8 +1033,10 @@
                                                             <label for="{{checkBoxesOp.id}}"><span>{{checkBoxesOp.label}}</span></label>
                                                         </div>
                                                     </div>
+
                                                     
                                                     <ngx-datatable #myTable12 class="bootstrap table table-striped " id="datatablele" [columns]="columns12" [rows]="rows12filtered" [columnMode]="ColumnMode.flex" [headerHeight]="50" [rowHeight]="$any('auto')" [scrollbarH]="true" (page)="setPage($event)" [summaryRow]="enableSummary"
+
                                                     [summaryPosition]="summaryPosition"
                                                     [summaryHeight]="35">
                                                         <ngx-datatable-column [headerClass]="column.headerClass" [cellClass]="column.cellClass" [flexGrow]="1" [minWidth]="90" [summaryFunc]="column.prop == 'Campo' ? summaryNull:summaryForAmount" *ngFor="let column of columns12; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
@@ -1057,7 +1061,20 @@
                                                 </div>
                                             </div>
                                           </div>
-                                        </div>                       
+                                          <app-tbl-dist-x-grupo-examen
+                                            [data]="this.data.tabla_anual_grupoExamen"
+                                            [cabecera]="this.data.cabecera_anual_grupoExamen"
+                                            [summaryPosition]="summaryPosition"
+                                            [enableSummary]="enableSummary"
+                                          ></app-tbl-dist-x-grupo-examen>
+                                          <app-tbl-det-examenes-realizados
+                                            [data]="this.data.tabla_anual_detExmsRealizados"
+                                            [cabecera]="this.data.cabecera_anual_detExmsRealizados"
+                                            [lstDeExamenes]="this.lstDeExamenes"
+                                            [summaryPosition]="summaryPosition"
+                                            [enableSummary]="enableSummary"
+                                          ></app-tbl-det-examenes-realizados>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

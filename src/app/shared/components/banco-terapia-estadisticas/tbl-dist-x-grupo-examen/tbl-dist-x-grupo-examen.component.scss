@@ -1,0 +1,50 @@
+.toggle-table {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.box-title {
+    font-size: 1rem!important;
+    font-weight: 600;
+}
+
+.card-header-info {
+    height: 35px;
+    border-color: #FFAA00;
+    border-radius: 5px;
+    background-color: #FFAA00 !important;
+}
+
+.callout {
+    .callout-info {
+        height: 36px;
+        padding: 6px 15px;
+        color: white;
+        background-color: #10004C !important;
+        margin-left: 10px;
+        width: 100%;
+    }
+}
+
+.btn-outline-primary {
+    color: #10004C;
+    border-color: #10004C;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+
+    &:hover {
+        background: #FFF;
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+    }
+}
+
+::ng-deep .ag-cell {
+    white-space: normal !important;
+    justify-content: center!important;
+}
+
+:host ::ng-deep #datatable .datatable-summary-row {
+    font-size: 09px!important;
+}

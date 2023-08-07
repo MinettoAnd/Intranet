@@ -1,0 +1,74 @@
+<div class="card">
+    <div class="card-header-info">
+        <div class="box-header">
+            <div class="toggle-table">
+                <div class="callout callout-info">
+                    <h3 class="box-title">Distribución por Grupo de Examen</h3>
+                </div>
+                <button type="button" class="btn btn-outline-primary" (click)="collapse.toggle()" [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+                    <i class="fa fa-minus" *ngIf="!isCollapsed"> </i>
+                    <i class="fa fa-plus" *ngIf="isCollapsed"> </i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+        <div *ngIf="data">
+            <div classs="row" style="align-items: center;justify-content: space-between;">
+                <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
+                    <li class="list-group-item border-0 pl-0">
+                        <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard()">
+                            <i class="fa fa-external-link"></i>
+                            Copiar tabla
+                        </button>
+                    </li>
+                    <li class="list-group-item border-0 pl-0">
+                        <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel()">
+                            <i class="fa fa-external-link"></i>
+                            Exportar tabla a Excel
+                        </button>
+                    </li>
+                </ul>
+            </div>
+
+            <ngx-datatable
+                #tabla
+                class="bootstrap table table-striped "
+                id="datatablele"
+                [columns]="cabecera"
+                [rows]="data"
+                [columnMode]="columnMode.flex"
+                [headerHeight]="50"
+                [rowHeight]="$any('auto')"
+                [scrollbarH]="true"
+                (page)="setPage($event)"
+                [summaryRow]="enableSummary"
+                [summaryPosition]="summaryPosition"
+                [summaryHeight]="35"
+            >
+                <ngx-datatable-column
+                    *ngFor="let column of cabecera; let i = index;"
+                    [headerClass]="column.headerClass"
+                    [cellClass]="column.cellClass"
+                    [flexGrow]="1"
+                    [minWidth]="90"
+                    [summaryFunc]="column.prop == 'Campo' ? summaryNull : summaryForAmount"
+                    name="{{column.name}}"
+                    prop="{{column.prop}}"
+                >
+                    <ng-template
+                        ngx-datatable-cell-template
+                        let-rowIndex="rowIndex"
+                        let-value="value"
+                        let-row="row"
+                    >
+                        <div>
+                            <span *ngIf="column.prop === 'Campo'">{{ value }}</span>
+                            <span *ngIf="column.prop !== 'Campo'">{{ value | currency }}</span>
+                        </div>
+                    </ng-template>
+                </ngx-datatable-column>
+            </ngx-datatable>
+        </div>
+    </div>
+</div>
