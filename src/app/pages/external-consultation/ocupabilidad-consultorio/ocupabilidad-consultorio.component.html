@@ -193,7 +193,7 @@
                               <div id="accordion">
                                
                                 <div class="card">
-                                  <div class="card-header" >
+                                  <div class="card-header-info" >
                                     <div class="box-header">
                                       
                                       <div class="toggle-table">
@@ -350,7 +350,7 @@
                               
                               <div id="accordion2">
                                 <div class="card">
-                                  <div class="card-header" >
+                                  <div class="card-header-info" >
                                     <div class="box-header">
                                       
                                       <div class="toggle-table">
@@ -419,7 +419,7 @@
                                   </div>
                                 </div>
                                 <div class="card">
-                                  <div class="card-header" >
+                                  <div class="card-header-info" >
                                     <div class="box-header">
                                       
                                       <div class="toggle-table">
@@ -649,60 +649,25 @@
                                 
                                 <div id="accordion3">
                                   <div class="card">
-                                    <div class="card-header" >
+                                    <div class="card-header-info" >
                                       <div class="box-header">
-                                        <h5 class="box-title" id="Title_div_tabla_04"><b>OCUPABILIDAD DEL CONSULTORIO - TIEMPO PROGRAMADO EN CONSULTORIO RESPECTO A LAS HORAS DEL DIA DE ATENCIÓN EN EL MES</b></h5>
                                         <div class="toggle-table">
                                           <div class="callout callout-info">
-                                            <span>Fórmula : Tiempo programado al consultorio / 12 horas x día de atención</span>
+                                            <h5 class="box-title"><b>OCUPABILIDAD DEL CONSULTORIO - TIEMPO PROGRAMADO EN CONSULTORIO RESPECTO A LAS HORAS DEL DIA DE ATENCIÓN EN EL MES</b></h5>
                                           </div>
                                           <button type="button" class="btn btn-outline-primary" (click)="collapse4.toggle()" [attr.aria-expanded]="!isCollapsed4"
-                                          aria-controls="collapseExample">
-                                          <i class="fa fa-minus" *ngIf="!isCollapsed4"> </i>
-                                          <i class="fa fa-plus" *ngIf="isCollapsed4"> </i> 
+                                            aria-controls="collapseExample">
+                                            <i class="fa fa-minus" *ngIf="!isCollapsed4"> </i>
+                                            <i class="fa fa-plus" *ngIf="isCollapsed4"> </i> 
                                           </button>
                                         </div>
                                       </div>
                                     </div>
                                 
                                     <div #collapse4="ngbCollapse" [(ngbCollapse)]="isCollapsed4">
-                                      <!-- <div class="row" style="align-items: center;justify-content: space-between;"> -->
-                                        <!-- <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
-                                          <li class="list-group-item border-0 pl-0">
-                                            <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(4)">
-                                              <i class="fa fa-external-link"></i>
-                                              Copiar tabla
-                                            </button>
-                                          </li>
-                                          <li class="list-group-item border-0 pl-0">
-                                            <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(4)">
-                                              <i class="fa fa-external-link"></i>
-                                              Exportar tabla a Excel
-                                            </button>
-                                          </li>
-                                          <li class="list-group-item border-0 pl-0">
-                                            <button type="button" (click)="showTableDasboard(4, 1)"
-                                              class="btn-shadow mr-3 btn btn-info">
-                                              <i class="pe-7s-credit"></i>
-                                            </button>
-                                            <button type="button" (click)="showTableDasboard(4, 2)" class="btn-shadow btn btn-info float-right">
-                                              <i class="pe-7s-graph3"></i>
-                                            </button>
-                                          </li>
-                                        </ul> -->
-                                        <!-- <div class="" style="display:flex;margin:15px;align-items: center;">
-                                          <span>Buscar</span>&nbsp;&nbsp;
-                                            <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter($event)'>
-                                        </div> -->
-                                      
-                                      <!-- </div> -->
-                                      <!-- <div class="card-body" *ngIf="isGrafico4">
-                                        <loading *ngIf="isLoading4">{{ isLoading4 }}</loading>
-                                        <div class="d-block" *ngIf="!isLoading4">
-                                          <canvas #baseChart id="chart-4">
-                                          </canvas>
-                                        </div>
-                                      </div> -->
+                                      <div class="text-center">
+                                        <span class="font-weight-bold">Fórmula : Tiempo programado al consultorio / 12 horas x día de atención</span>
+                                      </div>
                                       <ngx-datatable #myTable4
                                       class="bootstrap table table-striped"
                                         [columns]="columns3"
@@ -732,12 +697,11 @@
                                     </div>
                                   </div>
                                   <div class="card">
-                                    <div class="card-header" >
+                                    <div class="card-header-info" >
                                       <div class="box-header">
-                                        <h5 class="box-title" id="Title_div_tabla_04"><b>OCUPABILIDAD DE ATENCIONES - TIEMPO DE ATENCION DEL PACIENTE RESPECTO A LAS HORAS DEL DIA DE ATENCIÓN EN EL MES</b></h5>
                                         <div class="toggle-table">
                                           <div class="callout callout-info">
-                                            <span>Fórmula : Tiempo de atención del paciente / 12 horas x día de atención</span>
+                                            <h5 class="box-title"><b>OCUPABILIDAD DE ATENCIONES - TIEMPO DE ATENCION DEL PACIENTE RESPECTO A LAS HORAS DEL DIA DE ATENCIÓN EN EL MES</b></h5>
                                           </div>
                                           <button type="button" class="btn btn-outline-primary" (click)="collapse5.toggle()" [attr.aria-expanded]="!isCollapsed5"
                                             aria-controls="collapseExample">
@@ -749,43 +713,9 @@
                                     </div>
                                 
                                     <div #collapse5="ngbCollapse" [(ngbCollapse)]="isCollapsed5">
-                                      <!-- <div class="row" style="align-items: center;justify-content: space-between;"> -->
-                                        <!-- <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
-                                          <li class="list-group-item border-0 pl-0">
-                                            <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(5)">
-                                              <i class="fa fa-external-link"></i>
-                                              Copiar tabla
-                                            </button>
-                                          </li>
-                                          <li class="list-group-item border-0 pl-0">
-                                            <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(5)">
-                                              <i class="fa fa-external-link"></i>
-                                              Exportar tabla a Excel
-                                            </button>
-                                          </li>
-                                          <li class="list-group-item border-0 pl-0">
-                                            <button type="button" (click)="showTableDasboard(5, 1)"
-                                              class="btn-shadow mr-3 btn btn-info">
-                                              <i class="pe-7s-credit"></i>
-                                            </button>
-                                            <button type="button" (click)="showTableDasboard(5, 2)" class="btn-shadow btn btn-info float-right">
-                                              <i class="pe-7s-graph3"></i>
-                                            </button>
-                                          </li>
-                                        </ul> -->
-                                        <!-- <div class="" style="display:flex;margin:15px;align-items: center;">
-                                          <span>Buscar</span>&nbsp;&nbsp;
-                                            <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter($event)'>
-                                        </div> -->
-                                      
-                                      <!-- </div> -->
-                                      <!-- <div class="card-body" *ngIf="isGrafico5">
-                                        <loading *ngIf="isLoading5">{{ isLoading5 }}</loading>
-                                        <div class="d-block" *ngIf="!isLoading5">
-                                          <canvas #baseChart id="chart-5">
-                                          </canvas>
-                                        </div>
-                                      </div> -->
+                                      <div class="text-center">
+                                        <span class="font-weight-bold">Fórmula : Tiempo de atención del paciente / 12 horas x día de atención</span>
+                                      </div>
                                       <ngx-datatable #myTable5
                                       class="bootstrap table table-striped"
                                         [columns]="columns3"
@@ -814,14 +744,11 @@
                                     </div>
                                   </div>
                                   <div class="card">
-                                    
-                                    <div class="card-header" >
+                                    <div class="card-header-info" >
                                       <div class="box-header">
-                                        <h5 class="box-title" id="Title_div_tabla_04"><b>OCUPABILIDAD DEL TURNO - TIEMPO DE ATENCION DEL PACIENTE RESPECTO AL TIEMPO PROGRAMADO POR TURNO</b></h5>
                                         <div class="toggle-table">
                                           <div class="callout callout-info">
-                                            <span>Fórmula : Minutos de atención del paciente en el mes / Minutos programados del consultorio en el mes
-                                            </span>
+                                            <h5 class="box-title"><b>OCUPABILIDAD DEL TURNO - TIEMPO DE ATENCION DEL PACIENTE RESPECTO AL TIEMPO PROGRAMADO POR TURNO</b></h5>
                                           </div>
                                           <button type="button" class="btn btn-outline-primary" (click)="collapse6.toggle()" [attr.aria-expanded]="!isCollapsed6"
                                             aria-controls="collapseExample">
@@ -829,39 +756,12 @@
                                             <i class="fa fa-plus" *ngIf="isCollapsed6"> </i> 
                                           </button>
                                         </div>
-                                        
                                       </div>
                                     </div>
                                     <div #collapse6="ngbCollapse" [(ngbCollapse)]="isCollapsed6">
-                                      <!-- <div class="row" style="align-items: center;justify-content: space-between;"> -->
-                                        <!-- <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
-                                          <li class="list-group-item border-0 pl-0">
-                                            <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(6)">
-                                              <i class="fa fa-external-link"></i>
-                                              Copiar tabla
-                                            </button>
-                                          </li>
-                                          <li class="list-group-item border-0 pl-0">
-                                            <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(6)">
-                                              <i class="fa fa-external-link"></i>
-                                              Exportar tabla a Excel
-                                            </button>
-                                          </li>
-                                          
-                                        </ul> -->
-                                        <!-- <div class="" style="display:flex;margin:15px;align-items: center;">
-                                          <span>Buscar</span>&nbsp;&nbsp;
-                                            <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter($event)'>
-                                        </div> -->
-                                      
-                                      <!-- </div> -->
-                                      <!-- <div class="card-body" *ngIf="isGrafico6">
-                                        <loading *ngIf="isLoading6">{{ isLoading6 }}</loading>
-                                        <div class="d-block" *ngIf="!isLoading6">
-                                          <canvas #baseChart id="chart-6">
-                                          </canvas>
-                                        </div>
-                                      </div> -->
+                                      <div class="text-center">
+                                        <span class="font-weight-bold">Fórmula : Minutos de atención del paciente en el mes / Minutos programados del consultorio en el mes</span>
+                                      </div>
                                       
                                       <ngx-datatable #myTable6
                                       class="bootstrap table table-striped"
