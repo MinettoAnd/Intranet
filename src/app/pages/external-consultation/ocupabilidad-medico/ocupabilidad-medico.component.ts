@@ -579,6 +579,7 @@ this.tableApiservice.eliminarTablasMedico(this.tablas).subscribe(
             this.parameters.archivo_temporal='aaaTmpMedi';
             this.tableApiservice.getUsoResumenMedicoMes(this.parameters).subscribe(
               (response) => { 
+                console.log(response)
                 this.columns2 = [];
                 this.rows2 = [];
                 if(response.success){
