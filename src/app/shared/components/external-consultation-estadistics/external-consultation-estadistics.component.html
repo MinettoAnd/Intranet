@@ -1054,7 +1054,7 @@
                                                       <button type="button" class="btn btn-outline-primary" (click)="collapse6.toggle()" [attr.aria-expanded]="!isCollapsed6"
                                                       aria-controls="collapseExample">
                                                       <i class="fa fa-minus" *ngIf="!isCollapsed6"> </i>
-                                                      <i class="fa fa-plus" *ngIf="isCollapsed6"> </i> 
+                                                      <i class="fa fa-plus" *ngIf="isCollapsed6"> </i>
                                                       </button>
                                                     </div>
                                                   </div>
@@ -1089,12 +1089,12 @@
                                                           <span>Buscar</span>&nbsp;&nbsp;
                                                             <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter7($event)'>
                                                         </div>
-                                                    </div>                               
+                                                    </div>
                                                   </div>
-                                                  
+
                                                   <ngx-datatable #myTable6
-                                                  class="bootstrap table table-striped"
-                                                  id="datatablele"
+                                                    class="bootstrap table table-striped"
+                                                    id="datatablele"
                                                     [columns]="columns6"
                                                     [rows]="rows6"
                                                     [columnMode]="ColumnMode.flex"
@@ -1105,21 +1105,41 @@
                                                     [selected]="selected"
                                                     [selectionType]="SelectionType.single"
                                                     (select)='open($event)'
+                                                  >
+                                                    <ngx-datatable-column
+                                                      *ngFor="let column of columns6; let i = index;"
+                                                      name="{{column.name}}"
+                                                      prop="{{column.prop}}"
+                                                      [flexGrow]="calcTblResInaMedDelMes.cFlexGrow(i)"
+                                                      [maxWidth]="calcTblResInaMedDelMes.cWidth(i)"
+                                                      [minWidth]="calcTblResInaMedDelMes.cWidth(i)"
+                                                      [width]="calcTblResInaMedDelMes.cWidth(i)"
+                                                      [headerClass]="column.headerClass"
+                                                      [cellClass]="column.cellClass"
                                                     >
-                                                    <ngx-datatable-column [flexGrow]="1" [minWidth]="90" [headerClass]="column.headerClass" [cellClass]="column.cellClass" *ngFor="let column of columns6; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
-                                                      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
-                                                        let-row="row">
-                                                         
+                                                      <ng-template
+                                                        ngx-datatable-cell-template
+                                                        let-rowIndex="rowIndex"
+                                                        let-value="value"
+                                                        let-row="row"
+                                                      >
                                                         <div *ngIf="column.prop !== 'NomMedico'">
-                                                          <span  [title]="value">{{value}}</span>
+                                                          <span [title]="value">{{value}}</span>
                                                         </div>
                                                         <div *ngIf="column.prop === 'NomMedico'">
-                                                          <span  [title]="value"><a href="javascript:;" (click)="open($event, content)" style="color: #4B9FDE;">{{value}}</a></span>
+                                                          <span [title]="value">
+                                                            <a
+                                                              href="javascript:;"
+                                                              (click)="open($event, content)"
+                                                              style="color: #4B9FDE;"
+                                                            >
+                                                              {{value}}
+                                                            </a>
+                                                          </span>
                                                         </div>
                                                         <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
                                                           <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
                                                         </div> -->
-              
                                                       </ng-template>
                                                       <!-- <ngx-datatable-column prop="per1">
                                                         <ng-template let-row="row" ngx-datatable-cell-template>
@@ -1136,29 +1156,41 @@
                                                       </button>
                                                     </div>
                                                     <div class="modal-body">
-                                                      <ngx-datatable #myTable11
-                                                  class="bootstrap table table-striped"
-                                                  id="datatablele"
-                                                    [columns]="columnsMedicoRecord"
-                                                    [loadingIndicator]="loading"
-                                                    [rows]="rowsMedicoRecord"
-                                                    [columnMode]="ColumnMode.flex"
-                                                    [headerHeight]="50"
-                                                    [footerHeight]="50"
-                                                    [rowHeight]="$any('auto')"
-                                                    [scrollbarH]="true"
-                                                    [limit]="5"
-                                                    >
-                                                    <ngx-datatable-column [flexGrow]="1" [minWidth]="90" [headerClass]="column.headerClass" [cellClass]="column.cellClass" *ngFor="let column of columnsMedicoRecord; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
-                                                      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
-                                                        let-row="row">
-                                                        <div>
-                                                          <span  [title]="value">{{value}}</span>
-                                                        </div>
-                                                      </ng-template>
-                                                    </ngx-datatable-column>
-                                                  </ngx-datatable>
-                                                  
+                                                      <ngx-datatable
+                                                        #myTable11
+                                                        class="bootstrap table table-striped"
+                                                        id="datatablele"
+                                                        [columns]="columnsMedicoRecord"
+                                                        [loadingIndicator]="loading"
+                                                        [rows]="rowsMedicoRecord"
+                                                        [columnMode]="ColumnMode.flex"
+                                                        [headerHeight]="50"
+                                                        [footerHeight]="50"
+                                                        [rowHeight]="$any('auto')"
+                                                        [scrollbarH]="true"
+                                                        [limit]="5"
+                                                      >
+                                                        <ngx-datatable-column
+                                                          *ngFor="let column of columnsMedicoRecord; let i = index;"
+                                                          name="{{column.name}}"
+                                                          prop="{{column.prop}}"
+                                                          [flexGrow]="1"
+                                                          [minWidth]="90"
+                                                          [headerClass]="column.headerClass"
+                                                          [cellClass]="column.cellClass"
+                                                        >
+                                                          <ng-template
+                                                            ngx-datatable-cell-template
+                                                            let-rowIndex="rowIndex"
+                                                            let-value="value"
+                                                            let-row="row"
+                                                          >
+                                                            <div>
+                                                              <span [title]="value">{{value}}</span>
+                                                            </div>
+                                                          </ng-template>
+                                                        </ngx-datatable-column>
+                                                      </ngx-datatable>
                                                     </div>
                                                     <div class="modal-footer">
                                                       <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cerrar</button>
@@ -1166,7 +1198,7 @@
                                                   </ng-template>
                                                 </div>
                                               </div>
-                                            </div>                       
+                                            </div>
                                           </div>
                                         </div>
                                       </div>
@@ -1212,8 +1244,8 @@
                                                       </div>
                                                       <button type="button" class="btn btn-outline-primary" (click)="collapse7.toggle()" [attr.aria-expanded]="!isCollapsed7"
                                                       aria-controls="collapseExample">
-                                                      <i class="fa fa-minus" *ngIf="!isCollapsed7"> </i>
-                                                      <i class="fa fa-plus" *ngIf="isCollapsed7"> </i> 
+                                                      <i class="fa fa-minus" *ngIf="!isCollapsed7"></i>
+                                                      <i class="fa fa-plus" *ngIf="isCollapsed7"></i>
                                                       </button>
                                                     </div>
                                                   </div>
@@ -1235,10 +1267,11 @@
                                                       </li>
                                                     </ul>                                  
                                                   </div>
-                                                  
-                                                  <ngx-datatable #myTable7
-                                                  class="bootstrap table table-striped"
-                                                  id="datatablele"
+
+                                                  <ngx-datatable
+                                                    #myTable7
+                                                    class="bootstrap table table-striped"
+                                                    id="datatablele"
                                                     [columns]="columns7"
                                                     [rows]="rows7"
                                                     [columnMode]="ColumnMode.flex"
@@ -1247,17 +1280,29 @@
                                                     [scrollbarH]="true"
                                                     (page)="setPage($event)"
                                                     [rowClass]="getRowClass1"
+                                                  >
+                                                    <ngx-datatable-column
+                                                      *ngFor="let column of columns7; let i = index;"
+                                                      name="{{column.name}}"
+                                                      prop="{{column.prop}}"
+                                                      [flexGrow]="1"
+                                                      [minWidth]="90"
+                                                      [headerClass]="column.headerClass"
+                                                      [cellClass]="column.cellClass"
+                                                      [sortable]="false"
                                                     >
-                                                    <ngx-datatable-column [flexGrow]="1" [minWidth]="90" [headerClass]="column.headerClass" [cellClass]="column.cellClass" *ngFor="let column of columns7; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
-                                                      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
-                                                        let-row="row">
+                                                      <ng-template
+                                                        ngx-datatable-cell-template
+                                                        let-rowIndex="rowIndex"
+                                                        let-value="value"
+                                                        let-row="row"
+                                                      >
                                                         <div>
-                                                          <span  [title]="value">{{value}}</span>
+                                                          <span [title]="value">{{value}}</span>
                                                         </div>
                                                         <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
                                                           <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
                                                         </div> -->
-              
                                                       </ng-template>
                                                       <!-- <ngx-datatable-column prop="per1">
                                                         <ng-template let-row="row" ngx-datatable-cell-template>
@@ -1266,10 +1311,9 @@
                                                       </ngx-datatable-column> -->
                                                     </ngx-datatable-column>
                                                   </ngx-datatable>
-                                                  
                                                 </div>
                                               </div>
-                                            </div>                       
+                                            </div>
                                           </div>
                                         </div>
                                       </div>

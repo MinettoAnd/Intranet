@@ -20,7 +20,11 @@ import ResizeObserver from 'resize-observer-polyfill';
 import {GridOptions} from "ag-grid-community";
 import { AgGridAngular } from "ag-grid-angular";
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-import { CalcTblTipPaciente, CalcTblDiagAlta } from './helpers/confg-tbls.helper';
+import {
+    CalcTblTipPaciente,
+    CalcTblDiagAlta,
+    CalcTblResInaMedDelMes
+} from './helpers/confg-tbls.helper';
 import { calcTotalesTblRangoEtareo } from './helpers/calc-totales-tbls.helper';
 import { calcCssClassTblRangoEtareo } from './helpers/calc-css-class-tbls.helper';
 
@@ -42,6 +46,7 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
 
   public calcTblTipPaciente = CalcTblTipPaciente;
   public calcTblDiagAlta = CalcTblDiagAlta;
+  public calcTblResInaMedDelMes = CalcTblResInaMedDelMes;
   public calcCssClassTblRangoEtareo = calcCssClassTblRangoEtareo;
 
   public uptdChartsTabGrafico: any = {

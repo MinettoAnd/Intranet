@@ -31,7 +31,6 @@ export class CalcTblTipPaciente {
 
 export class CalcTblDiagAlta {
     public static width: number = 70;
-    public static opcFiltro = OpcFiltroEnum;
 
     public static cFlexGrow(idx: number): number {
         return idx === 0 ? 1 : 0;
@@ -39,5 +38,17 @@ export class CalcTblDiagAlta {
 
     public static cWidth(idx: number): number {
         return idx > 0 ? CalcTblDiagAlta.width : undefined;
+    }
+}
+
+export class CalcTblResInaMedDelMes {
+    public static width: number = 110;
+
+    public static cFlexGrow(idx: number): number {
+        return idx <= 1 ? 1 : 0;
+    }
+
+    public static cWidth(idx: number): number {
+        return idx > 1 ? CalcTblResInaMedDelMes.width : undefined;
     }
 }
