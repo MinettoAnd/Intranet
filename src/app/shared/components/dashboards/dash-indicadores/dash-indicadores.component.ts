@@ -23,6 +23,7 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { DataService } from 'src/app/_services/data.service';
 import { Subscription } from 'rxjs';
 import { IndicadoresService } from 'src/app/_services/indicadores.service';
+import { ChartService } from '../../barchar/chart.service';
 
 @Component({
   selector: 'app-dash-indicadores',
@@ -187,8 +188,49 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
   panelOptions;
   panelOptions2;
   isLoading: Boolean = false;
+  isTable0 = true;
+  isTable1 = true;
+  isTable2 = true;
+  isTable3 = true;
+  isTable4 = true;
+
+  isGrafico0 = false;
+  isGrafico1 = false;
+  isGrafico2 = false;
+  isGrafico3 = false;
+  isGrafico4 = false;
+  labels: string[] = [];
+  dataChart1: number[] = [];
+  dataChart2: number[] = [];
+  dataChart3: number[] = [];
+
+  dataChart4: number[] = [];
+  dataChart5: number[] = [];
+  dataChart6: number[] = [];
+
+  dataChart7: number[] = [];
+  dataChart8: number[] = [];
+  dataChart9: number[] = [];
+  dataChart10: number[] = [];
+
+  dataChart11: number[] = [];
+  dataChart12: number[] = [];
+
+  dataChart13: number[] = [];
+  dataChart14: number[] = [];
+  dataChart15: number[] = [];
+  dataChart16: number[] = [];
+  dataChart17: number[] = [];
+  dataChart18: number[] = [];
+  options1: any;
+  context0;
+  context1;
+  context2;
+  context3;
+  context4;
   constructor(private tableApiservice: IndicadoresService, private exportService: ExportService, private _cnp:CustomNumberPipe,
-    private _cp: CurrencyPipe, private _phone: PhonePipe, private _ndp:NumberDecimalPipe, private modalService: NgbModal, public dataService: DataService) {
+    private _cp: CurrencyPipe, private _phone: PhonePipe, 
+    private _ndp:NumberDecimalPipe, private modalService: NgbModal, public dataService: DataService, private chartService: ChartService) {
     this.page.pageNumber = 0;
     this.page.size = 10;
     // console.log(171, this.dataService.parametersFilters)
@@ -759,77 +801,77 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
       }
     );
 
-    this.tableApiservice.getResumenRecetaGrafica1(this.parameters).subscribe(
-      (response) => {
-        // this.rows = [];
-        if(response.data.success){
-          this.data = response.data ? response.data : [];
-          this.message = this.data.titulo;
-          this.title = response.data.title;
-          this.barChartLabels1 = [];
-          this.barChartData1 = [];
-          this.barChartData2 = [];
-          this.barChartData3 = [];
-          this.data.grafica1.map( item => {
-              this.barChartLabels1.push(item.name) 
-              this.barChartData1.push(item.item_1)      
-              this.barChartData2.push(item.item_2) 
-              this.barChartData3.push(item.item_3) 
+    // this.tableApiservice.getResumenRecetaGrafica1(this.parameters).subscribe(
+    //   (response) => {
+    //     // this.rows = [];
+    //     if(response.data.success){
+    //       this.data = response.data ? response.data : [];
+    //       this.message = this.data.titulo;
+    //       this.title = response.data.title;
+    //       this.barChartLabels1 = [];
+    //       this.barChartData1 = [];
+    //       this.barChartData2 = [];
+    //       this.barChartData3 = [];
+    //       this.data.grafica1.map( item => {
+    //           this.barChartLabels1.push(item.name) 
+    //           this.barChartData1.push(item.item_1)      
+    //           this.barChartData2.push(item.item_2) 
+    //           this.barChartData3.push(item.item_3) 
 
-          });
+    //       });
 
-            Swal.close();
-        }else{
-          Swal.close();
-        }
+    //         Swal.close();
+    //     }else{
+    //       Swal.close();
+    //     }
         
-      },
-      (error) => {
-          Swal.close();
-      }
-    );
+    //   },
+    //   (error) => {
+    //       Swal.close();
+    //   }
+    // );
 
-    this.tableApiservice.getResumenGraficaSedes1(this.parameters).subscribe(
-      (response) => {
-        // this.rows = [];
-        if(response.data.success){
-          this.data = response.data ? response.data : [];
-          this.message = this.data.titulo;
-          this.title = response.data.title;
-          this.barChartLabels2 = [];
-          this.barChartData4 = [];
-          this.barChartData5 = [];
-          this.barChartData6 = [];
-          this.data.grafica1.map( item => {
-              this.barChartLabels2.push(item.name) 
-              this.barChartData4.push(item.item_1)      
-              this.barChartData5.push(item.item_2) 
-              this.barChartData6.push(item.item_3) 
+    // this.tableApiservice.getResumenGraficaSedes1(this.parameters).subscribe(
+    //   (response) => {
+    //     // this.rows = [];
+    //     if(response.data.success){
+    //       this.data = response.data ? response.data : [];
+    //       this.message = this.data.titulo;
+    //       this.title = response.data.title;
+    //       this.barChartLabels2 = [];
+    //       this.barChartData4 = [];
+    //       this.barChartData5 = [];
+    //       this.barChartData6 = [];
+    //       this.data.grafica1.map( item => {
+    //           this.barChartLabels2.push(item.name) 
+    //           this.barChartData4.push(item.item_1)      
+    //           this.barChartData5.push(item.item_2) 
+    //           this.barChartData6.push(item.item_3) 
 
-          });
+    //       });
 
-          this.barChartLabels3 = [];
-          this.barChartData7 = [];
-          this.barChartData8 = [];
-          this.barChartData9 = [];
-          this.data.grafica2.map( item => {
-              this.barChartLabels3.push(item.name) 
-              this.barChartData7.push(item.item_1)      
-              this.barChartData8.push(item.item_2) 
-              this.barChartData9.push(item.item_3) 
+    //       this.barChartLabels3 = [];
+    //       this.barChartData7 = [];
+    //       this.barChartData8 = [];
+    //       this.barChartData9 = [];
+    //       this.data.grafica2.map( item => {
+    //           this.barChartLabels3.push(item.name) 
+    //           this.barChartData7.push(item.item_1)      
+    //           this.barChartData8.push(item.item_2) 
+    //           this.barChartData9.push(item.item_3) 
 
-          });
+    //       });
 
-            Swal.close();
-        }else{
-          Swal.close();
-        }
+    //         Swal.close();
+    //     }else{
+    //       Swal.close();
+    //     }
         
-      },
-      (error) => {
-          Swal.close();
-      }
-    );
+    //   },
+    //   (error) => {
+    //       Swal.close();
+    //   }
+    // );
   }
 
   copyTableToClipboard(numberTabla){
@@ -1127,6 +1169,259 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
       return 'TOTAL';
     }
         
+  }
+
+  showTableDasboard(id: number, position: number) {
+    
+    if (id == 1) {
+      if (position == 0) {
+        this.isTable1 = true;
+        this.isGrafico1 = false;
+      } else {
+        this.labels = [];
+        this.dataChart1 = [];
+        this.dataChart2 = [];
+        this.dataChart3 = []; 
+        if(this.columns5){
+          this.columns5.map(item =>{
+            if(item.prop !== 'indicador' && item.prop !== 'total' && item.prop !== 'prom'){
+              this.labels.push(item.name);
+            }
+          });
+        }
+        console.log('data', this.labels)
+        if(this.rows5){
+          this.rows5.map(item =>{
+            if(item.indicador.trim() === 'Atenciones'){
+              this.dataChart1.push(item.per1);
+              this.dataChart1.push(item.per2);
+              this.dataChart1.push(item.per3);
+              this.dataChart1.push(item.per4);
+              this.dataChart1.push(item.per5);
+              this.dataChart1.push(item.per6);
+              this.dataChart1.push(item.per7);
+              this.dataChart1.push(item.per8);
+              this.dataChart1.push(item.per9);
+              this.dataChart1.push(item.per10);
+              this.dataChart1.push(item.per11);
+              this.dataChart1.push(item.per12);
+            }else  if(item.indicador.trim() === 'Ordenes Emitidas'){
+              this.dataChart2.push(item.per1);
+              this.dataChart2.push(item.per2);
+              this.dataChart2.push(item.per3);
+              this.dataChart2.push(item.per4);
+              this.dataChart2.push(item.per5);
+              this.dataChart2.push(item.per6);
+              this.dataChart2.push(item.per7);
+              this.dataChart2.push(item.per8);
+              this.dataChart2.push(item.per9);
+              this.dataChart2.push(item.per10);
+              this.dataChart2.push(item.per11);
+              this.dataChart2.push(item.per12);
+            }else  if(item.indicador.trim() === 'Cantidad por Items Comprados'){
+              this.dataChart3.push(item.per1);
+              this.dataChart3.push(item.per2);
+              this.dataChart3.push(item.per3);
+              this.dataChart3.push(item.per4);
+              this.dataChart3.push(item.per5);
+              this.dataChart3.push(item.per6);
+              this.dataChart3.push(item.per7);
+              this.dataChart3.push(item.per8);
+              this.dataChart3.push(item.per9);
+              this.dataChart3.push(item.per10);
+              this.dataChart3.push(item.per11);
+              this.dataChart3.push(item.per12);
+            }
+          })
+        }   
+        console.log('eje x', this.dataChart1)
+      this.context1 = 'chart-1';                                    
+      this.data = this.chartService.getChartDataBarLinealx3(this.labels, this.dataChart1, this.dataChart2,this.dataChart3,'Atenciones', 'Ordenes Emitidas','Cantidad por Items Comprados','line')
+      this.options1 = this.chartService.getChartOptionsCantidades('', '',)
+      // this.getBarChart1(this.labels, this.dataChart1, this.dataChart2, this.dataChart3,'', '','chart-1', 'Lima', 'Chorrillos', 'Surco','line');
+  
+        this.isGrafico1 = true;
+        this.isTable1 = false;
+      }
+    } else if (id == 2) {
+      if (position == 0) {
+        this.isTable2 = true;
+        this.isGrafico2 = false;
+      } else {
+        this.labels = [];
+        this.dataChart4 = [];
+        this.dataChart5 = [];
+        this.dataChart6 = []; 
+        if(this.columns6){
+          this.columns6.map(item =>{
+            if(item.prop !== 'indicador' && item.prop !== 'total' && item.prop !== 'prom'){
+              this.labels.push(item.name);
+            }
+          });
+        }
+        console.log(this.rows6)
+        if(this.rows6){
+          this.rows6.map(item =>{
+            if(item.indicador.trim() === '% ordenes emitidas por atenciones'){
+              this.dataChart4.push(item.per1);
+              this.dataChart4.push(item.per2);
+              this.dataChart4.push(item.per3);
+              this.dataChart4.push(item.per4);
+              this.dataChart4.push(item.per5);
+              this.dataChart4.push(item.per6);
+              this.dataChart4.push(item.per7);
+              this.dataChart4.push(item.per8);
+              this.dataChart4.push(item.per9);
+              this.dataChart4.push(item.per10);
+              this.dataChart4.push(item.per11);
+              this.dataChart4.push(item.per12);
+            }else  if(item.indicador.trim() === '% ordenes compradas por atenciones'){
+              this.dataChart5.push(item.per1);
+              this.dataChart5.push(item.per2);
+              this.dataChart5.push(item.per3);
+              this.dataChart5.push(item.per4);
+              this.dataChart5.push(item.per5);
+              this.dataChart5.push(item.per6);
+              this.dataChart5.push(item.per7);
+              this.dataChart5.push(item.per8);
+              this.dataChart5.push(item.per9);
+              this.dataChart5.push(item.per10);
+              this.dataChart5.push(item.per11);
+              this.dataChart5.push(item.per12);
+            }
+          })
+        }
+        this.context2 = 'chart-2'; 
+        this.data = this.chartService.getChartDataBarLinealx2(this.labels, this.dataChart4, this.dataChart5, '% ordenes compradas por atenciones', '% ordenes compradas por atenciones','line')
+        this.options1 = this.chartService.getChartOptionsPocentajes('', '',)
+        // this.getBarChart1(this.labels, this.dataChart4, this.dataChart5, this.dataChart6,'', '','chart-1', 'CESADO', 'CONTINUADOR', 'NUEVO','line');
+  
+        this.isGrafico2 = true;
+        this.isTable2 = false;
+      }
+    } else if (id == 3) {
+      if (position == 0) {
+        this.isTable3 = true;
+        this.isGrafico3 = false;
+      } else {
+        this.labels = [];
+        this.dataChart7 = [];
+        this.dataChart8 = [];
+        this.dataChart9 = []; 
+        if(this.columns7){
+          this.columns7.map(item =>{
+            if(item.prop !== 'indicador' && item.prop !== 'total' && item.prop !== 'prom'){
+              this.labels.push(item.name);
+            }
+          });
+        }
+        console.log(this.rows7)
+        if(this.rows7){
+          this.rows7.map(item =>{
+            if(item.indicador.trim() === '% ordenes emitidas por paciente atendido'){
+              this.dataChart7.push(item.per1);
+              this.dataChart7.push(item.per2);
+              this.dataChart7.push(item.per3);
+              this.dataChart7.push(item.per4);
+              this.dataChart7.push(item.per5);
+              this.dataChart7.push(item.per6);
+              this.dataChart7.push(item.per7);
+              this.dataChart7.push(item.per8);
+              this.dataChart7.push(item.per9);
+              this.dataChart7.push(item.per10);
+              this.dataChart7.push(item.per11);
+              this.dataChart7.push(item.per12);
+            }else  if(item.indicador.trim() === '% ordenes compradas por paciente atendido'){
+              this.dataChart8.push(item.per1);
+              this.dataChart8.push(item.per2);
+              this.dataChart8.push(item.per3);
+              this.dataChart8.push(item.per4);
+              this.dataChart8.push(item.per5);
+              this.dataChart8.push(item.per6);
+              this.dataChart8.push(item.per7);
+              this.dataChart8.push(item.per8);
+              this.dataChart8.push(item.per9);
+              this.dataChart8.push(item.per10);
+              this.dataChart8.push(item.per11);
+              this.dataChart8.push(item.per12);
+            }
+          })
+        } 
+        this.context3 = 'chart-3';                                    
+        this.data = this.chartService.getChartDataBarLinealx2(this.labels, this.dataChart7, this.dataChart8, '% ordenes emitidas por paciente atendido', '% ordenes compradas por paciente atendido','line')
+        this.options1 = this.chartService.getChartOptionsPocentajes('', '',)
+        this.isGrafico3 = true;
+        this.isTable3 = false;
+        
+      }
+    } else if (id == 4) {
+      if (position == 0) {
+        this.isTable4 = true;
+        this.isGrafico4 = false;
+      } else {
+        this.labels = [];
+        this.dataChart10 = [];
+        this.dataChart11 = [];
+        this.dataChart12 = []; 
+        if(this.columns8){
+          this.columns8.map(item =>{
+            if(item.prop !== 'indicador' && item.prop !== 'total' && item.prop !== 'prom'){
+              this.labels.push(item.name);
+            }
+          });
+        }
+        console.log(this.rows8)
+        if(this.rows8){
+          this.rows8.map(item =>{
+            if(item.indicador.trim() === '% ordenes compradas'){
+              this.dataChart10.push(item.per1);
+              this.dataChart10.push(item.per2);
+              this.dataChart10.push(item.per3);
+              this.dataChart10.push(item.per4);
+              this.dataChart10.push(item.per5);
+              this.dataChart10.push(item.per6);
+              this.dataChart10.push(item.per7);
+              this.dataChart10.push(item.per8);
+              this.dataChart10.push(item.per9);
+              this.dataChart10.push(item.per10);
+              this.dataChart10.push(item.per11);
+              this.dataChart10.push(item.per12);
+            }else  if(item.indicador.trim() === '% ordenes compradas parcialmente'){
+              this.dataChart11.push(item.per1);
+              this.dataChart11.push(item.per2);
+              this.dataChart11.push(item.per3);
+              this.dataChart11.push(item.per4);
+              this.dataChart11.push(item.per5);
+              this.dataChart11.push(item.per6);
+              this.dataChart11.push(item.per7);
+              this.dataChart11.push(item.per8);
+              this.dataChart11.push(item.per9);
+              this.dataChart11.push(item.per10);
+              this.dataChart11.push(item.per11);
+              this.dataChart11.push(item.per12);
+            }else  if(item.indicador.trim() === '% ordenes compradas totalmente'){
+              this.dataChart12.push(item.per1);
+              this.dataChart12.push(item.per2);
+              this.dataChart12.push(item.per3);
+              this.dataChart12.push(item.per4);
+              this.dataChart12.push(item.per5);
+              this.dataChart12.push(item.per6);
+              this.dataChart12.push(item.per7);
+              this.dataChart12.push(item.per8);
+              this.dataChart12.push(item.per9);
+              this.dataChart12.push(item.per10);
+              this.dataChart12.push(item.per11);
+              this.dataChart12.push(item.per12);
+            }
+          })
+        }
+        this.context4 = 'chart-4'; 
+        this.data = this.chartService.getChartDataBarLinealx3(this.labels, this.dataChart10, this.dataChart11, this.dataChart12,'% ordenes compradas', '% ordenes compradas totalmente','% ordenes compradas totalmente','line')
+        this.options1 = this.chartService.getChartOptionsPocentajes('', '',)
+        this.isGrafico4 = true;
+        this.isTable4 = false;
+      }
+    } 
   }
 }
 

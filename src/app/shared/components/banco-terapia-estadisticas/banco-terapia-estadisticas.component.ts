@@ -209,13 +209,13 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
   checkBoxesOps1: any[] = [
     {
       id: '1a',
-      label: 'En Montos',
+      label: 'Montos',
       template: null,
       value: true
     },
     {
       id: '2a',
-      label: 'En Cantidad',
+      label: 'Cantidad',
       template: null,
       value: false
     }
@@ -223,13 +223,13 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
   checkBoxesOps2: any[] = [
     {
       id: '1b',
-      label: 'En Montos',
+      label: 'Montos',
       template: null,
       value: true
     },
     {
       id: '2b',
-      label: 'En Cantidad',
+      label: 'Cantidad',
       template: null,
       value: false
     }
@@ -237,13 +237,13 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
   checkBoxesOps3: any[] = [
     {
       id: '1c',
-      label: 'En Montos',
+      label: 'Montos',
       template: null,
       value: true
     },
     {
       id: '2c',
-      label: 'En Cantidad',
+      label: 'Cantidad',
       template: null,
       value: false
     }
@@ -251,13 +251,13 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
   checkBoxesOps4: any[] = [
     {
       id: '1d',
-      label: 'En Montos',
+      label: 'Montos',
       template: null,
       value: true
     },
     {
       id: '2d',
-      label: 'En Cantidad',
+      label: 'Cantidad',
       template: null,
       value: false
     }
