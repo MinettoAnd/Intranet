@@ -231,33 +231,27 @@
                                           </div>
                                         </div>
                                         <div #collapse5="ngbCollapse" [(ngbCollapse)]="isCollapsed5">
-                                            <!-- <div class="row" style="align-items: center;justify-content: space-between;">
+                                            <div class="row" style="align-items: center;justify-content: space-between;">
                                               <ul class="list-group list-group-horizontal list-group-flush">
                                                 <li class="list-group-item border-0 pl-0">
-                                                  <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(5)">
-                                                    <i class="fa fa-external-link"></i>
-                                                    Copiar tabla
+                                                  <button type="button" (click)="showTableDasboard(1, 0)"
+                                                    class="btn-shadow mr-3 btn btn-info">
+                                                    <i class="pe-7s-credit"></i>
                                                   </button>
-                                                </li>
-                                                <li class="list-group-item border-0 pl-0">
-                                                  <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(5)">
-                                                    <i class="fa fa-external-link"></i>
-                                                    Exportar tabla a Excel
+                                                  <button type="button" (click)="showTableDasboard(1, 1)" class="btn-shadow btn btn-info float-right">
+                                                    <i class="pe-7s-graph3"></i>
                                                   </button>
                                                 </li>
                                               </ul>
-                                              <div class="mr-4">
-                                                <select class="form-control form-select" style="width: auto!important;" (change)="tipoChangePer($event.target.value)" [(ngModel)]="selectedOptionPeriodo">
-                                                  <option  *ngFor="let periodo of periodos"
-                                                      [value]="periodo.value"
-                                                  >
-                                                      {{ periodo.value }}
-                                                  </option>
-                                                </select>
+                                            </div>
+                                            <div class="card-body" *ngIf="isGrafico1">
+                                              <div class="d-block" *ngIf="!isLoading1">
+                                                  <app-barchar 
+                                                  [chartData]="data" [chartOptions]="options1"  [context]="context1"
+                                                  ></app-barchar>
                                               </div>
-                                              
-                                            </div> -->
-                                            <ngx-datatable #myTable5
+                                            </div>
+                                            <ngx-datatable #myTable5 *ngIf="isTable1"
                                             class="bootstrap table table-striped"
                                             id="datatablele"
                                               [columns]="columns5"
@@ -285,11 +279,11 @@
                                                 </ng-template>
                                               </ngx-datatable-column>
                                             </ngx-datatable>
-                                            <div class="card">
+                                            <!-- <div class="card">
                                               <div class="card-header">
                                                 <div class="row" style="align-items: center;justify-content: space-between;">
                                                   <div class="">
-                                                      <p class="box-title">Resumen de Planilla Mensual en Soles</p>
+                                                      <p class="box-title">Exámenes de Imágenes</p>
                                                   </div>
                                                   <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
                                                     
@@ -309,12 +303,12 @@
                                                     </canvas>
                                                   </div>
                                               </div>
-                                            </div>
-                                            <div class="card">
+                                            </div> -->
+                                            <!-- <div class="card">
                                               <div class="card-header">
                                                 <div class="row" style="align-items: center;justify-content: space-between;">
                                                   <div class="">
-                                                      <p class="box-title">Resumen de Colaboradores por Planilla Mensual</p>
+                                                      <p class="box-title">Exámenes de Imágenes - Atenciones por Sede</p>
                                                   </div>
                                                   <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
                                                     
@@ -334,7 +328,7 @@
                                                     </canvas>
                                                   </div>
                                               </div>
-                                            </div>
+                                            </div> -->
                                         </div>
                                       </div>
                                       
@@ -354,32 +348,27 @@
                                           </div>
                                         </div>
                                         <div #collapse6="ngbCollapse" [(ngbCollapse)]="isCollapsed6">
-                                            <!-- <div class="row" style="align-items: center;justify-content: space-between;">
+                                            <div class="row" style="align-items: center;justify-content: space-between;">
                                               <ul class="list-group list-group-horizontal list-group-flush">
                                                 <li class="list-group-item border-0 pl-0">
-                                                  <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(6)">
-                                                    <i class="fa fa-external-link"></i>
-                                                    Copiar tabla
+                                                  <button type="button" (click)="showTableDasboard(2, 0)"
+                                                    class="btn-shadow mr-3 btn btn-info">
+                                                    <i class="pe-7s-credit"></i>
                                                   </button>
-                                                </li>
-                                                <li class="list-group-item border-0 pl-0">
-                                                  <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(6)">
-                                                    <i class="fa fa-external-link"></i>
-                                                    Exportar tabla a Excel
+                                                  <button type="button" (click)="showTableDasboard(2, 1)" class="btn-shadow btn btn-info float-right">
+                                                    <i class="pe-7s-graph3"></i>
                                                   </button>
                                                 </li>
                                               </ul>
-                                              <div class="mr-4">
-                                                <select class="form-control form-select" style="width: auto!important;" (change)="tipoChangePer($event.target.value)" [(ngModel)]="selectedOptionPeriodo">
-                                                  <option  *ngFor="let periodo of periodos"
-                                                      [value]="periodo.value"
-                                                  >
-                                                      {{ periodo.value }}
-                                                  </option>
-                                                </select>
+                                            </div>
+                                            <div class="card-body" *ngIf="isGrafico2">
+                                              <div class="d-block" >
+                                                  <app-barchar 
+                                                  [chartData]="data" [chartOptions]="options1"  [context]="context2"
+                                                  ></app-barchar>
                                               </div>
-                                            </div> -->
-                                            <ngx-datatable #myTable6
+                                            </div>
+                                            <ngx-datatable #myTable6 *ngIf="isTable2"
                                             class="bootstrap table table-striped"
                                             id="datatablele"
                                               [columns]="columns6"
@@ -400,11 +389,11 @@
                                                 </ng-template>
                                               </ngx-datatable-column>
                                             </ngx-datatable>
-                                            <div class="card">
+                                            <!-- <div class="card">
                                               <div class="card-header">
                                                 <div class="row" style="align-items: center;justify-content: space-between;">
                                                   <div class="">
-                                                      <p class="box-title">Resumen de Colaboradores por Planilla Mensual</p>
+                                                      <p class="box-title">% de Ordenes Emitidas por Atención por Sede</p>
                                                   </div>
                                                   <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
                                                     
@@ -424,8 +413,28 @@
                                                     </canvas>
                                                   </div>
                                               </div>
+                                            </div> -->
+                                            <div class="row" style="align-items: center;justify-content: space-between;">
+                                              <ul class="list-group list-group-horizontal list-group-flush">
+                                                <li class="list-group-item border-0 pl-0">
+                                                  <button type="button" (click)="showTableDasboard(3, 0)"
+                                                    class="btn-shadow mr-3 btn btn-info">
+                                                    <i class="pe-7s-credit"></i>
+                                                  </button>
+                                                  <button type="button" (click)="showTableDasboard(3, 1)" class="btn-shadow btn btn-info float-right">
+                                                    <i class="pe-7s-graph3"></i>
+                                                  </button>
+                                                </li>
+                                              </ul>
                                             </div>
-                                            <ngx-datatable #myTable7
+                                            <div class="card-body" *ngIf="isGrafico3">
+                                              <div class="d-block" *ngIf="!isLoading3">
+                                                  <app-barchar 
+                                                  [chartData]="data" [chartOptions]="options1"  [context]="context3"
+                                                  ></app-barchar>
+                                              </div>
+                                            </div>
+                                            <ngx-datatable #myTable7 *ngIf="isTable3"
                                             class="bootstrap table table-striped mt-3"
                                             id="datatablele"
                                               [columns]="columns7"
@@ -443,7 +452,27 @@
                                                 </ng-template>
                                               </ngx-datatable-column>
                                             </ngx-datatable>
-                                            <ngx-datatable #myTable8
+                                            <div class="row" style="align-items: center;justify-content: space-between;">
+                                              <ul class="list-group list-group-horizontal list-group-flush">
+                                                <li class="list-group-item border-0 pl-0">
+                                                  <button type="button" (click)="showTableDasboard(4, 0)"
+                                                    class="btn-shadow mr-3 btn btn-info">
+                                                    <i class="pe-7s-credit"></i>
+                                                  </button>
+                                                  <button type="button" (click)="showTableDasboard(4, 1)" class="btn-shadow btn btn-info float-right">
+                                                    <i class="pe-7s-graph3"></i>
+                                                  </button>
+                                                </li>
+                                              </ul>
+                                            </div>
+                                            <div class="card-body" *ngIf="isGrafico4">
+                                              <div class="d-block" *ngIf="!isLoading4">
+                                                  <app-barchar 
+                                                  [chartData]="data" [chartOptions]="options1"  [context]="context4"
+                                                  ></app-barchar>
+                                              </div>
+                                            </div>
+                                            <ngx-datatable #myTable8 *ngIf="isTable4"
                                             class="bootstrap table table-striped mt-3"
                                             id="datatablele"
                                               [columns]="columns8"
