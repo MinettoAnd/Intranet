@@ -569,8 +569,14 @@
                                                   let-row="row">
                                                   <div>
                                                     <span *ngIf="column.prop == 'grupo' || column.prop == 'especialidad'">{{value}}</span>
+                                                    <span *ngIf="column.prop !== 'grupo' && column.prop !== 'especialidad' && row.grupo.indexOf('%') === -1 && row.grupo.indexOf('Pago') === -1">{{value  | number : '1.0' }}</span>
+                                                    <span *ngIf="column.prop !== 'grupo' && column.prop !== 'especialidad' && row.grupo.indexOf('%') !== -1">{{value  | number : '1.2-2' }} %</span>
+                                                    <span *ngIf="column.prop !== 'grupo' && column.prop !== 'especialidad' && row.grupo.indexOf('Pago') !== -1">S/ {{value  | number : '1.2-2' }}</span>
+                                                    
+                                                  <!--
                                                     <span *ngIf="column.prop !== 'grupo' && column.prop !== 'especialidad' && row.grupo !== 'Porcentaje'">{{value  | number : '1.0' }}</span>
                                                     <span *ngIf="column.prop !== 'grupo' && column.prop !== 'especialidad' && row.grupo === 'Porcentaje'">{{value  | number : '1.2-2' }} %</span>
+                                                  -->  
                                                     <!-- <span *ngIf="row.grupo === 'Porcentaje'">{{row.grupo }} %</span>  -->
                                                   </div>
                                                 </ng-template>

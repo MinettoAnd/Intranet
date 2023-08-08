@@ -773,7 +773,9 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
             });
             console.log(707, this.grupos)
             this.temp1 = this.rows9;
-            this.rows9filtered = this.rows9.filter(item => item.grupo === 'Porcentaje');
+          //  this.rows9filtered = this.rows9.filter(item => item.grupo === 'Porcentaje');
+            this.rows9filtered = this.rows9.filter(item => item.grupo === '% Exámenes Compradas / Emitidos');
+            
           }
         }else{
           Swal.close();
