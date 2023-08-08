@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { CustomNumberPipe } from 'src/app/pipes/customNumber.pipe';
-
+import { NumberDecimalPipe } from 'src/app/pipes/numberDecimal.pipe';
 @Injectable({
   providedIn: 'root'
 })
 export class ChartService {
 
-  constructor(private  _cnp: CustomNumberPipe) { }
+  constructor(private  _cnp: CustomNumberPipe, private  _dp: CustomNumberPipe) { }
   getChartData2(chartLabels1, chartData1, chartData2, title, title2, typeChart) {
     const data = {
       labels: chartLabels1,
@@ -390,8 +390,8 @@ export class ChartService {
           categoryPercentage: 1,
           label: title,
           // borderColor: '#28a74559',
-          // borderWidth: 4,
-          fill: false,
+          borderWidth: 1,
+          // fill: false,
           data: chartData1,
           backgroundColor: '#28a74535',
           // backgroundColor: ['#2266d3', '#ffa408', '#eb445a', '#17a2b8', '#fd7e14', '#adb5bd','#ffc107', '#28a745', '#6610f2','#20c997'],
@@ -516,6 +516,14 @@ export class ChartService {
             beginAtZero: true,
             // max: 300,
             // min: 0
+            callback: function(value, index, values) {
+              let partesNumero = value.toString().split('.');
+  
+              partesNumero[0] = partesNumero[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            
+              return partesNumero.join('.');
+              // return '$' + value;
+            }
           }
         }],
       },
@@ -544,7 +552,13 @@ export class ChartService {
             weight: 'bold'
           },
           formatter: function (dato, ctx) {
-              return Math.round(dato * 100) / 100; 
+              // return Math.round(dato * 100) / 100; 
+              let partesNumero = dato.toString().split('.');
+  
+              partesNumero[0] = partesNumero[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            
+              return partesNumero.join('.');
+              // return this.separadorDeMiles(dato);
             },
         }
       },
@@ -561,7 +575,12 @@ export class ChartService {
                 // tooltipItem.xLabel = 'Día: ' + tooltipItem.xLabel + '   ' ;
                 // tooltipItem.label = 'Día: ' + tooltipItem.Label + '   ' ;
                 
-                return label;
+                // return label;
+              let partesNumero = label.toString().split('.');
+  
+              partesNumero[0] = partesNumero[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            
+              return partesNumero.join('.');
             },
             title: function(tooltipItem, data) {
              var title = 'Mes: ' + tooltipItem[0].xLabel + '   ' ;
@@ -738,4 +757,5 @@ export class ChartService {
     };
     return options;
   }
+
 }

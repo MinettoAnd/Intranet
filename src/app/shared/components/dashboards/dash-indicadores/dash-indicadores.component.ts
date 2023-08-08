@@ -570,7 +570,19 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
     //   pageNumber: this.page.pageNumber,
     //   size: this.page.size
     // };
-
+    this.rows1 = [];
+    this.rows2 = [];
+    this.rows3 = [];
+    this.rows4 = [];
+    this.rows5 = [];
+    this.rows6 = [];
+    this.rows7 = [];
+    this.rows8 = [];
+    this.rows9 = [];
+    this.rows10 = [];
+    this.rows9filtered = [];
+    this.rows10filtered = [];
+    this.temp1 = [];
     this.loading();
     console.log(this.parameters)
     this.tableApiservice.getTablaResumenMensual(this.parameters).subscribe(
@@ -743,7 +755,7 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
 
     this.tableApiservice.getResumenEspecialidadMensual1(this.parameters).subscribe(
       (response) => {
-        // this.rows = [];
+        
         if(response.data.success){
           this.data = response.data ? response.data : [];
           this.message = this.data.titulo;
@@ -752,16 +764,17 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
           this.rows9 = this.data.tabla_resumen_especialidad_mensual_01;
           console.log(778, this.rows9)
           this.grupos = [];
-          this.rows9.map( item => {
+          if(this.rows9){
+            this.rows9.map( item => {
                     
-            if (!this.grupos.includes(item.grupo)){
-              this.grupos.push(item.grupo);
-            }
-          });
-          console.log(707, this.grupos)
-          this.temp1 = this.rows9;
-          this.rows9filtered = this.rows9.filter(item => item.grupo === 'Porcentaje');
-
+              if (!this.grupos.includes(item.grupo)){
+                this.grupos.push(item.grupo);
+              }
+            });
+            console.log(707, this.grupos)
+            this.temp1 = this.rows9;
+            this.rows9filtered = this.rows9.filter(item => item.grupo === 'Porcentaje');
+          }
         }else{
           Swal.close();
         }
@@ -1218,7 +1231,7 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
               this.dataChart2.push(item.per10);
               this.dataChart2.push(item.per11);
               this.dataChart2.push(item.per12);
-            }else  if(item.indicador.trim() === 'Cantidad por Items Comprados'){
+            }else  if(item.indicador.trim() === 'Ordenes Compradas'){
               this.dataChart3.push(item.per1);
               this.dataChart3.push(item.per2);
               this.dataChart3.push(item.per3);
@@ -1236,7 +1249,7 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
         }   
         console.log('eje x', this.dataChart1)
       this.context1 = 'chart-1';                                    
-      this.data = this.chartService.getChartDataBarLinealx3(this.labels, this.dataChart1, this.dataChart2,this.dataChart3,'Atenciones', 'Ordenes Emitidas','Cantidad por Items Comprados','line')
+      this.data = this.chartService.getChartDataBarLinealx3(this.labels, this.dataChart1, this.dataChart2,this.dataChart3,'Atenciones', 'Ordenes Emitidas','Ordenes Compradas','line')
       this.options1 = this.chartService.getChartOptionsCantidades('', '',)
       // this.getBarChart1(this.labels, this.dataChart1, this.dataChart2, this.dataChart3,'', '','chart-1', 'Lima', 'Chorrillos', 'Surco','line');
   

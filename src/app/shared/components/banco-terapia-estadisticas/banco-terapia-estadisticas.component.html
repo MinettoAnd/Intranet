@@ -967,13 +967,17 @@
                                                         </div>
                                                     </div>
                                                     
-                                                    <ngx-datatable #myTable11 class="bootstrap table table-striped " id="datatablele" [columns]="columns11" [rows]="rows11filtered" [columnMode]="ColumnMode.flex" [headerHeight]="50" [rowHeight]="$any('auto')" [scrollbarH]="true" (page)="setPage($event)" [summaryRow]="enableSummary"
-                                                    [summaryPosition]="summaryPosition"
-                                                    [summaryHeight]="35">
-                                                        <ngx-datatable-column [headerClass]="column.headerClass" [cellClass]="column.cellClass" [flexGrow]="1" [minWidth]="90" [summaryFunc]="column.prop == 'Campo' ? summaryNull:summaryForAmount" *ngFor="let column of columns11; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                                    <ngx-datatable #myTable11 class="bootstrap table table-striped " 
+                                                    id="datatablele" [columns]="columns11" 
+                                                    [rows]="rows11filtered" [columnMode]="ColumnMode.flex" 
+                                                    [headerHeight]="50" [rowHeight]="$any('auto')" 
+                                                    [scrollbarH]="true" (page)="setPage($event)" 
+                                                    [rowClass]="getRowClass"
+                                                    >
+                                                        <ngx-datatable-column [headerClass]="column.headerClass" [cellClass]="column.cellClass" [flexGrow]="1" [minWidth]="90"  *ngFor="let column of columns11; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                             <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
                                                                 <div>
-                                                                    <span  *ngIf="column.prop === 'Campo'">{{value }}</span>
+                                                                    <span  *ngIf="column.prop === 'Campo'" [ngClass]="{'row-paddin': row.Campo !== 'CIA. SEGUROS/CONVENIOS' &&  row.Campo !=='INSTITUCIONAL/PRIVADO' &&  row.Campo !== 'MADRE NIÑO' &&  row.Campo !== 'PROGRAMAS DE SALUD' }">{{value }}</span>
                                                                     <span  *ngIf="column.prop !== 'Campo' && row.solesCantidad === 'soles'">{{value  | currency }}</span>
                                                                     <span  *ngIf="column.prop !== 'Campo' && row.solesCantidad === 'cantidad'">{{value | number: '1.0-0' }}</span>
                                                                 </div>

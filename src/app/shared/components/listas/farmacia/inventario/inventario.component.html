@@ -1,4 +1,4 @@
-<h4 class="card-title" *ngIf="action">PRODUCCIÓN DE GTH - Al Periodo {{selectedOptionPeriodo}}</h4>
+<h4 class="card-title" *ngIf="action"><i class="fa fa-line-chart"></i> Inventario de Almacenes - Sede {{parameters.sedeTXT}}</h4>
 <app-panel-cabecera [panelCabecera] = "panelOptions" *ngIf="action"></app-panel-cabecera>
 <div class="app-content content" *ngIf="action">
     <div class="content-wrapper">
@@ -11,16 +11,13 @@
             <div class="col-12">
               <div class="app-content content">
                 <app-content-wrapper>
-                  <div class="app-content content">
-                    <app-content-wrapper>
                       <app-content-inventario 
                       
                       [columns1]="columns1" [rows1]="rows1"
                       [temp]="rows1"
                       [tabs]="tabs">
                       </app-content-inventario>
-                    </app-content-wrapper>
-                  </div>
+                    
                 </app-content-wrapper>
               </div>
             </div>

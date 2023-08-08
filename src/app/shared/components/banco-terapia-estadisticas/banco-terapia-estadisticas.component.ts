@@ -372,8 +372,9 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
     }
   }
   getRowClass(row) {
+    console.log('getclass', row)
     return {
-      'totals': row.Campo.includes('TOTAL'), 'sub-totals': row.Campo === 'LIMA' || row.Campo === 'CHORRILLOS' || row.Campo === 'SURCO' 
+      'totals': row.Campo.includes('TOTAL'), 'sub-totals': row.Campo === 'CIA. SEGUROS/CONVENIOS' || row.Campo === 'INSTITUCIONAL/PRIVADO' || row.Campo === 'MADRE NIÑO' || row.Campo === 'PROGRAMAS DE SALUD' 
     };
   }
   getRowClass1(row) {
@@ -2525,7 +2526,7 @@ getBarChartB(chartLabels1, chartData1, chartData2,chartData3,chartData4,chartDat
     }
   }
   summaryForAmount(cells: any){
-    console.log(1215, cells);
+    // console.log(1215, cells);
     let count: number = 0;
     let re = /\,/gi;
     let re1 = /\S\/./gi;
