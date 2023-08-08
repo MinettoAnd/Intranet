@@ -160,7 +160,7 @@ export class SedeComponent implements OnInit {
       const parameters = {
         // periodo: this.periodo,
         sede : form.id_sede,
-        sedeTXT : form.id_sede === '0000' ? 'Todos' : form.id_sede === '0001' ? 'Lima' :  form.id_sede === '0002' ? 'Chorrillos' : 'Surco'
+        sedeTXT : form.id_sede === '000' ? 'Todas' : form.id_sede === '001' ? 'Lima' :  form.id_sede === '002' ? 'Chorrillos' : 'Surco'
         // anio : form.anio,
       }
       this.parameters.emit(parameters);

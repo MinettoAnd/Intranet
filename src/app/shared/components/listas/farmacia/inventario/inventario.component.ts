@@ -534,6 +534,7 @@ export class InventarioComponent implements OnInit {
    }
  }
   setPage(pageInfo) {
+    this.rows1 = [];
     console.log(pageInfo);
     this.selectedOptionPeriodo = this.parameters.periodo;
     // this.page.pageNumber = pageInfo.offset;
@@ -546,7 +547,7 @@ export class InventarioComponent implements OnInit {
     // };
 
     this.loading();
-    console.log(this.parameters)
+    console.log(549, this.parameters)
     this.tableApiservice.getStock(this.parameters).subscribe(
       (response) => {
         // this.rows = [];
