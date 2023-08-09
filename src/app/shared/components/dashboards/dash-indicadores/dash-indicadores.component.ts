@@ -1591,10 +1591,8 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
   }
 
   filtrarDatosTblResGrpExEsp(opcFiltro: string) {
-    // this.optFiltroResGrpExEsp = opcFiltro;
     if (opcFiltro.length > 0) {
-      const filtered = this.rowsFResGrpExEsp = this.rowsResGrpExExmEsp.filter(item => item.especialidad === opcFiltro);
-      // const filtered = this.rowsResGrpExExmEsp.filter(item => item.especialidad === opcFiltro);
+      const filtered = this.rowsResGrpExEsp.filter(item => item.especialidad === opcFiltro);
       this.rowsFResGrpExEsp = [...filtered];
      }
   }
@@ -1602,13 +1600,10 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
   filtrarDatosTblResGrpExExmEsp() {
     const filtroEsp: string = this.optFltrEspResGrpExExmEsp;
     const filtroExm: string = this.optFiltroExmResGrpExExmEsp;
-    // this.optFiltroResGrpExEsp = opcFiltro;
 
     if (filtroEsp.length > 0 && filtroExm.length > 0) {
-      let filtered = this.rowsFResGrpExExmEsp = this.rowsResGrpExExmEsp.filter(item => item.especialidad === filtroEsp)
+      let filtered = this.rowsResGrpExExmEsp.filter(item => item.especialidad === filtroEsp)
                                             .filter(item => item.Examen === filtroExm);
-      // filtered = this.rowsFResGrpExExmEsp = this.filtered.filter(item => item.Examen === filtroExm);
-      // filtered = this.filtered.filter(item => item.Examen === filtroExm);
 
       this.rowsFResGrpExExmEsp = [...filtered];
     }
@@ -1616,14 +1611,12 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
 
   filtrarPorValorTblResGrpExEsp(event, selectedOption) {
     const input = event.target.value.toLowerCase();
-    // console.log(838, input);
-    // filter our data
+
     if (input.length > 0) {
-      const filtered = this.rowsFResGrpExEsp
+      const filtered = this.rowsResGrpExEsp
         .filter(el =>
           Object.values(el).find( val => val?.toString().toLowerCase().includes(input) ) != undefined
         );
-        // console.log(filtered);
       this.rowsFResGrpExEsp = [...filtered]
     } else {
       this.rowsFResGrpExEsp = [...this.rowsResGrpExEsp.filter(item => item.grupo === selectedOption)]
@@ -1632,14 +1625,13 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
 
   filtrarPorValorTblResGrpExExmEsp(event, selectedOption) {
     const input = event.target.value.toLowerCase();
-    // console.log(838, input);
-    // filter our data
+
     if (input.length > 0) {
-      const filtered = this.rowsFResGrpExExmEsp
+      const filtered = this.rowsResGrpExExmEsp
         .filter(el =>
           Object.values(el).find( val => val?.toString().toLowerCase().includes(input) ) != undefined
         );
-        // console.log(filtered);
+
       this.rowsFResGrpExExmEsp = [...filtered]
     } else {
       this.rowsFResGrpExExmEsp = [...this.rowsResGrpExExmEsp.filter(item => item.grupo === selectedOption)]
