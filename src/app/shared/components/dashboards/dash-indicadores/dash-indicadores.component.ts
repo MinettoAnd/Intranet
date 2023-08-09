@@ -861,7 +861,7 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
             });
 
             this.optFiltroResGrpExEsp = this.fltroEspdsResGrpExEsp[0];
-            this.rowsFResGrpExEsp = this.rowsResGrpExEsp.filter(item => item.especialidad === this.selectedOptionTipo);
+            this.rowsFResGrpExEsp = this.rowsResGrpExEsp.filter(item => item.especialidad === this.optFiltroResGrpExEsp);
           }
 
           // TODO mover al aúltimo API petición
