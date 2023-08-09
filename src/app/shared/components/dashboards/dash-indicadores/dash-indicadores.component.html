@@ -707,7 +707,7 @@
                                           <div style="display:flex;align-items: center; justify-content:flex-end">
                                             <select
                                               class="form-control form-select"
-                                              (change)="filtrarDatosTblResGrpExEsp($event.target.value)"
+                                              (change)="filtrarDatosTblResGrpExEsp()"
                                               style="width:auto!important;"
                                               [(ngModel)]="optFiltroResGrpExEsp"
                                             >
@@ -719,13 +719,27 @@
                                                 {{val}}
                                               </option>
                                             </select>
+                                            <select
+                                              class="form-control form-select"
+                                              (change)="filtrarDatosTblResGrpExEsp()"
+                                              style="width:auto!important;"
+                                              [(ngModel)]="optFiltroGruposResGrpExEsp"
+                                            >
+                                              <option
+                                                *ngFor="let grupo of fltroGruposResGrpExEsp; let i = index"
+                                                [value]="grupo"
+                                                [selected]="grupo === optFiltroGruposResGrpExEsp"
+                                              >
+                                                {{grupo}}
+                                              </option>
+                                            </select>
                                             <div style="display:flex;margin:15px;align-items: center;">
                                               <span>Buscar</span>&nbsp;&nbsp;
                                               <input
                                                 type="text"
                                                 style='padding:6px;width:100%;'
                                                 placeholder="por cualquier campo"
-                                                (keyup)='filtrarPorValorTblResGrpExEsp($event, optFiltroResGrpExEsp)'>
+                                                (keyup)='filtrarPorValorTblResGrpExEsp($event)'>
                                             </div>
                                           </div>
                                         </div>
@@ -793,7 +807,7 @@
                                           <div style="display:flex;align-items: center; justify-content:flex-end">
                                             <select
                                               class="form-control form-select"
-                                              (change)="filtrarDatosTblResGrpExExmEsp($event.target.value)"
+                                              (change)="filtrarDatosTblResGrpExExmEsp()"
                                               style="width:auto!important;"
                                               [(ngModel)]="optFltrEspResGrpExExmEsp"
                                             >
@@ -808,7 +822,7 @@
 
                                             <select
                                               class="form-control form-select"
-                                              (change)="filtrarDatosTblResGrpExExmEsp($event.target.value)"
+                                              (change)="filtrarDatosTblResGrpExExmEsp()"
                                               style="width:auto!important;"
                                               [(ngModel)]="optFiltroExmResGrpExExmEsp"
                                             >
@@ -818,6 +832,20 @@
                                                 [selected]="val === optFiltroExmResGrpExExmEsp"
                                               >
                                                 {{val}}
+                                              </option>
+                                            </select>
+                                            <select
+                                              class="form-control form-select"
+                                              (change)="filtrarDatosTblResGrpExExmEsp()"
+                                              style="width:auto!important;"
+                                              [(ngModel)]="optFiltroGruposResGrpExExmEsp"
+                                            >
+                                              <option
+                                                *ngFor="let grupo of fltroGruposResGrpExExmEsp; let i = index"
+                                                [value]="grupo"
+                                                [selected]="grupo === optFiltroGruposResGrpExExmEsp"
+                                              >
+                                                {{grupo}}
                                               </option>
                                             </select>
                                             <div style="display:flex;margin:15px;align-items: center;">

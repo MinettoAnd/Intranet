@@ -112,18 +112,22 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
   columns10:any;
 
   public optFiltroResGrpExEsp: string = '';
+  public optFiltroGruposResGrpExEsp: string = '';
   public colsResGrpExEsp: Array<any> = [];
   public rowsResGrpExEsp: Array<any> = [];
   public rowsFResGrpExEsp: Array<any> = [];
   public fltroEspdsResGrpExEsp: Array<any> = [];
+  public fltroGruposResGrpExEsp: Array<any> = [];
 
   public optFltrEspResGrpExExmEsp: string = '';
   public optFiltroExmResGrpExExmEsp: string = '';
+  public optFiltroGruposResGrpExExmEsp: string = '';
   public colsResGrpExExmEsp: Array<any> = [];
   public rowsResGrpExExmEsp: Array<any> = [];
   public rowsFResGrpExExmEsp: Array<any> = [];
   public fltroEspdsResGrpExExmEsp: Array<any> = [];
   public fltroTipExmResGrpExExmEsp: Array<any> = [];
+  public fltroGruposResGrpExExmEsp: Array<any> = [];
 
   especialidad;
   especialidades = [];
@@ -832,11 +836,9 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
         if (response.data.success) {
           this.data = response.data ? response.data : [];
           this.colsResGrpExEsp = this.data.cabecera;
-
           this.rowsResGrpExEsp = this.data.tabla;
           this.fltroEspdsResGrpExEsp = [];
-
-          console.log('9d9d9', this.rowsResGrpExEsp)
+          this.fltroGruposResGrpExEsp = [];
 
           if (this.rowsResGrpExEsp) {
             await new Promise((resolve, reject) => {
@@ -844,6 +846,10 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
                 for (let item of this.rowsResGrpExEsp) {
                   if (!this.fltroEspdsResGrpExEsp.includes(item.especialidad)) {
                     this.fltroEspdsResGrpExEsp.push(item.especialidad);
+                  }
+
+                  if (!this.fltroGruposResGrpExEsp.includes(item.grupo)) {
+                    this.fltroGruposResGrpExEsp.push(item.grupo);
                   }
                 }
 
@@ -855,11 +861,10 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
             });
 
             this.optFiltroResGrpExEsp = this.fltroEspdsResGrpExEsp[0];
-            this.rowsFResGrpExEsp = this.rowsResGrpExEsp.filter(item => item.especialidad === this.optFiltroResGrpExEsp);
-          }
+            this.optFiltroGruposResGrpExEsp = this.fltroGruposResGrpExEsp[0];
 
-          // TODO mover al aúltimo API petición
-          // Swal.close();
+            this.filtrarDatosTblResGrpExEsp();
+          }
         } else {
           Swal.close();
         }
@@ -874,10 +879,7 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
           this.data = response.data ? response.data : [];
           this.colsResGrpExExmEsp = this.data.cabecera;
           this.rowsResGrpExExmEsp = this.data.tabla;
-          // this.grupos = [];
-
-          console.log('xzxx', this.rowsResGrpExExmEsp, this.colsResGrpExExmEsp)
-
+          this.fltroGruposResGrpExExmEsp = [];
 
           if (this.rowsResGrpExExmEsp) {
             await new Promise((resolve, reject) => {
@@ -886,8 +888,13 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
                   if (!this.fltroEspdsResGrpExExmEsp.includes(item.especialidad)) {
                     this.fltroEspdsResGrpExExmEsp.push(item.especialidad);
                   }
+
                   if (!this.fltroTipExmResGrpExExmEsp.includes(item.tipoExamen)) {
                     this.fltroTipExmResGrpExExmEsp.push(item.tipoExamen);
+                  }
+
+                  if (!this.fltroGruposResGrpExExmEsp.includes(item.grupo)) {
+                    this.fltroGruposResGrpExExmEsp.push(item.grupo);
                   }
                 }
 
@@ -900,6 +907,7 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
 
             this.optFltrEspResGrpExExmEsp = this.fltroEspdsResGrpExExmEsp[0];
             this.optFiltroExmResGrpExExmEsp = this.fltroTipExmResGrpExExmEsp[0];
+            this.optFiltroGruposResGrpExExmEsp = this.fltroGruposResGrpExExmEsp[0];
 
             this.filtrarDatosTblResGrpExExmEsp();
           }
@@ -1584,9 +1592,14 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
     } 
   }
 
-  filtrarDatosTblResGrpExEsp(opcFiltro: string) {
-    if (opcFiltro.length > 0) {
-      const filtered = this.rowsResGrpExEsp.filter(item => item.especialidad === opcFiltro);
+  filtrarDatosTblResGrpExEsp() {
+    const filtro: string = this.optFiltroResGrpExEsp;
+    const filtroGrupos: string = this.optFiltroGruposResGrpExEsp;
+
+    if (filtro.length > 0 && filtroGrupos.length > 0) {
+      const filtered = this.rowsResGrpExEsp.filter(item => item.especialidad === filtro)
+                                            .filter(item => item.grupo === filtroGrupos);
+
       this.rowsFResGrpExEsp = [...filtered];
      }
   }
@@ -1594,26 +1607,34 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
   filtrarDatosTblResGrpExExmEsp() {
     const filtroEsp: string = this.optFltrEspResGrpExExmEsp;
     const filtroExm: string = this.optFiltroExmResGrpExExmEsp;
+    const filtroGrupos: string = this.optFiltroGruposResGrpExExmEsp;
 
     if (filtroEsp.length > 0 && filtroExm.length > 0) {
       const filtered = this.rowsResGrpExExmEsp.filter(item => item.especialidad === filtroEsp)
-                                              .filter(item => item.tipoExamen === filtroExm);
+                                              .filter(item => item.tipoExamen === filtroExm)
+                                              .filter(item => item.grupo === filtroGrupos);
 
       this.rowsFResGrpExExmEsp = [...filtered];
     }
   }
 
-  filtrarPorValorTblResGrpExEsp(event, selectedOption) {
+  filtrarPorValorTblResGrpExEsp(event) {
     const input = event.target.value.toLowerCase();
+    const filtro: string = this.optFiltroResGrpExEsp;
+    const filtroGrupos: string = this.optFiltroGruposResGrpExEsp;
 
     if (input.length > 0) {
       const filtered = this.rowsFResGrpExEsp
         .filter(el =>
           Object.values(el).find( val => val?.toString().toLowerCase().includes(input) ) != undefined
         );
+
       this.rowsFResGrpExEsp = [...filtered]
     } else {
-      this.rowsFResGrpExEsp = [...this.rowsResGrpExEsp.filter(item => item.especialidad === selectedOption)]
+      const filtered = this.rowsResGrpExEsp.filter(item => item.especialidad === filtro)
+                                           .filter(item => item.grupo === filtroGrupos);
+
+      this.rowsFResGrpExEsp = filtered;
     }
   }
 
@@ -1621,6 +1642,7 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
     const input = event.target.value.toLowerCase();
     const filtroEsp: string = this.optFltrEspResGrpExExmEsp;
     const filtroExm: string = this.optFiltroExmResGrpExExmEsp;
+    const filtroGrupos: string = this.optFiltroGruposResGrpExExmEsp;
 
     if (input.length > 0) {
       const filtered = this.rowsFResGrpExExmEsp
@@ -1631,7 +1653,8 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
       this.rowsFResGrpExExmEsp = [...filtered]
     } else {
       const filtered = this.rowsResGrpExExmEsp.filter(item => item.especialidad === filtroEsp)
-                                            .filter(item => item.tipoExamen === filtroExm);
+                                              .filter(item => item.tipoExamen === filtroExm)
+                                              .filter(item => item.grupo === filtroGrupos);
 
       this.rowsFResGrpExExmEsp = [...filtered]
     }
