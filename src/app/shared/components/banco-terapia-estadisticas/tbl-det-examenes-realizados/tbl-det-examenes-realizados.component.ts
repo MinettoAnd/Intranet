@@ -37,6 +37,7 @@ export class TblDetExamenesRealizadosComponent implements OnInit {
   public columnMode = ColumnMode;
   public isCollapsed: boolean = false;
   public chbxIdSel: string = 'idDERMont';
+  public valFiltroGrupoExamen: any = 'todos';
 
   public summaryNull = summaryNull;
   public summaryForAmount = summaryForAmount;
@@ -44,20 +45,21 @@ export class TblDetExamenesRealizadosComponent implements OnInit {
   constructor(private exportService: ExportService) { }
 
   ngOnInit(): void {
-    this.filtrarDatos('todo', this.chbxIdSel);
+    this.filtrarDatos(this.chbxIdSel);
+    // this.valFiltroGrupoExamen = this.lstDeExamenes[0];
     // this.data.filter(item => item.solesCantidad === 'soles')
   }
 
-  public onChange(nombreExamen: string): void {
-    this.filtrarDatos(nombreExamen, this.chbxIdSel);
+  public onChange(): void {
+    this.filtrarDatos(this.chbxIdSel);
   }
 
   public chbxSel(id: any): void {
     this.chbxIdSel = id;
-    this.filtrarDatos('todos', id);
+    this.filtrarDatos(id);
   }
 
-  public filtrarDatos(nombreExamen: string, id: any): void {
+  public filtrarDatos(id: any): void {
 
     this.chkbxs.forEach(x => {
       if (x.id === id) {
@@ -65,15 +67,15 @@ export class TblDetExamenesRealizadosComponent implements OnInit {
 
         if(id === 'idDXGEMont') {
           this.lstGrupoDeExamen = this.data.filter(item => item.solesCantidad === 'soles')
-                                           .filter(valor => nombreExamen == valor.id);
+                                           .filter(valor => this.valFiltroGrupoExamen == valor.id);
         } else if (id === 'idDXGECant') {
           this.lstGrupoDeExamen = this.data.filter(item => item.solesCantidad === 'cantidad')
-                                           .filter(valor => nombreExamen == valor.id);
+                                           .filter(valor => this.valFiltroGrupoExamen == valor.id);
         }
       } else {
         x.value = false;
 
-        if (nombreExamen == 'todo') {
+        if (this.valFiltroGrupoExamen == 'todo') {
           this.lstGrupoDeExamen = this.data;
           return;
         } else {
