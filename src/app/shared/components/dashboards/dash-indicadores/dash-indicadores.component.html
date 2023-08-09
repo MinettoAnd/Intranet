@@ -757,10 +757,10 @@
                                               let-value="value"
                                               let-row="row"
                                             >
-                                              <span *ngIf="column.prop == 'medico' || column.prop == 'especialidad'">
+                                              <span *ngIf="column.prop == 'medico' || column.prop == 'especialidad' || column.prop == 'tipoExamen'">
                                                 {{value}}
                                               </span>
-                                              <span *ngIf="column.prop !== 'medico' && column.prop !== 'especialidad'">
+                                              <span *ngIf="column.prop !== 'medico' && column.prop !== 'especialidad' && column.prop !== 'tipoExamen'">
                                                 {{value  | number : '1.2-2' }} %
                                               </span>
                                             </ng-template>
@@ -844,7 +844,7 @@
                                           [selectionType]="SelectionType.single"
                                         >
                                           <ngx-datatable-column
-                                            *ngFor="let column of colsResGrpExEsp; let i = index;"
+                                            *ngFor="let column of colsResGrpExExmEsp; let i = index;"
                                             name="{{ column.name }}"
                                             prop="{{ column.prop }}"
                                             [headerClass]="column.headerClass"
@@ -861,14 +861,16 @@
                                               <span *ngIf="
                                                 column.prop == 'medico' ||
                                                 column.prop == 'especialidad' ||
-                                                column.prop == 'tipoAtencion'
+                                                column.prop == 'tipoAtencion' ||
+                                                column.prop == 'Examen'
                                               ">
                                                 {{value}}
                                               </span>
                                               <span *ngIf="
                                                 column.prop !== 'medico' &&
                                                 column.prop !== 'especialidad' &&
-                                                column.prop !== 'tipoAtencion'
+                                                column.prop !== 'tipoAtencion' &&
+                                                column.prop !== 'Examen'
                                               ">
                                                 {{value  | number : '1.2-2' }} %
                                               </span>

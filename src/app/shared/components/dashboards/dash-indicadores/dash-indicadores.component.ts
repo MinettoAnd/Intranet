@@ -833,12 +833,6 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
           this.data = response.data ? response.data : [];
           this.colsResGrpExEsp = this.data.cabecera;
 
-        //   this.cos.push({
-        //     "prop": "especialidad",
-        //     "name": "ESPECIALIDAD",
-        //     "headerClass": "text-center"
-        // },);
-
           this.rowsResGrpExEsp = this.data.tabla;
           this.fltroEspdsResGrpExEsp = [];
 
@@ -882,7 +876,7 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
           this.rowsResGrpExExmEsp = this.data.tabla;
           // this.grupos = [];
 
-          console.log('9d9d9', this.rowsResGrpExExmEsp)
+          console.log('xzxx', this.rowsResGrpExExmEsp, this.colsResGrpExExmEsp)
 
 
           if (this.rowsResGrpExExmEsp) {
@@ -892,8 +886,8 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
                   if (!this.fltroEspdsResGrpExExmEsp.includes(item.especialidad)) {
                     this.fltroEspdsResGrpExExmEsp.push(item.especialidad);
                   }
-                  if (!this.fltroTipExmResGrpExExmEsp.includes(item.Examen)) {
-                    this.fltroTipExmResGrpExExmEsp.push(item.Examen);
+                  if (!this.fltroTipExmResGrpExExmEsp.includes(item.tipoExamen)) {
+                    this.fltroTipExmResGrpExExmEsp.push(item.tipoExamen);
                   }
                 }
 
@@ -1603,7 +1597,7 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
 
     if (filtroEsp.length > 0 && filtroExm.length > 0) {
       const filtered = this.rowsResGrpExExmEsp.filter(item => item.especialidad === filtroEsp)
-                                              .filter(item => item.Examen === filtroExm);
+                                              .filter(item => item.tipoExamen === filtroExm);
 
       this.rowsFResGrpExExmEsp = [...filtered];
     }
@@ -1637,7 +1631,7 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
       this.rowsFResGrpExExmEsp = [...filtered]
     } else {
       const filtered = this.rowsResGrpExExmEsp.filter(item => item.especialidad === filtroEsp)
-                                            .filter(item => item.Examen === filtroExm);
+                                            .filter(item => item.tipoExamen === filtroExm);
 
       this.rowsFResGrpExExmEsp = [...filtered]
     }
