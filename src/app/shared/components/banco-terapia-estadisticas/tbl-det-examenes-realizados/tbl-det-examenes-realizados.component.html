@@ -48,7 +48,6 @@
                         (change)="onChange($event.target.value)"
                         [(ngModel)]="valFiltroGrupoExamen"
                     >
-                        <option value="todo" selected>Mostrar todo</option>
                         <option
                             *ngFor="let examen of lstDeExamenes"
                             value="{{ examen }}"

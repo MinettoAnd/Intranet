@@ -37,7 +37,7 @@ export class TblDetExamenesRealizadosComponent implements OnInit {
   public columnMode = ColumnMode;
   public isCollapsed: boolean = false;
   public chbxIdSel: string = 'idDERMont';
-  public valFiltroGrupoExamen: any = 'todo';
+  public valFiltroGrupoExamen: any = '';
 
   public summaryNull = summaryNull;
   public summaryForAmount = summaryForAmount;
@@ -45,9 +45,8 @@ export class TblDetExamenesRealizadosComponent implements OnInit {
   constructor(private exportService: ExportService) { }
 
   ngOnInit(): void {
+    this.valFiltroGrupoExamen = this.lstDeExamenes[0];
     this.filtrarDatos();
-    // this.valFiltroGrupoExamen = this.lstDeExamenes[0];
-    // this.data.filter(item => item.solesCantidad === 'soles')
   }
 
   public onChange(): void {
@@ -85,21 +84,5 @@ export class TblDetExamenesRealizadosComponent implements OnInit {
 
   public exportToExcel() {
     this.exportService.exportTableElmToExcel(this.data, '');
-  }
-
-  public filtrar(id: string) {
-    this.chkbxs.forEach(x => {
-      if (x.id === id) {
-        x.value = true;
-
-        if(id === 'idDERMont') {
-          this.dataFiltered = this.data.filter(item => item.solesCantidad === 'soles');
-        } else if (id === 'idDERCant') {
-          this.dataFiltered = this.data.filter(item => item.solesCantidad === 'cantidad');
-        }
-      } else {
-        x.value = false;
-      }
-    });
   }
 }
