@@ -41,7 +41,7 @@ export class TblDistXGrupoExamenComponent implements OnInit {
   constructor(private exportService: ExportService) { }
 
   ngOnInit(): void {
-    this.data.filter(item => item.solesCantidad === 'soles')
+    this.dataFiltered = this.data.filter(item => item.solesCantidad === 'soles')
   }
 
   public copyTableToClipboard() {
@@ -57,10 +57,12 @@ export class TblDistXGrupoExamenComponent implements OnInit {
       if (x.id === id) {
         x.value = true;
 
-        if(id === 'idDXGEMont') {
+        if (id === 'idDXGEMont') {
           this.dataFiltered = this.data.filter(item => item.solesCantidad === 'soles');
+          console.log('11')
         } else if (id === 'idDXGECant') {
           this.dataFiltered = this.data.filter(item => item.solesCantidad === 'cantidad');
+          console.log('22')
         }
       } else {
         x.value = false;

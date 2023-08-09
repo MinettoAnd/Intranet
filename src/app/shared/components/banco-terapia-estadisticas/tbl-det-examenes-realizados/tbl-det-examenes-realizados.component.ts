@@ -54,6 +54,7 @@ export class TblDetExamenesRealizadosComponent implements OnInit {
 
   public chbxSel(id: any): void {
     this.chbxIdSel = id;
+    this.filtrarDatos('todos', id);
   }
 
   public filtrarDatos(nombreExamen: string, id: any): void {
