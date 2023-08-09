@@ -453,9 +453,13 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
       },
       plugins: {
         datalabels: {
-          
+
           /* anchor puede ser "start", "center" o "end" */
           anchor: 'end',
+
+          align: 'end',
+          display: 'auto',
+
           backgroundColor: function(context) {
             return context.dataset.backgroundColor;
           },
