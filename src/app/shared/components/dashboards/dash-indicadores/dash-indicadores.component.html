@@ -705,13 +705,18 @@
                                       <div #collapse11="ngbCollapse" [(ngbCollapse)]="isCollapsed11">
                                         <div class="row" style="align-items: center;justify-content:flex-end">
                                           <div style="display:flex;align-items: center; justify-content:flex-end">
-                                            <select class="form-control form-select" (change)="grupoChange($event.target.value)" style="width:auto!important;" [(ngModel)]="selectedOptionTipo" >
+                                            <select
+                                              class="form-control form-select"
+                                              (change)="filtrarDatosTblResGrpExEsp($event.target.value)"
+                                              style="width:auto!important;"
+                                              [(ngModel)]="optFiltroResGrpExEsp"
+                                            >
                                               <option
-                                                *ngFor="let grupo of grupos; let i = index"
-                                                [value]="grupo"
-                                                [selected]="grupo === optFiltroResGrpExEsp"
+                                                *ngFor="let val of fltroEspdsResGrpExEsp; let i = index"
+                                                [value]="val"
+                                                [selected]="val === optFiltroResGrpExEsp"
                                               >
-                                                {{grupo}}
+                                                {{val}}
                                               </option>
                                             </select>
                                             <div style="display:flex;margin:15px;align-items: center;">

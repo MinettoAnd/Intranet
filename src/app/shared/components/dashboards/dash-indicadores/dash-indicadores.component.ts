@@ -115,7 +115,10 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
   public colsResGrpExEsp: Array<any> = [];
   public rowsResGrpExEsp: Array<any> = [];
   public rowsFResGrpExEsp: Array<any> = [];
+  public fltroEspdsResGrpExEsp: Array<any> = [];
 
+  // public optFltrEspResGrpExExmEsp: string = '';
+  // public optFiltroResGrpExExmEsp: string = '';
   public colsResGrpExExmEsp: Array<any> = [];
   public rowsResGrpExExmEsp: Array<any> = [];
   public rowsFResGrpExExmEsp: Array<any> = [];
@@ -821,48 +824,23 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
       }
     );
 
+    // TODO trabajando
     this.tableApiservice.getResumenGrupoExEspecialidad(this.parameters).subscribe(
       async (response) => {
         if (response.data.success) {
           this.data = response.data ? response.data : [];
           this.colsResGrpExEsp = this.data.cabecera;
           this.rowsResGrpExEsp = this.data.tabla;
+          this.fltroEspdsResGrpExEsp = [];
 
-          // Los valores dependen de la llamada al método
-          // del service getResumenEspecialidadMensual1
-          const int = setInterval(() => {
-            console.log('INTERVAL: getResumenGrupoExEspecialidad');
-            if (this.grupos.length > 0) {
-              console.log('INTERVAL: length > 0 : getResumenGrupoExEspecialidad');
-              this.optFiltroResGrpExEsp = this.grupos[0];
-              this.rowsFResGrpExEsp = this.rowsResGrpExEsp.filter(
-                item => item.grupo === this.optFiltroResGrpExEsp
-              );
+          console.log('9d9d9', this.rowsResGrpExEsp)
 
-              clearInterval(int);
-            }
-          }, 100);
-        } else {
-          Swal.close();
-        }
-      },
-      (error) => Swal.close()
-    );
-
-    this.tableApiservice.getResumenGrupoExExamenEspecialidad(this.parameters).subscribe(
-      async (response) => {
-        if (response.data.success) {
-          this.data = response.data ? response.data : [];
-          this.colsResGrpExExmEsp = this.data.cabecera;
-          this.rowsResGrpExExmEsp = this.data.tabla;
-          // this.grupos = [];
-
-          if (this.rows9) {
+          if (this.rowsResGrpExEsp) {
             await new Promise((resolve, reject) => {
               try {
                 for (let item of this.rows9) {
-                  if (!this.grupos.includes(item.grupo)) {
-                    this.grupos.push(item.grupo);
+                  if (!this.fltroEspdsResGrpExEsp.includes(item.especialidad)) {
+                    this.fltroEspdsResGrpExEsp.push(item.especialidad);
                   }
                 }
 
@@ -873,17 +851,72 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
               }
             });
 
-            // this.selectedOptionTipo = this.grupos[0];
-            // this.rowsFResGrpExExmEsp = this.rowsResGrpExExmEsp.filter(
-            //   item => item.grupo === this.selectedOptionTipo
-            // );
+            this.selectedOptionTipo = this.fltroEspdsResGrpExEsp[0];
+            this.rowsFResGrpExEsp = this.rowsResGrpExEsp.filter(item => item.especialidad === this.selectedOptionTipo);
           }
+
+          // Los valores dependen de la llamada al método
+          // del service getResumenEspecialidadMensual1
+          // const int = setInterval(() => {
+          //   console.log('INTERVAL: getResumenGrupoExEspecialidad');
+          //   if (this.grupos.length > 0) {
+          //     console.log('INTERVAL: length > 0 : getResumenGrupoExEspecialidad');
+          //     this.optFiltroResGrpExEsp = this.grupos[0];
+          //     this.rowsFResGrpExEsp = this.rowsResGrpExEsp.filter(
+          //       item => item.grupo === this.optFiltroResGrpExEsp
+          //     );
+
+          //     clearInterval(int);
+          //   }
+          // }, 100);
+
+          // TODO mover al aúltimo API petición
+          Swal.close();
         } else {
           Swal.close();
         }
       },
       (error) => Swal.close()
     );
+
+    // TODO siguiente
+    // this.tableApiservice.getResumenGrupoExExamenEspecialidad(this.parameters).subscribe(
+    //   async (response) => {
+    //     if (response.data.success) {
+    //       this.data = response.data ? response.data : [];
+    //       this.colsResGrpExExmEsp = this.data.cabecera;
+    //       this.rowsResGrpExExmEsp = this.data.tabla;
+    //       // this.grupos = [];
+
+    //       if (this.rows9) {
+    //         await new Promise((resolve, reject) => {
+    //           try {
+    //             for (let item of this.rows9) {
+    //               if (!this.grupos.includes(item.grupo)) {
+    //                 this.grupos.push(item.grupo);
+    //               }
+    //             }
+
+    //             resolve(true);
+    //           } catch (e) {
+    //             console.error(e);
+    //             reject(false);
+    //           }
+    //         });
+
+    //         // this.selectedOptionTipo = this.grupos[0];
+    //         // this.rowsFResGrpExExmEsp = this.rowsResGrpExExmEsp.filter(
+    //         //   item => item.grupo === this.selectedOptionTipo
+    //         // );
+    //       }
+
+              // Swal.close();
+    //     } else {
+    //       Swal.close();
+    //     }
+    //   },
+    //   (error) => Swal.close()
+    // );
 
     // this.tableApiservice.getResumenMedicoMensual1(this.parameters).subscribe(
     //   async (response) => {
@@ -1555,6 +1588,14 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
         this.isTable4 = false;
       }
     } 
+  }
+
+  filtrarDatosTblResGrpExEsp(opcFiltro: any) {
+    // this.optFiltroResGrpExEsp = opcFiltro;
+    if (opcFiltro.length > 0) {
+      const filtered = this.rowsFResGrpExEsp = this.rows9.filter(item => item.especialidad === opcFiltro);
+      this.rowsFResGrpExEsp = [...filtered]
+     }
   }
 }
 
