@@ -72,8 +72,11 @@
                         let-row="row"
                     >
                         <div>
-                            <span *ngIf="column.prop === 'Campo'">{{ value }}</span>
-                            <span *ngIf="column.prop !== 'Campo'">{{ value | currency }}</span>
+                            <span  *ngIf="column.prop === 'Campo'">{{value }}</span>
+                            <span  *ngIf="column.prop !== 'Campo' && row.solesCantidad === 'soles'">{{value  | currency }}</span>
+                            <span  *ngIf="column.prop !== 'Campo' && row.solesCantidad === 'cantidad'">{{value | number: '1.0-0' }}</span>
+                            <!-- <span *ngIf="column.prop === 'Campo'">{{ value }}</span>
+                            <span *ngIf="column.prop !== 'Campo'">{{ value | currency }}</span> -->
                         </div>
                     </ng-template>
                 </ngx-datatable-column>
