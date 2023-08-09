@@ -832,6 +832,13 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
         if (response.data.success) {
           this.data = response.data ? response.data : [];
           this.colsResGrpExEsp = this.data.cabecera;
+
+        //   this.cos.push({
+        //     "prop": "especialidad",
+        //     "name": "ESPECIALIDAD",
+        //     "headerClass": "text-center"
+        // },);
+
           this.rowsResGrpExEsp = this.data.tabla;
           this.fltroEspdsResGrpExEsp = [];
 
@@ -858,7 +865,7 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
           }
 
           // TODO mover al aúltimo API petición
-          Swal.close();
+          // Swal.close();
         } else {
           Swal.close();
         }
