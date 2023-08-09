@@ -771,10 +771,18 @@
                                               let-value="value"
                                               let-row="row"
                                             >
-                                              <span *ngIf="column.prop == 'medico' || column.prop == 'especialidad' || column.prop == 'tipoExamen'">
+                                              <span *ngIf="
+                                                column.prop == 'medico' ||
+                                                column.prop == 'especialidad' ||
+                                                column.prop == 'tipoExamen'
+                                              ">
                                                 {{value}}
                                               </span>
-                                              <span *ngIf="column.prop !== 'medico' && column.prop !== 'especialidad' && column.prop !== 'tipoExamen'">
+                                              <span *ngIf="
+                                                column.prop !== 'medico' &&
+                                                column.prop !== 'especialidad' &&
+                                                column.prop !== 'tipoExamen'
+                                              ">
                                                 {{value  | number : '1.2-2' }} %
                                               </span>
                                             </ng-template>
