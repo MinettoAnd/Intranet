@@ -542,14 +542,14 @@
                                               </select> -->
                                               <select class="form-control form-select" (change)="grupoChange($event.target.value)" style="width:auto!important;" [(ngModel)]="selectedOptionTipo" >
                                                 <!-- <option [value]="selectedOptionTipo" selected>{{selectedOptionTipo}}</option> -->
-                                              <option
-                                                *ngFor="let grupo of grupos; let i = index"
-                                                [value]="grupo"
-                                                [selected]="grupo === selectedOptionTipo"
-                                              >
-                                                {{grupo}}
-                                              </option>
-                                            </select>
+                                                <option
+                                                  *ngFor="let grupo of grupos; let i = index"
+                                                  [value]="grupo"
+                                                  [selected]="grupo === selectedOptionTipo"
+                                                >
+                                                  {{grupo}}
+                                                </option>
+                                              </select>
                                               <div style="display:flex;margin:15px;align-items: center;">
                                                 <span>Buscar</span>&nbsp;&nbsp;
                                                 <input
@@ -705,20 +705,15 @@
                                       <div #collapse11="ngbCollapse" [(ngbCollapse)]="isCollapsed11">
                                         <div class="row" style="align-items: center;justify-content:flex-end">
                                           <div style="display:flex;align-items: center; justify-content:flex-end">
-                                            <select
-                                              class="form-control form-select"
-                                              style="width:auto!important;"
-                                              (change)="especialityChange($event.target.value)"
-                                              [(ngModel)]="selectedOptionTipo1"
-                                            >
-                                            <option
-                                              *ngFor="let especialidad of especialidades; let i = index"
-                                              [value]="especialidad"
-                                              [selected]="especialidad === selectedOptionTipo1"
-                                            >
-                                              {{especialidad}}
-                                            </option>
-                                          </select>
+                                            <select class="form-control form-select" (change)="grupoChange($event.target.value)" style="width:auto!important;" [(ngModel)]="selectedOptionTipo" >
+                                              <option
+                                                *ngFor="let grupo of grupos; let i = index"
+                                                [value]="grupo"
+                                                [selected]="grupo === optFiltroResGrpExEsp"
+                                              >
+                                                {{grupo}}
+                                              </option>
+                                            </select>
                                             <div style="display:flex;margin:15px;align-items: center;">
                                               <span>Buscar</span>&nbsp;&nbsp;
                                               <input

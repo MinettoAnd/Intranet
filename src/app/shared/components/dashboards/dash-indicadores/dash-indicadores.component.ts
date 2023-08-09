@@ -111,9 +111,14 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
   columns9:any;
   columns10:any;
 
-  colsResGrpExEsp: Array<any> = [];
-  rowsResGrpExEsp: Array<any> = [];
-  rowsFResGrpExEsp: Array<any> = [];
+  public optFiltroResGrpExEsp: string = '';
+  public colsResGrpExEsp: Array<any> = [];
+  public rowsResGrpExEsp: Array<any> = [];
+  public rowsFResGrpExEsp: Array<any> = [];
+
+  public colsResGrpExExmEsp: Array<any> = [];
+  public rowsResGrpExExmEsp: Array<any> = [];
+  public rowsFResGrpExExmEsp: Array<any> = [];
 
   especialidad;
   especialidades = [];
@@ -820,8 +825,36 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
       async (response) => {
         if (response.data.success) {
           this.data = response.data ? response.data : [];
-          this.colsResGrpExEsp = this.data.cabecera_resumen_especialidad_mensual_01;
-          this.rowsResGrpExEsp = this.data.tabla_resumen_especialidad_mensual_01;
+          this.colsResGrpExEsp = this.data.cabecera;
+          this.rowsResGrpExEsp = this.data.tabla;
+
+          // Los valores dependen de la llamada al método
+          // del service getResumenEspecialidadMensual1
+          const int = setInterval(() => {
+            console.log('INTERVAL: getResumenGrupoExEspecialidad');
+            if (this.grupos.length > 0) {
+              console.log('INTERVAL: length > 0 : getResumenGrupoExEspecialidad');
+              this.optFiltroResGrpExEsp = this.grupos[0];
+              this.rowsFResGrpExEsp = this.rowsResGrpExEsp.filter(
+                item => item.grupo === this.optFiltroResGrpExEsp
+              );
+
+              clearInterval(int);
+            }
+          }, 100);
+        } else {
+          Swal.close();
+        }
+      },
+      (error) => Swal.close()
+    );
+
+    this.tableApiservice.getResumenGrupoExExamenEspecialidad(this.parameters).subscribe(
+      async (response) => {
+        if (response.data.success) {
+          this.data = response.data ? response.data : [];
+          this.colsResGrpExExmEsp = this.data.cabecera;
+          this.rowsResGrpExExmEsp = this.data.tabla;
           // this.grupos = [];
 
           if (this.rows9) {
@@ -840,12 +873,10 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
               }
             });
 
-            this.temp1 = this.rows9; // TODO ?
-
-            this.selectedOptionTipo = this.grupos[0];
-            this.rowsFResGrpExEsp = this.rowsResGrpExEsp.filter(
-              item => item.grupo === this.selectedOptionTipo
-            );
+            // this.selectedOptionTipo = this.grupos[0];
+            // this.rowsFResGrpExExmEsp = this.rowsResGrpExExmEsp.filter(
+            //   item => item.grupo === this.selectedOptionTipo
+            // );
           }
         } else {
           Swal.close();
