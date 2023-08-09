@@ -29,6 +29,15 @@
                         </button>
                     </li>
                 </ul>
+                <div *ngFor="let checkBoxesOp of chkbxs; let i = index" class="col-md-1 checkbox">
+                    <input type="checkbox" id="{{checkBoxesOp.id}}"
+                        [checked]="chkbxs[i].value"
+                        (click)="filtrar(checkBoxesOp.id);" />
+
+                    <label for="{{checkBoxesOp.id}}">
+                        <span>{{checkBoxesOp.label}}</span>
+                    </label>
+                </div>
             </div>
 
             <ngx-datatable

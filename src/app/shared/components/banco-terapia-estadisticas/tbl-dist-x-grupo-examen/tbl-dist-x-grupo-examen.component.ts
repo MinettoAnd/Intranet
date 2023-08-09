@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ColumnMode } from '@swimlane/ngx-datatable';
 
 import { ExportService } from 'src/app/_services/export.service';
@@ -9,11 +9,28 @@ import { summaryNull, summaryForAmount } from '../helpers/summary';
   templateUrl: './tbl-dist-x-grupo-examen.component.html',
   styleUrls: ['./tbl-dist-x-grupo-examen.component.scss']
 })
-export class TblDistXGrupoExamenComponent {
+export class TblDistXGrupoExamenComponent implements OnInit {
   @Input() public cabecera: Array<any> = [];
   @Input() public data: Array<any> = [];
-  @Input() public summaryPosition = 'bottom';
-  @Input() public enableSummary = true;
+  @Input() public summaryPosition: string = 'bottom';
+  @Input() public enableSummary: boolean = true;
+
+  public dataFiltered: Array<any> = [];
+
+  public chkbxs: Array<any> = [
+    {
+      id: 'idDXGEMont',
+      label: 'Montos',
+      template: null,
+      value: true
+    },
+    {
+      id: 'idDXGECant',
+      label: 'Cantidad',
+      template: null,
+      value: false
+    }
+  ];
 
   public columnMode = ColumnMode;
   public isCollapsed: boolean = false;
@@ -23,11 +40,31 @@ export class TblDistXGrupoExamenComponent {
 
   constructor(private exportService: ExportService) { }
 
+  ngOnInit(): void {
+    this.data.filter(item => item.solesCantidad === 'soles')
+  }
+
   public copyTableToClipboard() {
     this.exportService.exportToClipboard(this.data, this.cabecera);
   }
 
   public exportToExcel() {
     this.exportService.exportTableElmToExcel(this.data, '');
+  }
+
+  public filtrar(id: string) {
+    this.chkbxs.forEach(x => {
+      if (x.id === id) {
+        x.value = true;
+
+        if(id === 'idDXGEMont') {
+          this.dataFiltered = this.data.filter(item => item.solesCantidad === 'soles');
+        } else if (id === 'idDXGECant') {
+          this.dataFiltered = this.data.filter(item => item.solesCantidad === 'cantidad');
+        }
+      } else {
+        x.value = false;
+      }
+    });
   }
 }

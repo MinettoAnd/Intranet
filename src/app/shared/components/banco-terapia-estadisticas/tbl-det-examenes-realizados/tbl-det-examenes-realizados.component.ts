@@ -13,12 +13,30 @@ export class TblDetExamenesRealizadosComponent implements OnInit {
   @Input() public cabecera: Array<any> = [];
   @Input() public data: Array<any> = [];
   @Input() public lstDeExamenes: Array<any> = [];
-  @Input() public summaryPosition = 'bottom';
-  @Input() public enableSummary = true;
+  @Input() public summaryPosition: string = 'bottom';
+  @Input() public enableSummary: boolean = true;
+
+  public dataFiltered: Array<any> = [];
+
+  public chkbxs: Array<any> = [
+    {
+      id: 'idDERMont',
+      label: 'Montos',
+      template: null,
+      value: true
+    },
+    {
+      id: 'idDERCant',
+      label: 'Cantidad',
+      template: null,
+      value: false
+    }
+  ];
 
   public lstGrupoDeExamen: Array<any> = [];
   public columnMode = ColumnMode;
   public isCollapsed: boolean = false;
+  public chbxIdSel: string = 'idDERMont';
 
   public summaryNull = summaryNull;
   public summaryForAmount = summaryForAmount;
@@ -26,20 +44,50 @@ export class TblDetExamenesRealizadosComponent implements OnInit {
   constructor(private exportService: ExportService) { }
 
   ngOnInit(): void {
-    this.filtrarDatos('todo');
+    this.filtrarDatos('todo', this.chbxIdSel);
+    // this.data.filter(item => item.solesCantidad === 'soles')
   }
 
   public onChange(nombreExamen: string): void {
-    this.filtrarDatos(nombreExamen);
+    this.filtrarDatos(nombreExamen, this.chbxIdSel);
   }
 
-  public filtrarDatos(nombreExamen: string): void {
-    if (nombreExamen == 'todo') {
-      this.lstGrupoDeExamen = this.data;
-      return;
-    }
+  public chbxSel(id: any): void {
+    this.chbxIdSel = id;
+  }
 
-    this.lstGrupoDeExamen = this.data.filter(valor => nombreExamen == valor.id);
+  public filtrarDatos(nombreExamen: string, id: any): void {
+
+    this.chkbxs.forEach(x => {
+      if (x.id === id) {
+        x.value = true;
+
+        if(id === 'idDXGEMont') {
+          this.lstGrupoDeExamen = this.data.filter(item => item.solesCantidad === 'soles')
+                                           .filter(valor => nombreExamen == valor.id);
+        } else if (id === 'idDXGECant') {
+          this.lstGrupoDeExamen = this.data.filter(item => item.solesCantidad === 'cantidad')
+                                           .filter(valor => nombreExamen == valor.id);
+        }
+      } else {
+        x.value = false;
+
+        if (nombreExamen == 'todo') {
+          this.lstGrupoDeExamen = this.data;
+          return;
+        } else {
+          this.lstGrupoDeExamen = this.data.filter(item => item.solesCantidad === 'cantidad');
+        }
+      }
+    });
+
+    // if (nombreExamen == 'todo') {
+    //   this.lstGrupoDeExamen = this.data;
+    //   return;
+    // }
+
+    // this.lstGrupoDeExamen = this.data.filter(valor => nombreExamen == valor.id)
+    //                                  .filter(item => item.solesCantidad === 'soles');
   }
 
   public copyTableToClipboard() {
@@ -48,5 +96,21 @@ export class TblDetExamenesRealizadosComponent implements OnInit {
 
   public exportToExcel() {
     this.exportService.exportTableElmToExcel(this.data, '');
+  }
+
+  public filtrar(id: string) {
+    this.chkbxs.forEach(x => {
+      if (x.id === id) {
+        x.value = true;
+
+        if(id === 'idDERMont') {
+          this.dataFiltered = this.data.filter(item => item.solesCantidad === 'soles');
+        } else if (id === 'idDERCant') {
+          this.dataFiltered = this.data.filter(item => item.solesCantidad === 'cantidad');
+        }
+      } else {
+        x.value = false;
+      }
+    });
   }
 }
