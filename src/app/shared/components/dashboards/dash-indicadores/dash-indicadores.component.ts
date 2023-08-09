@@ -1602,8 +1602,8 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
     const filtroExm: string = this.optFiltroExmResGrpExExmEsp;
 
     if (filtroEsp.length > 0 && filtroExm.length > 0) {
-      let filtered = this.rowsResGrpExExmEsp.filter(item => item.especialidad === filtroEsp)
-                                            .filter(item => item.Examen === filtroExm);
+      const filtered = this.rowsResGrpExExmEsp.filter(item => item.especialidad === filtroEsp)
+                                              .filter(item => item.Examen === filtroExm);
 
       this.rowsFResGrpExExmEsp = [...filtered];
     }
@@ -1623,8 +1623,10 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
     }
   }
 
-  filtrarPorValorTblResGrpExExmEsp(event, selectedOption) {
+  filtrarPorValorTblResGrpExExmEsp(event) {
     const input = event.target.value.toLowerCase();
+    const filtroEsp: string = this.optFltrEspResGrpExExmEsp;
+    const filtroExm: string = this.optFiltroExmResGrpExExmEsp;
 
     if (input.length > 0) {
       const filtered = this.rowsFResGrpExExmEsp
@@ -1634,7 +1636,10 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
 
       this.rowsFResGrpExExmEsp = [...filtered]
     } else {
-      this.rowsFResGrpExExmEsp = [...this.rowsResGrpExExmEsp.filter(item => item.especialidad === selectedOption)]
+      const filtered = this.rowsResGrpExExmEsp.filter(item => item.especialidad === filtroEsp)
+                                            .filter(item => item.Examen === filtroExm);
+
+      this.rowsFResGrpExExmEsp = [...filtered]
     }
   }
 }
