@@ -35,4 +35,9 @@ export class IndicadoresService {
     this.loadTableApiDataURL = `${environment.api_url}getResumenGraficaSedes1`;
     return this.http.post(this.loadTableApiDataURL, data);
   }
+
+  getResumenGrupoExEspecialidad(data): Observable<any> {
+    this.loadTableApiDataURL = `${environment.api_url}getResumenGrupoExEspecialidad`;
+    return this.http.post(this.loadTableApiDataURL, data);
+  }
 }

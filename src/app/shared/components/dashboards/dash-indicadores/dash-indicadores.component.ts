@@ -110,6 +110,11 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
   columns8:any;
   columns9:any;
   columns10:any;
+
+  colsResGrpExEsp: Array<any> = [];
+  rowsResGrpExEsp: Array<any> = [];
+  rowsFResGrpExEsp: Array<any> = [];
+
   especialidad;
   especialidades = [];
   grupo;
@@ -228,31 +233,37 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
   context2;
   context3;
   context4;
-  constructor(private tableApiservice: IndicadoresService, private exportService: ExportService, private _cnp:CustomNumberPipe,
-    private _cp: CurrencyPipe, private _phone: PhonePipe, 
-    private _ndp:NumberDecimalPipe, private modalService: NgbModal, public dataService: DataService, private chartService: ChartService) {
+
+  constructor(
+    private tableApiservice: IndicadoresService,
+    private exportService: ExportService,
+    private _cnp: CustomNumberPipe,
+    private _cp: CurrencyPipe, private _phone: PhonePipe,
+    private _ndp:NumberDecimalPipe,
+    private modalService: NgbModal,
+    public dataService: DataService,
+    private chartService: ChartService
+  ) {
     this.page.pageNumber = 0;
     this.page.size = 10;
     // console.log(171, this.dataService.parametersFilters)
 
+    //   this.filtroForm = new FormGroup({
+    //     anio: new FormControl(this.anio),
+    //     mes: new FormControl(this.mes),
 
-    
-  //   this.filtroForm = new FormGroup({
-  //     anio: new FormControl(this.anio),
-  //     mes: new FormControl(this.mes),
+    // });
+    // var anioOp = Number(this.anio);
+    // while ( Number(anioOp) > 2017 ) {
+    //   console.log(275, anioOp);
 
-  // });
-  // var anioOp = Number(this.anio);
-  // while ( Number(anioOp) > 2017 ) {
-  //   console.log(275, anioOp);
-    
-  //   const anioNew = {
-  //      value: anioOp.toString(), label: anioOp.toString() 
-  //   }
-  //   this.optionsAnio.push(anioNew);
-  //   anioOp--;
-  // }
-   }
+    //   const anioNew = {
+    //      value: anioOp.toString(), label: anioOp.toString()
+    //   }
+    //   this.optionsAnio.push(anioNew);
+    //   anioOp--;
+    // }
+  }
 
   ngOnInit() {
     const observer1$: Subscription = this.dataService.callback.subscribe(
@@ -261,10 +272,12 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
         console.log(193, this.parameters)
         this.setPage({ offset: 0 });
       }
-      );
-      this.listObservers$ = [observer1$]
+    );
+
+    this.listObservers$ = [observer1$]
       // this.setPage({ offset: 0 });
-    }
+  }
+
   ngOnDestroy(): void {
     this.listObservers$.forEach(u => u.unsubscribe())
   }
@@ -282,7 +295,7 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
   guardarImagen(){
     var canvas = document.getElementById("chart-1") as HTMLCanvasElement;
     var downloadlink = document.getElementById("downloadlink") as HTMLAnchorElement;
-    
+
     // var ctx = canvas.getContext("2d");
     // ctx.strokeStyle = "yellow";
     // ctx.lineWidth = 4;
@@ -296,7 +309,7 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
   guardarImagen1(){
     var canvas = document.getElementById("chart-2") as HTMLCanvasElement;
     var downloadlink = document.getElementById("downloadlink1") as HTMLAnchorElement;
-    
+
     // var ctx = canvas.getContext("2d");
     // ctx.strokeStyle = "yellow";
     // ctx.lineWidth = 4;
@@ -495,11 +508,11 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
       type: chartType,
       plugins: [ChartDataLabels]
     });
-    
+
     return graph;
   }
   addData(chart, label,  data) {
-    this.removeData(chart) 
+    this.removeData(chart)
     chart.data.labels = label;
     chart.data.datasets.forEach((dataset, index) => {
         dataset.data = data[index];
@@ -513,13 +526,12 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
     chart.update();
   }
   removeData(chart) {
-      chart.data.labels = [];
-      chart.data.datasets.forEach((dataset) => {
-          dataset.data = [];
-          console.log(663, dataset.data);
-      });
-      chart.update();
-      
+    chart.data.labels = [];
+    chart.data.datasets.forEach((dataset) => {
+        dataset.data = [];
+        console.log(663, dataset.data);
+    });
+    chart.update();
   }
   public onLimitChange(limit: any): void {
     this.changePageLimit(limit);
@@ -538,13 +550,15 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
   }
   private changePageLimit(limit: any): void {
     this.loading();
-    if (limit === '0'){
-      
+
+    if (limit === '0') {
       this.page.size = this.page.totalElements;
       console.log(this.page.totalElements);
       return
     }
+
     this.page.size = parseInt(limit, 10);
+
     setTimeout(() => {
       Swal.close();
     }, 1000)
@@ -752,8 +766,8 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
     );
 
     this.tableApiservice.getResumenEspecialidadMensual1(this.parameters).subscribe(
-      (response) => {
-        if(response.data.success){
+      async (response) => {
+        if (response.data.success) {
           this.data = response.data ? response.data : [];
           this.message = this.data.titulo;
           this.title = response.data.title;
@@ -763,15 +777,35 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
           this.grupos = [];
 
           if (this.rows9) {
-            this.rows9.map( item => {
-              if (!this.grupos.includes(item.grupo)){
-                this.grupos.push(item.grupo);
+            await new Promise((resolve, reject) => {
+              try {
+                for (let item of this.rows9) {
+                  if (!this.grupos.includes(item.grupo)) {
+                    this.grupos.push(item.grupo);
+                  }
+                }
+
+                resolve(true);
+              } catch (e) {
+                console.error(e);
+                reject(false);
               }
+
+              // this.rows9.map(item => {
+              //   if (!this.grupos.includes(item.grupo)){
+              //     this.grupos.push(item.grupo);
+              //   }
+              // });
             });
+
             console.log(707, this.grupos)
+
             this.temp1 = this.rows9;
             // this.rows9filtered = this.rows9.filter(item => item.grupo === 'Porcentaje');
-            this.rows9filtered = this.rows9.filter(item => item.grupo === '% Exámenes Compradas / Emitidos');
+
+            this.selectedOptionTipo = this.grupos[0];
+            this.rows9filtered = this.rows9.filter(item => item.grupo === this.selectedOptionTipo);
+            // this.rows9filtered = this.rows9.filter(item => item.grupo === '% Exámenes Compradas / Emitidos');
           }
         } else {
           Swal.close();
@@ -781,35 +815,93 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
           Swal.close();
       }
     );
-    this.tableApiservice.getResumenMedicoMensual1(this.parameters).subscribe(
-      (response) => {
-        // this.rows = [];
-        if(response.data.success){
+
+    this.tableApiservice.getResumenGrupoExEspecialidad(this.parameters).subscribe(
+      async (response) => {
+        if (response.data.success) {
           this.data = response.data ? response.data : [];
-          this.message = this.data.titulo;
-          this.title = response.data.title;
-          this.columns10 = this.data.cabecera_resumen_medico_mensual_01;
-          this.rows10 = this.data.tabla_resumen_medico_mensual_01;
-          this.especialidades = [];
-          this.rows10.map( item => {
-                    
-            if (!this.especialidades.includes(item.especialidad)){
-              this.especialidades.push(item.especialidad);
-            }
-          });
-          console.log(707, this.especialidades)
-          this.temp2 = this.rows10;
-          this.rows10filtered = this.rows10.filter(item => item.especialidad === 'CARDIOLOGIA');
-            Swal.close();
-        }else{
+          this.colsResGrpExEsp = this.data.cabecera_resumen_especialidad_mensual_01;
+          this.rowsResGrpExEsp = this.data.tabla_resumen_especialidad_mensual_01;
+          // this.grupos = [];
+
+          if (this.rows9) {
+            await new Promise((resolve, reject) => {
+              try {
+                for (let item of this.rows9) {
+                  if (!this.grupos.includes(item.grupo)) {
+                    this.grupos.push(item.grupo);
+                  }
+                }
+
+                resolve(true);
+              } catch (e) {
+                console.error(e);
+                reject(false);
+              }
+            });
+
+            this.temp1 = this.rows9; // TODO ?
+
+            this.selectedOptionTipo = this.grupos[0];
+            this.rowsFResGrpExEsp = this.rowsResGrpExEsp.filter(
+              item => item.grupo === this.selectedOptionTipo
+            );
+          }
+        } else {
           Swal.close();
         }
-        
       },
-      (error) => {
-          Swal.close();
-      }
+      (error) => Swal.close()
     );
+
+    // this.tableApiservice.getResumenMedicoMensual1(this.parameters).subscribe(
+    //   async (response) => {
+    //     // this.rows = [];
+    //     if(response.data.success){
+    //       this.data = response.data ? response.data : [];
+    //       this.message = this.data.titulo;
+    //       this.title = response.data.title;
+    //       this.columns10 = this.data.cabecera_resumen_medico_mensual_01;
+    //       this.rows10 = this.data.tabla_resumen_medico_mensual_01;
+    //       this.especialidades = [];
+
+    //       await new Promise((resolve, reject) => {
+    //           try {
+    //             for (let item of this.rows9) {
+    //               if (!this.especialidades.includes(item.especialidad)) {
+    //                 this.especialidades.push(item.especialidad);
+    //               }
+    //             }
+
+    //             resolve(true);
+    //           } catch (e) {
+    //             console.error(e);
+    //             reject(false);
+    //           }
+
+    //           // this.rows10.map( item => {
+    //           //   if (!this.especialidades.includes(item.especialidad)){
+    //           //     this.especialidades.push(item.especialidad);
+    //           //   }
+    //           // });
+    //         });
+
+    //       console.log(707, this.especialidades)
+
+    //       this.temp2 = this.rows10;
+
+    //       this.selectedOptionTipo1 = this.especialidades[0];
+    //       this.rows10filtered = this.rows10.filter(item => item.especialidad === this.selectedOptionTipo1);
+    //       // this.rows10filtered = this.rows10.filter(item => item.especialidad === 'CARDIOLOGIA');
+    //       Swal.close();
+    //     }else{
+    //       Swal.close();
+    //     }
+    //   },
+    //   (error) => {
+    //       Swal.close();
+    //   }
+    // );
 
     // this.tableApiservice.getResumenRecetaGrafica1(this.parameters).subscribe(
     //   (response) => {

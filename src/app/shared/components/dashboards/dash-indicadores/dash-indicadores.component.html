@@ -543,15 +543,20 @@
                                               <select class="form-control form-select" (change)="grupoChange($event.target.value)" style="width:auto!important;" [(ngModel)]="selectedOptionTipo" >
                                                 <!-- <option [value]="selectedOptionTipo" selected>{{selectedOptionTipo}}</option> -->
                                               <option
-                                                *ngFor="let grupo of grupos; let i=index"
+                                                *ngFor="let grupo of grupos; let i = index"
                                                 [value]="grupo"
+                                                [selected]="grupo === selectedOptionTipo"
                                               >
                                                 {{grupo}}
                                               </option>
                                             </select>
-                                              <div class="" style="display:flex;margin:15px;align-items: center;">
+                                              <div style="display:flex;margin:15px;align-items: center;">
                                                 <span>Buscar</span>&nbsp;&nbsp;
-                                                  <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter($event, selectedOptionTipo)'>
+                                                <input
+                                                  type="text"
+                                                  style='padding:6px;width:100%;'
+                                                  placeholder="por cualquier campo"
+                                                  (keyup)='updateFilter($event, selectedOptionTipo)'>
                                               </div>
                                             </div>
                                           </div>
@@ -601,7 +606,7 @@
                                         </ngx-datatable>
                                       </div>
                                     </div>
-                                    <div class="card">
+                                    <div class="card" *ngIf="false">
                                       <div class="card-header-info" >
                                         <div class="box-header">
                                           <div class="toggle-table">
@@ -611,7 +616,7 @@
                                             <button type="button" class="btn btn-outline-primary" (click)="collapse10.toggle()" [attr.aria-expanded]="!isCollapsed10"
                                             aria-controls="collapseExample">
                                             <i class="fa fa-minus" *ngIf="!isCollapsed10"> </i>
-                                            <i class="fa fa-plus" *ngIf="isCollapsed10"> </i> 
+                                            <i class="fa fa-plus" *ngIf="isCollapsed10"> </i>
                                             </button>
                                           </div>
                                         </div>
@@ -625,44 +630,145 @@
                                             </select> -->
                                             <select class="form-control form-select" (change)="especialityChange($event.target.value)" style="width:auto!important;" [(ngModel)]="selectedOptionTipo1" >
                                               <!-- <option [value]="selectedOptionTipo" selected>{{selectedOptionTipo}}</option> -->
-                                            <option 
-                                              *ngFor="let especialidad of especialidades; let i=index"
+                                            <option
+                                              *ngFor="let especialidad of especialidades; let i = index"
                                               [value]="especialidad"
-                                            >{{especialidad}}
+                                              [selected]="especialidad === selectedOptionTipo1"
+                                            >
+                                              {{especialidad}}
                                             </option>
                                           </select>
                                             <div class="" style="display:flex;margin:15px;align-items: center;">
                                               <span>Buscar</span>&nbsp;&nbsp;
-                                                <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter2($event, selectedOptionTipo1)'>
+                                              <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter2($event, selectedOptionTipo1)'>
                                             </div>
-                                          </div> 
+                                          </div>
                                         </div>
-                                          <ngx-datatable #myTable10
-                                            class="bootstrap table table-striped "
-                                            id="datatablele"
-                                              [columns]="columns10"
-                                              [rows]="rows10filtered"
-                                              [columnMode]="ColumnMode.flex"
-                                              [headerHeight]="50"
-                                              [rowHeight]="$any('auto')"
-                                              [scrollbarH]="true"
-                                              (page)="setPage($event)"
-                                              [selected]="selected"
-                                              [selectionType]="SelectionType.single"
-                                              
-                                              >
-                                              <ngx-datatable-column [headerClass]="column.headerClass" [cellClass]="column.cellClass"
-                                              [flexGrow]="1" [minWidth]="90"  *ngFor="let column of columns10; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
-                                                <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
-                                                  let-row="row">
-                                                  <span *ngIf="column.prop == 'medico' || column.prop == 'especialidad'">{{value}}</span>
-                                                    <span *ngIf="column.prop !== 'medico' && column.prop !== 'especialidad'">{{value  | number : '1.2-2' }} %</span>
-                                                </ng-template>
-                                              </ngx-datatable-column>
-                                          </ngx-datatable>
+                                        <ngx-datatable #myTable10
+                                          class="bootstrap table table-striped "
+                                          id="datatablele"
+                                          [columns]="columns10"
+                                          [rows]="rows10filtered"
+                                          [columnMode]="ColumnMode.flex"
+                                          [headerHeight]="50"
+                                          [rowHeight]="$any('auto')"
+                                          [scrollbarH]="true"
+                                          (page)="setPage($event)"
+                                          [selected]="selected"
+                                          [selectionType]="SelectionType.single"
+                                        >
+                                          <ngx-datatable-column
+                                            *ngFor="let column of columns10; let i = index;"
+                                            name="{{column.name}}"
+                                            prop="{{column.prop}}"
+                                            [headerClass]="column.headerClass"
+                                            [cellClass]="column.cellClass"
+                                            [flexGrow]="1" [minWidth]="90"
+                                          >
+                                            <ng-template
+                                              ngx-datatable-cell-template
+                                              let-rowIndex="rowIndex"
+                                              let-value="value"
+                                              let-row="row"
+                                            >
+                                              <span *ngIf="column.prop == 'medico' || column.prop == 'especialidad'">
+                                                {{value}}
+                                              </span>
+                                              <span *ngIf="column.prop !== 'medico' && column.prop !== 'especialidad'">
+                                                {{value  | number : '1.2-2' }} %
+                                              </span>
+                                            </ng-template>
+                                          </ngx-datatable-column>
+                                        </ngx-datatable>
                                       </div>
                                     </div>
-                                </div>                       
+                                    <div class="card">
+                                      <div class="card-header-info" >
+                                        <div class="box-header">
+                                          <div class="toggle-table">
+                                            <div class="callout callout-info">
+                                              <h3 class="box-title">RESUMEN GRUPO DE EXÁMENES POR ESPECIALIDAD</h3>
+                                            </div>
+                                            <button
+                                              type="button"
+                                              class="btn btn-outline-primary"
+                                              (click)="collapse11.toggle()"
+                                              [attr.aria-expanded]="!isCollapsed11"
+                                              aria-controls="collapseExample"
+                                            >
+                                              <i class="fa fa-minus" *ngIf="!isCollapsed11"> </i>
+                                              <i class="fa fa-plus" *ngIf="isCollapsed11"> </i>
+                                            </button>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div #collapse11="ngbCollapse" [(ngbCollapse)]="isCollapsed11">
+                                        <div class="row" style="align-items: center;justify-content:flex-end">
+                                          <div style="display:flex;align-items: center; justify-content:flex-end">
+                                            <select
+                                              class="form-control form-select"
+                                              style="width:auto!important;"
+                                              (change)="especialityChange($event.target.value)"
+                                              [(ngModel)]="selectedOptionTipo1"
+                                            >
+                                            <option
+                                              *ngFor="let especialidad of especialidades; let i = index"
+                                              [value]="especialidad"
+                                              [selected]="especialidad === selectedOptionTipo1"
+                                            >
+                                              {{especialidad}}
+                                            </option>
+                                          </select>
+                                            <div style="display:flex;margin:15px;align-items: center;">
+                                              <span>Buscar</span>&nbsp;&nbsp;
+                                              <input
+                                                type="text"
+                                                style='padding:6px;width:100%;'
+                                                placeholder="por cualquier campo"
+                                                (keyup)='updateFilter2($event, selectedOptionTipo1)'>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <ngx-datatable
+                                          class="bootstrap table table-striped "
+                                          id="datatablele"
+                                          [columns]="colsResGrpExEsp"
+                                          [rows]="rowsFResGrpExEsp"
+                                          [columnMode]="ColumnMode.flex"
+                                          [headerHeight]="50"
+                                          [rowHeight]="$any('auto')"
+                                          [scrollbarH]="true"
+                                          (page)="setPage($event)"
+                                          [selected]="selected"
+                                          [selectionType]="SelectionType.single"
+                                        >
+                                          <ngx-datatable-column
+                                            *ngFor="let column of colsResGrpExEsp; let i = index;"
+                                            name="{{ column.name }}"
+                                            prop="{{ column.prop }}"
+                                            [headerClass]="column.headerClass"
+                                            [cellClass]="column.cellClass"
+                                            [flexGrow]="1"
+                                            [minWidth]="90"
+                                          >
+                                            <ng-template
+                                              ngx-datatable-cell-template
+                                              let-rowIndex="rowIndex"
+                                              let-value="value"
+                                              let-row="row"
+                                            >
+                                              <span *ngIf="column.prop == 'medico' || column.prop == 'especialidad'">
+                                                {{value}}
+                                              </span>
+                                              <span *ngIf="column.prop !== 'medico' && column.prop !== 'especialidad'">
+                                                {{value  | number : '1.2-2' }} %
+                                              </span>
+                                            </ng-template>
+                                          </ngx-datatable-column>
+                                        </ngx-datatable>
+                                      </div>
+                                    </div>
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -670,9 +776,8 @@
                       </div>
                     </ng-template>
                 </li>
-
               </ul>
-                <div [ngbNavOutlet]="nav" class="mt-2"></div>
+              <div [ngbNavOutlet]="nav" class="mt-2"></div>
             </div>
           </div>
         </section>
