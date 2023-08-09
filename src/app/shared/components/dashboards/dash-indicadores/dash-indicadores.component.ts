@@ -606,7 +606,6 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
         }else{
           Swal.close();
         }
-        
       },
       (error) => {
           Swal.close();
@@ -746,7 +745,6 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
         }else{
           Swal.close();
         }
-        
       },
       (error) => {
           Swal.close();
@@ -755,7 +753,6 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
 
     this.tableApiservice.getResumenEspecialidadMensual1(this.parameters).subscribe(
       (response) => {
-        
         if(response.data.success){
           this.data = response.data ? response.data : [];
           this.message = this.data.titulo;
@@ -764,23 +761,21 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
           this.rows9 = this.data.tabla_resumen_especialidad_mensual_01;
           console.log(778, this.rows9)
           this.grupos = [];
-          if(this.rows9){
+
+          if (this.rows9) {
             this.rows9.map( item => {
-                    
               if (!this.grupos.includes(item.grupo)){
                 this.grupos.push(item.grupo);
               }
             });
             console.log(707, this.grupos)
             this.temp1 = this.rows9;
-          //  this.rows9filtered = this.rows9.filter(item => item.grupo === 'Porcentaje');
+            // this.rows9filtered = this.rows9.filter(item => item.grupo === 'Porcentaje');
             this.rows9filtered = this.rows9.filter(item => item.grupo === '% Exámenes Compradas / Emitidos');
-            
           }
-        }else{
+        } else {
           Swal.close();
         }
-        
       },
       (error) => {
           Swal.close();

@@ -520,10 +520,15 @@
                                             <div class="callout callout-info">
                                               <h3 class="box-title">SOLICITUD DE ORDENES EMITIDAS POR ATENCIÓN REALIZADA - POR ESPECIALIDAD</h3>
                                             </div>
-                                            <button type="button" class="btn btn-outline-primary" (click)="collapse9.toggle()" [attr.aria-expanded]="!isCollapsed9"
-                                            aria-controls="collapseExample">
-                                            <i class="fa fa-minus" *ngIf="!isCollapsed9"> </i>
-                                            <i class="fa fa-plus" *ngIf="isCollapsed9"> </i> 
+                                            <button
+                                              type="button"
+                                              class="btn btn-outline-primary"
+                                              (click)="collapse9.toggle()"
+                                              [attr.aria-expanded]="!isCollapsed9"
+                                              aria-controls="collapseExample"
+                                            >
+                                              <i class="fa fa-minus" *ngIf="!isCollapsed9"> </i>
+                                              <i class="fa fa-plus" *ngIf="isCollapsed9"> </i>
                                             </button>
                                           </div>
                                         </div>
@@ -537,52 +542,63 @@
                                               </select> -->
                                               <select class="form-control form-select" (change)="grupoChange($event.target.value)" style="width:auto!important;" [(ngModel)]="selectedOptionTipo" >
                                                 <!-- <option [value]="selectedOptionTipo" selected>{{selectedOptionTipo}}</option> -->
-                                              <option 
+                                              <option
                                                 *ngFor="let grupo of grupos; let i=index"
                                                 [value]="grupo"
-                                              >{{grupo}}
+                                              >
+                                                {{grupo}}
                                               </option>
                                             </select>
                                               <div class="" style="display:flex;margin:15px;align-items: center;">
                                                 <span>Buscar</span>&nbsp;&nbsp;
                                                   <input type="text" style='padding:6px;width:100%;' placeholder="por cualquier campo" (keyup)='updateFilter($event, selectedOptionTipo)'>
                                               </div>
-                                            </div> 
+                                            </div>
                                           </div>
                                           <ngx-datatable #myTable9
                                             class="bootstrap table table-striped"
                                             id="datatablele"
-                                              [columns]="columns9"
-                                              [rows]="rows9filtered"
-                                              [columnMode]="ColumnMode.flex"
-                                              [headerHeight]="50"
-                                              [rowHeight]="$any('auto')"
-                                              [scrollbarH]="true"
-                                              (page)="setPage($event)"
+                                            [columns]="columns9"
+                                            [rows]="rows9filtered"
+                                            [columnMode]="ColumnMode.flex"
+                                            [headerHeight]="50"
+                                            [rowHeight]="$any('auto')"
+                                            [scrollbarH]="true"
+                                            (page)="setPage($event)"
                                             [selected]="selected"
-                                              [selectionType]="SelectionType.single"
-                                              
+                                            [selectionType]="SelectionType.single"
+                                          >
+                                            <ngx-datatable-column
+                                              *ngFor="let column of columns9; let i = index;"
+                                              name="{{column.name}}"
+                                              prop="{{column.prop}}"
+                                              [headerClass]="column.headerClass"
+                                              [cellClass]="column.cellClass"
+                                              [flexGrow]="1"
+                                              [minWidth]="90"
+                                              [pipe]="column.pipe"
+                                            >
+                                              <ng-template
+                                                ngx-datatable-cell-template
+                                                let-rowIndex="rowIndex"
+                                                let-value="value"
+                                                let-row="row"
                                               >
-                                              <ngx-datatable-column  [headerClass]="column.headerClass" [cellClass]="column.cellClass" 
-                                              [flexGrow]="1" [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns9; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
-                                                <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
-                                                  let-row="row">
-                                                  <div>
-                                                    <span *ngIf="column.prop == 'grupo' || column.prop == 'especialidad'">{{value}}</span>
-                                                    <span *ngIf="column.prop !== 'grupo' && column.prop !== 'especialidad' && row.grupo.indexOf('%') === -1 && row.grupo.indexOf('Pago') === -1">{{value  | number : '1.0' }}</span>
-                                                    <span *ngIf="column.prop !== 'grupo' && column.prop !== 'especialidad' && row.grupo.indexOf('%') !== -1">{{value  | number : '1.2-2' }} %</span>
-                                                    <span *ngIf="column.prop !== 'grupo' && column.prop !== 'especialidad' && row.grupo.indexOf('Pago') !== -1">S/ {{value  | number : '1.2-2' }}</span>
-                                                    
+                                                <div>
+                                                  <span *ngIf="column.prop == 'grupo' || column.prop == 'especialidad'">{{value}}</span>
+                                                  <span *ngIf="column.prop !== 'grupo' && column.prop !== 'especialidad' && row.grupo.indexOf('%') === -1 && row.grupo.indexOf('Pago') === -1">{{value  | number : '1.0' }}</span>
+                                                  <span *ngIf="column.prop !== 'grupo' && column.prop !== 'especialidad' && row.grupo.indexOf('%') !== -1">{{value  | number : '1.2-2' }} %</span>
+                                                  <span *ngIf="column.prop !== 'grupo' && column.prop !== 'especialidad' && row.grupo.indexOf('Pago') !== -1">S/ {{value  | number : '1.2-2' }}</span>
+
                                                   <!--
-                                                    <span *ngIf="column.prop !== 'grupo' && column.prop !== 'especialidad' && row.grupo !== 'Porcentaje'">{{value  | number : '1.0' }}</span>
-                                                    <span *ngIf="column.prop !== 'grupo' && column.prop !== 'especialidad' && row.grupo === 'Porcentaje'">{{value  | number : '1.2-2' }} %</span>
-                                                  -->  
-                                                    <!-- <span *ngIf="row.grupo === 'Porcentaje'">{{row.grupo }} %</span>  -->
-                                                  </div>
-                                                </ng-template>
-                                              </ngx-datatable-column>
-                                          </ngx-datatable>
-                                        
+                                                  <span *ngIf="column.prop !== 'grupo' && column.prop !== 'especialidad' && row.grupo !== 'Porcentaje'">{{value  | number : '1.0' }}</span>
+                                                  <span *ngIf="column.prop !== 'grupo' && column.prop !== 'especialidad' && row.grupo === 'Porcentaje'">{{value  | number : '1.2-2' }} %</span>
+                                                  -->
+                                                  <!-- <span *ngIf="row.grupo === 'Porcentaje'">{{row.grupo }} %</span>  -->
+                                                </div>
+                                              </ng-template>
+                                            </ngx-datatable-column>
+                                        </ngx-datatable>
                                       </div>
                                     </div>
                                     <div class="card">
