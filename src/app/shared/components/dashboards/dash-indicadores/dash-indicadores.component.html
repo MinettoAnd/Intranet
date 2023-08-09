@@ -768,6 +768,107 @@
                                         </ngx-datatable>
                                       </div>
                                     </div>
+                                    <div class="card">
+                                      <div class="card-header-info" >
+                                        <div class="box-header">
+                                          <div class="toggle-table">
+                                            <div class="callout callout-info">
+                                              <h3 class="box-title">RESUMEN GRUPO DE EXÁMENES POR ESPECIALIDAD Y EXÁMENES</h3>
+                                            </div>
+                                            <button
+                                              type="button"
+                                              class="btn btn-outline-primary"
+                                              (click)="collapse12.toggle()"
+                                              [attr.aria-expanded]="!isCollapsed12"
+                                              aria-controls="collapseExample"
+                                            >
+                                              <i class="fa fa-minus" *ngIf="!isCollapsed12"> </i>
+                                              <i class="fa fa-plus" *ngIf="isCollapsed12"> </i>
+                                            </button>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div #collapse12="ngbCollapse" [(ngbCollapse)]="isCollapsed12">
+                                        <div class="row" style="align-items: center;justify-content:flex-end">
+                                          <div style="display:flex;align-items: center; justify-content:flex-end">
+                                            <select
+                                              class="form-control form-select"
+                                              (change)="filtrarDatosTblResGrpExExmEsp($event.target.value)"
+                                              style="width:auto!important;"
+                                              [(ngModel)]="optFltrEspResGrpExExmEsp"
+                                            >
+                                              <option
+                                                *ngFor="let val of fltroEspdsResGrpExExmEsp; let i = index"
+                                                [value]="val"
+                                                [selected]="val === optFltrEspResGrpExExmEsp"
+                                              >
+                                                {{val}}
+                                              </option>
+                                            </select>
+
+                                            <select
+                                              class="form-control form-select"
+                                              (change)="filtrarDatosTblResGrpExExmEsp($event.target.value)"
+                                              style="width:auto!important;"
+                                              [(ngModel)]="optFiltroExmResGrpExExmEsp"
+                                            >
+                                              <option
+                                                *ngFor="let val of fltroTipExmResGrpExExmEsp; let i = index"
+                                                [value]="val"
+                                                [selected]="val === optFiltroExmResGrpExExmEsp"
+                                              >
+                                                {{val}}
+                                              </option>
+                                            </select>
+                                            <div style="display:flex;margin:15px;align-items: center;">
+                                              <span>Buscar</span>&nbsp;&nbsp;
+                                              <input
+                                                type="text"
+                                                style='padding:6px;width:100%;'
+                                                placeholder="por cualquier campo"
+                                                (keyup)='updateFilter2($event, selectedOptionTipo1)'>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <ngx-datatable
+                                          class="bootstrap table table-striped "
+                                          id="datatablele"
+                                          [columns]="colsResGrpExExmEsp"
+                                          [rows]="rowsFResGrpExExmEsp"
+                                          [columnMode]="ColumnMode.flex"
+                                          [headerHeight]="50"
+                                          [rowHeight]="$any('auto')"
+                                          [scrollbarH]="true"
+                                          (page)="setPage($event)"
+                                          [selected]="selected"
+                                          [selectionType]="SelectionType.single"
+                                        >
+                                          <ngx-datatable-column
+                                            *ngFor="let column of colsResGrpExEsp; let i = index;"
+                                            name="{{ column.name }}"
+                                            prop="{{ column.prop }}"
+                                            [headerClass]="column.headerClass"
+                                            [cellClass]="column.cellClass"
+                                            [flexGrow]="1"
+                                            [minWidth]="90"
+                                          >
+                                            <ng-template
+                                              ngx-datatable-cell-template
+                                              let-rowIndex="rowIndex"
+                                              let-value="value"
+                                              let-row="row"
+                                            >
+                                              <span *ngIf="column.prop == 'medico' || column.prop == 'especialidad' || column.prop == 'Examen'">
+                                                {{value}}
+                                              </span>
+                                              <span *ngIf="column.prop !== 'medico' && column.prop !== 'especialidad'">
+                                                {{value  | number : '1.2-2' }} %
+                                              </span>
+                                            </ng-template>
+                                          </ngx-datatable-column>
+                                        </ngx-datatable>
+                                      </div>
+                                    </div>
                                 </div>
                               </div>
                             </div>
