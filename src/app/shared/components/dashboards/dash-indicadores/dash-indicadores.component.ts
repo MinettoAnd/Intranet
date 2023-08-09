@@ -112,10 +112,12 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
   columns10:any;
 
   public optFiltroResGrpExEsp: string = '';
+  public optFiltroGruposResGrpExEsp: string = '';
   public colsResGrpExEsp: Array<any> = [];
   public rowsResGrpExEsp: Array<any> = [];
   public rowsFResGrpExEsp: Array<any> = [];
   public fltroEspdsResGrpExEsp: Array<any> = [];
+  public fltroGruposResGrpExEsp: Array<any> = [];
 
   public optFltrEspResGrpExExmEsp: string = '';
   public optFiltroExmResGrpExExmEsp: string = '';
@@ -835,6 +837,7 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
 
           this.rowsResGrpExEsp = this.data.tabla;
           this.fltroEspdsResGrpExEsp = [];
+          this.fltroGruposResGrpExEsp = [];
 
           console.log('9d9d9', this.rowsResGrpExEsp)
 
@@ -845,6 +848,10 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
                   if (!this.fltroEspdsResGrpExEsp.includes(item.especialidad)) {
                     this.fltroEspdsResGrpExEsp.push(item.especialidad);
                   }
+
+                  if (!this.fltroGruposResGrpExEsp.includes(item.grupo)) {
+                    this.fltroGruposResGrpExEsp.push(item.grupo);
+                  }
                 }
 
                 resolve(true);
@@ -854,8 +861,12 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
               }
             });
 
+            console.log('EEEEEEEE', this.fltroEspdsResGrpExEsp[0], this.fltroGruposResGrpExEsp[0])
+
             this.optFiltroResGrpExEsp = this.fltroEspdsResGrpExEsp[0];
-            this.rowsFResGrpExEsp = this.rowsResGrpExEsp.filter(item => item.especialidad === this.optFiltroResGrpExEsp);
+            this.optFiltroGruposResGrpExEsp = this.fltroGruposResGrpExEsp[0];
+
+            this.filtrarDatosTblResGrpExEsp();
           }
 
           // TODO mover al aúltimo API petición
@@ -1584,9 +1595,14 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
     } 
   }
 
-  filtrarDatosTblResGrpExEsp(opcFiltro: string) {
-    if (opcFiltro.length > 0) {
-      const filtered = this.rowsResGrpExEsp.filter(item => item.especialidad === opcFiltro);
+  filtrarDatosTblResGrpExEsp() {
+    const filtro: string = this.optFiltroResGrpExEsp;
+    const filtroGrupos: string = this.optFiltroGruposResGrpExEsp;
+
+    if (filtro.length > 0 && filtroGrupos.length > 0) {
+      const filtered = this.rowsResGrpExEsp.filter(item => item.especialidad === filtro)
+                                            .filter(item => item.grupo === filtroGrupos);
+
       this.rowsFResGrpExEsp = [...filtered];
      }
   }
@@ -1603,17 +1619,23 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
     }
   }
 
-  filtrarPorValorTblResGrpExEsp(event, selectedOption) {
+  filtrarPorValorTblResGrpExEsp(event) {
     const input = event.target.value.toLowerCase();
+    const filtro: string = this.optFiltroResGrpExEsp;
+    const filtroGrupos: string = this.optFiltroGruposResGrpExEsp;
 
     if (input.length > 0) {
       const filtered = this.rowsFResGrpExEsp
         .filter(el =>
           Object.values(el).find( val => val?.toString().toLowerCase().includes(input) ) != undefined
         );
+
       this.rowsFResGrpExEsp = [...filtered]
     } else {
-      this.rowsFResGrpExEsp = [...this.rowsResGrpExEsp.filter(item => item.especialidad === selectedOption)]
+      const filtered = this.rowsResGrpExEsp.filter(item => item.especialidad === filtro)
+                                           .filter(item => item.grupo === filtroGrupos);
+
+      this.rowsFResGrpExEsp = filtered;
     }
   }
 
@@ -1631,7 +1653,7 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
       this.rowsFResGrpExExmEsp = [...filtered]
     } else {
       const filtered = this.rowsResGrpExExmEsp.filter(item => item.especialidad === filtroEsp)
-                                            .filter(item => item.tipoExamen === filtroExm);
+                                              .filter(item => item.tipoExamen === filtroExm);
 
       this.rowsFResGrpExExmEsp = [...filtered]
     }
