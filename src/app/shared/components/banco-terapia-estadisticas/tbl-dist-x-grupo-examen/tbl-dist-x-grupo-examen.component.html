@@ -14,7 +14,7 @@
     </div>
     <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
         <div *ngIf="data">
-            <div classs="row" style="align-items: center;justify-content: space-between;">
+            <div classs="row" style="align-items: center;justify-content: space-between; display: flex;">
                 <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
                     <li class="list-group-item border-0 pl-0">
                         <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard()">
@@ -29,14 +29,16 @@
                         </button>
                     </li>
                 </ul>
-                <div *ngFor="let checkBoxesOp of chkbxs; let i = index" class="col-md-1 checkbox">
-                    <input type="checkbox" id="{{checkBoxesOp.id}}"
-                        [checked]="chkbxs[i].value"
-                        (click)="filtrar(checkBoxesOp.id);" />
+                <div style="display: flex;">
+                    <div *ngFor="let checkBoxesOp of chkbxs; let i = index" class="col-md-1 checkbox" style="width: 100px;">
+                        <input type="checkbox" id="{{checkBoxesOp.id}}"
+                            [checked]="chkbxs[i].value"
+                            (click)="filtrar(checkBoxesOp.id);" />
 
-                    <label for="{{checkBoxesOp.id}}">
-                        <span>{{checkBoxesOp.label}}</span>
-                    </label>
+                        <label for="{{checkBoxesOp.id}}">
+                            <span>{{checkBoxesOp.label}}</span>
+                        </label>
+                    </div>
                 </div>
             </div>
 

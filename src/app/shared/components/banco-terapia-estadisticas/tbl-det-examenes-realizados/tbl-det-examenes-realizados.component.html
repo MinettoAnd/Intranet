@@ -52,6 +52,7 @@
                         <option
                             *ngFor="let examen of lstDeExamenes"
                             value="{{ examen }}"
+                            [selected]="examen == valFiltroGrupoExamen"
                         >
                             {{ examen }}
                         </option>

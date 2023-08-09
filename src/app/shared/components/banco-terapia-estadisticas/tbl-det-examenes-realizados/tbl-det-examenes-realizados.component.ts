@@ -37,7 +37,7 @@ export class TblDetExamenesRealizadosComponent implements OnInit {
   public columnMode = ColumnMode;
   public isCollapsed: boolean = false;
   public chbxIdSel: string = 'idDERMont';
-  public valFiltroGrupoExamen: any = 'todos';
+  public valFiltroGrupoExamen: any = 'todo';
 
   public summaryNull = summaryNull;
   public summaryForAmount = summaryForAmount;
@@ -45,52 +45,38 @@ export class TblDetExamenesRealizadosComponent implements OnInit {
   constructor(private exportService: ExportService) { }
 
   ngOnInit(): void {
-    this.filtrarDatos(this.chbxIdSel);
+    this.filtrarDatos();
     // this.valFiltroGrupoExamen = this.lstDeExamenes[0];
     // this.data.filter(item => item.solesCantidad === 'soles')
   }
 
   public onChange(): void {
-    this.filtrarDatos(this.chbxIdSel);
+    this.filtrarDatos();
   }
 
   public chbxSel(id: any): void {
     this.chbxIdSel = id;
-    this.filtrarDatos(id);
+    this.filtrarDatos();
   }
 
-  public filtrarDatos(id: any): void {
+  public filtrarDatos(): void {
+    const id = this.chbxIdSel;
 
     this.chkbxs.forEach(x => {
       if (x.id === id) {
         x.value = true;
 
-        if(id === 'idDXGEMont') {
+        if (id === 'idDERMont') {
           this.lstGrupoDeExamen = this.data.filter(item => item.solesCantidad === 'soles')
-                                           .filter(valor => this.valFiltroGrupoExamen == valor.id);
-        } else if (id === 'idDXGECant') {
+                                            .filter(valor => this.valFiltroGrupoExamen == valor.id);
+        } else if (id === 'idDERCant') {
           this.lstGrupoDeExamen = this.data.filter(item => item.solesCantidad === 'cantidad')
-                                           .filter(valor => this.valFiltroGrupoExamen == valor.id);
+                                            .filter(valor => this.valFiltroGrupoExamen == valor.id);
         }
       } else {
         x.value = false;
-
-        if (this.valFiltroGrupoExamen == 'todo') {
-          this.lstGrupoDeExamen = this.data;
-          return;
-        } else {
-          this.lstGrupoDeExamen = this.data.filter(item => item.solesCantidad === 'cantidad');
-        }
       }
     });
-
-    // if (nombreExamen == 'todo') {
-    //   this.lstGrupoDeExamen = this.data;
-    //   return;
-    // }
-
-    // this.lstGrupoDeExamen = this.data.filter(valor => nombreExamen == valor.id)
-    //                                  .filter(item => item.solesCantidad === 'soles');
   }
 
   public copyTableToClipboard() {
