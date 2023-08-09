@@ -30,7 +30,7 @@
                     </li>
                 </ul>
                 <div style="display: flex;">
-                    <div *ngFor="let checkBoxesOp of chkbxs; let i = index" class="col-md-1 checkbox" style="min-width: 100px;">
+                    <div *ngFor="let checkBoxesOp of chkbxs; let i = index" class="col-md-1 checkbox" style="min-width: 150px;">
                         <input type="checkbox" id="{{checkBoxesOp.id}}"
                             [checked]="chkbxs[i].value"
                             (click)="filtrar(checkBoxesOp.id);" />
