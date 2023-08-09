@@ -378,9 +378,12 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
     };
   }
   getRowClass1(row) {
-
     return {
       'sub-totals': row.Campo === 'CIA. SEGUROS/CONVENIOS' || row.Campo === 'INSTITUCIONAL/PRIVADO' || row.Campo === 'MADRE NIÑO' || row.Campo === 'PROGRAMAS DE SALUD'};
+  }
+  getRowClass2(row) {
+    return {
+      'sub-totals': row.Campo === 'LIMA' || row.Campo === 'CHORRILLOS' || row.Campo === 'SURCO' || row.Campo === 'TOTAL'};
   }
   // getCellClass({ row, column, value }): any {
   //   console.log(178, column);

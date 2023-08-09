@@ -197,7 +197,7 @@
                                                         [rowHeight]="$any('auto')"
                                                         [scrollbarH]="true"
                                                         (page)="setPage($event)"
-                                                        [rowClass]="getRowClass"
+                                                        [rowClass]="getRowClass2"
                                                         >
                                                         <ngx-datatable-column [headerClass]="column.headerClass" [cellClass]="column.cellClass" 
                                                         [flexGrow]="1" [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns2; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
@@ -269,7 +269,7 @@
                                                     [rowHeight]="$any('auto')"
                                                     [scrollbarH]="true"
                                                     (page)="setPage($event)"
-                                                    [rowClass]="getRowClass"
+                                                    [rowClass]="getRowClass2"
                                                     >
                                                     <ngx-datatable-column [headerClass]="column.headerClass" [cellClass]="column.cellClass"
                                                     [flexGrow]="1"  [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns3; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
@@ -839,6 +839,7 @@
                                                 </div>
                                             </div>
                                           </div>
+                                          <!--
                                           <div class="card">
                                             <div class="card-header-info">
                                                 <div class="box-header">
@@ -870,7 +871,7 @@
                                                                     Exportar tabla a Excel
                                                                 </button>
                                                             </li>
-                                                            <!--  -->
+                                                           
                                                             <li class="list-group-item border-0 pl-0">
                                                                 <button type="button" (click)="showTableDasboard(2, 1)"
                                                                   class="btn-shadow mr-3 btn btn-info">
@@ -880,7 +881,7 @@
                                                                   <i class="pe-7s-graph3"></i>
                                                                 </button>
                                                             </li>
-                                                            <!--  -->
+                                                            
                                                         </ul>
                                                         
                                                         <div *ngFor="let checkBoxesOp of checkBoxesOps2; let i = index" class="col-md-1 checkbox" >
@@ -893,7 +894,7 @@
                                                             
                                                         </div>
                                                     </div>
-                                                    <!--  -->
+                                                  
                                                     <div class="card-body" *ngIf="isGrafico2">
                                                         <loading *ngIf="isLoading2">{{ isLoading2 }}</loading>
                                                         <div class="d-block" *ngIf="!isLoading2">
@@ -901,7 +902,7 @@
                                                           </canvas>
                                                         </div>
                                                     </div>
-                                                    <!--  -->
+                                                 
                                                     <ngx-datatable *ngIf="isTable10" #myTable10 class="bootstrap table table-striped " id="datatablele" [columns]="columns10" [rows]="rows10filtered" [columnMode]="ColumnMode.flex" [headerHeight]="50" [rowHeight]="$any('auto')" [scrollbarH]="true" (page)="setPage($event)" [summaryRow]="enableSummary"
                                                     [summaryPosition]="summaryPosition"
                                                     [summaryHeight]="35">
@@ -912,16 +913,10 @@
                                                                     <span  *ngIf="column.prop !== 'Campo' && row.solesCantidad === 'soles'">{{value  | currency }}</span>
                                                                     <span  *ngIf="column.prop !== 'Campo' && row.solesCantidad === 'cantidad'">{{value | number: '1.0-0' }}</span>
                                                                 </div>
-                                                                <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
-                                            <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
-                                            </div> -->
+                                                         
                                             
                                                             </ng-template>
-                                                            <!-- <ngx-datatable-column prop="per1">
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                            {{row.per1 | currency:'S/.  ':'code'}}
-                                            </ng-template>
-                                            </ngx-datatable-column> -->
+
                                                         </ngx-datatable-column>
                                                     </ngx-datatable>
                                                 </div>
@@ -981,21 +976,14 @@
                                                                     <span  *ngIf="column.prop !== 'Campo' && row.solesCantidad === 'soles'">{{value  | currency }}</span>
                                                                     <span  *ngIf="column.prop !== 'Campo' && row.solesCantidad === 'cantidad'">{{value | number: '1.0-0' }}</span>
                                                                 </div>
-                                                                <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
-                                            <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
-                                            </div> -->
                                             
                                                             </ng-template>
-                                                            <!-- <ngx-datatable-column prop="per1">
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                            {{row.per1 | currency:'S/.  ':'code'}}
-                                            </ng-template>
-                                            </ngx-datatable-column> -->
                                                         </ngx-datatable-column>
                                                     </ngx-datatable>
                                                 </div>
                                             </div>
                                           </div>
+                                        -->
                                           <div class="card">
                                             <div class="card-header-info">
                                                 <div class="box-header">
