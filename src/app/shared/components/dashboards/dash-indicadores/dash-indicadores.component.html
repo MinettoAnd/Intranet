@@ -725,7 +725,7 @@
                                                 type="text"
                                                 style='padding:6px;width:100%;'
                                                 placeholder="por cualquier campo"
-                                                (keyup)='updateFilter2($event, selectedOptionTipo1)'>
+                                                (keyup)='filtrarPorValorTblResGrpExEsp($event, selectedOptionTipo1)'>
                                             </div>
                                           </div>
                                         </div>
@@ -826,7 +826,7 @@
                                                 type="text"
                                                 style='padding:6px;width:100%;'
                                                 placeholder="por cualquier campo"
-                                                (keyup)='updateFilter2($event, selectedOptionTipo1)'>
+                                                (keyup)='filtrarPorValorTblResGrpExExmEsp($event, selectedOptionTipo1)'>
                                             </div>
                                           </div>
                                         </div>
@@ -858,7 +858,7 @@
                                               let-value="value"
                                               let-row="row"
                                             >
-                                              <span *ngIf="column.prop == 'medico' || column.prop == 'especialidad' || column.prop == 'Examen'">
+                                              <span *ngIf="column.prop == 'medico' || column.prop == 'especialidad' || column.prop == 'Examen' || column.prop == 'tipoAtencion'">
                                                 {{value}}
                                               </span>
                                               <span *ngIf="column.prop !== 'medico' && column.prop !== 'especialidad'">
