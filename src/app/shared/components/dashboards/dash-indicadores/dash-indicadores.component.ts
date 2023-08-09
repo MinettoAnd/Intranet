@@ -830,7 +830,6 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
       }
     );
 
-    // TODO trabajando
     this.tableApiservice.getResumenGrupoExEspecialidad(this.parameters).subscribe(
       async (response) => {
         if (response.data.success) {
@@ -872,7 +871,6 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
       (error) => Swal.close()
     );
 
-    // TODO siguiente
     this.tableApiservice.getResumenGrupoExExamenEspecialidad(this.parameters).subscribe(
       async (response) => {
         if (response.data.success) {
