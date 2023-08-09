@@ -1613,13 +1613,13 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
     const input = event.target.value.toLowerCase();
 
     if (input.length > 0) {
-      const filtered = this.rowsResGrpExEsp
+      const filtered = this.rowsFResGrpExEsp
         .filter(el =>
           Object.values(el).find( val => val?.toString().toLowerCase().includes(input) ) != undefined
         );
       this.rowsFResGrpExEsp = [...filtered]
     } else {
-      this.rowsFResGrpExEsp = [...this.rowsResGrpExEsp.filter(item => item.grupo === selectedOption)]
+      this.rowsFResGrpExEsp = [...this.rowsResGrpExEsp.filter(item => item.especialidad === selectedOption)]
     }
   }
 
@@ -1627,14 +1627,14 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
     const input = event.target.value.toLowerCase();
 
     if (input.length > 0) {
-      const filtered = this.rowsResGrpExExmEsp
+      const filtered = this.rowsFResGrpExExmEsp
         .filter(el =>
           Object.values(el).find( val => val?.toString().toLowerCase().includes(input) ) != undefined
         );
 
       this.rowsFResGrpExExmEsp = [...filtered]
     } else {
-      this.rowsFResGrpExExmEsp = [...this.rowsResGrpExExmEsp.filter(item => item.grupo === selectedOption)]
+      this.rowsFResGrpExExmEsp = [...this.rowsResGrpExExmEsp.filter(item => item.especialidad === selectedOption)]
     }
   }
 }
