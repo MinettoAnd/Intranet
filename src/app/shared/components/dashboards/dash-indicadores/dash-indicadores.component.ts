@@ -121,11 +121,13 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
 
   public optFltrEspResGrpExExmEsp: string = '';
   public optFiltroExmResGrpExExmEsp: string = '';
+  public optFiltroGruposResGrpExExmEsp: string = '';
   public colsResGrpExExmEsp: Array<any> = [];
   public rowsResGrpExExmEsp: Array<any> = [];
   public rowsFResGrpExExmEsp: Array<any> = [];
   public fltroEspdsResGrpExExmEsp: Array<any> = [];
   public fltroTipExmResGrpExExmEsp: Array<any> = [];
+  public fltroGruposResGrpExExmEsp: Array<any> = [];
 
   especialidad;
   especialidades = [];
@@ -834,12 +836,9 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
         if (response.data.success) {
           this.data = response.data ? response.data : [];
           this.colsResGrpExEsp = this.data.cabecera;
-
           this.rowsResGrpExEsp = this.data.tabla;
           this.fltroEspdsResGrpExEsp = [];
           this.fltroGruposResGrpExEsp = [];
-
-          console.log('9d9d9', this.rowsResGrpExEsp)
 
           if (this.rowsResGrpExEsp) {
             await new Promise((resolve, reject) => {
@@ -861,16 +860,11 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
               }
             });
 
-            console.log('EEEEEEEE', this.fltroEspdsResGrpExEsp[0], this.fltroGruposResGrpExEsp[0])
-
             this.optFiltroResGrpExEsp = this.fltroEspdsResGrpExEsp[0];
             this.optFiltroGruposResGrpExEsp = this.fltroGruposResGrpExEsp[0];
 
             this.filtrarDatosTblResGrpExEsp();
           }
-
-          // TODO mover al aúltimo API petición
-          // Swal.close();
         } else {
           Swal.close();
         }
@@ -885,10 +879,7 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
           this.data = response.data ? response.data : [];
           this.colsResGrpExExmEsp = this.data.cabecera;
           this.rowsResGrpExExmEsp = this.data.tabla;
-          // this.grupos = [];
-
-          console.log('xzxx', this.rowsResGrpExExmEsp, this.colsResGrpExExmEsp)
-
+          this.fltroGruposResGrpExExmEsp = [];
 
           if (this.rowsResGrpExExmEsp) {
             await new Promise((resolve, reject) => {
@@ -897,8 +888,13 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
                   if (!this.fltroEspdsResGrpExExmEsp.includes(item.especialidad)) {
                     this.fltroEspdsResGrpExExmEsp.push(item.especialidad);
                   }
+
                   if (!this.fltroTipExmResGrpExExmEsp.includes(item.tipoExamen)) {
                     this.fltroTipExmResGrpExExmEsp.push(item.tipoExamen);
+                  }
+
+                  if (!this.fltroGruposResGrpExExmEsp.includes(item.grupo)) {
+                    this.fltroGruposResGrpExExmEsp.push(item.grupo);
                   }
                 }
 
@@ -911,6 +907,7 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
 
             this.optFltrEspResGrpExExmEsp = this.fltroEspdsResGrpExExmEsp[0];
             this.optFiltroExmResGrpExExmEsp = this.fltroTipExmResGrpExExmEsp[0];
+            this.optFiltroGruposResGrpExExmEsp = this.fltroGruposResGrpExExmEsp[0];
 
             this.filtrarDatosTblResGrpExExmEsp();
           }
@@ -1610,10 +1607,12 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
   filtrarDatosTblResGrpExExmEsp() {
     const filtroEsp: string = this.optFltrEspResGrpExExmEsp;
     const filtroExm: string = this.optFiltroExmResGrpExExmEsp;
+    const filtroGrupos: string = this.optFiltroGruposResGrpExExmEsp;
 
     if (filtroEsp.length > 0 && filtroExm.length > 0) {
       const filtered = this.rowsResGrpExExmEsp.filter(item => item.especialidad === filtroEsp)
-                                              .filter(item => item.tipoExamen === filtroExm);
+                                              .filter(item => item.tipoExamen === filtroExm)
+                                              .filter(item => item.grupo === filtroGrupos);
 
       this.rowsFResGrpExExmEsp = [...filtered];
     }
@@ -1643,6 +1642,7 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
     const input = event.target.value.toLowerCase();
     const filtroEsp: string = this.optFltrEspResGrpExExmEsp;
     const filtroExm: string = this.optFiltroExmResGrpExExmEsp;
+    const filtroGrupos: string = this.optFiltroGruposResGrpExExmEsp;
 
     if (input.length > 0) {
       const filtered = this.rowsFResGrpExExmEsp
@@ -1653,7 +1653,8 @@ export class DashIndicadoresComponent implements OnInit, OnDestroy {
       this.rowsFResGrpExExmEsp = [...filtered]
     } else {
       const filtered = this.rowsResGrpExExmEsp.filter(item => item.especialidad === filtroEsp)
-                                              .filter(item => item.tipoExamen === filtroExm);
+                                              .filter(item => item.tipoExamen === filtroExm)
+                                              .filter(item => item.grupo === filtroGrupos);
 
       this.rowsFResGrpExExmEsp = [...filtered]
     }
