@@ -842,6 +842,7 @@
                                             </div>
                                           </div>
                 
+
                                           <div class="card">
                                             <div class="card-header-info">
                                                 <div class="box-header">
@@ -924,6 +925,9 @@
                                                 </div>
                                             </div>
                                           </div>
+
+
+
                                           <div class="card">
                                             <div class="card-header-info">
                                                 <div class="box-header">
@@ -985,6 +989,162 @@
                                                 </div>
                                             </div>
                                           </div>
+
+
+
+                                          <app-tbl-dist-x-grupo-examen
+                                            [data]="this.data.tabla_anual_grupoExamen"
+                                            [cabecera]="this.data.cabecera_anual_grupoExamen"
+                                            [summaryPosition]="summaryPosition"
+                                            [enableSummary]="enableSummary"
+                                          ></app-tbl-dist-x-grupo-examen>
+
+                                          <div class="card">
+                                            <div class="card-header-info">
+                                                <div class="box-header">
+                                                    <div class="toggle-table">
+                                                        <div class="callout callout-info">
+                                                            <h3 class="box-title">Distribución Anual por Tipo de Exámen Agrupado por Sede
+                                                            </h3>
+                                                        </div>
+                                                        <button type="button" class="btn btn-outline-primary" (click)="collapse21.toggle()" [attr.aria-expanded]="!isCollapsed21" aria-controls="collapseExample">
+                                                            <i class="fa fa-minus" *ngIf="!isCollapsed21"> </i>
+                                                            <i class="fa fa-plus" *ngIf="isCollapsed21"> </i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div #collapse21="ngbCollapse" [(ngbCollapse)]="isCollapsed21">
+                                                <div *ngIf="rows_TipoEx_sede">
+                                                    <div class="row" style="align-items: center;justify-content: space-between;">
+                                                        <ul class="list-group list-group-horizontal list-group-flush col-md-9" style="flex-wrap: wrap;">
+                                                            <li class="list-group-item border-0 pl-0">
+                                                                <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(21)">
+                                                                    <i class="fa fa-external-link"></i>
+                                                                    Copiar tabla
+                                                                </button>
+                                                            </li>
+                                                            <li class="list-group-item border-0 pl-0">
+                                                                <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(21)">
+                                                                    <i class="fa fa-external-link"></i>
+                                                                    Exportar tabla a Excel
+                                                                </button>
+                                                            </li>
+                                                        </ul>
+                                                        <div *ngFor="let checkBoxesOp of checkBoxesOps21; let i = index" class="col-md-1 checkbox">
+                                                            <input type="checkbox" id="{{checkBoxesOp.id}}"
+                                                            [checked]="checkBoxesOps21[i].value"
+                                                            (click)="selection(checkBoxesOp, checkBoxesOp.id, 21);"/>
+                                                            <label for="{{checkBoxesOp.id}}"><span>{{checkBoxesOp.label}}</span></label>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <ngx-datatable #myTable_TipoEx_sede class="bootstrap table table-striped " 
+                                                    id="datatablele" [columns]="columns_TipoEx_sede" 
+                                                    [rows]="rows_TipoEx_sede_filter" [columnMode]="ColumnMode.flex" 
+                                                    [headerHeight]="50" [rowHeight]="$any('auto')" 
+                                                    [scrollbarH]="true" (page)="setPage($event)" 
+                                                    [rowClass]="getRowClass2"
+                                                    >
+                                                        <ngx-datatable-column [headerClass]="column.headerClass" [cellClass]="column.cellClass" [flexGrow]="1" [minWidth]="90"  *ngFor="let column of columns_TipoEx_sede; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                                            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                                                                <div>
+                                                                    <span  *ngIf="column.prop === 'Campo'" [ngClass]="{'row-paddin': row.Campo !== 'LIMA' &&  row.Campo !=='CHORRILLOS' &&  row.Campo !== 'SURCO' &&  row.Campo !== 'TOTAL' }">{{value }}</span>
+                                                                    <span  *ngIf="column.prop !== 'Campo' && row.solesCantidad === 'soles'">{{value  | currency }}</span>
+                                                                    <span  *ngIf="column.prop !== 'Campo' && row.solesCantidad === 'cantidad'">{{value | number: '1.0-0' }}</span>
+                                                                </div>
+                                            
+                                                            </ng-template>
+                                                        </ngx-datatable-column>
+                                                    </ngx-datatable>
+                                                </div>
+                                            </div>
+                                          </div>
+
+
+
+
+                                          <div class="card">
+                                            <div class="card-header-info">
+                                                <div class="box-header">
+                                                    <div class="toggle-table">
+                                                        <div class="callout callout-info">
+                                                            <h3 class="box-title">Distribución Anual por Especialidad
+                                                            </h3>
+                                                        </div>
+                                                        <button type="button" class="btn btn-outline-primary" (click)="collapse22.toggle()" [attr.aria-expanded]="!isCollapsed12" aria-controls="collapseExample">
+                                                            <i class="fa fa-minus" *ngIf="!isCollapsed22"> </i>
+                                                            <i class="fa fa-plus" *ngIf="isCollapsed22"> </i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div #collapse22="ngbCollapse" [(ngbCollapse)]="isCollapsed22">
+                                                <div *ngIf="rows22">
+
+                                                    <div class="row" style="align-items: center;justify-content: space-between;">
+
+                                                        <ul class="list-group list-group-horizontal list-group-flush col-md-9" style="flex-wrap: wrap;">
+                                                            <li class="list-group-item border-0 pl-0">
+                                                                <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(22)">
+                                                                    <i class="fa fa-external-link"></i>
+                                                                    Copiar tabla
+                                                                </button>
+                                                            </li>
+                                                            <li class="list-group-item border-0 pl-0">
+                                                                <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(22)">
+                                                                    <i class="fa fa-external-link"></i>
+                                                                    Exportar tabla a Excel
+                                                                </button>
+                                                            </li>
+                                                        </ul>
+                                                        <div *ngFor="let checkBoxesOp of checkBoxesOps22; let i = index" class="col-md-1 checkbox">
+                                                            <input type="checkbox" id="{{checkBoxesOp.id}}"
+                                                            [checked]="checkBoxesOps22[i].value"
+                                                            (click)="selection(checkBoxesOp, checkBoxesOp.id, 22);"/>
+                                                            <label for="{{checkBoxesOp.id}}"><span>{{checkBoxesOp.label}}</span></label>
+                                                        </div>
+                                                    </div>
+
+                                                    
+                                                    <ngx-datatable #myTable22 class="bootstrap table table-striped " id="datatablele" [columns]="columns22" [rows]="rows22filtered" [columnMode]="ColumnMode.flex" [headerHeight]="50" [rowHeight]="$any('auto')" [scrollbarH]="true" (page)="setPage($event)" [summaryRow]="enableSummary"
+
+                                                    [summaryPosition]="summaryPosition"
+                                                    [summaryHeight]="35">
+                                                        <ngx-datatable-column [headerClass]="column.headerClass" [cellClass]="column.cellClass" [flexGrow]="1" [minWidth]="90" [summaryFunc]="column.prop == 'Campo' ? summaryNull:summaryForAmount" *ngFor="let column of columns22; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                                            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                                                                <div>
+                                                                    <span  *ngIf="column.prop === 'Campo'">{{value }}</span>
+                                                                    <span  *ngIf="column.prop !== 'Campo' && row.solesCantidad === 'soles'">{{value  | currency }}</span>
+                                                                    <span  *ngIf="column.prop !== 'Campo' && row.solesCantidad === 'cantidad'">{{value | number: '1.0-0' }}</span>
+                                                                </div>
+                                     
+                                                            </ng-template>
+                                                        </ngx-datatable-column>
+                                                    </ngx-datatable>
+                                                </div>
+                                            </div>
+                                          </div>
+
+
+
+                                          <app-tbl-det-examenes-especialidad
+                                            [data]="this.data.tabla_anual_especialidad_tipoEx"
+                                            [cabecera]="this.data.cabecera_anual_especialidad_tipoEx"
+                                            [lstDeExamenes]="this.lstDeExamenes"
+                                            [summaryPosition]="summaryPosition"
+                                            [enableSummary]="enableSummary"
+                                          ></app-tbl-det-examenes-especialidad>
+
+                                          <app-tbl-det-examenes-realizados
+                                            [data]="this.data.tabla_anual_detExmsRealizados"
+                                            [cabecera]="this.data.cabecera_anual_detExmsRealizados"
+                                            [lstDeExamenes]="this.lstDeExamenes"
+                                            [summaryPosition]="summaryPosition"
+                                            [enableSummary]="enableSummary"
+                                          ></app-tbl-det-examenes-realizados>
+
+
                                         
                                           <div class="card">
                                             <div class="card-header-info">
@@ -1056,28 +1216,8 @@
                                             </div>
                                           </div>
 
-                                          <app-tbl-dist-x-grupo-examen
-                                            [data]="this.data.tabla_anual_grupoExamen"
-                                            [cabecera]="this.data.cabecera_anual_grupoExamen"
-                                            [summaryPosition]="summaryPosition"
-                                            [enableSummary]="enableSummary"
-                                          ></app-tbl-dist-x-grupo-examen>
 
-                                          <app-tbl-det-examenes-especialidad
-                                            [data]="this.data.tabla_anual_especialidad_tipoEx"
-                                            [cabecera]="this.data.cabecera_anual_especialidad_tipoEx"
-                                            [lstDeExamenes]="this.lstDeExamenes"
-                                            [summaryPosition]="summaryPosition"
-                                            [enableSummary]="enableSummary"
-                                          ></app-tbl-det-examenes-especialidad>
-                                                                                  
-                                          <app-tbl-det-examenes-realizados
-                                            [data]="this.data.tabla_anual_detExmsRealizados"
-                                            [cabecera]="this.data.cabecera_anual_detExmsRealizados"
-                                            [lstDeExamenes]="this.lstDeExamenes"
-                                            [summaryPosition]="summaryPosition"
-                                            [enableSummary]="enableSummary"
-                                          ></app-tbl-det-examenes-realizados>
+
 
                                         </div>
                                     </div>

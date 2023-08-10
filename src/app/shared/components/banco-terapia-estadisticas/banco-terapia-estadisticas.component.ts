@@ -111,10 +111,12 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
   columns10:any;
   columns11:any;
   columns12:any;
+  columns22:any;
   columns13:any;
   columns14:any;
   columns15:any;
   columns16:any;
+  columns_TipoEx_sede:any;
 
   rows: any;
   rows1: any;
@@ -125,6 +127,8 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
   rows10filtered = [];
   rows11filtered = [];
   rows12filtered = [];
+  rows22filtered = [];
+  rows_TipoEx_sede_filter = [];
   rows5: any;
   rows6: any;
   rows7: any;
@@ -133,10 +137,13 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
   rows10: any;
   rows11: any;
   rows12: any;
+  rows22: any;
   rows13: any;
   rows14: any;
   rows15: any;
   rows16: any;
+  rows_TipoEx_sede: any;
+
   temp: any [];
   columnsPendientes: any;
   rowsPendientes: any;
@@ -234,6 +241,20 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
       value: false
     }
   ];
+  checkBoxesOps21: any[] = [
+    {
+      id: '1cc',
+      label: 'Montos',
+      template: null,
+      value: true
+    },
+    {
+      id: '2cc',
+      label: 'Cantidad',
+      template: null,
+      value: false
+    }
+  ];
   checkBoxesOps3: any[] = [
     {
       id: '1c',
@@ -262,6 +283,22 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
       value: false
     }
   ];
+
+  checkBoxesOps22: any[] = [
+    {
+      id: '1e',
+      label: 'Montos',
+      template: null,
+      value: true
+    },
+    {
+      id: '2e',
+      label: 'Cantidad',
+      template: null,
+      value: false
+    }
+  ];
+
   private rowClassRules;
   action: boolean = false;
   @Input() area: string;
@@ -335,6 +372,35 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
           }else if(id === '2b'){
             console.log(255, id)
             this.rows10filtered = this.rows10.filter(item => item.solesCantidad === 'cantidad');
+          }
+        }else{
+          x.value = false;
+        }
+      });
+    }else if (tabla === 21){
+      
+      this.checkBoxesOps21.forEach(x => {
+        if (x.id === id) {
+          x.value = true;
+          if(id === '1cc'){
+            this.rows_TipoEx_sede_filter = this.rows_TipoEx_sede.filter(item => item.solesCantidad === 'soles');
+          }else if(id === '2cc'){
+            console.log(255, id)
+            this.rows_TipoEx_sede_filter = this.rows_TipoEx_sede.filter(item => item.solesCantidad === 'cantidad');
+          }
+        }else{
+          x.value = false;
+        }
+      });
+    }else if (tabla === 22){
+      this.checkBoxesOps22.forEach(x => {
+        if (x.id === id) {
+          x.value = true;
+          if(id === '1e'){
+            this.rows22filtered = this.rows22.filter(item => item.solesCantidad === 'soles');
+          }else if(id === '2e'){
+            console.log(22, id)
+            this.rows22filtered = this.rows22.filter(item => item.solesCantidad === 'cantidad');
           }
         }else{
           x.value = false;
@@ -1710,6 +1776,11 @@ getBarChartB(chartLabels1, chartData1, chartData2,chartData3,chartData4,chartDat
           //    })
           //   }
           // })
+
+          this.columns_TipoEx_sede = this.data.cabecera_anual_grupoExamen_sede;
+          this.rows_TipoEx_sede = this.data.tabla_anual_grupoExamen_sede;
+          this.rows_TipoEx_sede_filter = this.columns_TipoEx_sede.filter(item => item.solesCantidad === 'soles');
+
           this.rows11 = this.data.tabla_anual;
           console.log(303, this.data.tabla_anual)
           // this.rows11filtered = this.rows11;
@@ -1718,6 +1789,10 @@ getBarChartB(chartLabels1, chartData1, chartData2,chartData3,chartData4,chartDat
           this.rows12 = this.data.tabla_anual_empresa;
           this.rows12filtered = this.rows12.filter(item => item.solesCantidad === 'soles');
           this.barChartLabels2 = [];
+
+          this.columns22 = this.data.cabecera_anual_especialidad;
+          this.rows22 = this.data.tabla_anual_especialidad;
+          this.rows22filtered = this.rows22.filter(item => item.solesCantidad === 'soles');
 
           this.columns13 = this.data.cabecera_diario_sede;
           this.columns13.map(item =>{
