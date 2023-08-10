@@ -282,6 +282,15 @@
     border-top-color: #190075!important;
 }
 
+.ag-theme-balham .ag-header-cell::after, .ag-theme-balham .ag-header-group-cell::after {
+    height: 100% !important;
+    top: 0 !important;
+}
+
+.ag-theme-balham .ag-ltr .ag-cell {
+    border-right-color: #190075 !important;
+}
+
 .ag-header-cell-label {
     justify-content: center!important;
 }

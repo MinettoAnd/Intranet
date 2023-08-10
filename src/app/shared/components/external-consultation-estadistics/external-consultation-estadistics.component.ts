@@ -17,7 +17,7 @@ import { CurrencyPipe } from '@angular/common';
 import * as Chart from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import ResizeObserver from 'resize-observer-polyfill';
-import {GridOptions} from "ag-grid-community";
+import { GridOptions, FirstDataRenderedEvent } from "ag-grid-community";
 import { AgGridAngular } from "ag-grid-angular";
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import {
@@ -1543,5 +1543,9 @@ export class ExternalConsultationEstadisticsComponent implements OnInit {
   public setValUptdChartsTabGrafico(boolCh1, boolCh2): void {
     this.uptdChartsTabGrafico.chart1 = boolCh1;
     this.uptdChartsTabGrafico.chart2 = boolCh2;
+  }
+
+  public onFirstDataRendered(params: FirstDataRenderedEvent) {
+    params.api.sizeColumnsToFit();
   }
 }
