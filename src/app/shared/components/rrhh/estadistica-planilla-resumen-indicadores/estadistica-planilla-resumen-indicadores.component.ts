@@ -581,8 +581,30 @@ async  open({ selected }, TipoPago?, EstadoDeposito?, TipoPlanilla?, content?: a
       pageNumber: this.page.pageNumber,
       size: this.page.size
     };
+    this.rows1 = [];
+    this.rows2 = [];
+    this.rows3 = [];
+    this.rows4 = [];
+    this.rows5 = [];
+    this.rows6 = [];
+    this.rows7 = [];
+    this.rows8 = [];
+    this.rows9 = [];
+    this.rows10 = [];
+    this.rows11 = [];
+    this.rows12 = [];
+    this.rows13 = [];
+    this.rows14 = [];
+    this.rows15 = [];
+    this.rowsModal = [];
+    this.rows9filtered = [];
+    this.rows3filtered = [];
+    this.rows4filtered = [];
+    this.rows5filtered = [];
+    this.rows6filtered = [];
 
     this.loading();
+    console.log('error con el servidor')
     this.tableApiservice.RRhhGetPlanillaEstadisticaResumen(this.parameters).subscribe(
       (response) => {
         this.rows = [];
@@ -702,7 +724,9 @@ async  open({ selected }, TipoPago?, EstadoDeposito?, TipoPlanilla?, content?: a
         
       },
       (error) => {
+        console.log('error con el servidor')
           Swal.close();
+          Swal.fire("Error!", "Se produjo un error con el servidor", "error");
       }
     );
     this.tableApiservice.RRhhGetPlanillaEstadisticaKPI(this.parameters).subscribe(
@@ -762,6 +786,7 @@ async  open({ selected }, TipoPago?, EstadoDeposito?, TipoPlanilla?, content?: a
       },
       (error) => {
           Swal.close();
+          Swal.fire("Error!", "Se produjo un error con el servidor", "error");
       }
     );
   }
