@@ -5,7 +5,7 @@ enum OpcFiltroEnum {
 
 export class CalcTblTipPaciente {
     public static minWidth: number = 70;
-    public static maxWidth: number = 140;
+    public static maxWidth: number = 100;
     public static opcFiltro = OpcFiltroEnum;
 
     public static cFlexGrow(idx: number): number {
