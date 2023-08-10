@@ -1033,27 +1033,33 @@
                                                         </ul>
                                                         <div *ngFor="let checkBoxesOp of checkBoxesOps21; let i = index" class="col-md-1 checkbox">
                                                             <input type="checkbox" id="{{checkBoxesOp.id}}"
-                                                            [checked]="checkBoxesOps21[i].value"
-                                                            (click)="selection(checkBoxesOp, checkBoxesOp.id, 21);"/>
-                                                            <label for="{{checkBoxesOp.id}}"><span>{{checkBoxesOp.label}}</span></label>
+                                                                [checked]="checkBoxesOps21[i].value"
+                                                                (click)="selection(checkBoxesOp, checkBoxesOp.id, 21);"/>
+
+                                                            <label for="{{checkBoxesOp.id}}">
+                                                                <span>{{checkBoxesOp.label}}</span>
+                                                            </label>
                                                         </div>
                                                     </div>
-                                                    
-                                                    <ngx-datatable #myTable_TipoEx_sede class="bootstrap table table-striped " 
-                                                    id="datatablele" [columns]="columns_TipoEx_sede" 
-                                                    [rows]="rows_TipoEx_sede_filter" [columnMode]="ColumnMode.flex" 
-                                                    [headerHeight]="50" [rowHeight]="$any('auto')" 
-                                                    [scrollbarH]="true" (page)="setPage($event)" 
-                                                    [rowClass]="getRowClass2"
+
+                                                    <ngx-datatable #myTable_TipoEx_sede class="bootstrap table table-striped"
+                                                        id="datatablele"
+                                                        [columns]="columns_TipoEx_sede"
+                                                        [rows]="rows_TipoEx_sede_filter"
+                                                        [columnMode]="ColumnMode.flex"
+                                                        [headerHeight]="50"
+                                                        [rowHeight]="$any('auto')"
+                                                        [scrollbarH]="true"
+                                                        (page)="setPage($event)"
+                                                        [rowClass]="getRowClass2"
                                                     >
                                                         <ngx-datatable-column [headerClass]="column.headerClass" [cellClass]="column.cellClass" [flexGrow]="1" [minWidth]="90"  *ngFor="let column of columns_TipoEx_sede; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                             <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
                                                                 <div>
-                                                                    <span  *ngIf="column.prop === 'Campo'" [ngClass]="{'row-paddin': row.Campo !== 'LIMA' &&  row.Campo !=='CHORRILLOS' &&  row.Campo !== 'SURCO' &&  row.Campo !== 'TOTAL' }">{{value }}</span>
-                                                                    <span  *ngIf="column.prop !== 'Campo' && row.solesCantidad === 'soles'">{{value  | currency }}</span>
-                                                                    <span  *ngIf="column.prop !== 'Campo' && row.solesCantidad === 'cantidad'">{{value | number: '1.0-0' }}</span>
+                                                                    <span *ngIf="column.prop === 'Campo'" [ngClass]="{'row-paddin': row.Campo !== 'LIMA' &&  row.Campo !=='CHORRILLOS' &&  row.Campo !== 'SURCO' &&  row.Campo !== 'TOTAL' }">{{value }}</span>
+                                                                    <span *ngIf="column.prop !== 'Campo' && row.solesCantidad === 'soles'">{{value  | currency }}</span>
+                                                                    <span *ngIf="column.prop !== 'Campo' && row.solesCantidad === 'cantidad'">{{value | number: '1.0-0' }}</span>
                                                                 </div>
-                                            
                                                             </ng-template>
                                                         </ngx-datatable-column>
                                                     </ngx-datatable>

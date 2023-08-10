@@ -377,18 +377,17 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
           x.value = false;
         }
       });
-    }else if (tabla === 21){
-      
+    } else if (tabla === 21){
       this.checkBoxesOps21.forEach(x => {
         if (x.id === id) {
           x.value = true;
-          if(id === '1cc'){
+          if (id === '1cc') {
             this.rows_TipoEx_sede_filter = this.rows_TipoEx_sede.filter(item => item.solesCantidad === 'soles');
-          }else if(id === '2cc'){
+          } else if (id === '2cc') {
             console.log(255, id)
             this.rows_TipoEx_sede_filter = this.rows_TipoEx_sede.filter(item => item.solesCantidad === 'cantidad');
           }
-        }else{
+        } else {
           x.value = false;
         }
       });
@@ -1779,7 +1778,7 @@ getBarChartB(chartLabels1, chartData1, chartData2,chartData3,chartData4,chartDat
 
           this.columns_TipoEx_sede = this.data.cabecera_anual_grupoExamen_sede;
           this.rows_TipoEx_sede = this.data.tabla_anual_grupoExamen_sede;
-          this.rows_TipoEx_sede_filter = this.columns_TipoEx_sede.filter(item => item.solesCantidad === 'soles');
+          this.rows_TipoEx_sede_filter = this.rows_TipoEx_sede.filter(item => item.solesCantidad === 'soles');
 
           this.rows11 = this.data.tabla_anual;
           console.log(303, this.data.tabla_anual)
