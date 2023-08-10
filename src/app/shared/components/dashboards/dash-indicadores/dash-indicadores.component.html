@@ -783,8 +783,20 @@
                                                 column.prop !== 'especialidad' &&
                                                 column.prop !== 'tipoExamen'
                                               ">
-                                                {{value  | number : '1.2-2' }} %
+                                                <ng-container *ngIf="optFiltroGruposResGrpExEsp.indexOf('%') === -1 && optFiltroGruposResGrpExEsp.indexOf('Pago') === -1">
+                                                  {{value  | number : '1.0' }}
+                                                </ng-container>
+                                                <ng-container *ngIf="optFiltroGruposResGrpExEsp.indexOf('%') !== -1">
+                                                  {{value  | number : '1.2-2' }} %
+                                                </ng-container>
+                                                <ng-container *ngIf="optFiltroGruposResGrpExEsp.indexOf('Pago') !== -1">
+                                                  S/ {{value  | number : '1.2-2' }}
+                                                </ng-container>
                                               </span>
+
+                                              <!-- <span *ngIf="row.grupo.indexOf('%') === -1 && row.grupo.indexOf('Pago') === -1">{{value  | number : '1.0' }}</span>
+                                              <span *ngIf="row.grupo.indexOf('%') !== -1">{{value  | number : '1.2-2' }} %</span>
+                                              <span *ngIf="row.grupo.indexOf('Pago') !== -1">S/ {{value  | number : '1.2-2' }}</span> -->
                                             </ng-template>
                                           </ngx-datatable-column>
                                         </ngx-datatable>
@@ -842,6 +854,7 @@
                                                 {{val}}
                                               </option>
                                             </select>
+
                                             <select
                                               class="form-control form-select"
                                               (change)="filtrarDatosTblResGrpExExmEsp()"
@@ -856,6 +869,7 @@
                                                 {{grupo}}
                                               </option>
                                             </select>
+
                                             <div style="display:flex;margin:15px;align-items: center;">
                                               <span>Buscar</span>&nbsp;&nbsp;
                                               <input
@@ -908,7 +922,15 @@
                                                 column.prop !== 'tipoAtencion' &&
                                                 column.prop !== 'Examen'
                                               ">
-                                                {{value  | number : '1.2-2' }} %
+                                                <ng-container *ngIf="optFiltroGruposResGrpExExmEsp.indexOf('%') === -1 && optFiltroGruposResGrpExExmEsp.indexOf('Pago') === -1">
+                                                  {{value  | number : '1.0' }}
+                                                </ng-container>
+                                                <ng-container *ngIf="optFiltroGruposResGrpExExmEsp.indexOf('%') !== -1">
+                                                  {{value  | number : '1.2-2' }} %
+                                                </ng-container>
+                                                <ng-container *ngIf="optFiltroGruposResGrpExExmEsp.indexOf('Pago') !== -1">
+                                                  S/ {{value  | number : '1.2-2' }}
+                                                </ng-container>
                                               </span>
                                             </ng-template>
                                           </ngx-datatable-column>
