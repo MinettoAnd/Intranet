@@ -6,7 +6,7 @@
                     <!--
                     <h3 class="box-title">Distribución por Médico que Solicitó el Exámen</h3>
                     -->
-                    <h3 class="box-title">Distribución de Exámenes Solicitados</h3>
+                    <h3 class="box-title">Distribución de Especialidad por Grupo de Exámenes</h3>
                 </div>
                 <button type="button" class="btn btn-outline-primary" (click)="collapse.toggle()" [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
                     <i class="fa fa-minus" *ngIf="!isCollapsed"> </i>
@@ -17,7 +17,7 @@
     </div>
     <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
         <div *ngIf="data">
-            <div class="row controles" style="align-items: center; justify-content: flex-end;">
+            <div class="row controles"  style="align-items: center; justify-content: flex-end;">
                 <div style="display: flex; align-items: center; justify-content: flex-end;">
                 <!--
                 <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
@@ -35,7 +35,6 @@
                     </li>
                 </ul>
                 -->
-
                 <div class="control-filtro">
                     Grupo de Exámen:
                     <select
@@ -64,7 +63,8 @@
                     </div>
                 </div>
             </div>
-        </div>
+
+            </div>
 
             <ngx-datatable
                 #tabla

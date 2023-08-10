@@ -574,6 +574,8 @@
                       </div>
                     </ng-template>
                 </li>
+
+
                 <li [ngbNavItem]="4">
                   <a ngbNavLink>DETALLE</a>
                   <ng-template ngbNavContent>
@@ -839,7 +841,7 @@
                                                 </div>
                                             </div>
                                           </div>
-                                          <!--
+                
                                           <div class="card">
                                             <div class="card-header-info">
                                                 <div class="box-header">
@@ -983,7 +985,7 @@
                                                 </div>
                                             </div>
                                           </div>
-                                        -->
+                                        
                                           <div class="card">
                                             <div class="card-header-info">
                                                 <div class="box-header">
@@ -1053,12 +1055,22 @@
                                                 </div>
                                             </div>
                                           </div>
+
                                           <app-tbl-dist-x-grupo-examen
                                             [data]="this.data.tabla_anual_grupoExamen"
                                             [cabecera]="this.data.cabecera_anual_grupoExamen"
                                             [summaryPosition]="summaryPosition"
                                             [enableSummary]="enableSummary"
                                           ></app-tbl-dist-x-grupo-examen>
+
+                                          <app-tbl-det-examenes-especialidad
+                                            [data]="this.data.tabla_anual_especialidad_tipoEx"
+                                            [cabecera]="this.data.cabecera_anual_especialidad_tipoEx"
+                                            [lstDeExamenes]="this.lstDeExamenes"
+                                            [summaryPosition]="summaryPosition"
+                                            [enableSummary]="enableSummary"
+                                          ></app-tbl-det-examenes-especialidad>
+                                                                                  
                                           <app-tbl-det-examenes-realizados
                                             [data]="this.data.tabla_anual_detExmsRealizados"
                                             [cabecera]="this.data.cabecera_anual_detExmsRealizados"
@@ -1066,6 +1078,7 @@
                                             [summaryPosition]="summaryPosition"
                                             [enableSummary]="enableSummary"
                                           ></app-tbl-det-examenes-realizados>
+
                                         </div>
                                     </div>
                                 </div>

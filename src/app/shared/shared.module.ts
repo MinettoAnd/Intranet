@@ -23,6 +23,8 @@ import { LiquidacionEmpresasComponent } from './components/liquidacion-empresas/
 import { BancoTerapiaEstadisticasComponent } from './components/banco-terapia-estadisticas/banco-terapia-estadisticas.component';
 import { TblDistXGrupoExamenComponent } from './components/banco-terapia-estadisticas/tbl-dist-x-grupo-examen/tbl-dist-x-grupo-examen.component';
 import { TblDetExamenesRealizadosComponent } from './components/banco-terapia-estadisticas/tbl-det-examenes-realizados/tbl-det-examenes-realizados.component';
+import { TblDetExamenesEspecialidadComponent } from './components/banco-terapia-estadisticas/tbl-det-examenes-especialidad/tbl-det-examenes-especialidad.component';
+
 import { EstadisticaResumenColaboradoresComponent } from './components/rrhh/estadistica-resumen-colaboradores/estadistica-resumen-colaboradores.component';
 import { PeriodoComponent } from './components/filtros/periodo/periodo.component';
 import { ResumenColaboradoresComponent } from './components/dashboards/resumen-colaboradores/resumen-colaboradores.component';
@@ -70,6 +72,7 @@ import { EnvioCorreosComponent } from './components/envio-correos/envio-correos.
     BancoTerapiaEstadisticasComponent,
     TblDistXGrupoExamenComponent,
     TblDetExamenesRealizadosComponent,
+    TblDetExamenesEspecialidadComponent,
     EstadisticaResumenColaboradoresComponent,
     PeriodoComponent,
     ResumenColaboradoresComponent,
@@ -126,6 +129,7 @@ import { EnvioCorreosComponent } from './components/envio-correos/envio-correos.
     BancoTerapiaEstadisticasComponent,
     TblDistXGrupoExamenComponent,
     TblDetExamenesRealizadosComponent,
+    TblDetExamenesEspecialidadComponent,
     EstadisticaResumenColaboradoresComponent,
     PeriodoComponent,
     ResumenColaboradoresComponent,
