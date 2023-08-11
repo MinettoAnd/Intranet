@@ -1075,7 +1075,8 @@
                                                 <div class="box-header">
                                                     <div class="toggle-table">
                                                         <div class="callout callout-info">
-                                                            <h3 class="box-title">Distribución Anual por Especialidad
+                                                            <h3 class="box-title">
+                                                                Distribución Anual por Especialidad *Seleccione la Especialidad para ver a los Médicos
                                                             </h3>
                                                         </div>
                                                         <button type="button" class="btn btn-outline-primary" (click)="collapse22.toggle()" [attr.aria-expanded]="!isCollapsed12" aria-controls="collapseExample">
@@ -1112,19 +1113,30 @@
                                                         </div>
                                                     </div>
 
-                                                    
-                                                    <ngx-datatable #myTable22 class="bootstrap table table-striped " id="datatablele" [columns]="columns22" [rows]="rows22filtered" [columnMode]="ColumnMode.flex" [headerHeight]="50" [rowHeight]="$any('auto')" [scrollbarH]="true" (page)="setPage($event)" [summaryRow]="enableSummary"
-
-                                                    [summaryPosition]="summaryPosition"
-                                                    [summaryHeight]="35">
+                                                    <ngx-datatable
+                                                        #myTable22
+                                                        class="bootstrap table table-striped"
+                                                        id="datatablele"
+                                                        [columns]="columns22"
+                                                        [rows]="rows22filtered"
+                                                        [columnMode]="ColumnMode.flex"
+                                                        [headerHeight]="50"
+                                                        [rowHeight]="$any('auto')"
+                                                        [scrollbarH]="true"
+                                                        (page)="setPage($event)"
+                                                        [summaryRow]="enableSummary"
+                                                        [selectionType]="SelectionType.single"
+                                                        (select)='evRegSelTblDistAnXEsp($event)'
+                                                        [summaryPosition]="summaryPosition"
+                                                        [summaryHeight]="35"
+                                                    >
                                                         <ngx-datatable-column [headerClass]="column.headerClass" [cellClass]="column.cellClass" [flexGrow]="1" [minWidth]="90" [summaryFunc]="column.prop == 'Campo' ? summaryNull:summaryForAmount" *ngFor="let column of columns22; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                             <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
                                                                 <div>
-                                                                    <span  *ngIf="column.prop === 'Campo'">{{value }}</span>
-                                                                    <span  *ngIf="column.prop !== 'Campo' && row.solesCantidad === 'soles'">{{value  | currency }}</span>
-                                                                    <span  *ngIf="column.prop !== 'Campo' && row.solesCantidad === 'cantidad'">{{value | number: '1.0-0' }}</span>
+                                                                    <span *ngIf="column.prop === 'Campo'">{{value }}</span>
+                                                                    <span *ngIf="column.prop !== 'Campo' && row.solesCantidad === 'soles'">{{value  | currency }}</span>
+                                                                    <span *ngIf="column.prop !== 'Campo' && row.solesCantidad === 'cantidad'">{{value | number: '1.0-0' }}</span>
                                                                 </div>
-                                     
                                                             </ng-template>
                                                         </ngx-datatable-column>
                                                     </ngx-datatable>
@@ -1132,7 +1144,14 @@
                                             </div>
                                           </div>
 
-
+                                          <app-tbl-medicos-dist-anual-x-esp
+                                            *ngIf="rowsMedicos !== undefined"
+                                            [data]="rowsMedicos"
+                                            [cabecera]="columnsMedicos"
+                                            [especialidad]="regSelTblDistAnXEsp.Campo"
+                                            [summaryPosition]="summaryPosition"
+                                            [enableSummary]="enableSummary"
+                                          ></app-tbl-medicos-dist-anual-x-esp>
 
                                           <app-tbl-det-examenes-especialidad
                                             [data]="this.data.tabla_anual_especialidad_tipoEx"
@@ -1150,8 +1169,6 @@
                                             [enableSummary]="enableSummary"
                                           ></app-tbl-det-examenes-realizados>
 
-
-                                        
                                           <div class="card">
                                             <div class="card-header-info">
                                                 <div class="box-header">
@@ -1221,10 +1238,6 @@
                                                 </div>
                                             </div>
                                           </div>
-
-
-
-
                                         </div>
                                     </div>
                                 </div>

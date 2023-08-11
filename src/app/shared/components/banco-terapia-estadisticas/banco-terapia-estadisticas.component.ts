@@ -24,6 +24,7 @@ import { LinkRendererComponent } from '../../../shared/components/renderer/link-
 import { RowDetalleComponent } from 'src/app/modals/jpric/row-detalle/row-detalle.component';
 import { AgGridAngular } from 'ag-grid-angular';
 import { PorcentajePipe } from 'src/app/pipes/porcentaje.pipe';
+import { fnFiltrarCabMedicos } from './helpers/filtros';
 
 @Component({
   selector: 'app-banco-terapia-estadisticas',
@@ -94,6 +95,7 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
   temp11 = [];
   tempPendientes = [];
   selected = [];
+  public regSelTblDistAnXEsp: Array<any> = [];
   id: number;
   loadingIndicator: true;
   columns:any;
@@ -143,6 +145,9 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
   rows15: any;
   rows16: any;
   rows_TipoEx_sede: any;
+
+  public columnsMedicos: Array<any> = [];
+  public rowsMedicos: Array<any> | undefined = undefined;
 
   temp: any [];
   columnsPendientes: any;
@@ -2699,6 +2704,33 @@ getBarChartB(chartLabels1, chartData1, chartData2,chartData3,chartData4,chartDat
     data.forEach(valor => tmpData.add(valor.idServicio_Nombre));
 
     this.lstDeExamenes = Array.from(tmpData);
+  }
+
+  public evRegSelTblDistAnXEsp({ selected }): void {
+    console.log(selected);
+    this.regSelTblDistAnXEsp = selected[0];
+    const id = '14'; // selected[0].id_esp;
+
+    const parameters = {
+      idEspecialidad: id,
+      AnioF: this.anio,
+      MesF: this.mes,
+      SedeF: this.id_sede,
+      CheckF: 1
+    };
+
+    this.loading();
+
+    this.tableApiservice.getCeMedicosStatistics(parameters).subscribe(
+      (response) =>{
+        this.columnsMedicos = fnFiltrarCabMedicos(response.data.cabeceras);
+        this.rowsMedicos = response.data.tabla_medicos_anual;
+        Swal.close();
+      },
+      (error) => {
+          Swal.close();
+      }
+    );
   }
 }
 
