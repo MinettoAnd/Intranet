@@ -42,9 +42,6 @@
                 [rowHeight]="$any('auto')"
                 [scrollbarH]="true"
                 (page)="setPage($event)"
-                [summaryRow]="enableSummary"
-                [summaryPosition]="summaryPosition"
-                [summaryHeight]="35"
             >
                 <ngx-datatable-column
                     *ngFor="let column of cabecera; let i = index;"
@@ -52,9 +49,12 @@
                     [cellClass]="column.cellClass"
                     [flexGrow]="1"
                     [minWidth]="90"
-                    [summaryFunc]="column.prop == 'Campo' ? summaryNull : summaryForAmount"
                     name="{{column.name}}"
                     prop="{{column.prop}}"
+                    [flexGrow]="calcTblMedicosDistAnXEsp.cFlexGrow(i)"
+                    [maxWidth]="calcTblMedicosDistAnXEsp.cWidth(i)"
+                    [minWidth]="calcTblMedicosDistAnXEsp.cWidth(i)"
+                    [width]="calcTblMedicosDistAnXEsp.cWidth(i)"
                 >
                     <ng-template
                         ngx-datatable-cell-template
@@ -62,7 +62,7 @@
                         let-value="value"
                         let-row="row"
                     >
-                        <span  [title]="value">{{ value }}</span>
+                        <span [title]="value">{{ value }}</span>
                     </ng-template>
                 </ngx-datatable-column>
             </ngx-datatable>
