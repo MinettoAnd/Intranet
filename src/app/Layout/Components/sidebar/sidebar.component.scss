@@ -456,6 +456,20 @@ text-align: left!important;
     display: none;
   }
 
+.app-sidebar-content {
+  .v-sidebar-menu-n {
+    position: relative !important;
+
+    ul.vsm-list-n {
+      height: fit-content !important;
+
+      .menu-list {
+        position: relative !important;
+      }
+    }
+  }
+}
+
   @media screen and (min-width: 1024px) {
     .v-sidebar-menu-n{
       display: flex;

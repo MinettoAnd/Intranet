@@ -32,7 +32,7 @@ $dropDownColor: #fff !default;
 $dropDownBg: $lightenBg !default;
 $sidebar-box-shadow: 7px 0 60px rgba(0, 0, 0, 0.05);
 .closed-sidebar app-sidebar .app-sidebar {
-height: 12vh!important;
+  height: auto;
 }
 // .closed-sidebar app-sidebar .app-sidebar .app-sidebar-content{
 //   flex-grow:unset;
