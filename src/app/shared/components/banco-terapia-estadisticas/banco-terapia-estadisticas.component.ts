@@ -24,7 +24,6 @@ import { LinkRendererComponent } from '../../../shared/components/renderer/link-
 import { RowDetalleComponent } from 'src/app/modals/jpric/row-detalle/row-detalle.component';
 import { AgGridAngular } from 'ag-grid-angular';
 import { PorcentajePipe } from 'src/app/pipes/porcentaje.pipe';
-import { fnFiltrarCabMedicos } from './helpers/filtros';
 
 @Component({
   selector: 'app-banco-terapia-estadisticas',
@@ -2708,36 +2707,11 @@ getBarChartB(chartLabels1, chartData1, chartData2,chartData3,chartData4,chartDat
   }
 
   public evRegSelTblDistAnXEsp({ selected }): void {
-    console.log(selected);
     this.regSelTblDistAnXEsp = selected[0];
-    const id = '14'; // selected[0].id_esp;
 
     this.rowsMedicosAnual = this.data.tabla_anual_especialidad_medico.filter(
       obj => obj.Campo != null && obj.Campo.trim() == this.regSelTblDistAnXEsp['Campo']
     );
-
-    console.log(this.rowsMedicosAnual)
-
-    // const parameters = {
-    //   idEspecialidad: id,
-    //   AnioF: this.anio,
-    //   MesF: this.mes,
-    //   SedeF: this.id_sede,
-    //   CheckF: 1
-    // };
-
-    // this.loading();
-
-    // this.tableApiservice.getCeMedicosStatistics(parameters).subscribe(
-    //   (response) =>{
-    //     this.columnsMedicosAnual = fnFiltrarCabMedicos(response.data.cabeceras);
-    //     this.rowsMedicosAnual = response.data.tabla_medicos_anual;
-    //     Swal.close();
-    //   },
-    //   (error) => {
-    //       Swal.close();
-    //   }
-    // );
   }
 }
 
