@@ -2712,9 +2712,11 @@ getBarChartB(chartLabels1, chartData1, chartData2,chartData3,chartData4,chartDat
   private asignarLstDeEspecialidad(data: Array<any>): void {
     const tmpData: Set<any> = new Set();
 
-    data.forEach(valor => tmpData.add(valor.especialidad));
+    data.forEach(valor => tmpData.add(valor.Campo));
 
     this.lstDeEspecialidad = Array.from(tmpData);
+    console.warn('Aquí viene')
+    console.log(data, this.lstDeEspecialidad)
   }
 
   public evRegSelTblDistAnXEsp({ selected }): void {
