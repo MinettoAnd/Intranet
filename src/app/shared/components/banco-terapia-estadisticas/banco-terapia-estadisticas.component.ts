@@ -24,7 +24,6 @@ import { LinkRendererComponent } from '../../../shared/components/renderer/link-
 import { RowDetalleComponent } from 'src/app/modals/jpric/row-detalle/row-detalle.component';
 import { AgGridAngular } from 'ag-grid-angular';
 import { PorcentajePipe } from 'src/app/pipes/porcentaje.pipe';
-import { fnFiltrarCabMedicos } from './helpers/filtros';
 
 @Component({
   selector: 'app-banco-terapia-estadisticas',
@@ -146,8 +145,8 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
   rows16: any;
   rows_TipoEx_sede: any;
 
-  public columnsMedicos: Array<any> = [];
-  public rowsMedicos: Array<any> | undefined = undefined;
+  public columnsMedicosAnual: Array<any> = [];
+  public rowsMedicosAnual: Array<any> | undefined = undefined;
 
   temp: any [];
   columnsPendientes: any;
@@ -2068,11 +2067,12 @@ getBarChartB(chartLabels1, chartData1, chartData2,chartData3,chartData4,chartDat
           // this.columns16 = this.data.cabeceras_ingresos_TPac;
           // this.rows16 = this.data.tabla_ingresos_TPac;
 
-            Swal.close();
+          this.columnsMedicosAnual = this.data.cabecera_anual_especialidad_medico;
+
+          Swal.close();
         }else{
           Swal.close();
         }
-        
       },
       (error) => {
           Swal.close();
@@ -2718,29 +2718,10 @@ getBarChartB(chartLabels1, chartData1, chartData2,chartData3,chartData4,chartDat
   }
 
   public evRegSelTblDistAnXEsp({ selected }): void {
-    console.log(selected);
     this.regSelTblDistAnXEsp = selected[0];
-    const id = '14'; // selected[0].id_esp;
 
-    const parameters = {
-      idEspecialidad: id,
-      AnioF: this.anio,
-      MesF: this.mes,
-      SedeF: this.id_sede,
-      CheckF: 1
-    };
-
-    this.loading();
-
-    this.tableApiservice.getCeMedicosStatistics(parameters).subscribe(
-      (response) =>{
-        this.columnsMedicos = fnFiltrarCabMedicos(response.data.cabeceras);
-        this.rowsMedicos = response.data.tabla_medicos_anual;
-        Swal.close();
-      },
-      (error) => {
-          Swal.close();
-      }
+    this.rowsMedicosAnual = this.data.tabla_anual_especialidad_medico.filter(
+      obj => obj.Campo != null && obj.Campo.trim() == this.regSelTblDistAnXEsp['Campo']
     );
   }
 }

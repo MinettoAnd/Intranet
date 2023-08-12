@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { ColumnMode } from '@swimlane/ngx-datatable';
 import { ExportService } from 'src/app/_services/export.service';
+import { CalcTblMedicosDistAnXEsp } from '../helpers/confg-tbls.helper';
 
 @Component({
   selector: 'app-tbl-medicos-dist-anual-x-esp',
@@ -16,6 +17,7 @@ export class TblMedicosDistAnualXEspComponent {
 
   public columnMode = ColumnMode;
   public isCollapsed: boolean = false;
+  public calcTblMedicosDistAnXEsp = CalcTblMedicosDistAnXEsp;
 
   constructor(private exportService: ExportService) { }
 

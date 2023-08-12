@@ -51,11 +51,5 @@ export class ImagenesService {
     this.loadTableApiDataURL = `${environment.api_url}imgsEstadisticasGetResumen`;
     return this.http.post(this.loadTableApiDataURL, data);
   }
-
-  // TODO confirmar si se queda o se usa el servicio del cuál se saco el código
-  getCeMedicosStatistics(data): Observable<any> {
-    this.loadTableApiDataURL = `${environment.api_url}getCeMedicosStatistics`;
-    return this.http.post(this.loadTableApiDataURL, data);
-  }
 }
 
