@@ -309,6 +309,7 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
   @Input() area: string;
 
   public lstDeExamenes: Array<any> = [];
+  public lstDeEspecialidad: Array<any> = [];
 
   constructor(private tableApiservice: ImagenesService, private exportService: ExportService, private _cnp:CustomNumberPipe,
     private _cp: CurrencyPipe, private _phone: PhonePipe, private _ndp:NumberDecimalPipe, private _pp:PorcentajePipe, private modalService: NgbModal) {
@@ -444,7 +445,8 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
   getRowClass(row) {
     console.log('getclass', row)
     return {
-      'totals': row.Campo.includes('TOTAL'), 'sub-totals': row.Campo === 'CIA. SEGUROS/CONVENIOS' || row.Campo === 'INSTITUCIONAL/PRIVADO' || row.Campo === 'MADRE NIÑO' || row.Campo === 'PROGRAMAS DE SALUD' 
+      'totals': row.Campo.includes('TOTAL'), 
+      'sub-totals': row.Campo === 'CIA. SEGUROS/CONVENIOS' || row.Campo === 'INSTITUCIONAL/PRIVADO' || row.Campo === 'MADRE NIÑO' || row.Campo === 'PROGRAMAS DE SALUD' 
     };
   }
   getRowClass1(row) {
@@ -453,7 +455,7 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
   }
   getRowClass2(row) {
     return {
-      'sub-totals': row.Campo === 'LIMA' || row.Campo === 'CHORRILLOS' || row.Campo === 'SURCO' || row.Campo === 'TOTAL'};
+      'sub-totals': row.Campo.trim() != 'Lima' && row.Campo.trim() != 'Chorrillos' && row.Campo.trim() != 'Surco'};
   }
   // getCellClass({ row, column, value }): any {
   //   console.log(178, column);
@@ -1325,6 +1327,7 @@ getBarChartB(chartLabels1, chartData1, chartData2,chartData3,chartData4,chartDat
           this.title = this.data.titulo;
 
           this.asignarLstDeExamenes(this.data.tabla_examen_lista);
+          this.asignarLstDeEspecialidad(this.data.tabla_anual_especialidad);
 
           // // this.columns = this.data.cabeceras_ingresos_TPac;
           // // this.rows = this.data.tabla_ingresos_TPac;
@@ -2704,6 +2707,14 @@ getBarChartB(chartLabels1, chartData1, chartData2,chartData3,chartData4,chartDat
     data.forEach(valor => tmpData.add(valor.idServicio_Nombre));
 
     this.lstDeExamenes = Array.from(tmpData);
+  }
+
+  private asignarLstDeEspecialidad(data: Array<any>): void {
+    const tmpData: Set<any> = new Set();
+
+    data.forEach(valor => tmpData.add(valor.especialidad));
+
+    this.lstDeEspecialidad = Array.from(tmpData);
   }
 
   public evRegSelTblDistAnXEsp({ selected }): void {

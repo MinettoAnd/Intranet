@@ -1,0 +1,95 @@
+<div class="card">
+    <div class="card-header-info">
+        <div class="box-header">
+            <div class="toggle-table">
+                <div class="callout callout-info">
+                    <!--
+                    <h3 class="box-title">Distribución por Médico que Solicitó el Exámen</h3>
+                    -->
+                    <h3 class="box-title">Distribución de Médico por Especialidad</h3>
+                </div>
+                <button type="button" class="btn btn-outline-primary" (click)="collapse.toggle()" [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+                    <i class="fa fa-minus" *ngIf="!isCollapsed"> </i>
+                    <i class="fa fa-plus" *ngIf="isCollapsed"> </i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+        <div *ngIf="data">
+            <div class="row controles"  style="align-items: center; justify-content: flex-end;">
+                <div style="display: flex; align-items: center; justify-content: flex-end;">
+
+                <div class="control-filtro">
+                    Especialidad:
+                    <select
+                        class="form-control form-select control-filtro-select"
+                        (change)="onChange($event.target.value)"
+                        [(ngModel)]="valFiltroGrupoEspecialidad"
+                    >
+                        <option
+                            *ngFor="let especialidad of lstDeEspecialidad"
+                            value="{{ especialidad }}"
+                            [selected]="especialidad == valFiltroGrupoEspecialidad"
+                        >
+                            {{ especialidad }}
+                        </option>
+                    </select>
+                </div>
+                <div style="display:flex;">
+                    <div *ngFor="let checkBoxesOp of chkbxs; let i = index" class="col-md-1 checkbox" style="min-width: 150px;">
+                        <input type="checkbox" id="{{checkBoxesOp.id}}"
+                            [checked]="chkbxs[i].value"
+                            (click)="chbxSel(checkBoxesOp.id);" />
+
+                        <label for="{{checkBoxesOp.id}}">
+                            <span>{{checkBoxesOp.label}}</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+
+            <ngx-datatable
+                #tabla
+                class="bootstrap table table-striped "
+                id="datatable"
+                [columns]="cabecera"
+                [rows]="lstGrupoDeEspecialidad"
+                [columnMode]="columnMode.flex"
+                [headerHeight]="50"
+                [rowHeight]="$any('auto')"
+                [scrollbarH]="true"
+                (page)="setPage($event)"
+                [rowClass]="getRowClass"
+            >
+                <ngx-datatable-column
+                    *ngFor="let column of cabecera; let i = index;"
+                    [headerClass]="column.headerClass"
+                    [cellClass]="column.cellClass"
+                    [flexGrow]="1"
+                    [minWidth]="90"
+                    [summaryFunc]="column.prop == 'Campo' ? summaryNull : summaryForAmount"
+                    name="{{column.name}}"
+                    prop="{{column.prop}}"
+                >
+                    <ng-template
+                        ngx-datatable-cell-template
+                        let-rowIndex="rowIndex"
+                        let-value="value"
+                        let-row="row"
+                    >
+                        <div>
+                            <!-- <span *ngIf="column.prop === 'Campo'">{{ value }}</span> -->
+                            <!-- <span *ngIf="column.prop !== 'Campo'">{{ value | currency }}</span> -->
+                            <span  *ngIf="column.prop === 'Campo'">{{value }}</span>
+                            <span  *ngIf="column.prop !== 'Campo' && row.solesCantidad === 'soles'">{{value  | currency }}</span>
+                            <span  *ngIf="column.prop !== 'Campo' && row.solesCantidad === 'cantidad'">{{value | number: '1.0-0' }}</span>
+                        </div>
+                    </ng-template>
+                </ngx-datatable-column>
+            </ngx-datatable>
+        </div>
+    </div>
+</div>

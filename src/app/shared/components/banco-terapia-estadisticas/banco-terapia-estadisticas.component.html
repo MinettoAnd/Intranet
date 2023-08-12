@@ -1004,7 +1004,7 @@
                                                 <div class="box-header">
                                                     <div class="toggle-table">
                                                         <div class="callout callout-info">
-                                                            <h3 class="box-title">Distribución Anual por Tipo de Exámen Agrupado por Sede
+                                                            <h3 class="box-title">Distribución Anual por Sede Agrupado por Tipo de Exámen
                                                             </h3>
                                                         </div>
                                                         <button type="button" class="btn btn-outline-primary" (click)="collapse21.toggle()" [attr.aria-expanded]="!isCollapsed21" aria-controls="collapseExample">
@@ -1056,7 +1056,7 @@
                                                         <ngx-datatable-column [headerClass]="column.headerClass" [cellClass]="column.cellClass" [flexGrow]="1" [minWidth]="90"  *ngFor="let column of columns_TipoEx_sede; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
                                                             <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
                                                                 <div>
-                                                                    <span *ngIf="column.prop === 'Campo'" [ngClass]="{'row-paddin': row.Campo !== 'LIMA' &&  row.Campo !=='CHORRILLOS' &&  row.Campo !== 'SURCO' &&  row.Campo !== 'TOTAL' }">{{value }}</span>
+                                                                    <span *ngIf="column.prop === 'Campo'" [ngClass]="{'row-paddin': row.Campo.trim() === 'Lima' ||  row.Campo.trim() ==='Chorrillos' ||  row.Campo.trim() === 'Surco' }">{{value }}</span>
                                                                     <span *ngIf="column.prop !== 'Campo' && row.solesCantidad === 'soles'">{{value  | currency }}</span>
                                                                     <span *ngIf="column.prop !== 'Campo' && row.solesCantidad === 'cantidad'">{{value | number: '1.0-0' }}</span>
                                                                 </div>
@@ -1152,6 +1152,14 @@
                                             [summaryPosition]="summaryPosition"
                                             [enableSummary]="enableSummary"
                                           ></app-tbl-medicos-dist-anual-x-esp>
+
+                                          <app-tbl-det-medico-especialidad
+                                            [data]="this.data.tabla_anual_especialidad_medico"
+                                            [cabecera]="this.data.cabecera_anual_especialidad_medico"
+                                            [lstDeEspecialidad]="this.lstDeEspecialidad"
+                                            [summaryPosition]="summaryPosition"
+                                            [enableSummary]="enableSummary"
+                                          ></app-tbl-det-medico-especialidad>
 
                                           <app-tbl-det-examenes-especialidad
                                             [data]="this.data.tabla_anual_especialidad_tipoEx"
