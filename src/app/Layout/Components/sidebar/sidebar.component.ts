@@ -555,4 +555,20 @@ menuI;
     });
   }
 
+  public fijarPosSubmenu(event: MouseEvent) {
+    const el: HTMLElement = event.target as HTMLElement;
+    const body: HTMLElement = document.querySelector('body');
+    const submenu: HTMLElement = el.querySelector('ul');
+    const leftLink: number = el.getBoundingClientRect().left;
+    const widthSubmenu: number = el.querySelector('ul').offsetWidth;
+    const widthBody: number = body.offsetWidth;
+
+    if ((leftLink + widthSubmenu) > widthBody) {
+      submenu.style.right = '0';
+      submenu.removeAttribute('left');
+    } else {
+      submenu.style.left = '0';
+      submenu.removeAttribute('right');
+    }
+  }
 }
