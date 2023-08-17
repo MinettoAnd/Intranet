@@ -20,13 +20,13 @@ export class TblDetMedicoEspecialidadComponent implements OnInit {
 
   public chkbxs: Array<any> = [
     {
-      id: 'idDEEMont',
+      id: 'idDMEMont',
       label: 'Montos',
       template: null,
       value: true
     },
     {
-      id: 'idDEECant',
+      id: 'idDMECant',
       label: 'Cantidad',
       template: null,
       value: false
@@ -36,7 +36,7 @@ export class TblDetMedicoEspecialidadComponent implements OnInit {
   public lstGrupoDeEspecialidad: Array<any> = [];
   public columnMode = ColumnMode;
   public isCollapsed: boolean = false;
-  public chbxIdSel: string = 'idDEEMont';
+  public chbxIdSel: string = 'idDMEMont';
   public valFiltroGrupoEspecialidad: any = '';
 
   public summaryNull = summaryNull;
@@ -50,9 +50,7 @@ export class TblDetMedicoEspecialidadComponent implements OnInit {
   }
 
   getRowClass(row) {
-    console.log('getclass', row)
     return {
-     // 'totals': row.Campo.includes('TOTAL'), 
       'sub-totals': row.Campo === 'CARDIOLOGIA' || row.Campo === 'RAYOS X' || row.Campo === 'ADMINISTRATIVO' || row.Campo === 'DENSITOMETRIA' || row.Campo === 'MAMOGRAFIAS'  || row.Campo === 'TOMOGRAFIAS'  || row.Campo === 'CONSULTA EXTERNA MEDICA' 
     };
   }
@@ -73,10 +71,10 @@ export class TblDetMedicoEspecialidadComponent implements OnInit {
       if (x.id === id) {
         x.value = true;
 
-        if (id === 'idDEEMont') {
+        if (id === 'idDMEMont') {
           this.lstGrupoDeEspecialidad = this.data.filter(item => item.solesCantidad === 'soles')
                                             .filter(valor => this.valFiltroGrupoEspecialidad == valor.id);
-        } else if (id === 'idDEECant') {
+        } else if (id === 'idDMECant') {
           this.lstGrupoDeEspecialidad = this.data.filter(item => item.solesCantidad === 'cantidad')
                                             .filter(valor => this.valFiltroGrupoEspecialidad == valor.id);
         }

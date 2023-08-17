@@ -442,7 +442,7 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
     }
   }
   getRowClass(row) {
-    console.log('getclass', row)
+    // console.log('getclass', row)
     return {
       'totals': row.Campo.includes('TOTAL'), 
       'sub-totals': row.Campo === 'CIA. SEGUROS/CONVENIOS' || row.Campo === 'INSTITUCIONAL/PRIVADO' || row.Campo === 'MADRE NIÑO' || row.Campo === 'PROGRAMAS DE SALUD' 

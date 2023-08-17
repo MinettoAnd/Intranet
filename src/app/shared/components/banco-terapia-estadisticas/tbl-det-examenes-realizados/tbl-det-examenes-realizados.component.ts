@@ -50,9 +50,7 @@ export class TblDetExamenesRealizadosComponent implements OnInit {
   }
 
   getRowClass(row) {
-    console.log('getclass', row)
     return {
-     // 'totals': row.Campo.includes('TOTAL'), 
       'sub-totals': row.Campo === 'CARDIOLOGIA' || row.Campo === 'RAYOS X' || row.Campo === 'ADMINISTRATIVO' || row.Campo === 'DENSITOMETRIA' || row.Campo === 'MAMOGRAFIAS'  || row.Campo === 'TOMOGRAFIAS'  || row.Campo === 'CONSULTA EXTERNA MEDICA' 
     };
   }
