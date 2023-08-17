@@ -1,0 +1,120 @@
+<div class="card">
+  <div class="card-header-info">
+    <div class="box-header">
+      <div class="toggle-table">
+        <div class="callout callout-info">
+          <h3 class="box-title">{{ tituloReporte }}</h3>
+        </div>
+        <button
+          type="button"
+          class="btn btn-outline-primary"
+          (click)="collapse.toggle()"
+          [attr.aria-expanded]="!isCollapsed"
+          aria-controls="collapse"
+        >
+          <i class="fa fa-minus" *ngIf="!isCollapsed"> </i>
+          <i class="fa fa-plus" *ngIf="isCollapsed"> </i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+    <div>
+      <div style="display: flex; justify-content: space-between;">
+        <div *ngIf="exportar || copiar" classs="row" style="align-items: center;justify-content: space-between; display: flex;">
+          <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
+            <li *ngIf="exportar" class="list-group-item border-0 pl-0">
+              <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard()">
+                <i class="fa fa-external-link"></i>
+                Copiar tabla
+              </button>
+            </li>
+            <li *ngIf="copiar" class="list-group-item border-0 pl-0">
+              <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel()">
+                <i class="fa fa-external-link"></i>
+                Exportar tabla a Excel
+              </button>
+            </li>
+          </ul>
+        </div>
+
+        <div class="w-opciones-filtrado m-3">
+          <ng-container
+            *ngFor="let opcionFiltrado of opcionesFiltrado; let idxOpcF = index"
+          >
+            <div>
+              <span class="font-weight-bold">{{ opcionFiltrado.titulo }}</span>
+              <select
+                class="form-control form-select"
+                [name]="'filtro-' + 'id'"
+                [(ngModel)]="valoresFiltrado[idxOpcF].valor"
+                (change)="cambioValorFiltro()"
+              >
+                <option
+                  *ngFor="let valor of opcionFiltrado.valores"
+                  [value]="valor"
+                  [selected]="valoresFiltrado[idxOpcF].valor == valor"
+                >
+                  {{ valor }}
+                </option>
+              </select>
+            </div>
+          </ng-container>
+        </div>
+
+        <div class="w-opciones-x-col m-3">
+          <div
+            class="checkbox"
+            *ngFor="let opcionGrupo of opcionesGrupoPorColumna"
+          >
+            <input
+              id="{{ nombreGrupoChk + opcionGrupo.valor }}"
+              name="{{ nombreGrupoChk }}"
+              type="checkbox"
+              [(ngModel)]="opcionGrupo.isChecked"
+            >
+            <label
+              class="lbl-opcion-x-col"
+              (click)="cambioValorOpcGrupo(opcionGrupo)"
+            >
+              {{ opcionGrupo.titulo }}
+            </label>
+          </div>
+        </div>
+
+        <div *ngIf="busqueda" style="display:flex;margin:15px;align-items: center;">
+          <span>Buscar</span>&nbsp;&nbsp;
+          <input
+            type="text"
+            style='padding:6px;width:100%;'
+            placeholder="por cualquier campo"
+            [(ngModel)]="txtBusquedaTabla"
+            (keyup)='cambioValorTextoBusqueda()'>
+        </div>
+      </div>
+
+      <app-tabla-reporte
+        [debugEnAlerta]="debugEnAlerta"
+        [cabecera]="cabecera"
+        [datos]="datosTabla"
+        [pieDePagina]="pieDePagina"
+        [cfgPieDePagina]="cfgPieDePagina"
+        [id]="id"
+        [anchoFijo]="anchoFijo"
+        [ordenar]="ordenar"
+        [anchos]="anchosCols"
+      ></app-tabla-reporte>
+      <!-- <app-tabla-reporte
+        [debugEnAlerta]="debugEnAlerta"
+        [cabecera]="cabecera"
+        [datos]="datosFiltrados"
+        [pieDePagina]="pieDePagina"
+        [cfgPieDePagina]="cfgPieDePagina"
+        [id]="id"
+        [anchoFijo]="anchoFijo"
+        [ordenar]="ordenar"
+        [anchos]="anchosCols"
+      ></app-tabla-reporte> -->
+    </div>
+  </div>
+</div>

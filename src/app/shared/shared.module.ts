@@ -53,10 +53,12 @@ import { FilterEnvioCorreosComponent } from './components/filtros/envio-correos/
 import { EnvioBoletasComponent } from './components/envio-correos/envio-boletas/envio-boletas.component';
 import { EnvioCorreosComponent } from './components/envio-correos/envio-correos.component';
 
+import { ReporteComponent } from './components-shared/reporte/reporte.component';
+import { TablaReporteComponent } from './components-shared/reporte/components/tabla-reporte/tabla-reporte.component';
 
 @NgModule({
   declarations: [
-    PiecharComponent, 
+    PiecharComponent,
     BarcharComponent,
     ComercialEstadisticasComponent,
     EmergenciesEstadisticsComponent,
@@ -100,7 +102,9 @@ import { EnvioCorreosComponent } from './components/envio-correos/envio-correos.
     ContentListadoComponent,
     FilterEnvioCorreosComponent,
     EnvioBoletasComponent,
-    EnvioCorreosComponent
+    EnvioCorreosComponent,
+    ReporteComponent,
+    TablaReporteComponent,
   ],
   imports: [
     AgGridModule.withComponents([LinkRendererComponent]),
@@ -154,6 +158,8 @@ import { EnvioCorreosComponent } from './components/envio-correos/envio-correos.
     ContentListadoComponent,
     FilterEnvioCorreosComponent,
     EnvioCorreosComponent,
+    ReporteComponent,
+    TablaReporteComponent,
   ],
   providers: [NgbNav],
   // bootstrap: [ResumenColaboradoresComponent],

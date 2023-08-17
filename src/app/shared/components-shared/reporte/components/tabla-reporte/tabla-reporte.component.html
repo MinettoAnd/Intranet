@@ -1,0 +1,38 @@
+<ngx-datatable
+  class="bootstrap table table-striped "
+  id="{{ id }}"
+
+  [columns]="cabecera"
+  [rows]="datos"
+
+  [reorderable]="ordenar"
+
+  [columnMode]="columnMode.flex"
+  [headerHeight]="50"
+  [rowHeight]="$any('auto')"
+  [scrollbarH]="true"
+>
+  <ngx-datatable-column
+    *ngFor="let column of cabecera; let idx = index;"
+
+    name="{{ column.name }}"
+    prop="{{ column.prop }}"
+
+    [headerClass]="column.headerClass"
+    [cellClass]="column.cellClass"
+
+    [flexGrow]="anchos[idx]?.flexGrow"
+    [maxWidth]="anchos[idx]?.width"
+    [minWidth]="anchos[idx]?.width"
+    [width]="anchos[idx]?.width"
+  >
+    <ng-template
+      ngx-datatable-cell-template
+      let-rowIndex="rowIndex"
+      let-value="value"
+      let-row="row"
+    >
+      <span [title]="value">{{ value }}</span>
+    </ng-template>
+  </ngx-datatable-column>
+</ngx-datatable>
