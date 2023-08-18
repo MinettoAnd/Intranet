@@ -113,7 +113,7 @@ export class ReporteComponent implements OnInit {
     this.nombreGrupoChk = 'chk' + fnGenerarIdUnico(5);
 
     // Datos para los checks
-    this.opcionesGrupoPorColumna = fnObtOpcsDeColumna(this.opcionesPorColumna, this.datos);
+    this.opcionesGrupoPorColumna = fnObtOpcsDeColumna(this.opcionesPorColumna);
     this.opcionesGrupoPorColumna[0].isChecked = true;
 
     // Datos para los select
@@ -122,15 +122,26 @@ export class ReporteComponent implements OnInit {
 
     this.anchosCols = fnCalcAnchoCols(this.anchoFijo, Object.keys(this.datos[0]).length);
 
-    this.cambioValorOpcGrupo(
-      this.primerValorOpcGrupoPorCol(this.opcionesGrupoPorColumna[0])
-    );
+    const opcPorCol = this.valOpcGrpXCol(this.opcionesGrupoPorColumna[0]);
+    this.datosPorOpcionColumna = this.opcionesPorColumna.length > 0
+      ? fnObtGrupoDatos(opcPorCol, this.datos)
+      : this.datos;
+
+    this.datosFiltrados = this.filtrosPorColumna.length > 0
+      ? fnFiltrarDatos(this.valoresFiltrado, this.datosPorOpcionColumna)
+      : this.datosPorOpcionColumna;
+
+    this.datosTabla = this.datosFiltrados;
   }
 
   public cambioValorOpcGrupo({ idxCol, valor }: ValorOpcionGrupoColInterface): void {
     this.opcionesGrupoPorColumna.forEach(obj => obj.isChecked = obj.valor == valor);
     this.datosPorOpcionColumna = fnObtGrupoDatos({ idxCol, valor }, this.datos);
-    this.datosFiltrados = fnFiltrarDatos(this.valoresFiltrado, this.datosPorOpcionColumna);
+
+    this.datosFiltrados = this.filtrosPorColumna.length > 0
+      ? fnFiltrarDatos(this.valoresFiltrado, this.datosPorOpcionColumna)
+      : this.datosPorOpcionColumna;
+
     this.datosTabla = fnBuscarPorTexto(this.txtBusquedaTabla, this.datosFiltrados);
   }
 
@@ -151,7 +162,7 @@ export class ReporteComponent implements OnInit {
     this.exportService.exportTableElmToExcel(this.datos, '');
   }
 
-  private primerValorOpcGrupoPorCol({ idxCol, valor }): ValorOpcionGrupoColInterface {
+  private valOpcGrpXCol({ idxCol, valor }): ValorOpcionGrupoColInterface {
     return { idxCol, valor };
   }
 

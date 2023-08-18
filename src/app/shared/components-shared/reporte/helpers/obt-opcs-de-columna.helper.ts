@@ -1,8 +1,7 @@
 import { OpcionGrupoColInterface } from "../interfaces/opcion-grupo-col.interface";
 
 export function fnObtOpcsDeColumna(
-  opciones: Array<any>,
-  datos: Array<any>
+  opciones: Array<any>
 ): Array<OpcionGrupoColInterface> {
   const opcionesColumna: Array<OpcionGrupoColInterface> = [];
   const idxCol: number = opciones[0];
