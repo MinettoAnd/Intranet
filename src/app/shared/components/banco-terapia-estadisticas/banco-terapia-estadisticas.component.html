@@ -1254,6 +1254,10 @@
                     </div>
                 </ng-template>
               </li>
+
+
+
+            <!--
               <li [ngbNavItem]="7">
                 <a ngbNavLink>DIARIA</a>
                 <ng-template ngbNavContent>
@@ -1264,8 +1268,6 @@
                         </div>
                         <div class="card-content collapse show">
                             <div class="card-body">
-                                <!-- <a class="btn btn-primary" id="downloadLink" (click)="exportexcel()">Exportar tabla a Excel</a>
-            <a class="btn btn-primary" id="downloadLink" (click)="copyTableToClipboard()">Copiar tabla</a> -->
                                 <div class="table table-striped table-bordered selection-deletion-row">
                                     <div class="box box-solid">
                                         <div id="accordion7">
@@ -1328,16 +1330,7 @@
                                                                     <span  *ngIf="column.prop === 'Campo'">{{value }}</span>
                                                                     <span  *ngIf="column.prop !== 'Campo'">{{value  | number:'1.0-0' }}</span>
                                                                 </div>
-                                                                <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
-                                            <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
-                                            </div> -->
-                                            
                                                             </ng-template>
-                                                            <!-- <ngx-datatable-column prop="per1">
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                            {{row.per1 | currency:'S/.  ':'code'}}
-                                            </ng-template>
-                                            </ngx-datatable-column> -->
                                                         </ngx-datatable-column>
                                                     </ngx-datatable>
                                                 </div>
@@ -1401,16 +1394,7 @@
                                                                     <span  *ngIf="column.prop === 'Campo'">{{value }}</span>
                                                                     <span  *ngIf="column.prop !== 'Campo'">{{value  | number:'1.2-2' }}</span>
                                                                 </div>
-                                                                <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
-                                            <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
-                                            </div> -->
-                                            
                                                             </ng-template>
-                                                            <!-- <ngx-datatable-column prop="per1">
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                            {{row.per1 | currency:'S/.  ':'code'}}
-                                            </ng-template>
-                                            </ngx-datatable-column> -->
                                                         </ngx-datatable-column>
                                                     </ngx-datatable>
                                                 </div>
@@ -1459,16 +1443,7 @@
                                                                     <span  *ngIf="column.prop === 'Campo'">{{value }}</span>
                                                                     <span  *ngIf="column.prop !== 'Campo'">{{value  | number:'1.2-2' }}</span>
                                                                 </div>
-                                                                <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
-                                            <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
-                                            </div> -->
-                                            
                                                             </ng-template>
-                                                            <!-- <ngx-datatable-column prop="per1">
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                            {{row.per1 | currency:'S/.  ':'code'}}
-                                            </ng-template>
-                                            </ngx-datatable-column> -->
                                                         </ngx-datatable-column>
                                                     </ngx-datatable>
                                                 </div>
@@ -1482,6 +1457,7 @@
                     </div>
                 </ng-template>
               </li>
+            -->
               </ul>
                 <div [ngbNavOutlet]="nav" class="mt-2"></div>
             </div>

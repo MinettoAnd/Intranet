@@ -619,7 +619,7 @@ export class DetallePagosAppMovilComponent implements OnInit {
               icon: "error"
             })
             return;
-          }else if((diff/(1000*60*60*24)) < 31){
+          }else if((diff/(1000*60*60*24)) < 2231){
             this.setPage({ offset: 0 });
           }else{
             Swal.fire({
