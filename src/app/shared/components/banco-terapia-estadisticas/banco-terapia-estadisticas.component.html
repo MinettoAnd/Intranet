@@ -86,7 +86,7 @@
                 <li [ngbNavItem]="1">
                     <a ngbNavLink>POR SEDE</a>
                       <ng-template ngbNavContent>
-                        
+
                         <div class="card" *ngIf="action">
                             <div class="card-header">
                               <h4 class="card-title">{{title}}</h4>
@@ -153,6 +153,34 @@
                                             </div>
                                         </div>
                                       </div>
+
+                                      <app-reporte
+                                            [id]="'tabla_anual_TPacGrupo'"
+                                            [copiar]="true"
+                                            [tituloReporte]="'tabla_anual_TPacGrupo'"
+                                            [opcionesPorColumna]="[
+                                                1,
+                                                { 'Montos': 'soles' },
+                                                { 'Cantidad': 'cantidad' },
+                                            ]"
+                                            [formatoDatos]="{
+                                                para: tipoControlEnum.OpcionPorCol,
+                                                excluir: ['Campo', 'solesCantidad'],
+                                                reglas: [
+                                                    {
+                                                        condicion: 'soles',
+                                                        formato: tipoFormatoValorEnum.Moneda,
+                                                    },
+                                                    {
+                                                        condicion: 'cantidad',
+                                                        formato: tipoFormatoValorEnum.Cantidad,
+                                                    },
+                                                ]
+                                            }"
+                                            [datos]="this.data.tabla_anual_TPacGrupo"
+                                            [cabecera]="this.data.cabecera_anual_TPacGrupo"
+                                        ></app-reporte>
+
                                       <div class="card">
                                         <div class="card-header-info" >
                                           <div class="box-header">
@@ -297,10 +325,10 @@
                                             </div>
                                         </div>
                                     </div>
-                                    </div>                       
+                                    </div>
                                   </div>
                                 </div>
-                                
+
                               </div>
                             </div>
                           </div>
@@ -752,6 +780,33 @@
                                 <div class="table table-striped table-bordered selection-deletion-row">
                                     <div class="box box-solid">
                                         <div id="accordion6">
+                                            <app-reporte
+                                                [id]="'tabla_anual_TPacGrupo'"
+                                                [copiar]="true"
+                                                [tituloReporte]="'tabla_anual_TPacGrupo'"
+                                                [opcionesPorColumna]="[
+                                                    1,
+                                                    { 'Montos': 'soles' },
+                                                    { 'Cantidad': 'cantidad' },
+                                                ]"
+                                                [formatoDatos]="{
+                                                    para: tipoControlEnum.OpcionPorCol,
+                                                    excluir: ['Campo', 'solesCantidad'],
+                                                    reglas: [
+                                                        {
+                                                            condicion: 'soles',
+                                                            formato: tipoFormatoValorEnum.Moneda,
+                                                        },
+                                                        {
+                                                            condicion: 'cantidad',
+                                                            formato: tipoFormatoValorEnum.Cantidad,
+                                                        },
+                                                    ]
+                                                }"
+                                                [datos]="this.data.tabla_anual_TPacGrupo"
+                                                [cabecera]="this.data.cabecera_anual_TPacGrupo"
+                                            ></app-reporte>
+
                                           <div class="card">
                                             <div class="card-header-info">
                                                 <div class="box-header">
@@ -841,7 +896,6 @@
                                                 </div>
                                             </div>
                                           </div>
-                
 
                                           <div class="card">
                                             <div class="card-header-info">
@@ -905,7 +959,7 @@
                                                           </canvas>
                                                         </div>
                                                     </div>
-                                                 
+
                                                     <ngx-datatable *ngIf="isTable10" #myTable10 class="bootstrap table table-striped " id="datatablele" [columns]="columns10" [rows]="rows10filtered" [columnMode]="ColumnMode.flex" [headerHeight]="50" [rowHeight]="$any('auto')" [scrollbarH]="true" (page)="setPage($event)" [summaryRow]="enableSummary"
                                                     [summaryPosition]="summaryPosition"
                                                     [summaryHeight]="35">
@@ -916,8 +970,6 @@
                                                                     <span  *ngIf="column.prop !== 'Campo' && row.solesCantidad === 'soles'">{{value  | currency }}</span>
                                                                     <span  *ngIf="column.prop !== 'Campo' && row.solesCantidad === 'cantidad'">{{value | number: '1.0-0' }}</span>
                                                                 </div>
-                                                         
-                                            
                                                             </ng-template>
 
                                                         </ngx-datatable-column>
@@ -925,8 +977,6 @@
                                                 </div>
                                             </div>
                                           </div>
-
-
 
                                           <div class="card">
                                             <div class="card-header-info">
@@ -989,8 +1039,6 @@
                                                 </div>
                                             </div>
                                           </div>
-
-
 
                                           <app-tbl-dist-x-grupo-examen
                                             [data]="this.data.tabla_anual_grupoExamen"
@@ -1066,9 +1114,6 @@
                                                 </div>
                                             </div>
                                           </div>
-
-
-
 
                                           <div class="card">
                                             <div class="card-header-info">

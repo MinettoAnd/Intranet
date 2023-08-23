@@ -25,12 +25,19 @@ import { RowDetalleComponent } from 'src/app/modals/jpric/row-detalle/row-detall
 import { AgGridAngular } from 'ag-grid-angular';
 import { PorcentajePipe } from 'src/app/pipes/porcentaje.pipe';
 
+import { TipoControlEnum } from '../../components-shared/reporte/enums/tipo-control.enum';
+import { TipoFormatoValorEnum } from '../../components-shared/reporte/enums/tipo-formato-valor.enum';
+
 @Component({
   selector: 'app-banco-terapia-estadisticas',
   templateUrl: './banco-terapia-estadisticas.component.html',
   styleUrls: ['./banco-terapia-estadisticas.component.scss']
 })
 export class BancoTerapiaEstadisticasComponent implements OnInit {
+
+  tipoControlEnum = TipoControlEnum
+  tipoFormatoValorEnum = TipoFormatoValorEnum
+
   initialSize = 0;
   active = 1;
   enableSummary = true;
