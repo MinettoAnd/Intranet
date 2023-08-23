@@ -626,13 +626,13 @@ export class EstadisticasComponent implements OnInit {
 		for ( var i = 0; i < length; i++ ) {
 			result += characters.charAt(Math.floor(Math.random() * charactersLength));
 		}
-		return 'aaTmp_' + today + result;
+		return 'aaTmpCQx_' + today + result;
 	}
  setPage(pageInfo) {
       console.log(pageInfo);
       // this.page.pageNumber = pageInfo.offset;
-      this.archivo_atenciones = 'aaaTmpA';
-      this.archivo_componentes = 'aaaTmpP';
+      this.archivo_atenciones = 'aaaTmpACQx';
+      this.archivo_componentes = 'aaaTmpPCQx';
       this.parameters = {
         periodo:this.periodo_consulta,
         sede: this.id_sede,
