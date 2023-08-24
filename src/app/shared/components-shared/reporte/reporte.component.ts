@@ -129,8 +129,10 @@ export class ReporteComponent implements OnInit {
 
     this.datosPorOpcionColumna = this.obtGrupoDatos(this.datos);
     this.datosFiltrados = this.filtrarDatos(this.datosPorOpcionColumna);
-    this.datosFormateados = this.formatearDatos(this.datosFiltrados);
-    this.datosTabla = this.datosFormateados;
+    // console.log('formatearDatos', this.formatearDatos(this.datosFiltrados));
+    this.datosTabla = [...this.datosFiltrados];
+    // this.datosFormateados = this.formatearDatos(this.datosFiltrados);
+    // this.datosTabla = [...this.datosFormateados];
   }
 
   public cambioValorOpcGrupo(valorCol: ValorOpcionGrupoColInterface): void {
@@ -138,19 +140,21 @@ export class ReporteComponent implements OnInit {
     this.opcionesGrupoPorColumna.forEach(obj => obj.isChecked = obj.valor == valorCol.valor);
     this.datosPorOpcionColumna = fnObtGrupoDatos(valorCol, this.datos);
     this.datosFiltrados = this.filtrarDatos(this.datosPorOpcionColumna);
-    this.datosFormateados = this.formatearDatos(this.datosFiltrados);
-    this.datosTabla = fnBuscarPorTexto(this.txtBusquedaTabla, this.datosFormateados);
+    // this.datosFormateados = this.formatearDatos(this.datosFiltrados);
+    // this.datosTabla = fnBuscarPorTexto(this.txtBusquedaTabla, this.datosFormateados);
+    this.datosTabla = fnBuscarPorTexto(this.txtBusquedaTabla, this.datosFiltrados);
   }
 
   public cambioValorFiltro(): void {
     this.datosFiltrados = fnFiltrarDatos(this.valoresFiltrado, this.datosPorOpcionColumna);
-    this.datosFormateados = this.formatearDatos(this.datosFiltrados);
-    this.datosTabla = fnBuscarPorTexto(this.txtBusquedaTabla, this.datosFormateados);
+    // this.datosFormateados = this.formatearDatos(this.datosFiltrados);
+    // this.datosTabla = fnBuscarPorTexto(this.txtBusquedaTabla, this.datosFormateados);
+    this.datosTabla = fnBuscarPorTexto(this.txtBusquedaTabla, this.datosFiltrados);
   }
 
   public cambioValorTextoBusqueda() {
-    this.datosFormateados = this.formatearDatos(this.datosFiltrados);
-    this.datosTabla = fnBuscarPorTexto(this.txtBusquedaTabla, this.datosFormateados);
+    // this.datosFormateados = this.formatearDatos(this.datosFiltrados);
+    this.datosTabla = fnBuscarPorTexto(this.txtBusquedaTabla, this.datosFiltrados);
   }
 
   public copyTableToClipboard() {
@@ -178,10 +182,12 @@ export class ReporteComponent implements OnInit {
   }
 
   private formatearDatos(datos: Array<any>): Array<any> {
+
     if (!this.formatoDatos) {
       return datos;
     }
 
+    return datos;
     return fnFormatearDatos(
       this.formatoDatos,
       this.valorPorColumna,
