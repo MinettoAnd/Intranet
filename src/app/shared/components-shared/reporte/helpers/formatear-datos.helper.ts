@@ -44,6 +44,7 @@ function aplicarFormatoADatos(
       }
 
       obj[key] = aplicarFormato(formato, obj[key]);
+      console.log('formato aplicado', formato, key, obj[key])
     }
   }
 
@@ -130,6 +131,8 @@ export function fnFormatearDatos(
   } else if (formatoDatos.para == TipoControlEnum.FiltroPorCol) {
     formato = getFormatoFiltroPorCol(formatoDatos, valoresFiltrado);
   }
+
+  console.log('por buen camino', formato, excluir, datos);
 
   return aplicarFormatoADatos(formato, excluir, datos);
 }

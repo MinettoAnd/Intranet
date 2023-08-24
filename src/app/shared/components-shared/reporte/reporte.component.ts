@@ -118,8 +118,10 @@ export class ReporteComponent implements OnInit {
 
     // Datos para los checks
     this.opcionesGrupoPorColumna = fnObtOpcsDeColumna(this.opcionesPorColumna);
-    this.opcionesGrupoPorColumna[0].isChecked = true;
-    this.valorPorColumna = this.valOpcGrpXCol(this.opcionesGrupoPorColumna[0]);
+    if (this.opcionesGrupoPorColumna.length > 0) {
+      this.opcionesGrupoPorColumna[0].isChecked = true;
+      this.valorPorColumna = this.valOpcGrpXCol(this.opcionesGrupoPorColumna[0]);
+    }
 
     // Datos para los select
     this.opcionesFiltrado = fnObtOpcsDeFiltrado(this.filtrosPorColumna, this.datos);
@@ -127,12 +129,19 @@ export class ReporteComponent implements OnInit {
 
     this.anchosCols = fnCalcAnchoCols(this.anchoFijo, Object.keys(this.datos[0]).length);
 
+    console.log({
+      'formatoDatos': this.formatoDatos,
+      'valorPorColumna': this.valorPorColumna,
+      'valoresFiltrado': this.valoresFiltrado,
+      // 'datos': datos,
+    });
+
     this.datosPorOpcionColumna = this.obtGrupoDatos(this.datos);
     this.datosFiltrados = this.filtrarDatos(this.datosPorOpcionColumna);
-    // console.log('formatearDatos', this.formatearDatos(this.datosFiltrados));
-    this.datosTabla = [...this.datosFiltrados];
-    // this.datosFormateados = this.formatearDatos(this.datosFiltrados);
-    // this.datosTabla = [...this.datosFormateados];
+    this.datosFormateados = this.formatearDatos(this.datosFiltrados);
+    console.log('formatearDatos', this.datosFormateados);
+    this.datosTabla = [...this.datosFormateados];
+    // this.datosTabla = [...this.datosFiltrados];
   }
 
   public cambioValorOpcGrupo(valorCol: ValorOpcionGrupoColInterface): void {
@@ -140,21 +149,21 @@ export class ReporteComponent implements OnInit {
     this.opcionesGrupoPorColumna.forEach(obj => obj.isChecked = obj.valor == valorCol.valor);
     this.datosPorOpcionColumna = fnObtGrupoDatos(valorCol, this.datos);
     this.datosFiltrados = this.filtrarDatos(this.datosPorOpcionColumna);
-    // this.datosFormateados = this.formatearDatos(this.datosFiltrados);
-    // this.datosTabla = fnBuscarPorTexto(this.txtBusquedaTabla, this.datosFormateados);
-    this.datosTabla = fnBuscarPorTexto(this.txtBusquedaTabla, this.datosFiltrados);
+    this.datosFormateados = this.formatearDatos(this.datosFiltrados);
+    this.datosTabla = fnBuscarPorTexto(this.txtBusquedaTabla, this.datosFormateados);
+    // this.datosTabla = fnBuscarPorTexto(this.txtBusquedaTabla, this.datosFiltrados);
   }
 
   public cambioValorFiltro(): void {
     this.datosFiltrados = fnFiltrarDatos(this.valoresFiltrado, this.datosPorOpcionColumna);
-    // this.datosFormateados = this.formatearDatos(this.datosFiltrados);
-    // this.datosTabla = fnBuscarPorTexto(this.txtBusquedaTabla, this.datosFormateados);
-    this.datosTabla = fnBuscarPorTexto(this.txtBusquedaTabla, this.datosFiltrados);
+    this.datosFormateados = this.formatearDatos(this.datosFiltrados);
+    this.datosTabla = fnBuscarPorTexto(this.txtBusquedaTabla, this.datosFormateados);
+    // this.datosTabla = fnBuscarPorTexto(this.txtBusquedaTabla, this.datosFiltrados);
   }
 
   public cambioValorTextoBusqueda() {
-    // this.datosFormateados = this.formatearDatos(this.datosFiltrados);
-    this.datosTabla = fnBuscarPorTexto(this.txtBusquedaTabla, this.datosFiltrados);
+    this.datosFormateados = this.formatearDatos(this.datosFiltrados);
+    this.datosTabla = fnBuscarPorTexto(this.txtBusquedaTabla, this.datosFormateados);
   }
 
   public copyTableToClipboard() {
@@ -182,19 +191,16 @@ export class ReporteComponent implements OnInit {
   }
 
   private formatearDatos(datos: Array<any>): Array<any> {
+    console.log('heheheheh', this.formatoDatos, this.formatoDatos ? 'formateando' : 'no formateando');
 
-    return datos;
-
-    if (!this.formatoDatos) {
-      return datos;
-    }
-
-    return fnFormatearDatos(
-      this.formatoDatos,
-      this.valorPorColumna,
-      this.valoresFiltrado,
-      datos,
-    );
+    return this.formatoDatos
+      ? fnFormatearDatos(
+          this.formatoDatos,
+          this.valorPorColumna,
+          this.valoresFiltrado,
+          datos,
+        )
+      : datos;
   }
 
 }
