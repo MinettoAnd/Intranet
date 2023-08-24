@@ -162,166 +162,41 @@
                                         </div>
                                       </div>
 
-                                    <app-reporte
-                                        [id]="'tabla_sucursal_gtpac'"
-                                        [copiar]="true"
-                                        [tituloReporte]="'Distribución por Tipo de Paciente Agrupado'"
-                                        [datos]="this.data.tabla_tpac"
-                                        [cabecera]="this.data.cabecera_tpac"
-                                    ></app-reporte>
+
 
                                     <app-reporte
-                                        [id]="'tabla_sucursal_gtpac'"
+                                        [id]="'tabla_tipoAtencion'"
                                         [copiar]="true"
                                         [tituloReporte]="'Distribución por Origen de Atención'"
                                         [datos]="this.data.tabla_tipoAtencion"
                                         [cabecera]="this.data.cabecera_tipoAtencion"
                                     ></app-reporte>
 
-                                      <div class="card">
-                                        <div class="card-header-info" >
-                                          <div class="box-header">
-                                            <div class="toggle-table">
-                                              <div class="callout callout-info">
-                                                <h3 class="box-title">Distribución por Sede y Origen
-                                                </h3>
-                                              </div>
-                                              <button type="button" class="btn btn-outline-primary" (click)="collapse2.toggle()" [attr.aria-expanded]="!isCollapsed2"
-                                              aria-controls="collapseExample">
-                                              <i class="fa fa-minus" *ngIf="!isCollapsed2"> </i>
-                                              <i class="fa fa-plus" *ngIf="isCollapsed2"> </i> 
-                                              </button>
-                                            </div>
-                                          </div>
-                                        </div>
-                                        <div #collapse2="ngbCollapse" [(ngbCollapse)]="isCollapsed2">
-                                            <div *ngIf="rows2">
-                                                <div class="row" style="align-items: center;justify-content: space-between;">
-                                                    <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
-                                                    <li class="list-group-item border-0 pl-0">
-                                                        <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(2)">
-                                                        <i class="fa fa-external-link"></i>
-                                                        Copiar tabla
-                                                        </button>
-                                                    </li>
-                                                    <li class="list-group-item border-0 pl-0">
-                                                        <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(2)">
-                                                        <i class="fa fa-external-link"></i>
-                                                        Exportar tabla a Excel
-                                                        </button>
-                                                    </li>
-                                                    </ul>
-                                                </div>
-                                                <ngx-datatable #myTable2
-                                                        class="bootstrap table table-striped "
-                                                        id="datatablele"
-                                                        [columns]="columns2"
-                                                        [rows]="rows2"
-                                                        [columnMode]="ColumnMode.force"
-                                                        [headerHeight]="50"
-                                                        [rowHeight]="$any('auto')"
-                                                        [scrollbarH]="true"
-                                                        (page)="setPage($event)"
-                                                        [rowClass]="getRowClass2"
-                                                        >
-                                                        <ngx-datatable-column [headerClass]="column.headerClass" [cellClass]="column.cellClass" 
-                                                        [flexGrow]="1" [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns2; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
-                                                            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
-                                                            let-row="row">
-                                                            <div>
-                                                                <span  [title]="value">{{value}}</span>
-                                                            </div>
-                                                            <!-- <div>
-                                                                <span *ngIf="column.prop == 'PeriodoTXT'">{{value}}</span>
-                                                                <span *ngIf="column.prop == 'Lima' || column.prop == 'Chorrillos' || column.prop == 'Surco' || column.prop == 'Total' ">{{value  | currency }}</span>
-                                                            </div> -->
-                                                            <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
-                                                                <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
-                                                            </div> -->
-                    
-                                                            </ng-template>
-                                                            <!-- <ngx-datatable-column prop="per1">
-                                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                                {{row.per1 | currency:'S/.  ':'code'}}
-                                                            </ng-template>
-                                                            </ngx-datatable-column> -->
-                                                        </ngx-datatable-column>
-                                                    </ngx-datatable>
-                                            </div>
-                                        </div>
-                                      </div>
-                                      <div class="card">
-                                        <div class="card-header-info" >
-                                        <div class="box-header">
-                                            <div class="toggle-table">
-                                            <div class="callout callout-info">
-                                                <h3 class="box-title">Distribución por Sede y Grupo de Paciente
-                                                </h3>
-                                            </div>
-                                            <button type="button" class="btn btn-outline-primary" (click)="collapse3.toggle()" [attr.aria-expanded]="!isCollapsed3"
-                                            aria-controls="collapseExample">
-                                            <i class="fa fa-minus" *ngIf="!isCollapsed3"> </i>
-                                            <i class="fa fa-plus" *ngIf="isCollapsed3"> </i> 
-                                            </button>
-                                            </div>
-                                        </div>
-                                        </div>
-                                        <div #collapse3="ngbCollapse" [(ngbCollapse)]="isCollapsed3">
-                                            <div *ngIf="rows3">
-                                                <div class="row" style="align-items: center;justify-content: space-between;">
-                                                    <ul class="list-group list-group-horizontal list-group-flush" style="flex-wrap: wrap;">
-                                                    <li class="list-group-item border-0 pl-0">
-                                                        <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(3)">
-                                                        <i class="fa fa-external-link"></i>
-                                                        Copiar tabla
-                                                        </button>
-                                                    </li>
-                                                    <li class="list-group-item border-0 pl-0">
-                                                        <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(3)">
-                                                        <i class="fa fa-external-link"></i>
-                                                        Exportar tabla a Excel
-                                                        </button>
-                                                    </li>
-                                                    </ul>
-                                                </div>
-                                                <ngx-datatable #myTable3
-                                                    class="bootstrap table table-striped "
-                                                    id="datatablele"
-                                                    [columns]="columns3"
-                                                    [rows]="rows3"
-                                                    [columnMode]="ColumnMode.flex"
-                                                    [headerHeight]="50"
-                                                    [rowHeight]="$any('auto')"
-                                                    [scrollbarH]="true"
-                                                    (page)="setPage($event)"
-                                                    [rowClass]="getRowClass2"
-                                                    >
-                                                    <ngx-datatable-column [headerClass]="column.headerClass" [cellClass]="column.cellClass"
-                                                    [flexGrow]="1"  [minWidth]="90" [pipe]="column.pipe" *ngFor="let column of columns3; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
-                                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
-                                                        let-row="row">
-                                                        <div>
-                                                            <span  [title]="value">{{value}}</span>
-                                                        </div>
-                                                        <!-- <div>
-                                                        <span *ngIf="column.prop == 'PeriodoTXT'">{{value}}</span>
-                                                        <span *ngIf="column.prop == 'Lima' || column.prop == 'Chorrillos' || column.prop == 'Surco' || column.prop == 'Total' ">{{value  | number }}</span>
-                                                        </div> -->
-                                                        <!-- <div [ngClass]="{'row-center': row.item.includes('TOTAL') && column.name === 'ITEM', 'row-background': row.item.includes('TOTAL')}">
-                                                            <span  [ngClass]="{'row-paddin': row.item.includes('-') && column.name === 'ITEM', 'row-center': row.item.includes('TOTAL CUOTAS') && column.name === 'ITEM',  'row-center-2': row.item.includes('TOTAL RECAUDADO') && column.name === 'ITEM'}" [title]="value">{{value}}</span>
-                                                        </div> -->
-                
-                                                        </ng-template>
-                                                        <!-- <ngx-datatable-column prop="per1">
-                                                        <ng-template let-row="row" ngx-datatable-cell-template>
-                                                            {{row.per1 | currency:'S/.  ':'code'}}
-                                                        </ng-template>
-                                                        </ngx-datatable-column> -->
-                                                    </ngx-datatable-column>
-                                                </ngx-datatable>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <app-reporte
+                                        [id]="'tabla_servicio'"
+                                        [copiar]="true"
+                                        [tituloReporte]="'Distribución por Servicio'"
+                                        [datos]="this.data.tabla_servicio"
+                                        [cabecera]="this.data.cabecera_servicio"
+                                    ></app-reporte>
+
+                                    <app-reporte
+                                        [id]="'tabla_tpac'"
+                                        [copiar]="true"
+                                        [tituloReporte]="'Distribución por Tipo de Paciente Agrupado'"
+                                        [datos]="this.data.tabla_tpac"
+                                        [cabecera]="this.data.cabecera_tpac"
+                                    ></app-reporte>
+
+
+                                    <app-reporte
+                                        [id]="'tabla_empresaGrupo'"
+                                        [copiar]="true"
+                                        [tituloReporte]="'Distribución por Empresa Aseguradora'"
+                                        [datos]="this.data.tabla_empresaGrupo"
+                                        [cabecera]="this.data.cabecera_empresaGrupo"
+                                    ></app-reporte>
+
                                     </div>                       
                                   </div>
                                 </div>
