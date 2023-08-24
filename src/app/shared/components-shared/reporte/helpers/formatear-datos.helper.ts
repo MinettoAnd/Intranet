@@ -33,19 +33,30 @@ function aplicarFormatoADatos(
   excluir: Array<string>,
   datos: Array<any>,
 ): Array<any> {
+  if (!formato) {
+    return datos;
+  }
+
   const datosConFormato: Array<any> = [...datos];
 
-  for (let obj of datosConFormato) {
-    const keys: Array<string> = Object.keys(obj);
+  console.info('datosConFormato', datosConFormato);
 
-    for (let key of keys) {
-      if (excluir.find(val => val == key)) {
-        continue;
+  try {
+    for (let obj of datosConFormato) {
+      console.log('obj', obj);
+      const keys: Array<string> = Object.keys(obj);
+
+      for (let key of keys) {
+        if (excluir.find(val => val == key)) {
+          continue;
+        }
+
+        obj[key] = aplicarFormato(formato, obj[key]);
+        console.log('formato aplicado', formato, key, obj[key])
       }
-
-      obj[key] = aplicarFormato(formato, obj[key]);
-      console.log('formato aplicado', formato, key, obj[key])
     }
+  } catch (e) {
+    // TODO
   }
 
   return datosConFormato;
@@ -128,8 +139,10 @@ export function fnFormatearDatos(
   }
 
   if (formatoDatos.para == TipoControlEnum.OpcionPorCol) {
+    console.log('[1] OpcionPorCol', formatoDatos, valorPorColumna)
     formato = getFormatoOpcionPorCol(formatoDatos, valorPorColumna);
   } else if (formatoDatos.para == TipoControlEnum.FiltroPorCol) {
+    console.log('[2] FiltroPorCol')
     formato = getFormatoFiltroPorCol(formatoDatos, valoresFiltrado);
   }
 

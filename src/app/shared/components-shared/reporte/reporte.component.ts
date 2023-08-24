@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, AfterViewInit } from '@angular/core';
 
 import { ExportService } from 'src/app/_services/export.service';
 
@@ -26,7 +26,7 @@ import { fnGenerarIdUnico } from '../../utils/generar-id-unico.util';
   templateUrl: './reporte.component.html',
   styleUrls: ['./reporte.component.scss'],
 })
-export class ReporteComponent implements OnInit {
+export class ReporteComponent implements OnInit, AfterViewInit {
 
   // Muestra el mensaje de error en la alerta nativa del navegador
   @Input() public debugEnAlerta: boolean = false;
@@ -114,6 +114,11 @@ export class ReporteComponent implements OnInit {
   constructor(private exportService: ExportService) {}
 
   ngOnInit(): void {
+  }
+
+  ngAfterViewInit(): void {
+
+  // ngAfterContentInit(): void {
     this.nombreGrupoChk = 'chk' + fnGenerarIdUnico(5);
 
     // Datos para los checks
@@ -129,41 +134,30 @@ export class ReporteComponent implements OnInit {
 
     this.anchosCols = fnCalcAnchoCols(this.anchoFijo, Object.keys(this.datos[0]).length);
 
-    console.log({
-      'formatoDatos': this.formatoDatos,
-      'valorPorColumna': this.valorPorColumna,
-      'valoresFiltrado': this.valoresFiltrado,
-      // 'datos': datos,
-    });
-
-    this.datosPorOpcionColumna = this.obtGrupoDatos(this.datos);
-    this.datosFiltrados = this.filtrarDatos(this.datosPorOpcionColumna);
-    this.datosFormateados = this.formatearDatos(this.datosFiltrados);
-    console.log('formatearDatos', this.datosFormateados);
+    this.datosPorOpcionColumna = [...this.obtGrupoDatos(this.datos)];
+    this.datosFiltrados = [...this.filtrarDatos(this.datosPorOpcionColumna)];
+    this.datosFormateados = [...this.formatearDatos(this.datosFiltrados)];
     this.datosTabla = [...this.datosFormateados];
-    // this.datosTabla = [...this.datosFiltrados];
   }
 
   public cambioValorOpcGrupo(valorCol: ValorOpcionGrupoColInterface): void {
     this.valorPorColumna = valorCol;
     this.opcionesGrupoPorColumna.forEach(obj => obj.isChecked = obj.valor == valorCol.valor);
-    this.datosPorOpcionColumna = fnObtGrupoDatos(valorCol, this.datos);
-    this.datosFiltrados = this.filtrarDatos(this.datosPorOpcionColumna);
-    this.datosFormateados = this.formatearDatos(this.datosFiltrados);
-    this.datosTabla = fnBuscarPorTexto(this.txtBusquedaTabla, this.datosFormateados);
-    // this.datosTabla = fnBuscarPorTexto(this.txtBusquedaTabla, this.datosFiltrados);
+    this.datosPorOpcionColumna = [...fnObtGrupoDatos(valorCol, this.datos)];
+    this.datosFiltrados = [...this.filtrarDatos(this.datosPorOpcionColumna)];
+    this.datosFormateados = [...this.formatearDatos(this.datosFiltrados)];
+    this.datosTabla = [...fnBuscarPorTexto(this.txtBusquedaTabla, this.datosFormateados)];
   }
 
   public cambioValorFiltro(): void {
-    this.datosFiltrados = fnFiltrarDatos(this.valoresFiltrado, this.datosPorOpcionColumna);
-    this.datosFormateados = this.formatearDatos(this.datosFiltrados);
-    this.datosTabla = fnBuscarPorTexto(this.txtBusquedaTabla, this.datosFormateados);
-    // this.datosTabla = fnBuscarPorTexto(this.txtBusquedaTabla, this.datosFiltrados);
+    this.datosFiltrados = [...fnFiltrarDatos(this.valoresFiltrado, this.datosPorOpcionColumna)];
+    this.datosFormateados = [...this.formatearDatos(this.datosFiltrados)];
+    this.datosTabla = [...fnBuscarPorTexto(this.txtBusquedaTabla, this.datosFormateados)];
   }
 
   public cambioValorTextoBusqueda() {
-    this.datosFormateados = this.formatearDatos(this.datosFiltrados);
-    this.datosTabla = fnBuscarPorTexto(this.txtBusquedaTabla, this.datosFormateados);
+    this.datosFormateados = [...this.formatearDatos(this.datosFiltrados)];
+    this.datosTabla = [...fnBuscarPorTexto(this.txtBusquedaTabla, this.datosFormateados)];
   }
 
   public copyTableToClipboard() {
@@ -191,7 +185,7 @@ export class ReporteComponent implements OnInit {
   }
 
   private formatearDatos(datos: Array<any>): Array<any> {
-    console.log('heheheheh', this.formatoDatos, this.formatoDatos ? 'formateando' : 'no formateando');
+    console.log('en proceso para formatear datos', this.formatoDatos, this.formatoDatos ? 'formateando' : 'no formateando');
 
     return this.formatoDatos
       ? fnFormatearDatos(
