@@ -183,7 +183,7 @@ export class ReporteComponent implements OnInit {
 
   private formatearDatos(datos: Array<any>): Array<any> {
 
-    return datos;
+    return [];
 
     if (!this.formatoDatos) {
       return datos;

@@ -115,6 +115,7 @@ export function fnFormatearDatos(
   valoresFiltrado: Array<ValorFiltradoInterface>,
   datos: Array<any>,
 ): Array<any> {
+  return [];
   let formato: TipoFormatoValorEnum = undefined;
   let excluir: Array<string> = 'excluir' in formatoDatos
       ? formatoDatos.excluir
