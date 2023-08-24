@@ -193,20 +193,6 @@ export class ReporteComponent implements OnInit {
   private formatearDatos(datos: Array<any>): Array<any> {
     console.log('heheheheh', this.formatoDatos, this.formatoDatos ? 'formateando' : 'no formateando');
 
-<<<<<<< HEAD
-    return [];
-
-    if (!this.formatoDatos) {
-      return datos;
-    }
-
-    return fnFormatearDatos(
-      this.formatoDatos,
-      this.valorPorColumna,
-      this.valoresFiltrado,
-      datos,
-    );
-=======
     return this.formatoDatos
       ? fnFormatearDatos(
           this.formatoDatos,
@@ -215,7 +201,6 @@ export class ReporteComponent implements OnInit {
           datos,
         )
       : datos;
->>>>>>> f2aa63e2d7c4062e2ab5a2e56c343fac2373742f
   }
 
 }

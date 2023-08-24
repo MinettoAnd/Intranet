@@ -166,15 +166,17 @@
                                         [id]="'tabla_sucursal_gtpac'"
                                         [copiar]="true"
                                         [tituloReporte]="'Distribución por Tipo de Paciente Agrupado'"
-                                        [opcionesPorColumna]="[
-                                            1,
-                                            { 'Montos': 'soles' },
-                                            { 'Cantidad': 'cantidad' },
-                                        ]"
-                                        [datos]="this.data.tabla_sucursal_gtpac"
-                                        [cabecera]="this.data.cabecera_sucursal_gtpac"
+                                        [datos]="this.data.tabla_tpac"
+                                        [cabecera]="this.data.cabecera_tpac"
                                     ></app-reporte>
 
+                                    <app-reporte
+                                        [id]="'tabla_sucursal_gtpac'"
+                                        [copiar]="true"
+                                        [tituloReporte]="'Distribución por Origen de Atención'"
+                                        [datos]="this.data.tabla_tipoAtencion"
+                                        [cabecera]="this.data.cabecera_tipoAtencion"
+                                    ></app-reporte>
 
                                       <div class="card">
                                         <div class="card-header-info" >
