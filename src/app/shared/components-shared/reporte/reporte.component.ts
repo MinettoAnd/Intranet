@@ -20,6 +20,7 @@ import { fnBuscarPorTexto } from './helpers/buscar-por-texto.helper';
 import { fnFormatearDatos } from './helpers/formatear-datos.helper';
 
 import { fnGenerarIdUnico } from '../../utils/generar-id-unico.util';
+import { fnDestArrObj } from '../../utils/dest-arr-obj.util';
 
 @Component({
   selector: 'app-reporte',
@@ -34,7 +35,11 @@ export class ReporteComponent implements OnInit, AfterViewInit {
   @Input() public tituloReporte: string = '';
 
   @Input() public cabecera: Array<any> = [];
-  @Input() public datos: Array<any> = [];
+
+  @Input() public set datos(datos: Array<any>) {
+    this._datos = fnDestArrObj(datos);
+  };
+
   @Input() public exportar: boolean = false;
   @Input() public copiar: boolean = false;
 
@@ -72,6 +77,8 @@ export class ReporteComponent implements OnInit, AfterViewInit {
   /*
    * Datos con los que trabaja el componente
    */
+  private _datos: Array<any> = [];
+
   public anchosCols: Array<AnchoColInterface> = [];
 
   // Datos como resultado de obtener el grupo de datos
@@ -117,8 +124,6 @@ export class ReporteComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-
-  // ngAfterContentInit(): void {
     this.nombreGrupoChk = 'chk' + fnGenerarIdUnico(5);
 
     // Datos para los checks
@@ -129,43 +134,46 @@ export class ReporteComponent implements OnInit, AfterViewInit {
     }
 
     // Datos para los select
-    this.opcionesFiltrado = fnObtOpcsDeFiltrado(this.filtrosPorColumna, this.datos);
+    this.opcionesFiltrado = fnObtOpcsDeFiltrado(this.filtrosPorColumna, this._datos);
     this.valoresFiltrado = fnObtValoresDeFiltrado(this.opcionesFiltrado);
 
-    this.anchosCols = fnCalcAnchoCols(this.anchoFijo, Object.keys(this.datos[0]).length);
+    this.anchosCols = fnCalcAnchoCols(
+      this.anchoFijo,
+      Object.keys(this._datos[0]).length
+    );
 
-    this.datosPorOpcionColumna = [...this.obtGrupoDatos(this.datos)];
-    this.datosFiltrados = [...this.filtrarDatos(this.datosPorOpcionColumna)];
-    this.datosFormateados = [...this.formatearDatos(this.datosFiltrados)];
-    this.datosTabla = [...this.datosFormateados];
+    this.datosPorOpcionColumna = this.obtGrupoDatos(this._datos);
+    this.datosFiltrados = this.filtrarDatos(this.datosPorOpcionColumna);
+    this.datosFormateados = this.formatearDatos(this.datosFiltrados);
+    this.datosTabla = fnDestArrObj(this.datosFormateados);
   }
 
   public cambioValorOpcGrupo(valorCol: ValorOpcionGrupoColInterface): void {
     this.valorPorColumna = valorCol;
     this.opcionesGrupoPorColumna.forEach(obj => obj.isChecked = obj.valor == valorCol.valor);
-    this.datosPorOpcionColumna = [...fnObtGrupoDatos(valorCol, this.datos)];
-    this.datosFiltrados = [...this.filtrarDatos(this.datosPorOpcionColumna)];
-    this.datosFormateados = [...this.formatearDatos(this.datosFiltrados)];
-    this.datosTabla = [...fnBuscarPorTexto(this.txtBusquedaTabla, this.datosFormateados)];
+    this.datosPorOpcionColumna = fnObtGrupoDatos(valorCol, this._datos);
+    this.datosFiltrados = this.filtrarDatos(this.datosPorOpcionColumna);
+    this.datosFormateados = this.formatearDatos(this.datosFiltrados);
+    this.datosTabla = fnBuscarPorTexto(this.txtBusquedaTabla, this.datosFormateados);
   }
 
   public cambioValorFiltro(): void {
-    this.datosFiltrados = [...fnFiltrarDatos(this.valoresFiltrado, this.datosPorOpcionColumna)];
-    this.datosFormateados = [...this.formatearDatos(this.datosFiltrados)];
-    this.datosTabla = [...fnBuscarPorTexto(this.txtBusquedaTabla, this.datosFormateados)];
+    this.datosFiltrados = fnFiltrarDatos(this.valoresFiltrado, this.datosPorOpcionColumna);
+    this.datosFormateados = this.formatearDatos(this.datosFiltrados);
+    this.datosTabla = fnBuscarPorTexto(this.txtBusquedaTabla, this.datosFormateados);
   }
 
   public cambioValorTextoBusqueda() {
-    this.datosFormateados = [...this.formatearDatos(this.datosFiltrados)];
-    this.datosTabla = [...fnBuscarPorTexto(this.txtBusquedaTabla, this.datosFormateados)];
+    this.datosFormateados = this.formatearDatos(this.datosFiltrados);
+    this.datosTabla = fnBuscarPorTexto(this.txtBusquedaTabla, this.datosFormateados);
   }
 
   public copyTableToClipboard() {
-    this.exportService.exportToClipboard(this.datos, this.cabecera);
+    this.exportService.exportToClipboard(this._datos, this.cabecera);
   }
 
   public exportToExcel() {
-    this.exportService.exportTableElmToExcel(this.datos, '');
+    this.exportService.exportTableElmToExcel(this._datos, '');
   }
 
   private valOpcGrpXCol({ idxCol, valor }): ValorOpcionGrupoColInterface {
@@ -175,18 +183,16 @@ export class ReporteComponent implements OnInit, AfterViewInit {
   private obtGrupoDatos(datos: Array<any>): Array<any> {
     return this.opcionesPorColumna.length > 0
       ? fnObtGrupoDatos(this.valorPorColumna, datos)
-      : datos;
+      : fnDestArrObj(datos);
   }
 
   private filtrarDatos(datos: Array<any>): Array<any> {
     return this.filtrosPorColumna.length > 0
       ? fnFiltrarDatos(this.valoresFiltrado, datos)
-      : datos;
+      : fnDestArrObj(datos);
   }
 
   private formatearDatos(datos: Array<any>): Array<any> {
-    console.log('en proceso para formatear datos', this.formatoDatos, this.formatoDatos ? 'formateando' : 'no formateando');
-
     return this.formatoDatos
       ? fnFormatearDatos(
           this.formatoDatos,
@@ -194,7 +200,7 @@ export class ReporteComponent implements OnInit, AfterViewInit {
           this.valoresFiltrado,
           datos,
         )
-      : datos;
+      : fnDestArrObj(datos);
   }
 
 }
