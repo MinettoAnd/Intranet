@@ -35,8 +35,20 @@ import { TipoFormatoValorEnum } from '../../components-shared/reporte/enums/tipo
 })
 export class BancoTerapiaEstadisticasComponent implements OnInit {
 
-  tipoControlEnum = TipoControlEnum
-  tipoFormatoValorEnum = TipoFormatoValorEnum
+  public formatoDatosTblDistAnTPacGrupo = {
+    para: TipoControlEnum.OpcionPorCol,
+    excluir: ['Campo', 'solesCantidad'],
+    reglas: [
+      {
+          valor: 'soles',
+          formato: TipoFormatoValorEnum.Moneda,
+      },
+      {
+          valor: 'cantidad',
+          formato: TipoFormatoValorEnum.Cantidad,
+      },
+    ],
+  };
 
   initialSize = 0;
   active = 1;
