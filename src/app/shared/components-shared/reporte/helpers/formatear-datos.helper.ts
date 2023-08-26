@@ -5,6 +5,7 @@ import { TipoFormatoValorEnum } from "../enums/tipo-formato-valor.enum";
 import { FormatoDatosInterface, ReglaFormatoDatosInterface } from "../interfaces/formato-datos.interface";
 import { ValorFiltradoInterface } from '../interfaces/valor-filtrado.interface';
 import { ValorOpcionGrupoColInterface } from "../interfaces/valor-opcion-grupo-col.interface";
+import { fnDestArrObj } from "src/app/shared/utils/dest-arr-obj.util";
 
 const decimalPipe = new DecimalPipe('es-PE');
 const currencyPipe = new CurrencyPipe('es-PE');
@@ -33,17 +34,14 @@ function aplicarFormatoADatos(
   excluir: Array<string>,
   datos: Array<any>,
 ): Array<any> {
+  const datosConFormato: Array<any> = fnDestArrObj(datos);
+
   if (!formato) {
-    return datos;
+    return datosConFormato;
   }
-
-  const datosConFormato: Array<any> = [...datos];
-
-  console.info('datosConFormato', datosConFormato);
 
   try {
     for (let obj of datosConFormato) {
-      console.log('obj', obj);
       const keys: Array<string> = Object.keys(obj);
 
       for (let key of keys) {
@@ -52,7 +50,6 @@ function aplicarFormatoADatos(
         }
 
         obj[key] = aplicarFormato(formato, obj[key]);
-        console.log('formato aplicado', formato, key, obj[key])
       }
     }
   } catch (e) {
@@ -127,7 +124,7 @@ export function fnFormatearDatos(
   valoresFiltrado: Array<ValorFiltradoInterface>,
   datos: Array<any>,
 ): Array<any> {
-  return [];
+  let tmpDatos: Array<any> = fnDestArrObj(datos);
   let formato: TipoFormatoValorEnum = undefined;
   let excluir: Array<string> = 'excluir' in formatoDatos
       ? formatoDatos.excluir
@@ -135,18 +132,14 @@ export function fnFormatearDatos(
 
   if (!formatoDatos.hasOwnProperty('para')) {
     formato = formatoDatos.reglas[0].formato;
-    return aplicarFormatoADatos(formato, excluir, datos);
+    return aplicarFormatoADatos(formato, excluir, tmpDatos);
   }
 
   if (formatoDatos.para == TipoControlEnum.OpcionPorCol) {
-    console.log('[1] OpcionPorCol', formatoDatos, valorPorColumna)
     formato = getFormatoOpcionPorCol(formatoDatos, valorPorColumna);
   } else if (formatoDatos.para == TipoControlEnum.FiltroPorCol) {
-    console.log('[2] FiltroPorCol')
     formato = getFormatoFiltroPorCol(formatoDatos, valoresFiltrado);
   }
 
-  console.log('por buen camino', formato, excluir, datos);
-
-  return aplicarFormatoADatos(formato, excluir, datos);
+  return aplicarFormatoADatos(formato, excluir, tmpDatos);
 }
