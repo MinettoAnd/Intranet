@@ -27,6 +27,7 @@ import { PorcentajePipe } from 'src/app/pipes/porcentaje.pipe';
 
 import { TipoControlEnum } from '../../components-shared/reporte/enums/tipo-control.enum';
 import { TipoFormatoValorEnum } from '../../components-shared/reporte/enums/tipo-formato-valor.enum';
+import { FormatoDatosInterface } from '../../components-shared/reporte/interfaces/formato-datos.interface';
 
 @Component({
   selector: 'app-banco-terapia-estadisticas',
@@ -35,17 +36,35 @@ import { TipoFormatoValorEnum } from '../../components-shared/reporte/enums/tipo
 })
 export class BancoTerapiaEstadisticasComponent implements OnInit {
 
-  public formatoDatosTblDistAnTPacGrupo = {
+  public formatoDatosTblDistAnTPacGrupo: FormatoDatosInterface = {
     para: TipoControlEnum.OpcionPorCol,
     excluir: ['Campo', 'solesCantidad'],
     reglas: [
       {
           valor: 'soles',
-          formato: TipoFormatoValorEnum.Moneda,
+          formato: [{ tipo: TipoFormatoValorEnum.Moneda }],
       },
       {
           valor: 'cantidad',
-          formato: TipoFormatoValorEnum.Cantidad,
+          formato: [{ tipo: TipoFormatoValorEnum.Cantidad}],
+      },
+    ],
+  };
+
+  public formatoDatosTblDistXServicio: FormatoDatosInterface = {
+    excluir: ['grupo'],
+    reglas: [
+      {
+        formato: [
+          {
+            tipo: TipoFormatoValorEnum.Cantidad,
+            cols: ['atendidos', 'orden', 'atenciones'],
+          },
+          {
+            tipo: TipoFormatoValorEnum.Moneda,
+            cols: ['ingreso', 'empresa', 'esperado'],
+          }
+        ],
       },
     ],
   };

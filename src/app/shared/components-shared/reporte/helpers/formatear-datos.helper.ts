@@ -2,7 +2,7 @@ import { DecimalPipe, CurrencyPipe } from "@angular/common";
 import { CondicionFormatoDatosEnum } from "../enums/regla-formato-datos.enum";
 import { TipoControlEnum } from "../enums/tipo-control.enum";
 import { TipoFormatoValorEnum } from "../enums/tipo-formato-valor.enum";
-import { FormatoDatosInterface, ReglaFormatoDatosInterface } from "../interfaces/formato-datos.interface";
+import { FormatoDatosInterface, ReglaFormatoDatosInterface, TipoFormatoInterface } from "../interfaces/formato-datos.interface";
 import { ValorFiltradoInterface } from '../interfaces/valor-filtrado.interface';
 import { ValorOpcionGrupoColInterface } from "../interfaces/valor-opcion-grupo-col.interface";
 import { fnDestArrObj } from "src/app/shared/utils/dest-arr-obj.util";
@@ -30,7 +30,7 @@ function aplicarFormato(
 }
 
 function aplicarFormatoADatos(
-  formato: TipoFormatoValorEnum,
+  formato: Array<TipoFormatoInterface>,
   excluir: Array<string>,
   datos: Array<any>,
 ): Array<any> {
@@ -41,15 +41,27 @@ function aplicarFormatoADatos(
   }
 
   try {
-    for (let obj of datosConFormato) {
-      const keys: Array<string> = Object.keys(obj);
+    for (let tipoFormato of formato) {
+      for (let obj of datosConFormato) {
+        const keys: Array<string> = Object.keys(obj);
 
-      for (let key of keys) {
-        if (excluir.find(val => val == key)) {
-          continue;
+        for (let key of keys) {
+          // No se aplica formato a las columnas especificadas
+          if (excluir.find(val => val == key)) {
+            continue;
+          }
+
+          // Se aplica formato a todas las columnas
+          if (!tipoFormato.hasOwnProperty('cols')) {
+            obj[key] = aplicarFormato(tipoFormato.tipo, obj[key]);
+            continue;
+          }
+
+          // Se aplica formato a las columnas especificadas
+          if (tipoFormato.cols.find(col => col == key)) {
+            obj[key] = aplicarFormato(tipoFormato.tipo, obj[key]);
+          }
         }
-
-        obj[key] = aplicarFormato(formato, obj[key]);
       }
     }
   } catch (e) {
@@ -80,8 +92,8 @@ function aplicarCondicion(
 function getFormatoFiltroPorCol(
   { reglas, control }: FormatoDatosInterface,
   valoresFiltrado: Array<ValorFiltradoInterface>,
-): TipoFormatoValorEnum {
-  let formato: TipoFormatoValorEnum = undefined;
+): Array<TipoFormatoInterface> {
+  let formato: Array<TipoFormatoInterface> = undefined;
 
   for (let regla of reglas) {
     const valorFiltrado: ValorFiltradoInterface = valoresFiltrado.find(
@@ -105,8 +117,8 @@ function getFormatoFiltroPorCol(
 function getFormatoOpcionPorCol(
   { reglas }: FormatoDatosInterface,
   { valor }: ValorOpcionGrupoColInterface,
-): TipoFormatoValorEnum {
-  let formato: TipoFormatoValorEnum = undefined;
+): Array<TipoFormatoInterface> {
+  let formato: Array<TipoFormatoInterface> = undefined;
 
   for (let regla of reglas) {
     if (regla.valor == valor) {
@@ -125,7 +137,7 @@ export function fnFormatearDatos(
   datos: Array<any>,
 ): Array<any> {
   let tmpDatos: Array<any> = fnDestArrObj(datos);
-  let formato: TipoFormatoValorEnum = undefined;
+  let formato: Array<TipoFormatoInterface> = undefined;
   let excluir: Array<string> = 'excluir' in formatoDatos
       ? formatoDatos.excluir
       : [];
