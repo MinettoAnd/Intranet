@@ -6,13 +6,15 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IndicadoresLabComponent } from './indicadores/indicadoresLab.component';
+import { EstadisticasComponent } from './estadisticas/estadisticas.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
   declarations: [
     LiquidacionEmpresaBiohealthComponent,
-    IndicadoresLabComponent
+    IndicadoresLabComponent,
+    EstadisticasComponent
   ],
   imports: [
     CommonModule,NgxDatatableModule,NgbModule, 
@@ -27,6 +29,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
       {
         path: 'indicadores',
         component: IndicadoresLabComponent
+      },
+      {
+        path: 'estadisticas',
+        component: EstadisticasComponent
       },
     ])
   ],
