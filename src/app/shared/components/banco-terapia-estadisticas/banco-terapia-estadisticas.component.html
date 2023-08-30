@@ -120,7 +120,7 @@
                                           
                                               <ag-grid-angular
                                                 #agGrid
-                                                style="width: 100%; height: 300px;"
+                                                style="width: 100%; height: 200px;"
                                                 id="myTable1"
                                                 ag-grid="gridOptions"
                                                 class="ag-theme-balham"
@@ -788,6 +788,21 @@
                                 <div class="table table-striped table-bordered selection-deletion-row">
                                     <div class="box box-solid">
                                         <div id="accordion6">
+
+                                        <app-reporte
+                                            [id]="'tabla_anual_sede_gtexamen'"
+                                            [copiar]="true"
+                                            [tituloReporte]="'Distribución Anual por Sede y Tipo de Exámen'"
+                                            [opcionesPorColumna]="[
+                                                1,
+                                                { 'Montos': 'soles' },
+                                                { 'Cantidad': 'cantidad' },
+                                            ]"
+                                            [datos]="this.data.tabla_anual_sede_gtexamen"
+                                            [cabecera]="this.data.cabecera_sede_gtexamen"
+                                            [formatoDatos]="formatoDatosTblDistAnTPacGrupo"
+                                        ></app-reporte>
+
                                           <div class="card">
                                             <div class="card-header-info">
                                                 <div class="box-header">
@@ -877,7 +892,7 @@
                                                 </div>
                                             </div>
                                           </div>
-
+<!--
                                         <app-reporte
                                             [id]="'tabla_anual_TPacGrupo'"
                                             [copiar]="true"
@@ -891,7 +906,7 @@
                                             [cabecera]="this.data.cabecera_anual_TPacGrupo"
                                             [formatoDatos]="formatoDatosTblDistAnTPacGrupo"
                                         ></app-reporte>
-
+-->
 
                                           <div class="card">
                                             <div class="card-header-info">
@@ -977,7 +992,7 @@
                                           </div>
 
 
-
+<!--
                                           <div class="card">
                                             <div class="card-header-info">
                                                 <div class="box-header">
@@ -1041,7 +1056,7 @@
                                           </div>
 
 
-
+                                        -->
                                           <app-tbl-dist-x-grupo-examen
                                             [data]="this.data.tabla_anual_grupoExamen"
                                             [cabecera]="this.data.cabecera_anual_grupoExamen"
@@ -1119,7 +1134,7 @@
 
 
 
-
+<!--
                                           <div class="card">
                                             <div class="card-header-info">
                                                 <div class="box-header">
@@ -1136,6 +1151,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            
                                             <div #collapse22="ngbCollapse" [(ngbCollapse)]="isCollapsed22">
                                                 <div *ngIf="rows22">
 
@@ -1202,7 +1218,7 @@
                                             [summaryPosition]="summaryPosition"
                                             [enableSummary]="enableSummary"
                                           ></app-tbl-medicos-dist-anual-x-esp>
-
+                                        -->
                                           <app-tbl-det-medico-especialidad
                                             [data]="this.data.tabla_anual_especialidad_medico"
                                             [cabecera]="this.data.cabecera_anual_especialidad_medico"
