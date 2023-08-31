@@ -6,12 +6,13 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AgGridModule } from 'ag-grid-angular';
 import { RouterModule } from '@angular/router';
-
+import { EstadisticasComponent } from './estadisticas/estadisticas.component';
 
 
 @NgModule({
   declarations: [
-    IngresosComponent
+    IngresosComponent,
+    EstadisticasComponent
   ],
   imports: [
     CommonModule,NgxDatatableModule,NgbModule, 
@@ -22,6 +23,10 @@ import { RouterModule } from '@angular/router';
       {
         path: 'ingresos',
         component: IngresosComponent
+      },
+      {
+        path: 'estadisticas',
+        component: EstadisticasComponent
       },
     ])
   ],
