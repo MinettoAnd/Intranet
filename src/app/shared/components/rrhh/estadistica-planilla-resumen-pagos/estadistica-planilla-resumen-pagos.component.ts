@@ -234,7 +234,7 @@ export class EstadisticaPlanillaResumenPagosComponent implements OnInit {
       labels: chartLabels1,
       datasets: [
         {
-          barPercentage: 0.8,
+          barPercentage: 0.6,
           categoryPercentage: 1,
           label: title,
           borderColor: '#28a74559',

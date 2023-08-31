@@ -803,6 +803,21 @@
                                             [formatoDatos]="formatoDatosTblDistAnTPacGrupo"
                                         ></app-reporte>
 
+                                        <app-reporte
+                                            [id]="'tabla_anual_especialidad_gtexamen'"
+                                            [copiar]="true"
+                                            [tituloReporte]="'Distribución Anual por Especialidad y Tipo de Exámen'"
+                                            [opcionesPorColumna]="[
+                                                1,
+                                                { 'Montos': 'soles' },
+                                                { 'Cantidad': 'cantidad' },
+                                            ]"
+                                            [anchoFijo]="[{'0':'300'}]"
+                                            [datos]="this.data.tabla_anual_especialidad_gtexamen"
+                                            [cabecera]="this.data.cabecera_anual_especialidad_gtexamen"
+                                            [formatoDatos]="formatoDatosTblDistAnTPacGrupo"
+                                        ></app-reporte>
+
                                           <div class="card">
                                             <div class="card-header-info">
                                                 <div class="box-header">
@@ -857,10 +872,10 @@
                                                             </div>
                                                         </div>
                                                     <!--  -->
-                                                    <div class="card-body" *ngIf="isGrafico1">
+                                                    <div class="card-body" *ngIf="isGrafico1" style="height: 300px !important;">
                                                         <loading *ngIf="isLoading1">{{ isLoading1 }}</loading>
-                                                        <div class="d-block" *ngIf="!isLoading1">
-                                                          <canvas #baseChart id="chart-1">
+                                                        <div class="d-block" *ngIf="!isLoading1" style="height: 300px !important; width: 100%;">
+                                                          <canvas #baseChart id="chart-1" style="height: 100% !important; width: 100%;">
                                                           </canvas>
                                                         </div>
                                                     </div>
@@ -963,10 +978,10 @@
                                                         </div>
                                                     </div>
                                                   
-                                                    <div class="card-body" *ngIf="isGrafico2">
+                                                    <div class="card-body" *ngIf="isGrafico2" style="height: 300px !important;">
                                                         <loading *ngIf="isLoading2">{{ isLoading2 }}</loading>
-                                                        <div class="d-block" *ngIf="!isLoading2">
-                                                          <canvas #baseChart id="chart-2">
+                                                        <div class="d-block" *ngIf="!isLoading2" style="height: 300px !important; width: 100%;">
+                                                          <canvas #baseChart id="chart-2" style="height: 100% !important; width: 100%;">
                                                           </canvas>
                                                         </div>
                                                     </div>
@@ -1063,7 +1078,7 @@
                                             [summaryPosition]="summaryPosition"
                                             [enableSummary]="enableSummary"
                                           ></app-tbl-dist-x-grupo-examen>
-
+<!--
                                           <div class="card">
                                             <div class="card-header-info">
                                                 <div class="box-header">
@@ -1132,7 +1147,7 @@
                                             </div>
                                           </div>
 
-
+-->
 
 <!--
                                           <div class="card">
@@ -1219,6 +1234,8 @@
                                             [enableSummary]="enableSummary"
                                           ></app-tbl-medicos-dist-anual-x-esp>
                                         -->
+                                          
+                                        <!--
                                           <app-tbl-det-medico-especialidad
                                             [data]="this.data.tabla_anual_especialidad_medico"
                                             [cabecera]="this.data.cabecera_anual_especialidad_medico"
@@ -1226,6 +1243,24 @@
                                             [summaryPosition]="summaryPosition"
                                             [enableSummary]="enableSummary"
                                           ></app-tbl-det-medico-especialidad>
+-->
+                                          <app-reporte
+                                            [id]="'tabla_anual_especialidad_medico'"
+                                            [copiar]="true"
+                                            [pieDePagina]="true"
+                                            [tituloReporte]="'Distribución de Médico por Especialidad'"
+                                            [anchoFijo]="[{'0':'350'}]"
+                                            [datos]="this.data.tabla_anual_especialidad_medico"
+                                            [cabecera]="this.data.cabecera_anual_especialidad_medico"
+                                            [filtrosPorColumna]="[{'Especialidad':'id'}]"
+                                            [opcionesPorColumna]="[
+                                                3,
+                                                { 'Montos': 'soles' },
+                                                { 'Cantidad': 'cantidad' },
+                                            ]"
+                                            [formatoDatos]="formatoDatosTblDistAnTPacGrupo"
+                                                            
+                                          ></app-reporte>
 
                                           <app-tbl-det-examenes-especialidad
                                             [data]="this.data.tabla_anual_especialidad_tipoEx"

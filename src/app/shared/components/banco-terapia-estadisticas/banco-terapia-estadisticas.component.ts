@@ -38,7 +38,7 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
 
   public formatoDatosTblDistAnTPacGrupo: FormatoDatosInterface = {
     para: TipoControlEnum.OpcionPorCol,
-    excluir: ['Campo', 'solesCantidad'],
+    excluir: ['id','Grupo','Campo', 'solesCantidad'],
     reglas: [
       {
           valor: 'soles',
@@ -522,7 +522,7 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
         labels: chartLabels1,
         datasets: [
           {
-            barPercentage: 0.8,
+            barPercentage: 0.6,
             categoryPercentage: 1,
             label: title,
             borderColor: '#28a74559',
@@ -579,6 +579,17 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
       };
     
     const options = {
+      maintainAspectRatio:false,
+      responsive: false,
+      layout: {
+        padding: {
+          left: 10,
+          right: 10,
+          top: 0,
+          bottom: 10
+        }
+      },
+      //responsive: true,
       // callbacks: {
       //   label: function (t, d) {
       //     var xLabel = d.datasets[t.datasetIndex].label;
@@ -586,7 +597,7 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
       //     return xLabel + ': ' + yLabel;
       //   }
       // },
-      responsive: true,
+      
       // We use these empty structures as placeholders for dynamic theming.
       // scales: {
       //   yAxes: [{
@@ -718,7 +729,7 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
       labels: chartLabels1,
       datasets: [
         {
-          barPercentage: 0.8,
+          barPercentage: 0.6,
           categoryPercentage: 1,
           label: title,
           borderColor: '#28a74559',
@@ -774,6 +785,17 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
     };
   
   const options = {
+    maintainAspectRatio:false,
+    responsive: false,
+    layout: {
+      padding: {
+        left: 10,
+        right: 10,
+        top: 0,
+        bottom: 10
+      }
+    },
+    //responsive: true,
     // callbacks: {
     //   label: function (t, d) {
     //     var xLabel = d.datasets[t.datasetIndex].label;
@@ -781,7 +803,7 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
     //     return xLabel + ': ' + yLabel;
     //   }
     // },
-    responsive: true,
+
     // We use these empty structures as placeholders for dynamic theming.
     // scales: {
     //   yAxes: [{
@@ -913,7 +935,7 @@ console.log('grafico',chartData4)
     labels: chartLabels1,
     datasets: [
       {
-        barPercentage: 0.8,
+        barPercentage: 0.6,
         categoryPercentage: 1,
         label: title,
         borderColor: '#28a74559',
@@ -970,6 +992,17 @@ console.log('grafico',chartData4)
   };
 
 const options = {
+  maintainAspectRatio: false,    
+  responsive: false,
+  layout: {
+    padding: {
+      left: 10,
+      right: 10,
+      top: 0,
+      bottom: 10
+    }
+  },
+  //responsive: true,
   // callbacks: {
   //   label: function (t, d) {
   //     var xLabel = d.datasets[t.datasetIndex].label;
@@ -977,7 +1010,7 @@ const options = {
   //     return xLabel + ': ' + yLabel;
   //   }
   // },
-  responsive: true,
+  
   // We use these empty structures as placeholders for dynamic theming.
   // scales: {
   //   yAxes: [{
@@ -1109,7 +1142,7 @@ getBarChartB(chartLabels1, chartData1, chartData2,chartData3,chartData4,chartDat
       labels: chartLabels1,
       datasets: [
         {
-          barPercentage: 0.8,
+          barPercentage: 0.6,
           categoryPercentage: 1,
           label: title,
           borderColor: '#28a74559',
@@ -1168,6 +1201,17 @@ getBarChartB(chartLabels1, chartData1, chartData2,chartData3,chartData4,chartDat
     };
   
   const options = {
+    maintainAspectRatio: false,
+    responsive: false,
+    layout: {
+      padding: {
+        left: 10,
+        right: 10,
+        top: 0,
+        bottom: 10
+      }
+    },
+    //responsive: true,
     // callbacks: {
     //   label: function (t, d) {
     //     var xLabel = d.datasets[t.datasetIndex].label;
@@ -1175,7 +1219,7 @@ getBarChartB(chartLabels1, chartData1, chartData2,chartData3,chartData4,chartDat
     //     return xLabel + ': ' + yLabel;
     //   }
     // },
-    responsive: true,
+    
     // We use these empty structures as placeholders for dynamic theming.
     // scales: {
     //   yAxes: [{
