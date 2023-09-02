@@ -4,6 +4,10 @@ import { ColumnMode } from '@swimlane/ngx-datatable';
 import { CfgPieDePaginaInterface } from '../../interfaces/cfg-pie-de-pagina.interface';
 import { AnchoColInterface } from '../../interfaces/ancho-col.interface';
 
+import { MarcadorEnum } from '../../enums/marcador.enum';
+
+import { fnObtNroParaCadena } from '../../helpers/obt-nro-para-cadena.helper';
+
 @Component({
   selector: 'app-tabla-reporte',
   templateUrl: './tabla-reporte.component.html',
@@ -40,10 +44,35 @@ export class TablaReporteComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  // getRowClass(row) {
-  //   return {
-  //     'totals': row.GRUPO2.includes('TOTAL'), 'sub-totals': row.GRUPO2 === 'PROGRAMA DE SALUD' || row.GRUPO2 === 'CONVENIOS' || row.GRUPO2 ==='SEGUROS' || row.GRUPO2 ==='OTROS'
-  //   };
-  // }
+  getClasses(row) {
+    return {
+      'totals': MarcadorEnum.IsTotal in row,
+      // 'sub-totals':
+    };
+  }
+
+  ordenarPor(valA, valB, rowA, rowB, sortDir) {
+    if (MarcadorEnum.IsTotal in rowA) {
+      return sortDir === 'asc' ? 1 : -1;
+    }
+
+    if (MarcadorEnum.IsTotal in rowB) {
+      return sortDir === 'asc' ? -1 : 1;
+    }
+
+
+    const vA = fnObtNroParaCadena(valA);
+    const vB = fnObtNroParaCadena(valB);
+
+    if (vA < vB) {
+      return sortDir === 'asc' ? -1 : 1;
+    }
+
+    if (vA > vB) {
+      return sortDir === 'asc' ? 1 : -1;
+    }
+
+    return 0;
+  }
 
 }

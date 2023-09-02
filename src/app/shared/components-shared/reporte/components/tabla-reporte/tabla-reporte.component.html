@@ -7,6 +7,8 @@
 
   [reorderable]="ordenar"
 
+  [rowClass]="getClasses"
+
   [columnMode]="columnMode.flex"
   [headerHeight]="50"
   [rowHeight]="$any('auto')"
@@ -25,6 +27,8 @@
     [maxWidth]="anchos[idx]?.width"
     [minWidth]="anchos[idx]?.width"
     [width]="anchos[idx]?.width"
+
+    [comparator]="ordenarPor"
   >
     <ng-template
       ngx-datatable-cell-template

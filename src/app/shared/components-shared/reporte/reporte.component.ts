@@ -18,9 +18,11 @@ import { fnObtOpcsDeColumna } from './helpers/obt-opcs-de-columna.helper';
 import { fnObtGrupoDatos } from './helpers/obt-grupo-datos.helper';
 import { fnBuscarPorTexto } from './helpers/buscar-por-texto.helper';
 import { fnFormatearDatos } from './helpers/formatear-datos.helper';
+import { fnObtTotales } from './helpers/obt-totales.helper';
 
 import { fnGenerarIdUnico } from '../../utils/generar-id-unico.util';
 import { fnDestArrObj } from '../../utils/dest-arr-obj.util';
+import { fnMarcarTotales } from './helpers/marcar-totales.helper';
 
 @Component({
   selector: 'app-reporte',
@@ -112,6 +114,11 @@ export class ReporteComponent implements OnInit, AfterViewInit {
   // @see valoresFiltrado
   public opcionesFiltrado: Array<OpcionFiltradoInterface> = [];
 
+  // Totales obtenidos de los datos ya sea sumándo las columnas o
+  // encontrando el/los campos con el índice TOTAL.
+  // @see pieDePagina
+  // public totales: Array<any> = [];
+
   // TODO agregar paginación
 
   public nombreGrupoChk: string = '';
@@ -142,6 +149,21 @@ export class ReporteComponent implements OnInit, AfterViewInit {
       Object.keys(this._datos[0]).length
     );
 
+    // Obteniendo los totales
+    const resTotales = this.pieDePagina ? fnObtTotales(this._datos) : null;
+    console.log('TOTALES', resTotales);
+
+    if (resTotales) {
+      if (resTotales.calculados) {
+        this._datos.push(...fnDestArrObj(resTotales.totales));
+      } else {
+        fnMarcarTotales(this._datos);
+      }
+    }
+
+    // TODO fnAgregarTotales(this._datos)
+
+    // Tratamiento de los datos
     this.datosPorOpcionColumna = this.obtGrupoDatos(this._datos);
     this.datosFiltrados = this.filtrarDatos(this.datosPorOpcionColumna);
     this.datosFormateados = this.formatearDatos(this.datosFiltrados);
