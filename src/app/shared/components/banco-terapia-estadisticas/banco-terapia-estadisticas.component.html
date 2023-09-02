@@ -139,34 +139,35 @@
                                       </div>
 
 
+                                    <ng-container *ngIf="getArea() == 'Imagenes'"> 
+                                        <app-reporte
+                                            [id]="'tabla_sede_gtexamen'"
+                                            [copiar]="true"
+                                            [tituloReporte]="'Distribución por Sede y Tipo de Exámen'"
+                                            [datos]="this.data.tabla_sede_gtexamen"
+                                            [cabecera]="this.data.cabecera_sede_gtexamen"
+                                            [opcionesPorColumna]="[
+                                                1,
+                                                { 'Montos': 'soles' },
+                                                { 'Cantidad': 'cantidad' },
+                                            ]"
+                                            [formatoDatos]="formatoDatosTblDistAnTPacGrupo"
+                                        ></app-reporte>
 
-                                   <app-reporte
-                                      [id]="'tabla_sede_gtexamen'"
-                                      [copiar]="true"
-                                      [tituloReporte]="'Distribución por Sede y Tipo de Exámen'"
-                                      [datos]="this.data.tabla_sede_gtexamen"
-                                      [cabecera]="this.data.cabecera_sede_gtexamen"
-                                      [opcionesPorColumna]="[
-                                        1,
-                                        { 'Montos': 'soles' },
-                                        { 'Cantidad': 'cantidad' },
-                                      ]"
-                                      [formatoDatos]="formatoDatosTblDistAnTPacGrupo"
-                                  ></app-reporte>
-
-                                    <app-reporte
-                                        [id]="'tabla_tipoAtencion'"
-                                        [copiar]="true"
-                                        [tituloReporte]="'Distribución por Origen de Atención'"
-                                        [datos]="this.data.tabla_tipoAtencion"
-                                        [cabecera]="this.data.cabecera_tipoAtencion"
-                                        [formatoDatos]="formatoDatosTblDistXServicio"
-                                    ></app-reporte>
+                                        <app-reporte
+                                            [id]="'tabla_tipoAtencion'"
+                                            [copiar]="true"
+                                            [tituloReporte]="'Distribución por Origen de Atención'"
+                                            [datos]="this.data.tabla_tipoAtencion"
+                                            [cabecera]="this.data.cabecera_tipoAtencion"
+                                            [formatoDatos]="formatoDatosTblDistXServicio"
+                                        ></app-reporte>
+                                    </ng-container>
 
                                     <app-reporte
                                         [id]="'tabla_servicio'"
                                         [copiar]="true"
-                                        [tituloReporte]="'Distribución por Servicio'"
+                                        [tituloReporte]="'Distribución por Tipo de Exámen'"
                                         [datos]="this.data.tabla_servicio"
                                         [cabecera]="this.data.cabecera_servicio"
                                         [formatoDatos]="formatoDatosTblDistXServicio"
@@ -789,34 +790,36 @@
                                     <div class="box box-solid">
                                         <div id="accordion6">
 
-                                        <app-reporte
-                                            [id]="'tabla_anual_sede_gtexamen'"
-                                            [copiar]="true"
-                                            [tituloReporte]="'Distribución Anual por Sede y Tipo de Exámen'"
-                                            [opcionesPorColumna]="[
-                                                1,
-                                                { 'Montos': 'soles' },
-                                                { 'Cantidad': 'cantidad' },
-                                            ]"
-                                            [datos]="this.data.tabla_anual_sede_gtexamen"
-                                            [cabecera]="this.data.cabecera_sede_gtexamen"
-                                            [formatoDatos]="formatoDatosTblDistAnTPacGrupo"
-                                        ></app-reporte>
+                                            <ng-container *ngIf="getArea() == 'Imagenes'">                                               
+                                                <app-reporte
+                                                    [id]="'tabla_anual_sede_gtexamen'"
+                                                    [copiar]="true"
+                                                    [tituloReporte]="'Consolidado Anual por Sede y Tipo de Exámen'"
+                                                    [opcionesPorColumna]="[
+                                                        1,
+                                                        { 'Montos': 'soles' },
+                                                        { 'Cantidad': 'cantidad' },
+                                                    ]"
+                                                    [datos]="this.data.tabla_anual_sede_gtexamen"
+                                                    [cabecera]="this.data.cabecera_sede_gtexamen"
+                                                    [formatoDatos]="formatoDatosTblDistAnTPacGrupo"
+                                                ></app-reporte>
 
-                                        <app-reporte
-                                            [id]="'tabla_anual_especialidad_gtexamen'"
-                                            [copiar]="true"
-                                            [tituloReporte]="'Distribución Anual por Especialidad y Tipo de Exámen'"
-                                            [opcionesPorColumna]="[
-                                                1,
-                                                { 'Montos': 'soles' },
-                                                { 'Cantidad': 'cantidad' },
-                                            ]"
-                                            [anchoFijo]="[{'0':'300'}]"
-                                            [datos]="this.data.tabla_anual_especialidad_gtexamen"
-                                            [cabecera]="this.data.cabecera_anual_especialidad_gtexamen"
-                                            [formatoDatos]="formatoDatosTblDistAnTPacGrupo"
-                                        ></app-reporte>
+                                            <app-reporte
+                                                [id]="'tabla_anual_especialidad_gtexamen'"
+                                                [copiar]="true"
+                                                [tituloReporte]="'Consolidado Anual por Especialidad y Tipo de Exámen'"
+                                                [opcionesPorColumna]="[
+                                                    1,
+                                                    { 'Montos': 'soles' },
+                                                    { 'Cantidad': 'cantidad' },
+                                                ]"
+                                                [anchoFijo]="[{'0':'300'}]"
+                                                [datos]="this.data.tabla_anual_especialidad_gtexamen"
+                                                [cabecera]="this.data.cabecera_anual_especialidad_gtexamen"
+                                                [formatoDatos]="formatoDatosTblDistAnTPacGrupo"
+                                            ></app-reporte>
+                                        </ng-container>
 
                                           <div class="card">
                                             <div class="card-header-info">
@@ -1244,11 +1247,27 @@
                                             [enableSummary]="enableSummary"
                                           ></app-tbl-det-medico-especialidad>
 -->
-                                          <app-reporte
+                                        <app-reporte
+                                            [id]="'tabla_anual_especialidad'"
+                                            [copiar]="true"
+                                            [pieDePagina]="true"
+                                            [tituloReporte]="'Distribución Anual por Especialidad'"
+                                            [anchoFijo]="[{'0':'350'}]"
+                                            [datos]="this.data.tabla_anual_especialidad"
+                                            [cabecera]="this.data.cabecera_anual_especialidad"
+                                            [opcionesPorColumna]="[
+                                                1,
+                                                { 'Montos': 'soles' },
+                                                { 'Cantidad': 'cantidad' },
+                                            ]"
+                                            [formatoDatos]="formatoDatosTblDistAnTPacGrupo"                                                           
+                                        ></app-reporte>
+
+                                        <app-reporte
                                             [id]="'tabla_anual_especialidad_medico'"
                                             [copiar]="true"
                                             [pieDePagina]="true"
-                                            [tituloReporte]="'Distribución de Médico por Especialidad'"
+                                            [tituloReporte]="'Distribución Anual por Médico según Especialidad'"
                                             [anchoFijo]="[{'0':'350'}]"
                                             [datos]="this.data.tabla_anual_especialidad_medico"
                                             [cabecera]="this.data.cabecera_anual_especialidad_medico"
@@ -1258,8 +1277,7 @@
                                                 { 'Montos': 'soles' },
                                                 { 'Cantidad': 'cantidad' },
                                             ]"
-                                            [formatoDatos]="formatoDatosTblDistAnTPacGrupo"
-                                                            
+                                            [formatoDatos]="formatoDatosTblDistAnTPacGrupo"                                                            
                                           ></app-reporte>
 
                                           <app-tbl-det-examenes-especialidad

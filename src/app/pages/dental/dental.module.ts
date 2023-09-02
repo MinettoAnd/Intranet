@@ -7,7 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AgGridModule } from 'ag-grid-angular';
 import { RouterModule } from '@angular/router';
 import { EstadisticasComponent } from './estadisticas/estadisticas.component';
-
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -18,6 +18,7 @@ import { EstadisticasComponent } from './estadisticas/estadisticas.component';
     CommonModule,NgxDatatableModule,NgbModule, 
     FormsModule,
     ReactiveFormsModule,
+    SharedModule,
     AgGridModule.withComponents([]),
     RouterModule.forChild([
       {

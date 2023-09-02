@@ -2775,6 +2775,10 @@ getBarChartB(chartLabels1, chartData1, chartData2,chartData3,chartData4,chartDat
     // }
     return 'TOTAL';
   }
+  getArea(){
+    return this.area
+  }
+
   separadorDeMiles(numero) {
     console.log(1331, numero)
     let partesNumero = numero.toString().split('.');
