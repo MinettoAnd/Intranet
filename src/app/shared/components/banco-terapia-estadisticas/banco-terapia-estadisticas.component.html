@@ -171,7 +171,7 @@
                                         [datos]="this.data.tabla_servicio"
                                         [cabecera]="this.data.cabecera_servicio"
                                         [formatoDatos]="formatoDatosTblDistXServicio"
-                                        [pieDePagina]="true"
+                                 
                        
                                     ></app-reporte>
 
@@ -182,7 +182,7 @@
                                         [datos]="this.data.tabla_tpac"
                                         [cabecera]="this.data.cabecera_tpac"
                                         [formatoDatos]="formatoDatosTblDistXServicio"
-                                        [pieDePagina]="true"
+                                      
                                     ></app-reporte>
 
 
@@ -199,7 +199,7 @@
                                     <app-reporte
                                         [id]="'tabla_empresaGrupo'"
                                         [copiar]="true"
-                                        [pieDePagina]="true"
+                                      
                                         [tituloReporte]="'Distribución por Especialidad Solicitante'"
                                         [anchoFijo]="[{'0':'310'}]"
                                         [datos]="this.data.tabla_especialidad"
@@ -663,7 +663,7 @@
             -->
 
                 <li [ngbNavItem]="4">
-                  <a ngbNavLink>DETALLE</a>
+                  <a ngbNavLink>DETALLE POR TIPO DE EXAMEN</a>
                   <ng-template ngbNavContent>
                       <div class="card" *ngIf="action">
                           <div class="card-header">
@@ -682,7 +682,7 @@
                                                 <div class="box-header">
                                                     <div class="toggle-table">
                                                     <div class="callout callout-info">
-                                                        <h3 class="box-title">Detalle de Exámenes Realizados
+                                                        <h3 class="box-title">Exámenes Realizados Agrupado por Tipo
                                                         </h3>
                                                     </div>
                                                     <button type="button" class="btn btn-outline-primary" (click)="collapse7.toggle()" [attr.aria-expanded]="!isCollapsed7"
@@ -757,7 +757,7 @@
                                             <app-reporte
                                                 [id]="'tabla_detalle_empresa'"
                                                 [copiar]="true"
-                                                [pieDePagina]="true"
+                                           
                                                 [tituloReporte]="'Detalle de Exámenes Realizados por Empresa'"
                                                 [anchoFijo]="[{'0':'80'},{'1':'140'},{'3':'105'},{'5':'70'},{'6':'80'},{'7':'80'},{'8':'170'}]"
                                                 [datos]="this.data.tabla_detalle_empresa"
@@ -1249,7 +1249,7 @@
                                         <app-reporte
                                             [id]="'tabla_anual_especialidad'"
                                             [copiar]="true"
-                                            [pieDePagina]="true"
+                                          
                                             [tituloReporte]="'Distribución Anual por Especialidad'"
                                             [anchoFijo]="[{'0':'350'}]"
                                             [datos]="this.data.tabla_anual_especialidad"
@@ -1265,7 +1265,7 @@
                                         <app-reporte
                                             [id]="'tabla_anual_especialidad_medico'"
                                             [copiar]="true"
-                                            [pieDePagina]="true"
+                                         
                                             [tituloReporte]="'Distribución Anual por Médico según Especialidad'"
                                             [anchoFijo]="[{'0':'350'}]"
                                             [datos]="this.data.tabla_anual_especialidad_medico"
@@ -1375,7 +1375,7 @@
 
 
 
-            <!--
+            
               <li [ngbNavItem]="7">
                 <a ngbNavLink>DIARIA</a>
                 <ng-template ngbNavContent>
@@ -1575,7 +1575,7 @@
                     </div>
                 </ng-template>
               </li>
-            -->
+            
               </ul>
                 <div [ngbNavOutlet]="nav" class="mt-2"></div>
             </div>

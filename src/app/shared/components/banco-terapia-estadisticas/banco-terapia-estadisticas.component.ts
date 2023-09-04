@@ -1883,7 +1883,7 @@ getBarChartB(chartLabels1, chartData1, chartData2,chartData3,chartData4,chartDat
           this.rows22 = this.data.tabla_anual_especialidad;
           this.rows22filtered = this.rows22.filter(item => item.solesCantidad === 'soles');
 
-        /*  this.columns13 = this.data.cabecera_diario_sede;
+          this.columns13 = this.data.cabecera_diario_sede;
           this.columns13.map(item =>{
             if(item.prop !== 'Campo' && item.prop !== 'total' ){
               this.barChartLabels2.push(item.name);
@@ -2146,7 +2146,7 @@ getBarChartB(chartLabels1, chartData1, chartData2,chartData3,chartData4,chartDat
           })
           this.columns15 = this.data.cabecera_diario_empresa;
           this.rows15 = this.data.tabla_diario_empresa;
-*/
+
           // this.columns16 = this.data.cabeceras_ingresos_TPac;
           // this.rows16 = this.data.tabla_ingresos_TPac;
 
