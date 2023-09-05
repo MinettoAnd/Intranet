@@ -759,7 +759,7 @@
                                                 [copiar]="true"
                                            
                                                 [tituloReporte]="'Detalle de Exámenes Realizados por Empresa'"
-                                                [anchoFijo]="[{'0':'80'},{'1':'140'},{'3':'105'},{'5':'70'},{'6':'80'},{'7':'80'},{'8':'170'}]"
+                                                [anchoFijo]="[{'0':'80'},{'1':'145'},{'2':'170'},{'4':'110'},{'6':'70'},{'7':'80'},{'8':'80'}]"
                                                 [datos]="this.data.tabla_detalle_empresa"
                                                 [cabecera]="this.data.cabecera_detalle_empresa"
                                                 [formatoDatos]="formatoDatosTblDistXServicio"
@@ -925,88 +925,7 @@
                                         ></app-reporte>
 -->
 
-                                          <div class="card">
-                                            <div class="card-header-info">
-                                                <div class="box-header">
-                                                    <div class="toggle-table">
-                                                        <div class="callout callout-info">
-                                                            <h3 class="box-title">Distribución Anual por Tipo de Paciente Agrupado
-                                                            </h3>
-                                                        </div>
-                                                        <button type="button" class="btn btn-outline-primary" (click)="collapse10.toggle()" [attr.aria-expanded]="!isCollapsed10" aria-controls="collapseExample">
-                                                            <i class="fa fa-minus" *ngIf="!isCollapsed10"> </i>
-                                                            <i class="fa fa-plus" *ngIf="isCollapsed10"> </i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div #collapse10="ngbCollapse" [(ngbCollapse)]="isCollapsed10">
-                                                <div *ngIf="rows10">
-                                                    <div class="row" style="align-items: center;justify-content: space-between;">
-                                                        <ul class="list-group list-group-horizontal list-group-flush col-md-9" style="flex-wrap: wrap;">
-                                                            <li class="list-group-item border-0 pl-0">
-                                                                <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(10)">
-                                                                    <i class="fa fa-external-link"></i>
-                                                                    Copiar tabla
-                                                                </button>
-                                                            </li>
-                                                            <li class="list-group-item border-0 pl-0">
-                                                                <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(10)">
-                                                                    <i class="fa fa-external-link"></i>
-                                                                    Exportar tabla a Excel
-                                                                </button>
-                                                            </li>
-                                                           
-                                                            <li class="list-group-item border-0 pl-0">
-                                                                <button type="button" (click)="showTableDasboard(2, 1)"
-                                                                  class="btn-shadow mr-3 btn btn-info">
-                                                                  <i class="pe-7s-credit"></i>
-                                                                </button>
-                                                                <button type="button" (click)="showTableDasboard(2, 2)" class="btn-shadow btn btn-info float-right">
-                                                                  <i class="pe-7s-graph3"></i>
-                                                                </button>
-                                                            </li>
-                                                            
-                                                        </ul>
-                                                        
-                                                        <div *ngFor="let checkBoxesOp of checkBoxesOps2; let i = index" class="col-md-1 checkbox" >
-                                                            <div *ngIf="isTable10">
-                                                                <input type="checkbox" id="{{checkBoxesOp.id}}"
-                                                                [checked]="checkBoxesOps2[i].value"
-                                                                (click)="selection(checkBoxesOp, checkBoxesOp.id, 2);"/>
-                                                                <label for="{{checkBoxesOp.id}}"><span>{{checkBoxesOp.label}}</span></label>
-                                                            </div>
-                                                            
-                                                        </div>
-                                                    </div>
-                                                  
-                                                    <div class="card-body" *ngIf="isGrafico2" style="height: 300px !important;">
-                                                        <loading *ngIf="isLoading2">{{ isLoading2 }}</loading>
-                                                        <div class="d-block" *ngIf="!isLoading2" style="height: 300px !important; width: 100%;">
-                                                          <canvas #baseChart id="chart-2" style="height: 100% !important; width: 100%;">
-                                                          </canvas>
-                                                        </div>
-                                                    </div>
-                                                 
-                                                    <ngx-datatable *ngIf="isTable10" #myTable10 class="bootstrap table table-striped " id="datatablele" [columns]="columns10" [rows]="rows10filtered" [columnMode]="ColumnMode.flex" [headerHeight]="50" [rowHeight]="$any('auto')" [scrollbarH]="true" (page)="setPage($event)" [summaryRow]="enableSummary"
-                                                    [summaryPosition]="summaryPosition"
-                                                    [summaryHeight]="35">
-                                                        <ngx-datatable-column [headerClass]="column.headerClass" [cellClass]="column.cellClass" [flexGrow]="1" [minWidth]="90" [summaryFunc]="column.prop == 'Campo' ? summaryNull:summaryForAmount" *ngFor="let column of columns10; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
-                                                            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-                                                                <div>
-                                                                    <span  *ngIf="column.prop === 'Campo'">{{value }}</span>
-                                                                    <span  *ngIf="column.prop !== 'Campo' && row.solesCantidad === 'soles'">{{value  | currency }}</span>
-                                                                    <span  *ngIf="column.prop !== 'Campo' && row.solesCantidad === 'cantidad'">{{value | number: '1.0-0' }}</span>
-                                                                </div>
-                                                         
-                                            
-                                                            </ng-template>
 
-                                                        </ngx-datatable-column>
-                                                    </ngx-datatable>
-                                                </div>
-                                            </div>
-                                          </div>
 
 
 <!--
@@ -1074,12 +993,7 @@
 
 
                                         -->
-                                          <app-tbl-dist-x-grupo-examen
-                                            [data]="this.data.tabla_anual_grupoExamen"
-                                            [cabecera]="this.data.cabecera_anual_grupoExamen"
-                                            [summaryPosition]="summaryPosition"
-                                            [enableSummary]="enableSummary"
-                                          ></app-tbl-dist-x-grupo-examen>
+
 <!--
                                           <div class="card">
                                             <div class="card-header-info">
@@ -1287,6 +1201,15 @@
                                             [enableSummary]="enableSummary"
                                           ></app-tbl-det-examenes-especialidad>
 
+
+                                          <app-tbl-dist-x-grupo-examen
+                                          [data]="this.data.tabla_anual_grupoExamen"
+                                          [cabecera]="this.data.cabecera_anual_grupoExamen"
+                                          [summaryPosition]="summaryPosition"
+                                          [enableSummary]="enableSummary"
+                                      ></app-tbl-dist-x-grupo-examen>
+
+
                                           <app-tbl-det-examenes-realizados
                                             [data]="this.data.tabla_anual_detExmsRealizados"
                                             [cabecera]="this.data.cabecera_anual_detExmsRealizados"
@@ -1294,6 +1217,89 @@
                                             [summaryPosition]="summaryPosition"
                                             [enableSummary]="enableSummary"
                                           ></app-tbl-det-examenes-realizados>
+
+                                          <div class="card">
+                                            <div class="card-header-info">
+                                                <div class="box-header">
+                                                    <div class="toggle-table">
+                                                        <div class="callout callout-info">
+                                                            <h3 class="box-title">Distribución Anual por Tipo de Paciente Agrupado
+                                                            </h3>
+                                                        </div>
+                                                        <button type="button" class="btn btn-outline-primary" (click)="collapse10.toggle()" [attr.aria-expanded]="!isCollapsed10" aria-controls="collapseExample">
+                                                            <i class="fa fa-minus" *ngIf="!isCollapsed10"> </i>
+                                                            <i class="fa fa-plus" *ngIf="isCollapsed10"> </i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div #collapse10="ngbCollapse" [(ngbCollapse)]="isCollapsed10">
+                                                <div *ngIf="rows10">
+                                                    <div class="row" style="align-items: center;justify-content: space-between;">
+                                                        <ul class="list-group list-group-horizontal list-group-flush col-md-9" style="flex-wrap: wrap;">
+                                                            <li class="list-group-item border-0 pl-0">
+                                                                <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(10)">
+                                                                    <i class="fa fa-external-link"></i>
+                                                                    Copiar tabla
+                                                                </button>
+                                                            </li>
+                                                            <li class="list-group-item border-0 pl-0">
+                                                                <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(10)">
+                                                                    <i class="fa fa-external-link"></i>
+                                                                    Exportar tabla a Excel
+                                                                </button>
+                                                            </li>
+                                                           
+                                                            <li class="list-group-item border-0 pl-0">
+                                                                <button type="button" (click)="showTableDasboard(2, 1)"
+                                                                  class="btn-shadow mr-3 btn btn-info">
+                                                                  <i class="pe-7s-credit"></i>
+                                                                </button>
+                                                                <button type="button" (click)="showTableDasboard(2, 2)" class="btn-shadow btn btn-info float-right">
+                                                                  <i class="pe-7s-graph3"></i>
+                                                                </button>
+                                                            </li>
+                                                            
+                                                        </ul>
+                                                        
+                                                        <div *ngFor="let checkBoxesOp of checkBoxesOps2; let i = index" class="col-md-1 checkbox" >
+                                                            <div *ngIf="isTable10">
+                                                                <input type="checkbox" id="{{checkBoxesOp.id}}"
+                                                                [checked]="checkBoxesOps2[i].value"
+                                                                (click)="selection(checkBoxesOp, checkBoxesOp.id, 2);"/>
+                                                                <label for="{{checkBoxesOp.id}}"><span>{{checkBoxesOp.label}}</span></label>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                  
+                                                    <div class="card-body" *ngIf="isGrafico2" style="height: 300px !important;">
+                                                        <loading *ngIf="isLoading2">{{ isLoading2 }}</loading>
+                                                        <div class="d-block" *ngIf="!isLoading2" style="height: 300px !important; width: 100%;">
+                                                          <canvas #baseChart id="chart-2" style="height: 100% !important; width: 100%;">
+                                                          </canvas>
+                                                        </div>
+                                                    </div>
+                                                 
+                                                    <ngx-datatable *ngIf="isTable10" #myTable10 class="bootstrap table table-striped " id="datatablele" [columns]="columns10" [rows]="rows10filtered" [columnMode]="ColumnMode.flex" [headerHeight]="50" [rowHeight]="$any('auto')" [scrollbarH]="true" (page)="setPage($event)" [summaryRow]="enableSummary"
+                                                    [summaryPosition]="summaryPosition"
+                                                    [summaryHeight]="35">
+                                                        <ngx-datatable-column [headerClass]="column.headerClass" [cellClass]="column.cellClass" [flexGrow]="1" [minWidth]="90" [summaryFunc]="column.prop == 'Campo' ? summaryNull:summaryForAmount" *ngFor="let column of columns10; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                                            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                                                                <div>
+                                                                    <span  *ngIf="column.prop === 'Campo'">{{value }}</span>
+                                                                    <span  *ngIf="column.prop !== 'Campo' && row.solesCantidad === 'soles'">{{value  | currency }}</span>
+                                                                    <span  *ngIf="column.prop !== 'Campo' && row.solesCantidad === 'cantidad'">{{value | number: '1.0-0' }}</span>
+                                                                </div>
+                                                         
+                                            
+                                                            </ng-template>
+  
+                                                        </ngx-datatable-column>
+                                                    </ngx-datatable>
+                                                </div>
+                                            </div>
+                                          </div>
 
                                           <div class="card">
                                             <div class="card-header-info">
