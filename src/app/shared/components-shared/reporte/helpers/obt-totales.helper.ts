@@ -11,9 +11,13 @@ export function fnObtTotales(
 } {
   let calculados: boolean = false;
   let totales = fnDestArrObj(
-    datos.filter(
-      obj => obj['grupo'].trim().toLowerCase() == 'total'
-    )
+    datos.filter(obj => {
+      if ('grupo' in obj) {
+        obj['grupo'].trim().toLowerCase() == 'total'
+      }
+
+      return false;
+    })
   );
 
   if (totales.length == 0) {
