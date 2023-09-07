@@ -1,11 +1,9 @@
-export function fnObtNroParaCadena(val: string): string {
-  if (val.startsWith('S')) {
-    return val.substring(2).trim();
+export function fnObtNroParaCadena(val: string): number {
+  let strN: string = val.replace(/[^0-9.-]+/g, '');
+
+  if (strN.slice(-1) === '%') {
+    strN = strN.slice(0, -1);
   }
 
-  if (val.startsWith('%')) {
-    return val.substring(1).trim();
-  }
-
-  return val;
+  return Number(strN);
 }

@@ -155,6 +155,7 @@ export class ReporteComponent implements OnInit, AfterViewInit {
 
     if (resTotales) {
       if (resTotales.calculados) {
+        // TODO implemetar compatibilidad con datos no numéricos y filtros
         this._datos.push(...fnDestArrObj(resTotales.totales));
       } else {
         fnMarcarTotales(this._datos);

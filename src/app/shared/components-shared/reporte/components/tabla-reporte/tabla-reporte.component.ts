@@ -60,19 +60,19 @@ export class TablaReporteComponent implements OnInit {
       return sortDir === 'asc' ? -1 : 1;
     }
 
+    if (!/\d/.test(valA) || !/\d/.test(valB)) {
+      const comparacion = valA.localeCompare(valB);
+      return sortDir === 'asc' ? comparacion : -comparacion * -1;
+    }
 
     const vA = fnObtNroParaCadena(valA);
     const vB = fnObtNroParaCadena(valB);
 
-    if (vA < vB) {
-      return sortDir === 'asc' ? -1 : 1;
+    if (sortDir == 'asc') {
+      return vA - vB;
+    } else {
+      return (vB - vA) * -1;
     }
-
-    if (vA > vB) {
-      return sortDir === 'asc' ? 1 : -1;
-    }
-
-    return 0;
   }
 
 }
