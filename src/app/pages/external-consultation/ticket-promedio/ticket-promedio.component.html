@@ -80,9 +80,9 @@
 
                   <ng-template ngbNavContent>
                     <app-reporte
-                        [id]="'tabla_tpac'"
+                        [id]="'tabla_consolidado'"
                         [copiar]="true"
-                        [tituloReporte]="'Distribución por Tipo de Paciente Agrupado'"
+                        [tituloReporte]="'TICKET PROMEDIO - CONSOLIDADO'"
                         [datos]="this.datosConsolidado.tabla_consolidado"
                         [cabecera]="this.datosConsolidado.cabeceras_consolidado"
                     ></app-reporte>
@@ -92,9 +92,9 @@
                   <a ngbNavLink>CONSULTA</a>
                   <ng-template ngbNavContent>
                     <app-reporte
-                        [id]="'tabla_tpac2'"
+                        [id]="'tabla_consulta'"
                         [copiar]="true"
-                        [tituloReporte]="'Distribución por Tipo de Paciente Agrupado'"
+                        [tituloReporte]="'TICKET PROMEDIO - CONSULTA EXTERNA'"
                         [datos]="this.datosConsulta.tabla_consulta"
                         [cabecera]="this.datosConsulta.cabeceras_consulta"
                     ></app-reporte>
@@ -104,20 +104,50 @@
                     <a ngbNavLink>LABORATORIO</a>
                     <ng-template ngbNavContent>
                       <app-reporte
-                        [id]="'tabla_tpac2'"
+                        [id]="'tabla_laboratorio'"
                         [copiar]="true"
-                        [tituloReporte]="'Distribución por Tipo de Paciente Agrupado'"
+                        [tituloReporte]="'TICKET PROMEDIO - LABORATORIO'"
                         [datos]="this.datosLaboratorio.tabla_laboratorio"
                         [cabecera]="this.datosLaboratorio.cabeceras_laboratorio"
                     ></app-reporte>
                     </ng-template>
                 </li>
-                <li [ngbNavItem]="3">
-                    <a ngbNavLink>TAB 2</a>
-                    <ng-template ngbNavContent>
-                      LABORATORIO
-                    </ng-template>
-                </li>
+                <li [ngbNavItem]="4">
+                  <a ngbNavLink>IMAGENES</a>
+                  <ng-template ngbNavContent>
+                    <app-reporte
+                      [id]="'tabla_imagenes'"
+                      [copiar]="true"
+                      [tituloReporte]="'TICKET PROMEDIO - IMAGENES'"
+                      [datos]="this.datosImagenes.tabla_imagenes"
+                      [cabecera]="this.datosImagenes.cabeceras_imagenes"
+                  ></app-reporte>
+                  </ng-template>
+              </li>
+              <li [ngbNavItem]="5">
+                <a ngbNavLink>PROCEDIMIENTOS</a>
+                <ng-template ngbNavContent>
+                  <app-reporte
+                    [id]="'tabla_procedimientos'"
+                    [copiar]="true"
+                    [tituloReporte]="'TICKET PROMEDIO - PROCEDIMIENTOS'"
+                    [datos]="this.datosProcedimientos.tabla_procedimientos"
+                    [cabecera]="this.datosProcedimientos.cabeceras_procedimientos"
+                ></app-reporte>
+                </ng-template>
+            </li>
+            <li [ngbNavItem]="6">
+              <a ngbNavLink>MEDICINAS</a>
+              <ng-template ngbNavContent>
+                <app-reporte
+                  [id]="'tabla_medicinas'"
+                  [copiar]="true"
+                  [tituloReporte]="'TICKET PROMEDIO - MEDICINAS'"
+                  [datos]="this.datosMedicinas.tabla_medicinas"
+                  [cabecera]="this.datosMedicinas.cabeceras_medicinas"
+              ></app-reporte>
+              </ng-template>
+          </li>
               </ul>
 
               <div [ngbNavOutlet]="nav" class="mt-2"></div>

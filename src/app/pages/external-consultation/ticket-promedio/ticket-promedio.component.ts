@@ -169,6 +169,19 @@ export class TicketPromedioComponent implements OnInit {
     tabla_laboratorio: [],
     cabeceras_laboratorio: [],
   };
+  public datosImagenes: any = {
+    tabla_imagenes: [],
+    cabeceras_imagenes: [],
+  };
+  public datosProcedimientos: any = {
+    tabla_procedimientos: [],
+    cabeceras_procedimientos: [],
+  };
+  public datosMedicinas: any = {
+    tabla_medicinas: [],
+    cabeceras_medicinas: [],
+  };
+
   public datosTbl2: any = {};
   public datosTbl3: any = {};
 
@@ -245,13 +258,13 @@ export class TicketPromedioComponent implements OnInit {
     console.log(pageInfo);
     // this.page.pageNumber = pageInfo.offset;
     this.parameters = {
-      archivo_temporal: 'aaaTmpEsp',
-      archivo_matriz: 'aaaTmpMatriz',
+      //archivo_temporal: 'aaaTmpEsp',
+      //archivo_matriz: 'aaaTmpMatriz',
       periodo_consulta:this.periodo_consulta,
       mes: this.mes,
       tipo: 'mes', //mes, meses
 	    sede: this.id_sede,
-      meses: this.mes,
+      meses: this.mes
       // anio: this.anio,
       // pageNumber: this.page.pageNumber,
       // size: this.page.size
@@ -272,6 +285,24 @@ export class TicketPromedioComponent implements OnInit {
     this.tableApiservice.getLaboratorio(this.parameters).subscribe(response => {
       this.datosLaboratorio.tabla_laboratorio = response.data.tabla_laboratorio;
       this.datosLaboratorio.cabeceras_laboratorio = response.data.cabeceras_laboratorio;
+      Swal.close();
+    });
+
+    this.tableApiservice.getImagenes(this.parameters).subscribe(response => {
+      this.datosImagenes.tabla_imagenes = response.data.tabla_imagenes;
+      this.datosImagenes.cabeceras_imagenes = response.data.cabeceras_imagenes;
+      Swal.close();
+    });
+
+    this.tableApiservice.getProcedimientos(this.parameters).subscribe(response => {
+      this.datosProcedimientos.tabla_procedimientos = response.data.tabla_procedimientos;
+      this.datosProcedimientos.cabeceras_procedimientos = response.data.cabeceras_procedimientos;
+      Swal.close();
+    });
+
+    this.tableApiservice.getMedicinas(this.parameters).subscribe(response => {
+      this.datosMedicinas.tabla_medicinas = response.data.tabla_medicinas;
+      this.datosMedicinas.cabeceras_medicinas = response.data.cabeceras_medicinas;
       Swal.close();
     });
 
