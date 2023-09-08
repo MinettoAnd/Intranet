@@ -158,7 +158,6 @@ export class ReporteComponent implements OnInit, AfterViewInit {
 
     // Obteniendo los totales
     const resTotales = this.pieDePagina ? fnObtTotales(this._datos) : null;
-    console.log('TOTALES', resTotales);
 
     if (resTotales) {
       if (resTotales.calculados) {
@@ -172,15 +171,10 @@ export class ReporteComponent implements OnInit, AfterViewInit {
     // TODO fnAgregarTotales(this._datos)
 
     // Tratamiento de los datos
-    console.log('this._datos', this._datos);
     this.datosPorOpcionColumna = this.obtGrupoDatos(this._datos);
-    console.log('this.datosPorOpcionColumna', this.datosPorOpcionColumna);
     this.datosFiltrados = this.filtrarDatos(this.datosPorOpcionColumna);
-    console.log('this.datosFiltrados', this.datosFiltrados);
     this.datosFormateados = this.formatearDatos(this.datosFiltrados);
-    console.log('this.datosFormateados', this.datosFormateados);
     this.datosTabla = fnDestArrObj(this.datosFormateados);
-    console.log('this.datosTabla', this.datosTabla);
   }
 
   public cambioValorOpcGrupo(valorCol: ValorOpcionGrupoColInterface): void {

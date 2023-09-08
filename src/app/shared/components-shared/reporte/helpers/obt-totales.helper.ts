@@ -14,6 +14,7 @@ export function fnObtTotales(
     datos.filter(obj => {
       if ('grupo' in obj) {
         obj['grupo'].trim().toLowerCase() == 'total'
+        return true;
       }
 
       return false;
