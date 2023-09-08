@@ -805,6 +805,7 @@
                                                     [datos]="this.data.tabla_anual_sede_gtexamen"
                                                     [cabecera]="this.data.cabecera_sede_gtexamen"
                                                     [formatoDatos]="formatoDatosTblDistAnTPacGrupo"
+                                                    [pieDePagina]="true"
                                                 ></app-reporte>
 
                                             <app-reporte
@@ -820,6 +821,7 @@
                                                 [datos]="this.data.tabla_anual_especialidad_gtexamen"
                                                 [cabecera]="this.data.cabecera_anual_especialidad_gtexamen"
                                                 [formatoDatos]="formatoDatosTblDistAnTPacGrupo"
+                                                [pieDePagina]="true"
                                             ></app-reporte>
                                         </ng-container>
 
@@ -1177,6 +1179,7 @@
                                                 { 'Cantidad': 'cantidad' },
                                             ]"
                                             [formatoDatos]="formatoDatosTblDistAnTPacGrupo"
+                                            [pieDePagina]="true"
                                         ></app-reporte>
 
                                         <app-reporte
