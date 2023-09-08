@@ -7,7 +7,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConsultaAtencionesComponent } from './consulta-atenciones/consulta-atenciones.component';
 import { EstadisticasComponent } from './estadisticas/estadisticas.component';
-
+import { AgGridModule } from 'ag-grid-angular';
 @NgModule({
   declarations: [
     CirugiasProgramadasComponent,
@@ -18,6 +18,7 @@ import { EstadisticasComponent } from './estadisticas/estadisticas.component';
     CommonModule,NgxDatatableModule,NgbModule, 
     FormsModule,
     ReactiveFormsModule,
+    AgGridModule.withComponents([]),
     RouterModule.forChild([
       {
         path: 'cirugiasProgramadas',

@@ -289,16 +289,147 @@
                                             <div class="row">
                                               <div class="col-sm-6 border-right">
                                                 <div class="description-block">
-                                                  <h5 class="description-header" style="padding-bottom: 8px !important; font-size: 18px;  cursor:pointer;" onclick="detalle_componente('arco');" id="div_panel_0103_01">{{usoArco}}</h5>
+                                                  <h5 class="description-header" style="padding-bottom: 8px !important; font-size: 18px;  cursor:pointer;" (click)="detalle_estancia(arco);" id="div_panel_0103_01">{{usoArco}}</h5>
                                                   <span class="description-text" style="font-size: 16px;">Arco en C</span>
                                                 </div>
                                               </div>
                                               <div class="col-sm-6 border-right">
                                                 <div class="description-block">
-                                                  <h5 class="description-header" style="padding-bottom: 8px !important; font-size: 18px;  cursor:pointer;" onclick="detalle_componente('torre');" id="div_panel_0103_02">{{usoTorre}}</h5>
+                                                  <h5 class="description-header" style="padding-bottom: 8px !important; font-size: 18px;  cursor:pointer;" (click)="detalle_estancia(torre);" id="div_panel_0103_02">{{usoTorre}}</h5>
                                                   <span class="description-text" style="font-size: 16px;">Torre Endoscópica</span>
                                                 </div>
                                               </div>
+                                              <ng-template #arco let-modal>
+                                                <div class="modal-header">
+                                                  <p class="modal-title" id="modal-basic-title"><b>Detalle de uso de equipos - Arco en C</b></p>
+                                                  <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                                                    <span aria-hidden="true">&times;</span>
+                                                  </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                  <div class="row pb-3" style='display:flex; justify-content: space-between;'>
+                                                    <div class="col-md-2" style='margin-left:15px;'>
+                                                        <select class="form-control form-select" (change)="onLimitChange($event.target.value, 1)">
+                                                            <option
+                                                                *ngFor="let option of pageLimitOptions"
+                                                                [value]="option.value"
+                                                            >
+                                                                {{ option.value }} Registros
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-2" style="display:flex;margin-right:15px;align-items: center;">
+                                                      <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(1)">
+                                                        <i class="fa fa-external-link"></i>
+                                                        Copiar tabla
+                                                      </button>
+                                                    </div>
+                                                    <div class="col-md-2" style="display:flex;margin-right:15px;align-items: center;">
+                                                      <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(1)">
+                                                        <i class="fa fa-external-link"></i>
+                                                        Exportar tabla a Excel
+                                                      </button>
+                                                    </div>
+                                                    <div class="col-md-2" style="display:flex;margin-right:15px;align-items: center;">
+                                                        <!-- <span>Buscar</span>&nbsp;&nbsp; -->
+                                                        <input type="text" style='padding:6px;width:100%;' placeholder="Buscar por cualquier campo" (keyup)='updateFilter($event, 1)'>
+                                                    </div>
+                                                  </div>
+                                                
+                                                <ngx-datatable #myTable11
+                                              class="bootstrap table table-striped"
+                                              id="datatablele"
+                                                [columns]="columnsTablas"
+                                                [loadingIndicator]="loading"
+                                                [rows]="rowsUsoArco"
+                                                [columnMode]="ColumnMode.force"
+                                                [headerHeight]="50"
+                                                [footerHeight]="50"
+                                                [rowHeight]="$any('auto')"
+                                                [scrollbarH]="true"
+                                                [limit]="page1.size"
+                                                >
+                                                <ngx-datatable-column [flexGrow]="1" [minWidth]="90" [headerClass]="column.headerClass" [cellClass]="column.cellClass" *ngFor="let column of columnsTablas; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                                  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                                                    let-row="row">
+                                                    <div>
+                                                      <span  [title]="value">{{value}}</span>
+                                                    </div>
+                                                  </ng-template>
+                                                </ngx-datatable-column>
+                                              </ngx-datatable>
+                                              
+                                                </div>
+                                                <div class="modal-footer">
+                                                  <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cerrar</button>
+                                                </div>
+                                              </ng-template>
+
+                                              <ng-template #torre let-modal>
+                                                <div class="modal-header">
+                                                  <p class="modal-title" id="modal-basic-title"><b>Detalle de uso de equipos - Torre Endoscópica</b></p>
+                                                  <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                                                    <span aria-hidden="true">&times;</span>
+                                                  </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                <div class="row pb-3" style='display:flex; justify-content: space-between;'>
+                                                  <div class="col-md-2" style='margin-left:15px;'>
+                                                      <select class="form-control form-select" (change)="onLimitChange($event.target.value, 2)">
+                                                          <option
+                                                              *ngFor="let option of pageLimitOptions"
+                                                              [value]="option.value"
+                                                          >
+                                                              {{ option.value }} Registros
+                                                          </option>
+                                                      </select>
+                                                  </div>
+                                                  <div class="col-md-2" style="display:flex;margin-right:15px;align-items: center;">
+                                                    <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(2)">
+                                                      <i class="fa fa-external-link"></i>
+                                                      Copiar tabla
+                                                    </button>
+                                                  </div>
+                                                  <div class="col-md-2" style="display:flex;margin-right:15px;align-items: center;">
+                                                    <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(2)">
+                                                      <i class="fa fa-external-link"></i>
+                                                      Exportar tabla a Excel
+                                                    </button>
+                                                  </div>
+                                                  <div class="col-md-2" style="display:flex;margin-right:15px;align-items: center;">
+                                                      <!-- <span>Buscar</span>&nbsp;&nbsp; -->
+                                                      <input type="text" style='padding:6px;width:100%;' placeholder="Buscar por cualquier campo" (keyup)='updateFilter($event, 2)'>
+                                                  </div>
+                                                </div>
+                                                
+                                                <ngx-datatable #myTable11
+                                              class="bootstrap table table-striped"
+                                              id="datatablele"
+                                                [columns]="columnsTablas"
+                                                [loadingIndicator]="loading"
+                                                [rows]="rowsUsoTorre"
+                                                [columnMode]="ColumnMode.force"
+                                                [headerHeight]="50"
+                                                [footerHeight]="50"
+                                                [rowHeight]="$any('auto')"
+                                                [scrollbarH]="true"
+                                                [limit]="page2.size"
+                                                >
+                                                <ngx-datatable-column [flexGrow]="1" [minWidth]="90" [headerClass]="column.headerClass" [cellClass]="column.cellClass" *ngFor="let column of columnsTablas; let i = index;" name="{{column.name}}" prop="{{column.prop}}">
+                                                  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                                                    let-row="row">
+                                                    <div>
+                                                      <span  [title]="value">{{value}}</span>
+                                                    </div>
+                                                  </ng-template>
+                                                </ngx-datatable-column>
+                                              </ngx-datatable>
+                                              
+                                                </div>
+                                                <div class="modal-footer">
+                                                  <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cerrar</button>
+                                                </div>
+                                              </ng-template>
                                             </div>
                                           </div>
                                         </div>
@@ -316,22 +447,83 @@
                                             <div class="row">
                                               <div class="col-sm-4 border-right">
                                                 <div class="description-block">
-                                                  <h5 class="description-header" style="padding-bottom: 8px !important; font-size: 18px;  cursor:pointer;" onclick="detalle_estancia();" id="div_panel_0104_01">{{minutosSalaProm}}</h5>
+                                                  <h5 class="description-header" style="padding-bottom: 8px !important; font-size: 18px;  cursor:pointer;" (click)="detalle_estancia(content)" id="div_panel_0104_01">{{minutosSalaProm}}</h5>
                                                   <span class="description-text" style="font-size: 16px;">Sala</span>
                                                 </div>
                                               </div>
                                               <div class="col-sm-4 border-right">
                                                 <div class="description-block">
-                                                  <h5 class="description-header" style="padding-bottom: 8px !important; font-size: 18px;  cursor:pointer;" onclick="detalle_estancia();" id="div_panel_0104_02">{{minutosActoQxProm}}</h5>
+                                                  <h5 class="description-header" style="padding-bottom: 8px !important; font-size: 18px;  cursor:pointer;" (click)="detalle_estancia(content)" id="div_panel_0104_02">{{minutosActoQxProm}}</h5>
                                                   <span class="description-text" style="font-size: 16px;">Intervención</span>
                                                 </div>
                                               </div>
                                               <div class="col-sm-4 border-right">
                                                 <div class="description-block">
-                                                  <h5 class="description-header" style="padding-bottom: 8px !important; font-size: 18px;  cursor:pointer;" onclick="detalle_estancia();" id="div_panel_0104_03">{{minutosAnestesiaProm}}</h5>
+                                                  <h5 class="description-header" style="padding-bottom: 8px !important; font-size: 18px;  cursor:pointer;" (click)="detalle_estancia(content)" id="div_panel_0104_03">{{minutosAnestesiaProm}}</h5>
                                                   <span class="description-text" style="font-size: 16px;">Anestesia</span>
                                                 </div>
                                               </div>
+                                              <ng-template #content let-modal>
+                                                <div class="modal-header">
+                                                  <p class="modal-title" id="modal-basic-title"><b>Detalle de Estancia</b></p>
+                                                  <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                                                    <span aria-hidden="true">&times;</span>
+                                                  </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                  <div class="row pb-3" style='display:flex; justify-content: space-between;'>
+                                                    <div class="col-md-2" style='margin-left:15px;'>
+                                                        <select class="form-control form-select" (change)="onLimitChange($event.target.value, 3)">
+                                                            <option
+                                                                *ngFor="let option of pageLimitOptions"
+                                                                [value]="option.value"
+                                                            >
+                                                                {{ option.value }} Registros
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-2" style="display:flex;margin-right:15px;align-items: center;">
+                                                      <button class="btn btn-sm font-weight-bold btn-link" (click)="copyTableToClipboard(3)">
+                                                        <i class="fa fa-external-link"></i>
+                                                        Copiar tabla
+                                                      </button>
+                                                    </div>
+                                                    <div class="col-md-2" style="display:flex;margin-right:15px;align-items: center;">
+                                                      <button class="btn btn-sm font-weight-bold btn-link" (click)="exportToExcel(3)">
+                                                        <i class="fa fa-external-link"></i>
+                                                        Exportar tabla a Excel
+                                                      </button>
+                                                    </div>
+                                                    <div class="col-md-2" style="display:flex;margin-right:15px;align-items: center;">
+                                                        <!-- <span>Buscar</span>&nbsp;&nbsp; -->
+                                                        <input type="text" style='padding:6px;width:100%;' placeholder="Buscar por cualquier campo" (keyup)='updateFilter($event, 3)'>
+                                                    </div>
+                                                  </div>
+                                                  <ag-grid-angular
+                                                #agGrid
+                                                style="width: 100%; height: 400px;"
+                                                id="myTable11"
+                                                ag-grid="gridOptions"
+                                                class="ag-theme-balham"
+                                                [columnDefs]="columnsEstancia"
+                                                [pagination]="true"
+                                                [paginationPageSize]="page3.size"
+                                                [groupSelectsChildren]="true"
+                                                [groupDefaultExpanded]="groupDefaultExpanded"
+                                                [autoGroupColumnDef]="autoGroupColumnDef"
+                                                [defaultColDef]="defaultColDef"
+                                                [rowData]="rowsEstancia"
+                                                [rowSelection]="rowSelection"
+                                                [rowClassRules]="rowClassRules"
+                                                [frameworkComponents]="frameworkComponents"
+                                                (gridReady)="onGridReady1($event)"
+                                                [onPaginationChanged]= "onPaginationChanged(1)"
+                                                ></ag-grid-angular>
+                                                </div>
+                                                <div class="modal-footer">
+                                                  <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cerrar</button>
+                                                </div>
+                                              </ng-template>
                                             </div>
                                           </div>
                                         </div>
