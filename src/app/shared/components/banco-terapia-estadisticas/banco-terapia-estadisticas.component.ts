@@ -38,7 +38,7 @@ export class BancoTerapiaEstadisticasComponent implements OnInit {
 
   public formatoDatosTblDistAnTPacGrupo: FormatoDatosInterface = {
     para: TipoControlEnum.OpcionPorCol,
-    excluir: ['id','Grupo','Campo', 'solesCantidad'],
+    excluir: ['id','grupo','Campo', 'solesCantidad'],
     reglas: [
       {
           valor: 'soles',
