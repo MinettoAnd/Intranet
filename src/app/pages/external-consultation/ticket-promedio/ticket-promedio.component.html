@@ -82,9 +82,11 @@
                     <app-reporte
                         [id]="'tabla_consolidado'"
                         [copiar]="true"
+                        [anchoFijo]="[{'0':'200'}]"
                         [tituloReporte]="'TICKET PROMEDIO - CONSOLIDADO'"
                         [datos]="this.datosConsolidado.tabla_consolidado"
                         [cabecera]="this.datosConsolidado.cabeceras_consolidado"
+                        [formatoDatos]="formatoDatosTblDistXServicio"
                     ></app-reporte>
                   </ng-template>
                 </li>
@@ -94,9 +96,11 @@
                     <app-reporte
                         [id]="'tabla_consulta'"
                         [copiar]="true"
+                        [anchoFijo]="[{'0':'500'}]"
                         [tituloReporte]="'TICKET PROMEDIO - CONSULTA EXTERNA'"
                         [datos]="this.datosConsulta.tabla_consulta"
                         [cabecera]="this.datosConsulta.cabeceras_consulta"
+                        [formatoDatos]="formatoDatosTblDistXServicio"
                     ></app-reporte>
                   </ng-template>
                 </li>
@@ -106,9 +110,11 @@
                       <app-reporte
                         [id]="'tabla_laboratorio'"
                         [copiar]="true"
+                        [anchoFijo]="[{'0':'500'}]"
                         [tituloReporte]="'TICKET PROMEDIO - LABORATORIO'"
                         [datos]="this.datosLaboratorio.tabla_laboratorio"
                         [cabecera]="this.datosLaboratorio.cabeceras_laboratorio"
+                        [formatoDatos]="formatoDatosTblDistXServicio"
                     ></app-reporte>
                     </ng-template>
                 </li>
@@ -118,9 +124,11 @@
                     <app-reporte
                       [id]="'tabla_imagenes'"
                       [copiar]="true"
+                      [anchoFijo]="[{'0':'500'}]"
                       [tituloReporte]="'TICKET PROMEDIO - IMAGENES'"
                       [datos]="this.datosImagenes.tabla_imagenes"
                       [cabecera]="this.datosImagenes.cabeceras_imagenes"
+                      [formatoDatos]="formatoDatosTblDistXServicio"
                   ></app-reporte>
                   </ng-template>
               </li>
@@ -130,9 +138,11 @@
                   <app-reporte
                     [id]="'tabla_procedimientos'"
                     [copiar]="true"
+                    [anchoFijo]="[{'0':'500'}]"
                     [tituloReporte]="'TICKET PROMEDIO - PROCEDIMIENTOS'"
                     [datos]="this.datosProcedimientos.tabla_procedimientos"
                     [cabecera]="this.datosProcedimientos.cabeceras_procedimientos"
+                    [formatoDatos]="formatoDatosTblDistXServicio"
                 ></app-reporte>
                 </ng-template>
             </li>
@@ -142,9 +152,11 @@
                 <app-reporte
                   [id]="'tabla_medicinas'"
                   [copiar]="true"
+                  [anchoFijo]="[{'0':'500'}]"
                   [tituloReporte]="'TICKET PROMEDIO - MEDICINAS'"
                   [datos]="this.datosMedicinas.tabla_medicinas"
                   [cabecera]="this.datosMedicinas.cabeceras_medicinas"
+                  [formatoDatos]="formatoDatosTblDistXServicio"
               ></app-reporte>
               </ng-template>
           </li>

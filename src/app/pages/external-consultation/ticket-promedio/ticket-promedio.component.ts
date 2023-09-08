@@ -18,6 +18,9 @@ import { CurrencyPipe } from '@angular/common';
 import * as Chart from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import ResizeObserver from 'resize-observer-polyfill';
+import { TipoControlEnum } from '../../../shared/components-shared/reporte/enums/tipo-control.enum';
+import { TipoFormatoValorEnum } from '../../../shared/components-shared/reporte/enums/tipo-formato-valor.enum';
+import { FormatoDatosInterface } from '../../../shared/components-shared/reporte/interfaces/formato-datos.interface';
 import { ExternalConsultationTicketPromedioService } from 'src/app/_services/external-consultation-ticket-promedio.service';
 
 
@@ -35,6 +38,38 @@ export class TicketPromedioComponent implements OnInit {
   id_sede = '0001';
   filtroForm: FormGroup;
 
+  public formatoDatosTblDistAnTPacGrupo: FormatoDatosInterface = {
+    para: TipoControlEnum.OpcionPorCol,
+    excluir: ['id','grupo','Campo', 'solesCantidad'],
+    reglas: [
+      {
+          valor: 'soles',
+          formato: [{ tipo: TipoFormatoValorEnum.Moneda }],
+      },
+      {
+          valor: 'cantidad',
+          formato: [{ tipo: TipoFormatoValorEnum.Cantidad}],
+      },
+    ],
+  };
+
+  public formatoDatosTblDistXServicio: FormatoDatosInterface = {
+    excluir: ['grupo'],
+    reglas: [
+      {
+        formato: [
+          {
+            tipo: TipoFormatoValorEnum.Cantidad,
+            cols: ['Cantidad','atendidos', 'orden', 'atenciones'],
+          },
+          {
+            tipo: TipoFormatoValorEnum.Moneda,
+            cols: ['mes_01', 'mes_02', 'mes_03', 'mes_04', 'mes_05', 'mes_06', 'mes_07', 'mes_08', 'mes_09', 'mes_10', 'mes_11', 'mes_12', 'total'],
+          }
+        ],
+      },
+    ],
+  };
 
   public config: PerfectScrollbarConfigInterface = { wheelPropagation: true };
   @ViewChild(PerfectScrollbarComponent) componentRef?: PerfectScrollbarComponent;
@@ -264,7 +299,7 @@ export class TicketPromedioComponent implements OnInit {
       mes: this.mes,
       tipo: 'mes', //mes, meses
 	    sede: this.id_sede,
-      meses: this.mes
+      anio: this.anio
       // anio: this.anio,
       // pageNumber: this.page.pageNumber,
       // size: this.page.size
