@@ -86,18 +86,34 @@
                         [datos]="this.datosConsolidado.tabla_consolidado"
                         [cabecera]="this.datosConsolidado.cabeceras_consolidado"
                     ></app-reporte>
-
-                    {{ this.datosConsolidado.tabla_consolidado | json }}
                   </ng-template>
                 </li>
                 <li [ngbNavItem]="2">
                   <a ngbNavLink>CONSULTA</a>
                   <ng-template ngbNavContent>
-                    CONSULTA
+                    <app-reporte
+                        [id]="'tabla_tpac2'"
+                        [copiar]="true"
+                        [tituloReporte]="'Distribución por Tipo de Paciente Agrupado'"
+                        [datos]="this.datosConsulta.tabla_consulta"
+                        [cabecera]="this.datosConsulta.cabeceras_consulta"
+                    ></app-reporte>
                   </ng-template>
                 </li>
                 <li [ngbNavItem]="3">
                     <a ngbNavLink>LABORATORIO</a>
+                    <ng-template ngbNavContent>
+                      <app-reporte
+                        [id]="'tabla_tpac2'"
+                        [copiar]="true"
+                        [tituloReporte]="'Distribución por Tipo de Paciente Agrupado'"
+                        [datos]="this.datosLaboratorio.tabla_laboratorio"
+                        [cabecera]="this.datosLaboratorio.cabeceras_laboratorio"
+                    ></app-reporte>
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="3">
+                    <a ngbNavLink>TAB 2</a>
                     <ng-template ngbNavContent>
                       LABORATORIO
                     </ng-template>

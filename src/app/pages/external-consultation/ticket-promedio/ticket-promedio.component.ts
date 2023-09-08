@@ -161,6 +161,14 @@ export class TicketPromedioComponent implements OnInit {
     tabla_consolidado: [],
     cabeceras_consolidado: [],
   };
+  public datosConsulta: any = {
+    tabla_consulta: [],
+    cabeceras_consulta: [],
+  };
+  public datosLaboratorio: any = {
+    tabla_laboratorio: [],
+    cabeceras_laboratorio: [],
+  };
   public datosTbl2: any = {};
   public datosTbl3: any = {};
 
@@ -192,7 +200,6 @@ export class TicketPromedioComponent implements OnInit {
   }
 
   ngOnInit() {
-
     // this.setPage({ offset: 0 });
   }
 
@@ -253,12 +260,21 @@ export class TicketPromedioComponent implements OnInit {
     this.loading();
 
     this.tableApiservice.getConsolidado(this.parameters).subscribe(response => {
-      console.log(response.data);
       this.datosConsolidado.tabla_consolidado = response.data.tabla_consolidado;
       this.datosConsolidado.cabeceras_consolidado = response.data.cabeceras_consolidado;
     });
 
-    Swal.close();
+    this.tableApiservice.getConsulta(this.parameters).subscribe(response => {
+      this.datosConsulta.tabla_consulta = response.data.tabla_consulta;
+      this.datosConsulta.cabeceras_consulta = response.data.cabeceras_consulta;
+    });
+
+    this.tableApiservice.getLaboratorio(this.parameters).subscribe(response => {
+      this.datosLaboratorio.tabla_laboratorio = response.data.tabla_laboratorio;
+      this.datosLaboratorio.cabeceras_laboratorio = response.data.cabeceras_laboratorio;
+      Swal.close();
+    });
+
   }
 
   copyTableToClipboard(numberTabla){
