@@ -10,12 +10,14 @@ import { ExternalAttentionConsultationComponent } from './attention-consultation
 import { OcupabilidadMedicoComponent } from './ocupabilidad-medico/ocupabilidad-medico.component';
 import { OcupabilidadConsultorioComponent } from './ocupabilidad-consultorio/ocupabilidad-consultorio.component';
 import { EstadisticasComponent } from './estadisticas/estadisticas.component';
+import { TicketPromedioComponent } from './ticket-promedio/ticket-promedio.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 @NgModule({
   declarations: [
     ExternalAttentionConsultationComponent,
     OcupabilidadMedicoComponent,
     OcupabilidadConsultorioComponent,
+    TicketPromedioComponent,
     EstadisticasComponent
   ],
   imports: [
@@ -42,6 +44,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
       {
         path: 'ocupabilidad-del-medico',
         component: OcupabilidadMedicoComponent
+      },
+      {
+        path: 'ticket-promedio',
+        component: TicketPromedioComponent
       }
     ])
   ],
