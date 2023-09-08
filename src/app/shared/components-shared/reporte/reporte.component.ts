@@ -40,6 +40,7 @@ export class ReporteComponent implements OnInit, AfterViewInit {
 
   @Input() public set datos(datos: Array<any>) {
     this._datos = fnDestArrObj(datos);
+    this.init();
   };
 
   @Input() public exportar: boolean = false;
@@ -131,6 +132,10 @@ export class ReporteComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    this.init();
+  }
+
+  public init(): void {
     this.nombreGrupoChk = 'chk' + fnGenerarIdUnico(5);
 
     // Datos para los checks
@@ -144,10 +149,12 @@ export class ReporteComponent implements OnInit, AfterViewInit {
     this.opcionesFiltrado = fnObtOpcsDeFiltrado(this.filtrosPorColumna, this._datos);
     this.valoresFiltrado = fnObtValoresDeFiltrado(this.opcionesFiltrado);
 
-    this.anchosCols = fnCalcAnchoCols(
-      this.anchoFijo,
-      Object.keys(this._datos[0]).length
-    );
+    if (this._datos.length > 0) {
+      this.anchosCols = fnCalcAnchoCols(
+        this.anchoFijo,
+        Object.keys(this._datos[0]).length
+      );
+    }
 
     // Obteniendo los totales
     const resTotales = this.pieDePagina ? fnObtTotales(this._datos) : null;
@@ -165,10 +172,15 @@ export class ReporteComponent implements OnInit, AfterViewInit {
     // TODO fnAgregarTotales(this._datos)
 
     // Tratamiento de los datos
+    console.log('this._datos', this._datos);
     this.datosPorOpcionColumna = this.obtGrupoDatos(this._datos);
+    console.log('this.datosPorOpcionColumna', this.datosPorOpcionColumna);
     this.datosFiltrados = this.filtrarDatos(this.datosPorOpcionColumna);
+    console.log('this.datosFiltrados', this.datosFiltrados);
     this.datosFormateados = this.formatearDatos(this.datosFiltrados);
+    console.log('this.datosFormateados', this.datosFormateados);
     this.datosTabla = fnDestArrObj(this.datosFormateados);
+    console.log('this.datosTabla', this.datosTabla);
   }
 
   public cambioValorOpcGrupo(valorCol: ValorOpcionGrupoColInterface): void {

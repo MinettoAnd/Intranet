@@ -12,6 +12,7 @@ import { OcupabilidadConsultorioComponent } from './ocupabilidad-consultorio/ocu
 import { EstadisticasComponent } from './estadisticas/estadisticas.component';
 import { TicketPromedioComponent } from './ticket-promedio/ticket-promedio.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+
 @NgModule({
   declarations: [
     ExternalAttentionConsultationComponent,
