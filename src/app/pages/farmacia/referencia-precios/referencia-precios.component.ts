@@ -13,7 +13,7 @@ import * as XLSX from 'xlsx';
 import { ExcelJson } from '../../../interfaces/excel-json.interface';
 import { ExportService } from '../../../_services/export.service';
 import ResizeObserver from 'resize-observer-polyfill';
-
+import { GridApi, GridReadyEvent} from 'ag-grid-community';
 
 @Component({
   selector: 'app-referencia-precios',
@@ -70,6 +70,8 @@ export class ReferenciaPreciosComponent implements OnInit {
     {value: 100},
   ];
   action: boolean = false;
+  private gridApi1!: GridApi;
+  pageNumber1: number;
   constructor(private tableApiservice: FarmaciaService, private exportService: ExportService) {
     this.page.pageNumber = 0;
     this.page.size = 10;
@@ -95,6 +97,29 @@ export class ReferenciaPreciosComponent implements OnInit {
     );
     return inrFormat.format(params.value);
   }
+  onGridReady1(params: GridReadyEvent) {
+    this.gridApi1 = params.api;
+
+  }
+  onPaginationChanged(table) {
+    console.log(' hola')
+    if (table === 1){
+      // console.log(336, this.pageNumber1 )
+      if(this.gridApi1) {
+         
+        if (this.pageNumber1 === this.gridApi1.paginationGetCurrentPage()) {
+          
+          return;
+        }
+        this.pageNumber1 = this.gridApi1.paginationGetCurrentPage()
+        
+      }else{
+        return;
+      }
+    }
+    
+
+  }
   public onLimitChange(limit: any): void {
     this.changePageLimit(limit);
     // this.setPage({ offset: 0 });
@@ -110,7 +135,7 @@ export class ReferenciaPreciosComponent implements OnInit {
       return
     }
     this.page.size = parseInt(limit, 10);
-    
+    this.gridApi1.paginationSetPageSize(Number(this.page.size));
     setTimeout(() => {
       Swal.close();
     }, 1000)

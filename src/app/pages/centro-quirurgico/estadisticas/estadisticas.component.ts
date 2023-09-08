@@ -19,7 +19,7 @@ import ResizeObserver from 'resize-observer-polyfill';
 import {GridOptions} from "ag-grid-community";
 import { AgGridAngular } from "ag-grid-angular";
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-
+import { GridApi, GridReadyEvent} from 'ag-grid-community';
 @Component({
   selector: 'app-estadisticas',
   templateUrl: './estadisticas.component.html',
@@ -128,9 +128,9 @@ export class EstadisticasComponent implements OnInit {
   columns2: any[];
   rows2: any[];
   especialidades: any;
+  temp1: any[];
   temp2: any[];
-  temp4: any[];
-  temp5: any[];
+  temp3: any[];
   temp6: any[];
   tempRowsMedicos: any[];
   rowsFilter: any[];
@@ -154,10 +154,11 @@ export class EstadisticasComponent implements OnInit {
   columns10: any;
   rows10: any[];
   medicos = false;
-  columnsMedicos: any[];
-  rowsMedicos: any[];
-  columnsMedicoRecord: any[];
-  rowsMedicoRecord: any[];
+  columnsEstancia: any[];
+  rowsEstancia: any[];
+  columnsTablas: any[];
+  rowsUsoArco: any[];
+  rowsUsoTorre: any[];
   filtered: any;
   detalleAnual: any;
   especialidad: any;
@@ -187,7 +188,8 @@ export class EstadisticasComponent implements OnInit {
       flex: "1 1 auto",
   };
   action: boolean = false;
-
+  private gridApi1!: GridApi;
+  pageNumber1: number;
   constructor(private tableApiservice: CentroQuirurgicoService, private exportService: ExportService,
     private _cp: CurrencyPipe, private modalService: NgbModal) { 
       this.page1.pageNumber = 0;
@@ -198,6 +200,7 @@ export class EstadisticasComponent implements OnInit {
       this.page3.size = 10;
       this.page4.pageNumber = 0;
       this.page4.size = 10;
+      this.pageNumber1 = 0
     this.filtroForm = new FormGroup({
       id_sede: new FormControl(this.id_sede),
       mes: new FormControl(this.mes),
@@ -232,6 +235,65 @@ export class EstadisticasComponent implements OnInit {
 
     // this.setPage({ offset: 0 });
   }
+  onGridReady1(params: GridReadyEvent) {
+    this.gridApi1 = params.api;
+
+  }
+  onPaginationChanged(table) {
+    console.log(' hola')
+    if (table === 1){
+      // console.log(336, this.pageNumber1 )
+      if(this.gridApi1) {
+         
+        if (this.pageNumber1 === this.gridApi1.paginationGetCurrentPage()) {
+          
+          return;
+        }
+        this.pageNumber1 = this.gridApi1.paginationGetCurrentPage()
+        
+      }else{
+        return;
+      }
+    }
+    
+
+  }
+  public onLimitChange(limit: any, numberT): void {
+    this.changePageLimit(limit, numberT);
+
+  }
+
+  private changePageLimit(limit: any, numberT): void {
+    console.log(267, numberT)
+    this.loading();
+    if(numberT === 1){console.log(numberT);
+      if (limit === '0'){
+        this.page1.size = this.page1.totalElements;
+        // console.log(this.page.totalElements);
+        return
+      }
+      this.page1.size = parseInt(limit, 10);
+    }else if(numberT === 2){
+      if (limit === '0'){
+        this.page2.size = this.page2.totalElements;
+        // console.log(this.page.totalElements);
+        return
+      }
+      this.page2.size = parseInt(limit, 10);
+    }else if(numberT === 3){
+      if (limit === '0'){
+        this.page3.size = this.page3.totalElements;
+        // console.log(this.page.totalElements);
+        return
+      }
+      this.page3.size = parseInt(limit, 10);
+      this.gridApi1.paginationSetPageSize(Number(this.page3.size));
+      console.log(this.page3.size);
+    }
+    setTimeout(() => {
+      Swal.close();
+    }, 1000)
+  }
   public onAnioChange(anio: any): void {
     this.anio = anio;
     this.periodo_consulta = this.anio + this.mes;
@@ -242,7 +304,76 @@ export class EstadisticasComponent implements OnInit {
     this.periodo_consulta = this.anio + this.mes;
     // this.setPage({ offset: 0 });
   }
-  
+  copyTableToClipboard(numberTabla){
+    if(numberTabla === 1){
+      this.exportService.exportToClipboard(this.rowsUsoArco, this.columnsTablas);
+    }else if (numberTabla === 2){
+
+      this.exportService.exportToClipboard(this.rowsUsoTorre, this.columnsTablas);
+    }else if (numberTabla === 3){
+    
+      this.exportService.exportToClipboard(this.rowsEstancia, this.columnsEstancia);
+    }
+  }
+
+  exportToExcel(numberTabla): void {
+    if(numberTabla === 1){
+      this.exportService.exportTableElmToExcel(this.rowsUsoArco, '');
+    }else if (numberTabla === 2){
+      
+      this.exportService.exportTableElmToExcel(this.rowsUsoTorre, '');
+    }else if (numberTabla === 3){
+      
+      this.exportService.exportTableElmToExcel(this.rowsEstancia, '');
+    }
+  }
+  updateFilter(event, numberTabla) {
+    const input = event.target.value.toLowerCase();
+    if(numberTabla === 1){
+      if (input.length > 0) {
+        const filtered = this.rowsUsoArco.filter(el =>
+          // console.log(240, el);
+          Object.values(el).find( val => val?.toString().toLowerCase().indexOf(input) !== -1 ) != undefined
+            // Object.values(el).find( val => val?.toString().toLowerCase().includes(input) ) != undefined
+          );
+          console.log(filtered);
+        this.rowsUsoArco = [...filtered]
+        
+      } else {
+
+        this.rowsUsoArco = [...this.temp1]
+      }
+    }else if (numberTabla === 2){
+      if (input.length > 0) {
+        const filtered = this.rowsUsoTorre.filter(el =>
+          // console.log(240, el);
+          Object.values(el).find( val => val?.toString().toLowerCase().indexOf(input) !== -1 ) != undefined
+            // Object.values(el).find( val => val?.toString().toLowerCase().includes(input) ) != undefined
+          );
+          console.log(filtered);
+        this.rowsUsoTorre = [...filtered]
+        
+      } else {
+
+        this.rowsUsoTorre = [...this.temp2]
+      }
+    }else if (numberTabla === 3){
+      if (input.length > 0) {
+        const filtered = this.rowsEstancia.filter(el =>
+          // console.log(240, el);
+          Object.values(el).find( val => val?.toString().toLowerCase().indexOf(input) !== -1 ) != undefined
+            // Object.values(el).find( val => val?.toString().toLowerCase().includes(input) ) != undefined
+          );
+          console.log(filtered);
+        this.rowsEstancia = [...filtered]
+        
+      } else {
+
+        this.rowsEstancia = [...this.temp3]
+      }
+    }
+
+  }
   filter() {
     this.action = true;
     const form = this.filtroForm.value;
@@ -572,8 +703,30 @@ export class EstadisticasComponent implements OnInit {
       'cell-red': Number(value) < 0
     };
   }
-
-
+  detalle_estancia(content?: any){
+    this.page1.pageNumber = 0;
+      this.page1.size = 10;
+      this.page2.pageNumber = 0;
+      this.page2.size = 10;
+      this.page3.pageNumber = 0;
+      this.page3.size = 10;
+    console.log(577, content)
+    this.modalService.open(content, {size: "xxxl", ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      console.log(content);
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
   tipoChange(event, tabla){
     console.log(751, event);
     const input = event;
@@ -699,6 +852,11 @@ export class EstadisticasComponent implements OnInit {
                                         
                                         this.usoArco = response.data.uso_arco;
                                         this.usoTorre = response.data.uso_torre;
+                                        this.columnsTablas = response.data.cabeceras_tablas;
+                                        this.rowsUsoArco = response.data.tabla_arco;
+                                        this.temp1 = this.rowsUsoArco;
+                                        this.rowsUsoTorre = response.data.tabla_artroscopio;
+                                        this.temp2 = this.rowsUsoTorre;
                                           // Swal.close();
                                       },
                                       (error) => {
@@ -712,6 +870,9 @@ export class EstadisticasComponent implements OnInit {
                                           this.minutosSalaProm = response.data.minutos_sala_PROM;
                                           this.minutosActoQxProm = response.data.minutos_actoQx_PROM;
                                           this.minutosAnestesiaProm = response.data.minutos_Anestesia_PROM;
+                                          this.columnsEstancia = response.data.cabeceras_estancia;
+                                          this.rowsEstancia = response.data.tabla_estancia;
+                                          this.temp3 = this.rowsEstancia;
                                           }
                                         // Swal.close(); 
                                       },
