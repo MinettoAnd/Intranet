@@ -271,7 +271,7 @@ export class LiquidacionEmpresasComponent implements OnInit {
     //   return {'totals': row.item.includes('TOTAL') || row.item.includes('COLECTIVA') }
     // }
     return {
-      'totals': row.Grupo.includes('TOTAL')
+      'totals': row.grupo.includes('TOTAL')
     };
   }
   getRowClass1(row) {
